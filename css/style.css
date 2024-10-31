@@ -1,0 +1,340 @@
+/* 重設基本樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 確保整個頁面都有背景色 */
+html, 
+body {
+    min-height: 100vh;
+    background-color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+/* body 特定樣式 */
+body {
+    width: 100%;
+    background-color: #fff9e6;
+    padding: 20px;
+    font-family: Arial, "微軟正黑體", sans-serif;
+    color: #333;
+}
+
+/* 容器樣式 */
+.container {
+    width: 100%;
+    min-width: 800px;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+}
+
+/* 搜尋區域樣式 */
+.search-container {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 40px;
+}
+
+.schedule-table {
+    width: 75%;
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* 搜尋區域樣式 */
+.search-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.search-title {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.team-filters {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* 按鈕容器基本樣式 */
+.team-filters {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* 寬度大於 1000px 時，一行顯示 */
+@media screen and (min-width: 1001px) {
+    .team-filters {
+        grid-template-columns: repeat(8, auto);  /* 8個按鈕一行 */
+    }
+    
+    /* 清除按鈕獨立一行 */
+    .clear-filter {
+        grid-column: 1 / -1;
+        justify-self: center;
+        margin-top: 10px;
+    }
+}
+
+/* 寬度小於等於 1000px 時，兩行顯示 */
+@media screen and (max-width: 1000px) {
+    .team-filters {
+        grid-template-columns: repeat(4, auto);  /* 4個按鈕一行 */
+    }
+    
+    /* 清除按鈕獨立一行 */
+    .clear-filter {
+        grid-column: 1 / -1;
+        justify-self: center;
+        margin-top: 10px;
+    }
+}
+
+/* 按鈕樣式 */
+.team-filter {
+    padding: 8px 16px;
+    border: 2px solid #ff7f50;
+    border-radius: 20px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;  /* 確保按鈕文字不換行 */
+}
+
+.team-filter:hover {
+    background-color: #fff0eb;
+}
+
+.team-filter.active {
+    background-color: #ff7f50;
+    color: white;
+}
+
+.clear-filter {
+    grid-column: 1 / -1;  /* 橫跨所有列 */
+    justify-self: center;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: 2px solid #888;
+    border-radius: 20px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.clear-filter:hover {
+    background-color: #888;
+    color: white;
+}
+
+/* 表格樣式 */
+.schedule-table {
+    width: 75%;
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* 調整表格單元格的內距 */
+.schedule-table th,
+.schedule-table td {
+    padding: 8px 10px;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+/* 表格欄位寬度設定 */
+.schedule-table th:nth-child(1),
+.schedule-table td:nth-child(1) {
+    width: 8%;
+}
+
+.schedule-table th:nth-child(2),
+.schedule-table td:nth-child(2),
+.schedule-table th:nth-child(6),
+.schedule-table td:nth-child(6) {
+    width: 20%;
+}
+
+.schedule-table th:nth-child(3),
+.schedule-table td:nth-child(3),
+.schedule-table th:nth-child(5),
+.schedule-table td:nth-child(5) {
+    width: 8%;
+}
+
+.schedule-table th:nth-child(4),
+.schedule-table td:nth-child(4) {
+    width: 6%;
+}
+
+.schedule-table th:nth-child(7),
+.schedule-table td:nth-child(7) {
+    width: 15%;
+}
+
+/* 表格標題列樣式 */
+.schedule-table th {
+    background-color: #ff7f50 !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* 週次標題列樣式 */
+.week-header td {
+    padding: 6px 10px;
+    background-color: #ff9977 !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* 交替行底色 */
+.schedule-table tr:nth-child(even):not(.week-header) td {
+    background-color: #fff9f7 !important;
+}
+
+/* 週次欄位樣式 */
+.schedule-table td:first-child {
+    font-weight: 600;
+}
+
+/* 確保客隊欄位使用正常粗細 */
+.schedule-table td:nth-child(2) {
+    font-weight: normal !important;
+}
+
+/* 主隊名稱樣式 */
+.home-team {
+    font-weight: normal;
+}
+
+/* 主場標記樣式 */
+.home-mark {
+    color: #666;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+/* 載入和錯誤訊息樣式 */
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error-message {
+    color: #dc3545;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8d7da;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 850px) {
+    .container {
+        width: 95%;
+        min-width: unset;
+        padding: 15px;
+    }
+}
+
+/* 確保在小螢幕上也有適當的寬度 */
+@media screen and (max-width: 800px) {
+    .schedule-table {
+        width: 80%;
+    }
+}
+
+/* 導航按鈕樣式 */
+.nav-buttons {
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 6px solid #333;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    border: 2px solid #ff7f50;
+}
+
+.nav-btn:hover {
+    background-color: #fff0eb;
+}
+
+.nav-btn.active {
+    background-color: #ff7f50;
+    color: white;
+}
+
+/* 內容區域樣式 */
+#content {
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* iframe 樣式 */
+#contentFrame {
+    width: 100%;
+    height: calc(100vh - 180px);
+    border: none;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+/* 內容頁面基本樣式 */
+.content-page {
+    margin: 0;
+    padding: 20px;
+    background-color: #fff;
+}
