@@ -151,10 +151,15 @@ body {
 
 /* 個人排名表格的交錯背景色 */
 #personalTableBody tr:nth-child(even) {
-    background-color: #f5f5f5;
+    background-color: #e0e0e0;
 }
 
 /* 或者如果要更具體的選擇器 */
 #personalTable tbody tr:nth-child(even) {
-    background-color: #f5f5f5;
+    background-color: #e0e0e0;
+}
+
+/* 確保 hover 效果也能覆蓋整行 */
+#personalTable tr:hover {
+    background-color: #ffd1d1;
 } 
