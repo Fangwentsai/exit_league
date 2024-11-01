@@ -28,6 +28,17 @@ function loadNews() {
     const newsContent = document.getElementById('newsContent');
     if (newsContent) {
         newsContent.innerHTML = `
+            <!-- 阿淦幣新聞 -->
+            <div class="news-item">
+                <div class="news-date">2024/10/15</div>
+                <div class="news-title">阿淦幣即日起開始發售</div>
+                <div class="news-text">
+                    <p>阿淦因其優異手氣榮獲第二屆地獄倒霉鬼殊榮，即日起凡於比賽店家持100元阿淦幣消費即可換取一杯shot。</p>
+                    <img src="../images/agan.png" alt="阿淦幣" class="news-image">
+                </div>
+            </div>
+
+            <!-- 聯賽開始新聞 -->
             <div class="news-item">
                 <div class="news-date">2023/11/1</div>
                 <div class="news-title">聯賽開始</div>

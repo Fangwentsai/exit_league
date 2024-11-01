@@ -17,6 +17,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
 }
 
 .news-item {
@@ -86,4 +87,15 @@ body {
 .vs {
     color: #999;
     margin: 0 10px;
-} 
+}
+
+.news-image {
+    max-width: 100%;
+    height: auto;
+    margin: 15px 0;
+    display: block;
+}
+
+.news-text p {
+    margin: 0 0 15px 0;
+}
