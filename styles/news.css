@@ -67,10 +67,10 @@ body {
 
 .match-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    gap: 20px;
 }
 
 .match-date {
@@ -79,14 +79,24 @@ body {
 }
 
 .match-teams {
-    flex-grow: 1;
-    text-align: center;
-    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team-name {
+    min-width: 120px;
+    text-align: right;
+}
+
+.team-name.right {
+    text-align: left;
 }
 
 .vs {
-    color: #999;
-    margin: 0 10px;
+    color: #666;
+    font-weight: bold;
+    padding: 0 10px;
 }
 
 .news-image {
