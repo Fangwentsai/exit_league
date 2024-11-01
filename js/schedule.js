@@ -1,132 +1,122 @@
-// 測試數據
-const TEST_DATA = {
-    values: [
-        {
-            date: "11/5",
-            games: [
-                ["逃生入口A", "", "vs", "", "逃生入口C"],
-                ["逃生入口B", "", "vs", "", "JACK都說隊"],
-                ["VIVI朝九晚五", "", "vs", "", "醉販"],
-                ["海盜揪硬", "", "vs", "", "人生揪難"]
-            ]
-        },
-        {
-            date: "11/12",
-            games: [
-                ["海盜揪硬", "", "vs", "", "逃生入口A"],
-                ["VIVI朝九晚五", "", "vs", "", "逃生入口B"],
-                ["逃生入口C", "", "vs", "", "JACK都說隊"],
-                ["醉販", "", "vs", "", "人生揪難"]
-            ]
-        }
-        // ... 其他週次的資料
-    ]
-};
+// 從 config.js 獲取設定
+const { SHEET_ID, API_KEY } = CONFIG;
 
-// 儲存選中的隊伍
-let selectedTeams = new Set();
-
-// 初始化篩選器
-function initializeFilters() {
-    // 綁定隊伍按鈕點擊事件
-    document.querySelectorAll('.team-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const team = this.dataset.team;
-            if (this.classList.contains('active')) {
-                selectedTeams.delete(team);
-                this.classList.remove('active');
-            } else {
-                selectedTeams.add(team);
-                this.classList.add('active');
-            }
-            filterGames();
-        });
-    });
-
-    // 綁定取消按鈕點擊事件
-    document.getElementById('cancelBtn').addEventListener('click', function() {
-        selectedTeams.clear();
-        document.querySelectorAll('.team-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        filterGames();
-    });
-}
-
-// 篩選比賽
-function filterGames() {
-    const filteredData = {
-        values: TEST_DATA.values.map(weekData => {
-            // 如果沒有選擇任何隊伍，顯示所有比賽
-            if (selectedTeams.size === 0) {
-                return weekData;
-            }
-
-            // 過濾符合所選隊伍的比賽
-            const filteredGames = weekData.games.filter(game => 
-                selectedTeams.has(game[0]) || selectedTeams.has(game[4])
-            );
-
-            return filteredGames.length > 0 ? {
-                ...weekData,
-                games: filteredGames
-            } : null;
-        }).filter(Boolean)
-    };
-
-    updateTable(filteredData);
-}
-
-// 更新表格
-function updateTable(data) {
-    const table = document.getElementById('leagueTable');
-    let html = `
-        <tr>
-            <th class="table-header">日期</th>
-            <th class="table-header">客場</th>
-            <th class="table-header">分數</th>
-            <th class="table-header"></th>
-            <th class="table-header">分數</th>
-            <th class="table-header">主場</th>
-        </tr>
-    `;
-    
-    data.values.forEach((weekData, weekIndex) => {
-        const weekClass = weekIndex % 2 === 0 ? 'week-block-1' : 'week-block-2';
+async function loadSchedule() {
+    try {
+        const range = 'schedule!A:F';
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
         
-        weekData.games.forEach((game, index) => {
-            if (index === 0) {
-                html += `
-                    <tr class="${weekClass}">
-                        <td class="week-header" rowspan="${weekData.games.length}">
-                            ${weekData.date}
-                        </td>
-                        <td>${game[0]}</td>
-                        <td>${game[1]}</td>
-                        <td>${game[2]}</td>
-                        <td>${game[3]}</td>
-                        <td>${game[4]}</td>
-                    </tr>
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (!data.values || data.values.length === 0) {
+            throw new Error('No data found in sheet');
+        }
+
+        const table = document.getElementById('leagueTable');
+        
+        // 創建表頭
+        const headerRow = document.createElement('tr');
+        headerRow.className = 'header-row';
+        headerRow.innerHTML = `
+            <th>日期</th>
+            <th>客隊</th>
+            <th>客場分數</th>
+            <th>VS</th>
+            <th>主場分數</th>
+            <th>主隊</th>
+        `;
+        table.appendChild(headerRow);
+
+        // 在處理數據時添加日期分組
+        let currentDate = '';
+        let isOddGroup = true;
+
+        // 處理數據 - 不使用合併儲存格
+        data.values.slice(1).forEach((row, index) => {
+            if (row && row.length >= 6) {
+                const matchRow = document.createElement('tr');
+                const date = row[0] || '';
+                const awayTeam = row[1] || '';
+                const awayScore = row[2] || '';
+                const homeScore = row[4] || '';
+                const homeTeam = row[5] || '';
+                
+                // 如果日期改變，切換奇偶群組
+                if (date !== currentDate) {
+                    currentDate = date;
+                    isOddGroup = !isOddGroup;
+                }
+                
+                matchRow.setAttribute('data-date-group', isOddGroup ? 'odd' : 'even');
+                matchRow.className = 'match-row';
+                
+                matchRow.innerHTML = `
+                    <td class="date-cell">${date}</td>
+                    <td class="team-cell">${awayTeam}</td>
+                    <td class="score-cell">${awayScore}</td>
+                    <td class="vs-cell">VS</td>
+                    <td class="score-cell">${homeScore}</td>
+                    <td class="team-cell">${homeTeam}</td>
                 `;
-            } else {
-                html += `
-                    <tr class="${weekClass}">
-                        <td>${game[0]}</td>
-                        <td>${game[1]}</td>
-                        <td>${game[2]}</td>
-                        <td>${game[3]}</td>
-                        <td>${game[4]}</td>
-                    </tr>
-                `;
+                table.appendChild(matchRow);
             }
+        });
+
+        // 設置篩選功能
+        setupFilters();
+
+    } catch (error) {
+        console.error('Error loading schedule:', error);
+        document.getElementById('leagueTable').innerHTML = '<tr><td colspan="6">載入賽程時發生錯誤</td></tr>';
+    }
+}
+
+function setupFilters() {
+    const teamButtons = document.querySelectorAll('.team-btn');
+    const cancelButton = document.getElementById('cancelBtn');
+    const allRows = document.querySelectorAll('.match-row');
+    let selectedTeams = new Set();
+
+    teamButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const team = button.getAttribute('data-team');
+            
+            if (button.classList.contains('active')) {
+                button.classList.remove('active');
+                selectedTeams.delete(team);
+                if (selectedTeams.size === 0) {
+                    resetDisplay();
+                    return;
+                }
+            } else {
+                button.classList.add('active');
+                selectedTeams.add(team);
+            }
+
+            // 簡單的顯示/隱藏邏輯
+            allRows.forEach(row => {
+                const team1 = row.getAttribute('data-team1');
+                const team2 = row.getAttribute('data-team2');
+                const shouldShow = selectedTeams.size === 0 || 
+                                 Array.from(selectedTeams).some(team => 
+                                     team === team1 || team === team2
+                                 );
+                row.style.display = shouldShow ? '' : 'none';
+            });
         });
     });
 
-    table.innerHTML = html;
+    // 重置顯示
+    function resetDisplay() {
+        selectedTeams.clear();
+        teamButtons.forEach(button => button.classList.remove('active'));
+        allRows.forEach(row => row.style.display = '');
+    }
+
+    // 取消按鈕
+    cancelButton.addEventListener('click', resetDisplay);
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    updateTable(TEST_DATA);
-    initializeFilters();
-});
+// 頁面載入時執行
+document.addEventListener('DOMContentLoaded', loadSchedule);

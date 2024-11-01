@@ -67,9 +67,9 @@ function loadNews() {
         newsContent.innerHTML = `
             <div class="news-item">
                 <div class="news-date">2024/10/15</div>
-                <div class="news-title">阿淦幣即日起開始發售</div>
+                <div class="news-title">阿淦幣即日起開始發行</div>
                 <div class="news-text">
-                    <p>第二屆阿淦因其優異的手氣榮獲地獄倒霉鬼殊榮，即日起凡於比賽店家持100元阿淦幣消費即可換取一杯shot。</p>
+                    <p>第二屆阿淦因其優異的手氣榮獲地獄倒霉鬼殊榮，即日起凡於比賽店家持100元阿淦幣消費即可換取一杯shot。（但你們都沒有）</p>
                     <img src="../images/agan.png" alt="阿淦幣" class="news-image">
                 </div>
             </div>

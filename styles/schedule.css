@@ -9,7 +9,7 @@ body {
 
 .container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -39,100 +39,102 @@ body {
 
 .team-btn {
     padding: 6px 12px;
-    border: 2px solid #4a4a4a;
+    border: 2px solid #555;
     border-radius: 6px;
     background-color: white;
-    color: #4a4a4a;
+    color: #333;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     white-space: nowrap;
     font-size: 0.9em;
 }
 
-.team-btn:hover {
-    background-color: #f5f5f5;
-}
-
 .team-btn.active {
-    background-color: #4a4a4a;
+    background-color: #fa363a;
     color: white;
 }
 
 .cancel-btn {
     padding: 6px 12px;
-    border: 2px solid #ff6b6b;
+    border: 2px solid #555;
     border-radius: 6px;
     background-color: white;
-    color: #ff6b6b;
+    color: #333;
     cursor: pointer;
-    transition: all 0.3s;
     font-size: 0.9em;
 }
 
-.cancel-btn:hover {
-    background-color: #fff5f5;
+/* 移除 hover 和 active 狀態 */
+.cancel-btn:active {
+    background-color: #fa363a;
+    color: white;
 }
 
-/* 表格樣式 */
+/* 表格基本樣式 */
 .schedule-table {
     width: 100%;
+    max-width: 800px;
     border-collapse: collapse;
-    border: 1px solid #666666;
-    table-layout: fixed;
-}
-
-.table-header {
-    background-color: #4a4a4a;
-    color: white;
-    font-weight: normal;
+    margin: 20px auto;
+    border: 2px solid #555;
 }
 
 .schedule-table th,
 .schedule-table td {
-    padding: 15px 10px;
+    padding: 10px;
     text-align: center;
-    vertical-align: middle;
-    border: 1px solid #666666;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    border: 1px solid #555;
+}
+
+/* 表頭樣式 */
+.header-row th {
+    background-color: #555;
+    color: white;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+/* 表格單元格樣式 */
+.date-cell {
+    width: 50px;
+    text-align: center;
+    color: #666;
     white-space: nowrap;
 }
 
-.schedule-table th:nth-child(1),
-.schedule-table td:nth-child(1) {
-    width: 10%;
+.team-cell {
+    width: 150px;
+    white-space: nowrap;
 }
 
-.schedule-table th:nth-child(2),
-.schedule-table td:nth-child(2),
-.schedule-table th:nth-child(6),
-.schedule-table td:nth-child(6) {
-    width: 25%;
+.score-cell {
+    width: 140px;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.schedule-table th:nth-child(3),
-.schedule-table td:nth-child(3),
-.schedule-table th:nth-child(5),
-.schedule-table td:nth-child(5) {
-    width: 10%;
+.vs-cell {
+    width: 40px;
+    font-weight: bold;
+    color: #666;
+    white-space: nowrap;
 }
 
-.schedule-table th:nth-child(4),
-.schedule-table td:nth-child(4) {
-    width: 10%;
-}
-
-.week-block-1 {
+/* 交錯顏色 - 整行設定 */
+.match-row[data-date-group="odd"],
+.match-row[data-date-group="odd"] td {
     background-color: #f5f5f5;
 }
 
-.week-block-2 {
-    background-color: #ebebeb;
+/* 移除之前只針對日期欄位的背景色設定 */
+.match-row[data-date-group="odd"] .date-cell {
+    background-color: inherit;  /* 繼承整行的背景色 */
 }
 
-.week-header {
-    font-weight: bold;
-    color: #333;
+/* Hover 效果 */
+.match-row:hover,
+.match-row:hover td {
+    background-color: #ffd1d1;
 }
 
 /* 響應式設計 */
@@ -152,4 +154,52 @@ body {
         padding: 5px 10px;
         font-size: 0.85em;
     }
-} 
+}
+
+/* 進度條容器 */
+.loading-bar {
+    width: 100%;
+    height: 3px;
+    background-color: #f0f0f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+}
+
+/* 進度條 */
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background-color: #fa363a;
+    transition: width 0.3s ease;
+}
+
+/* Banner 樣式 */
+.banner {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    border: 2px solid #555;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 新的日期分組背景色規則 */
+.match-row[class*="date-group-odd"] .date-cell {
+    background-color: #f0f0f0;
+}
+
+/* 或者使用 JavaScript 動態添加的類別 */
+.date-group-1 .date-cell,
+.date-group-3 .date-cell,
+.date-group-5 .date-cell,
+.date-group-7 .date-cell {
+    background-color: #f0f0f0;
+}

@@ -9,7 +9,17 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- 加入 banner 圖片 -->
+    <div class="banner">
+        <img src="../images/banner.png" alt="Banner" class="banner-image">
+    </div>
+
     <div class="container">
+        <!-- 加入進度條 -->
+        <div id="loadingBar" class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        
         <!-- 搜尋區域 -->
         <div class="search-section">
             <div class="search-title">快速篩選隊伍(可複選)</div>
@@ -34,6 +44,9 @@
         <table class="schedule-table" id="leagueTable"></table>
     </div>
 
+    <!-- 先引入 config.js -->
+    <script src="../config/config.js"></script>
+    <!-- 再引入 schedule.js -->
     <script src="../js/schedule.js"></script>
 </body>
 </html>

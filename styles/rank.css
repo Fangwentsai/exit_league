@@ -1,0 +1,160 @@
+/* 基本樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* 表格樣式 */
+.rank-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 10px auto;
+    border: 2px solid #555;
+}
+
+.rank-table th,
+.rank-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #555;
+}
+
+/* 表頭樣式 */
+.header-row th {
+    background-color: #555 !important;
+    color: white !important;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .rank-table th,
+    .rank-table td {
+        padding: 10px 5px;
+    }
+}
+
+/* 標題樣式 */
+.rank-title {
+    text-align: center;
+    color: #333;
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+/* 交替行背景色 */
+#rankTableBody tr:nth-child(2),
+#rankTableBody tr:nth-child(4),
+#rankTableBody tr:nth-child(6),
+#rankTableBody tr:nth-child(8) {
+    background-color: #ebebeb;
+    color: #333;
+}
+
+/* 添加可排序表頭的樣式 */
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background-color: #555 !important;
+    color: white !important;
+}
+
+/* 移除所有狀態的視覺效果 */
+.sortable:hover,
+.sortable:active,
+.sortable:focus,
+.sortable.asc,
+.sortable.desc {
+    background-color: #555 !important;
+    color: white !important;
+}
+
+/* 移除箭頭 */
+.sortable::after {
+    content: none;
+}
+
+.sortable.asc::after,
+.sortable.desc::after {
+    content: none;
+}
+
+/* 移除點擊時的反白 */
+.sortable:active,
+.sortable:focus {
+    background-color: inherit;
+    outline: none;
+}
+
+/* 確保文字不會被選中 */
+.sortable {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 分頁控制項樣式 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.page-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: 1px solid #555;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination button.active {
+    background-color: #555;
+    color: white;
+}
+
+.pagination button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination button.active:hover {
+    background-color: #555;
+}
+
+/* 個人排名表格的交錯背景色 */
+#personalTableBody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+/* 或者如果要更具體的選擇器 */
+#personalTable tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+} 
