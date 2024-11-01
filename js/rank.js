@@ -62,10 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPersonalRankings();
 });
 
-// 添加分頁相關變數
+// 全局變數
 let currentPage = 1;
-const rowsPerPage = 8;
-let allRankings = [];
+const rowsPerPage = 10;
+let totalPages = 1;
+let currentData = [];
 
 async function loadPersonalRankings() {
     try {
@@ -93,9 +94,14 @@ async function loadPersonalRankings() {
             firstRate: parseFloat(row[8]) || 0
         }));
 
-        updatePersonalTable();
+        // 獲取所有數據後，設置篩選功能
+        setupFilters(allRankings);  // 傳入所有數據
+        updatePersonalTable(allRankings);  // 顯示初始數據
+
+        // 設置篩選和排序功能
+        setupFilters(allRankings);
         setupSorting();
-        setupPagination();
+        setupPagination();  // 設置分頁
 
     } catch (error) {
         console.error('載入個人排名時發生錯誤:', error);
@@ -104,16 +110,76 @@ async function loadPersonalRankings() {
     }
 }
 
-function updatePersonalTable() {
+function setupFilters(rankings) {
+    const teamFilter = document.getElementById('teamFilter');
+    const nameSearch = document.getElementById('nameSearch');
+    const resetButton = document.getElementById('resetFilter');
+
+    // 獲取唯一的隊伍列表並排序
+    const uniqueTeams = [...new Set(rankings.map(row => row.team))]
+        .filter(team => team)  // 移除空值
+        .sort();
+
+    // 清空現有選項並添加"所有隊伍"選項
+    teamFilter.innerHTML = '<option value="">所有隊伍</option>';
+    
+    // 添加唯一的隊伍選項
+    uniqueTeams.forEach(team => {
+        const option = document.createElement('option');
+        option.value = team;
+        option.textContent = team;
+        teamFilter.appendChild(option);
+    });
+
+    // 篩選函數
+    function filterRankings() {
+        const searchText = nameSearch.value.toLowerCase();
+        const selectedTeam = teamFilter.value;
+
+        const filteredRankings = rankings.filter(row => {
+            const nameMatch = row.name.toLowerCase().includes(searchText);
+            const teamMatch = !selectedTeam || row.team === selectedTeam;
+            return nameMatch && teamMatch;
+        });
+
+        updatePersonalTable(filteredRankings);
+    }
+
+    // 添加事件監聽器
+    nameSearch.addEventListener('input', filterRankings);  // 即時搜尋
+    teamFilter.addEventListener('change', filterRankings);
+
+    // 重置篩選
+    function resetFilters() {
+        teamFilter.value = '';  // 重置下拉選單
+        nameSearch.value = '';  // 清空搜尋框
+        filterRankings();  // 重新顯示所有數據
+    }
+
+    // 添加重置按鈕事件
+    resetButton.addEventListener('click', resetFilters);
+}
+
+// 更新表格數據
+function updatePersonalTable(rankings) {
+    currentData = rankings;
+    totalPages = Math.ceil(rankings.length / rowsPerPage);
+    currentPage = 1;  // 重置到第一頁
+    
+    updatePageInfo();
+    displayCurrentPage();
+}
+
+// 顯示當前頁數據
+function displayCurrentPage() {
     const tableBody = document.getElementById('personalTableBody');
     if (!tableBody) return;
     
-    tableBody.innerHTML = '';
-    
-    // 計算當前頁面的數據範圍
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const pageData = allRankings.slice(start, end);
+    const pageData = currentData.slice(start, end);
+    
+    tableBody.innerHTML = '';
     
     pageData.forEach((row, index) => {
         const tr = document.createElement('tr');
@@ -131,87 +197,161 @@ function updatePersonalTable() {
         `;
         tableBody.appendChild(tr);
     });
+
+    updatePageInfo();
 }
 
+// 更新分頁資訊
+function updatePageInfo() {
+    document.getElementById('currentPage').textContent = currentPage;
+    document.getElementById('totalPages').textContent = totalPages;
+    
+    // 更新按鈕狀態
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
+    
+    if (prevButton && nextButton) {
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
+    }
+}
+
+// 設置分頁事件監聽
 function setupPagination() {
-    const totalPages = Math.ceil(allRankings.length / rowsPerPage);
-    const paginationContainer = document.createElement('div');
-    paginationContainer.className = 'pagination';
-    
-    // 上一頁按鈕
-    const prevButton = document.createElement('button');
-    prevButton.textContent = '上一頁';
-    prevButton.onclick = () => {
-        if (currentPage > 1) {
-            currentPage--;
-            updatePersonalTable();
-            updatePaginationButtons();
-        }
-    };
-    
-    // 下一頁按鈕
-    const nextButton = document.createElement('button');
-    nextButton.textContent = '下一頁';
-    nextButton.onclick = () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            updatePersonalTable();
-            updatePaginationButtons();
-        }
-    };
-    
-    // 頁碼按鈕
-    const pageButtons = document.createElement('div');
-    pageButtons.className = 'page-buttons';
-    
-    paginationContainer.appendChild(prevButton);
-    paginationContainer.appendChild(pageButtons);
-    paginationContainer.appendChild(nextButton);
-    
-    // 將分頁控制項添加到表格後面
-    const personalTable = document.getElementById('personalTable');
-    personalTable.parentNode.insertBefore(paginationContainer, personalTable.nextSibling);
-    
-    updatePaginationButtons();
-}
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
 
-function updatePaginationButtons() {
-    const totalPages = Math.ceil(allRankings.length / rowsPerPage);
-    const pageButtons = document.querySelector('.page-buttons');
-    pageButtons.innerHTML = '';
-    
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.className = i === currentPage ? 'active' : '';
-        button.onclick = () => {
-            currentPage = i;
-            updatePersonalTable();
-            updatePaginationButtons();
-        };
-        pageButtons.appendChild(button);
+    if (prevButton) {
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayCurrentPage();
+            }
+        });
+    }
+
+    if (nextButton) {
+        nextButton.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayCurrentPage();
+            }
+        });
     }
 }
 
 function setupSorting() {
     const headers = document.querySelectorAll('.sortable');
+    let currentSort = {
+        column: null,
+        ascending: true
+    };
+
     headers.forEach(header => {
-        let isAsc = true;
         header.addEventListener('click', () => {
-            const column = header.dataset.column;
+            const column = header.getAttribute('data-column');
             
-            // 排序數據
-            allRankings.sort((a, b) => {
-                const valueA = a[column];
-                const valueB = b[column];
-                return isAsc ? valueB - valueA : valueA - valueB;
+            // 切換排序方向
+            if (currentSort.column === column) {
+                currentSort.ascending = !currentSort.ascending;
+            } else {
+                currentSort.column = column;
+                currentSort.ascending = true;
+            }
+
+            // 移除所有排序指示器
+            headers.forEach(h => {
+                h.classList.remove('asc', 'desc');
             });
 
-            isAsc = !isAsc;
-            currentPage = 1; // 重置到第一頁
-            updatePersonalTable();
-            updatePaginationButtons();
+            // 添加當前排序指示器
+            header.classList.add(currentSort.ascending ? 'asc' : 'desc');
+
+            // 執行排序
+            sortTable(column, currentSort.ascending);
         });
     });
+}
+
+function sortTable(column, ascending) {
+    const tbody = document.getElementById('personalTableBody');
+    const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+    rows.sort((a, b) => {
+        let aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
+        let bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
+
+        // 處理數字和百分比
+        if (aValue.includes('%')) {
+            aValue = parseFloat(aValue);
+            bValue = parseFloat(bValue);
+        } else if (!isNaN(aValue)) {
+            aValue = Number(aValue);
+            bValue = Number(bValue);
+        }
+
+        if (ascending) {
+            return aValue > bValue ? 1 : -1;
+        } else {
+            return aValue < bValue ? 1 : -1;
+        }
+    });
+
+    // 重新插入排序後的行
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+function getColumnIndex(column) {
+    const columnMap = {
+        'team': 2,
+        'name': 3,
+        'wins01': 4,
+        'rate01': 5,
+        'winsCR': 6,
+        'rateCR': 7,
+        'totalWins': 8,
+        'totalRate': 9,
+        'firstRate': 10
+    };
+    return columnMap[column];
+}
+
+function updateTable(data) {
+    filteredData = [...data];  // 保存過濾後的數據
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    
+    // 更新分頁信息
+    document.getElementById('currentPage').textContent = currentPage;
+    document.getElementById('totalPages').textContent = totalPages;
+    
+    // 計算當前頁的數據範圍
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const pageData = filteredData.slice(start, end);
+    
+    // 更新表格內容
+    const tableBody = document.getElementById('personalTableBody');
+    tableBody.innerHTML = '';
+    
+    pageData.forEach((row, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${start + index + 1}</td>
+            <td>${row.team}</td>
+            <td>${row.name}</td>
+            <td>${row.wins01}</td>
+            <td>${row.rate01}%</td>
+            <td>${row.winsCR}</td>
+            <td>${row.rateCR}%</td>
+            <td>${row.totalWins}</td>
+            <td>${row.totalRate}%</td>
+            <td>${row.firstRate}%</td>
+        `;
+        tableBody.appendChild(tr);
+    });
+
+    // 更新分頁按鈕狀態
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage === totalPages;
 }
  

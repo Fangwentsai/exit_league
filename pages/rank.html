@@ -32,7 +32,21 @@
             </table>
         </div>
 
-        <h2 class="rank-title">個人排名(測試中)</h2>
+        <div class="personal-rank-header">
+            <h2 class="rank-title">個人排名</h2>
+            <div class="filter-container">
+                <div class="team-filter">
+                    <select id="teamFilter" class="team-select">
+                        <option value="">所有隊伍</option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="nameSearch" placeholder="搜尋..." class="search-input">
+                </div>
+                <button id="resetFilter" class="reset-button">取消</button>
+            </div>
+        </div>
+
         <div class="rank-table-container">
             <table class="rank-table" id="personalTable">
                 <thead>
@@ -53,6 +67,13 @@
                     <!-- 個人排名數據會在這裡動態生成 -->
                 </tbody>
             </table>
+            
+            <!-- 添加分頁控制 -->
+            <div class="pagination-container">
+                <button id="prevPage" class="pagination-button">上一頁</button>
+                <span id="pageInfo">第 <span id="currentPage">1</span> 頁，共 <span id="totalPages">1</span> 頁</span>
+                <button id="nextPage" class="pagination-button">下一頁</button>
+            </div>
         </div>
     </div>
 
