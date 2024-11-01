@@ -2,12 +2,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>難找的聯賽 第三季</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <h1>難找的聯賽 第三季</h1>
-    
+    <!-- 標題區域 -->
+    <div class="header-section">
+        <div class="container">
+            <h1 class="main-title">難找的聯賽</h1>
+        </div>
+    </div>
+
     <div class="nav-buttons">
         <button class="nav-btn active" data-page="news">公告</button>
         <button class="nav-btn" data-page="schedule">賽程</button>
@@ -15,7 +21,9 @@
     </div>
 
     <!-- 使用 iframe 作為下方內容區域 -->
-    <iframe id="contentFrame" src="pages/news.html"></iframe>
+    <div class="iframe-container">
+        <iframe id="contentFrame" src="pages/news.html"></iframe>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

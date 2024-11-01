@@ -1,0 +1,155 @@
+/* 基本樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 搜尋區域樣式 */
+.search-section {
+    margin-bottom: 30px;
+}
+
+.search-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.team-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.team-btn {
+    padding: 6px 12px;
+    border: 2px solid #4a4a4a;
+    border-radius: 6px;
+    background-color: white;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.team-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.team-btn.active {
+    background-color: #4a4a4a;
+    color: white;
+}
+
+.cancel-btn {
+    padding: 6px 12px;
+    border: 2px solid #ff6b6b;
+    border-radius: 6px;
+    background-color: white;
+    color: #ff6b6b;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9em;
+}
+
+.cancel-btn:hover {
+    background-color: #fff5f5;
+}
+
+/* 表格樣式 */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #666666;
+    table-layout: fixed;
+}
+
+.table-header {
+    background-color: #4a4a4a;
+    color: white;
+    font-weight: normal;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 15px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #666666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.schedule-table th:nth-child(1),
+.schedule-table td:nth-child(1) {
+    width: 10%;
+}
+
+.schedule-table th:nth-child(2),
+.schedule-table td:nth-child(2),
+.schedule-table th:nth-child(6),
+.schedule-table td:nth-child(6) {
+    width: 25%;
+}
+
+.schedule-table th:nth-child(3),
+.schedule-table td:nth-child(3),
+.schedule-table th:nth-child(5),
+.schedule-table td:nth-child(5) {
+    width: 10%;
+}
+
+.schedule-table th:nth-child(4),
+.schedule-table td:nth-child(4) {
+    width: 10%;
+}
+
+.week-block-1 {
+    background-color: #f5f5f5;
+}
+
+.week-block-2 {
+    background-color: #ebebeb;
+}
+
+.week-header {
+    font-weight: bold;
+    color: #333;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 10px 5px;
+    }
+    
+    .team-btn,
+    .cancel-btn {
+        padding: 5px 10px;
+        font-size: 0.85em;
+    }
+} 
