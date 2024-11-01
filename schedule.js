@@ -37,10 +37,14 @@ async function loadSchedule() {
             if (row && row.length >= 6) {
                 const matchRow = document.createElement('tr');
                 const date = row[0] || '';
-                const awayTeam = row[1] || '';
+                let awayTeam = row[1] || '';
                 const awayScore = row[2] || '';
                 const homeScore = row[4] || '';
-                const homeTeam = row[5] || '';
+                let homeTeam = row[5] || '';
+                
+                // 轉換隊伍名稱
+                awayTeam = awayTeam.replace('VIVI朝九晚五', 'ViVi朝九晚五');
+                homeTeam = homeTeam.replace('VIVI朝九晚五', 'ViVi朝九晚五');
                 
                 // 如果日期改變，切換奇偶群組
                 if (date !== currentDate) {
