@@ -49,6 +49,8 @@ async function loadSchedule() {
                 }
                 
                 matchRow.setAttribute('data-date-group', isOddGroup ? 'odd' : 'even');
+                matchRow.setAttribute('data-team1', awayTeam);
+                matchRow.setAttribute('data-team2', homeTeam);
                 matchRow.className = 'match-row';
                 
                 matchRow.innerHTML = `
