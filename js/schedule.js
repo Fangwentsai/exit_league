@@ -43,8 +43,8 @@ async function loadSchedule() {
                 let homeTeam = row[5] || '';
                 
                 // 轉換隊伍名稱
-                awayTeam = awayTeam.replace('VIVI朝九晚五', 'ViVi朝九晚五');
-                homeTeam = homeTeam.replace('VIVI朝九晚五', 'ViVi朝九晚五');
+                awayTeam = awayTeam.replace('Vivi朝酒晚舞', 'Vivi朝酒晚舞');
+                homeTeam = homeTeam.replace('Vivi朝酒晚舞', 'Vivi朝酒晚舞');
                 
                 // 如果日期改變，切換奇偶群組
                 if (date !== currentDate) {
