@@ -94,14 +94,13 @@ async function loadPersonalRankings() {
             firstRate: parseFloat(row[8]) || 0
         }));
 
-        // 獲取所有數據後，設置篩選功能
-        setupFilters(allRankings);  // 傳入所有數據
-        updatePersonalTable(allRankings);  // 顯示初始數據
+        // 初始排序：依總勝場降序
+        sortData('totalWins', false);  // false 表示降序
 
         // 設置篩選和排序功能
         setupFilters(allRankings);
         setupSorting();
-        setupPagination();  // 設置分頁
+        setupPagination();
 
     } catch (error) {
         console.error('載入個人排名時發生錯誤:', error);
