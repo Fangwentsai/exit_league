@@ -42,29 +42,31 @@ async function loadSchedule() {
                 const homeScore = row[4] || '';
                 let homeTeam = row[5] || '';
                 
-                // 轉換隊伍名稱
-                awayTeam = awayTeam.replace('Vivi朝酒晚舞', 'Vivi朝酒晚舞');
-                homeTeam = homeTeam.replace('Vivi朝酒晚舞', 'Vivi朝酒晚舞');
-                
-                // 如果日期改變，切換奇偶群組
-                if (date !== currentDate) {
-                    currentDate = date;
-                    isOddGroup = !isOddGroup;
-                }
-                
-                matchRow.setAttribute('data-date-group', isOddGroup ? 'odd' : 'even');
-                matchRow.setAttribute('data-team1', awayTeam);
-                matchRow.setAttribute('data-team2', homeTeam);
-                matchRow.className = 'match-row';
+                // 為每個日期生成對應的遊戲編號（g01, g02, ...）
+                const gameNumber = `g${String(index + 1).padStart(2, '0')}`;
+                const gameUrl = `../game_result/${gameNumber}.html`;
                 
                 matchRow.innerHTML = `
-                    <td class="date-cell">${date}</td>
+                    <td class="date-cell">
+                        <a href="#" class="match-link" data-game="${gameUrl}">
+                            ${date}
+                        </a>
+                    </td>
                     <td class="team-cell">${awayTeam}</td>
                     <td class="score-cell">${awayScore}</td>
                     <td class="vs-cell">VS</td>
                     <td class="score-cell">${homeScore}</td>
                     <td class="team-cell">${homeTeam}</td>
                 `;
+                
+                // 添加點擊事件
+                const matchLink = matchRow.querySelector('.match-link');
+                matchLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const gameUrl = e.target.getAttribute('data-game');
+                    showMatchDetails(gameUrl);
+                });
+
                 table.appendChild(matchRow);
             }
         });
@@ -122,6 +124,38 @@ function setupFilters() {
 
     // 取消按鈕
     cancelButton.addEventListener('click', resetDisplay);
+}
+
+// 添加顯示比賽詳情的函數，接受 URL 參數
+function showMatchDetails(url) {
+    const modal = document.createElement('div');
+    modal.className = 'match-modal';
+    
+    const modalContent = document.createElement('div');
+    modalContent.className = 'match-modal-content';
+    
+    const closeButton = document.createElement('button');
+    closeButton.className = 'modal-close';
+    closeButton.innerHTML = '×';
+    
+    const iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.className = 'match-iframe';
+    
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(iframe);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+    
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
 }
 
 // 頁面載入時執行

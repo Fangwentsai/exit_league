@@ -1,84 +1,70 @@
-// 使用完整的 raw URL
-async function loadUpcomingMatches() {
+async function loadMatches() {
     try {
         const response = await fetch('https://raw.githubusercontent.com/Fangwentsai/exit_league/main/data/schedule.json');
         const data = await response.json();
         
         // 取得今天日期
         const today = new Date();
-        console.log('今天日期:', today);
+        today.setHours(0, 0, 0, 0);
         
-        // 找出最近的比賽日期
-        let closestMatch = null;
-        let minDiff = Infinity;
+        // 找出最近過去的比賽（上週）
+        let lastMatch = null;
+        let minPastDiff = Infinity;
+        
+        // 找出最近將來的比賽（下週）
+        let nextMatch = null;
+        let minFutureDiff = Infinity;
         
         data.schedule.forEach(matchDay => {
             const matchDate = new Date(matchDay.date);
-            console.log('比較日期:', matchDate);
+            matchDate.setHours(0, 0, 0, 0);
+            const timeDiff = matchDate - today;
             
-            // 計算日期差異（絕對值）
-            const timeDiff = Math.abs(matchDate - today);
+            // 上週比賽（過去最近）
+            if (timeDiff < 0 && Math.abs(timeDiff) < minPastDiff) {
+                minPastDiff = Math.abs(timeDiff);
+                lastMatch = matchDay;
+            }
             
-            // 如果找到更近的日期，更新
-            if (timeDiff < minDiff) {
-                minDiff = timeDiff;
-                closestMatch = matchDay;
+            // 下週比賽（未來最近）
+            if (timeDiff > 0 && timeDiff < minFutureDiff) {
+                minFutureDiff = timeDiff;
+                nextMatch = matchDay;
             }
         });
 
-        console.log('最近的比賽:', closestMatch);
-
-        // 如果找到最近的比賽，顯示它們
-        if (closestMatch) {
-            const upcomingMatchesHtml = `
-                <div class="match-date">${closestMatch.date}</div>
-                ${closestMatch.games.map(game => `
-                    <div class="match-item">
-                        <div class="match-teams">
-                            <span class="team-name">${game.team1}</span>
-                            <span class="vs">vs</span>
-                            <span class="team-name right">${game.team2}</span>
-                        </div>
-                    </div>
-                `).join('')}
-            `;
-
-            document.getElementById('upcomingMatchesContent').innerHTML = upcomingMatchesHtml;
-        } else {
-            document.getElementById('upcomingMatchesContent').innerHTML = '<p>目前沒有近期比賽</p>';
+        // 顯示上週比賽
+        if (lastMatch) {
+            document.getElementById('lastWeekMatchesContent').innerHTML = generateMatchesHTML(lastMatch);
         }
+
+        // 顯示下週比賽
+        if (nextMatch) {
+            document.getElementById('upcomingMatchesContent').innerHTML = generateMatchesHTML(nextMatch);
+        }
+
     } catch (error) {
-        console.error('Error loading upcoming matches:', error);
-        document.getElementById('upcomingMatchesContent').innerHTML = '<p>載入比賽資料時發生錯誤</p>';
+        console.error('Error loading matches:', error);
+        document.getElementById('lastWeekMatchesContent').innerHTML = '<p>載入上週戰況時發生錯誤</p>';
+        document.getElementById('upcomingMatchesContent').innerHTML = '<p>載入近期比賽時發生錯誤</p>';
     }
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    loadNews();
-    loadUpcomingMatches();
-});
-
-// 新聞載入函數
-function loadNews() {
-    console.log('執行 loadNews 函數');
-    const newsContent = document.getElementById('newsContent');
-    if (newsContent) {
-        newsContent.innerHTML = `
-            <div class="news-item">
-                <div class="news-date">2024/11/1</div>
-                <div class="news-title">聯賽開始</div>
-                <div class="news-text">難找的聯賽第三季正式開始！</div>
-            </div>
-            <div class="news-item">
-                <div class="news-date">2024/10/15</div>
-                <div class="news-title">阿淦幣即日起開始發行</div>
-                <div class="news-text">
-                    <p>第二屆阿淦因其優異的手氣榮獲地獄倒霉鬼殊榮，即日起凡於比賽店家持100元阿淦幣消費即可換取一杯shot。（但你們沒有）</p>
-                    <img src="../images/agan.png" alt="阿淦幣" class="news-image">
+// 生成比賽 HTML 的輔助函數
+function generateMatchesHTML(matchDay) {
+    return `
+        <div class="match-date">${matchDay.date}</div>
+        <div class="matches-container">
+            ${matchDay.games.map(game => `
+                <div class="match-item">
+                    <div class="team">${game.team1}</div>
+                    <div class="vs">VS</div>
+                    <div class="team">${game.team2.replace('(主)', '')}</div>
                 </div>
-            </div>
+            `).join('')}
+        </div>
+    `;
+}
 
-        `;
-    }
-} 
+// 頁面載入時執行
+document.addEventListener('DOMContentLoaded', loadMatches);

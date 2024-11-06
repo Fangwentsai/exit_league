@@ -267,22 +267,20 @@ function setupSorting() {
             // 添加當前排序指示器
             header.classList.add(currentSort.ascending ? 'asc' : 'desc');
 
-            // 執行排序
-            sortTable(column, currentSort.ascending);
+            // 對完整數據進行排序
+            sortData(column, currentSort.ascending);
         });
     });
 }
 
-function sortTable(column, ascending) {
-    const tbody = document.getElementById('personalTableBody');
-    const rows = Array.from(tbody.getElementsByTagName('tr'));
-
-    rows.sort((a, b) => {
-        let aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
-        let bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
+function sortData(column, ascending) {
+    // 對 currentData 進行排序
+    currentData.sort((a, b) => {
+        let aValue = a[column];
+        let bValue = b[column];
 
         // 處理數字和百分比
-        if (aValue.includes('%')) {
+        if (typeof aValue === 'string' && aValue.includes('%')) {
             aValue = parseFloat(aValue);
             bValue = parseFloat(bValue);
         } else if (!isNaN(aValue)) {
@@ -297,23 +295,9 @@ function sortTable(column, ascending) {
         }
     });
 
-    // 重新插入排序後的行
-    rows.forEach(row => tbody.appendChild(row));
-}
-
-function getColumnIndex(column) {
-    const columnMap = {
-        'team': 2,
-        'name': 3,
-        'wins01': 4,
-        'rate01': 5,
-        'winsCR': 6,
-        'rateCR': 7,
-        'totalWins': 8,
-        'totalRate': 9,
-        'firstRate': 10
-    };
-    return columnMap[column];
+    // 重置到第一頁並更新顯示
+    currentPage = 1;
+    displayCurrentPage();
 }
 
 function updateTable(data) {

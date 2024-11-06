@@ -213,3 +213,83 @@ body {
 .loading-bar {
     background-color: #e0e0e0;
 }
+
+/* 比賽連結樣式 */
+.match-link {
+    color: #fa363a;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.match-link:hover {
+    text-decoration: underline;
+}
+
+/* 模態框樣式 */
+.match-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.match-modal-content {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.match-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+/* 調整關閉按鈕到左上角 */
+.modal-close {
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fa363a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close:hover {
+    background-color: #e62e32;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+}
+
+/* 日期連結樣式 */
+.match-link {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.match-link:hover {
+    color: #fa363a;
+    text-decoration: underline;
+}
