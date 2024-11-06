@@ -76,10 +76,15 @@ body {
 }
 
 .game-section h3 {
-    color: #333;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    border-left: 4px solid #fa363a;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.game-section h4 {
+    display: inline-block;
+    margin: 0;
+    font-weight: normal;
+    color: #666;
 }
 
 .game-table {
