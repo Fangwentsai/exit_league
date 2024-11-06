@@ -83,7 +83,7 @@ async function loadSchedule() {
 function setupFilters() {
     const teamButtons = document.querySelectorAll('.team-btn');
     const cancelButton = document.getElementById('cancelBtn');
-    const allRows = document.querySelectorAll('.match-row');
+    const allRows = document.querySelectorAll('#leagueTable tr:not(.header-row)');
     let selectedTeams = new Set();
 
     teamButtons.forEach(button => {
@@ -102,15 +102,18 @@ function setupFilters() {
                 selectedTeams.add(team);
             }
 
-            // 簡單的顯示/隱藏邏輯
+            // 修改篩選邏輯
             allRows.forEach(row => {
-                const team1 = row.getAttribute('data-team1');
-                const team2 = row.getAttribute('data-team2');
-                const shouldShow = selectedTeams.size === 0 || 
-                                 Array.from(selectedTeams).some(team => 
-                                     team === team1 || team === team2
-                                 );
-                row.style.display = shouldShow ? '' : 'none';
+                const cells = row.getElementsByTagName('td');
+                if (cells.length >= 6) {  // 確保有足夠的單元格
+                    const team1 = cells[1].textContent; // 客隊
+                    const team2 = cells[5].textContent; // 主隊
+                    const shouldShow = selectedTeams.size === 0 || 
+                                     Array.from(selectedTeams).some(team => 
+                                         team1.includes(team) || team2.includes(team)
+                                     );
+                    row.style.display = shouldShow ? '' : 'none';
+                }
             });
         });
     });

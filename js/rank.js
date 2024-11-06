@@ -1,4 +1,9 @@
 const { SHEET_ID, API_KEY } = CONFIG;
+let allRankings = [];
+let currentPage = 1;
+const rowsPerPage = 10;
+let totalPages = 1;
+let currentData = [];
 
 async function loadRankings() {
     try {
@@ -62,12 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPersonalRankings();
 });
 
-// 全局變數
-let currentPage = 1;
-const rowsPerPage = 10;
-let totalPages = 1;
-let currentData = [];
-
 async function loadPersonalRankings() {
     try {
         console.log('開始載入個人排名...');
@@ -93,6 +92,9 @@ async function loadPersonalRankings() {
             totalRate: parseFloat(row[7]) || 0,
             firstRate: parseFloat(row[8]) || 0
         }));
+
+        // 設置初始數據
+        currentData = [...allRankings];
 
         // 初始排序：依總勝場降序
         sortData('totalWins', false);  // false 表示降序

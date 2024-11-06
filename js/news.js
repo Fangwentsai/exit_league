@@ -35,7 +35,7 @@ async function loadMatches() {
 
         // 顯示上週比賽
         if (lastMatch) {
-            document.getElementById('lastWeekMatchesContent').innerHTML = generateMatchesHTML(lastMatch);
+            document.getElementById('lastWeekMatchesContent').innerHTML = createLastWeekMatchHTML(lastMatch);
         }
 
         // 顯示下週比賽
@@ -56,14 +56,68 @@ function generateMatchesHTML(matchDay) {
         <div class="match-date">${matchDay.date}</div>
         <div class="matches-container">
             ${matchDay.games.map(game => `
-                <div class="match-item">
-                    <div class="team">${game.team1}</div>
-                    <div class="vs">VS</div>
-                    <div class="team">${game.team2.replace('(主)', '')}</div>
-                </div>
+                <a href="#" class="match-item">
+                    ${game.team1} <span class="vs">VS</span> ${game.team2}
+                </a>
             `).join('')}
         </div>
     `;
+}
+
+function createMatchHTML(match) {
+    return `
+        <div class="match-date">${match.date}</div>
+        <a href="../game_result/${match.game_number}.html" class="match-item">
+            ${match.team1} <span class="vs">VS</span> ${match.team2}
+        </a>
+    `;
+}
+
+// 生成上週比賽的 HTML
+function createLastWeekMatchHTML(match) {
+    if (!match) return '';
+    
+    return `
+        <div class="match-date">${match.date}</div>
+        <div class="matches-container">
+            ${match.games.map(game => `
+                <a href="#" class="match-item" 
+                   onclick="openGameModal('${game.game_number}')"
+                   data-game-number="${game.game_number}">
+                    ${game.team1} <span class="vs">VS</span> ${game.team2}
+                </a>
+            `).join('')}
+        </div>
+    `;
+}
+
+// 添加懸浮視窗相關函數
+function openGameModal(gameNumber) {
+    const modal = document.getElementById('gameModal');
+    const iframe = document.getElementById('gameFrame');
+    
+    if (modal && iframe) {
+        iframe.src = `../game_result/${gameNumber}.html`;
+        modal.style.display = 'block';
+    }
+}
+
+function closeGameModal() {
+    const modal = document.getElementById('gameModal');
+    const iframe = document.getElementById('gameFrame');
+    
+    if (modal && iframe) {
+        iframe.src = '';
+        modal.style.display = 'none';
+    }
+}
+
+// 點擊視窗外關閉視窗
+window.onclick = function(event) {
+    const modal = document.getElementById('gameModal');
+    if (event.target == modal) {
+        closeGameModal();
+    }
 }
 
 // 頁面載入時執行
