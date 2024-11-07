@@ -1,0 +1,337 @@
+/* 基本樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 搜尋區域樣式 */
+.search-section {
+    margin-bottom: 30px;
+}
+
+.search-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.team-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.team-btn {
+    padding: 6px 12px;
+    border: 2px solid #555;
+    border-radius: 6px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.team-btn.active {
+    background-color: #fa363a;
+    color: white;
+}
+
+.cancel-btn {
+    padding: 6px 12px;
+    border: 2px solid #555;
+    border-radius: 6px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+/* 移除 hover 和 active 狀態 */
+.cancel-btn:active {
+    background-color: #fa363a;
+    color: white;
+}
+
+/* 表格基本樣式 */
+.schedule-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 20px auto;
+    border: 2px solid #555;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #555;
+}
+
+/* 表頭樣式 */
+.header-row th {
+    background-color: #555;
+    color: white;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+/* 表格單元格樣式 */
+.date-cell {
+    width: 50px;
+    text-align: center;
+    color: #666;
+    white-space: nowrap;
+}
+
+.team-cell {
+    width: 150px;
+    white-space: nowrap;
+}
+
+.score-cell {
+    width: 140px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.vs-cell {
+    width: 40px;
+    font-weight: bold;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* 交錯顏色 - 整行設定 */
+.match-row[data-date-group="odd"],
+.match-row[data-date-group="odd"] td {
+    background-color: #e0e0e0;
+}
+
+/* 移除之前只針對日期欄位的背景色設定 */
+.match-row[data-date-group="odd"] .date-cell {
+    background-color: inherit;  /* 繼承整行的背景色 */
+}
+
+/* Hover 效果 */
+.match-row:hover,
+.match-row:hover td {
+    background-color: #ffd1d1;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 10px 5px;
+    }
+    
+    .team-btn,
+    .cancel-btn {
+        padding: 5px 10px;
+        font-size: 0.85em;
+    }
+}
+
+/* 進度條容器 */
+.loading-bar {
+    width: 100%;
+    height: 3px;
+    background-color: #e0e0e0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+}
+
+/* 進度條 */
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background-color: #fa363a;
+    transition: width 0.3s ease;
+}
+
+/* Banner 樣式 */
+.banner {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    border: 2px solid #555;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 新的日期分組背景色規則 */
+.match-row[class*="date-group-odd"] .date-cell {
+    background-color: #e0e0e0;
+}
+
+/* 或者使用 JavaScript 動態添加的類別 */
+.date-group-1 .date-cell,
+.date-group-3 .date-cell,
+.date-group-5 .date-cell,
+.date-group-7 .date-cell {
+    background-color: #e0e0e0;
+}
+
+/* 按鈕 hover 效果 */
+.team-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* 其他可能用到淺灰色的地方 */
+.loading-bar {
+    background-color: #e0e0e0;
+}
+
+/* 比賽連結樣式 */
+.match-link {
+    color: #fa363a;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.match-link:hover {
+    text-decoration: underline;
+}
+
+/* 模態框樣式 */
+.match-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.match-modal-content {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.match-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+/* 調整關閉按鈕到左上角 */
+.modal-close {
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fa363a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close:hover {
+    background-color: #e62e32;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+}
+
+/* 日期連結樣式 */
+.match-link {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.match-link:hover {
+    color: #fa363a;
+    text-decoration: underline;
+}
+
+/* 懸浮視窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+#gameFrame {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin-top: 20px;
+}

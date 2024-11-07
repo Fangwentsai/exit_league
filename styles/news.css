@@ -1,0 +1,351 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.news-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.news-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.news-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.news-title {
+    color: #333;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.news-text {
+    color: #444;
+    line-height: 1.6;
+}
+
+.upcoming-matches {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.section-title {
+    color: #333;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #fa363a;
+}
+
+.match-item {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+.match-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.match-item:visited {
+    color: inherit;
+}
+
+.match-date {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.match-teams {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team-name {
+    min-width: 120px;
+    text-align: right;
+}
+
+.team-name.right {
+    text-align: left;
+}
+
+.vs {
+    font-weight: bold;
+    padding: 0 15px;
+    display: inline-block;
+}
+
+.news-image {
+    max-width: 100%;
+    height: auto;
+    margin: 15px 0;
+    display: block;
+}
+
+.news-text p {
+    margin: 0 0 15px 0;
+}
+
+/* 店家資訊區塊樣式 */
+.venue-info {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venue-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.venue-item {
+    padding: 12px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    border-left: 4px solid #fa363a;
+}
+
+.venue-item h3 {
+    font-size: 0.95em;
+    margin: 0 0 5px 0;
+}
+
+.venue-teams {
+    font-size: 0.85em;
+    font-weight: normal;
+}
+
+.venue-item p {
+    margin: 5px 0;
+    color: #444;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .venue-list {
+        gap: 10px;
+    }
+
+    .venue-item {
+        padding: 12px;
+    }
+
+    .venue-item h3 {
+        font-size: 1em;
+    }
+}
+
+/* 地址行樣式 */
+.address-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    color: #444;
+}
+
+/* 地圖圖標樣式 */
+.map-icon {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.map-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.map-link:hover .map-icon {
+    opacity: 0.8;
+}
+
+/* 資訊行樣式 */
+.info-line {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+    color: #444;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.address {
+    color: #444;
+    margin: 0 3px;
+}
+
+.nav-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: #666;
+    white-space: nowrap;
+}
+
+.nav-text {
+    font-size: 0.85em;
+}
+
+/* 響應式調整 */
+@media screen and (max-width: 430px) {
+    .venue-item {
+        padding: 10px;
+    }
+    
+    .info-line {
+        font-size: 0.85em;
+        gap: 4px;
+    }
+    
+    .venue-teams {
+        font-size: 0.8em;
+    }
+}
+
+.matches-content {
+    text-align: center;
+}
+
+.matches-content .match-item {
+    margin: 6px 0;
+}
+
+.matches-content .vs {
+    font-weight: bold;
+    padding: 0 15px;
+    display: inline-block;
+}
+
+.matches-container {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* 懸浮視窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+#gameFrame {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin-top: 20px;
+}
+
+.rankings {
+    display: flex;
+    justify-content: space-between;
+    gap: 3px;
+    margin-bottom: 18px;
+}
+
+.ranking-section {
+    flex: 1;
+    background-color: #fff;
+    padding: 2px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.ranking-table th,
+.ranking-table td {
+    padding: 6px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+.ranking-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.ranking-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* 如果需要標題保持原來大小 */
+.ranking-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}

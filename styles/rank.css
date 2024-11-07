@@ -1,0 +1,350 @@
+/* 基本樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* 表格樣式 */
+.rank-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 10px auto;
+    border: 2px solid #555;
+}
+
+.rank-table th,
+.rank-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #555;
+}
+
+/* 表頭樣式 */
+.header-row th {
+    background-color: #555 !important;
+    color: white !important;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .rank-table th,
+    .rank-table td {
+        padding: 4px 2px;
+        font-size: 0.9em;
+    }
+
+    .team-btn,
+    .cancel-btn {
+        padding: 5px 10px;
+        font-size: 0.85em;
+    }
+
+    /* 調整排序指示器大小 */
+    .sortable.asc::after,
+    .sortable.desc::after {
+        font-size: 0.7em;
+    }
+}
+
+/* 如果需要更小螢幕的優化 */
+@media screen and (max-width: 480px) {
+    .rank-table th,
+    .rank-table td {
+        padding: 7px 2px;
+        font-size: 0.85em;
+    }
+
+    /* 確保分頁控制在小螢幕上也能正常顯示 */
+    .pagination-container {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .pagination-button {
+        padding: 8px 15px;
+    }
+}
+
+/* 個人排名標題區域 */
+.personal-rank-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-right: auto;
+}
+
+/* 個人排名標題在 flex 容器中的樣式 */
+.personal-rank-header .rank-title {
+    flex: 0 1 auto;
+    margin: 0;
+    padding: 0;
+}
+
+/* 標題樣式 */
+.rank-title {
+    text-align: left;
+    color: #333;
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+/* 篩選容器樣式 */
+.filter-container {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+    align-items: center;
+    height: 25px;
+}
+
+/* 搜尋框容器 */
+.search-box {
+    width: 60px;
+    height: 25px;
+}
+
+.team-select {
+    height: 25px;
+    padding: 0 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    width: 120px;
+}
+
+/* 搜尋框 */
+.search-box {
+    width: 60px;  /* 改為 60px */
+    padding-right: 18px;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    padding: 0 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 搜尋框和下拉選單的焦點樣式 */
+.search-input:focus,
+.team-select:focus {
+    outline: none;
+    border-color: #fa363a;
+    box-shadow: 0 0 3px rgba(250, 54, 58, 0.3);
+}
+
+/* 交替行背景色 */
+#rankTableBody tr:nth-child(2),
+#rankTableBody tr:nth-child(4),
+#rankTableBody tr:nth-child(6),
+#rankTableBody tr:nth-child(8) {
+    background-color: #ebebeb;
+    color: #333;
+}
+
+/* 添加可排序表頭的樣式 */
+.sortable {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+}
+
+.sortable:hover {
+    background-color: #666;
+}
+
+.sortable.asc::after {
+    content: ' ▲';
+    font-size: 0.8em;
+}
+
+.sortable.desc::after {
+    content: ' ▼';
+    font-size: 0.8em;
+}
+
+/* 移除所有狀態的視覺效果 */
+.sortable:hover,
+.sortable:active,
+.sortable:focus,
+.sortable.asc,
+.sortable.desc {
+    background-color: #555 !important;
+    color: white !important;
+}
+
+/* 移除箭頭 */
+.sortable::after {
+    content: none;
+}
+
+.sortable.asc::after,
+.sortable.desc::after {
+    content: none;
+}
+
+/* 移除點擊時的反白 */
+.sortable:active,
+.sortable:focus {
+    background-color: inherit;
+    outline: none;
+}
+
+/* 確保文字不會被選中 */
+.sortable {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 分頁控制項樣式 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.page-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: 1px solid #555;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination button.active {
+    background-color: #555;
+    color: white;
+}
+
+.pagination button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination button.active:hover {
+    background-color: #555;
+}
+
+/* 個人排名表格的交錯背景色 */
+#personalTableBody tr:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+/* 或者如果要更具體的選擇器 */
+#personalTable tbody tr:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+/* 確保 hover 效果也能覆蓋整行 */
+#personalTable tr:hover {
+    background-color: #ffd1d1;
+}
+
+/* 分頁控制樣式 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.pagination-button {
+    padding: 5px 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination-button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    margin: 0 10px;
+}
+
+/* 取消按鈕樣式 */
+.reset-button {
+    height: 25px;
+    padding: 0 12px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 50px;
+    white-space: nowrap;
+}
+
+.reset-button:hover {
+    background-color: #e0e0e0;
+}
+
+@media screen and (max-width: 768px) {
+    .filter-container {
+        gap: 5px;
+    }
+    
+    .reset-button {
+        padding: 4px 6px;
+        font-size: 0.9em;
+    }
+}
+
+/* 統一 hover 效果 */
+.team-select:hover,
+.search-input:hover,
+.reset-button:hover {
+    border-color: #333;
+}
+
+/* 統一 focus 效果 */
+.team-select:focus,
+.search-input:focus {
+    outline: none;
+    border-color: #fa363a;
+    box-shadow: 0 0 3px rgba(250, 54, 58, 0.3);
+}
+
+h3 {
+    margin-bottom: 5px;  /* 減少與 h4 的間距 */
+}
+
+h4 {
+    margin-top: 0;  /* 移除與 h3 的間距 */
+    font-weight: normal;  /* 可選：讓文字不要太粗 */
+    color: #666;  /* 可選：讓顏色淡一點 */
+}

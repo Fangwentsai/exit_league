@@ -1,0 +1,60 @@
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section-title {
+    color: #333;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.rule-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.rule-section {
+    margin-bottom: 30px;
+}
+
+.rule-section h3 {
+    color: #444;
+    margin: 10px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+}
+
+.rule-section ul {
+    padding-left: 20px;
+}
+
+.rule-section ul ul {
+    margin-top: 8px;
+}
+
+.rule-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.rule-section li li {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.schedule-link {
+    color: #0366d6;
+    text-decoration: none;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.schedule-link:hover {
+    text-decoration: underline;
+} 
