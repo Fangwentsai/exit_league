@@ -338,3 +338,13 @@ body {
     border-color: #fa363a;
     box-shadow: 0 0 3px rgba(250, 54, 58, 0.3);
 }
+
+h3 {
+    margin-bottom: 5px;  /* 減少與 h4 的間距 */
+}
+
+h4 {
+    margin-top: 0;  /* 移除與 h3 的間距 */
+    font-weight: normal;  /* 可選：讓文字不要太粗 */
+    color: #666;  /* 可選：讓顏色淡一點 */
+}
