@@ -305,9 +305,7 @@ body {
 }
 
 .rankings {
-    display: flex;
-    justify-content: space-between;
-    gap: 3px;
+    display: block;
     margin-bottom: 18px;
 }
 
@@ -316,6 +314,7 @@ body {
     padding: 2px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
 }
 
 .ranking-table {
@@ -341,6 +340,20 @@ body {
 
 .ranking-table tr:hover {
     background-color: #f9f9f9;
+}
+
+/* 當螢幕寬度大於 400px 時切換為雙欄 */
+@media screen and (min-width: 400px) {
+    .rankings {
+        display: flex;
+        justify-content: space-between;
+        gap: 3px;
+    }
+
+    .ranking-section {
+        flex: 1;
+        margin-bottom: 0;
+    }
 }
 
 /* 如果需要標題保持原來大小 */
