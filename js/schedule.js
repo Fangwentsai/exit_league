@@ -32,6 +32,9 @@ async function loadSchedule() {
         let currentDate = '';
         let isOddGroup = true;
 
+        // 建立一個計數器來追蹤實際的遊戲編號
+        let gameCounter = 1;
+
         // 處理數據 - 不使用合併儲存格
         data.values.slice(1).forEach((row, index) => {
             if (row && row.length >= 6) {
@@ -42,9 +45,10 @@ async function loadSchedule() {
                 const homeScore = row[4] || '';
                 let homeTeam = row[5] || '';
                 
-                // 為每個日期生成對應的遊戲編號（g01, g02, ...）
-                const gameNumber = `g${String(index + 1).padStart(2, '0')}`;
+                // 使用 gameCounter 來生成遊戲編號
+                const gameNumber = `g${String(gameCounter).padStart(2, '0')}`;
                 const gameUrl = `../game_result/${gameNumber}.html`;
+                gameCounter++; // 每次處理完一場比賽後增加計數器
                 
                 matchRow.innerHTML = `
                     <td class="date-cell">
