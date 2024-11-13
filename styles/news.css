@@ -342,8 +342,8 @@ body {
     background-color: #f9f9f9;
 }
 
-/* 當螢幕寬度大於 400px 時切換為雙欄 */
-@media screen and (min-width: 400px) {
+/* 當螢幕寬度大於 480px 時切換為雙欄 */
+@media screen and (min-width: 480px) {
     .rankings {
         display: flex;
         justify-content: space-between;
