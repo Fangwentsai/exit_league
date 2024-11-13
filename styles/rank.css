@@ -104,7 +104,8 @@ body {
     text-align: left;
     color: #333;
     margin: 10px 0;
-    font-size: 1.2em;
+    font-size: 1.8em;
+    font-family: "Noto Sans CJK TC", "Microsoft JhengHei", PingFang, STHeiti, sans-serif, serifs;
 }
 
 /* 篩選容器樣式 */
