@@ -18,7 +18,7 @@ async function loadMatches() {
         data.schedule.forEach(matchDay => {
             const matchDate = new Date(matchDay.date);
             matchDate.setHours(0, 0, 0, 0);
-            const timeDiff = matchDate - today;
+            const timeDiff = matchDate - today +1;
             
             // 上週比賽（過去最近）
             if (timeDiff < 0 && Math.abs(timeDiff) < minPastDiff) {
@@ -122,3 +122,13 @@ window.onclick = function(event) {
 
 // 頁面載入時執行
 document.addEventListener('DOMContentLoaded', loadMatches);
+
+// 修改比賽項目的生成方式
+function createMatchElement(match) {
+    return `
+        <div class="match-container">
+            <div class="team-left">${match.awayTeam} ${match.awayScore}</div>
+            <div class="team-right">${match.homeScore} ${match.homeTeam}</div>
+        </div>
+    `;
+}
