@@ -55,7 +55,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .section-title {
@@ -87,25 +87,16 @@ body {
     margin-bottom: 5px;
 }
 
-.match-teams {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
 .team-name {
     min-width: 120px;
+}
+
+.team-name:first-child {
     text-align: right;
 }
 
-.team-name.right {
+.team-name:last-child {
     text-align: left;
-}
-
-.vs {
-    font-weight: bold;
-    padding: 0 15px;
-    display: inline-block;
 }
 
 .news-image {
@@ -250,16 +241,50 @@ body {
     margin: 6px 0;
 }
 
-.matches-content .vs {
-    font-weight: bold;
-    padding: 0 15px;
-    display: inline-block;
+.matches-container {
+    margin: 10px 0;
 }
 
-.matches-container {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+.match-date {
+    text-align: left;
+    margin-bottom: 5px;
+    padding-left: 12px
+}
+
+.match-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+.team-left {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.vs {
+    padding: 0 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.team-right {
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* 調整斷點到 500px */
+@media screen and (max-width: 500px) {
+    .match-teams {
+        grid-template-columns: 1fr 40px 1fr;
+        gap: 2px;
+    }
+
+    .team-left, .team-right {
+        font-size: 0.9em;
+        padding: 0 5px;
+    }
 }
 
 /* 懸浮視窗樣式 */
@@ -342,7 +367,7 @@ body {
     background-color: #f9f9f9;
 }
 
-/* 當螢幕寬度大於 480px 時切換為雙欄 */
+/* 當螢幕寬度大於 400px 時切換為雙欄 */
 @media screen and (min-width: 480px) {
     .rankings {
         display: flex;
@@ -356,7 +381,7 @@ body {
     }
 }
 
-/* 如果需要標題保持原來大小 */
+/* 如果需要標題保持原大小 */
 .ranking-section h2 {
     font-size: 18px;
     margin-bottom: 10px;
