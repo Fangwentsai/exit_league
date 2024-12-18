@@ -155,23 +155,23 @@
       "games": [
         {
           "game_number": "g25",
-          "team1": "逃生入口A",
-          "team2": "人生揪難(主)"
+          "team1": "逃生入口A 18",
+          "team2": "18 人生揪難(主)"
         },
         {
           "game_number": "g26",
-          "team1": "逃生入口C",
-          "team2": "酒空組(主)"
+          "team1": "逃生入口C 8",
+          "team2": "28 酒空組(主)"
         },
         {
           "game_number": "g27",
-          "team1": "Jack",
-          "team2": "醉販(主)"
+          "team1": "Jack 18",
+          "team2": "18 醉販(主)"
         },
         {
           "game_number": "g28",
-          "team1": "海盜揪硬",
-          "team2": "Vivi朝酒晚舞(主)"
+          "team1": "海盜揪硬 11",
+          "team2": "25 Vivi朝酒晚舞(主)"
         }
       ]
     },
