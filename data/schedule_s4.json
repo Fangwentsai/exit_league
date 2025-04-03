@@ -89,14 +89,14 @@
       { "game_number": "g50", "team1": "逃生入口C", "team2": "人生揪難(主)" },
       { "game_number": "g51", "team1": "VIVI朝酒晚舞", "team2": "醉販(主)" },
       { "game_number": "g52", "team1": "海盜揪硬", "team2": "Jack(主)" }
-    ]}
+    ]},
 
     { "date": "2024/7/8", "games": [
     { "game_number": "g53", "team1": "逃生入口A", "team2": "人生揪難(主)" },
     { "game_number": "g54", "team1": "VIVI朝酒晚舞", "team2": "酒空組(主)" },
     { "game_number": "g55", "team1": "Jack", "team2": "醉販(主)" },
     { "game_number": "g56", "team1": "海盜揪硬", "team2": "逃生入口C(主)" }
-    ]},
+    ]}
 
   ]
 }
