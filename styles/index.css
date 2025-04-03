@@ -171,11 +171,11 @@ body {
 /* 下拉選單項目 */
 .dropdown-item {
     color: #dc3545; /* 紅色文字 */
-    padding: 6px 10px; /* 減小內邊距，降低高度 */
+    padding: 14px 10px; /* 減小內邊距，降低高度 */
     text-decoration: none;
     display: block;
     transition: all 0.2s ease-out;
-    font-size: 13px; /* 更小的字體 */
+    font-size: 16px; /* 更小的字體 */
     white-space: nowrap; /* 防止文字換行 */
     line-height: 1.2; /* 減小行高 */
     position: relative;
