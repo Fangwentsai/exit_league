@@ -1,6 +1,6 @@
 async function loadMatches() {
     try {
-        const response = await fetch('https://raw.githubusercontent.com/Fangwentsai/exit_league/main/data/schedule.json');
+        const response = await fetch('https://raw.githubusercontent.com/Fangwentsai/exit_league/main/data/schedule_s4.json');
         const data = await response.json();
         
         // 取得今天日期
