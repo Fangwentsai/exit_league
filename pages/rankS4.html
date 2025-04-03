@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/rank.css">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492"
+     crossorigin="anonymous"></script>
+     
+</head>
+<body>
+    <div class="container">
+        <h2 class="rank-title">隊伍排名</h2>
+        <div class="rank-table-container">
+            <table class="rank-table" id="rankTable">
+                <thead>
+                    <tr class="header-row">
+                        <th>排名</th>
+                        <th>隊伍</th>
+                        <th>勝</th>
+                        <th>敗</th>
+                        <th>和</th>
+                        <th>積分</th>
+                        <th>飲酒加成</th>
+                        <th>總分</th>
+                    </tr>
+                </thead>
+                <tbody id="rankTableBody">
+                    <!-- 排名數據會在這裡動態生成 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="personal-rank-header">
+            <h2 class="rank-title">個人排名</h2>
+            <div class="filter-container">
+                <div class="team-filter">
+                    <select id="teamFilter" class="team-select">
+                        <option value="">所有隊伍</option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="nameSearch" placeholder="搜尋..." class="search-input">
+                </div>
+                <button id="resetFilter" class="reset-button">取消</button>
+            </div>
+        </div>
+
+        <div class="rank-table-container">
+            <table class="rank-table" id="personalTable">
+                <thead>
+                    <tr class="header-row">
+                        <th>排名</th>
+                        <th class="sortable" data-column="team">隊伍</th>
+                        <th class="sortable" data-column="name">姓名</th>
+                        <th class="sortable" data-column="wins01">01勝場</th>
+                        <th class="sortable" data-column="rate01">01勝率</th>
+                        <th class="sortable" data-column="winsCR">CR勝場</th>
+                        <th class="sortable" data-column="rateCR">CR勝率</th>
+                        <th class="sortable" data-column="totalWins">總勝場</th>
+                        <th class="sortable" data-column="totalRate">總勝率</th>
+                        <th class="sortable" data-column="firstRate">先攻率</th>
+                    </tr>
+                </thead>
+                <tbody id="personalTableBody">
+                    <!-- 個人排名數據會在這裡動態生成 -->
+                </tbody>
+            </table>
+            
+            <!-- 添加分頁控制 -->
+            <div class="pagination-container">
+                <button id="prevPage" class="pagination-button">上一頁</button>
+                <span id="pageInfo">第 <span id="currentPage">1</span> 頁，共 <span id="totalPages">1</span> 頁</span>
+                <button id="nextPage" class="pagination-button">下一頁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 確保路徑正確 -->
+    <script src="../config/config.js"></script>
+    <script src="../js/rank.js"></script>
+</body>
+</html>
