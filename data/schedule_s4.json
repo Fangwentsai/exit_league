@@ -17,7 +17,7 @@
     { "date": "2024/4/22", "games": [
       { "game_number": "g09", "team1": "逃生入口A", "team2": "Jack(主)" },
       { "game_number": "g10", "team1": "人生揪難", "team2": "酒空組(主)" },
-      { "game_number": "g11", "team1": "逃生入口C", "team2":"VIVI朝酒晚舞(主)" },
+      { "game_number": "g11", "team1": "逃生入口C", "team2": "VIVI朝酒晚舞(主)" },
       { "game_number": "g12", "team1": "醉販", "team2": "海盜揪硬(主)" }
     ]},
 
@@ -67,12 +67,12 @@
       { "game_number": "g37", "team1": "Jack", "team2": "逃生入口A(主)" },
       { "game_number": "g38", "team1": "酒空組", "team2": "人生揪難(主)" },
       { "game_number": "g39", "team1": "VIVI朝酒晚舞", "team2": "逃生入口C(主)" },
-      { "game_number": "g40", "team1": "海盜揪硬", "team2": "醉販" }
+      { "game_number": "g40", "team1": "海盜揪硬", "team2": "醉販(主)" }
     ]},
 
     { "date": "2024/6/17", "games": [
       { "game_number": "g41", "team1": "逃生入口A", "team2": "醉販(主)" },
-      { "game_number": "g42", "team1": "酒空組", "team2": "酒空組(主)" },
+      { "game_number": "g42", "team1": "海盜揪硬", "team2": "酒空組(主)" },
       { "game_number": "g43", "team1": "VIVI朝酒晚舞", "team2": "人生揪難(主)" },
       { "game_number": "g44", "team1": "逃生入口C", "team2": "Jack(主)" }
     ]},
@@ -92,11 +92,10 @@
     ]},
 
     { "date": "2024/7/8", "games": [
-    { "game_number": "g53", "team1": "逃生入口A", "team2": "人生揪難(主)" },
-    { "game_number": "g54", "team1": "VIVI朝酒晚舞", "team2": "酒空組(主)" },
-    { "game_number": "g55", "team1": "Jack", "team2": "醉販(主)" },
-    { "game_number": "g56", "team1": "海盜揪硬", "team2": "逃生入口C(主)" }
+      { "game_number": "g53", "team1": "逃生入口A", "team2": "人生揪難(主)" },
+      { "game_number": "g54", "team1": "VIVI朝酒晚舞", "team2": "酒空組(主)" },
+      { "game_number": "g55", "team1": "Jack", "team2": "醉販(主)" },
+      { "game_number": "g56", "team1": "海盜揪硬", "team2": "逃生入口C(主)" }
     ]}
-
   ]
 }
