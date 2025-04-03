@@ -25,8 +25,25 @@
     <!-- 導航按鈕 -->
     <div class="nav-buttons">
         <button class="nav-btn active" data-page="news">公告</button>
-        <button class="nav-btn" data-page="schedule">賽程</button>
-        <button class="nav-btn" data-page="rank">排名</button>
+        
+        <!-- 賽程按鈕和下拉選單 -->
+        <div class="dropdown-container">
+            <button class="nav-btn" data-page="schedule" id="scheduleBtn">賽程</button>
+            <div class="dropdown-menu" id="scheduleDropdown">
+                <a href="pages/scheduleS4.html" target="contentFrame" class="dropdown-item">第四屆</a>
+                <a href="pages/schedule.html" target="contentFrame" class="dropdown-item">第三屆</a>
+            </div>
+        </div>
+        
+        <!-- 排名按鈕和下拉選單 -->
+        <div class="dropdown-container">
+            <button class="nav-btn" data-page="rank" id="rankBtn">排名</button>
+            <div class="dropdown-menu" id="rankDropdown">
+                <a href="pages/rankS4.html" target="contentFrame" class="dropdown-item">第四屆</a>
+                <a href="pages/rank.html" target="contentFrame" class="dropdown-item">第三屆</a>
+            </div>
+        </div>
+        
         <button class="nav-btn" data-page="rule">規則</button>
     </div>
 
