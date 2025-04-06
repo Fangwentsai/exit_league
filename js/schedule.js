@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
             leagueTable.innerHTML = '';
             
             // 定義固定的表頭 (移除結果欄)
-            const headers = ['日期/場次', '主隊', '主隊得分', '', '客隊得分', '客隊'];
+            const headers = ['日期/場次', '客隊', '客隊得分', '', '主隊得分', '主隊'];
             console.log('使用固定表頭:', headers);
             
             // 創建表頭
