@@ -172,6 +172,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // 添加一個函數來判斷當前頁面並返回對應的賽季路徑
+    function getSeasonPath() {
+        // 獲取當前頁面的URL
+        const currentUrl = window.location.pathname;
+        
+        // 檢查URL中是否包含"scheduleS4.html"
+        if (currentUrl.includes('scheduleS4.html')) {
+            console.log('檢測到第4賽季頁面，連結到season4目錄');
+            return 'season4';
+        } else {
+            console.log('檢測到其他頁面，連結到season3目錄');
+            return 'season3';
+        }
+    }
+    
     // 構建 API URL
     const RANGE= 'schedule!A1:F1000';
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${RANGE}?key=${config.API_KEY}`;
@@ -240,6 +255,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // 建立一個計數器來追蹤實際的遊戲編號
             let gameCounter = 1;
             
+            // 獲取當前賽季路徑
+            const seasonPath = getSeasonPath();
+            
             // 從第1行開始處理數據（跳過可能的空行）
             for (let i = 0; i < data.values.length; i++) {
                 const rowData = data.values[i];
@@ -257,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // 使用 gameCounter 來生成遊戲編號
                 const gameNumber = `g${String(gameCounter).padStart(2, '0')}`;
-                const gameUrl = `../game_result/season3/${gameNumber}.html`;
+                const gameUrl = `../game_result/${seasonPath}/${gameNumber}.html`;
                 gameCounter++; // 每次處理完一場比賽後增加計數器
                 
                 // 創建行

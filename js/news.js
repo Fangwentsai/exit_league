@@ -67,7 +67,7 @@ function generateMatchesHTML(matchDay) {
 function createMatchHTML(match) {
     return `
         <div class="match-date">${match.date}</div>
-        <a href="../game_result/${match.game_number}.html" class="match-item">
+        <a href="../game_result/season4/${match.game_number}.html" class="match-item">
             ${match.team1} <span class="vs">VS</span> ${match.team2}
         </a>
     `;
@@ -97,7 +97,7 @@ function openGameModal(gameNumber) {
     const iframe = document.getElementById('gameFrame');
     
     if (modal && iframe) {
-        iframe.src = `../game_result/${gameNumber}.html`;
+        iframe.src = `../game_result/season4/${gameNumber}.html`;
         modal.style.display = 'block';
     }
 }
