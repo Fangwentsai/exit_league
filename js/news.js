@@ -1,6 +1,6 @@
 async function loadMatches() {
     try {
-        const response = await fetch('https://raw.githubusercontent.com/Fangwentsai/exit_league/main/data/schedule.json');
+        const response = await fetch('https://raw.githubusercontent.com/Fangwentsai/exit_league/main/data/schedule_s4.json');
         const data = await response.json();
         
         // 取得今天日期
@@ -18,7 +18,7 @@ async function loadMatches() {
         data.schedule.forEach(matchDay => {
             const matchDate = new Date(matchDay.date);
             matchDate.setHours(0, 0, 0, 0);
-            const timeDiff = matchDate - today;
+            const timeDiff = matchDate - today +1;
             
             // 上週比賽（過去最近）
             if (timeDiff < 0 && Math.abs(timeDiff) < minPastDiff) {
@@ -67,7 +67,7 @@ function generateMatchesHTML(matchDay) {
 function createMatchHTML(match) {
     return `
         <div class="match-date">${match.date}</div>
-        <a href="../game_result/${match.game_number}.html" class="match-item">
+        <a href="../game_result/season4/${match.game_number}.html" class="match-item">
             ${match.team1} <span class="vs">VS</span> ${match.team2}
         </a>
     `;
@@ -97,7 +97,7 @@ function openGameModal(gameNumber) {
     const iframe = document.getElementById('gameFrame');
     
     if (modal && iframe) {
-        iframe.src = `../game_result/${gameNumber}.html`;
+        iframe.src = `../game_result/season4/${gameNumber}.html`;
         modal.style.display = 'block';
     }
 }
@@ -122,3 +122,13 @@ window.onclick = function(event) {
 
 // 頁面載入時執行
 document.addEventListener('DOMContentLoaded', loadMatches);
+
+// 修改比賽項目的生成方式
+function createMatchElement(match) {
+    return `
+        <div class="match-container">
+            <div class="team-left">${match.awayTeam} ${match.awayScore}</div>
+            <div class="team-right">${match.homeScore} ${match.homeTeam}</div>
+        </div>
+    `;
+}

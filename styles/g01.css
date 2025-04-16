@@ -98,6 +98,13 @@
     font-weight: normal;
 }
 
+/* 修改 score-table 寬度 */
+.score-table {
+    width: 100%;  /* 從原來的寬度改為100% */
+    max-width: 800px; /* 設置最大寬度 */
+    margin: 0 auto; /* 居中顯示 */
+}
+
 /* 響應式設計 */
 @media screen and (max-width: 480px) {
     .container {

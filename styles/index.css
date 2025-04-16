@@ -60,33 +60,31 @@ body {
     color: white;
     cursor: pointer;
     font-size: 16px;
-    transition: all 0.3s;
+    transition: all 0.2s ease;
     line-height: 1;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    top: 0;
 }
 
 .nav-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    top: 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-btn:active {
+    top: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .nav-btn.active {
     background-color: #ff6b6b;
     color: white;
+    border-bottom: 2px solid #ffffff;
 }
 
 .nav-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: transparent;
-    transition: all 0.3s;
-}
-
-.nav-btn.active::after {
-    background-color: white;
+    content: none;
 }
 
 .iframe-container {
@@ -145,4 +143,95 @@ body {
 
 .team-name {
     text-align: left;
+}
+
+/* 下拉選單容器 */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 下拉選單 */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中 */
+    background-color: #fff5f5; /* 淡紅色背景 */
+    min-width: 100px; /* 減小寬度 */
+    box-shadow: 0 2px 5px rgba(220,53,69,0.2); /* 紅色陰影 */
+    border-radius: 0 0 5px 5px;
+    z-index: 1000;
+    border: 1px solid #ffccd5; /* 淡紅色邊框 */
+    text-align: center; /* 文字居中 */
+    padding: 4px 0; /* 上下內邊距減小 */
+}
+
+/* 下拉選單項目 */
+.dropdown-item {
+    color: #dc3545; /* 紅色文字 */
+    padding: 14px 10px; /* 減小內邊距，降低高度 */
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s ease-out;
+    font-size: 16px; /* 更小的字體 */
+    white-space: nowrap; /* 防止文字換行 */
+    line-height: 1.2; /* 減小行高 */
+    position: relative;
+    top: 0;
+}
+
+.dropdown-item:hover {
+    background-color: #ffe2e6; /* 淡紅色懸停背景 */
+    color: #c82333; /* 深紅色懸停文字 */
+    transform: translateY(2px);
+    box-shadow: 0 2px 3px rgba(220,53,69,0.2);
+}
+
+/* 顯示下拉選單 */
+.dropdown-menu.show {
+    display: block;
+    animation: dropDown 0.2s ease-out forwards;
+}
+
+/* 向下展開動畫 */
+@keyframes dropDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) translateX(-50%) scaleY(0.7);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%) scaleY(1);
+    }
+}
+
+/* 賽程按鈕特殊樣式 */
+#scheduleBtn {
+    position: relative;
+}
+
+#scheduleBtn::after {
+    content: none;
+}
+
+/* 當下拉選單顯示時的按鈕樣式 */
+#scheduleBtn.active::after {
+    transform: rotate(180deg);
+}
+
+/* 下拉選單項目動畫效果 - 適用於所有下拉選單 */
+.dropdown-item {
+    /* 保留原有樣式 */
+    transition: all 0.2s ease-out; /* 平滑過渡效果 */
+    position: relative; /* 為動畫做準備 */
+    top: 0; /* 初始位置 */
+}
+
+.dropdown-item:hover {
+    background-color: #ffe2e6; /* 淡紅色懸停背景 */
+    color: #c82333; /* 深紅色懸停文字 */
+    transform: translateY(2px); /* 輕微下移效果 */
+    box-shadow: 0 2px 3px rgba(220,53,69,0.2); /* 懸停時添加陰影 */
 } 

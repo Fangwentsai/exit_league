@@ -55,7 +55,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .section-title {
@@ -87,25 +87,16 @@ body {
     margin-bottom: 5px;
 }
 
-.match-teams {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
 .team-name {
     min-width: 120px;
+}
+
+.team-name:first-child {
     text-align: right;
 }
 
-.team-name.right {
+.team-name:last-child {
     text-align: left;
-}
-
-.vs {
-    font-weight: bold;
-    padding: 0 15px;
-    display: inline-block;
 }
 
 .news-image {
@@ -250,16 +241,50 @@ body {
     margin: 6px 0;
 }
 
-.matches-content .vs {
-    font-weight: bold;
-    padding: 0 15px;
-    display: inline-block;
+.matches-container {
+    margin: 10px 0;
 }
 
-.matches-container {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+.match-date {
+    text-align: left;
+    margin-bottom: 5px;
+    padding-left: 12px
+}
+
+.match-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+.team-left {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.vs {
+    padding: 0 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.team-right {
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* 調整斷點到 500px */
+@media screen and (max-width: 500px) {
+    .match-teams {
+        grid-template-columns: 1fr 40px 1fr;
+        gap: 2px;
+    }
+
+    .team-left, .team-right {
+        font-size: 0.9em;
+        padding: 0 5px;
+    }
 }
 
 /* 懸浮視窗樣式 */
@@ -305,18 +330,16 @@ body {
 }
 
 .rankings {
-    display: flex;
-    justify-content: space-between;
-    gap: 3px;
+    display: block;
     margin-bottom: 18px;
 }
 
 .ranking-section {
-    flex: 1;
     background-color: #fff;
     padding: 2px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
 }
 
 .ranking-table {
@@ -344,8 +367,102 @@ body {
     background-color: #f9f9f9;
 }
 
-/* 如果需要標題保持原來大小 */
+/* 當螢幕寬度大於 400px 時切換為雙欄 */
+@media screen and (min-width: 480px) {
+    .rankings {
+        display: flex;
+        justify-content: space-between;
+        gap: 3px;
+    }
+
+    .ranking-section {
+        flex: 1;
+        margin-bottom: 0;
+    }
+}
+
+/* 如果需要標題保持原大小 */
 .ranking-section h2 {
     font-size: 18px;
     margin-bottom: 10px;
+}
+
+/* 比賽表格樣式 */
+.match-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    table-layout: fixed; /* 固定表格布局 */
+}
+
+.match-table tr {
+    border-bottom: 1px solid #eee;
+}
+
+.match-table tr:last-child {
+    border-bottom: none;
+}
+
+.match-table td {
+    padding: 10px 5px;
+    overflow: hidden; /* 防止內容溢出 */
+    text-overflow: ellipsis; /* 溢出時顯示省略號 */
+    white-space: nowrap; /* 防止文字換行 */
+}
+
+.team-left {
+    text-align: right;
+    width: 40%;
+    font-weight: 500;
+}
+
+.vs {
+    text-align: center;
+    width: 20%;
+    color: #fa363a;
+    font-weight: bold;
+}
+
+.team-right {
+    text-align: left;
+    width: 40%;
+    font-weight: 500;
+}
+
+/* 響應式調整 - 針對小螢幕設備 */
+@media screen and (max-width: 480px) {
+    .match-table {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .match-table td {
+        padding: 8px 2px; /* 減少內邊距 */
+        font-size: 0.85em; /* 縮小字體 */
+    }
+    
+    .team-left, .team-right {
+        width: 42%; /* 稍微增加兩側寬度 */
+    }
+    
+    .vs {
+        width: 16%; /* 減少中間VS的寬度 */
+        font-size: 0.9em; /* 縮小VS字體 */
+    }
+}
+
+/* 特別針對 iPhone XR (414px) 的優化 */
+@media screen and (max-width: 414px) {
+    .match-table td {
+        padding: 6px 1px; /* 進一步減少內邊距 */
+        font-size: 0.8em; /* 進一步縮小字體 */
+    }
+    
+    .team-left {
+        padding-right: 3px; /* 增加右側內邊距，使文字與VS保持距離 */
+    }
+    
+    .team-right {
+        padding-left: 3px; /* 增加左側內邊距，使文字與VS保持距離 */
+    }
 }

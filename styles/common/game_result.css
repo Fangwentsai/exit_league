@@ -88,7 +88,7 @@ body {
 }
 
 .game-table {
-    width: 100%;
+    width: 102%;
     border-collapse: collapse;
 }
 
@@ -161,7 +161,7 @@ body {
     .game-table th,
     .game-table td {
         padding: 6px 4px;
-        font-size: 0.9em;
+        font-size: 10pt;
     }
 
     .game-detail {
@@ -188,7 +188,7 @@ body {
 .winner-icon {
     position: absolute;
     top: 34%;
-    left: 6px;
+    left: 2px;
     width: 30px;
     height: 30px;
     transform: translateY(-50%);
@@ -215,7 +215,7 @@ body {
 
 /* 遊戲詳情 */
 .game-detail {
-    font-size: 0.8em;
+    font-size: 8pt;
     color: #666;
     font-weight: normal;
 }
@@ -307,7 +307,7 @@ body {
 
 .score-details {
     margin: 15px auto;
-    max-width: 65%;
+    max-width: 85%;
 }
 
 .score-table {
