@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>難找的聯賽 | 新北市永和區飛鏢聯賽</title>
     <meta name="keyword" content="新北市永和區, 鳳凰飛鏢, 自辦聯賽,  難找的聯賽, 飛鏢聯賽, 飛鏢比賽, 飛鏢愛好者, 自嗨比賽, 尬聊, 喝酒互弄, 丟鏢">
-    <meta name=”description” content=”新北市永和區的「難找的聯賽」是一群飛鏢愛好者自嗨創辦的比賽，名字就透露了我們的風格——不正經但很熱血！這裡沒有大牌明星，只有一堆熱愛飛鏢的普通人，打比賽只是藉口，主要是尬聊、喝酒互弄、順便丟丟鏢。每週比賽一場，打得好壞無所謂，開心才是王道！如果你也想加入這種佛系比賽，歡迎來找我們（雖然很難找）。”>
+    <meta name="description" content="新北市永和區的「難找的聯賽」是一群飛鏢愛好者自嗨創辦的比賽，名字就透露了我們的風格——不正經但很熱血！這裡沒有大牌明星，只有一堆熱愛飛鏢的普通人，打比賽只是藉口，主要是尬聊、喝酒互弄、順便丟丟鏢。每週比賽一場，打得好壞無所謂，開心才是王道！如果你也想加入這種佛系比賽，歡迎來找我們（雖然很難找）。">
     <meta name="author" content="Jesse Tsai">
     <meta name="robots" content="index, follow">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -15,6 +15,39 @@
     <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
+    <!-- 漢堡選單按鈕 -->
+    <div class="hamburger-btn">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </div>
+
+    <!-- 側邊欄 -->
+    <div class="sidebar">
+        <div class="sidebar-nav">
+            <div class="sidebar-btn" data-page="news">公告</div>
+            
+            <!-- 賽程選項 -->
+            <div class="sidebar-btn" data-page="schedule">賽程</div>
+            <div class="sidebar-submenu">
+                <div class="sidebar-btn submenu-item" data-page="scheduleS4">第四屆</div>
+                <div class="sidebar-btn submenu-item" data-page="schedule">第三屆</div>
+            </div>
+            
+            <!-- 排名選項 -->
+            <div class="sidebar-btn" data-page="rank">排名</div>
+            <div class="sidebar-submenu">
+                <div class="sidebar-btn submenu-item" data-page="rankS4">第四屆</div>
+                <div class="sidebar-btn submenu-item" data-page="rank">第三屆</div>
+            </div>
+            
+            <div class="sidebar-btn" data-page="rule">規則</div>
+        </div>
+    </div>
+
+    <!-- 遮罩層 -->
+    <div class="overlay"></div>
+
     <!-- 標題區域 -->
     <div class="header-section">
         <div class="container">
@@ -22,36 +55,19 @@
         </div>
     </div>
 
-    <!-- 導航按鈕 -->
-    <div class="nav-buttons">
-        <button class="nav-btn active" data-page="news">公告</button>
-        
-        <!-- 賽程按鈕和下拉選單 -->
-        <div class="dropdown-container">
-            <button class="nav-btn" data-page="schedule" id="scheduleBtn">賽程</button>
-            <div class="dropdown-menu" id="scheduleDropdown">
-                <a href="pages/scheduleS4.html" target="contentFrame" class="dropdown-item">第四屆</a>
-                <a href="pages/schedule.html" target="contentFrame" class="dropdown-item">第三屆</a>
+    <!-- 內容區域 -->
+    <div class="content-container">
+        <div id="contentArea"></div>
+        <div class="footer">
+            <div>
+                <a href="/privacy.html">隱私政策</a> |
+                <a href="/terms.html">使用條款</a> |
+                <a href="/about.html">關於我們</a>
+            </div>
+            <div class="copyright">
+                © 2024 難找的聯賽. All rights reserved.
             </div>
         </div>
-        
-        <!-- 排名按鈕和下拉選單 -->
-        <div class="dropdown-container">
-            <button class="nav-btn" data-page="rank" id="rankBtn">排名</button>
-            <div class="dropdown-menu" id="rankDropdown">
-                <a href="pages/rankS4.html" target="contentFrame" class="dropdown-item">第四屆</a>
-                <a href="pages/rank.html" target="contentFrame" class="dropdown-item">第三屆</a>
-            </div>
-        </div>
-        
-        <button class="nav-btn" data-page="rule">規則</button>
-    </div>
-
-    <!-- iframe 內容區域 -->
-    <div class="iframe-container">
-        
-        <iframe id="contentFrame" name="contentFrame" src="pages/news.html"></iframe>
-        <div class="footer"></div>
     </div>
 
     <script src="js/main.js"></script>

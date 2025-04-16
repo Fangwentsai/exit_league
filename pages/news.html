@@ -231,14 +231,20 @@
         <div class="news-content" id="newsContent">
 
               <!-- 原有的新聞 -->
+              <div class="news-item">
+                <div class="news-date">2025/4/16</div>
+                <div class="news-title">網頁改版</div>
+                <div class="news-text">難找的聯賽網頁2.0beta版先上線一下，賽程的鏈結還是壞的我之後再來修掰噗</div>
+            </div>
+
             <div class="news-item">
-                <div class="news-date">2025/11/5</div>
+                <div class="news-date">2024/11/5</div>
                 <div class="news-title">聯賽開始</div>
                 <div class="news-text">難找的聯賽第三届正式開始！</div>
             </div>
             <!-- 阿淦幣新聞 -->
             <div class="news-item">
-                <div class="news-date">2025/10/15</div>
+                <div class="news-date">2024/10/15</div>
                 <div class="news-title">阿淦幣即日起開始發售</div>
                 <div class="news-text">
                     <p>第二屆阿淦因其優異的手氣榮獲地獄倒霉鬼殊榮，即日起凡於於比賽店家持100元阿淦幣消費即可換取一杯shot。</p>
@@ -250,49 +256,31 @@
 
     <div id="gameModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeGameModal()">&times;</span>
+            <span class="close">&times;</span>
             <iframe id="gameFrame" frameborder="0"></iframe>
         </div>
     </div>
 
-    <script src="../js/news.js"></script>
+    <script>
+    async function loadMatches() {
+        try {
+            console.log('開始載入比賽數據...');
+            const url = '/data/schedule_s4.json';
+            console.log('嘗試讀取:', url);
+            
+            const response = await fetch(url);
+            console.log('fetch 響應狀態:', response.status);
+            
+            // ... 其餘代碼 ...
+        } catch (error) {
+            console.error('載入比賽時發生錯誤:', error);
+        }
+    }
 
-    <footer style="
-        text-align: center;
-        margin-top: 50px;
-        padding: 20px;
-        border-top: 1px solid #eee;
-        background-color: #f8f9fa;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        font-family: Arial, sans-serif;">
-        <div style="max-width: 800px; margin: 0 auto;">
-            <a href="/privacy.html" style="
-                color: #666;
-                text-decoration: none;
-                margin: 0 10px;
-                padding: 5px 10px;">隱私政策</a> |
-            <a href="/terms.html" style="
-                color: #666;
-                text-decoration: none;
-                margin: 0 10px;
-                padding: 5px 10px;">使用條款</a> |
-            <a href="/about.html" style="
-                color: #666;
-                text-decoration: none;
-                margin: 0 10px;
-                padding: 5px 10px;">關於我們</a>
-            <p style="
-                color: #999;
-                font-size: 12px;
-                margin-top: 10px;">© 2024 難找的聯賽. All rights reserved.</p>
-        </div>
-    </footer>
+    // 立即執行
+    loadMatches();
+    </script>
 </body>
-</html>
-
-
 </html>
 
 

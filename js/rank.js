@@ -38,10 +38,17 @@ if (!CONFIG[currentSeason]) {
             const range = 'schedule!K:Q';
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
-            console.log("This IS NOW", url);
+            console.log("正在請求 URL:", url);
             
             const response = await fetch(url);
+            console.log("API 響應狀態:", response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
+            }
+            
             const data = await response.json();
+            console.log("收到的數據:", data);
             
             if (!data.values || data.values.length === 0) {
                 throw new Error('No data found in sheet');
@@ -84,9 +91,10 @@ if (!CONFIG[currentSeason]) {
             });
 
         } catch (error) {
-            console.error('Error loading rankings:', error);
+            console.error('載入排名時發生錯誤:', error);
+            console.error('錯誤詳情:', error.stack);
             document.getElementById('rankTableBody').innerHTML = 
-                '<tr><td colspan="8">載入排名時發生錯誤</td></tr>';
+                `<tr><td colspan="8">載入排名時發生錯誤: ${error.message}</td></tr>`;
         }
     }
 
@@ -103,8 +111,17 @@ if (!CONFIG[currentSeason]) {
             const range = 'personal!A:I';
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
             
+            console.log("正在請求個人排名 URL:", url);
+            
             const response = await fetch(url);
+            console.log("個人排名 API 響應狀態:", response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
+            }
+            
             const data = await response.json();
+            console.log("收到的個人排名數據:", data);
             
             if (!data.values || data.values.length === 0) {
                 throw new Error('No data found in sheet');
@@ -136,8 +153,9 @@ if (!CONFIG[currentSeason]) {
 
         } catch (error) {
             console.error('載入個人排名時發生錯誤:', error);
+            console.error('錯誤詳情:', error.stack);
             document.getElementById('personalTableBody').innerHTML = 
-                '<tr><td colspan="10">載入個人排名時發生錯誤</td></tr>';
+                `<tr><td colspan="10">載入個人排名時發生錯誤: ${error.message}</td></tr>`;
         }
     }
 

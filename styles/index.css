@@ -1,8 +1,18 @@
-body {
+/* 隱藏所有滾動條 */
+html, body {
     margin: 0;
     padding: 0;
-    background-color: #555;
-    font-family: Arial, sans-serif;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+
+/* Chrome, Safari and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 .container {
@@ -11,23 +21,27 @@ body {
     padding: 0 20px;
 }
 
+/* 標題區域 */
 .header-section {
+    background-color: #dc3545;
+    color: white;
+    text-align: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 40px;
-    z-index: 1000;
-    padding: 5px 0;
-    background-color: #fa363a;
+    margin: 0;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
 .main-title {
-    color: #ffffff;
-    text-align: center;
     margin: 0;
-    font-weight: 700;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .nav-section {
@@ -39,52 +53,30 @@ body {
 }
 
 .nav-buttons {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background-color: #fa363a;
-    padding: 0;
-    text-align: center;
-    line-height: 40px;
-    z-index: 999;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .nav-btn {
-    padding: 8px 20px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 0;
-    background-color: transparent;
+    padding: 8px 16px;
+    background-color: #dc3545;
     color: white;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.2s ease;
-    line-height: 1;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
-    position: relative;
-    top: 0;
-}
-
-.nav-btn:hover {
-    top: 2px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.nav-btn:active {
-    top: 3px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .nav-btn.active {
-    background-color: #ff6b6b;
-    color: white;
-    border-bottom: 2px solid #ffffff;
-}
-
-.nav-btn::after {
-    content: none;
+    background-color: white;
+    color: #dc3545;
+    box-shadow: 0 0 0 2px #dc3545;
 }
 
 .iframe-container {
@@ -156,37 +148,21 @@ body {
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%); /* 水平居中 */
-    background-color: #fff5f5; /* 淡紅色背景 */
-    min-width: 100px; /* 減小寬度 */
-    box-shadow: 0 2px 5px rgba(220,53,69,0.2); /* 紅色陰影 */
-    border-radius: 0 0 5px 5px;
-    z-index: 1000;
-    border: 1px solid #ffccd5; /* 淡紅色邊框 */
-    text-align: center; /* 文字居中 */
-    padding: 4px 0; /* 上下內邊距減小 */
+    left: 0;
+    background-color: white;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+    z-index: 3;
+    min-width: 120px;
 }
 
 /* 下拉選單項目 */
 .dropdown-item {
-    color: #dc3545; /* 紅色文字 */
-    padding: 14px 10px; /* 減小內邊距，降低高度 */
-    text-decoration: none;
-    display: block;
-    transition: all 0.2s ease-out;
-    font-size: 16px; /* 更小的字體 */
-    white-space: nowrap; /* 防止文字換行 */
-    line-height: 1.2; /* 減小行高 */
-    position: relative;
-    top: 0;
-}
-
-.dropdown-item:hover {
-    background-color: #ffe2e6; /* 淡紅色懸停背景 */
-    color: #c82333; /* 深紅色懸停文字 */
-    transform: translateY(2px);
-    box-shadow: 0 2px 3px rgba(220,53,69,0.2);
+    padding: 8px 16px;
+    color: #dc3545;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 /* 顯示下拉選單 */
@@ -229,9 +205,195 @@ body {
     top: 0; /* 初始位置 */
 }
 
-.dropdown-item:hover {
-    background-color: #ffe2e6; /* 淡紅色懸停背景 */
-    color: #c82333; /* 深紅色懸停文字 */
-    transform: translateY(2px); /* 輕微下移效果 */
-    box-shadow: 0 2px 3px rgba(220,53,69,0.2); /* 懸停時添加陰影 */
+/* 內容區域需要添加上方間距，避免被固定標題擋住 */
+.content-container {
+    max-width: 1000px;
+    margin: 65px auto 5px auto;
+    padding: 10px;
+}
+
+/* 內容區域 */
+#contentArea {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+#contentArea::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* 漢堡按鈕樣式 */
+.hamburger-btn {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+/* 漢堡按鈕動畫效果 */
+.hamburger-btn.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* 側邊欄樣式 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -160px;
+    width: 160px;
+    height: 100%;
+    background-color: #e84855; /* 比 #dc3545 稍淺的紅色 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 999;
+    padding-top: 60px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+/* 側邊欄導航按鈕 */
+.sidebar-nav {
+    padding: 0;
+}
+
+/* 側邊欄按鈕樣式 */
+.sidebar-btn {
+    padding: 12px 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    text-align: left;
+    width: 160px;
+    box-sizing: border-box;
+}
+
+/* 子選單樣式 */
+.sidebar-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+}
+
+.sidebar-submenu.active {
+    max-height: 200px; /* 足夠容納子選單項目的高度 */
+}
+
+.sidebar-submenu .submenu-item {
+    padding: 12px 15px; /* 和根目錄一樣的 padding */
+    font-size: 14px;
+    width: 160px; /* 和根目錄一樣的寬度 */
+    box-sizing: border-box;
+    margin-left: 0; /* 移除縮排 */
+    color: white;
+}
+
+
+/* 當父選單被點擊時顯示子選單 */
+.sidebar-btn.active + .sidebar-submenu {
+    display: block;
+}
+
+/* 遮罩層樣式 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 998;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 確保所有可滾動元素都隱藏滾動條 */
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+/* Footer 樣式 */
+.footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #f8f9fa;
+    width: 100%;
+}
+
+.footer a {
+    color: #6c757d;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:first-child {
+    margin-left: 0;
+}
+
+.footer a:last-child {
+    margin-right: 0;
+}
+
+/* 版權資訊 */
+.copyright {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 10px 0 0 0;
+    text-align: center;
 } 
