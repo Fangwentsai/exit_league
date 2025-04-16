@@ -316,14 +316,11 @@ body {
     position: absolute;
     right: 15px;
     top: 10px;
-    color: white;
-    font-size: 24px;
+    color: #333;
+    font-size: 32px;
+    font-weight: bold;
     cursor: pointer;
-    opacity: 0.8;
-}
-
-.close:hover {
-    opacity: 1;
+    padding: 5px 10px;
 }
 
 #gameFrame {
