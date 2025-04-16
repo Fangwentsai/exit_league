@@ -308,6 +308,7 @@ body::-webkit-scrollbar {
     text-align: left;
     width: 160px;
     box-sizing: border-box;
+    padding-top: 20px;
 }
 
 /* 子選單樣式 */
