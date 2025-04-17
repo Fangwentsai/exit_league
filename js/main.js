@@ -188,12 +188,13 @@ async function loadContent(page, anchor = null, pushState = true) {
                         });
                         
                         if (element) {
-                            // 獲取所有固定定位的元素
-                            const fixedElements = Array.from(document.querySelectorAll('*')).filter(el => 
-                                window.getComputedStyle(el).position === 'fixed'
+                            // 只計算真正固定在頂部的元素
+                            const fixedElements = Array.from(document.querySelectorAll('header, nav, .fixed-top')).filter(el => 
+                                window.getComputedStyle(el).position === 'fixed' && 
+                                window.getComputedStyle(el).top === '0px'
                             );
                             
-                            // 計算所有固定元素的總高度
+                            // 計算固定元素的總高度
                             const totalFixedHeight = fixedElements.reduce((total, el) => {
                                 const rect = el.getBoundingClientRect();
                                 return total + (rect.height || 0);
@@ -209,19 +210,20 @@ async function loadContent(page, anchor = null, pushState = true) {
                             }
 
                             // 計算最終滾動位置
-                            const scrollPosition = elementPosition - totalFixedHeight - 20; // 額外留出 20px 的空間
+                            const scrollPosition = Math.max(0, elementPosition - totalFixedHeight - 20);
 
                             console.log('計算滾動位置:', {
                                 elementPosition,
                                 totalFixedHeight,
                                 finalScrollPosition: scrollPosition,
                                 fixedElements: fixedElements.length,
+                                fixedElementsList: fixedElements.map(el => el.tagName),
                                 windowScrollY: window.scrollY,
                                 windowInnerHeight: window.innerHeight
                             });
 
                             window.scrollTo({
-                                top: Math.max(0, scrollPosition), // 確保不會出現負值
+                                top: scrollPosition,
                                 behavior: 'smooth'
                             });
                             return true;
@@ -1080,7 +1082,8 @@ function loadCSS(file, isImportant = false, isPreload = false) {
     return new Promise((resolve, reject) => {
         const link = document.createElement('link');
         link.rel = isPreload ? 'preload' : 'stylesheet';
-        link.href = `/${file}`;
+        // 移除域名，使用相對路徑
+        link.href = file.startsWith('/') ? file : `/${file}`;
         if (isPreload) {
             link.as = 'style';
         }
