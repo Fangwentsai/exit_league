@@ -644,24 +644,6 @@ function showScheduleError(message) {
     }
 }
 
-// 確保頁面載入時也處理 URL 中的錨點
-document.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash;
-    if (hash) {
-        const [page, anchor] = hash.slice(1).split('/');
-        if (page) {
-            loadContent(page, anchor, false);
-        }
-    }
-});
-
-// 處理瀏覽器的前進/後退
-window.addEventListener('popstate', (event) => {
-    if (event.state) {
-        loadContent(event.state.page, event.state.anchor, false);
-    }
-});
-
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     // 設置漢堡選單
@@ -680,6 +662,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadContent(page);
             }
         });
+    }
+
+    // 處理初始頁面載入
+    const hash = window.location.hash;
+    if (hash) {
+        const [page, anchor] = hash.slice(1).split('/');
+        if (page) {
+            loadContent(page, anchor, false);
+        }
+    } else {
+        // 如果沒有 hash，載入預設的新聞頁面
+        loadContent('news', null, true);
+    }
+});
+
+// 處理瀏覽器的前進/後退
+window.addEventListener('popstate', (event) => {
+    if (event.state) {
+        loadContent(event.state.page, event.state.anchor, false);
+    } else {
+        // 如果沒有 state，載入預設的新聞頁面
+        loadContent('news', null, false);
     }
 });
 
