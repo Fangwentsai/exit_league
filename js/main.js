@@ -145,32 +145,51 @@ function loadContent(page, anchor = null, pushState = true) {
             }
             
             // 根據頁面類型載入不同的數據
+            let dataLoadPromise = Promise.resolve();
             if (page === 'news') {
-                loadNewsData();
+                dataLoadPromise = loadNewsData();
             } 
             else if (page === 'rank' || page === 'rankS4') {
-                loadRankData(page);
+                dataLoadPromise = loadRankData(page);
             }
             else if (page === 'schedule' || page === 'scheduleS4') {
-                loadScheduleData(page);
+                dataLoadPromise = loadScheduleData(page);
             }
             
-            // 如果有錨點，滾動到對應位置
-            if (anchor) {
-                setTimeout(() => {
-                    const element = document.getElementById(anchor);
-                    if (element) {
-                        const headerHeight = 70;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-                        
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 100);
-            }
+            // 等待數據載入完成後再處理錨點
+            dataLoadPromise.then(() => {
+                // 如果有錨點，滾動到對應位置
+                if (anchor) {
+                    const scrollToAnchor = () => {
+                        const element = document.getElementById(anchor);
+                        if (element) {
+                            const headerHeight = 70; // 頂部固定區域的高度
+                            const elementRect = element.getBoundingClientRect();
+                            const absoluteElementTop = elementRect.top + window.pageYOffset;
+                            const middle = window.innerHeight / 4;
+                            const scrollPosition = absoluteElementTop - headerHeight - middle;
+
+                            window.scrollTo({
+                                top: scrollPosition,
+                                behavior: 'smooth'
+                            });
+                            return true;
+                        }
+                        return false;
+                    };
+
+                    // 嘗試多次滾動，確保元素已經載入
+                    let attempts = 0;
+                    const maxAttempts = 5;
+                    const tryScroll = () => {
+                        if (scrollToAnchor() || attempts >= maxAttempts) return;
+                        attempts++;
+                        setTimeout(tryScroll, 200);
+                    };
+                    
+                    setTimeout(tryScroll, 300);
+                }
+            });
 
             // 更新瀏覽器歷史記錄
             if (pushState) {
@@ -625,27 +644,26 @@ function showScheduleError(message) {
     }
 }
 
+// 確保頁面載入時也處理 URL 中的錨點
+document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    if (hash) {
+        const [page, anchor] = hash.slice(1).split('/');
+        if (page) {
+            loadContent(page, anchor, false);
+        }
+    }
+});
+
+// 處理瀏覽器的前進/後退
+window.addEventListener('popstate', (event) => {
+    if (event.state) {
+        loadContent(event.state.page, event.state.anchor, false);
+    }
+});
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 處理瀏覽器的上一頁/下一頁事件
-    window.addEventListener('popstate', (event) => {
-        if (event.state) {
-            loadContent(event.state.page, event.state.anchor, false);
-        } else {
-            loadContent('news', null, false);
-        }
-    });
-
-    // 處理初始 URL
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-        const [page, anchor] = hash.split('/');
-        loadContent(page, anchor);
-    } else {
-        loadContent('news');
-        history.replaceState({ page: 'news' }, '', '#news');
-    }
-
     // 設置漢堡選單
     setupHamburgerMenu();
 
