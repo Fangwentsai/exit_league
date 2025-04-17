@@ -209,12 +209,13 @@ async function loadContent(page, anchor = null, pushState = true) {
                                 currentElement = currentElement.offsetParent;
                             }
 
-                            // 計算最終滾動位置
-                            const scrollPosition = Math.max(0, elementPosition - totalFixedHeight - 20);
+                            // 計算最終滾動位置，額外扣除 45px
+                            const scrollPosition = Math.max(0, elementPosition - totalFixedHeight - 45);
 
                             console.log('計算滾動位置:', {
                                 elementPosition,
                                 totalFixedHeight,
+                                extraOffset: 45,
                                 finalScrollPosition: scrollPosition,
                                 fixedElements: fixedElements.length,
                                 fixedElementsList: fixedElements.map(el => el.tagName),
