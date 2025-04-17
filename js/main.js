@@ -867,7 +867,7 @@ function createMatchesHTML(matchDay, isLastWeek = false) {
     return `
         <div class="match-date">
             <span class="date">${matchDay.date}</span>
-            ${isLastWeek ? '<span class="view-result">點擊看詳細賽況 👇</span>' : ''}
+            ${isLastWeek ? '<span class="view-result">點擊下排看詳細賽況 👇</span>' : ''}
         </div>
         <div class="matches-container">
             ${matchDay.games.map(game => {
