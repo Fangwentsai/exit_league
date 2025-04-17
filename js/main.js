@@ -127,6 +127,7 @@ function closeSidebar() {
 
 // 載入內容
 function loadContent(page, anchor = null, pushState = true) {
+    console.log('loadContent 開始:', { page, anchor, pushState });
     const contentArea = document.getElementById('contentArea');
     if (!contentArea) return;
 
@@ -135,6 +136,7 @@ function loadContent(page, anchor = null, pushState = true) {
 
     // 構建頁面路徑
     const pagePath = `pages/${page}.html`;
+    console.log('準備載入頁面:', pagePath);
 
     // 讀取頁面內容
     fetch(pagePath)
@@ -146,6 +148,7 @@ function loadContent(page, anchor = null, pushState = true) {
         })
         .then(html => {
             contentArea.innerHTML = html;
+            console.log('頁面內容已載入');
             
             // 確保標題顏色保持白色
             const mainTitle = document.querySelector('.main-title');
@@ -167,15 +170,31 @@ function loadContent(page, anchor = null, pushState = true) {
             
             // 等待數據載入完成後再處理錨點
             dataLoadPromise.then(() => {
+                console.log('數據載入完成，準備處理錨點');
                 // 如果有錨點，滾動到對應位置
                 if (anchor) {
+                    console.log('開始處理錨點:', anchor);
                     const scrollToAnchor = () => {
                         const element = document.getElementById(anchor);
+                        console.log('尋找錨點元素:', { 
+                            anchor, 
+                            elementFound: !!element,
+                            elementTop: element?.offsetTop,
+                            elementId: element?.id,
+                            elementHTML: element?.outerHTML
+                        });
+                        
                         if (element) {
                             const headerHeight = 60; // 頂部固定區域的高度
-                            const elementRect = element.getBoundingClientRect();
-                            const absoluteElementTop = element.offsetTop;
-                            const scrollPosition = absoluteElementTop - headerHeight - 10;
+                            const scrollPosition = element.offsetTop - headerHeight;
+
+                            console.log('計算滾動位置:', {
+                                headerHeight,
+                                elementOffsetTop: element.offsetTop,
+                                scrollPosition,
+                                windowScrollY: window.scrollY,
+                                windowInnerHeight: window.innerHeight
+                            });
 
                             window.scrollTo({
                                 top: scrollPosition,
@@ -190,7 +209,11 @@ function loadContent(page, anchor = null, pushState = true) {
                     let attempts = 0;
                     const maxAttempts = 10;
                     const tryScroll = () => {
-                        if (scrollToAnchor() || attempts >= maxAttempts) return;
+                        console.log(`嘗試滾動 第 ${attempts + 1} 次`);
+                        if (scrollToAnchor() || attempts >= maxAttempts) {
+                            console.log(attempts >= maxAttempts ? '達到最大嘗試次數' : '成功找到並滾動到錨點');
+                            return;
+                        }
                         attempts++;
                         setTimeout(tryScroll, 100);
                     };
@@ -202,10 +225,12 @@ function loadContent(page, anchor = null, pushState = true) {
             // 更新瀏覽器歷史記錄
             if (pushState) {
                 const url = anchor ? `#${page}/${anchor}` : `#${page}`;
+                console.log('更新瀏覽器歷史:', url);
                 history.pushState({ page, anchor }, '', url);
             }
         })
         .catch(error => {
+            console.error('載入頁面時發生錯誤:', error);
             contentArea.innerHTML = `<div class="error-message">載入失敗: ${error.message}</div>`;
         });
 }
