@@ -42,16 +42,20 @@ body::-webkit-scrollbar {
     margin: 0;
     font-size: 30px;
     font-weight: bold;
+    width: 100%;
+    text-align: center;
 }
 
 .main-title .sidebar-btn {
     padding: 0;
-    width: auto;
+    width: 100%;
     cursor: pointer;
     font-size: inherit;
     font-weight: inherit;
     text-align: center;
     color: inherit;
+    display: inline-block;
+    transform: none;
 }
 
 .main-title .sidebar-btn:hover {

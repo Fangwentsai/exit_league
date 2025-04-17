@@ -23,12 +23,27 @@ function setupHamburgerMenu() {
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.querySelector('.overlay');
     
+    function closeAllSubmenus() {
+        document.querySelectorAll('.sidebar-submenu').forEach(menu => {
+            menu.classList.remove('active');
+            if (menu.previousElementSibling) {
+                menu.previousElementSibling.classList.remove('active');
+            }
+        });
+    }
+    
     if (hamburger && sidebar) {
         hamburger.addEventListener('click', () => {
+            const isClosing = sidebar.classList.contains('active');
             hamburger.classList.toggle('active');
             sidebar.classList.toggle('active');
             if (overlay) {
                 overlay.classList.toggle('active');
+            }
+            
+            // 如果是關閉側邊欄，同時關閉所有子目錄
+            if (isClosing) {
+                closeAllSubmenus();
             }
         });
 
@@ -38,12 +53,7 @@ function setupHamburgerMenu() {
                 hamburger.classList.remove('active');
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
-                
-                // 關閉所有子目錄
-                document.querySelectorAll('.sidebar-submenu').forEach(menu => {
-                    menu.classList.remove('active');
-                    menu.previousElementSibling.classList.remove('active');
-                });
+                closeAllSubmenus();
             });
         }
     }
