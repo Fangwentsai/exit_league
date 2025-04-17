@@ -338,3 +338,57 @@ h1 {
     padding: 20px;
     background-color: #fff;
 }
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+.submenu-link {
+    display: block;
+    padding: 8px 15px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.submenu-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+}
+
+.sidebar-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-submenu.active {
+    max-height: 300px;
+    padding: 8px 0;
+}
+
+.sidebar-submenu .submenu-item {
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 160px;
+    box-sizing: border-box;
+    margin-left: 0;
+    color: white;
+    text-decoration: none;
+    display: block;
+    line-height: 1.4;
+    margin: 4px 0;
+}
+
+.sidebar-submenu .submenu-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}

@@ -6,9 +6,9 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 800px;    /* 從原本的寬度增加到 800px */
+    margin: 0 auto;      /* 左右 margin 設為 auto 實現置中 */
+    padding: 20px;       /* 保持一些邊距 */
 }
 
 .news-content {
@@ -54,7 +54,6 @@ body {
     padding: 18px;
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
 }
 
 .section-title,
@@ -67,25 +66,43 @@ body {
 }
 
 .match-item {
-    display: inline-block;
-    text-decoration: none;
-    color: inherit;
-    padding: 5px 10px;
-    margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
 }
 
-.match-item:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    cursor: pointer;
+.team {
+    width: 140px;     /* 調整寬度確保能容納隊伍名稱 */
+    font-size: 16px;  /* 設定基本字體大小 */
 }
 
-.match-item:visited {
-    color: inherit;
+.team-away {
+    text-align: right;
+}
+
+.team-home {
+    text-align: left;
+}
+
+.vs {
+    flex: 0 0 auto;
+    font-weight: bold;
+    color: #e84855;
+    font-size: 12px;  /* VS 的字體可以稍微小一點 */
 }
 
 .match-date {
-    text-align: center;
-    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 18px;  /* 日期的字體大一點 */
+}
+
+.match-date .date {
+    font-weight: bold;
 }
 
 .team-name {
@@ -246,12 +263,6 @@ body {
     margin: 10px 0;
 }
 
-.match-date {
-    text-align: left;
-    margin-bottom: 5px;
-    padding-left: 12px
-}
-
 .match-teams {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -262,12 +273,6 @@ body {
 .team-left {
     text-align: right;
     padding-right: 10px;
-}
-
-.vs {
-    padding: 0 8px;
-    font-weight: bold;
-    text-align: center;
 }
 
 .team-right {
@@ -412,13 +417,6 @@ body {
     font-weight: 500;
 }
 
-.vs {
-    text-align: center;
-    width: 20%;
-    color: #fa363a;
-    font-weight: bold;
-}
-
 .team-right {
     text-align: left;
     width: 40%;
@@ -460,5 +458,51 @@ body {
     
     .team-right {
         padding-left: 3px; /* 增加左側內邊距，使文字與VS保持距離 */
+    }
+}
+
+.match-status {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background-color: rgba(250, 137, 147, 0.721);  /* 使用和 modal 一樣的紅色 */
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.view-result {
+    font-size: 14px;  /* 提示文字保持小一點 */
+    color: #fa363a;   /* 淺紅色 */
+    font-weight: bold; /* 粗體 */
+}
+
+.match-item.clickable {
+    cursor: pointer;
+}
+
+/* 在小螢幕上的響應式設計 */
+@media screen and (max-width: 840px) {  /* 800px + 兩邊 padding */
+    .container {
+        width: 100%;      /* 在小螢幕上使用百分比寬度 */
+        padding: 3px;
     }
 }

@@ -38,6 +38,12 @@ function setupHamburgerMenu() {
                 hamburger.classList.remove('active');
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
+                
+                // 關閉所有子目錄
+                document.querySelectorAll('.sidebar-submenu').forEach(menu => {
+                    menu.classList.remove('active');
+                    menu.previousElementSibling.classList.remove('active');
+                });
             });
         }
     }
@@ -49,6 +55,7 @@ function setupNavigation() {
         button.addEventListener('click', function(e) {
             const page = this.dataset.page;
             const submenu = this.nextElementSibling;
+            const anchor = this.dataset.anchor;
             
             // 檢查是否有子選單
             if (submenu && submenu.classList.contains('sidebar-submenu')) {
@@ -67,7 +74,7 @@ function setupNavigation() {
                 submenu.classList.toggle('active');
             } else if (page) {
                 // 如果是一般按鈕，載入對應頁面
-                loadContent(page);
+                loadContent(page, anchor);
                 // 關閉側邊欄
                 const sidebar = document.querySelector('.sidebar');
                 const overlay = document.querySelector('.overlay');
@@ -84,8 +91,9 @@ function setupNavigation() {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             const page = this.dataset.page;
+            const anchor = this.dataset.anchor;
             if (page) {
-                loadContent(page);
+                loadContent(page, anchor);
                 // 關閉側邊欄
                 const sidebar = document.querySelector('.sidebar');
                 const overlay = document.querySelector('.overlay');
@@ -98,43 +106,71 @@ function setupNavigation() {
     });
 }
 
-function loadContent(page = 'news') {
-    console.log('Loading page:', page);
+// 載入內容
+function loadContent(page, anchor = null, pushState = true) {
     const contentArea = document.getElementById('contentArea');
-    
+    if (!contentArea) return;
+
+    // 顯示載入中
     contentArea.innerHTML = '<div class="loading">載入中...</div>';
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `pages/${page}.html`, true);
+    // 構建頁面路徑
+    const pagePath = `pages/${page}.html`;
 
-    xhr.onload = async function() {
-        console.log('XHR status:', xhr.status);
-        if (xhr.status === 200) {
-            contentArea.innerHTML = xhr.responseText;
-
+    // 讀取頁面內容
+    fetch(pagePath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('頁面載入失敗');
+            }
+            return response.text();
+        })
+        .then(html => {
+            contentArea.innerHTML = html;
+            
+            // 確保標題顏色保持白色
+            const mainTitle = document.querySelector('.main-title');
+            if (mainTitle) {
+                mainTitle.style.color = 'white';
+            }
+            
             // 根據頁面類型載入不同的數據
             if (page === 'news') {
-                await loadNewsData();
+                loadNewsData();
             } 
             else if (page === 'rank' || page === 'rankS4') {
-                await loadRankData(page);
+                loadRankData(page);
             }
             else if (page === 'schedule' || page === 'scheduleS4') {
-                await loadScheduleData(page);
+                loadScheduleData(page);
+            }
+            
+            // 如果有錨點，滾動到對應位置
+            if (anchor) {
+                setTimeout(() => {
+                    const element = document.getElementById(anchor);
+                    if (element) {
+                        const headerHeight = 70;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100);
             }
 
-            // 更新按鈕狀態
-            updateButtonStates(page);
-        } else {
-            showError(xhr.statusText);
-        }
-    };
-
-    xhr.onerror = function() {
-        showError('Network error occurred');
-    };
-
-    xhr.send();
+            // 更新瀏覽器歷史記錄
+            if (pushState) {
+                const url = anchor ? `#${page}/${anchor}` : `#${page}`;
+                history.pushState({ page, anchor }, '', url);
+            }
+        })
+        .catch(error => {
+            contentArea.innerHTML = `<div class="error-message">載入失敗: ${error.message}</div>`;
+        });
 }
 
 // 更新按鈕狀態
@@ -274,11 +310,11 @@ function updateNewsContent(lastMatch, nextMatch) {
     const upcomingContent = document.getElementById('upcomingMatchesContent');
     
     if (lastWeekContent) {
-        lastWeekContent.innerHTML = lastMatch ? createMatchesHTML(lastMatch) : '<p>沒有上週的比賽記錄</p>';
+        lastWeekContent.innerHTML = lastMatch ? createMatchesHTML(lastMatch, true) : '<p>沒有上週的比賽記錄</p>';
     }
     
     if (upcomingContent) {
-        upcomingContent.innerHTML = nextMatch ? createMatchesHTML(nextMatch) : '<p>沒有即將到來的比賽</p>';
+        upcomingContent.innerHTML = nextMatch ? createMatchesHTML(nextMatch, false) : '<p>沒有即將到來的比賽</p>';
     }
 }
 
@@ -444,15 +480,32 @@ function filterScheduleTable(selectedTeams) {
 }
 
 // 創建比賽 HTML
-function createMatchesHTML(matchDay) {
+function createMatchesHTML(matchDay, isLastWeek = false) {
     return `
-        <div class="match-date">${matchDay.date}</div>
+        <div class="match-date">
+            <span class="date">${matchDay.date}</span>
+            ${isLastWeek ? '<span class="view-result">點擊看詳細賽況 👇</span>' : ''}
+        </div>
         <div class="matches-container">
-            ${matchDay.games.map(game => `
-                <div class="match-item" onclick="showGameResult('${game.game_number}')">
-                    ${game.team1} <span class="vs">VS</span> ${game.team2}
-                </div>
-            `).join('')}
+            ${matchDay.games.map(game => {
+                if (isLastWeek) {
+                    return `
+                        <div class="match-item clickable" onclick="showGameResult('${game.game_number}')">
+                            <span class="team team-away">${game.team1}</span>
+                            <span class="vs">VS</span>
+                            <span class="team team-home">${game.team2}</span>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="match-item" onclick="showToast('比賽尚未開打喔┌|◎o◎|┘')">
+                            <span class="team team-away">${game.team1}</span>
+                            <span class="vs">VS</span>
+                            <span class="team team-home">${game.team2}</span>
+                        </div>
+                    `;
+                }
+            }).join('')}
         </div>
     `;
 }
@@ -481,6 +534,24 @@ function showGameResult(gameNumber) {
             }
         }
     }
+}
+
+// 添加顯示 toast 的函數
+function showToast(message) {
+    // 創建 toast 元素
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // 添加顯示的 class
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // 1秒後移除
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => document.body.removeChild(toast), 200);
+    }, 1000);
 }
 
 function showLoadingBar() {
@@ -546,10 +617,26 @@ function showScheduleError(message) {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
-    loadContent('news');
+    // 處理瀏覽器的上一頁/下一頁事件
+    window.addEventListener('popstate', (event) => {
+        if (event.state) {
+            loadContent(event.state.page, event.state.anchor, false);
+        } else {
+            loadContent('news', null, false);
+        }
+    });
 
-    // 漢堡選單處理
+    // 處理初始 URL
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+        const [page, anchor] = hash.split('/');
+        loadContent(page, anchor);
+    } else {
+        loadContent('news');
+        history.replaceState({ page: 'news' }, '', '#news');
+    }
+
+    // 設置漢堡選單
     setupHamburgerMenu();
 
     // 設置導航事件

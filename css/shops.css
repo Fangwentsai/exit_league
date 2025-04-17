@@ -1,0 +1,172 @@
+.shops-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.shops-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+    font-size: 2em;
+}
+
+.shops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.shop-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.shop-card:hover {
+    transform: translateY(-5px);
+}
+
+.shop-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.shop-info {
+    padding: 20px;
+}
+
+.shop-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background-color: #ffebee;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.shop-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #e0e0e0;
+}
+
+.shop-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.shop-title {
+    flex-grow: 1;
+}
+
+.shop-name {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.shop-teams {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.shop-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.shop-address {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.shop-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.map-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.shop-stats {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.shop-contact {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.contact-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .shops-grid {
+        grid-template-columns: 1fr;
+    }
+} 

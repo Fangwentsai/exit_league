@@ -44,6 +44,20 @@ body::-webkit-scrollbar {
     font-weight: bold;
 }
 
+.main-title .sidebar-btn {
+    padding: 0;
+    width: auto;
+    cursor: pointer;
+    font-size: inherit;
+    font-weight: inherit;
+    text-align: center;
+    color: inherit;
+}
+
+.main-title .sidebar-btn:hover {
+    opacity: 0.8;
+}
+
 .nav-section {
     padding: 15px 0;
     border-bottom: 6px solid #333;
@@ -282,7 +296,7 @@ body::-webkit-scrollbar {
     left: -160px;
     width: 160px;
     height: 100%;
-    background-color: #e84855; /* 比 #dc3545 稍淺的紅色 */
+    background-color: #e84855;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     z-index: 999;
@@ -308,7 +322,6 @@ body::-webkit-scrollbar {
     text-align: left;
     width: 160px;
     box-sizing: border-box;
-    padding-top: 20px;
 }
 
 /* 子選單樣式 */
@@ -316,22 +329,28 @@ body::-webkit-scrollbar {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    background-color: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-submenu.active {
-    max-height: 200px; /* 足夠容納子選單項目的高度 */
+    max-height: 300px;
+    padding: 8px 0;
 }
 
 .sidebar-submenu .submenu-item {
-    padding: 12px 15px; /* 和根目錄一樣的 padding */
+    padding: 8px 15px;
     font-size: 14px;
-    width: 160px; /* 和根目錄一樣的寬度 */
+    width: 160px;
     box-sizing: border-box;
-    margin-left: 0; /* 移除縮排 */
     color: white;
+    text-decoration: none;
+    display: block;
+    line-height: 1.6;
 }
 
+.sidebar-submenu .submenu-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
 
 /* 當父選單被點擊時顯示子選單 */
 .sidebar-btn.active + .sidebar-submenu {
@@ -377,18 +396,25 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
-.footer a {
+.footer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer .sidebar-btn {
+    display: inline-block;
+    padding: 0;
     color: #6c757d;
-    text-decoration: none;
-    margin: 0 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    width: auto;
 }
 
-.footer a:first-child {
-    margin-left: 0;
-}
-
-.footer a:last-child {
-    margin-right: 0;
+.footer .sidebar-btn:hover {
+    color: #dc3545;
 }
 
 /* 版權資訊 */
