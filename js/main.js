@@ -669,5 +669,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 設置導航事件
     setupNavigation();
+
+    // 設置標題連結點擊事件
+    const titleLink = document.querySelector('.title-link');
+    if (titleLink) {
+        titleLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.dataset.page;
+            if (page) {
+                loadContent(page);
+            }
+        });
+    }
 });
 
