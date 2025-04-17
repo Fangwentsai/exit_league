@@ -85,13 +85,8 @@ function setupNavigation() {
             } else if (page) {
                 // 如果是一般按鈕，載入對應頁面
                 loadContent(page, anchor);
-                // 關閉側邊欄
-                const sidebar = document.querySelector('.sidebar');
-                const overlay = document.querySelector('.overlay');
-                const hamburger = document.querySelector('.hamburger-btn');
-                if (sidebar) sidebar.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                if (hamburger) hamburger.classList.remove('active');
+                // 關閉側邊欄和所有子選單
+                closeSidebar();
             }
         });
     });
@@ -104,15 +99,29 @@ function setupNavigation() {
             const anchor = this.dataset.anchor;
             if (page) {
                 loadContent(page, anchor);
-                // 關閉側邊欄
-                const sidebar = document.querySelector('.sidebar');
-                const overlay = document.querySelector('.overlay');
-                const hamburger = document.querySelector('.hamburger-btn');
-                if (sidebar) sidebar.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                if (hamburger) hamburger.classList.remove('active');
+                // 關閉側邊欄和所有子選單
+                closeSidebar();
             }
         });
+    });
+}
+
+// 關閉側邊欄和所有子選單的函數
+function closeSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+    const hamburger = document.querySelector('.hamburger-btn');
+    
+    if (sidebar) sidebar.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    if (hamburger) hamburger.classList.remove('active');
+    
+    // 關閉所有子選單
+    document.querySelectorAll('.sidebar-submenu').forEach(menu => {
+        menu.classList.remove('active');
+        if (menu.previousElementSibling) {
+            menu.previousElementSibling.classList.remove('active');
+        }
     });
 }
 
@@ -163,11 +172,10 @@ function loadContent(page, anchor = null, pushState = true) {
                     const scrollToAnchor = () => {
                         const element = document.getElementById(anchor);
                         if (element) {
-                            const headerHeight = 70; // 頂部固定區域的高度
+                            const headerHeight = 60; // 頂部固定區域的高度
                             const elementRect = element.getBoundingClientRect();
-                            const absoluteElementTop = elementRect.top + window.pageYOffset;
-                            const middle = window.innerHeight / 4;
-                            const scrollPosition = absoluteElementTop - headerHeight - middle;
+                            const absoluteElementTop = element.offsetTop;
+                            const scrollPosition = absoluteElementTop - headerHeight - 10;
 
                             window.scrollTo({
                                 top: scrollPosition,
@@ -180,14 +188,14 @@ function loadContent(page, anchor = null, pushState = true) {
 
                     // 嘗試多次滾動，確保元素已經載入
                     let attempts = 0;
-                    const maxAttempts = 5;
+                    const maxAttempts = 10;
                     const tryScroll = () => {
                         if (scrollToAnchor() || attempts >= maxAttempts) return;
                         attempts++;
-                        setTimeout(tryScroll, 200);
+                        setTimeout(tryScroll, 100);
                     };
                     
-                    setTimeout(tryScroll, 300);
+                    setTimeout(tryScroll, 100);
                 }
             });
 
