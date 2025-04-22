@@ -315,8 +315,8 @@ async function loadNewsData() {
                 
                 // 如果是下周的比赛（7天内），需要延迟一天显示
                 if (daysDiff <= 7) {
-                    // 如果今天是比赛前一天，不显示这场比赛
-                    if (daysDiff === 1) {
+                    // 如果今天是比赛当天或前一天，不显示这场比赛
+                    if (daysDiff <= 1) {
                         return;
                     }
                 }
