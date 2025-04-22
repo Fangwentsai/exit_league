@@ -303,14 +303,28 @@ async function loadNewsData() {
             
             const timeDiff = matchDate - today;
             
-            if (timeDiff < 0 && Math.abs(timeDiff) < minPastDiff) {
-                minPastDiff = Math.abs(timeDiff);
-                lastMatch = matchDay;
-            }
-            
-            if (timeDiff > 0 && timeDiff < minFutureDiff) {
-                minFutureDiff = timeDiff;
-                nextMatch = matchDay;
+            // 修改判断逻辑：下周的比赛延迟一天显示
+            if (timeDiff < 0) {  // 过去的比赛
+                if (Math.abs(timeDiff) < minPastDiff) {
+                    minPastDiff = Math.abs(timeDiff);
+                    lastMatch = matchDay;
+                }
+            } else {  // 未来的比赛
+                // 计算比赛日期与今天的差值（天数）
+                const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                
+                // 如果是下周的比赛（7天内），需要延迟一天显示
+                if (daysDiff <= 7) {
+                    // 如果今天是比赛前一天，不显示这场比赛
+                    if (daysDiff === 1) {
+                        return;
+                    }
+                }
+                
+                if (timeDiff < minFutureDiff) {
+                    minFutureDiff = timeDiff;
+                    nextMatch = matchDay;
+                }
             }
         });
 
@@ -587,100 +601,165 @@ function updateTeamRankings(data) {
     `).join('');
 }
 
-// 賽程頁面數據加載
+// 載入賽程數據
 async function loadScheduleData(page) {
+    console.log('開始載入賽程數據:', page);
+    let season = '';
+    
+    // 根據頁面確定要使用的配置
+    if (page === 'scheduleS4') {
+        season = 's4';
+    } else if (page === 'schedule') {  // schedule.html 對應第三屆
+        season = 's3';
+    } else {
+        console.error('未知的賽程頁面:', page);
+        return;
+    }
+
+    // 構建數據文件路徑
+    const dataFile = `/data/schedule_${season}.json`;
+    console.log('嘗試載入數據文件:', dataFile);
+
     try {
-        const currentSeason = page === 'scheduleS4' ? 'SEASON4' : 'SEASON3';
-        const config = CONFIG[currentSeason];
-        if (!config) throw new Error('找不到配置');
-
         showLoadingBar();
-
-        const range = 'schedule!A1:F1000';
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${range}?key=${config.API_KEY}`;
+        console.log('開始發送請求到:', dataFile);
+        const response = await fetch(dataFile);
+        console.log('收到響應:', response.status, response.statusText);
         
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
-        
-        const data = await response.json();
-        if (!data.values || data.values.length === 0) {
-            throw new Error('No data found in sheet');
+        if (!response.ok) {
+            throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
         }
-
-        // 獲取賽季路徑
-        const seasonPath = currentSeason === 'SEASON4' ? 'season4' : 'season3';
         
-        // 更新表格
-        const table = document.getElementById('leagueTable');
-        if (!table) return;
-
-        const headers = ['日期/場次', '客隊', '客隊得分', '', '主隊得分', '主隊'];
+        const text = await response.text();
+        console.log('收到的數據長度:', text.length);
+        console.log('數據前100個字符:', text.substring(0, 100));
         
-        // 過濾掉空白行
-        const filteredData = data.values.slice(1).filter(row => {
-            return row && (row[0]?.trim() || row[1]?.trim() || row[5]?.trim());
-        });
-
-        let gameCounter = 1;
-        
-        table.innerHTML = `
-            <thead>
-                <tr>
-                    ${headers.map(header => `<th>${header}</th>`).join('')}
-                </tr>
-            </thead>
-            <tbody>
-                ${filteredData.map(row => {
-                    // 檢查日期是否已過
-                    const matchDate = new Date(row[0].replace('/', '-'));
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0); // 設置為今天凌晨
-
-                    const gameNumber = `g${String(gameCounter).padStart(2, '0')}`;
-                    const gameUrl = `game_result/${seasonPath}/${gameNumber}.html`;
+        try {
+            // 清理文本內容
+            const cleanText = text
+                .replace(/^\uFEFF/, '')
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .replace(/\r\n/g, '\n')
+                .trim();
+            
+            // 驗證 JSON 格式
+            try {
+                validateScheduleData(cleanText);
+                console.log('JSON 格式驗證通過');
+            } catch (validationError) {
+                console.error('JSON 格式驗證失敗:', validationError.message);
+            }
+            
+            // 在解析之前輸出可能出錯的位置附近的內容
+            const errorPosition = 7391;
+            const start = Math.max(0, errorPosition - 50);
+            const end = Math.min(cleanText.length, errorPosition + 50);
+            console.log('可能出錯位置附近的內容:', cleanText.substring(start, end));
+            
+            const data = JSON.parse(cleanText);
+            console.log('JSON 解析成功');
+            
+            // 獲取當前日期
+            const currentDate = new Date();
+            
+            // 生成表格內容
+            let tableContent = '';
+            data.schedule.forEach((daySchedule) => {
+                daySchedule.games.forEach((match, index) => {
+                    const matchDate = new Date(daySchedule.date);
+                    const hasScores = match.team1.includes(" ") && match.team2.includes(" ");
+                    const isPastMatch = matchDate < currentDate;
                     
-                    // 檢查是否有得分數據
-                    const hasScores = row[2]?.trim() && row[4]?.trim();
+                    // 使用 game_number 而不是索引
+                    const gameNumber = match.game_number.substring(1); // 移除 'g' 前綴
+                    let gameResultPath = '';
                     
-                    // 只有在比賽日期已過且有得分數據時才生成連結
-                    const dateCell = (matchDate < today && hasScores)
-                        ? `<a href="#" class="match-link" data-game="${gameUrl}">${row[0] || ''}</a>`
-                        : row[0] || '';
+                    // 根據賽季設定正確的路徑
+                    if (season === 's4') {
+                        gameResultPath = `game_result/season4/g${gameNumber}.html`;
+                    } else if (season === 's3') {
+                        gameResultPath = `game_result/season3/g${gameNumber}.html`;
+                    }
 
-                    gameCounter++;
-                    
-                    return `
-                        <tr>
-                            <td style="background-color: #f0f0f0;">
-                                ${dateCell}
-                            </td>
-                            <td>${row[1] || ''}</td>
-                            <td style="text-align: center;">${row[2] || ''}</td>
-                            <td style="text-align: center;">VS</td>
-                            <td style="text-align: center;">${row[4] || ''}</td>
-                            <td>${row[5] || ''}</td>
+                    // 生成日期單元格的HTML
+                    let dateHtml = '';
+                    if (isPastMatch && hasScores) {
+                        // 檢查文件是否存在
+                        fetch(gameResultPath)
+                            .then(response => {
+                                if (response.ok) {
+                                    const dateLink = document.querySelector(`#match-${gameNumber} .date-cell a`);
+                                    if (dateLink) {
+                                        dateLink.style.display = 'inline';
+                                        console.log(`比賽記錄文件存在: ${gameResultPath}`);
+                                    }
+                                }
+                            })
+                            .catch(() => {
+                                const dateLink = document.querySelector(`#match-${gameNumber} .date-cell a`);
+                                if (dateLink) {
+                                    dateLink.style.display = 'none';
+                                    console.log(`比賽記錄文件不存在: ${gameResultPath}`);
+                                }
+                            });
+
+                        dateHtml = `
+                            <a href="${gameResultPath}" style="display: none">
+                                ${daySchedule.date}
+                            </a>
+                            <span class="date-text">${daySchedule.date}</span>
+                        `;
+                    } else {
+                        dateHtml = daySchedule.date;
+                    }
+
+                    // 從 team1 和 team2 中提取分數（如果有的話）
+                    let team1Parts = match.team1.split(" ");
+                    let team2Parts = match.team2.split(" ");
+                    let team1Score = team1Parts.length > 1 ? team1Parts[team1Parts.length - 1] : null;
+                    let team1Name = team1Parts.length > 1 ? team1Parts.slice(0, -1).join(" ") : match.team1;
+                    let team2Score = team2Parts.length > 1 ? team2Parts[0] : null;
+                    let team2Name = team2Parts.length > 1 ? team2Parts.slice(1).join(" ") : match.team2;
+
+                    // 生成表格行
+                    tableContent += `
+                        <tr id="match-${gameNumber}">
+                            <td class="date-cell">${dateHtml}</td>
+                            <td>19:30</td>
+                            <td class="team-cell">${team1Name}</td>
+                            <td class="vs-cell">VS</td>
+                            <td class="team-cell">${team2Name}</td>
+                            <td>${hasScores ? `${team1Score} : ${team2Score}` : '-'}</td>
                         </tr>
                     `;
-                }).join('')}
-            </tbody>
-        `;
-
-        // 只為過去的比賽添加點擊事件
-        table.querySelectorAll('.match-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const gameUrl = e.target.getAttribute('data-game');
-                showMatchDetails(gameUrl);
+                });
             });
-        });
+            
+            // 更新表格內容
+            const tableBody = document.querySelector('.schedule-table tbody');
+            if (tableBody) {
+                tableBody.innerHTML = tableContent;
+            }
 
-        // 設置賽程篩選功能
-        setupScheduleFilters();
-        hideLoadingBar();
-
+            // 設置賽程篩選功能
+            setupScheduleFilters();
+            
+            hideLoadingBar();
+            console.log('賽程數據載入完成');
+        } catch (error) {
+            console.error('載入賽程數據時發生錯誤:', error);
+            const tableBody = document.querySelector('.schedule-table tbody');
+            if (tableBody) {
+                tableBody.innerHTML = '<tr><td colspan="6">載入數據時發生錯誤</td></tr>';
+            }
+            hideLoadingBar();
+        }
     } catch (error) {
         console.error('載入賽程數據時發生錯誤:', error);
-        showScheduleError(error.message);
+        const tableBody = document.querySelector('.schedule-table tbody');
+        if (tableBody) {
+            tableBody.innerHTML = '<tr><td colspan="6">載入數據時發生錯誤</td></tr>';
+        }
         hideLoadingBar();
     }
 }
@@ -1120,6 +1199,48 @@ function loadImage(file) {
             resolve();
         };
     });
+}
+
+// 驗證 JSON 數據格式
+function validateScheduleData(text) {
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        
+        if (!inString) {
+            if (char === '{' || char === '[') {
+                depth++;
+            } else if (char === '}' || char === ']') {
+                depth--;
+                if (depth < 0) {
+                    throw new Error(`在位置 ${i} 發現未匹配的閉合符號: ${char}`);
+                }
+            } else if (char === '"') {
+                inString = true;
+            }
+        } else {
+            if (char === '\\' && !escaped) {
+                escaped = true;
+                continue;
+            }
+            if (char === '"' && !escaped) {
+                inString = false;
+            }
+            escaped = false;
+        }
+    }
+    
+    if (depth !== 0) {
+        throw new Error(`JSON 結構不完整: 缺少 ${depth} 個閉合符號`);
+    }
+    if (inString) {
+        throw new Error('JSON 結構不完整: 字符串未閉合');
+    }
+    
+    return true;
 }
 
 // 初始化
