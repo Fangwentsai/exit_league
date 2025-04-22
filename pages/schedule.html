@@ -8,6 +8,11 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492"
      crossorigin="anonymous"></script>
+    <!-- 明確指定只加載 s3 的數據 -->
+    <script>
+        const seasonOverride = 's3';
+        console.log('設置 seasonOverride =', seasonOverride);
+    </script>
 </head>
 <body>
     <!-- 加入 banner 圖片 -->
@@ -44,10 +49,23 @@
         <div class="schedule-hint">提醒：點擊日期/場次可以查看先前比賽紀錄喔</div>
 
         <!-- 賽程表格 -->
-        <table class="schedule-table" id="leagueTable"></table>
+        <table class="schedule-table" id="leagueTable">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>客隊</th>
+                    <th>比分</th>
+                    <th>主隊</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 比賽資料將由 JavaScript 動態載入 -->
+            </tbody>
+        </table>
     </div>
 
-    <!-- 引入配置 -->
+    <!-- 引入配置和主腳本 -->
     <script src="../config/config.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
