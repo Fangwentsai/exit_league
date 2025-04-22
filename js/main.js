@@ -303,27 +303,35 @@ async function loadNewsData() {
             
             const timeDiff = matchDate - today;
             
-            // 修改判断逻辑：下周的比赛延迟一天显示
+            // 获取当前日期是周几（0是周日，1-6是周一到周六）
+            const currentDayOfWeek = today.getDay();
+            // 获取比赛日期是周几
+            const matchDayOfWeek = matchDate.getDay();
+            
             if (timeDiff < 0) {  // 过去的比赛
                 if (Math.abs(timeDiff) < minPastDiff) {
                     minPastDiff = Math.abs(timeDiff);
                     lastMatch = matchDay;
                 }
             } else {  // 未来的比赛
-                // 计算比赛日期与今天的差值（天数）
+                // 计算当前日期到比赛日期的天数差
                 const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                 
-                // 如果是下周的比赛（7天内），需要延迟一天显示
-                if (daysDiff <= 7) {
-                    // 如果今天是比赛当天或前一天，不显示这场比赛
-                    if (daysDiff <= 1) {
-                        return;
+                // 如果比赛日期是周日（0），且当前日期在周一到周六之间
+                if (matchDayOfWeek === 0) {
+                    // 如果当前日期在周一到周六之间，且距离比赛还有不到一周
+                    if (currentDayOfWeek >= 1 && currentDayOfWeek <= 6 && daysDiff < 7) {
+                        if (timeDiff < minFutureDiff) {
+                            minFutureDiff = timeDiff;
+                            nextMatch = matchDay;
+                        }
                     }
-                }
-                
-                if (timeDiff < minFutureDiff) {
-                    minFutureDiff = timeDiff;
-                    nextMatch = matchDay;
+                } else {
+                    // 对于非周日的比赛，保持原有逻辑
+                    if (timeDiff < minFutureDiff) {
+                        minFutureDiff = timeDiff;
+                        nextMatch = matchDay;
+                    }
                 }
             }
         });
