@@ -75,7 +75,7 @@ body {
 
 .team {
     width: 140px;     /* 調整寬度確保能容納隊伍名稱 */
-    font-size: 16px;  /* 設定基本字體大小 */
+    font-size: 15px;  /* 設定基本字體大小 */
 }
 
 .team-away {

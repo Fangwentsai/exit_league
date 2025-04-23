@@ -1054,8 +1054,39 @@ function setupMatchTableRows() {
                 }
             }
         }
+        
+        // 檢查是否為重要比賽並標記
+        markImportantMatches(row);
     }
     console.log('賽程表格行點擊事件設置完成');
+}
+
+// 標記重要比賽
+function markImportantMatches(row) {
+    // 獲取隊伍名稱
+    const cells = row.getElementsByClassName('team-cell');
+    if (cells.length < 2) return;
+    
+    const team1 = cells[0].textContent.trim();
+    const team2 = cells[1].textContent.trim();
+    
+    // 定義重要比賽的隊伍組合
+    const importantMatchups = [
+        ['Vivi朝酒晚舞', '海盜揪硬'],  // 第一名對第二名
+        ['Vivi朝酒晚舞', 'Jack'],      // 第一名對第三名
+        ['海盜揪硬', 'Jack'],          // 第二名對第三名
+        ['酒空組', '一鏢開天門']        // 第四名對第五名
+    ];
+    
+    // 檢查是否為重要比賽
+    for (const matchup of importantMatchups) {
+        if ((team1 === matchup[0] && team2 === matchup[1]) || 
+            (team1 === matchup[1] && team2 === matchup[0])) {
+            row.classList.add('important-match');
+            console.log(`標記重要比賽: ${team1} vs ${team2}`);
+            break;
+        }
+    }
 }
 
 // 創建比賽 HTML
