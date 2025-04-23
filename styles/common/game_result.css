@@ -88,7 +88,7 @@ body {
 }
 
 .game-table {
-    width: 102%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -232,6 +232,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .stats-btn {
@@ -367,5 +368,20 @@ body {
         width: 24px; /* 小屏幕上縮小圖標 */
         height: 24px;
         left: 3px; /* 調整左側間距 */
+    }
+}
+
+/* 為iPhone 12 Pro等中等寬度設備設置特殊樣式 */
+@media screen and (min-width: 375px) and (max-width: 390px) {
+    .stats-btn {
+        padding: 5px 8px;
+        min-width: 60px;
+        font-size: 11px;
+    }
+    
+    .game-table th,
+    .game-table td {
+        padding: 5px 3px;
+        font-size: 9pt;
     }
 }
