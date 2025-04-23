@@ -440,7 +440,7 @@ body {
     }
     
     .vs {
-        width: 16%; /* 減少中間VS的寬度 */
+        width: 10%; /* 減少中間VS的寬度 */
         font-size: 0.9em; /* 縮小VS字體 */
     }
 }
@@ -504,5 +504,63 @@ body {
     .container {
         width: 100%;      /* 在小螢幕上使用百分比寬度 */
         padding: 3px;
+    }
+}
+
+/* 為iPhone 12 Pro及類似尺寸設備添加特殊樣式 */
+@media screen and (min-width: 375px) and (max-width: 390px) {
+    .team {
+        width: 120px; /* 調整寬度 */
+        font-size: 13px; /* 縮小字體 */
+    }
+    
+    .vs {
+        font-size: 11px;
+    }
+    
+    .section-title,
+    .ranking-section h2 {
+        font-size: 18px;
+    }
+    
+    .match-date {
+        font-size: 16px;
+    }
+    
+    .news-title {
+        font-size: 1.1em;
+    }
+    
+    .news-text {
+        font-size: 0.95em;
+    }
+    
+    .upcoming-matches {
+        padding: 15px;
+    }
+    
+    .match-item {
+        gap: 5px;
+    }
+}
+
+/* 更小螢幕的特殊處理 */
+@media screen and (max-width: 360px) {
+    .team {
+        width: 110px;
+        font-size: 12px;
+    }
+    
+    .vs {
+        font-size: 10px;
+    }
+    
+    .section-title,
+    .ranking-section h2 {
+        font-size: 17px;
+    }
+    
+    .match-date {
+        font-size: 15px;
     }
 }
