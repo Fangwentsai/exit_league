@@ -288,4 +288,57 @@ function generateMatchTable(matches) {
     // 插入到 match-result 後面
     const matchResult = document.querySelector('.match-result');
     matchResult.insertAdjacentHTML('afterend', tableHTML);
+}
+
+// 頁面載入完成後執行的函數
+document.addEventListener('DOMContentLoaded', function() {
+    // 處理勝利圖標的位置
+    setupWinnerIcons();
+    
+    // 其他頁面初始化代碼...
+    setupStatsButtons();
+});
+
+// 設置勝利圖標的位置
+function setupWinnerIcons() {
+    // 獲取所有帶有winner類別的單元格
+    const winnerCells = document.querySelectorAll('.winner');
+    
+    // 遍歷每個單元格
+    winnerCells.forEach(cell => {
+        // 檢測內容是否包含逗號或<br>，表示是多人賽
+        const cellText = cell.innerHTML;
+        if (cellText.includes(',') || cellText.includes('<br>')) {
+            // 添加多行樣式類
+            cell.classList.add('winner-multiline');
+        }
+    });
+}
+
+// 設置統計按鈕的切換功能
+function setupStatsButtons() {
+    const statsBtns = document.querySelectorAll('.stats-btn');
+    const awayStats = document.getElementById('awayStats');
+    const homeStats = document.getElementById('homeStats');
+    
+    if (!statsBtns.length || !awayStats || !homeStats) return;
+    
+    statsBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // 移除所有按鈕的活動狀態
+            statsBtns.forEach(b => b.classList.remove('active'));
+            // 添加當前按鈕的活動狀態
+            this.classList.add('active');
+            
+            // 顯示對應的統計表格
+            const team = this.getAttribute('data-team');
+            if (team === 'away') {
+                awayStats.classList.remove('hidden');
+                homeStats.classList.add('hidden');
+            } else {
+                homeStats.classList.remove('hidden');
+                awayStats.classList.add('hidden');
+            }
+        });
+    });
 } 

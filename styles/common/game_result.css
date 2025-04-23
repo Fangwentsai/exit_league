@@ -181,20 +181,26 @@ body {
     position: relative;
     text-align: center;
     vertical-align: middle;
-    padding: 8px 6px 8px 38px !important;
+    padding: 8px 6px 8px 38px !important; /* 左側添加空間以容納勝利圖標 */
+}
+
+/* 多人賽的勝方標示 - 使用特定的類別替代:has選擇器 */
+.winner-multiline {
+    padding-left: 42px !important; /* 有換行時增加左側間距 */
 }
 
 /* 勝利圖標 */
 .winner-icon {
     position: absolute;
-    top: 34%;
-    left: 2px;
+    top: 50%; /* 定位在垂直中間 */
+    left: 4px; /* 左側位置 */
     width: 30px;
     height: 30px;
-    transform: translateY(-50%);
+    transform: translateY(-50%); /* 垂直居中對齊 */
     background-image: url(../../images/winner.png);
     background-size: contain;
     background-repeat: no-repeat;
+    z-index: 5; /* 將圖標放在文字上方以確保可見 */
 }
 
 /* 表格基本樣式 */
@@ -345,4 +351,21 @@ body {
 /* 交替行顏色 */
 .score-table tr:nth-child(even) {
     background: #fafafa;
+}
+
+/* 為小屏幕設備調整勝利圖標 */
+@media screen and (max-width: 480px) {
+    .winner {
+        padding: 8px 6px 8px 32px !important; /* 小屏幕上減少左側空間 */
+    }
+    
+    .winner-multiline {
+        padding-left: 36px !important; /* 小屏幕上的多行文字左側間距 */
+    }
+    
+    .winner-icon {
+        width: 24px; /* 小屏幕上縮小圖標 */
+        height: 24px;
+        left: 3px; /* 調整左側間距 */
+    }
 }
