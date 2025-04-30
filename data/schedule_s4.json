@@ -22,10 +22,10 @@
     ]},
 
     { "date": "2025/4/29", "games": [
-      { "game_number": "g13", "team1": "一鏢開天門", "team2": "逃生入口A(主)" },
-      { "game_number": "g14", "team1": "酒空組", "team2": "海盜揪硬(主)" },
-      { "game_number": "g15", "team1": "人生揪難", "team2": "VIVI朝酒晚舞(主)" },
-      { "game_number": "g16", "team1": "Jack", "team2": "逃生入口C(主)" }
+      { "game_number": "g13", "team1": "一鏢開天門 19", "team2": "17 逃生入口A(主)" },
+      { "game_number": "g14", "team1": "酒空組 17", "team2": "19 海盜揪硬(主)" },
+      { "game_number": "g15", "team1": "人生揪難 11", "team2": "25 VIVI朝酒晚舞(主)" },
+      { "game_number": "g16", "team1": "Jack 15", "team2": "21 逃生入口C(主)" }
     ]},
 
     { "date": "2025/5/6", "games": [
