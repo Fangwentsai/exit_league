@@ -9,6 +9,38 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../styles/news.css">
+    <style>
+        /* 加載指示器樣式 */
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .loading-indicator:after {
+            content: "...";
+            position: absolute;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            animation: ellipsis 2s infinite;
+            width: 0px;
+        }
+        
+        @keyframes ellipsis {
+            from {
+                width: 0px;
+            }
+            to {
+                width: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,13 +48,17 @@
         <!-- 近期比賽區塊 (置頂) -->
         <div class="upcoming-matches">
             <h2 class="section-title">上週戰況</h2>
-            <div id="lastWeekMatchesContent" class="matches-content"></div>
+            <div id="lastWeekMatchesContent" class="matches-content">
+                <div class="loading-indicator">數據加載中，請稍候...</div>
+            </div>
         </div>
 
         <!-- 近期比賽區塊 (置頂) -->
         <div class="upcoming-matches">            
             <h2 class="section-title">近期比賽</h2>
-            <div id="upcomingMatchesContent" class="matches-content"></div>
+            <div id="upcomingMatchesContent" class="matches-content">
+                <div class="loading-indicator">數據加載中，請稍候...</div>
+            </div>
         </div>
         
         <!-- 排行榜區塊 -->
@@ -208,26 +244,6 @@
             <iframe id="gameFrame" frameborder="0"></iframe>
         </div>
     </div>
-
-    <script>
-    async function loadMatches() {
-        try {
-            console.log('開始載入比賽數據...');
-            const url = '/data/schedule_s4.json';
-            console.log('嘗試讀取:', url);
-            
-            const response = await fetch(url);
-            console.log('fetch 響應狀態:', response.status);
-            
-            // ... 其餘代碼 ...
-        } catch (error) {
-            console.error('載入比賽時發生錯誤:', error);
-        }
-    }
-
-    // 立即執行
-    loadMatches();
-    </script>
 </body>
 </html>
 

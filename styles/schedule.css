@@ -8,10 +8,11 @@ body {
 }
 
 .container {
-    width: 100%; /* 修改為100%寬度，移除邊距 */
+    width: 100%; 
     max-width: 100%;
     margin: 0;
-    padding: 10px; /* 減少padding */
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 /* 搜尋區域樣式 */
@@ -20,14 +21,14 @@ body {
     padding: 20px;
     background-color: #f8f8f8;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #eee;
     width: 100%;
     box-sizing: border-box;
 }
 
 .search-title {
-    font-size: 1.2em;
+    font-size: 1.25em;
     margin-bottom: 20px;
     color: #333;
     position: relative;
@@ -65,44 +66,48 @@ body {
 
 /* 隊伍按鈕基本樣式 */
 .team-btn {
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: 2px solid #555;
-    border-radius: 8px;  /* 減少圓角 */
+    border-radius: 8px;
     background-color: #fff;
     color: #333;
     cursor: pointer;
     white-space: nowrap;
-    font-size: 0.9em;
+    font-size: 1em;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex: 1;
     min-width: 90px;
     max-width: 150px;
+    text-align: center;
+    font-weight: 500;
 }
 
 /* 隊伍按鈕懸停效果 */
 .team-btn:hover {
     background-color: #f0f0f0;
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: #333;
 }
 
-/* 隊伍按鈕選中狀態 - 移除 !important */
+/* 隊伍按鈕選中狀態 */
 .team-btn.selected {
     background-color: #dc3545;
     color: #fff;
     border-color: #dc3545;
     box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+    transform: translateY(-1px);
 }
 
 /* 取消按鈕樣式 */
 .cancel-btn {
     padding: 8px 12px;
     border: 2px solid #555;
-    border-radius: 8px;  /* 減少圓角 */
+    border-radius: 8px;
     background-color: #fff;
     color: #333;
     cursor: pointer;
@@ -148,24 +153,42 @@ body {
     box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
 }
 
-/* 表格基本樣式 */
+/* 表格基本樣式 - 使用表格布局而非網格布局 */
 .schedule-table {
-    width: 100%; /* 保證100%寬度 */
-    max-width: none; /* 移除最大寬度限制 */
+    width: 100%;
     border-collapse: collapse;
-    margin: 0; /* 完全移除邊距 */
+    margin: 0;
     border: 1px solid #ddd;
     table-layout: fixed;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .schedule-table th,
 .schedule-table td {
-    padding: 10px;
+    padding: 12px 10px;
     text-align: center;
     border: 1px solid #ddd;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.9em;
+}
+
+/* 設置列寬比例 */
+.schedule-table th:nth-child(1),
+.schedule-table td:nth-child(1) {
+    width: 20%; /* 日期列 */
+}
+
+.schedule-table th:nth-child(2),
+.schedule-table td:nth-child(2),
+.schedule-table th:nth-child(4),
+.schedule-table td:nth-child(4) {
+    width: 35%; /* 隊伍名稱列 */
+}
+
+.schedule-table th:nth-child(3),
+.schedule-table td:nth-child(3) {
+    width: 10%; /* 比分列 */
 }
 
 /* 表頭樣式 */
@@ -179,9 +202,11 @@ body {
     background-color: #dc3545;
     color: white;
     font-weight: bold;
+    font-size: 1.05em;
+    padding: 14px 10px;
 }
 
-/* 表格雙數行背景色 - 改為白色 */
+/* 表格雙數行背景色 */
 .schedule-table tbody tr:nth-child(even) {
     background-color: #ffffff;
 }
@@ -191,599 +216,284 @@ body {
     background-color: #ffffff;
 }
 
+/* 表格行懸停效果 */
+.schedule-table tbody tr:hover {
+    background-color: #f8f8f8;
+    transition: background-color 0.2s ease;
+}
+
 /* 選中隊伍的效果 */
 .schedule-table td.highlight-team {
     font-weight: bold;
-    background-color: #ffd6d9;  /* 淺紅色背景，適配 #dc3545 */
+    background-color: #ffd6d9;
+    border-left: 3px solid #dc3545;
 }
 
-/* 確保選中的隊伍背景色優先級更高 */
-.schedule-table tbody tr:nth-child(even) td.highlight-team {
-    background-color: #ffd6d9 !important;  /* 保持選中狀態的背景色 */
-}
-
-/* 日期單元格樣式 - 移除灰色背景 */
+/* 日期單元格 */
 .date-cell {
-    background-color: #ffffff;
-    min-width: 80px;
     font-weight: normal;
-}
-
-.team-cell {
-    width: 35%;  /* 增加隊伍欄位寬度 */
-}
-
-/* 比分單元格樣式 */
-.score-cell {
-    width: 15%;
-    text-align: center;
-    font-weight: bold;
-    color: #666;
-    padding: 5px;
-    min-width: 60px;
+    vertical-align: middle;
     white-space: nowrap;
-}
-
-/* 分數樣式 */
-.score {
-    color: #dc3545;
-    font-weight: bold;
-    font-size: 1.1em;
-    margin: 0 3px;
-}
-
-/* VS 單元格樣式 */
-.vs-cell {
-    width: 15%;  /* 增加 VS 欄位寬度以容納分數 */
-    font-weight: bold;
-    color: #666;
-    padding: 5px;  /* 增加內邊距 */
-    min-width: 60px;  /* 確保最小寬度 */
-    white-space: nowrap;
-}
-
-/* 交錯顏色 - 整行設定 */
-.match-row[data-date-group="odd"],
-.match-row[data-date-group="odd"] td {
-    background-color: #ffffff;
-}
-
-/* 移除之前只針對日期欄位的背景色設定 */
-.match-row[data-date-group="odd"] .date-cell {
-    background-color: inherit;
-}
-
-/* Hover 效果 */
-.match-row:hover,
-.match-row:hover td {
-    background-color: #ffffff;
-}
-
-/* 新的日期分組背景色規則 */
-.match-row[class*="date-group-odd"] .date-cell {
-    background-color: #ffffff;
-}
-
-/* 或者使用 JavaScript 動態添加的類別 */
-.date-group-1 .date-cell,
-.date-group-3 .date-cell,
-.date-group-5 .date-cell,
-.date-group-7 .date-cell {
-    background-color: #ffffff;
-}
-
-/* 響應式設計 */
-@media screen and (max-width: 768px) {
-    .container {
-        width: 100%;
-        padding: 10px 5px; /* 在手機版上進一步減少側邊間距 */
-    }
-    
-    .schedule-table th,
-    .schedule-table td {
-        padding: 8px 4px;
-        font-size: 0.85em;
-    }
-
-    /* 調整手機版的欄位寬度 */
-    .date-cell {
-        width: 12%;
-    }
-
-    .team-cell {
-        width: 35%;  /* 增加手機版隊伍欄位寬度 */
-    }
-
-    .score-cell {
-        width: 18%;  /* 手機版比分欄位寬度 */
-        padding: 4px;
-        min-width: 50px;  /* 手機版最小寬度 */
-    }
-
-    .vs-cell {
-        width: 14%;  /* 手機版 VS 欄位寬度 */
-        padding: 4px;
-        min-width: 50px;  /* 手機版最小寬度 */
-    }
-    
-    .search-section {
-        padding: 15px;
-        margin: 15px 0 20px;
-    }
-
-    .search-title {
-        font-size: 1.2em;
-        margin-bottom: 15px;
-    }
-
-    .filter-row {
-        gap: 8px;
-        justify-content: center;  /* 在手機版置中對齊 */
-    }
-
-    .team-btn {
-        padding: 6px 10px;
-        font-size: 0.9em;
-        min-width: 80px;
-        max-width: 120px;
-        flex: 0 1 auto;
-    }
-
-    .cancel-btn {
-        padding: 6px 10px;
-        font-size: 0.9em;
-        margin-left: 0;
-        width: auto;
-    }
-}
-
-/* 超小螢幕的特殊處理 */
-@media screen and (max-width: 480px) {
-    .schedule-table th,
-    .schedule-table td {
-        font-size: 0.85em;
-        padding: 6px 2px;
-    }
-
-    /* 更進一步調整超小螢幕的欄位寬度 */
-    .date-cell {
-        width: 10%;
-    }
-
-    .team-cell {
-        width: 37%;  /* 調整超小螢幕隊伍欄位寬度 */
-    }
-
-    .score-cell {
-        width: 16%;  /* 超小螢幕比分欄位寬度 */
-        padding: 3px;
-        min-width: 40px;  /* 超小螢幕最小寬度 */
-    }
-
-    .vs-cell {
-        width: 12%;  /* 超小螢幕 VS 欄位寬度 */
-        padding: 3px;
-        min-width: 40px;  /* 超小螢幕最小寬度 */
-    }
-
-    /* 調整超小螢幕的分數大小 */
-    .score {
-        font-size: 1em;
-        margin: 0 3px;
-    }
-
-    .team-btn {
-        padding: 5px 8px;
-        font-size: 0.85em;
-        min-width: 70px;
-        max-width: 100px;
-    }
-
-    .cancel-btn {
-        padding: 5px 8px;
-        font-size: 0.85em;
-    }
-
-    .filter-row {
-        gap: 6px;
-    }
-}
-
-/* 進度條容器 */
-.loading-bar {
-    width: 100%;
-    height: 3px;
-    background-color: #e0e0e0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: none;
-}
-
-/* 進度條 */
-.loading-progress {
-    width: 0%;
-    height: 100%;
-    background-color: #dc3545;
-    transition: width 0.3s ease;
-}
-
-/* Banner 樣式 */
-.banner {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    border: 2px solid #555;
-}
-
-.banner-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* 比賽連結樣式 */
-.match-link {
-    color: #fa363a;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.match-link:hover {
-    text-decoration: underline;
-}
-
-/* 模態框樣式 */
-.match-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.match-modal-content {
-    position: relative;
-    width: 90%;
-    height: 80%;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.match-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 8px;
-}
-
-/* 調整關閉按鈕到左上角 */
-.modal-close {
-    position: absolute;
-    left: -15px;
-    top: -15px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fa363a;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
-    z-index: 1001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.modal-close:hover {
-    background-color: #e62e32;
-    transform: scale(1.1);
-    transition: all 0.2s ease;
-}
-
-/* 日期連結樣式 */
-.match-link {
-    color: #333;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.match-link:hover {
-    color: #fa363a;
-    text-decoration: underline;
-}
-
-/* 懸浮視窗樣式 */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    width: 80%;
-    height: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-
-.close {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: #000;
-}
-
-#gameFrame {
-    width: 100%;
-    height: calc(100% - 30px);
-    margin-top: 20px;
-}
-
-/* 提示文字樣式 */
-.schedule-hint {
-    margin: 15px 0 10px;
-    color: #666;
-    font-size: 0.95em;
-    padding-left: 20px;
-    position: relative;
-}
-
-.schedule-hint::before {
-    content: '💡';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* 賽程頁面樣式 */
-.schedule-container {
-    max-width: 100%; /* 修改為100%寬度 */
-    margin: 0;
-    padding: 10px; /* 減少內邊距 */
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.schedule-filters {
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-.filter-item {
-    margin-right: 20px;
-    margin-bottom: 10px;
-}
-
-.filter-label {
-    font-weight: bold;
-    margin-right: 8px;
-}
-
-.schedule-table {
-    width: 100%;
-    max-width: none; /* 移除最大寬度限制 */
-    border-collapse: collapse;
-}
-
-.schedule-table th,
-.schedule-table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.schedule-table th {
-    background-color: #dc3545;
-    color: white;
-    font-weight: bold;
-}
-
-.schedule-table tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-.schedule-table tr:hover {
-    background-color: #f0f0f0;
-}
-
-.date-cell {
-    width: 15%;
-    min-width: 90px;
-}
-
-.team-cell {
-    width: 37%;
-}
-
-.score-cell {
-    width: 16%;
-    padding: 3px;
-    min-width: 40px;
-}
-
-.score {
-    font-weight: bold;
+    font-size: 0.95em;
 }
 
 /* 可點擊日期樣式 */
 .clickable-date {
-    color: #333;
-    font-weight: bold;
-    cursor: pointer;
+    color: #dc3545;
     text-decoration: underline;
-    transition: color 0.2s, transform 0.2s;
-    display: inline-block;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
 .clickable-date:hover {
-    color: #dc3545;
+    color: #a71d2a;
 }
 
-.clickable-date:active {
-    transform: translateY(1px) scale(0.98);
-    transition: transform 0.1s;
+/* 隊伍單元格 */
+.team-cell {
+    font-weight: normal;
+    text-align: center; /* 確保文字居中 */
+    vertical-align: middle;
+    font-size: 1.05em; /* 放大隊伍名稱文字 */
+    padding: 0 10px; /* 增加水平內邊距，讓文字與中間更接近 */
 }
 
-/* 響應式設計 */
-@media (max-width: 768px) {
-    .schedule-table th,
-    .schedule-table td {
-        padding: 6px;
-        font-size: 14px;
+/* 調整客場隊伍的文字位置 */
+.schedule-table td:nth-child(2) {
+    text-align: right; /* 靠右對齊，朝向中間 */
+    padding-right: 15px; /* 增加右側內邊距，靠近中間 */
+}
+
+/* 調整主場隊伍的文字位置 */
+.schedule-table td:nth-child(4) {
+    text-align: left; /* 靠左對齊，朝向中間 */
+    padding-left: 15px; /* 增加左側內邊距，靠近中間 */
+}
+
+/* 比分單元格 */
+.score-cell {
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 2px; /* 減少水平內邊距，讓比分更緊湊 */
+    position: relative;
+    min-width: 50px; /* 確保比分欄有最小寬度 */
+    background-color: #fafafa; /* 輕微背景色，使比分欄顯得更加獨立 */
+}
+
+/* 比分樣式 */
+.score {
+    font-weight: bold;
+    font-size: 1.4em; /* 放大比分數字 */
+    display: inline-block;
+    margin: 0 1px; /* 減少比分數字之間的間距 */
+    color: #dc3545; /* 添加紅色以增強視覺效果 */
+}
+
+/* 比分之間的分隔符 */
+.score-cell .score-separator {
+    display: inline-block;
+    margin: 0 3px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* 響應式設計 - 平板 */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 5px;
     }
     
-    .date-cell {
+    .schedule-table th,
+    .schedule-table td {
+        padding: 10px 5px;
+        font-size: 0.9em;
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 20%;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 35%;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 10%;
+    }
+    
+    .search-section {
+        padding: 15px;
+        margin: 10px 0 15px;
+    }
+    
+    .search-title {
+        font-size: 1.2em;
+    }
+    
+    .team-btn {
+        padding: 8px 12px;
+        font-size: 0.95em;
+        min-width: 80px;
+    }
+    
+    .team-cell {
+        font-size: 1em;
+    }
+    
+    .score {
+        font-size: 1.3em;
+    }
+    
+    .schedule-table th {
+        padding: 12px 5px;
+        font-size: 1em;
+    }
+    
+    .schedule-table td:nth-child(2) {
+        padding-right: 10px; /* 平板上減少內邊距 */
+    }
+    
+    .schedule-table td:nth-child(4) {
+        padding-left: 10px; /* 平板上減少內邊距 */
+    }
+}
+
+/* 響應式設計 - 手機 (480px) */
+@media screen and (max-width: 480px) {
+    .schedule-table th,
+    .schedule-table td {
+        font-size: 0.85em;
+        padding: 10px 2px;
+        line-height: 1.3;
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 37.5%;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 10%;
+        padding: 3px;
+    }
+    
+    .team-cell {
+        font-size: 0.95em;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+    
+    .score {
+        font-size: 1.3em;
+        font-weight: 700;
+        color: #c82333;
+    }
+    
+    .score-cell .score-separator {
+        color: #aaa;
+    }
+    
+    .team-btn {
+        padding: 8px 10px;
+        font-size: 0.9em;
         min-width: 70px;
+        max-width: 100px;
     }
-}
-
-@media (max-width: 576px) {
-    .schedule-table th,
-    .schedule-table td {
-        padding: 4px;
-        font-size: 12px;
+    
+    .cancel-btn {
+        padding: 5px 8px;
+        font-size: 0.85em;
+    }
+    
+    .filter-row {
+        gap: 6px;
+    }
+    
+    .schedule-table th {
+        padding: 10px 2px;
+        font-size: 0.95em;
+    }
+    
+    .schedule-table td:nth-child(2) {
+        padding-right: 8px;
+    }
+    
+    .schedule-table td:nth-child(4) {
+        padding-left: 8px;
+    }
+    
+    .schedule-table tbody tr {
+        height: auto;
+        min-height: 44px;
+    }
+    
+    .score-cell {
+        background-color: #fbfbfb;
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.03);
     }
     
     .date-cell {
-        min-width: 60px;
+        font-weight: 500;
+        background-color: #f5f5f5;
+    }
+}
+
+/* 特別為430px寬度設置優化 */
+@media screen and (max-width: 430px) and (min-width: 391px) {
+    .team-cell {
+        font-size: 0.9em;
+        padding: 6px 2px;
     }
     
-    .filter-item {
-        margin-right: 10px;
-    }
-}
-
-/* 可點擊比賽行樣式 */
-tr.clickable-match {
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
-}
-
-tr.clickable-match:hover {
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-tr.clickable-match:active {
-    transform: scale(0.98);
-    background-color: #f0f0f0;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: transform 0.1s, box-shadow 0.1s;
-}
-
-/* 高亮提示點擊樣式 */
-tr.clickable-match .score-cell {
-    position: relative;
-}
-
-tr.clickable-match .score-cell:after {
-    content: "點擊查看";
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: #fff;
-    padding: 3px 8px;
-    border-radius: 3px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s, top 0.3s;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 5;
-}
-
-tr.clickable-match:hover .score-cell:after {
-    opacity: 0.9;
-    top: -25px;
-}
-
-@media (max-width: 768px) {
-    tr.clickable-match .score-cell:after {
-        display: none;
-    }
-}
-
-/* 重要比賽高亮樣式 - 已停用 */
-tr.important-match {
-    /* 移除所有特殊樣式 */
-    position: relative;
-    border-left: none; /* 移除紅色邊框 */
-    background-color: inherit; /* 使用與普通行相同的背景色 */
-    transition: none;
-}
-
-tr.important-match:before {
-    /* 移除星星圖標 */
-    content: none;
-    display: none;
-}
-
-tr.important-match:hover {
-    background-color: #f0f0f0; /* 與普通行的hover效果一致 */
-}
-
-tr.important-match.clickable-match:hover {
-    /* 使用與普通clickable-match相同的效果 */
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* 當同時是重要比賽和可點擊比賽時的樣式 */
-tr.important-match.clickable-match .score-cell:after {
-    background-color: #333; /* 恢復為默認顏色 */
-}
-
-/* 停用響應式調整 */
-@media (max-width: 768px) {
-    tr.important-match:before {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    tr.important-match {
-        border-left: none;
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
     }
     
-    tr.important-match:before {
-        display: none;
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 37.5%;
+        white-space: normal;
+        word-break: break-word;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 12%;
+        padding: 2px 0;
+    }
+    
+    .score {
+        font-size: 1.2em;
+    }
+    
+    .schedule-table td:nth-child(2) {
+        padding-right: 5px;
+    }
+    
+    .schedule-table td:nth-child(4) {
+        padding-left: 5px;
     }
 }
 
-/* 為iPhone 12 Pro等中等寬度設備設置特殊樣式 */
+/* 優化iPhone 12 Pro等約390px寬的設備 */
 @media screen and (min-width: 375px) and (max-width: 390px) {
     .team-btn {
         padding: 6px 8px;
@@ -801,4 +511,394 @@ tr.important-match.clickable-match .score-cell:after {
     .filter-row {
         gap: 6px;
     }
+    
+    .team-cell {
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 37.5%;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 10%;
+    }
+    
+    .score {
+        font-size: 1.2em;
+    }
+}
+
+/* 小型手機優化 (375px以下) */
+@media screen and (max-width: 374px) {
+    .team-cell {
+        font-size: 0.85em;
+        padding: 8px 1px;
+    }
+    
+    .date-cell {
+        font-size: 0.75em;
+        padding: 3px 1px;
+    }
+    
+    .score-cell {
+        padding: 2px;
+    }
+    
+    .score {
+        font-size: 1.1em;
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 37.5%;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 10%;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 8px 1px;
+    }
+    
+    .team-cell {
+        white-space: normal;
+        word-break: break-word;
+        font-size: 0.84em;
+        line-height: 1.3;
+    }
+    
+    .score-cell .score-separator {
+        margin: 0 1px;
+        font-size: 0.9em;
+    }
+    
+    tr.clickable-match:after {
+        content: "⋯";
+        right: 3px;
+        font-size: 14px;
+        padding: 0;
+        background: none;
+    }
+}
+
+/* 改進加載條樣式 */
+.loading-bar {
+    width: 100%;
+    height: 3px;
+    background-color: #f0f0f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background-color: #dc3545;
+    background-image: linear-gradient(45deg, 
+        rgba(255,255,255,0.2) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255,255,255,0.2) 50%, 
+        rgba(255,255,255,0.2) 75%, 
+        transparent 75%, 
+        transparent);
+    background-size: 16px 16px;
+    animation: loading-animation 1s linear infinite;
+    transition: width 0.3s ease;
+}
+
+@keyframes loading-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 16px 0;
+    }
+}
+
+/* 改進表格初始載入動畫 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.schedule-table tbody tr {
+    animation: fadeInUp 0.3s ease-out forwards;
+    animation-delay: calc(var(--row-index, 0) * 0.05s);
+    opacity: 0;
+}
+
+/* 滾動時改進表格行的顯示效果 */
+@media (prefers-reduced-motion: no-preference) {
+    .schedule-table {
+        scroll-behavior: smooth;
+    }
+    
+    /* 為表格行添加交錯淡入效果 */
+    .schedule-table tbody tr:nth-child(odd) {
+        --row-index: 1;
+    }
+    
+    .schedule-table tbody tr:nth-child(even) {
+        --row-index: 2;
+    }
+}
+
+/* 頁面切換過渡效果 */
+.content-container {
+    transition: opacity 0.2s ease;
+}
+
+/* 模態框改進樣式 */
+.match-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+.match-modal.visible {
+    opacity: 1;
+}
+
+.match-modal-content {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.match-modal.visible .match-modal-content {
+    transform: scale(1);
+}
+
+.match-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.match-modal.visible .match-iframe {
+    opacity: 1;
+}
+
+.modal-close {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fa363a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background-color: #e62e32;
+    transform: scale(1.1);
+}
+
+/* 改進可點擊比賽行的觸覺反饋 */
+@media (hover: hover) {
+    tr.clickable-match:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* 提升移動設備觸摸體驗 */
+@media (hover: none) {
+    tr.clickable-match:active {
+        background-color: #ffeeef;
+    }
+    
+    tr.clickable-match:after {
+        content: "點擊查看";
+        right: 5px;
+        font-size: 10px;
+        opacity: 0.7;
+        background-color: #dc3545;
+        color: white;
+        padding: 2px 5px;
+        border-radius: 10px;
+    }
+}
+
+/* 保留其他樣式 */
+.banner {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    border: 2px solid #555;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.schedule-hint {
+    margin: 15px 0;
+    padding: 12px 15px;
+    background-color: #f8f8f8;
+    border-left: 4px solid #dc3545;
+    color: #333;
+    font-size: 0.95em;
+    position: relative;
+    border-radius: 0 4px 4px 0;
+}
+
+/* 提醒圖標 */
+.schedule-hint::before {
+    content: "⚠️";
+    margin-right: 8px;
+}
+
+/* 可點擊比賽行樣式 */
+tr.clickable-match {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 2px solid transparent;
+}
+
+tr.clickable-match:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-left: 2px solid #dc3545;
+}
+
+tr.clickable-match:hover .team-cell {
+    color: #dc3545; /* 懸停時隊伍名稱變紅色 */
+    font-weight: 500;
+}
+
+/* 添加漸變效果，更明顯的視覺提示 */
+tr.clickable-match:active {
+    transform: translateY(1px);
+    background-color: #f8d7da;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.1s ease;
+}
+
+/* 改進可點擊比賽的指示符 */
+tr.clickable-match:after {
+    content: "查看";  /* 改用文字而非符號，更明確 */
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+tr.clickable-match:hover:after {
+    opacity: 0.9;
+    transform: translateY(-50%) translateX(-2px); /* 懸停時向左移動一點 */
+}
+
+/* 模態框相關樣式 */
+.match-link {
+    color: #fa363a;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.match-link:hover {
+    text-decoration: underline;
+}
+
+/* 表格行增加間隔效果，改善視覺識別度 */
+.schedule-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.schedule-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* 提高表格整體視覺質感 */
+.schedule-table {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
+}
+
+/* 改進表頭樣式 */
+.schedule-table th {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    font-size: 1.05em;
+    padding: 14px 6px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid #c82333;
 }

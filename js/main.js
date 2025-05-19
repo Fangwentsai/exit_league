@@ -133,6 +133,11 @@ async function loadContent(page, anchor = null, pushState = true) {
 
     // 顯示載入中
     contentArea.innerHTML = '<div class="loading">載入中...</div>';
+    
+    // 移除所有預加載的CSS樣式表
+    document.querySelectorAll('link[data-preload="true"]').forEach(link => {
+        document.head.removeChild(link);
+    });
 
     // 預加載當前頁面所需資源
     await preloadResources(page);
@@ -281,75 +286,370 @@ function showError(message) {
     `;
 }
 
-// 新聞頁面數據加載
+// ========== Google Sheets 新聞頁面數據加載與渲染 ========== //
+
+// 解析日期，格式為 "MM/DD"，添加當前年份
+function parseDate(dateStr) {
+    if (!dateStr) return null;
+    let parts;
+    if (dateStr.includes('/')) {
+        parts = dateStr.split('/');
+    } else if (dateStr.includes('-')) {
+        parts = dateStr.split('-');
+    } else if (dateStr.includes('.')) {
+        parts = dateStr.split('.');
+    } else {
+        console.error('無法解析日期格式:', dateStr);
+        return null;
+    }
+    if (parts.length < 2) {
+        console.error('日期格式不完整:', dateStr);
+        return null;
+    }
+    let month, day;
+    if (parts.length === 2) {
+        month = parseInt(parts[0], 10) - 1;
+        day = parseInt(parts[1], 10);
+    } else if (parts.length === 3) {
+        month = parseInt(parts[1], 10) - 1;
+        day = parseInt(parts[2], 10);
+    }
+    if (isNaN(month) || isNaN(day)) {
+        console.error('日期解析失敗:', dateStr);
+        return null;
+    }
+    const year = new Date().getFullYear();
+    return new Date(year, month, day);
+}
+
+function generateMatchesHTML(matches) {
+    if (matches.length === 0) {
+        return '<p>沒有比賽數據</p>';
+    }
+    
+    // 生成唯一的ID，用於事件綁定
+    const uniqueId = 'matches-' + Math.random().toString(36).substr(2, 9);
+    
+    const matchesByDate = {};
+    for (const match of matches) {
+        if (!matchesByDate[match.date]) {
+            matchesByDate[match.date] = [];
+        }
+        matchesByDate[match.date].push(match);
+    }
+    
+    let html = `<div id="${uniqueId}">`;
+    for (const date in matchesByDate) {
+        html += `
+            <div class="match-date">
+                <span class="date">${date}</span>
+            </div>
+            <div class="matches-container">
+        `;
+        for (const match of matchesByDate[date]) {
+            // 判斷比賽是否已完成（有分數）
+            const hasScores = match.score1 || match.score2;
+            const gameNumber = match.gameCode.replace(/^[Gg]/, '');
+            const gameResultPath = `game_result/season4/g${gameNumber}.html`;
+            
+            // 如果有分數，添加一個 data 屬性來存儲游戲路徑，用於之後的事件綁定
+            const dataAttr = hasScores ? `data-game-url="${gameResultPath}"` : '';
+            const clickableClass = hasScores ? 'clickable-match' : '';
+            
+            html += `
+                <div class="match ${clickableClass}" ${dataAttr}>
+                    <div class="match-header">
+                        <span class="match-code">${match.gameCode}</span>
+                        <span class="match-venue">${match.venue || ''}</span>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team1">
+                            <div class="team-name">${match.team1}</div>
+                            <div class="score">${match.score1 || ''}</div>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="team team2">
+                            <div class="team-name">${match.team2}</div>
+                            <div class="score">${match.score2 || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        html += `</div>`;
+    }
+    html += `</div>`;
+    
+    // 添加特定於比賽顯示的CSS樣式
+    if (!document.getElementById('match-style')) {
+        const style = document.createElement('style');
+        style.id = 'match-style';
+        style.textContent = `
+            .match {
+                background-color: #f5f5f5;
+                border-radius: 8px;
+                margin-bottom: 10px;
+                padding: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .clickable-match {
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            
+            .clickable-match:hover {
+                background-color: #e9e9e9;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+            
+            .match-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .match-code {
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .match-venue {
+                font-style: italic;
+            }
+            
+            .match-teams {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 0 5px;
+            }
+            
+            .team {
+                display: flex;
+                flex-direction: column;
+                width: 42%;
+            }
+            
+            .team1 {
+                align-items: flex-start;
+                text-align: left;
+            }
+            
+            .team2 {
+                align-items: flex-end;
+                text-align: right;
+            }
+            
+            .team-name {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 2px;
+            }
+            
+            .score {
+                font-size: 22px;
+                font-weight: bold;
+                color: #c00;
+                line-height: 1;
+            }
+            
+            .vs {
+                align-self: center;
+                font-weight: bold;
+                color: #666;
+                padding: 0 5px;
+                flex-shrink: 0;
+                font-size: 14px;
+                margin-top: 8px;
+            }
+            
+            .match-date {
+                margin-top: 15px;
+                margin-bottom: 8px;
+                position: relative;
+            }
+            
+            .date {
+                font-weight: bold;
+                color: #333;
+                background-color: #f0f0f0;
+                padding: 3px 10px;
+                border-radius: 4px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // 使用 setTimeout 使事件在 HTML 插入 DOM 後綁定
+    setTimeout(() => {
+        const container = document.getElementById(uniqueId);
+        if (container) {
+            // 為所有可點擊的比賽添加事件
+            const clickableMatches = container.querySelectorAll('.clickable-match');
+            clickableMatches.forEach(match => {
+                match.addEventListener('click', function() {
+                    const gameUrl = this.getAttribute('data-game-url');
+                    if (gameUrl) {
+                        showMatchDetails(gameUrl);
+                    }
+                });
+            });
+        }
+    }, 0);
+    
+    return html;
+}
+
+function parseScheduleData(values) {
+    console.log('開始解析 schedule 工作表數據');
+    console.log('數據行數:', values.length);
+    const result = [];
+    for (let i = 0; i < values.length; i++) {
+        const row = values[i];
+        if (!row || row.length < 7) continue;
+        const gameCode = row[0];
+        if (gameCode && typeof gameCode === 'string' && gameCode.startsWith('G') && row[1]) {
+            console.log(`處理比賽: ${gameCode} - ${row[1]}`);
+            result.push({
+                gameCode: gameCode,
+                date: row[1] || '',
+                team1: row[2] || '',
+                score1: row[3] || '',
+                vs: row[4] || 'vs',
+                score2: row[5] || '',
+                team2: row[6] || '',
+                venue: row[7] || ''
+            });
+        }
+    }
+    console.log(`共解析出 ${result.length} 場比賽`);
+    return result;
+}
+
+function displayMatches(matches) {
+    console.log('開始處理並顯示比賽數據，總數據條數:', matches.length);
+    const today = new Date();
+    console.log('當前日期:', today.toISOString().split('T')[0]);
+    const lastWeekMatches = [];
+    const upcomingMatches = [];
+    for (const match of matches) {
+        if (!match.date) {
+            console.log('跳過沒有日期的比賽:', match);
+            continue;
+        }
+        const matchDate = parseDate(match.date);
+        if (!matchDate) {
+            console.log('無法解析日期:', match.date, '跳過此比賽:', match);
+            continue;
+        }
+        console.log('比賽日期:', match.date, '解析為:', matchDate.toISOString().split('T')[0]);
+        const diffTime = matchDate.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        console.log('比賽與今天相差天數:', diffDays);
+        
+        // 只顯示最近 7 天內的比賽作為上週戰況
+        if (diffDays < 0 && diffDays >= -7) {
+            console.log('分類為上週比賽:', match);
+            lastWeekMatches.push(match);
+        } 
+        // 只顯示未來 7 天的比賽作為近期比賽
+        else if (diffDays >= 0 && diffDays <= 7) {
+            console.log('分類為近期比賽:', match);
+            upcomingMatches.push(match);
+        } else {
+            console.log('不在顯示範圍內的比賽:', match);
+        }
+    }
+    
+    // 按日期排序，確保最近的日期排在前面
+    lastWeekMatches.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateB - dateA; // 降序排列，最近的日期在前
+    });
+    
+    // 按日期排序，確保最近的日期排在前面
+    upcomingMatches.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateA - dateB; // 升序排列，最近的日期在前
+    });
+    
+    console.log('上週比賽總數:', lastWeekMatches.length);
+    console.log('近期比賽總數:', upcomingMatches.length);
+    const lastWeekContent = document.getElementById('lastWeekMatchesContent');
+    if (lastWeekContent) {
+        if (lastWeekMatches.length > 0) {
+            lastWeekContent.innerHTML = generateMatchesHTML(lastWeekMatches);
+            console.log('上週戰況已更新');
+        } else {
+            lastWeekContent.innerHTML = '<p>無上週比賽數據</p>';
+            console.log('無上週比賽數據');
+        }
+    } else {
+        console.error('找不到上週戰況容器元素');
+    }
+    const upcomingContent = document.getElementById('upcomingMatchesContent');
+    if (upcomingContent) {
+        if (upcomingMatches.length > 0) {
+            upcomingContent.innerHTML = generateMatchesHTML(upcomingMatches);
+            console.log('近期比賽已更新');
+        } else {
+            upcomingContent.innerHTML = '<p>無近期比賽數據</p>';
+            console.log('無近期比賽數據');
+        }
+    } else {
+        console.error('找不到近期比賽容器元素');
+    }
+}
+
+async function loadMatches() {
+    try {
+        console.log('開始從 Google Sheets 載入比賽數據...');
+        const sheetId = CONFIG.SEASON4.SHEET_ID;
+        const apiKey = CONFIG.SEASON4.API_KEY;
+        console.log('使用的 Google Sheets ID:', sheetId);
+        console.log('使用的 API Key:', apiKey);
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A2:H57?key=${apiKey}`;
+        console.log('請求的 URL:', url);
+        const response = await fetch(url);
+        console.log('fetch 響應狀態:', response.status);
+        if (!response.ok) {
+            throw new Error(`Google Sheets API 錯誤: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        console.log('獲取到的 JSON 數據:', jsonData);
+        if (!jsonData.values || jsonData.values.length === 0) {
+            throw new Error('Google Sheets 數據為空');
+        }
+        const data = parseScheduleData(jsonData.values);
+        console.log('解析後的比賽數據:', data);
+        if (data.length === 0) {
+            throw new Error('沒有有效的比賽數據');
+        }
+        displayMatches(data);
+    } catch (error) {
+        console.error('載入比賽時發生錯誤:', error);
+        const lastWeekContent = document.getElementById('lastWeekMatchesContent');
+        const upcomingContent = document.getElementById('upcomingMatchesContent');
+        if (lastWeekContent) {
+            lastWeekContent.innerHTML = `<p>載入數據時發生錯誤: ${error.message}</p>`;
+        }
+        if (upcomingContent) {
+            upcomingContent.innerHTML = `<p>載入數據時發生錯誤: ${error.message}</p>`;
+        }
+    }
+}
+
+// 修改 loadNewsData，載入頁面時自動抓取 Google Sheets
 async function loadNewsData() {
     try {
-        // 檢查是否有指定的賽季覆蓋設定
-        let season = 's4'; // 默認使用第四屆數據
-        if (typeof seasonOverride !== 'undefined') {
-            console.log('新聞頁面使用明確指定的賽季:', seasonOverride);
-            season = seasonOverride;
-        }
-        
-        const dataFile = `data/schedule_${season}.json`;
-        console.log('載入新聞頁面數據:', dataFile);
-        
-        const response = await fetch(dataFile);
-        if (!response.ok) throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
-        
-        const data = await response.json();
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        let lastMatch = null;
-        let nextMatch = null;
-        let minPastDiff = Infinity;
-        let minFutureDiff = Infinity;
-        
-        data.schedule.forEach(matchDay => {
-            const [year, month, day] = matchDay.date.split('/');
-            const matchDate = new Date(year, month - 1, day);
-            matchDate.setHours(0, 0, 0, 0);
-            
-            const timeDiff = matchDate - today;
-            
-            // 获取当前日期是周几（0是周日，1-6是周一到周六）
-            const currentDayOfWeek = today.getDay();
-            // 获取比赛日期是周几
-            const matchDayOfWeek = matchDate.getDay();
-            
-            if (timeDiff < 0) {  // 过去的比赛
-                if (Math.abs(timeDiff) < minPastDiff) {
-                    minPastDiff = Math.abs(timeDiff);
-                    lastMatch = matchDay;
-                }
-            } else {  // 未来的比赛
-                // 计算当前日期到比赛日期的天数差
-                const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                
-                // 如果比赛日期是周日（0），且当前日期在周一到周六之间
-                if (matchDayOfWeek === 0) {
-                    // 如果当前日期在周一到周六之间，且距离比赛还有不到一周
-                    if (currentDayOfWeek >= 1 && currentDayOfWeek <= 6 && daysDiff < 7) {
-                        if (timeDiff < minFutureDiff) {
-                            minFutureDiff = timeDiff;
-                            nextMatch = matchDay;
-                        }
-                    }
-                } else {
-                    // 对于非周日的比赛，保持原有逻辑
-                    if (timeDiff < minFutureDiff) {
-                        minFutureDiff = timeDiff;
-                        nextMatch = matchDay;
-                    }
-                }
-            }
-        });
-
-        // 更新顯示
-        updateNewsContent(lastMatch, nextMatch);
+        await loadMatches();
     } catch (error) {
-        console.error('載入新聞數據時發生錯誤:', error);
         showNewsError(error.message);
     }
 }
@@ -736,12 +1036,12 @@ async function loadScheduleData(page) {
 
                     // 準備比分單元格的內容
                     let scoreContent = hasScores 
-                        ? `<span class="score">${team1Score}</span> - <span class="score">${team2Score}</span>` 
+                        ? `<span class="score">${team1Score}</span><span class="score-separator">-</span><span class="score">${team2Score}</span>` 
                         : '-';
 
-                    // 生成表格行
+                    // 生成表格行 - 使用更優化的布局
                     tableContent += `
-                        <tr id="match-${gameNumber}">
+                        <tr id="match-${gameNumber}" class="${isPastMatch && hasScores ? 'clickable-match' : ''}">
                             <td class="date-cell">${dateHtml}</td>
                             <td class="team-cell">${team1Name}</td>
                             <td class="score-cell">${scoreContent}</td>
@@ -800,293 +1100,185 @@ async function loadScheduleData(page) {
 
 // 顯示比賽詳情
 function showMatchDetails(gameUrl) {
+    console.log('嘗試顯示比賽詳情:', gameUrl);
+    
+    // 如果已經存在模態框，先移除
+    const existingModal = document.querySelector('.match-modal');
+    if (existingModal) {
+        document.body.removeChild(existingModal);
+    }
+    
+    // 創建模態框容器
     const modal = document.createElement('div');
     modal.className = 'match-modal';
     
-    // 添加模態框樣式
-    const style = document.createElement('style');
-    style.textContent = `
-        .match-modal {
-            display: block;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
-        }
-        .match-modal-content {
-            background-color: #fefefe;
-            margin: 1% auto; /* 從2%減少到1%，進一步減少頂部留白 */
-            padding: 0; /* 移除內邊距，增加內容區域 */
-            border: 1px solid #888;
-            width: 95%; /* 增加寬度從90%到95% */
-            max-width: 1100px; /* 增加最大寬度從900px到1100px */
-            border-radius: 5px;
-            position: relative;
-            height: 95%; /* 增加高度從90%到95% */
-            display: flex;
-            flex-direction: column;
-        }
-        .match-modal-header {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 15px;
-            margin-bottom: 0; /* 移除底部間距 */
-            background-color: #dc3545;
-            color: white;
-            border-radius: 5px 5px 0 0;
-            flex-shrink: 0;
-        }
-        .match-modal-header h3 {
-            margin: 0;
-            color: white;
-        }
-        .match-modal-close {
-            color: #ffffff; /* 改成白色 */
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 5px;
-            z-index: 2; /* 確保在最上層 */
-            background-color: transparent; /* 移除白色背景 */
-            width: 30px;
-            height: 30px;
-            line-height: 28px;
-            text-align: center;
-            border-radius: 50%;
-            text-shadow: 0 0 3px rgba(0,0,0,0.3); /* 添加陰影使按鈕在紅色背景上更明顯 */
-        }
-        .match-modal-close:hover {
-            color: #f0f0f0;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-        .match-modal-iframe-container {
-            flex-grow: 1;
-            position: relative;
-            min-height: 500px; /* 確保至少有500px高度 */
-        }
-        .match-modal-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            min-height: 500px; /* 確保至少有500px高度 */
-        }
-    `;
-    document.head.appendChild(style);
-
-    // 修改iframe的HTML，使用flex布局增加可視空間
-    modal.innerHTML = `
-        <div class="match-modal-content">
-            <span class="match-modal-close">&times;</span>
-            <div class="match-modal-header">
-                <h3>賽事回顧</h3>
-            </div>
-            <div class="match-modal-iframe-container">
-                <iframe src="${gameUrl}" class="match-modal-iframe" allowfullscreen></iframe>
-            </div>
-        </div>
-    `;
-
-    // 添加模態框到頁面
-    document.body.appendChild(modal);
-
-    // 關閉按鈕事件
-    const closeBtn = modal.querySelector('.match-modal-close');
-    closeBtn.addEventListener('click', () => {
-        document.body.removeChild(modal);
+    // 創建模態框內容
+    const modalContent = document.createElement('div');
+    modalContent.className = 'match-modal-content';
+    
+    // 添加關閉按鈕
+    const closeButton = document.createElement('button');
+    closeButton.className = 'modal-close';
+    closeButton.innerHTML = '&times;';
+    closeButton.addEventListener('click', function() {
+        closeMatchModal(modal);
     });
+    
+    // 創建iframe來加載比賽結果頁面
+    const iframe = document.createElement('iframe');
+    iframe.className = 'match-iframe';
+    iframe.src = gameUrl;
+    
+    // 組裝模態框
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(iframe);
+    modal.appendChild(modalContent);
+    
+    // 添加到頁面
+    document.body.appendChild(modal);
+    
+    // 使用setTimeout讓DOM有時間渲染，然後再添加顯示類
+    setTimeout(() => {
+        modal.classList.add('visible');
+    }, 10);
+    
+    // 添加點擊模態框背景關閉的功能
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeMatchModal(modal);
+        }
+    });
+    
+    // 添加ESC鍵關閉功能
+    const handleKeyDown = function(e) {
+        if (e.key === 'Escape') {
+            if (document.body.contains(modal)) {
+                closeMatchModal(modal);
+            }
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+}
 
-    // 點擊外部關閉
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
+// 關閉模態框
+function closeMatchModal(modal) {
+    modal.classList.remove('visible');
+    
+    // 等待動畫完成後再移除元素
+    setTimeout(() => {
+        if (document.body.contains(modal)) {
             document.body.removeChild(modal);
         }
-    });
+    }, 300);
 }
 
 // 設置賽程篩選功能
 function setupScheduleFilters() {
-    console.log('開始設置賽程篩選功能');
+    console.log('設置賽程篩選功能');
     const teamButtons = document.querySelectorAll('.team-btn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    let selectedTeams = [];
-
-    console.log('找到的隊伍按鈕數量:', teamButtons.length);
-    console.log('取消按鈕是否存在:', !!cancelBtn);
-
-    // 為每個隊伍按鈕添加點擊事件
+    const selectedTeams = new Set();
+    
+    // 為每個按鈕添加點擊事件
     teamButtons.forEach(button => {
-        const teamName = button.getAttribute('data-team');
-        console.log('設置按鈕事件，隊伍名稱:', teamName);
-        
-        button.addEventListener('click', () => {
-            const team = button.getAttribute('data-team');
-            const index = selectedTeams.indexOf(team);
-            console.log('按鈕被點擊，隊伍:', team);
-            console.log('當前選中的隊伍:', selectedTeams);
-            console.log('該隊伍在數組中的索引:', index);
-
-            // 切換按鈕選中狀態
-            button.classList.toggle('selected');
-            console.log('按鈕選中狀態:', button.classList.contains('selected'));
-
-            // 更新選中的隊伍列表
-            if (index === -1) {
-                selectedTeams.push(team);
-                console.log('添加隊伍到選中列表');
+        button.addEventListener('click', function() {
+            const team = this.getAttribute('data-team');
+            
+            if (this.classList.contains('selected')) {
+                // 如果已選中，則取消選中
+                this.classList.remove('selected');
+                selectedTeams.delete(team);
             } else {
-                selectedTeams.splice(index, 1);
-                console.log('從選中列表移除隊伍');
+                // 如果未選中，則選中
+                this.classList.add('selected');
+                selectedTeams.add(team);
             }
-            console.log('更新後的選中隊伍列表:', selectedTeams);
-
-            filterScheduleTable(selectedTeams);
+            
+            // 篩選表格
+            filterScheduleTable(Array.from(selectedTeams));
         });
     });
-
-    // 取消按鈕事件
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => {
-            console.log('點擊取消按鈕');
-            console.log('重置前的選中隊伍:', selectedTeams);
-            selectedTeams = [];
-            teamButtons.forEach(btn => btn.classList.remove('selected'));
-            console.log('已清除所有按鈕的選中狀態');
-            console.log('重置後的選中隊伍:', selectedTeams);
-            filterScheduleTable(selectedTeams);
-        });
-    }
+    
+    console.log('賽程篩選功能設置完成');
 }
 
-// 篩選賽程表格
+// 根據選中的隊伍篩選賽程表格
 function filterScheduleTable(selectedTeams) {
-    console.log('開始篩選賽程表格');
-    console.log('選中的隊伍:', selectedTeams);
+    console.log('篩選賽程表格，選中的隊伍:', selectedTeams);
+    const rows = document.querySelectorAll('.schedule-table tbody tr');
     
-    const table = document.getElementById('leagueTable');
-    if (!table) {
-        console.error('找不到賽程表格元素');
+    // 如果沒有選中任何隊伍，顯示所有行
+    if (selectedTeams.length === 0) {
+        rows.forEach(row => {
+            row.style.display = '';
+            
+            // 移除高亮
+            const teamCells = row.querySelectorAll('.team-cell');
+            teamCells.forEach(cell => {
+                cell.classList.remove('highlight-team');
+            });
+        });
         return;
     }
-
-    const rows = table.getElementsByTagName('tr');
-    console.log('表格總行數:', rows.length);
     
-    // 從第二行開始遍歷（跳過表頭）
-    for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row.cells || row.cells.length < 4) {
-            console.log(`跳過第 ${i} 行：單元格數量不足`);
-            continue;
-        }
-
-        // 獲取主隊和客隊單元格（調整為新的表格結構）
-        const awayTeamCell = row.cells[1]; // 客隊是第2列
-        const homeTeamCell = row.cells[3]; // 主隊是第4列
-        const awayTeam = awayTeamCell.textContent.trim();
-        const homeTeam = homeTeamCell.textContent.trim();
+    // 篩選行
+    rows.forEach(row => {
+        // 獲取隊伍名稱
+        const teamCells = row.querySelectorAll('.team-cell');
+        if (teamCells.length < 2) return;
         
-        console.log(`第 ${i} 行：主隊 "${homeTeam}" vs 客隊 "${awayTeam}"`);
-
-        // 移除之前的高亮效果
-        homeTeamCell.classList.remove('highlight-team');
-        awayTeamCell.classList.remove('highlight-team');
-
-        if (selectedTeams.length === 0) {
-            console.log(`第 ${i} 行：沒有選中隊伍，顯示所有行`);
+        const team1 = teamCells[0].textContent.trim();
+        const team2 = teamCells[1].textContent.trim();
+        
+        // 檢查是否包含選中的隊伍
+        const containsSelectedTeam = selectedTeams.some(selectedTeam => 
+            team1.includes(selectedTeam) || team2.includes(selectedTeam)
+        );
+        
+        // 顯示或隱藏行
+        if (containsSelectedTeam) {
             row.style.display = '';
+            
+            // 高亮匹配的隊伍
+            teamCells.forEach(cell => {
+                const teamName = cell.textContent.trim();
+                const isHighlighted = selectedTeams.some(selectedTeam => 
+                    teamName.includes(selectedTeam)
+                );
+                
+                if (isHighlighted) {
+                    cell.classList.add('highlight-team');
+                } else {
+                    cell.classList.remove('highlight-team');
+                }
+            });
         } else {
-            const homeMatch = selectedTeams.includes(homeTeam);
-            const awayMatch = selectedTeams.includes(awayTeam);
-            console.log(`第 ${i} 行：主隊匹配=${homeMatch}, 客隊匹配=${awayMatch}`);
-            
-            // 添加高亮效果
-            if (homeMatch) homeTeamCell.classList.add('highlight-team');
-            if (awayMatch) awayTeamCell.classList.add('highlight-team');
-            
-            if (homeMatch || awayMatch) {
-                console.log(`第 ${i} 行：顯示`);
-                row.style.display = '';
-            } else {
-                console.log(`第 ${i} 行：隱藏`);
-                row.style.display = 'none';
-            }
+            row.style.display = 'none';
         }
-    }
-    console.log('篩選完成');
+    });
 }
 
-// 設置賽程表格行的點擊事件
+// 設置賽程表格行的點擊事件處理
 function setupMatchTableRows() {
-    console.log('設置賽程表格行點擊事件');
-    const tableBody = document.querySelector('.schedule-table tbody');
-    if (!tableBody) {
-        console.error('找不到賽程表格主體');
-        return;
-    }
-
-    const rows = tableBody.getElementsByTagName('tr');
-    for (let i = 0; i < rows.length; i++) {
-        const row = rows[i];
-        const dateCell = row.querySelector('.date-cell');
-        if (dateCell) {
-            const clickableDate = dateCell.querySelector('.clickable-date');
-            if (clickableDate) {
-                const gameUrl = clickableDate.getAttribute('data-game-url');
-                if (gameUrl) {
-                    // 為整行添加可點擊類和點擊事件
-                    row.classList.add('clickable-match');
-                    row.addEventListener('click', function(e) {
-                        // 防止點擊日期時觸發兩次
-                        if (e.target !== clickableDate) {
-                            showMatchDetails(gameUrl);
-                        }
-                    });
+    // 為有比賽結果的行添加點擊處理
+    document.querySelectorAll('tr.clickable-match').forEach((row, index) => {
+        // 為行添加索引屬性，用於交錯動畫
+        row.style.setProperty('--row-index', index + 1);
+        
+        row.addEventListener('click', function() {
+            const dateCell = this.querySelector('.date-cell');
+            if (dateCell) {
+                const clickableDate = dateCell.querySelector('.clickable-date');
+                if (clickableDate) {
+                    const gameUrl = clickableDate.getAttribute('data-game-url');
+                    if (gameUrl) {
+                        console.log('點擊行，顯示比賽詳情:', gameUrl);
+                        showMatchDetails(gameUrl);
+                    }
                 }
             }
-        }
-        
-        // 檢查是否為重要比賽並標記
-        markImportantMatches(row);
-    }
-    console.log('賽程表格行點擊事件設置完成');
-}
-
-// 標記重要比賽
-function markImportantMatches(row) {
-    // 獲取隊伍名稱
-    const cells = row.getElementsByClassName('team-cell');
-    if (cells.length < 2) return;
-    
-    const team1 = cells[0].textContent.trim();
-    const team2 = cells[1].textContent.trim();
-    
-    // 定義重要比賽的隊伍組合
-    const importantMatchups = [
-        ['Vivi朝酒晚舞', '海盜揪硬'],  // 第一名對第二名
-        ['Vivi朝酒晚舞', 'Jack'],      // 第一名對第三名
-        ['海盜揪硬', 'Jack'],          // 第二名對第三名
-        ['酒空組', '一鏢開天門']        // 第四名對第五名
-    ];
-    
-    // 檢查是否為重要比賽
-    for (const matchup of importantMatchups) {
-        if ((team1 === matchup[0] && team2 === matchup[1]) || 
-            (team1 === matchup[1] && team2 === matchup[0])) {
-            row.classList.add('important-match');
-            console.log(`標記重要比賽: ${team1} vs ${team2}`);
-            break;
-        }
-    }
+        });
+    });
 }
 
 // 創建比賽 HTML
@@ -1260,7 +1452,7 @@ async function preloadResources(page = 'news') {
 
     try {
         // 立即加載基礎 CSS
-        const baseCssPromises = baseCssFiles.map(file => loadCSS(file, true));
+        const baseCssPromises = baseCssFiles.map(file => loadCSS(file, true, false));
         await Promise.all(baseCssPromises);
         console.log('基礎 CSS 加載完成');
 
@@ -1270,9 +1462,9 @@ async function preloadResources(page = 'news') {
             console.log('共用圖片加載完成');
         });
 
-        // 加載當前頁面需要的 CSS
+        // 加載當前頁面需要的 CSS - 使用normal模式
         if (pageCssMap[page]) {
-            const pageCssPromises = pageCssMap[page].map(file => loadCSS(file));
+            const pageCssPromises = pageCssMap[page].map(file => loadCSS(file, true, false));
             Promise.all(pageCssPromises).then(() => {
                 console.log(`${page} 頁面 CSS 加載完成`);
             });
@@ -1286,16 +1478,23 @@ async function preloadResources(page = 'news') {
             });
         }
 
-        // 預加載其他頁面的資源（低優先級）
-        setTimeout(() => {
-            Object.entries(pageCssMap).forEach(([key, files]) => {
-                if (key !== page) {
-                    files.forEach(file => {
-                        loadCSS(file, false, true);
-                    });
-                }
-            });
-        }, 2000);
+        // 預加載其他頁面的資源（低優先級）- 使用真正的preload模式
+        if (window.cssPreloadingDone !== true) {
+            setTimeout(() => {
+                // 設置標記，避免重複預加載
+                window.cssPreloadingDone = true;
+                
+                console.log('開始預加載其他頁面CSS資源');
+                Object.entries(pageCssMap).forEach(([key, files]) => {
+                    if (key !== page) {
+                        files.forEach(file => {
+                            // 使用預加載模式，但不會自動應用到頁面
+                            loadCSS(file, false, true);
+                        });
+                    }
+                });
+            }, 2000); // 縮短至2秒，資源加載更快
+        }
 
     } catch (error) {
         console.error('資源加載過程中發生錯誤:', error);
@@ -1305,27 +1504,85 @@ async function preloadResources(page = 'news') {
 // 加載 CSS 文件
 function loadCSS(file, isImportant = false, isPreload = false) {
     return new Promise((resolve, reject) => {
+        // 檢查是否已經加載過此CSS文件
+        const existingLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"][as="style"]'));
+        const isAlreadyLoaded = existingLinks.some(link => link.href.includes(file));
+        
+        // 如果已經加載過，只有在非預加載模式時才應用該CSS
+        if (isAlreadyLoaded) {
+            // 檢查是否為預加載模式的CSS需要轉為常規應用模式
+            if (!isPreload) {
+                const preloadLink = existingLinks.find(link => 
+                    link.href.includes(file) && 
+                    link.rel === 'preload' && 
+                    link.getAttribute('as') === 'style'
+                );
+                
+                // 如果找到預加載的鏈接，將其轉換為stylesheet
+                if (preloadLink) {
+                    console.log(`將預加載的CSS轉為應用: ${file}`);
+                    // 創建新的stylesheet鏈接而不是修改原有的
+                    // 這樣可以避免閃爍和樣式突變問題
+                    const styleLink = document.createElement('link');
+                    styleLink.rel = 'stylesheet';
+                    styleLink.href = preloadLink.href;
+                    if (isImportant) {
+                        styleLink.setAttribute('importance', 'high');
+                    }
+                    
+                    styleLink.onload = () => {
+                        console.log(`預加載CSS轉換為stylesheet成功: ${file}`);
+                        // 加載完成後可以選擇移除預加載的鏈接
+                        // document.head.removeChild(preloadLink);
+                        resolve();
+                    };
+                    
+                    document.head.appendChild(styleLink);
+                    return;
+                }
+            }
+            
+            console.log(`CSS 文件已存在${isPreload ? '，跳過預加載' : ''}: ${file}`);
+            resolve();
+            return;
+        }
+        
+        // 創建新的鏈接元素
         const link = document.createElement('link');
-        link.rel = isPreload ? 'preload' : 'stylesheet';
+        
+        // 嚴格區分預加載模式和常規加載模式
+        if (isPreload) {
+            // 預加載模式 - 僅預加載，不應用
+            link.rel = 'preload';
+            link.as = 'style';
+            link.setAttribute('data-preload', 'true');
+            
+            link.onload = () => {
+                console.log(`CSS 預加載成功: ${file}`);
+                resolve();
+            };
+        } else {
+            // 常規加載模式 - 直接應用到頁面
+            link.rel = 'stylesheet';
+            
+            link.onload = () => {
+                console.log(`CSS 加載成功: ${file}`);
+                resolve();
+            };
+        }
+        
         // 使用相對路徑，不添加前導斜線
         link.href = file;
-        if (isPreload) {
-            link.as = 'style';
-        }
+        
         if (isImportant) {
             link.setAttribute('importance', 'high');
         }
-        link.onload = () => {
-            console.log(`CSS ${isPreload ? '預加載' : '載入'}成功: ${file}`);
-            if (isPreload) {
-                link.rel = 'stylesheet';
-            }
-            resolve();
-        };
+        
         link.onerror = () => {
             console.warn(`CSS 載入失敗: ${file}`);
             resolve(); // 即使失敗也繼續
         };
+        
         document.head.appendChild(link);
     });
 }
@@ -1422,6 +1679,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 如果沒有 hash，載入預設的新聞頁面
         loadContent('news', null, true);
     }
+    
+    // 全局設置 - 讓 showMatchDetails 可以被 HTML 內的 onclick 事件呼叫
+    window.showMatchDetails = showMatchDetails;
+    window.showGameResult = function(gameNumber) {
+        const gameUrl = `game_result/season4/${gameNumber}.html`;
+        showMatchDetails(gameUrl);
+    };
+    
+    // Toast 訊息功能
+    window.showToast = function(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        // 添加 Toast 樣式
+        if (!document.getElementById('toast-style')) {
+            const style = document.createElement('style');
+            style.id = 'toast-style';
+            style.textContent = `
+                .toast {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(100px);
+                    background-color: rgba(0,0,0,0.8);
+                    color: #fff;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    opacity: 0;
+                    transition: all 0.3s ease;
+                    z-index: 9999;
+                }
+                .toast.show {
+                    transform: translateX(-50%) translateY(0);
+                    opacity: 1;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 2000);
+    };
 });
 
 // 處理瀏覽器的前進/後退
