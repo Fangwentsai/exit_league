@@ -1,3 +1,22 @@
+/* 内容包装器样式 */
+.content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 表格边框全局样式 */
+:root {
+    --table-border-width: 1.5px;
+    --table-border-color: #ccc;
+    --table-border: var(--table-border-width) solid var(--table-border-color);
+}
+
 /* 基本樣式 */
 body {
     margin: 0;
@@ -156,9 +175,10 @@ body {
 /* 表格基本樣式 - 使用表格布局而非網格布局 */
 .schedule-table {
     width: 100%;
+    min-width: 320px; /* 確保最小寬度適合小屏幕 */
     border-collapse: collapse;
     margin: 0;
-    border: 1px solid #ddd;
+    border: var(--table-border);
     table-layout: fixed;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
@@ -167,7 +187,7 @@ body {
 .schedule-table td {
     padding: 12px 10px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: var(--table-border);
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.9em;
@@ -176,19 +196,20 @@ body {
 /* 設置列寬比例 */
 .schedule-table th:nth-child(1),
 .schedule-table td:nth-child(1) {
-    width: 20%; /* 日期列 */
+    width: 18%; /* 日期列 */
 }
 
 .schedule-table th:nth-child(2),
 .schedule-table td:nth-child(2),
 .schedule-table th:nth-child(4),
 .schedule-table td:nth-child(4) {
-    width: 35%; /* 隊伍名稱列 */
+    width: 32%; /* 隊伍名稱列，縮小 */
 }
 
 .schedule-table th:nth-child(3),
 .schedule-table td:nth-child(3) {
-    width: 10%; /* 比分列 */
+    width: 18%; /* 比分列，放大 */
+    min-width: 60px; /* 確保比分欄有足夠寬度 */
 }
 
 /* 表頭樣式 */
@@ -231,11 +252,12 @@ body {
 
 /* 日期單元格 */
 .date-cell {
-    font-weight: normal;
+    font-weight: bold; /* 改為粗體 */
     vertical-align: middle;
     white-space: nowrap;
     background-color: #f9f9f9;
     font-size: 0.95em;
+    color: #000; /* 改為黑色 */
 }
 
 /* 可點擊日期樣式 */
@@ -250,25 +272,42 @@ body {
     color: #a71d2a;
 }
 
-/* 隊伍單元格 */
+/* 表格隊伍名稱欄位樣式 */
 .team-cell {
-    font-weight: normal;
-    text-align: center; /* 確保文字居中 */
+    text-align: center !important;
+    font-weight: bold;
+    padding: 10px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     vertical-align: middle;
-    font-size: 1.05em; /* 放大隊伍名稱文字 */
-    padding: 0 10px; /* 增加水平內邊距，讓文字與中間更接近 */
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+/* 被選中高亮的隊伍單元格 */
+.highlight-team {
+    background-color: #ffebec !important;
+    font-weight: bold;
+    border-left: 3px solid #dc3545 !important;
+    color: #dc3545 !important;
+}
+
+/* 高亮隊伍行樣式 */
+tr:has(.highlight-team) {
+    background-color: #fff9f9 !important;
 }
 
 /* 調整客場隊伍的文字位置 */
 .schedule-table td:nth-child(2) {
-    text-align: right; /* 靠右對齊，朝向中間 */
-    padding-right: 15px; /* 增加右側內邊距，靠近中間 */
+    text-align: center; /* 改為置中 */
+    padding-right: 8px;
 }
 
 /* 調整主場隊伍的文字位置 */
 .schedule-table td:nth-child(4) {
-    text-align: left; /* 靠左對齊，朝向中間 */
-    padding-left: 15px; /* 增加左側內邊距，靠近中間 */
+    text-align: center; /* 改為置中 */
+    padding-left: 8px;
 }
 
 /* 比分單元格 */
@@ -276,10 +315,10 @@ body {
     font-weight: normal;
     text-align: center;
     vertical-align: middle;
-    padding: 5px 2px; /* 減少水平內邊距，讓比分更緊湊 */
+    padding: 5px 8px; /* 增加水平內邊距 */
     position: relative;
-    min-width: 50px; /* 確保比分欄有最小寬度 */
-    background-color: #fafafa; /* 輕微背景色，使比分欄顯得更加獨立 */
+    min-width: 60px; /* 增加比分欄最小寬度 */
+    background-color: #fafafa;
 }
 
 /* 比分樣式 */
@@ -287,28 +326,38 @@ body {
     font-weight: bold;
     font-size: 1.4em; /* 放大比分數字 */
     display: inline-block;
-    margin: 0 1px; /* 減少比分數字之間的間距 */
-    color: #dc3545; /* 添加紅色以增強視覺效果 */
+    margin: 0 2px;
+    color: #dc3545;
 }
 
 /* 比分之間的分隔符 */
 .score-cell .score-separator {
     display: inline-block;
     margin: 0 3px;
-    color: #666;
-    font-size: 1.1em;
+    color: #888;
+    font-size: 1.2em;
+    font-weight: 300;
+    position: relative;
+    top: -1px;
 }
 
 /* 響應式設計 - 平板 */
 @media screen and (max-width: 768px) {
     .container {
         padding: 5px;
+        overflow-x: hidden; /* 改为hidden，因为包裹器已添加overflow-x:auto */
+    }
+    
+    .content-wrapper {
+        margin-bottom: 15px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .schedule-table th,
     .schedule-table td {
         padding: 10px 5px;
         font-size: 0.9em;
+        border: var(--table-border);
     }
     
     .schedule-table th:nth-child(1),
@@ -325,7 +374,8 @@ body {
     
     .schedule-table th:nth-child(3),
     .schedule-table td:nth-child(3) {
-        width: 10%;
+        width: 16%;
+        min-width: 50px;
     }
     
     .search-section {
@@ -357,250 +407,411 @@ body {
     }
     
     .schedule-table td:nth-child(2) {
-        padding-right: 10px; /* 平板上減少內邊距 */
+        padding-right: 5px;
+        text-align: center;
     }
     
     .schedule-table td:nth-child(4) {
-        padding-left: 10px; /* 平板上減少內邊距 */
+        padding-left: 5px;
+        text-align: center;
+    }
+    
+    .schedule-table {
+        min-width: 280px;
     }
 }
 
 /* 響應式設計 - 手機 (480px) */
 @media screen and (max-width: 480px) {
+    .content-wrapper {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
     .schedule-table th,
     .schedule-table td {
+        padding: 10px 5px;
         font-size: 0.85em;
-        padding: 10px 2px;
-        line-height: 1.3;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    
+
     .schedule-table th:nth-child(1),
     .schedule-table td:nth-child(1) {
-        width: 15%;
+        width: 18%;
+        min-width: 60px; /* 為日期保留足夠寬度 */
     }
-    
+
     .schedule-table th:nth-child(2),
     .schedule-table td:nth-child(2),
     .schedule-table th:nth-child(4),
     .schedule-table td:nth-child(4) {
-        width: 37.5%;
-    }
-    
-    .schedule-table th:nth-child(3),
-    .schedule-table td:nth-child(3) {
-        width: 10%;
-        padding: 3px;
-    }
-    
-    .team-cell {
-        font-size: 0.95em;
-        font-weight: 500;
-        line-height: 1.4;
-    }
-    
-    .score {
-        font-size: 1.3em;
-        font-weight: 700;
-        color: #c82333;
-    }
-    
-    .score-cell .score-separator {
-        color: #aaa;
-    }
-    
-    .team-btn {
-        padding: 8px 10px;
-        font-size: 0.9em;
-        min-width: 70px;
-        max-width: 100px;
-    }
-    
-    .cancel-btn {
-        padding: 5px 8px;
-        font-size: 0.85em;
-    }
-    
-    .filter-row {
-        gap: 6px;
-    }
-    
-    .schedule-table th {
+        width: 32%;
         padding: 10px 2px;
-        font-size: 0.95em;
     }
-    
-    .schedule-table td:nth-child(2) {
-        padding-right: 8px;
-    }
-    
-    .schedule-table td:nth-child(4) {
-        padding-left: 8px;
-    }
-    
-    .schedule-table tbody tr {
-        height: auto;
-        min-height: 44px;
-    }
-    
-    .score-cell {
-        background-color: #fbfbfb;
-        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.03);
-    }
-    
-    .date-cell {
-        font-weight: 500;
-        background-color: #f5f5f5;
-    }
-}
 
-/* 特別為430px寬度設置優化 */
-@media screen and (max-width: 430px) and (min-width: 391px) {
-    .team-cell {
-        font-size: 0.9em;
-        padding: 6px 2px;
-    }
-    
-    .schedule-table th:nth-child(1),
-    .schedule-table td:nth-child(1) {
-        width: 15%;
-    }
-    
-    .schedule-table th:nth-child(2),
-    .schedule-table td:nth-child(2),
-    .schedule-table th:nth-child(4),
-    .schedule-table td:nth-child(4) {
-        width: 37.5%;
-        white-space: normal;
-        word-break: break-word;
-    }
-    
     .schedule-table th:nth-child(3),
     .schedule-table td:nth-child(3) {
-        width: 12%;
-        padding: 2px 0;
-    }
-    
-    .score {
-        font-size: 1.2em;
-    }
-    
-    .schedule-table td:nth-child(2) {
-        padding-right: 5px;
-    }
-    
-    .schedule-table td:nth-child(4) {
-        padding-left: 5px;
-    }
-}
-
-/* 優化iPhone 12 Pro等約390px寬的設備 */
-@media screen and (min-width: 375px) and (max-width: 390px) {
-    .team-btn {
-        padding: 6px 8px;
-        min-width: 70px;
-        max-width: 120px;
-        font-size: 0.8em;
-    }
-    
-    .cancel-btn {
-        padding: 6px 8px;
+        width: 18%; 
         min-width: 50px;
-        font-size: 0.8em;
     }
-    
-    .filter-row {
-        gap: 6px;
-    }
-    
+
     .team-cell {
         font-size: 0.9em;
+        padding: 8px 3px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
     
-    .schedule-table th:nth-child(1),
-    .schedule-table td:nth-child(1) {
-        width: 15%;
+    .highlight-team {
+        background-color: #ffeaec !important;
+        border-left: 2px solid #dc3545 !important;
     }
-    
-    .schedule-table th:nth-child(2),
-    .schedule-table td:nth-child(2),
-    .schedule-table th:nth-child(4),
-    .schedule-table td:nth-child(4) {
-        width: 37.5%;
-    }
-    
-    .schedule-table th:nth-child(3),
-    .schedule-table td:nth-child(3) {
-        width: 10%;
-    }
-    
-    .score {
-        font-size: 1.2em;
-    }
-}
 
-/* 小型手機優化 (375px以下) */
-@media screen and (max-width: 374px) {
-    .team-cell {
+    .score {
+        font-size: 0.9em;
+        font-weight: bold;
+        padding: 2px 0;
+    }
+
+    .score-cell .score-separator {
+        margin: 0 2px;
+        font-size: 0.9em;
+        font-weight: normal;
+        color: #666;
+    }
+
+    .date-cell {
         font-size: 0.85em;
-        padding: 8px 1px;
+        font-weight: bold;
+    }
+
+    .team-btn {
+        padding: 8px 10px;
+        font-size: 0.8em;
+        min-width: 70px;
+        max-width: 120px;
+        border-width: 1px;
+        margin: 3px 2px;
+    }
+
+    .team-btn.selected {
+        transform: none;
+        box-shadow: 0 1px 3px rgba(220, 53, 69, 0.3);
+    }
+
+    .filter-row {
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 5px;
+        justify-content: center;
+    }
+    
+    .search-title {
+        font-size: 1.1em;
+        margin-bottom: 12px;
+        text-align: center;
+        padding-left: 0;
+    }
+    
+    .search-title::before {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -8px;
+        width: 30px;
+        height: 3px;
+    }
+
+    .schedule-table th {
+        font-size: 0.9em;
+        padding: 10px 5px;
+    }
+
+    .schedule-table td:nth-child(2) {
+        text-align: center !important;
+        padding-right: 5px;
+    }
+
+    .schedule-table td:nth-child(4) {
+        text-align: center !important;
+        padding-left: 5px;
+    }
+
+    .schedule-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .score-cell {
+        padding: 10px 2px;
+        font-weight: bold;
     }
     
     .date-cell {
-        font-size: 0.75em;
-        padding: 3px 1px;
+        font-weight: bold;
+        color: #000;
     }
     
-    .score-cell {
-        padding: 2px;
+    /* 搜尋區域在小屏幕上的樣式 */
+    .search-section {
+        padding: 15px 10px;
+        margin: 10px 0 15px;
+    }
+    
+    .search-title {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+}
+
+/* iPhone 6/7/8, Plus和类似尺寸设备 */
+@media screen and (max-width: 414px) {
+    .content-wrapper {
+        margin-bottom: 8px;
+    }
+    
+    .schedule-table {
+        min-width: 250px;
+    }
+    
+    .team-cell {
+        font-size: 0.82em;
+        line-height: 1.25;
     }
     
     .score {
-        font-size: 1.1em;
+        font-size: 1.15em;
+        line-height: 1;
     }
     
-    .schedule-table th:nth-child(1),
-    .schedule-table td:nth-child(1) {
-        width: 15%;
-    }
-    
-    .schedule-table th:nth-child(2),
-    .schedule-table td:nth-child(2),
-    .schedule-table th:nth-child(4),
-    .schedule-table td:nth-child(4) {
-        width: 37.5%;
+    .score-cell .score-separator {
+        font-size: 0.95em;
+        top: -1px;
     }
     
     .schedule-table th:nth-child(3),
     .schedule-table td:nth-child(3) {
-        width: 10%;
+        width: 22%; 
+        min-width: 40px;
+    }
+    
+    .schedule-table td:nth-child(2),
+    .schedule-table td:nth-child(4) {
+        text-align: center;
+    }
+}
+
+/* 中小型手机适配（例如iPhone SE、iPhone 8等） */
+@media screen and (max-width: 375px) {
+    .content-wrapper {
+        margin-bottom: 8px;
     }
     
     .schedule-table th,
     .schedule-table td {
-        padding: 8px 1px;
+        font-size: 0.75em;
+        padding: 6px 1px;
+        border: var(--table-border);
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
+        min-width: 45px;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 30%;
+        min-width: 70px;
     }
     
     .team-cell {
-        white-space: normal;
-        word-break: break-word;
-        font-size: 0.84em;
-        line-height: 1.3;
+        font-size: 0.8em;
+        line-height: 1.2;
+    }
+    
+    .date-cell {
+        font-size: 0.7em;
+    }
+    
+    .score {
+        font-size: 1.1em;
+        margin: 0 1px;
+        line-height: 1;
     }
     
     .score-cell .score-separator {
-        margin: 0 1px;
+        margin: 0;
         font-size: 0.9em;
+        top: -1px;
     }
     
-    tr.clickable-match:after {
-        content: "⋯";
-        right: 3px;
-        font-size: 14px;
-        padding: 0;
-        background: none;
+    .team-btn {
+        padding: 5px 6px;
+        font-size: 0.75em;
+        min-width: 60px;
+        max-width: 85px;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 22%;
+        min-width: 38px;
+    }
+    
+    .schedule-table td:nth-child(2),
+    .schedule-table td:nth-child(4) {
+        text-align: center;
+    }
+    
+    .schedule-table {
+        min-width: 240px;
+    }
+}
+
+/* 超小型手机适配（例如iPhone 5/SE等） */
+@media screen and (max-width: 320px) {
+    .content-wrapper {
+        margin-bottom: 5px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        font-size: 0.7em;
+        padding: 4px 1px;
+        border: var(--table-border);
+    }
+    
+    .schedule-table th:nth-child(1),
+    .schedule-table td:nth-child(1) {
+        width: 15%;
+        min-width: 40px;
+    }
+    
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2),
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        width: 28%;
+        min-width: 60px;
+    }
+    
+    .team-cell {
+        font-size: 0.75em;
+        line-height: 1.1;
+    }
+    
+    .date-cell {
+        font-size: 0.65em;
+    }
+    
+    .score {
+        font-size: 1em;
+        margin: 0;
+        line-height: 1;
+    }
+    
+    .score-cell .score-separator {
+        margin: 0;
+        font-size: 0.85em;
+        top: -1px;
+    }
+    
+    .search-section {
+        padding: 10px;
+        margin: 10px 0;
+    }
+    
+    .team-btn {
+        padding: 4px 5px;
+        font-size: 0.7em;
+        min-width: 55px;
+        max-width: 80px;
+        margin: 2px;
+    }
+    
+    .filter-row {
+        gap: 3px;
+    }
+    
+    .cancel-btn {
+        padding: 4px 6px;
+        font-size: 0.7em;
+    }
+    
+    .search-title {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        width: 24%;
+        min-width: 35px;
+    }
+    
+    .schedule-table {
+        min-width: 220px;
+    }
+    
+    .score-cell {
+        padding: 3px 1px;
+        min-width: 35px;
+    }
+    
+    .schedule-table td:nth-child(2),
+    .schedule-table td:nth-child(4) {
+        text-align: center;
+    }
+}
+
+/* iPhone 13/14 Pro和类似尺寸设备 */
+@media screen and (max-width: 390px) and (min-width: 376px) {
+    .content-wrapper {
+        margin-bottom: 8px;
+    }
+    
+    .schedule-table {
+        min-width: 245px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        font-size: 0.78em;
+        padding: 6px 1px;
+    }
+    
+    .team-cell {
+        font-size: 0.79em;
+        line-height: 1.25;
+        white-space: normal;
+        word-break: break-word;
+    }
+    
+    .date-cell {
+        font-size: 0.72em;
+    }
+    
+    .score {
+        font-size: 1.02em;
+    }
+    
+    .team-btn {
+        padding: 5px 8px;
+        font-size: 0.78em;
+        min-width: 62px;
+        max-width: 88px;
+    }
+    
+    .schedule-table td:nth-child(2),
+    .schedule-table td:nth-child(4) {
+        text-align: center;
     }
 }
 

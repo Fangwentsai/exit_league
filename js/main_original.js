@@ -1,4 +1,3 @@
-// 修复未关闭的模板字符串
 // 配置信息
 const CONFIG = {
     SEASON3: {
@@ -1069,7 +1068,7 @@ async function loadScheduleData(page) {
                 setupMatchTableRows();
                 
                 // 重要: 重新初始化篩選功能
-                console.log('關鍵: 表格加載完成，延遲調用篩選功能初始化');
+                console.log('關鍵: 表格加載完成，重新初始化篩選功能');
                 
                 // 確保清除所有按鈕的選中狀態
                 document.querySelectorAll('.team-btn').forEach(btn => {
@@ -1078,37 +1077,14 @@ async function loadScheduleData(page) {
                 
                 // 一個簡單的延遲，確保DOM完全更新
                 setTimeout(() => {
-                    // 檢查並調用filter.js中的初始化函數
-                    console.log('嘗試初始化篩選功能');
-                    try {
-                        // 首先檢查全局命名空間
-                        if (typeof window.initializeFilters === 'function') {
-                            console.log('找到window.initializeFilters函數，調用初始化');
-                            window.initializeFilters();
-                        } else if (typeof initializeFilters === 'function') {
-                            console.log('找到局部initializeFilters函數，調用初始化');
-                            initializeFilters();
-                        } else if (typeof window.setupScheduleFilters === 'function') {
-                            console.log('找到window.setupScheduleFilters函數，調用初始化');
-                            window.setupScheduleFilters();
-                        } else if (typeof setupScheduleFilters === 'function') {
-                            console.log('找到局部setupScheduleFilters函數，調用初始化');
-                            setupScheduleFilters();
-                        } else {
-                            // 如果都找不到，使用備用函數
-                            console.log('使用內部備用篩選函數_setupScheduleFilters');
-                            _setupScheduleFilters();
-                        }
-                    } catch (error) {
-                        console.error('初始化篩選功能時發生錯誤:', error);
-                        // 嘗試使用備用函數
-                        try {
-                            _setupScheduleFilters();
-                        } catch (backupError) {
-                            console.error('備用篩選功能也失敗:', backupError);
-                        }
+                    // 重新設置篩選功能
+                    if (typeof setupScheduleFilters === 'function') {
+                        console.log('重新初始化篩選功能');
+                        setupScheduleFilters();
+                    } else {
+                        console.error('無法找到setupScheduleFilters函數');
                     }
-                }, 800); // 增加延遲時間，確保DOM和所有腳本都已加載
+                }, 100);
             } else {
                 console.error('找不到表格元素 .schedule-table tbody');
             }
@@ -1208,41 +1184,67 @@ function closeMatchModal(modal) {
     }, 300);
 }
 
-// 以下是原main.js中的筛选函数，為避免與filter.js衝突，將它们重命名
-// 注意：這些函數通常不會被使用，而是由filter.js中的函數替代
-function _setupScheduleFilters() {
-    console.log('使用main.js中的備用篩選功能(_setupScheduleFilters)');
+// 設置賽程篩選功能
+function setupScheduleFilters() {
+    console.log('設置賽程篩選功能');
     const teamButtons = document.querySelectorAll('.team-btn');
+    console.log('找到篩選按鈕數量:', teamButtons.length);
+    
     if (teamButtons.length === 0) {
         console.warn('警告: 未找到任何篩選按鈕，請確認頁面加載正確');
         return;
     }
     
+    // 記錄找到的所有按鈕信息
+    teamButtons.forEach((btn, idx) => {
+        const team = btn.getAttribute('data-team');
+        const hasClass = btn.classList.contains('selected');
+        console.log(`按鈕 ${idx}: team=${team}, 是否選中=${hasClass}, 內容文本="${btn.textContent}"`);
+    });
+    
+    // 創建一個新的Set來存儲選中的隊伍
+    // 確保每次重新加載頁面時都重置篩選狀態
     const selectedTeams = new Set();
     
+    // 為每個按鈕添加點擊事件
     teamButtons.forEach(button => {
         const team = button.getAttribute('data-team');
         
+        // 移除現有事件(如果有的話)
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
         
+        // 添加新的事件監聽器
         newButton.addEventListener('click', function() {
             const team = this.getAttribute('data-team');
+            console.log(`點擊按鈕: ${team}`);
+            
             if (this.classList.contains('selected')) {
+                // 如果已選中，則取消選中
+                console.log(`取消選中: ${team}`);
                 this.classList.remove('selected');
                 selectedTeams.delete(team);
             } else {
+                // 如果未選中，則選中
+                console.log(`選中: ${team}`);
                 this.classList.add('selected');
                 selectedTeams.add(team);
             }
             
-            _filterScheduleTable(Array.from(selectedTeams));
+            console.log('當前選中的隊伍:', Array.from(selectedTeams));
+            
+            // 篩選表格
+            debugFilterTable(Array.from(selectedTeams));
         });
     });
+    
+    console.log('賽程篩選功能設置完成');
 }
 
-function _filterScheduleTable(selectedTeams) {
-    console.log('使用main.js中的備用篩選表格功能(_filterScheduleTable)');
+// 測試用的調試篩選功能
+function debugFilterTable(selectedTeams) {
+    console.log('調試篩選表格，選中的隊伍:', selectedTeams);
+    
     const tbody = document.querySelector('.schedule-table tbody');
     if (!tbody) {
         console.error('未找到表格主體');
@@ -1250,39 +1252,49 @@ function _filterScheduleTable(selectedTeams) {
     }
     
     const rows = tbody.querySelectorAll('tr');
+    console.log(`找到表格行: ${rows.length} 行`);
     
+    // 如果沒有選中任何隊伍，顯示所有行
     if (selectedTeams.length === 0) {
-        rows.forEach(row => {
-            row.style.display = '';
-            row.querySelectorAll('td').forEach(cell => {
-                cell.classList.remove('highlight-team');
-            });
-        });
+        console.log('沒有選中任何隊伍，顯示所有行');
+        rows.forEach(row => row.style.display = '');
         return;
     }
     
-    rows.forEach(row => {
+    // 篩選行
+    rows.forEach((row, idx) => {
         const cells = row.querySelectorAll('td');
         if (cells.length < 4) {
+            console.log(`行 ${idx+1} 單元格數量不足: ${cells.length}`);
             return;
         }
         
+        // 單元格索引: 1=客隊, 3=主隊
         const awayTeam = cells[1].textContent.trim();
         const homeTeam = cells[3].textContent.trim();
         
+        console.log(`行 ${idx+1}: 客隊="${awayTeam}", 主隊="${homeTeam}"`);
+        
+        // 檢查是否包含選中的隊伍
         const matchFound = selectedTeams.some(team => 
             awayTeam.includes(team) || homeTeam.includes(team)
         );
         
+        console.log(`行 ${idx+1} 匹配結果: ${matchFound}`);
+        
+        // 顯示或隱藏行
         row.style.display = matchFound ? '' : 'none';
         
+        // 高亮匹配的隊伍
         if (matchFound) {
+            // 檢查客隊
             if (selectedTeams.some(team => awayTeam.includes(team))) {
                 cells[1].classList.add('highlight-team');
             } else {
                 cells[1].classList.remove('highlight-team');
             }
             
+            // 檢查主隊
             if (selectedTeams.some(team => homeTeam.includes(team))) {
                 cells[3].classList.add('highlight-team');
             } else {
@@ -1290,12 +1302,111 @@ function _filterScheduleTable(selectedTeams) {
             }
         }
     });
+    
+    console.log('篩選完成');
 }
 
-// 如果filter.js未加载，提供备用初始化函数
-function _initializeFilters() {
-    console.log('使用main.js中的備用初始化函數(_initializeFilters)');
-    _setupScheduleFilters();
+// 使用調試篩選函數替換原有的篩選函數
+function filterScheduleTable(selectedTeams) {
+    debugFilterTable(selectedTeams);
+}
+
+// 設置賽程表格行的點擊事件處理
+function setupMatchTableRows() {
+    // 為有比賽結果的行添加點擊處理
+    document.querySelectorAll('tr.clickable-match').forEach((row, index) => {
+        // 為行添加索引屬性，用於交錯動畫
+        row.style.setProperty('--row-index', index + 1);
+        
+        row.addEventListener('click', function() {
+            const dateCell = this.querySelector('.date-cell');
+            if (dateCell) {
+                const clickableDate = dateCell.querySelector('.clickable-date');
+                if (clickableDate) {
+                    const gameUrl = clickableDate.getAttribute('data-game-url');
+                    if (gameUrl) {
+                        console.log('點擊行，顯示比賽詳情:', gameUrl);
+                        showMatchDetails(gameUrl);
+                    }
+                }
+            }
+        });
+    });
+}
+
+// 創建比賽 HTML
+function createMatchesHTML(matchDay, isLastWeek = false) {
+    return `
+        <div class="match-date">
+            <span class="date">${matchDay.date}</span>
+            ${isLastWeek ? '<span class="view-result">點擊下排看詳細賽況 👇</span>' : ''}
+        </div>
+        <div class="matches-container">
+            ${matchDay.games.map(game => {
+                if (isLastWeek) {
+                    return `
+                        <div class="match-item clickable" onclick="showGameResult('${game.game_number}')">
+                            <span class="team team-away">${game.team1}</span>
+                            <span class="vs">VS</span>
+                            <span class="team team-home">${game.team2}</span>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="match-item" onclick="showToast('比賽尚未開打喔┌|◎o◎|┘')">
+                            <span class="team team-away">${game.team1}</span>
+                            <span class="vs">VS</span>
+                            <span class="team team-home">${game.team2}</span>
+                        </div>
+                    `;
+                }
+            }).join('')}
+        </div>
+    `;
+}
+
+// 顯示比賽結果
+function showGameResult(gameNumber) {
+    const modal = document.getElementById('gameModal');
+    const gameFrame = document.getElementById('gameFrame');
+    const closeBtn = document.querySelector('.close');
+    
+    if (modal && gameFrame) {
+        modal.style.display = 'block';
+        gameFrame.src = `game_result/season4/${gameNumber}.html`;
+
+        // 點擊關閉按鈕關閉 modal
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            gameFrame.src = ''; // 清空 iframe 內容
+        }
+
+        // 點擊 modal 外部關閉
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                gameFrame.src = ''; // 清空 iframe 內容
+            }
+        }
+    }
+}
+
+// 添加顯示 toast 的函數
+function showToast(message) {
+    // 創建 toast 元素
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // 添加顯示的 class
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // 1秒後移除
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => document.body.removeChild(toast), 200);
+    }, 1000);
 }
 
 function showLoadingBar() {
@@ -1473,172 +1584,4 @@ function loadCSS(file, isImportant = false, isPreload = false) {
                     }
                     
                     styleLink.onload = () => {
-                        console.log(`CSS已應用：${file}`);
-                        resolve();
-                    };
-                    
-                    styleLink.onerror = (err) => {
-                        console.error(`CSS應用失敗: ${file}`, err);
-                        reject(err);
-                    };
-                    
-                    document.head.appendChild(styleLink);
-                    return;
-                }
-            }
-            
-            // 如果已經載入且不需要轉換，直接完成
-            resolve();
-            return;
-        }
-        
-        // 創建新的link元素
-        const link = document.createElement('link');
-        
-        // 設置通用屬性
-        link.href = file;
-        
-        // 根據是否為預加載模式設置不同的屬性
-        if (isPreload) {
-            link.rel = 'preload';
-            link.as = 'style';
-            link.setAttribute('data-preload', 'true');
-        } else {
-            link.rel = 'stylesheet';
-            if (isImportant) {
-                link.setAttribute('importance', 'high');
-            }
-        }
-        
-        // 添加事件監聽器
-        link.onload = () => {
-            console.log(`${isPreload ? 'CSS預加載' : 'CSS載入'}成功: ${file}`);
-            resolve();
-        };
-        
-        link.onerror = (err) => {
-            console.error(`${isPreload ? 'CSS預加載' : 'CSS載入'}失敗: ${file}`, err);
-            reject(err);
-        };
-        
-        // 添加到頁面
-        document.head.appendChild(link);
-    });
-}
-
-// 加載圖片
-function loadImage(src) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-            console.log(`圖片加載成功: ${src}`);
-            resolve(img);
-        };
-        img.onerror = (err) => {
-            console.error(`圖片加載失敗: ${src}`, err);
-            reject(err);
-        };
-        img.src = src;
-    });
-}
-
-// 驗證 JSON 格式
-function validateScheduleData(jsonText) {
-    try {
-        const parsed = JSON.parse(jsonText);
-        if (!parsed.schedule || !Array.isArray(parsed.schedule)) {
-            throw new Error('缺少 schedule 陣列');
-        }
-        
-        if (parsed.schedule.length === 0) {
-            throw new Error('schedule 陣列為空');
-        }
-        
-        parsed.schedule.forEach((day, index) => {
-            if (!day.date) {
-                throw new Error(`第 ${index+1} 個比賽日缺少日期`);
-            }
-            
-            if (!day.games || !Array.isArray(day.games)) {
-                throw new Error(`第 ${index+1} 個比賽日 (${day.date}) 缺少 games 陣列`);
-            }
-            
-            day.games.forEach((game, gameIndex) => {
-                if (!game.game_number) {
-                    throw new Error(`${day.date} 的第 ${gameIndex+1} 場比賽缺少遊戲編號`);
-                }
-                if (!game.team1) {
-                    throw new Error(`${day.date} 的第 ${gameIndex+1} 場比賽 (${game.game_number}) 缺少隊伍1`);
-                }
-                if (!game.team2) {
-                    throw new Error(`${day.date} 的第 ${gameIndex+1} 場比賽 (${game.game_number}) 缺少隊伍2`);
-                }
-            });
-        });
-        
-        return true;
-    } catch (e) {
-        console.error('JSON 驗證錯誤:', e.message);
-        throw e;
-    }
-}
-
-// 設置表格行點擊事件
-function setupMatchTableRows() {
-    const clickableMatches = document.querySelectorAll('.clickable-match');
-    console.log('找到可點擊比賽行數:', clickableMatches.length);
-    
-    clickableMatches.forEach(row => {
-        row.addEventListener('click', function() {
-            console.log('點擊比賽行:', this.id);
-            const dateCell = this.querySelector('.date-cell');
-            if (dateCell) {
-                const clickableDate = dateCell.querySelector('.clickable-date');
-                if (clickableDate) {
-                    const gameUrl = clickableDate.getAttribute('data-game-url');
-                    console.log('找到比賽URL:', gameUrl);
-                    if (gameUrl) {
-                        showMatchDetails(gameUrl);
-                    }
-                }
-            }
-        });
-    });
-}
-
-// 頁面載入時執行
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('頁面載入完成');
-    
-    // 設置漢堡選單處理
-    setupHamburgerMenu();
-    
-    // 設置導航
-    setupNavigation();
-    
-    // 處理URL中的錨點
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        console.log('處理URL中的錨點:', hash);
-        const parts = hash.split('/');
-        const page = parts[0];
-        const anchor = parts.length > 1 ? parts[1] : null;
-        
-        if (page) {
-            loadContent(page, anchor, false);
-        }
-    } else {
-        console.log('沒有錨點，載入默認頁面');
-        loadContent('news', null, true);
-    }
-    
-    // 監聽瀏覽器前進後退
-    window.addEventListener('popstate', function(event) {
-        console.log('瀏覽器導航:', event.state);
-        if (event.state && event.state.page) {
-            loadContent(event.state.page, event.state.anchor, false);
-        } else {
-            loadContent('news', null, false);
-        }
-    });
-});
+                        console.log(`
