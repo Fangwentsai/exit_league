@@ -13,10 +13,20 @@ const CONFIG = {
     }
 };
 
+// 添加一個全局變量來控制是否顯示調試日誌
+const DEBUG_MODE = false;
+
+// 定義一個調試日誌函數
+function debugLog(...args) {
+    if (DEBUG_MODE) {
+        console.log(...args);
+    }
+}
+
 // 調試輸出
-console.log('CONFIG 對象已加載');
-console.log('CONFIG.SEASON3:', CONFIG.SEASON3);
-console.log('CONFIG.SEASON4:', CONFIG.SEASON4);
+// console.log('CONFIG 對象已加載');
+// console.log('CONFIG.SEASON3:', CONFIG.SEASON3);
+// console.log('CONFIG.SEASON4:', CONFIG.SEASON4);
 
 // 漢堡選單處理
 function setupHamburgerMenu() {
@@ -128,7 +138,7 @@ function closeSidebar() {
 
 // 載入內容
 async function loadContent(page, anchor = null, pushState = true) {
-    console.log('loadContent 開始:', { page, anchor, pushState });
+    debugLog('loadContent 開始:', { page, anchor, pushState });
     const contentArea = document.getElementById('contentArea');
     if (!contentArea) return;
 
@@ -145,7 +155,7 @@ async function loadContent(page, anchor = null, pushState = true) {
 
     // 構建頁面路徑
     const pagePath = `pages/${page}.html`;
-    console.log('準備載入頁面:', pagePath);
+    debugLog('準備載入頁面:', pagePath);
 
     // 讀取頁面內容
     fetch(pagePath)
@@ -157,7 +167,7 @@ async function loadContent(page, anchor = null, pushState = true) {
         })
         .then(html => {
             contentArea.innerHTML = html;
-            console.log('頁面內容已載入');
+            debugLog('頁面內容已載入');
             
             // 確保標題顏色保持白色
             const mainTitle = document.querySelector('.main-title');
@@ -179,13 +189,13 @@ async function loadContent(page, anchor = null, pushState = true) {
             
             // 等待數據載入完成後再處理錨點
             dataLoadPromise.then(() => {
-                console.log('數據載入完成，準備處理錨點');
+                debugLog('數據載入完成，準備處理錨點');
                 // 如果有錨點，滾動到對應位置
                 if (anchor) {
-                    console.log('開始處理錨點:', anchor);
+                    debugLog('開始處理錨點:', anchor);
                     const scrollToAnchor = () => {
                         const element = document.getElementById(anchor);
-                        console.log('尋找錨點元素:', { 
+                        debugLog('尋找錨點元素:', { 
                             anchor, 
                             elementFound: !!element,
                             elementTop: element?.offsetTop,
@@ -218,7 +228,7 @@ async function loadContent(page, anchor = null, pushState = true) {
                             // 計算最終滾動位置，額外扣除 65px
                             const scrollPosition = Math.max(0, elementPosition - totalFixedHeight - 65);
 
-                            console.log('計算滾動位置:', {
+                            debugLog('計算滾動位置:', {
                                 elementPosition,
                                 totalFixedHeight,
                                 extraOffset: 65,
@@ -242,9 +252,9 @@ async function loadContent(page, anchor = null, pushState = true) {
                     let attempts = 0;
                     const maxAttempts = 10;
                     const tryScroll = () => {
-                        console.log(`嘗試滾動 第 ${attempts + 1} 次`);
+                        debugLog(`嘗試滾動 第 ${attempts + 1} 次`);
                         if (scrollToAnchor() || attempts >= maxAttempts) {
-                            console.log(attempts >= maxAttempts ? '達到最大嘗試次數' : '成功找到並滾動到錨點');
+                            debugLog(attempts >= maxAttempts ? '達到最大嘗試次數' : '成功找到並滾動到錨點');
                             return;
                         }
                         attempts++;
@@ -258,12 +268,12 @@ async function loadContent(page, anchor = null, pushState = true) {
             // 更新瀏覽器歷史記錄
             if (pushState) {
                 const url = anchor ? `#${page}/${anchor}` : `#${page}`;
-                console.log('更新瀏覽器歷史:', url);
+                debugLog('更新瀏覽器歷史:', url);
                 history.pushState({ page, anchor }, '', url);
             }
         })
         .catch(error => {
-            console.error('載入頁面時發生錯誤:', error);
+            debugLog('載入頁面時發生錯誤:', error);
             contentArea.innerHTML = `<div class="error-message">載入失敗: ${error.message}</div>`;
         });
 }
@@ -300,11 +310,11 @@ function parseDate(dateStr) {
     } else if (dateStr.includes('.')) {
         parts = dateStr.split('.');
     } else {
-        console.error('無法解析日期格式:', dateStr);
+        debugLog('無法解析日期格式:', dateStr);
         return null;
     }
     if (parts.length < 2) {
-        console.error('日期格式不完整:', dateStr);
+        debugLog('日期格式不完整:', dateStr);
         return null;
     }
     let month, day;
@@ -316,7 +326,7 @@ function parseDate(dateStr) {
         day = parseInt(parts[2], 10);
     }
     if (isNaN(month) || isNaN(day)) {
-        console.error('日期解析失敗:', dateStr);
+        debugLog('日期解析失敗:', dateStr);
         return null;
     }
     const year = new Date().getFullYear();
@@ -506,15 +516,15 @@ function generateMatchesHTML(matches) {
 }
 
 function parseScheduleData(values) {
-    console.log('開始解析 schedule 工作表數據');
-    console.log('數據行數:', values.length);
+    debugLog('開始解析 schedule 工作表數據');
+    debugLog('數據行數:', values.length);
     const result = [];
     for (let i = 0; i < values.length; i++) {
         const row = values[i];
         if (!row || row.length < 7) continue;
         const gameCode = row[0];
         if (gameCode && typeof gameCode === 'string' && gameCode.startsWith('G') && row[1]) {
-            console.log(`處理比賽: ${gameCode} - ${row[1]}`);
+            debugLog(`處理比賽: ${gameCode} - ${row[1]}`);
             result.push({
                 gameCode: gameCode,
                 date: row[1] || '',
@@ -527,42 +537,42 @@ function parseScheduleData(values) {
             });
         }
     }
-    console.log(`共解析出 ${result.length} 場比賽`);
+    debugLog(`共解析出 ${result.length} 場比賽`);
     return result;
 }
 
 function displayMatches(matches) {
-    console.log('開始處理並顯示比賽數據，總數據條數:', matches.length);
+    debugLog('開始處理並顯示比賽數據，總數據條數:', matches.length);
     const today = new Date();
-    console.log('當前日期:', today.toISOString().split('T')[0]);
+    debugLog('當前日期:', today.toISOString().split('T')[0]);
     const lastWeekMatches = [];
     const upcomingMatches = [];
     for (const match of matches) {
         if (!match.date) {
-            console.log('跳過沒有日期的比賽:', match);
+            debugLog('跳過沒有日期的比賽:', match);
             continue;
         }
         const matchDate = parseDate(match.date);
         if (!matchDate) {
-            console.log('無法解析日期:', match.date, '跳過此比賽:', match);
+            debugLog('無法解析日期:', match.date, '跳過此比賽:', match);
             continue;
         }
-        console.log('比賽日期:', match.date, '解析為:', matchDate.toISOString().split('T')[0]);
+        debugLog('比賽日期:', match.date, '解析為:', matchDate.toISOString().split('T')[0]);
         const diffTime = matchDate.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        console.log('比賽與今天相差天數:', diffDays);
+        debugLog('比賽與今天相差天數:', diffDays);
         
         // 只顯示最近 7 天內的比賽作為上週戰況
         if (diffDays < 0 && diffDays >= -7) {
-            console.log('分類為上週比賽:', match);
+            debugLog('分類為上週比賽:', match);
             lastWeekMatches.push(match);
         } 
         // 只顯示未來 7 天的比賽作為近期比賽
         else if (diffDays >= 0 && diffDays <= 7) {
-            console.log('分類為近期比賽:', match);
+            debugLog('分類為近期比賽:', match);
             upcomingMatches.push(match);
         } else {
-            console.log('不在顯示範圍內的比賽:', match);
+            debugLog('不在顯示範圍內的比賽:', match);
         }
     }
     
@@ -580,16 +590,16 @@ function displayMatches(matches) {
         return dateA - dateB; // 升序排列，最近的日期在前
     });
     
-    console.log('上週比賽總數:', lastWeekMatches.length);
-    console.log('近期比賽總數:', upcomingMatches.length);
+    debugLog('上週比賽總數:', lastWeekMatches.length);
+    debugLog('近期比賽總數:', upcomingMatches.length);
     const lastWeekContent = document.getElementById('lastWeekMatchesContent');
     if (lastWeekContent) {
         if (lastWeekMatches.length > 0) {
             lastWeekContent.innerHTML = generateMatchesHTML(lastWeekMatches);
-            console.log('上週戰況已更新');
+            debugLog('上週戰況已更新');
         } else {
             lastWeekContent.innerHTML = '<p>無上週比賽數據</p>';
-            console.log('無上週比賽數據');
+            debugLog('無上週比賽數據');
         }
     } else {
         console.error('找不到上週戰況容器元素');
@@ -598,10 +608,10 @@ function displayMatches(matches) {
     if (upcomingContent) {
         if (upcomingMatches.length > 0) {
             upcomingContent.innerHTML = generateMatchesHTML(upcomingMatches);
-            console.log('近期比賽已更新');
+            debugLog('近期比賽已更新');
         } else {
             upcomingContent.innerHTML = '<p>無近期比賽數據</p>';
-            console.log('無近期比賽數據');
+            debugLog('無近期比賽數據');
         }
     } else {
         console.error('找不到近期比賽容器元素');
@@ -610,25 +620,25 @@ function displayMatches(matches) {
 
 async function loadMatches() {
     try {
-        console.log('開始從 Google Sheets 載入比賽數據...');
+        debugLog('開始從 Google Sheets 載入比賽數據...');
         const sheetId = CONFIG.SEASON4.SHEET_ID;
         const apiKey = CONFIG.SEASON4.API_KEY;
-        console.log('使用的 Google Sheets ID:', sheetId);
-        console.log('使用的 API Key:', apiKey);
+        debugLog('使用的 Google Sheets ID:', sheetId);
+        debugLog('使用的 API Key:', apiKey);
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A2:H57?key=${apiKey}`;
-        console.log('請求的 URL:', url);
+        debugLog('請求的 URL:', url);
         const response = await fetch(url);
-        console.log('fetch 響應狀態:', response.status);
+        debugLog('fetch 響應狀態:', response.status);
         if (!response.ok) {
             throw new Error(`Google Sheets API 錯誤: ${response.status}`);
         }
         const jsonData = await response.json();
-        console.log('獲取到的 JSON 數據:', jsonData);
+        debugLog('獲取到的 JSON 數據:', jsonData);
         if (!jsonData.values || jsonData.values.length === 0) {
             throw new Error('Google Sheets 數據為空');
         }
         const data = parseScheduleData(jsonData.values);
-        console.log('解析後的比賽數據:', data);
+        debugLog('解析後的比賽數據:', data);
         if (data.length === 0) {
             throw new Error('沒有有效的比賽數據');
         }
@@ -922,13 +932,13 @@ function updateTeamRankings(data) {
 
 // 載入賽程數據
 async function loadScheduleData(page) {
-    console.log('開始載入賽程數據:', page);
-    console.log('當前頁面:', window.location.href);
+    debugLog('開始載入賽程數據:', page);
+    debugLog('當前頁面:', window.location.href);
     let season = '';
     
     // 檢查是否有明確指定的賽季覆蓋設定
     if (typeof seasonOverride !== 'undefined') {
-        console.log('使用明確指定的賽季:', seasonOverride);
+        debugLog('使用明確指定的賽季:', seasonOverride);
         season = seasonOverride;
     } else {
         // 根據頁面確定要使用的配置
@@ -937,27 +947,27 @@ async function loadScheduleData(page) {
         } else if (page === 'schedule') {  // schedule.html 對應第三屆
             season = 's3';
         } else {
-            console.error('未知的賽程頁面:', page);
+            debugLog('未知的賽程頁面:', page);
             return;
         }
     }
 
     // 構建數據文件路徑
     const dataFile = `data/schedule_${season}.json`;
-    console.log('嘗試載入數據文件:', dataFile);
+    debugLog('嘗試載入數據文件:', dataFile);
 
     try {
         showLoadingBar();
-        console.log('開始發送請求到:', dataFile);
+        debugLog('開始發送請求到:', dataFile);
         const response = await fetch(dataFile);
-        console.log('收到響應:', response.status, response.statusText);
+        debugLog('收到響應:', response.status, response.statusText);
         
         if (!response.ok) {
             throw new Error(`HTTP 錯誤! 狀態: ${response.status}`);
         }
         
         const text = await response.text();
-        console.log('收到的數據長度:', text.length);
+        debugLog('收到的數據長度:', text.length);
         
         try {
             // 清理文本內容
@@ -970,13 +980,13 @@ async function loadScheduleData(page) {
             // 驗證 JSON 格式
             try {
                 validateScheduleData(cleanText);
-                console.log('JSON 格式驗證通過');
+                debugLog('JSON 格式驗證通過');
             } catch (validationError) {
-                console.error('JSON 格式驗證失敗:', validationError.message);
+                debugLog('JSON 格式驗證失敗:', validationError.message);
             }
             
             const data = JSON.parse(cleanText);
-            console.log('JSON 解析成功');
+            debugLog('JSON 解析成功');
             
             // 獲取當前日期
             const currentDate = new Date();
@@ -989,7 +999,7 @@ async function loadScheduleData(page) {
             
             data.schedule.forEach((daySchedule) => {
                 if (!daySchedule.games || !Array.isArray(daySchedule.games)) {
-                    console.error('無效的比賽日數據:', daySchedule);
+                    debugLog('無效的比賽日數據:', daySchedule);
                     return;
                 }
                 
@@ -1051,14 +1061,14 @@ async function loadScheduleData(page) {
             const tableBody = document.querySelector('.schedule-table tbody');
             if (tableBody) {
                 tableBody.innerHTML = tableContent;
-                console.log('表格內容已更新');
+                debugLog('表格內容已更新');
                 
                 // 添加日期單元格的點擊事件
                 document.querySelectorAll('.clickable-date').forEach(dateElement => {
                     dateElement.addEventListener('click', function(e) {
                         e.stopPropagation(); // 防止事件冒泡到tr
                         const gameUrl = this.getAttribute('data-game-url');
-                        console.log('點擊日期，顯示比賽詳情:', gameUrl);
+                        debugLog('點擊日期，顯示比賽詳情:', gameUrl);
                         if (gameUrl) {
                             showMatchDetails(gameUrl);
                         }
@@ -1069,7 +1079,7 @@ async function loadScheduleData(page) {
                 setupMatchTableRows();
                 
                 // 重要: 重新初始化篩選功能
-                console.log('關鍵: 表格加載完成，延遲調用篩選功能初始化');
+                debugLog('關鍵: 表格加載完成，延遲調用篩選功能初始化');
                 
                 // 確保清除所有按鈕的選中狀態
                 document.querySelectorAll('.team-btn').forEach(btn => {
@@ -1079,44 +1089,44 @@ async function loadScheduleData(page) {
                 // 一個簡單的延遲，確保DOM完全更新
                 setTimeout(() => {
                     // 檢查並調用filter.js中的初始化函數
-                    console.log('嘗試初始化篩選功能');
+                    debugLog('嘗試初始化篩選功能');
                     try {
                         // 首先檢查全局命名空間
                         if (typeof window.initializeFilters === 'function') {
-                            console.log('找到window.initializeFilters函數，調用初始化');
+                            debugLog('找到window.initializeFilters函數，調用初始化');
                             window.initializeFilters();
                         } else if (typeof initializeFilters === 'function') {
-                            console.log('找到局部initializeFilters函數，調用初始化');
+                            debugLog('找到局部initializeFilters函數，調用初始化');
                             initializeFilters();
                         } else if (typeof window.setupScheduleFilters === 'function') {
-                            console.log('找到window.setupScheduleFilters函數，調用初始化');
+                            debugLog('找到window.setupScheduleFilters函數，調用初始化');
                             window.setupScheduleFilters();
                         } else if (typeof setupScheduleFilters === 'function') {
-                            console.log('找到局部setupScheduleFilters函數，調用初始化');
+                            debugLog('找到局部setupScheduleFilters函數，調用初始化');
                             setupScheduleFilters();
                         } else {
                             // 如果都找不到，使用備用函數
-                            console.log('使用內部備用篩選函數_setupScheduleFilters');
+                            debugLog('使用內部備用篩選函數_setupScheduleFilters');
                             _setupScheduleFilters();
                         }
                     } catch (error) {
-                        console.error('初始化篩選功能時發生錯誤:', error);
+                        debugLog('初始化篩選功能時發生錯誤:', error);
                         // 嘗試使用備用函數
                         try {
                             _setupScheduleFilters();
                         } catch (backupError) {
-                            console.error('備用篩選功能也失敗:', backupError);
+                            debugLog('備用篩選功能也失敗:', backupError);
                         }
                     }
                 }, 800); // 增加延遲時間，確保DOM和所有腳本都已加載
             } else {
-                console.error('找不到表格元素 .schedule-table tbody');
+                debugLog('找不到表格元素 .schedule-table tbody');
             }
             
             hideLoadingBar();
-            console.log('賽程數據載入完成');
+            debugLog('賽程數據載入完成');
         } catch (error) {
-            console.error('載入賽程數據時發生錯誤:', error);
+            debugLog('載入賽程數據時發生錯誤:', error);
             const tableBody = document.querySelector('.schedule-table tbody');
             if (tableBody) {
                 tableBody.innerHTML = '<tr><td colspan="4">載入數據時發生錯誤</td></tr>';
@@ -1124,7 +1134,7 @@ async function loadScheduleData(page) {
             hideLoadingBar();
         }
     } catch (error) {
-        console.error('載入賽程數據時發生錯誤:', error);
+        debugLog('載入賽程數據時發生錯誤:', error);
         const tableBody = document.querySelector('.schedule-table tbody');
         if (tableBody) {
             tableBody.innerHTML = '<tr><td colspan="4">載入數據時發生錯誤</td></tr>';
@@ -1135,7 +1145,7 @@ async function loadScheduleData(page) {
 
 // 顯示比賽詳情
 function showMatchDetails(gameUrl) {
-    console.log('嘗試顯示比賽詳情:', gameUrl);
+    debugLog('嘗試顯示比賽詳情:', gameUrl);
     
     // 如果已經存在模態框，先移除
     const existingModal = document.querySelector('.match-modal');
@@ -1211,10 +1221,10 @@ function closeMatchModal(modal) {
 // 以下是原main.js中的筛选函数，為避免與filter.js衝突，將它们重命名
 // 注意：這些函數通常不會被使用，而是由filter.js中的函數替代
 function _setupScheduleFilters() {
-    console.log('使用main.js中的備用篩選功能(_setupScheduleFilters)');
+    debugLog('使用main.js中的備用篩選功能(_setupScheduleFilters)');
     const teamButtons = document.querySelectorAll('.team-btn');
     if (teamButtons.length === 0) {
-        console.warn('警告: 未找到任何篩選按鈕，請確認頁面加載正確');
+        debugLog('警告: 未找到任何篩選按鈕，請確認頁面加載正確');
         return;
     }
     
@@ -1242,10 +1252,10 @@ function _setupScheduleFilters() {
 }
 
 function _filterScheduleTable(selectedTeams) {
-    console.log('使用main.js中的備用篩選表格功能(_filterScheduleTable)');
+    debugLog('使用main.js中的備用篩選表格功能(_filterScheduleTable)');
     const tbody = document.querySelector('.schedule-table tbody');
     if (!tbody) {
-        console.error('未找到表格主體');
+        debugLog('未找到表格主體');
         return;
     }
     
@@ -1294,7 +1304,7 @@ function _filterScheduleTable(selectedTeams) {
 
 // 如果filter.js未加载，提供备用初始化函数
 function _initializeFilters() {
-    console.log('使用main.js中的備用初始化函數(_initializeFilters)');
+    debugLog('使用main.js中的備用初始化函數(_initializeFilters)');
     _setupScheduleFilters();
 }
 
@@ -1361,7 +1371,7 @@ function showScheduleError(message) {
 
 // 預加載資源
 async function preloadResources(page = 'news') {
-    console.log('開始預加載資源，當前頁面:', page);
+    debugLog('開始預加載資源，當前頁面:', page);
     
     // 基礎 CSS 文件（立即加載）
     const baseCssFiles = [
@@ -1396,19 +1406,19 @@ async function preloadResources(page = 'news') {
         // 立即加載基礎 CSS
         const baseCssPromises = baseCssFiles.map(file => loadCSS(file, true, false));
         await Promise.all(baseCssPromises);
-        console.log('基礎 CSS 加載完成');
+        debugLog('基礎 CSS 加載完成');
 
         // 立即加載共用圖片
         const commonImagePromises = commonImages.map(file => loadImage(file));
         Promise.all(commonImagePromises).then(() => {
-            console.log('共用圖片加載完成');
+            debugLog('共用圖片加載完成');
         });
 
         // 加載當前頁面需要的 CSS - 使用normal模式
         if (pageCssMap[page]) {
             const pageCssPromises = pageCssMap[page].map(file => loadCSS(file, true, false));
             Promise.all(pageCssPromises).then(() => {
-                console.log(`${page} 頁面 CSS 加載完成`);
+                debugLog(`${page} 頁面 CSS 加載完成`);
             });
         }
 
@@ -1416,7 +1426,7 @@ async function preloadResources(page = 'news') {
         if (pageImageMap[page]) {
             const pageImagePromises = pageImageMap[page].map(file => loadImage(file));
             Promise.all(pageImagePromises).then(() => {
-                console.log(`${page} 頁面圖片加載完成`);
+                debugLog(`${page} 頁面圖片加載完成`);
             });
         }
 
@@ -1426,7 +1436,7 @@ async function preloadResources(page = 'news') {
                 // 設置標記，避免重複預加載
                 window.cssPreloadingDone = true;
                 
-                console.log('開始預加載其他頁面CSS資源');
+                debugLog('開始預加載其他頁面CSS資源');
                 Object.entries(pageCssMap).forEach(([key, files]) => {
                     if (key !== page) {
                         files.forEach(file => {
@@ -1439,7 +1449,7 @@ async function preloadResources(page = 'news') {
         }
 
     } catch (error) {
-        console.error('資源加載過程中發生錯誤:', error);
+        debugLog('資源加載過程中發生錯誤:', error);
     }
 }
 
@@ -1462,7 +1472,7 @@ function loadCSS(file, isImportant = false, isPreload = false) {
                 
                 // 如果找到預加載的鏈接，將其轉換為stylesheet
                 if (preloadLink) {
-                    console.log(`將預加載的CSS轉為應用: ${file}`);
+                    debugLog(`將預加載的CSS轉為應用: ${file}`);
                     // 創建新的stylesheet鏈接而不是修改原有的
                     // 這樣可以避免閃爍和樣式突變問題
                     const styleLink = document.createElement('link');
@@ -1473,12 +1483,12 @@ function loadCSS(file, isImportant = false, isPreload = false) {
                     }
                     
                     styleLink.onload = () => {
-                        console.log(`CSS已應用：${file}`);
+                        debugLog(`CSS已應用：${file}`);
                         resolve();
                     };
                     
                     styleLink.onerror = (err) => {
-                        console.error(`CSS應用失敗: ${file}`, err);
+                        debugLog(`CSS應用失敗: ${file}`, err);
                         reject(err);
                     };
                     
@@ -1512,12 +1522,12 @@ function loadCSS(file, isImportant = false, isPreload = false) {
         
         // 添加事件監聽器
         link.onload = () => {
-            console.log(`${isPreload ? 'CSS預加載' : 'CSS載入'}成功: ${file}`);
+            debugLog(`${isPreload ? 'CSS預加載' : 'CSS載入'}成功: ${file}`);
             resolve();
         };
         
         link.onerror = (err) => {
-            console.error(`${isPreload ? 'CSS預加載' : 'CSS載入'}失敗: ${file}`, err);
+            debugLog(`${isPreload ? 'CSS預加載' : 'CSS載入'}失敗: ${file}`, err);
             reject(err);
         };
         
@@ -1531,11 +1541,11 @@ function loadImage(src) {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => {
-            console.log(`圖片加載成功: ${src}`);
+            debugLog(`圖片加載成功: ${src}`);
             resolve(img);
         };
         img.onerror = (err) => {
-            console.error(`圖片加載失敗: ${src}`, err);
+            debugLog(`圖片加載失敗: ${src}`, err);
             reject(err);
         };
         img.src = src;
@@ -1578,7 +1588,7 @@ function validateScheduleData(jsonText) {
         
         return true;
     } catch (e) {
-        console.error('JSON 驗證錯誤:', e.message);
+        debugLog('JSON 驗證錯誤:', e.message);
         throw e;
     }
 }
@@ -1586,17 +1596,17 @@ function validateScheduleData(jsonText) {
 // 設置表格行點擊事件
 function setupMatchTableRows() {
     const clickableMatches = document.querySelectorAll('.clickable-match');
-    console.log('找到可點擊比賽行數:', clickableMatches.length);
+    debugLog('找到可點擊比賽行數:', clickableMatches.length);
     
     clickableMatches.forEach(row => {
         row.addEventListener('click', function() {
-            console.log('點擊比賽行:', this.id);
+            debugLog('點擊比賽行:', this.id);
             const dateCell = this.querySelector('.date-cell');
             if (dateCell) {
                 const clickableDate = dateCell.querySelector('.clickable-date');
                 if (clickableDate) {
                     const gameUrl = clickableDate.getAttribute('data-game-url');
-                    console.log('找到比賽URL:', gameUrl);
+                    debugLog('找到比賽URL:', gameUrl);
                     if (gameUrl) {
                         showMatchDetails(gameUrl);
                     }
@@ -1608,7 +1618,7 @@ function setupMatchTableRows() {
 
 // 頁面載入時執行
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('頁面載入完成');
+    debugLog('頁面載入完成');
     
     // 設置漢堡選單處理
     setupHamburgerMenu();
@@ -1619,7 +1629,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 處理URL中的錨點
     const hash = window.location.hash.substring(1);
     if (hash) {
-        console.log('處理URL中的錨點:', hash);
+        debugLog('處理URL中的錨點:', hash);
         const parts = hash.split('/');
         const page = parts[0];
         const anchor = parts.length > 1 ? parts[1] : null;
@@ -1628,13 +1638,13 @@ document.addEventListener('DOMContentLoaded', function() {
             loadContent(page, anchor, false);
         }
     } else {
-        console.log('沒有錨點，載入默認頁面');
+        debugLog('沒有錨點，載入默認頁面');
         loadContent('news', null, true);
     }
     
     // 監聽瀏覽器前進後退
     window.addEventListener('popstate', function(event) {
-        console.log('瀏覽器導航:', event.state);
+        debugLog('瀏覽器導航:', event.state);
         if (event.state && event.state.page) {
             loadContent(event.state.page, event.state.anchor, false);
         } else {
