@@ -1,20 +1,10 @@
 #!/bin/bash
 
-# 更新廣告代碼為帶有本地開發檢測的版本
-MONETAG_CODE='<!-- Monetag廣告代碼 -->
-    <script>
-        // 只在非本地環境中加載廣告
-        if (!window.location.hostname.includes("localhost") && !window.location.hostname.includes("127.0.0.1")) {
-            const script = document.createElement("script");
-            script.src = "https://fpyf8.com/88/tag.min.js";
-            script.setAttribute("data-zone", "148281");
-            script.setAttribute("async", "");
-            script.setAttribute("data-cfasync", "false");
-            document.head.appendChild(script);
-        }
-    </script>'
+# 新的簡化廣告代碼
+NEW_CODE='<!-- Monetag廣告代碼 -->
+    <script src="https://fpyf8.com/88/tag.min.js" data-zone="148281" async data-cfasync="false"></script>'
 
-# 簡化處理單個文件的函數
+# 處理單個文件的函數
 process_file() {
   local file=$1
   echo "處理文件: $file"
@@ -23,11 +13,12 @@ process_file() {
   sed -i '' '/<\!-- Monetag廣告代碼/,/<\/script>/d' "$file"
   sed -i '' '/google-adsense-account/d' "$file"
   sed -i '' '/adsbygoogle/d' "$file"
+  sed -i '' '/shaiwourtijogno\.net/d' "$file"
   
   # 在</head>前添加新的Monetag代碼
-  sed -i '' 's@</head>@'"$MONETAG_CODE"'\n</head>@' "$file"
+  sed -i '' 's@</head>@'"$NEW_CODE"'\\n</head>@' "$file"
   
-  echo "   已更新廣告代碼（增加本地環境檢測）"
+  echo "   已更新廣告代碼"
 }
 
 # 處理指定目錄中的所有HTML文件
@@ -43,8 +34,14 @@ process_directory() {
   done
 }
 
-# 處理index.html
-process_file "index.html"
+# 先處理index.html，但只移除舊代碼而不添加新代碼
+# 因為我們不想在框架頁面中加載廣告
+echo "處理文件: index.html"
+sed -i '' '/<\!-- Monetag廣告代碼/,/<\/script>/d' "index.html"
+sed -i '' '/google-adsense-account/d' "index.html"
+sed -i '' '/adsbygoogle/d' "index.html"
+sed -i '' '/shaiwourtijogno\.net/d' "index.html"
+echo "   已更新index.html (僅移除舊代碼)"
 
 # 處理pages目錄
 process_directory "pages"
@@ -53,4 +50,4 @@ process_directory "pages"
 process_directory "game_result/season3"
 process_directory "game_result/season4"
 
-echo "完成！現在廣告只會在正式環境中顯示，本地開發時不會顯示廣告。" 
+echo "完成更新！" 
