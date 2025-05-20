@@ -1430,27 +1430,46 @@ async function preloadResources(page = 'news') {
             });
         }
 
-        // 預加載其他頁面的資源（低優先級）- 使用真正的preload模式
+        // 根據用戶交互來預加載其他頁面的資源
         if (window.cssPreloadingDone !== true) {
-            setTimeout(() => {
-                // 設置標記，避免重複預加載
-                window.cssPreloadingDone = true;
-                
-                debugLog('開始預加載其他頁面CSS資源');
-                Object.entries(pageCssMap).forEach(([key, files]) => {
-                    if (key !== page) {
-                        files.forEach(file => {
-                            // 使用預加載模式，但不會自動應用到頁面
-                            loadCSS(file, false, true);
-                        });
-                    }
-                });
-            }, 2000); // 縮短至2秒，資源加載更快
+            setupPreloadOnHover();
+            window.cssPreloadingDone = true;
         }
-
     } catch (error) {
         debugLog('資源加載過程中發生錯誤:', error);
     }
+}
+
+// 基於用戶交互的預加載策略
+function setupPreloadOnHover() {
+    const navItems = document.querySelectorAll('.sidebar-btn');
+    const preloadedPages = new Set();
+    
+    navItems.forEach(item => {
+        const page = item.dataset.page;
+        if (!page || page === 'news' || preloadedPages.has(page)) return;
+        
+        item.addEventListener('mouseenter', () => {
+            // 當用戶將鼠標懸停在導航項上時預加載對應頁面的CSS
+            if (preloadedPages.has(page)) return;
+            
+            debugLog(`鼠標懸停預加載: ${page}`);
+            const pageCssMap = {
+                'rank': ['styles/rank.css'],
+                'rankS4': ['styles/rank.css'],
+                'schedule': ['styles/schedule.css'],
+                'scheduleS4': ['styles/schedule.css'],
+                'shops': ['styles/shops.css']
+            };
+            
+            if (pageCssMap[page]) {
+                pageCssMap[page].forEach(file => {
+                    loadCSS(file, false, false);
+                });
+                preloadedPages.add(page);
+            }
+        });
+    });
 }
 
 // 加載 CSS 文件
