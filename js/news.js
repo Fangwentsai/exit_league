@@ -273,9 +273,14 @@ function createMatchesHTML(matchDay) {
                     }
                 }
                 
+                // 添加onclick屬性來打開模態窗口，僅在有比分時才添加點擊事件
+                const hasScores = team1Info.score && team2Info.score;
+                const clickAttr = hasScores ? `onclick="showMatchDetails('game_result/season4/${game.game_number}.html')"` : '';
+                const cursorStyle = hasScores ? 'style="cursor: pointer;"' : '';
+                
                 // 使用表格布局確保對齊
                 return `
-                <div class="match-item">
+                <div class="match-item" ${cursorStyle} ${clickAttr}>
                     <div class="game-code">G${gameCode}</div>
                     <table class="match-table">
                         <tr>
