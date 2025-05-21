@@ -360,10 +360,16 @@ function generateMatchesHTML(matches) {
         for (const match of matchesByDate[date]) {
             // 判斷比賽是否已完成（有分數）
             const hasScores = match.score1 || match.score2;
-            const gameNumber = match.gameCode.replace(/^[Gg]/, '');
-            const gameResultPath = `game_result/season4/g${gameNumber}.html`;
+            // 提取比賽編號，確保正確格式化
+            let gameNumber = match.gameCode.replace(/^[Gg]/, '');
             
-            // 如果有分數，添加一個 data 屬性來存儲游戲路徑，用於之後的事件綁定
+            // 生成比賽結果頁面的URL
+            let gameResultPath = '';
+            
+            // 固定使用第四季路徑
+            gameResultPath = `game_result/season4/g${gameNumber}.html`;
+            
+            // 如果有分數，添加可點擊的類和數據屬性
             const dataAttr = hasScores ? `data-game-url="${gameResultPath}"` : '';
             const clickableClass = hasScores ? 'clickable-match' : '';
             
@@ -495,21 +501,42 @@ function generateMatchesHTML(matches) {
         document.head.appendChild(style);
     }
     
-    // 使用 setTimeout 使事件在 HTML 插入 DOM 後綁定
-    setTimeout(() => {
+    // 使用不同的方法绑定事件，确保HTML插入DOM后能正确绑定
+    const bindEvents = function() {
         const container = document.getElementById(uniqueId);
-        if (container) {
-            // 為所有可點擊的比賽添加事件
-            const clickableMatches = container.querySelectorAll('.clickable-match');
-            clickableMatches.forEach(match => {
-                match.addEventListener('click', function() {
-                    const gameUrl = this.getAttribute('data-game-url');
-                    if (gameUrl) {
-                        showMatchDetails(gameUrl);
-                    }
-                });
-            });
+        if (!container) {
+            console.log('找不到比賽容器:', uniqueId);
+            return;
         }
+        
+        // 為所有可點擊的比賽添加事件
+        const clickableMatches = container.querySelectorAll('.clickable-match');
+        console.log('找到可點擊比賽數:', clickableMatches.length);
+        
+        clickableMatches.forEach(match => {
+            // 移除舊事件監聽器（如果有）
+            const newMatch = match.cloneNode(true);
+            match.parentNode.replaceChild(newMatch, match);
+            
+            newMatch.addEventListener('click', function(e) {
+                const gameUrl = this.getAttribute('data-game-url');
+                console.log('點擊比賽, URL:', gameUrl);
+                if (gameUrl) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showMatchDetails(gameUrl);
+                }
+            });
+        });
+    };
+    
+    // 使用MutationObserver确保DOM更新后绑定事件
+    window.setTimeout(function() {
+        bindEvents();
+        
+        // 安排多次重试绑定，确保在各种情况下都能成功
+        setTimeout(bindEvents, 500);
+        setTimeout(bindEvents, 1000);
     }, 0);
     
     return html;
@@ -1145,7 +1172,7 @@ async function loadScheduleData(page) {
 
 // 顯示比賽詳情
 function showMatchDetails(gameUrl) {
-    debugLog('嘗試顯示比賽詳情:', gameUrl);
+    console.log('嘗試顯示比賽詳情:', gameUrl);
     
     // 如果已經存在模態框，先移除
     const existingModal = document.querySelector('.match-modal');
@@ -1165,7 +1192,9 @@ function showMatchDetails(gameUrl) {
     const closeButton = document.createElement('button');
     closeButton.className = 'modal-close';
     closeButton.innerHTML = '&times;';
-    closeButton.addEventListener('click', function() {
+    closeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         closeMatchModal(modal);
     });
     
@@ -1173,6 +1202,16 @@ function showMatchDetails(gameUrl) {
     const iframe = document.createElement('iframe');
     iframe.className = 'match-iframe';
     iframe.src = gameUrl;
+    
+    // 確保 iframe 加載正常
+    iframe.onerror = function() {
+        console.error('iframe 加載失敗:', gameUrl);
+        iframe.srcdoc = `<div style="padding: 20px; text-align: center;">
+            <h2>加載失敗</h2>
+            <p>無法加載比賽詳情: ${gameUrl}</p>
+            <p><a href="${gameUrl}" target="_blank">嘗試在新標籤頁打開</a></p>
+        </div>`;
+    };
     
     // 組裝模態框
     modalContent.appendChild(closeButton);
@@ -1182,9 +1221,10 @@ function showMatchDetails(gameUrl) {
     // 添加到頁面
     document.body.appendChild(modal);
     
-    // 使用setTimeout讓DOM有時間渲染，然後再添加顯示類
-    setTimeout(() => {
+    // 確保模態框顯示
+    setTimeout(function() {
         modal.classList.add('visible');
+        console.log('模態框已添加可見類');
     }, 10);
     
     // 添加點擊模態框背景關閉的功能
