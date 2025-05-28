@@ -180,6 +180,9 @@ async function loadContent(page, anchor = null, pushState = true) {
             if (page === 'news') {
                 dataLoadPromise = loadNewsData();
             } 
+            else if (page === 'rule') {
+                dataLoadPromise = loadRuleData();
+            }
             else if (page === 'rank' || page === 'rankS4') {
                 dataLoadPromise = loadRankData(page);
             }
@@ -687,9 +690,132 @@ async function loadMatches() {
 async function loadNewsData() {
     try {
         await loadMatches();
+        
+        // 載入廣告腳本
+        loadNewsAds();
     } catch (error) {
         showNewsError(error.message);
     }
+}
+
+// 載入rule頁面數據
+async function loadRuleData() {
+    try {
+        // 載入rule頁面廣告
+        loadRuleAds();
+    } catch (error) {
+        console.error('載入rule頁面時發生錯誤:', error);
+    }
+}
+
+// 載入新聞頁面廣告
+function loadNewsAds() {
+    // 載入320x50 Banner廣告
+    loadBannerAd();
+    
+    // 載入原生廣告
+    loadNativeAd();
+}
+
+// 載入320x50 Banner廣告
+function loadBannerAd() {
+    const bannerContainer = document.getElementById('banner-320x50');
+    if (!bannerContainer) {
+        return;
+    }
+    
+    // 清空容器並重新開始
+    bannerContainer.innerHTML = '';
+    
+    // 動態創建atOptions
+    window.atOptions = {
+        'key': '2c30b6c41b1176ab4fd54a009a0d8185',
+        'format': 'iframe',
+        'height': 50,
+        'width': 320,
+        'params': {}
+    };
+    
+    // 動態載入廣告腳本
+    const adScript = document.createElement('script');
+    adScript.type = 'text/javascript';
+    adScript.src = '//www.highperformanceformat.com/2c30b6c41b1176ab4fd54a009a0d8185/invoke.js';
+    
+    // 將腳本添加到容器中
+    bannerContainer.appendChild(adScript);
+}
+
+// 載入原生廣告
+function loadNativeAd() {
+    const nativeScript = document.createElement('script');
+    nativeScript.async = true;
+    nativeScript.setAttribute('data-cfasync', 'false');
+    nativeScript.src = '//pl26772431.profitableratecpm.com/83ae8421cfe1507148af099ea8c60432/invoke.js';
+    
+    document.head.appendChild(nativeScript);
+}
+
+// 載入rule頁面廣告
+function loadRuleAds() {
+    console.log('Rule頁面: 開始載入廣告');
+    // 載入468x60 Banner廣告
+    loadRule468x60Banner();
+}
+
+// 載入468x60 Banner廣告
+function loadRule468x60Banner() {
+    console.log('Rule頁面: 開始載入468x60廣告');
+    
+    const bannerContainer = document.getElementById('banner-468x60');
+    if (!bannerContainer) {
+        console.error('Rule頁面: 找不到468x60廣告容器');
+        return;
+    }
+    
+    console.log('Rule頁面: 廣告容器已找到');
+    
+    // 清空容器並重新開始
+    bannerContainer.innerHTML = '';
+    
+    // 動態創建atOptions
+    window.atOptions = {
+        'key': 'e9f3d9c040d57f47e1e89dd3e53eef4b',
+        'format': 'iframe',
+        'height': 60,
+        'width': 468,
+        'params': {}
+    };
+    
+    console.log('Rule頁面: atOptions已設定', window.atOptions);
+    
+    // 動態載入廣告腳本
+    const adScript = document.createElement('script');
+    adScript.type = 'text/javascript';
+    adScript.src = '//www.highperformanceformat.com/e9f3d9c040d57f47e1e89dd3e53eef4b/invoke.js';
+    
+    adScript.onload = function() {
+        console.log('Rule頁面: 廣告腳本載入完成');
+    };
+    
+    adScript.onerror = function() {
+        console.error('Rule頁面: 廣告腳本載入失敗');
+    };
+    
+    // 將腳本添加到容器中
+    bannerContainer.appendChild(adScript);
+    console.log('Rule頁面: 廣告腳本已添加到容器');
+    
+    // 檢查廣告載入狀態
+    setTimeout(function() {
+        const hasIframe = bannerContainer.querySelector('iframe');
+        console.log('Rule頁面: 廣告載入檢查 - iframe存在:', !!hasIframe);
+        console.log('Rule頁面: 容器內容長度:', bannerContainer.innerHTML.length);
+        if (hasIframe) {
+            console.log('Rule頁面: ✅ 468x60廣告成功載入');
+        } else {
+            console.log('Rule頁面: ❌ 468x60廣告未載入');
+        }
+    }, 3000);
 }
 
 // 更新新聞內容
