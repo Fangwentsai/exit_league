@@ -5,24 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/rule.css">
     
-    <!-- 468x60 Banner廣告 - 移到head中 -->
-    <script type="text/javascript">
-        console.log('Rule頁面: 468x60 Banner廣告配置開始載入');
-        atOptions = {
-            'key' : 'e9f3d9c040d57f47e1e89dd3e53eef4b',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-        console.log('Rule頁面: atOptions配置完成', atOptions);
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/e9f3d9c040d57f47e1e89dd3e53eef4b/invoke.js"></script>
-    <script>
-        console.log('Rule頁面: 468x60 Banner廣告腳本已載入');
-    </script>
-    
-<!-- Monetag廣告代碼 -->
+    <!-- Monetag廣告代碼 -->
     <script>(function(d,z,s){s.src="https://"+d+"/401/"+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})("gizokraijaw.net",9352320,document.createElement("script"))</script>
 </head>
 <body>
@@ -145,23 +128,10 @@
     </div>
 
     <!-- 468x60 Banner廣告容器 -->
-    <div style="text-align: center; margin: 20px 0; padding: 10px; border-top: 1px solid #ddd;">
-        <div id="banner-468x60"></div>
-        <script>
-            console.log('Rule頁面: 468x60 Banner廣告容器已創建');
-            // 檢查廣告是否載入
-            setTimeout(function() {
-                const bannerContainer = document.getElementById('banner-468x60');
-                if (bannerContainer) {
-                    console.log('Rule頁面: 468x60 Banner容器內容:', bannerContainer.innerHTML);
-                    if (bannerContainer.innerHTML.trim() === '') {
-                        console.warn('Rule頁面: 468x60 Banner廣告可能未成功載入 - 容器為空');
-                    } else {
-                        console.log('Rule頁面: 468x60 Banner廣告已成功載入');
-                    }
-                }
-            }, 3000);
-        </script>
+    <div style="text-align: center; margin: 5px 0; padding: 2px; border-top: 1px solid #ddd;">
+        <div id="banner-468x60">
+            <!-- 廣告將由JavaScript動態載入 -->
+        </div>
     </div>
 
 </body>
