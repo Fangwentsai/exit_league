@@ -118,6 +118,20 @@
 <body>
     <div class="container">
         
+        <!-- 320x50 Banner廣告 -->
+        <div style="text-align: center; margin: 20px 0; padding: 10px;">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '2c30b6c41b1176ab4fd54a009a0d8185',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/2c30b6c41b1176ab4fd54a009a0d8185/invoke.js"></script>
+        </div>
+        
         <!-- 近期比賽區塊 (置頂) -->
         <div class="upcoming-matches">
             <h2 class="section-title">上週戰況</h2>
@@ -132,6 +146,12 @@
             <div id="upcomingMatchesContent" class="matches-content">
                 <div class="loading-indicator">數據加載中，請稍候...</div>
             </div>
+        </div>
+        
+        <!-- 原生廣告 -->
+        <div style="text-align: center; margin: 20px 0; padding: 10px;">
+            <script async="async" data-cfasync="false" src="//pl26772431.profitableratecpm.com/83ae8421cfe1507148af099ea8c60432/invoke.js"></script>
+            <div id="container-83ae8421cfe1507148af099ea8c60432"></div>
         </div>
         
         <!-- 排行榜區塊 -->
@@ -317,18 +337,44 @@
                 <div class="news-title">阿淦幣即日起開始發售</div>
                 <div class="news-text">
                     <p>第二屆阿淦因其優異的手氣榮獲地獄倒霉鬼殊榮，即日起凡於於比賽店家持100元阿淦幣消費即可換取一杯shot。</p>
-                    <!--<img src="../images/agan.png" alt="阿淦幣" class="news-image">-->
+                    <img src="../images/agan.png" alt="阿淦幣" class="news-image">
+                </div>
+            </div>
+            
+            <!-- Adsterra Direct Links 按鈕 -->
+            <div style="text-align: center; margin: 30px 0; padding: 20px;">
+                <a href="https://www.profitableratecpm.com/yz1s4f4ta?key=2ca041c85a08eb263f3378fee668d461" 
+                   target="_blank" 
+                   style="display: inline-block; 
+                          background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
+                          color: white; 
+                          padding: 15px 30px; 
+                          text-decoration: none; 
+                          border-radius: 30px; 
+                          font-weight: bold; 
+                          font-size: 18px; 
+                          box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+                          transition: all 0.3s ease; 
+                          border: none; 
+                          cursor: pointer;
+                          text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+                   onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)';"
+                   onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)';">
+                    支持難找的聯賽 - 點擊這裡
+                </a>
+                <div style="margin-top: 10px; font-size: 12px; color: #666; font-style: italic;">
+                    感謝您的支持，讓我們的聯賽能夠持續運作！
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="gameModal" class="modal">
+    <!--<div id="gameModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <iframe id="gameFrame" frameborder="0"></iframe>
         </div>
-    </div>
+    </div>-->
     
     <!-- 添加以下腳本，以確保模態窗口功能正常工作 -->
     <script>
