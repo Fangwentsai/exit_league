@@ -23,6 +23,19 @@
     </script>
     
     <link rel="stylesheet" href="../styles/news.css">
+    
+    <!-- 320x50 Banner廣告 - 移到head中 -->
+    <script type="text/javascript">
+        atOptions = {
+            'key' : '2c30b6c41b1176ab4fd54a009a0d8185',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/2c30b6c41b1176ab4fd54a009a0d8185/invoke.js"></script>
+    
     <style>
         /* 加載指示器樣式 */
         .loading-indicator {
@@ -112,24 +125,15 @@
             border: none;
         }
     </style>
-<!-- Monetag廣告代碼 -->
-    <script>(function(d,z,s){s.src="https://"+d+"/401/"+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})("gizokraijaw.net",9352320,document.createElement("script"))</script>
+<!-- Monetag廣告代碼 
+    <script>(function(d,z,s){s.src="https://"+d+"/401/"+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})("gizokraijaw.net",9352320,document.createElement("script"))</script>-->
 </head>
 <body>
     <div class="container">
         
-        <!-- 320x50 Banner廣告 -->
+        <!-- 320x50 Banner廣告容器 -->
         <div style="text-align: center; margin: 20px 0; padding: 10px; border-top: 1px solid #ddd;">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '2c30b6c41b1176ab4fd54a009a0d8185',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/2c30b6c41b1176ab4fd54a009a0d8185/invoke.js"></script>
+            <div id="banner-320x50"></div>
         </div>
         
         <!-- 近期比賽區塊 (置頂) -->
@@ -152,8 +156,18 @@
         <div style="text-align: center; margin: 20px 0; padding: 10px;">
             <div style="font-size: 12px; color: #f44336; margin-bottom: 10px;">廣告</div>
             <div id="container-83ae8421cfe1507148af099ea8c60432"></div>
-            <script async data-cfasync="false" src="//pl26772431.profitableratecpm.com/83ae8421cfe1507148af099ea8c60432/invoke.js"></script>
         </div>
+        
+        <!-- 原生廣告腳本 - 移到底部 -->
+        <script>
+            (function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.setAttribute('data-cfasync', 'false');
+                script.src = '//pl26772431.profitableratecpm.com/83ae8421cfe1507148af099ea8c60432/invoke.js';
+                document.head.appendChild(script);
+            })();
+        </script>
         
         <!-- 排行榜區塊 -->
         <div class="rankings">
