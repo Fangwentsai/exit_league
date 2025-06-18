@@ -951,8 +951,13 @@
                     option.disabled = true;
                     select.appendChild(option);
                 } else {
-                    // 按日期排序（最新的在前）
-                    games.sort((a, b) => new Date(b.dateObj) - new Date(a.dateObj));
+                    // 按 gamecode 數字排序（g41, g42, g43, g44...）
+                    games.sort((a, b) => {
+                        // 提取數字部分進行比較
+                        const aNum = parseInt(a.id.replace(/\D/g, '')) || 0;
+                        const bNum = parseInt(b.id.replace(/\D/g, '')) || 0;
+                        return aNum - bNum;
+                    });
                     
                     games.forEach(game => {
                         const option = document.createElement('option');
@@ -978,19 +983,22 @@
         // 從 Google Sheets 載入比賽資料
         async function loadGamesFromSheet(targetDates) {
             try {
-                // 使用現有的配置
-                const config = window.config || {
-                    SHEET_ID: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE',
-                    API_KEY: 'AIzaSyBbyT6gJZCfUwCQnf8mzBYKFJkfRd1xVJE'
+                // 使用新的 API 設定
+                const config = {
+                    CLIENT_ID: '945502427007-dq3ldlv77r1u0h6me3s6jj948dajk6gm.apps.googleusercontent.com',
+                    API_KEY: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
+                    SCHEDULE_SHEET_ID: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE', // 讀取比賽場次
+                    RESULT_SHEET_ID: '1V2hj-9R-C2GWYu6Wo-por-gNvm56vGFPjx4ELcx3XtE'    // 寫入比賽結果
                 };
                 
-                const range = 'schedule!A:H'; // 調整範圍根據你的實際表格
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${range}?key=${config.API_KEY}`;
+                const range = 'schedule!A:H';
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SCHEDULE_SHEET_ID}/values/${range}?key=${config.API_KEY}`;
                 
                 console.log('載入比賽資料 URL:', url);
                 
                 const response = await fetch(url);
                 if (!response.ok) {
+                    console.error('API 回應錯誤:', response.status, response.statusText);
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
@@ -998,7 +1006,7 @@
                 
                 if (!data.values || data.values.length === 0) {
                     console.log('沒有找到比賽資料');
-                    return [];
+                    return getStaticGames(targetDates);
                 }
                 
                 // 解析比賽資料
@@ -1031,13 +1039,11 @@
                     }
                 }
                 
-                console.log('找到的比賽:', games);
-                return games;
+                console.log('從 Google Sheets 載入的比賽:', games);
+                return games.length > 0 ? games : getStaticGames(targetDates);
                 
             } catch (error) {
                 console.error('從 Google Sheets 載入比賽資料失敗:', error);
-                
-                // 降級使用靜態資料
                 console.log('使用備用靜態資料');
                 return getStaticGames(targetDates);
             }
@@ -1057,13 +1063,27 @@
 
         // 備用靜態比賽資料
         function getStaticGames(targetDates) {
+            const today = new Date();
+            const todayString = formatDate(today);
+            
             const allGames = [
+                // 最新比賽（使用今天日期）
+                { id: 'g48', date: todayString, away: '逃生入口A', home: 'Vivi朝酒晚舞' },
+                { id: 'g47', date: todayString, away: '海盜揪硬', home: '人生揪難' },
+                { id: 'g46', date: todayString, away: '酒空組', home: 'Jack' },
+                { id: 'g45', date: todayString, away: '一鏢開天門', home: '逃生入口C' },
+                
+                // 昨天的比賽
                 { id: 'g44', date: '6/17', away: '逃生入口C', home: 'Jack' },
                 { id: 'g43', date: '6/17', away: 'Vivi朝酒晚舞', home: '人生揪難' },
                 { id: 'g42', date: '6/17', away: '海盜揪硬', home: '酒空組' },
                 { id: 'g41', date: '6/17', away: '逃生入口A', home: '一鏢開天門' },
-                { id: 'g40', date: '6/10', away: '海盜揪硬', home: '一鏢開天門' },
-                { id: 'g39', date: '6/10', away: 'Vivi朝酒晚舞', home: '逃生入口C' },
+                
+                // 前天的比賽
+                { id: 'g40', date: '6/16', away: '海盜揪硬', home: '一鏢開天門' },
+                { id: 'g39', date: '6/16', away: 'Vivi朝酒晚舞', home: '逃生入口C' },
+                { id: 'g38', date: '6/16', away: 'Jack', home: '酒空組' },
+                { id: 'g37', date: '6/16', away: '人生揪難', home: '逃生入口A' },
             ];
             
             const targetDateStrings = targetDates.map(date => formatDate(date));
@@ -1072,7 +1092,13 @@
                           .map(game => ({
                               ...game,
                               dateObj: parseGameDate(game.date)
-                          }));
+                          }))
+                          .sort((a, b) => {
+                              // 按 gamecode 數字排序
+                              const aNum = parseInt(a.id.replace(/\D/g, '')) || 0;
+                              const bNum = parseInt(b.id.replace(/\D/g, '')) || 0;
+                              return aNum - bNum;
+                          });
         }
 
         // 載入選手資料
@@ -1292,19 +1318,18 @@
             let homeScore = 0;
             let awayScore = 0;
             
-            // 計算原始分數
+            // 計算原始分數 - 根據勝負來計分
             for (let i = 1; i <= 16; i++) {
-                const homeKey = `home-${i}`;
-                const awayKey = `away-${i}`;
                 const requiredPlayers = setPlayerCounts[i];
+                const winner = winLoseData[i]; // 'home' 或 'away'
                 
-                // 檢查是否有選手
-                if (selectedPlayers[homeKey] && selectedPlayers[homeKey].length === requiredPlayers) {
+                // 只有當該SET有勝負結果時才計分
+                if (winner === 'home') {
                     homeScore += requiredPlayers;
-                }
-                if (selectedPlayers[awayKey] && selectedPlayers[awayKey].length === requiredPlayers) {
+                } else if (winner === 'away') {
                     awayScore += requiredPlayers;
                 }
+                // 如果沒有勝負結果，則不加分
             }
             
             // 勝場加成（原始分數較高的+1）
@@ -1414,7 +1439,7 @@
             };
             
             // 確認對話框 - 顯示比分
-            const confirmMessage = `請確認比賽結果：\n\n比賽：${gameData.gameId.toUpperCase()}\n\n${gameData.homeTeam}：${gameData.scores.home.total} 分\n${gameData.awayTeam}：${gameData.scores.away.total} 分\n\n確認無誤後將寫入 Google Sheets`;
+            const confirmMessage = `請確認比賽結果：\n\n比賽：${gameData.gameId.toUpperCase()}\n\n${gameData.homeTeam}：${gameData.scores.home.total} 分\n${gameData.awayTeam}：${gameData.scores.away.total} 分\n\n確認無誤後將寫入`;
             
             if (confirm(confirmMessage)) {
                 saveToGoogleSheets(gameData);
@@ -1423,35 +1448,70 @@
 
         // 保存到 Google Sheets
         async function saveToGoogleSheets(gameData) {
+            const saveBtn = document.getElementById('saveBtn');
+            const originalText = saveBtn.textContent;
+            
             try {
                 // 顯示載入狀態
-                const saveBtn = document.getElementById('saveBtn');
-                const originalText = saveBtn.textContent;
                 saveBtn.textContent = '保存中...';
                 saveBtn.disabled = true;
                 
-                // Google Apps Script Web App URL (請將此處替換為你的實際 URL)
+                console.log('準備保存資料：', gameData);
+                
+                // Google Apps Script Web App URL
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbyvqowohZQJ1Prh9Zgo4M9JM01PQKyGtpPfEY0gw6CBc41zq6BcLnKixM7yo4uKnILt/exec';
+                
+                console.log('發送請求到：', scriptURL);
                 
                 const response = await fetch(scriptURL, {
                     method: 'POST',
+                    mode: 'cors',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain', // 改為 text/plain 避免 CORS 預檢
                     },
                     body: JSON.stringify(gameData)
                 });
                 
+                console.log('收到回應：', response.status, response.statusText);
+                
                 if (response.ok) {
-                    const result = await response.json();
-                    alert('比賽資料已成功保存到 Google Sheets！');
-                    console.log('保存成功：', result);
+                    const resultText = await response.text();
+                    console.log('回應內容：', resultText);
+                    
+                    try {
+                        const result = JSON.parse(resultText);
+                        if (result.status === 'success') {
+                            alert(`✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\n時間：${new Date(result.timestamp).toLocaleString()}`);
+                            console.log('保存成功：', result);
+                        } else {
+                            throw new Error(result.message || '保存失敗');
+                        }
+                    } catch (parseError) {
+                        console.error('解析回應失敗：', parseError);
+                        // 如果無法解析 JSON，但狀態碼是 200，可能還是成功了
+                        if (resultText.includes('success') || resultText.includes('成功') || resultText.includes('"status":"success"')) {
+                            alert('✅ 比賽資料已保存完成！');
+                        } else {
+                            throw new Error('伺服器回應格式錯誤：' + resultText.substring(0, 100));
+                        }
+                    }
                 } else {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('HTTP 錯誤：', response.status, errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 
             } catch (error) {
                 console.error('保存到 Google Sheets 失敗：', error);
-                alert('保存失敗！請檢查網路連線或聯絡系統管理員。\n\n錯誤資訊：' + error.message);
+                
+                let errorMessage = '保存失敗！';
+                if (error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
+                    errorMessage += '\n\n可能原因：\n1. 網路連線問題\n2. Google Apps Script 未正確部署\n3. 跨域請求被阻擋';
+                } else {
+                    errorMessage += '\n\n錯誤資訊：' + error.message;
+                }
+                
+                alert(errorMessage);
                 
                 // 降級保存到本地存儲
                 if (confirm('是否改為保存到本地存儲？')) {
@@ -1459,7 +1519,6 @@
                 }
             } finally {
                 // 恢復按鈕狀態
-                const saveBtn = document.getElementById('saveBtn');
                 saveBtn.textContent = originalText;
                 saveBtn.disabled = false;
             }
