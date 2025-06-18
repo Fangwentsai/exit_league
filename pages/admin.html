@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>難找的聯賽 - 管理後台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dc3545;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #dc3545 0%, #b02a3a 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+            padding: 10px;
+            background: #fdf2f2;
+            border-radius: 5px;
+        }
+
+        .admin-dashboard {
+            display: none;
+            background: #f5f5f5;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .admin-header {
+            background: #dc3545;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #b02a3a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #8b1e2b;
+        }
+
+        .admin-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .game-selector {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .game-selector h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .game-select {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .game-select:focus {
+            outline: none;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+        }
+
+        .game-details {
+            display: none;
+            margin-top: 30px;
+        }
+
+        /* 新的遊戲佈局 */
+        .game-board {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .game-board-header {
+            display: grid;
+            grid-template-columns: 60px 4fr 4fr 80px 80px;
+            gap: 0;
+            background: #c44451;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .header-cell {
+            padding: 20px 15px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header-cell:last-child {
+            border-right: none;
+        }
+
+        .game-board-body {
+            background: white;
+        }
+
+        .game-row {
+            display: grid;
+            grid-template-columns: 60px 4fr 4fr 80px 80px;
+            gap: 0;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .game-row:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .game-row:last-child {
+            border-bottom: none;
+        }
+
+        .set-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #c44451;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .team-button {
+            padding: 20px 15px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .team-button:hover {
+            background: #f0f7ff;
+        }
+
+        .team-button.selected {
+            background: #495057;
+            color: white;
+        }
+
+        .team-button.home-team.selected {
+            background: #495057;
+        }
+
+        .team-button.away-team.selected {
+            background: #495057;
+        }
+
+        .set-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .set-type {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .player-info {
+            font-size: 12px;
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        .team-button.selected .set-title,
+        .team-button.selected .set-type,
+        .team-button.selected .player-info {
+            color: white;
+        }
+
+        .control-button {
+            padding: 20px 15px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .control-button:last-child {
+            border-right: none;
+        }
+
+        .control-button:hover {
+            background: #fdf2f2;
+            color: #dc3545;
+        }
+
+        .control-button.home-selected {
+            background: #dc3545;
+            color: white;
+            font-weight: bold;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .control-button.away-selected {
+            background: #c82333;
+            color: white;
+            font-weight: bold;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(200, 35, 51, 0.3);
+        }
+
+        /* 飲酒加成簡單版 */
+        .bonus-simple {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .bonus-simple h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .bonus-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .bonus-btn {
+            padding: 12px 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .bonus-btn:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .bonus-btn.home-selected,
+        .bonus-btn.away-selected {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        /* 分數計算區域 */
+        .score-calculation {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .score-calculation h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .score-summary {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+
+        .team-name.home-team {
+            background: #dc3545;
+        }
+
+        .team-name.away-team {
+            background: #c82333;
+        }
+
+        .score-detail {
+            font-size: 14px;
+            color: #666;
+            background: white;
+            padding: 6px 10px;
+            border-radius: 3px;
+        }
+
+        .total-score {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .total-score.home-total {
+            background: #dc3545;
+        }
+
+        .total-score.away-total {
+            background: #c82333;
+        }
+
+        .vs-divider {
+            font-size: 20px;
+            font-weight: bold;
+            color: #666;
+            padding: 0 20px;
+        }
+
+        /* 保存按鈕 */
+        .save-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .save-btn {
+            padding: 18px 50px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .save-btn:hover {
+            background: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(40, 167, 69, 0.4);
+        }
+
+        .save-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 彈窗樣式 */
+        .player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-header h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .modal-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .player-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .player-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .player-option:hover {
+            border-color: #dc3545;
+            background: #fdf2f2;
+            transform: translateY(-2px);
+        }
+
+        .player-option.selected {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+            transform: translateY(-2px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #dc3545;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 1200px) {
+            .game-board-header,
+            .game-row {
+                grid-template-columns: 50px 4fr 4fr 70px 70px;
+            }
+            
+            .header-cell,
+            .control-button {
+                padding: 15px 6px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-content {
+                padding: 20px;
+            }
+            
+            .game-board-header,
+            .game-row {
+                grid-template-columns: 40px 3fr 3fr 60px 60px;
+            }
+            
+            .header-cell {
+                padding: 12px 8px;
+                font-size: 12px;
+            }
+            
+            .team-button {
+                padding: 15px 10px;
+            }
+            
+            .set-title {
+                font-size: 12px;
+            }
+            
+            .set-type {
+                font-size: 10px;
+            }
+            
+            .player-info {
+                font-size: 10px;
+            }
+            
+            .control-button {
+                padding: 15px 4px;
+                font-size: 10px;
+            }
+            
+            .score-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .score-row {
+                flex-direction: row;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .team-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .team-name {
+                font-size: 14px;
+                padding: 6px 8px;
+            }
+
+            .score-detail {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+
+            .total-score {
+                font-size: 14px;
+                padding: 6px 8px;
+            }
+
+            .vs-divider {
+                font-size: 16px;
+                padding: 0 8px;
+                flex-shrink: 0;
+            }
+
+            .bonus-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登入頁面 -->
+    <div class="login-container" id="loginContainer">
+        <div class="logo">
+            <h1>難找的聯賽</h1>
+            <p>比賽管理系統</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">帳號</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密碼</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">登入</button>
+            
+            <div class="error-message" id="errorMessage">
+                帳號或密碼錯誤！
+            </div>
+        </form>
+    </div>
+
+    <!-- 管理後台 -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <div class="admin-header">
+            <h1>比賽統計系統</h1>
+            <button class="logout-btn" onclick="logout()">登出</button>
+        </div>
+        
+        <div class="admin-content">
+            <div class="game-selector">
+                <h2>選擇比賽</h2>
+                <select class="game-select" id="gameSelect">
+                    <option value="">請選擇比賽...</option>
+                </select>
+                <div class="loading" id="loadingGames">載入比賽資料中...</div>
+            </div>
+            
+            <div class="game-details" id="gameDetails">
+                <!-- 新的遊戲佈局 -->
+                <div class="game-board">
+                    <div class="game-board-header">
+                        <div class="header-cell">SET</div>
+                        <div class="header-cell">主場</div>
+                        <div class="header-cell">客場</div>
+                        <div class="header-cell">先攻</div>
+                        <div class="header-cell">勝負</div>
+                    </div>
+                                         <div class="game-board-body">
+                         <div id="gameRows">
+                             <!-- SET行將動態生成 -->
+                         </div>
+
+                     </div>
+                 </div>
+                
+                <!-- 飲酒加成 -->
+                <div class="bonus-simple">
+                    <h3>🍺 飲酒加成 (+5分)</h3>
+                    <div class="bonus-buttons">
+                        <button class="bonus-btn" data-team="home" onclick="selectBonus('home')" id="homeBonusBtn">
+                            主場隊伍
+                        </button>
+                        <button class="bonus-btn" data-team="away" onclick="selectBonus('away')" id="awayBonusBtn">
+                            客場隊伍
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 比賽成績試算 -->
+                <div class="score-calculation">
+                    <h3>比賽成績</h3>
+                    <div class="score-summary">
+                        <div class="score-row">
+                            <div class="team-info">
+                                <span class="team-name home-team" id="homeTeamScoreName">主場隊伍</span>
+                                <span class="score-detail">成績: <span id="homeOriginalScore">0</span></span>
+                                <span class="score-detail">勝場: <span id="homeWinBonus">0</span></span>
+                                <span class="score-detail">飲酒: <span id="homeDrinkBonus">0</span></span>
+                                <span class="total-score home-total">總分: <span id="homeTotalScore">0</span></span>
+                            </div>
+                            <div class="vs-divider">VS</div>
+                            <div class="team-info">
+                                <span class="team-name away-team" id="awayTeamScoreName">客場隊伍</span>
+                                <span class="score-detail">成績: <span id="awayOriginalScore">0</span></span>
+                                <span class="score-detail">勝場: <span id="awayWinBonus">0</span></span>
+                                <span class="score-detail">飲酒: <span id="awayDrinkBonus">0</span></span>
+                                <span class="total-score away-total">總分: <span id="awayTotalScore">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 保存按鈕 -->
+                <div class="save-section">
+                    <button class="save-btn" id="saveBtn" onclick="saveGameData()">保存比賽資料</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 選手選擇彈窗 -->
+    <div class="player-modal" id="playerModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePlayerModal()">&times;</button>
+            <div class="modal-header">
+                <h3 id="modalTitle">選擇選手</h3>
+                <p id="modalSubtitle">SET1 - 501 (OI/MO)</p>
+            </div>
+            <div class="player-list" id="playerList">
+                <!-- 選手列表將動態生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 控制選擇彈窗（先攻/勝負） -->
+    <div class="player-modal" id="controlModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeControlModal()">&times;</button>
+            <div class="modal-header">
+                <h3 id="controlModalTitle">選擇先攻</h3>
+                <p id="controlModalSubtitle">SET1</p>
+            </div>
+            <div class="player-list">
+                <div class="player-option" onclick="selectControl('home')" id="controlHomeOption">
+                    主場
+                </div>
+                <div class="player-option" onclick="selectControl('away')" id="controlAwayOption">
+                    客場
+                </div>
+                <div class="player-option" onclick="selectControl(null)" id="controlNullOption">
+                    不選擇
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全域變數
+        let currentGame = null;
+        let currentSet = null;
+        let currentTeam = null;
+        let currentControlType = null; // 當前控制類型（firstAttack/winLose）
+        let playersData = {};
+        let selectedPlayers = {}; // 用於追蹤選手選擇
+        let firstAttackData = {}; // 用於追蹤先攻選擇
+        let winLoseData = {}; // 用於追蹤勝負選擇
+        let bonusTeam = null; // 用於追蹤飲酒加成
+        
+        // 防錯機制 - 定義不能重複的SET組合
+        const noRepeatGroups = [
+            [1, 2, 3, 4],      // SET1-4 不能重複
+            [6, 7, 8, 9],      // SET6-9 不能重複
+            [11, 12],          // SET11-12 不能重複
+            [13, 14]           // SET13-14 不能重複
+        ];
+        
+        // 比賽項目定義
+        const setTypes = {
+            1: "501 (OI/MO)",
+            2: "501 (DI/DO)", 
+            3: "701 (OI/MO)",
+            4: "701 (OI/MO, 25/50)",
+            5: "三人賽 701",
+            6: "Cricket",
+            7: "Cricket",
+            8: "Random Cricket",
+            9: "Random Cricket", 
+            10: "三人賽 Cricket",
+            11: "701 雙人賽",
+            12: "701 雙人賽 FREEZE",
+            13: "Cricket 雙人賽",
+            14: "Team Cricket",
+            15: "四人賽 1101",
+            16: "四人賽 Cricket"
+        };
+
+        // 每個SET需要的選手數量
+        const setPlayerCounts = {
+            1: 1, 2: 1, 3: 1, 4: 1, 5: 3, 6: 1, 7: 1, 8: 1, 9: 1, 10: 3,
+            11: 2, 12: 2, 13: 2, 14: 2, 15: 4, 16: 4
+        };
+
+        // 登入處理
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'root' && password === 'root666') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                loadGames();
+                loadPlayers();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        // 登出
+        function logout() {
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // 動態載入比賽資料
+        async function loadGames() {
+            try {
+                document.getElementById('loadingGames').style.display = 'block';
+                document.getElementById('loadingGames').textContent = '載入比賽資料中...';
+                
+                // 獲取當前日期和前兩天的日期
+                const today = new Date();
+                const dates = [];
+                
+                for (let i = 2; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() - i);
+                    dates.push(date);
+                }
+                
+                console.log('搜尋日期範圍:', dates.map(d => formatDate(d)));
+                
+                // 從 Google Sheets 載入比賽資料
+                const games = await loadGamesFromSheet(dates);
+                
+                const select = document.getElementById('gameSelect');
+                select.innerHTML = '<option value="">請選擇比賽...</option>';
+                
+                if (games.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = '目前沒有可用的比賽';
+                    option.disabled = true;
+                    select.appendChild(option);
+                } else {
+                    // 按日期排序（最新的在前）
+                    games.sort((a, b) => new Date(b.dateObj) - new Date(a.dateObj));
+                    
+                    games.forEach(game => {
+                        const option = document.createElement('option');
+                        option.value = game.id;
+                        option.textContent = `${game.id.toUpperCase()} (${game.date}) - ${game.away} vs ${game.home}`;
+                        select.appendChild(option);
+                    });
+                }
+
+                document.getElementById('loadingGames').style.display = 'none';
+                
+            } catch (error) {
+                console.error('載入比賽資料失敗:', error);
+                document.getElementById('loadingGames').textContent = '載入失敗，請重新整理頁面';
+            }
+        }
+
+        // 格式化日期為 M/D 格式
+        function formatDate(date) {
+            return `${date.getMonth() + 1}/${date.getDate()}`;
+        }
+
+        // 從 Google Sheets 載入比賽資料
+        async function loadGamesFromSheet(targetDates) {
+            try {
+                // 使用現有的配置
+                const config = window.config || {
+                    SHEET_ID: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE',
+                    API_KEY: 'AIzaSyBbyT6gJZCfUwCQnf8mzBYKFJkfRd1xVJE'
+                };
+                
+                const range = 'schedule!A:H'; // 調整範圍根據你的實際表格
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${range}?key=${config.API_KEY}`;
+                
+                console.log('載入比賽資料 URL:', url);
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.values || data.values.length === 0) {
+                    console.log('沒有找到比賽資料');
+                    return [];
+                }
+                
+                // 解析比賽資料
+                const games = [];
+                const targetDateStrings = targetDates.map(date => formatDate(date));
+                
+                console.log('目標日期:', targetDateStrings);
+                
+                // 從第二行開始（跳過標題行）
+                for (let i = 1; i < data.values.length; i++) {
+                    const row = data.values[i];
+                    
+                    // 假設表格格式：[game_id, date, away_team, home_team, ...]
+                    if (row.length >= 4) {
+                        const gameId = row[0];
+                        const gameDate = row[1];
+                        const awayTeam = row[2];
+                        const homeTeam = row[3];
+                        
+                        // 檢查日期是否在目標範圍內
+                        if (targetDateStrings.includes(gameDate)) {
+                            games.push({
+                                id: gameId,
+                                date: gameDate,
+                                dateObj: parseGameDate(gameDate),
+                                away: awayTeam,
+                                home: homeTeam
+                            });
+                        }
+                    }
+                }
+                
+                console.log('找到的比賽:', games);
+                return games;
+                
+            } catch (error) {
+                console.error('從 Google Sheets 載入比賽資料失敗:', error);
+                
+                // 降級使用靜態資料
+                console.log('使用備用靜態資料');
+                return getStaticGames(targetDates);
+            }
+        }
+
+        // 解析比賽日期
+        function parseGameDate(dateString) {
+            const parts = dateString.split('/');
+            if (parts.length === 2) {
+                const month = parseInt(parts[0]) - 1; // JavaScript 月份從 0 開始
+                const day = parseInt(parts[1]);
+                const year = new Date().getFullYear(); // 假設是當年
+                return new Date(year, month, day);
+            }
+            return new Date();
+        }
+
+        // 備用靜態比賽資料
+        function getStaticGames(targetDates) {
+            const allGames = [
+                { id: 'g44', date: '6/17', away: '逃生入口C', home: 'Jack' },
+                { id: 'g43', date: '6/17', away: 'Vivi朝酒晚舞', home: '人生揪難' },
+                { id: 'g42', date: '6/17', away: '海盜揪硬', home: '酒空組' },
+                { id: 'g41', date: '6/17', away: '逃生入口A', home: '一鏢開天門' },
+                { id: 'g40', date: '6/10', away: '海盜揪硬', home: '一鏢開天門' },
+                { id: 'g39', date: '6/10', away: 'Vivi朝酒晚舞', home: '逃生入口C' },
+            ];
+            
+            const targetDateStrings = targetDates.map(date => formatDate(date));
+            
+            return allGames.filter(game => targetDateStrings.includes(game.date))
+                          .map(game => ({
+                              ...game,
+                              dateObj: parseGameDate(game.date)
+                          }));
+        }
+
+        // 載入選手資料
+        async function loadPlayers() {
+            try {
+                const response = await fetch('../data/player.json');
+                playersData = await response.json();
+                console.log('選手資料載入成功:', playersData);
+            } catch (error) {
+                console.error('載入選手資料失敗:', error);
+                alert('載入選手資料失敗，請檢查 player.json 文件');
+            }
+        }
+
+        // 比賽選擇處理
+        document.getElementById('gameSelect').addEventListener('change', function(e) {
+            const gameId = e.target.value;
+            if (gameId) {
+                loadGameDetails(gameId);
+            } else {
+                document.getElementById('gameDetails').style.display = 'none';
+            }
+        });
+
+        // 載入比賽詳情
+        function loadGameDetails(gameId) {
+            // 從下拉選單中獲取比賽資料
+            const select = document.getElementById('gameSelect');
+            const selectedOption = Array.from(select.options).find(option => option.value === gameId);
+            
+            if (!selectedOption) {
+                console.error('找不到比賽資料:', gameId);
+                return;
+            }
+            
+            // 解析選項文字以獲取隊伍名稱
+            // 格式: "G44 (6/17) - 逃生入口C vs Jack"
+            const optionText = selectedOption.textContent;
+            const match = optionText.match(/^.+?\s-\s(.+?)\svs\s(.+)$/);
+            
+            if (match) {
+                currentGame = {
+                    away: match[1].trim(),
+                    home: match[2].trim()
+                };
+            } else {
+                console.error('無法解析比賽資料:', optionText);
+                return;
+            }
+
+            // 重置所有數據
+            selectedPlayers = {};
+            firstAttackData = {};
+            winLoseData = {};
+            bonusTeam = null;
+
+            // 更新隊伍名稱
+            document.getElementById('homeTeamScoreName').textContent = currentGame.home;
+            document.getElementById('awayTeamScoreName').textContent = currentGame.away;
+            document.getElementById('homeBonusBtn').textContent = currentGame.home;
+            document.getElementById('awayBonusBtn').textContent = currentGame.away;
+
+            // 生成佈局
+            generateGameLayout();
+
+            // 重置飲酒加成
+            document.querySelectorAll('.bonus-button').forEach(btn => {
+                btn.classList.remove('home-selected', 'away-selected');
+            });
+
+            // 更新試算
+            updateScoreCalculation();
+
+            document.getElementById('gameDetails').style.display = 'block';
+        }
+
+        // 選擇飲酒加成
+        function selectBonus(team) {
+            // 清除所有選擇
+            document.querySelectorAll('.bonus-btn').forEach(btn => {
+                btn.classList.remove('home-selected', 'away-selected');
+            });
+            
+            if (bonusTeam === team) {
+                // 如果點擊的是已選擇的，則取消選擇
+                bonusTeam = null;
+            } else {
+                // 選擇新的隊伍
+                bonusTeam = team;
+                const button = document.querySelector(`[data-team="${team}"]`);
+                button.classList.add(team === 'home' ? 'home-selected' : 'away-selected');
+            }
+            
+            // 更新試算
+            updateScoreCalculation();
+        }
+
+        // 開啟選手選擇彈窗
+        function openPlayerModal(setNumber, team) {
+            currentSet = setNumber;
+            currentTeam = team;
+            
+            const teamName = team === 'home' ? currentGame.home : currentGame.away;
+            const players = playersData[teamName] || [];
+            const requiredPlayers = setPlayerCounts[setNumber];
+            
+            // 初始化選中的選手
+            const key = `${currentTeam}-${currentSet}`;
+            if (!selectedPlayers[key]) {
+                selectedPlayers[key] = [];
+            }
+            
+            document.getElementById('modalTitle').textContent = `選擇選手 - ${teamName}`;
+            document.getElementById('modalSubtitle').textContent = `SET${setNumber} - ${setTypes[setNumber]} (需選擇${requiredPlayers}人)`;
+            
+            const playerList = document.getElementById('playerList');
+            playerList.innerHTML = '';
+            
+            players.forEach(player => {
+                const playerDiv = document.createElement('div');
+                playerDiv.className = 'player-option';
+                playerDiv.textContent = player;
+                
+                // 檢查是否已選中
+                if (selectedPlayers[key].includes(player)) {
+                    playerDiv.classList.add('selected');
+                }
+                
+                playerDiv.addEventListener('click', () => togglePlayerSelection(player, requiredPlayers));
+                playerList.appendChild(playerDiv);
+            });
+            
+            document.getElementById('playerModal').style.display = 'block';
+        }
+
+        // 檢查選手是否在同組SET中重複
+        function checkPlayerConflict(playerName, setNumber, teamType) {
+            for (const group of noRepeatGroups) {
+                if (group.includes(setNumber)) {
+                    // 檢查同組其他SET是否已有此選手
+                    for (const otherSet of group) {
+                        if (otherSet !== setNumber) {
+                            const otherKey = `${teamType}-${otherSet}`;
+                            if (selectedPlayers[otherKey] && selectedPlayers[otherKey].includes(playerName)) {
+                                return `${playerName} 已在 SET${otherSet} 中出場，同組SET不能重複選擇！`;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            return null;
+        }
+
+        // 切換選手選擇狀態
+        function togglePlayerSelection(playerName, requiredPlayers) {
+            const key = `${currentTeam}-${currentSet}`;
+            const playerIndex = selectedPlayers[key].indexOf(playerName);
+            
+            if (playerIndex > -1) {
+                // 取消選擇
+                selectedPlayers[key].splice(playerIndex, 1);
+            } else {
+                // 檢查是否會造成重複
+                const conflictMessage = checkPlayerConflict(playerName, currentSet, currentTeam);
+                if (conflictMessage) {
+                    alert(conflictMessage);
+                    return;
+                }
+                
+                // 新增選擇
+                if (selectedPlayers[key].length < requiredPlayers) {
+                    selectedPlayers[key].push(playerName);
+                } else {
+                    alert(`最多只能選擇${requiredPlayers}位選手！`);
+                    return;
+                }
+            }
+            
+            // 更新UI
+            const playerOptions = document.querySelectorAll('.player-option');
+            playerOptions.forEach(option => {
+                if (option.textContent === playerName) {
+                    option.classList.toggle('selected');
+                }
+            });
+            
+            // 即時更新SET按鈕
+            updateSetButton();
+            
+            // 如果選滿了指定人數，立即關閉彈窗
+            if (selectedPlayers[key].length === requiredPlayers) {
+                closePlayerModal();
+            }
+        }
+
+        // 更新SET按鈕顯示
+        function updateSetButton() {
+            const key = `${currentTeam}-${currentSet}`;
+            const playerElement = document.getElementById(`${currentTeam}-set${currentSet}-player`);
+            const buttonElement = document.querySelector(`[data-set="${currentSet}"][data-team="${currentTeam}"]`);
+            
+            if (selectedPlayers[key] && selectedPlayers[key].length > 0) {
+                playerElement.textContent = `已選擇: ${selectedPlayers[key].join(', ')}`;
+                buttonElement.classList.add('selected');
+            } else {
+                playerElement.textContent = '點擊選擇選手';
+                buttonElement.classList.remove('selected');
+            }
+            
+            // 更新試算
+            updateScoreCalculation();
+        }
+
+        // 更新比賽成績試算
+        function updateScoreCalculation() {
+            let homeScore = 0;
+            let awayScore = 0;
+            
+            // 計算原始分數
+            for (let i = 1; i <= 16; i++) {
+                const homeKey = `home-${i}`;
+                const awayKey = `away-${i}`;
+                const requiredPlayers = setPlayerCounts[i];
+                
+                // 檢查是否有選手
+                if (selectedPlayers[homeKey] && selectedPlayers[homeKey].length === requiredPlayers) {
+                    homeScore += requiredPlayers;
+                }
+                if (selectedPlayers[awayKey] && selectedPlayers[awayKey].length === requiredPlayers) {
+                    awayScore += requiredPlayers;
+                }
+            }
+            
+            // 勝場加成（原始分數較高的+1）
+            let homeWinBonus = 0;
+            let awayWinBonus = 0;
+            if (homeScore > awayScore) {
+                homeWinBonus = 1;
+            } else if (awayScore > homeScore) {
+                awayWinBonus = 1;
+            }
+            
+            // 飲酒加成
+            let homeDrinkBonus = 0;
+            let awayDrinkBonus = 0;
+            if (bonusTeam === 'home') {
+                homeDrinkBonus = 5;
+            } else if (bonusTeam === 'away') {
+                awayDrinkBonus = 5;
+            }
+            
+            // 更新顯示
+            document.getElementById('homeOriginalScore').textContent = homeScore;
+            document.getElementById('homeWinBonus').textContent = homeWinBonus;
+            document.getElementById('homeDrinkBonus').textContent = homeDrinkBonus;
+            document.getElementById('homeTotalScore').textContent = homeScore + homeWinBonus + homeDrinkBonus;
+            
+            document.getElementById('awayOriginalScore').textContent = awayScore;
+            document.getElementById('awayWinBonus').textContent = awayWinBonus;
+            document.getElementById('awayDrinkBonus').textContent = awayDrinkBonus;
+            document.getElementById('awayTotalScore').textContent = awayScore + awayWinBonus + awayDrinkBonus;
+        }
+
+        // 檢查資料完整性
+        function validateGameData() {
+            const missingData = [];
+            
+            // 檢查所有SET的選手選擇
+            for (let i = 1; i <= 16; i++) {
+                const homeKey = `home-${i}`;
+                const awayKey = `away-${i}`;
+                const requiredPlayers = setPlayerCounts[i];
+                
+                if (!selectedPlayers[homeKey] || selectedPlayers[homeKey].length !== requiredPlayers) {
+                    missingData.push(`SET${i} 主場選手`);
+                }
+                if (!selectedPlayers[awayKey] || selectedPlayers[awayKey].length !== requiredPlayers) {
+                    missingData.push(`SET${i} 客場選手`);
+                }
+            }
+            
+            // 檢查先攻選擇
+            for (let i = 1; i <= 16; i++) {
+                if (!firstAttackData[i]) {
+                    missingData.push(`SET${i} 先攻`);
+                }
+            }
+            
+            // 檢查勝負選擇
+            for (let i = 1; i <= 16; i++) {
+                if (!winLoseData[i]) {
+                    missingData.push(`SET${i} 勝負`);
+                }
+            }
+            
+            return missingData;
+        }
+
+        // 保存比賽資料
+        function saveGameData() {
+            // 檢查是否有選擇比賽
+            if (!currentGame) {
+                alert('請先選擇比賽！');
+                return;
+            }
+            
+            // 檢查資料完整性
+            const missingData = validateGameData();
+            if (missingData.length > 0) {
+                alert(`以下場次尚未登記完成：\n\n${missingData.join('\n')}\n\n請先完成所有欄位的填寫。`);
+                return;
+            }
+            
+            // 準備保存的資料
+            const gameData = {
+                gameId: document.getElementById('gameSelect').value,
+                homeTeam: currentGame.home,
+                awayTeam: currentGame.away,
+                selectedPlayers: selectedPlayers,
+                firstAttackData: firstAttackData,
+                winLoseData: winLoseData,
+                bonusTeam: bonusTeam,
+                scores: {
+                    home: {
+                        original: parseInt(document.getElementById('homeOriginalScore').textContent),
+                        winBonus: parseInt(document.getElementById('homeWinBonus').textContent),
+                        drinkBonus: parseInt(document.getElementById('homeDrinkBonus').textContent),
+                        total: parseInt(document.getElementById('homeTotalScore').textContent)
+                    },
+                    away: {
+                        original: parseInt(document.getElementById('awayOriginalScore').textContent),
+                        winBonus: parseInt(document.getElementById('awayWinBonus').textContent),
+                        drinkBonus: parseInt(document.getElementById('awayDrinkBonus').textContent),
+                        total: parseInt(document.getElementById('awayTotalScore').textContent)
+                    }
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            // 確認對話框 - 顯示比分
+            const confirmMessage = `請確認比賽結果：\n\n比賽：${gameData.gameId.toUpperCase()}\n\n${gameData.homeTeam}：${gameData.scores.home.total} 分\n${gameData.awayTeam}：${gameData.scores.away.total} 分\n\n確認無誤後將寫入 Google Sheets`;
+            
+            if (confirm(confirmMessage)) {
+                saveToGoogleSheets(gameData);
+            }
+        }
+
+        // 保存到 Google Sheets
+        async function saveToGoogleSheets(gameData) {
+            try {
+                // 顯示載入狀態
+                const saveBtn = document.getElementById('saveBtn');
+                const originalText = saveBtn.textContent;
+                saveBtn.textContent = '保存中...';
+                saveBtn.disabled = true;
+                
+                // Google Apps Script Web App URL (請將此處替換為你的實際 URL)
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbyvqowohZQJ1Prh9Zgo4M9JM01PQKyGtpPfEY0gw6CBc41zq6BcLnKixM7yo4uKnILt/exec';
+                
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(gameData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('比賽資料已成功保存到 Google Sheets！');
+                    console.log('保存成功：', result);
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error('保存到 Google Sheets 失敗：', error);
+                alert('保存失敗！請檢查網路連線或聯絡系統管理員。\n\n錯誤資訊：' + error.message);
+                
+                // 降級保存到本地存儲
+                if (confirm('是否改為保存到本地存儲？')) {
+                    saveToLocalStorage(gameData);
+                }
+            } finally {
+                // 恢復按鈕狀態
+                const saveBtn = document.getElementById('saveBtn');
+                saveBtn.textContent = originalText;
+                saveBtn.disabled = false;
+            }
+        }
+
+        // 保存到本地存儲（備用方案）
+        function saveToLocalStorage(gameData) {
+            try {
+                const savedGames = JSON.parse(localStorage.getItem('darts_game_data') || '[]');
+                
+                // 檢查是否已存在相同比賽的資料
+                const existingIndex = savedGames.findIndex(game => game.gameId === gameData.gameId);
+                
+                if (existingIndex > -1) {
+                    if (confirm('此比賽已有保存資料，是否覆蓋？')) {
+                        savedGames[existingIndex] = gameData;
+                    } else {
+                        return;
+                    }
+                } else {
+                    savedGames.push(gameData);
+                }
+                
+                localStorage.setItem('darts_game_data', JSON.stringify(savedGames));
+                alert('比賽資料已保存到本地存儲！');
+                
+                console.log('保存的資料：', gameData);
+                
+            } catch (error) {
+                console.error('保存失敗：', error);
+                alert('保存失敗，請檢查瀏覽器存儲權限');
+            }
+        }
+
+        // 生成遊戲佈局
+        function generateGameLayout() {
+            const container = document.getElementById('gameRows');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= 16; i++) {
+                const row = document.createElement('div');
+                row.className = 'game-row';
+                
+                row.innerHTML = `
+                    <!-- SET編號 -->
+                    <div class="set-number">SET${i}</div>
+                    
+                    <!-- 主場選手按鈕 -->
+                    <button class="team-button home-team" data-set="${i}" data-team="home" onclick="openPlayerModal(${i}, 'home')">
+                        <div class="set-title" id="home-team-name">${currentGame.home}</div>
+                        <div class="set-type">${setTypes[i]}</div>
+                        <div class="player-info" id="home-set${i}-player">點擊選擇選手</div>
+                    </button>
+                    
+                    <!-- 客場選手按鈕 -->
+                    <button class="team-button away-team" data-set="${i}" data-team="away" onclick="openPlayerModal(${i}, 'away')">
+                        <div class="set-title" id="away-team-name">${currentGame.away}</div>
+                        <div class="set-type">${setTypes[i]}</div>
+                        <div class="player-info" id="away-set${i}-player">點擊選擇選手</div>
+                    </button>
+                    
+                    <!-- 先攻按鈕 -->
+                    <button class="control-button" data-set="${i}" data-type="firstAttack" onclick="openControlModal(${i}, 'firstAttack')" id="attack-set${i}">
+                        選擇
+                    </button>
+                    
+                    <!-- 勝負按鈕 -->
+                    <button class="control-button" data-set="${i}" data-type="winLose" onclick="openControlModal(${i}, 'winLose')" id="win-set${i}">
+                        選擇
+                    </button>
+                `;
+                
+                container.appendChild(row);
+            }
+        }
+
+        // 開啟控制選擇彈窗（先攻/勝負）
+        function openControlModal(setNumber, type) {
+            currentSet = setNumber;
+            currentControlType = type;
+            
+            const title = type === 'firstAttack' ? '選擇先攻' : '選擇勝負';
+            const currentSelection = type === 'firstAttack' ? firstAttackData[setNumber] : winLoseData[setNumber];
+            
+            document.getElementById('controlModalTitle').textContent = title;
+            document.getElementById('controlModalSubtitle').textContent = `SET${setNumber}`;
+            
+            // 更新選項文字
+            if (type === 'firstAttack') {
+                document.getElementById('controlHomeOption').textContent = '主';
+                document.getElementById('controlAwayOption').textContent = '客';
+            } else {
+                document.getElementById('controlHomeOption').textContent = '主';
+                document.getElementById('controlAwayOption').textContent = '客';
+            }
+            
+            // 清除所有選中狀態
+            document.querySelectorAll('#controlModal .player-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 設定當前選中狀態
+            if (currentSelection === 'home') {
+                document.getElementById('controlHomeOption').classList.add('selected');
+            } else if (currentSelection === 'away') {
+                document.getElementById('controlAwayOption').classList.add('selected');
+            } else {
+                document.getElementById('controlNullOption').classList.add('selected');
+            }
+            
+            document.getElementById('controlModal').style.display = 'block';
+        }
+
+        // 選擇控制選項
+        function selectControl(choice) {
+            // 清除所有選中狀態
+            document.querySelectorAll('#controlModal .player-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 設定新的選中狀態
+            if (choice === 'home') {
+                document.getElementById('controlHomeOption').classList.add('selected');
+            } else if (choice === 'away') {
+                document.getElementById('controlAwayOption').classList.add('selected');
+            } else {
+                document.getElementById('controlNullOption').classList.add('selected');
+            }
+            
+            // 更新數據
+            if (currentControlType === 'firstAttack') {
+                firstAttackData[currentSet] = choice;
+            } else {
+                winLoseData[currentSet] = choice;
+            }
+            
+            // 更新按鈕顯示
+            updateControlButton(currentSet, currentControlType, choice);
+            
+            // 更新試算
+            updateScoreCalculation();
+            
+            // 立即關閉彈窗
+            closeControlModal();
+        }
+
+        // 更新控制按鈕顯示
+        function updateControlButton(setNumber, type, choice) {
+            const button = document.getElementById(`${type === 'firstAttack' ? 'attack' : 'win'}-set${setNumber}`);
+            
+            // 清除所有選擇狀態
+            button.classList.remove('home-selected', 'away-selected');
+            
+            if (choice) {
+                const displayText = choice === 'home' ? '主' : '客';
+                button.classList.add(choice === 'home' ? 'home-selected' : 'away-selected');
+                
+                if (type === 'firstAttack') {
+                    button.textContent = `${displayText} 先攻`;
+                } else {
+                    button.textContent = `${displayText} 勝`;
+                }
+            } else {
+                button.textContent = '選擇';
+            }
+        }
+
+        // 關閉控制選擇彈窗
+        function closeControlModal() {
+            document.getElementById('controlModal').style.display = 'none';
+        }
+
+        // 關閉選手選擇彈窗
+        function closePlayerModal() {
+            document.getElementById('playerModal').style.display = 'none';
+        }
+
+        // 點擊彈窗外部關閉
+        document.getElementById('playerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePlayerModal();
+            }
+        });
+
+        document.getElementById('controlModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeControlModal();
+            }
+        });
+    </script>
+</body>
+</html> 
