@@ -340,11 +340,11 @@
         }
 
         .control-button.away-selected {
-            background: #c82333;
-            color: white;
+            background: #f8a5aa;
+            color: #721c24;
             font-weight: bold;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(200, 35, 51, 0.3);
+            box-shadow: 0 6px 12px rgba(248, 165, 170, 0.4);
         }
 
         /* 飲酒加成簡單版 */
@@ -491,7 +491,7 @@
 
         .save-btn {
             padding: 18px 50px;
-            background: #28a745;
+            background: #dc3545;
             color: white;
             border: none;
             border-radius: 12px;
@@ -499,13 +499,13 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
         }
 
         .save-btn:hover {
-            background: #218838;
+            background: #c82333;
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 12px 30px rgba(220, 53, 69, 0.4);
         }
 
         .save-btn:disabled {
@@ -869,6 +869,7 @@
         let firstAttackData = {}; // 用於追蹤先攻選擇
         let winLoseData = {}; // 用於追蹤勝負選擇
         let bonusTeam = null; // 用於追蹤飲酒加成
+        let hasUnsavedChanges = false; // 追蹤是否有未保存的變更
         
         // 防錯機制 - 定義不能重複的SET組合
         const noRepeatGroups = [
@@ -877,6 +878,47 @@
             [11, 12],          // SET11-12 不能重複
             [13, 14]           // SET13-14 不能重複
         ];
+
+        // 檢查是否有未保存的資料
+        function hasAnyData() {
+            // 檢查選手選擇
+            for (let key in selectedPlayers) {
+                if (selectedPlayers[key] && selectedPlayers[key].length > 0) {
+                    return true;
+                }
+            }
+            
+            // 檢查先攻選擇
+            for (let key in firstAttackData) {
+                if (firstAttackData[key]) {
+                    return true;
+                }
+            }
+            
+            // 檢查勝負選擇
+            for (let key in winLoseData) {
+                if (winLoseData[key]) {
+                    return true;
+                }
+            }
+            
+            // 檢查飲酒加成
+            if (bonusTeam) {
+                return true;
+            }
+            
+            return false;
+        }
+
+        // 標記有變更
+        function markAsChanged() {
+            hasUnsavedChanges = true;
+        }
+
+        // 標記已保存
+        function markAsSaved() {
+            hasUnsavedChanges = false;
+        }
         
         // 比賽項目定義
         const setTypes = {
@@ -1124,13 +1166,44 @@
             }
         }
 
+        // 用於儲存當前選擇的比賽ID
+        let currentGameId = null;
+
         // 比賽選擇處理
         document.getElementById('gameSelect').addEventListener('change', function(e) {
-            const gameId = e.target.value;
-            if (gameId) {
-                loadGameDetails(gameId);
+            const newGameId = e.target.value;
+            
+            // 如果有未保存的資料且切換到不同比賽，顯示警告
+            if (currentGame && hasAnyData() && hasUnsavedChanges && newGameId !== currentGameId) {
+                const confirmLeave = confirm('⚠️ 警告！\n\n您有未保存的比賽資料，如果離開將會遺失所有已填寫的內容。\n\n確認要離開當前比賽嗎？');
+                
+                if (!confirmLeave) {
+                    // 用戶選擇取消，恢復原來的選擇
+                    setTimeout(() => {
+                        e.target.value = currentGameId || '';
+                    }, 0);
+                    return;
+                }
+            }
+            
+            if (newGameId) {
+                currentGameId = newGameId; // 更新當前比賽ID
+                loadGameDetails(newGameId);
             } else {
+                if (currentGame && hasAnyData() && hasUnsavedChanges) {
+                    const confirmLeave = confirm('⚠️ 警告！\n\n您有未保存的比賽資料，如果離開將會遺失所有已填寫的內容。\n\n確認要取消選擇比賽嗎？');
+                    
+                    if (!confirmLeave) {
+                        setTimeout(() => {
+                            e.target.value = currentGameId || '';
+                        }, 0);
+                        return;
+                    }
+                }
                 document.getElementById('gameDetails').style.display = 'none';
+                currentGame = null;
+                currentGameId = null;
+                hasUnsavedChanges = false;
             }
         });
 
@@ -1165,6 +1238,7 @@
             firstAttackData = {};
             winLoseData = {};
             bonusTeam = null;
+            hasUnsavedChanges = false;
 
             // 更新隊伍名稱
             document.getElementById('homeTeamScoreName').textContent = currentGame.home;
@@ -1205,6 +1279,9 @@
                 const button = document.querySelector(`[data-team="${team}"]`);
                 button.classList.add(team === 'home' ? 'home-selected' : 'away-selected');
             }
+            
+            // 標記有變更
+            markAsChanged();
             
             // 更新試算
             updateScoreCalculation();
@@ -1302,6 +1379,9 @@
             
             // 即時更新SET按鈕
             updateSetButton();
+            
+            // 標記有變更
+            markAsChanged();
             
             // 如果選滿了指定人數，立即關閉彈窗
             if (selectedPlayers[key].length === requiredPlayers) {
@@ -1546,6 +1626,7 @@
                     try {
                         const result = JSON.parse(resultText);
                         if (result.status === 'success') {
+                            markAsSaved();
                             alert(`✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\n時間：${new Date(result.timestamp).toLocaleString()}\n\n頁面將自動關閉...`);
                             console.log('保存成功：', result);
                             
@@ -1560,6 +1641,7 @@
                         console.error('解析回應失敗：', parseError);
                         // 如果無法解析 JSON，但狀態碼是 200，可能還是成功了
                         if (resultText.includes('success') || resultText.includes('成功') || resultText.includes('"status":"success"')) {
+                            markAsSaved();
                             alert('✅ 比賽資料已保存完成！\n\n頁面將自動關閉...');
                             
                             // 延遲 1 秒後關閉分頁
@@ -1618,6 +1700,7 @@
                 }
                 
                 localStorage.setItem('darts_game_data', JSON.stringify(savedGames));
+                markAsSaved();
                 alert('比賽資料已保存到本地存儲！\n\n頁面將自動關閉...');
                 
                 console.log('保存的資料：', gameData);
@@ -1760,6 +1843,9 @@
             // 更新按鈕顯示
             updateControlButton(currentSet, currentControlType, choice);
             
+            // 標記有變更
+            markAsChanged();
+            
             // 更新試算
             updateScoreCalculation();
             
@@ -1808,6 +1894,23 @@
         document.getElementById('controlModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeControlModal();
+            }
+        });
+
+        // 瀏覽器離開頁面警告
+        window.addEventListener('beforeunload', function(e) {
+            if (hasAnyData() && hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = '您有未保存的比賽資料，確定要離開嗎？';
+                return '您有未保存的比賽資料，確定要離開嗎？';
+            }
+        });
+
+        // 頁面可見性變化警告（適用於移動端）
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && hasAnyData() && hasUnsavedChanges) {
+                // 移動端可能不支援 beforeunload，這裡可以添加額外處理
+                console.log('頁面隱藏，有未保存的資料');
             }
         });
     </script>
