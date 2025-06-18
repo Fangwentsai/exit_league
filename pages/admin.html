@@ -991,7 +991,7 @@
                     RESULT_SHEET_ID: '1V2hj-9R-C2GWYu6Wo-por-gNvm56vGFPjx4ELcx3XtE'    // 寫入比賽結果
                 };
                 
-                const range = 'schedule!A:H';
+                const range = 'schedule!A:H'; // 讀取A到H欄，確保包含所有必要資料
                 const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SCHEDULE_SHEET_ID}/values/${range}?key=${config.API_KEY}`;
                 
                 console.log('載入比賽資料 URL:', url);
@@ -1014,20 +1014,21 @@
                 const targetDateStrings = targetDates.map(date => formatDate(date));
                 
                 console.log('目標日期:', targetDateStrings);
+                console.log('Google Sheets 原始資料:', data.values);
                 
                 // 從第二行開始（跳過標題行）
                 for (let i = 1; i < data.values.length; i++) {
                     const row = data.values[i];
                     
-                    // 假設表格格式：[game_id, date, away_team, home_team, ...]
-                    if (row.length >= 4) {
-                        const gameId = row[0];
-                        const gameDate = row[1];
-                        const awayTeam = row[2];
-                        const homeTeam = row[3];
+                    // 根據實際表格格式：A=比賽ID, B=日期, C=客隊, D=客場分數, E=vs, F=主場分數, G=主隊
+                    if (row.length >= 7) {
+                        const gameId = row[0];    // A欄：比賽ID (G01, G02...)
+                        const gameDate = row[1];  // B欄：日期 (4/8, 4/15...)
+                        const awayTeam = row[2];  // C欄：客隊
+                        const homeTeam = row[6];  // G欄：主隊
                         
-                        // 檢查日期是否在目標範圍內
-                        if (targetDateStrings.includes(gameDate)) {
+                        // 檢查必要欄位是否存在且日期在目標範圍內
+                        if (gameDate && gameId && awayTeam && homeTeam && targetDateStrings.includes(gameDate)) {
                             games.push({
                                 id: gameId,
                                 date: gameDate,
