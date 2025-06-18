@@ -299,6 +299,16 @@
             color: white;
         }
 
+        .team-button.incomplete {
+            background: #fff8dc;
+            border-left: 4px solid #ffc107;
+        }
+
+        .team-button.incomplete .player-info {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
         .control-button {
             padding: 20px 15px;
             border: none;
@@ -1173,6 +1183,9 @@
             // 更新試算
             updateScoreCalculation();
 
+            // 初始化所有SET按鈕的顯示狀態
+            updateAllSetButtons();
+
             document.getElementById('gameDetails').style.display = 'block';
         }
 
@@ -1301,17 +1314,68 @@
             const key = `${currentTeam}-${currentSet}`;
             const playerElement = document.getElementById(`${currentTeam}-set${currentSet}-player`);
             const buttonElement = document.querySelector(`[data-set="${currentSet}"][data-team="${currentTeam}"]`);
+            const requiredPlayers = setPlayerCounts[currentSet];
+            const selectedCount = selectedPlayers[key] ? selectedPlayers[key].length : 0;
             
-            if (selectedPlayers[key] && selectedPlayers[key].length > 0) {
-                playerElement.textContent = `已選擇: ${selectedPlayers[key].join(', ')}`;
-                buttonElement.classList.add('selected');
+            if (selectedCount > 0) {
+                if (selectedCount === requiredPlayers) {
+                    // 選滿人數 - 變成灰色（已完成）
+                    playerElement.textContent = `✓ 已選擇: ${selectedPlayers[key].join(', ')}`;
+                    buttonElement.classList.add('selected');
+                    buttonElement.classList.remove('incomplete');
+                } else {
+                    // 人數不足 - 保持白色，但顯示進度
+                    playerElement.textContent = `⚠ 已選擇 ${selectedCount}/${requiredPlayers}: ${selectedPlayers[key].join(', ')}`;
+                    buttonElement.classList.remove('selected');
+                    buttonElement.classList.add('incomplete');
+                }
             } else {
-                playerElement.textContent = '點擊選擇選手';
-                buttonElement.classList.remove('selected');
+                // 尚未選擇 - 白色背景
+                if (requiredPlayers > 1) {
+                    playerElement.textContent = `點擊選擇選手 (需${requiredPlayers}人)`;
+                } else {
+                    playerElement.textContent = '點擊選擇選手';
+                }
+                buttonElement.classList.remove('selected', 'incomplete');
             }
             
             // 更新試算
             updateScoreCalculation();
+        }
+
+        // 更新所有SET按鈕的顯示狀態
+        function updateAllSetButtons() {
+            for (let i = 1; i <= 16; i++) {
+                ['home', 'away'].forEach(team => {
+                    const key = `${team}-${i}`;
+                    const playerElement = document.getElementById(`${team}-set${i}-player`);
+                    const buttonElement = document.querySelector(`[data-set="${i}"][data-team="${team}"]`);
+                    const requiredPlayers = setPlayerCounts[i];
+                    const selectedCount = selectedPlayers[key] ? selectedPlayers[key].length : 0;
+                    
+                    if (selectedCount > 0) {
+                        if (selectedCount === requiredPlayers) {
+                            // 選滿人數 - 變成灰色（已完成）
+                            playerElement.textContent = `✓ 已選擇: ${selectedPlayers[key].join(', ')}`;
+                            buttonElement.classList.add('selected');
+                            buttonElement.classList.remove('incomplete');
+                        } else {
+                            // 人數不足 - 黃色背景，顯示進度
+                            playerElement.textContent = `⚠ 已選擇 ${selectedCount}/${requiredPlayers}: ${selectedPlayers[key].join(', ')}`;
+                            buttonElement.classList.remove('selected');
+                            buttonElement.classList.add('incomplete');
+                        }
+                    } else {
+                        // 尚未選擇 - 白色背景
+                        if (requiredPlayers > 1) {
+                            playerElement.textContent = `點擊選擇選手 (需${requiredPlayers}人)`;
+                        } else {
+                            playerElement.textContent = '點擊選擇選手';
+                        }
+                        buttonElement.classList.remove('selected', 'incomplete');
+                    }
+                });
+            }
         }
 
         // 更新比賽成績試算
@@ -1613,6 +1677,28 @@
 
         // 開啟控制選擇彈窗（先攻/勝負）
         function openControlModal(setNumber, type) {
+            // 如果是勝負選擇，先檢查選手是否已完成選擇
+            if (type === 'winLose') {
+                const homeKey = `home-${setNumber}`;
+                const awayKey = `away-${setNumber}`;
+                const requiredPlayers = setPlayerCounts[setNumber];
+                const homeCount = selectedPlayers[homeKey] ? selectedPlayers[homeKey].length : 0;
+                const awayCount = selectedPlayers[awayKey] ? selectedPlayers[awayKey].length : 0;
+                
+                if (homeCount !== requiredPlayers || awayCount !== requiredPlayers) {
+                    let missingTeams = [];
+                    if (homeCount !== requiredPlayers) {
+                        missingTeams.push(`主場選手 (${homeCount}/${requiredPlayers})`);
+                    }
+                    if (awayCount !== requiredPlayers) {
+                        missingTeams.push(`客場選手 (${awayCount}/${requiredPlayers})`);
+                    }
+                    
+                    alert(`❌ 無法選擇勝負！\n\nSET${setNumber} 請先完成選手登記：\n${missingTeams.join('\n')}\n\n請先選滿所需選手數量後再進行勝負選擇。`);
+                    return;
+                }
+            }
+            
             currentSet = setNumber;
             currentControlType = type;
             
