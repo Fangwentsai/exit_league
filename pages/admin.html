@@ -1046,18 +1046,18 @@
                 const range = 'schedule!A:H'; // 讀取A到H欄，確保包含所有必要資料
                 const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SCHEDULE_SHEET_ID}/values/${range}?key=${config.API_KEY}`;
                 
-                console.log('載入比賽資料 URL:', url);
+                console.log('🔍 載入比賽資料 URL:', url);
                 
                 const response = await fetch(url);
                 if (!response.ok) {
-                    console.error('API 回應錯誤:', response.status, response.statusText);
+                    console.error('❌ API 回應錯誤:', response.status, response.statusText);
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
                 const data = await response.json();
                 
                 if (!data.values || data.values.length === 0) {
-                    console.log('沒有找到比賽資料');
+                    console.log('⚠️ Google Sheets 沒有找到比賽資料，使用備用資料');
                     return getStaticGames(targetDates);
                 }
                 
@@ -1065,19 +1065,21 @@
                 const games = [];
                 const targetDateStrings = targetDates.map(date => formatDate(date));
                 
-                console.log('目標日期:', targetDateStrings);
-                console.log('Google Sheets 原始資料:', data.values);
+                console.log('🎯 目標日期:', targetDateStrings);
+                console.log('📊 Google Sheets 原始資料 (前10行):', data.values.slice(0, 10));
                 
                 // 從第二行開始（跳過標題行）
                 for (let i = 1; i < data.values.length; i++) {
                     const row = data.values[i];
                     
-                    // 根據實際表格格式：A=比賽ID, B=日期, C=客隊, D=客場分數, E=vs, F=主場分數, G=主隊
-                    if (row.length >= 7) {
-                        const gameId = row[0];    // A欄：比賽ID (G01, G02...)
-                        const gameDate = row[1];  // B欄：日期 (4/8, 4/15...)
-                        const awayTeam = row[2];  // C欄：客隊
-                        const homeTeam = row[6];  // G欄：主隊
+                    // 根據你的表格格式：A=比賽ID, B=日期, C=客隊, D=vs, E=主隊, F=主場, G=客場
+                    if (row.length >= 5) {
+                        const gameId = row[0] ? row[0].toLowerCase() : '';    // A欄：比賽ID (G44, G45...)
+                        const gameDate = row[1];                             // B欄：日期 (6/17, 6/24...)
+                        const awayTeam = row[2];                             // C欄：客隊
+                        const homeTeam = row[4];                             // E欄：主隊 (跳過 D欄的 vs)
+                        
+                        console.log(`📝 處理第${i}行:`, { gameId, gameDate, awayTeam, homeTeam });
                         
                         // 檢查必要欄位是否存在且日期在目標範圍內
                         if (gameDate && gameId && awayTeam && homeTeam && targetDateStrings.includes(gameDate)) {
@@ -1088,16 +1090,24 @@
                                 away: awayTeam,
                                 home: homeTeam
                             });
+                            console.log(`✅ 加入比賽: ${gameId} - ${awayTeam} vs ${homeTeam} (${gameDate})`);
                         }
                     }
                 }
                 
-                console.log('從 Google Sheets 載入的比賽:', games);
-                return games.length > 0 ? games : getStaticGames(targetDates);
+                console.log('📋 從 Google Sheets 載入的比賽:', games);
+                
+                if (games.length > 0) {
+                    console.log('✅ 成功從 Google Sheets 載入比賽資料');
+                    return games;
+                } else {
+                    console.log('⚠️ Google Sheets 沒有符合條件的比賽，使用備用資料');
+                    return getStaticGames(targetDates);
+                }
                 
             } catch (error) {
-                console.error('從 Google Sheets 載入比賽資料失敗:', error);
-                console.log('使用備用靜態資料');
+                console.error('❌ 從 Google Sheets 載入比賽資料失敗:', error);
+                console.log('🔄 使用備用靜態資料');
                 return getStaticGames(targetDates);
             }
         }
@@ -1120,19 +1130,19 @@
             const todayString = formatDate(today);
             
             const allGames = [
-                // 最新比賽（使用今天日期）
-                { id: 'g48', date: todayString, away: '逃生入口A', home: 'Vivi朝酒晚舞' },
-                { id: 'g47', date: todayString, away: '海盜揪硬', home: '人生揪難' },
-                { id: 'g46', date: todayString, away: '酒空組', home: 'Jack' },
-                { id: 'g45', date: todayString, away: '一鏢開天門', home: '逃生入口C' },
+                // 最新比賽（6/24）
+                { id: 'g48', date: '6/24', away: 'Jack', home: '人生揪難' },
+                { id: 'g47', date: '6/24', away: '海盜揪硬', home: 'Vivi朝酒晚舞' },
+                { id: 'g46', date: '6/24', away: '一鏢開天門', home: '逃生入口C' },
+                { id: 'g45', date: '6/24', away: '逃生入口A', home: '逃生入口C' },
                 
-                // 昨天的比賽
+                // 昨天的比賽（6/17）
                 { id: 'g44', date: '6/17', away: '逃生入口C', home: 'Jack' },
                 { id: 'g43', date: '6/17', away: 'Vivi朝酒晚舞', home: '人生揪難' },
                 { id: 'g42', date: '6/17', away: '海盜揪硬', home: '酒空組' },
                 { id: 'g41', date: '6/17', away: '逃生入口A', home: '一鏢開天門' },
                 
-                // 前天的比賽
+                // 前天的比賽（6/16）
                 { id: 'g40', date: '6/16', away: '海盜揪硬', home: '一鏢開天門' },
                 { id: 'g39', date: '6/16', away: 'Vivi朝酒晚舞', home: '逃生入口C' },
                 { id: 'g38', date: '6/16', away: 'Jack', home: '酒空組' },
