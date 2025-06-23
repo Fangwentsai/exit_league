@@ -978,17 +978,17 @@
                 document.getElementById('loadingGames').style.display = 'block';
                 document.getElementById('loadingGames').textContent = '載入比賽資料中...';
                 
-                // 獲取當前日期和前兩天的日期
+                // 獲取相關的日期範圍（前2天到後2天）
                 const today = new Date();
                 const dates = [];
                 
-                for (let i = 2; i >= 0; i--) {
+                for (let i = 2; i >= -2; i--) {
                     const date = new Date(today);
                     date.setDate(today.getDate() - i);
                     dates.push(date);
                 }
                 
-                console.log('搜尋日期範圍:', dates.map(d => formatDate(d)));
+                console.log('🗓️ 搜尋日期範圍:', dates.map(d => formatDate(d)));
                 
                 // 從 Google Sheets 載入比賽資料
                 const games = await loadGamesFromSheet(dates);
@@ -1072,12 +1072,12 @@
                 for (let i = 1; i < data.values.length; i++) {
                     const row = data.values[i];
                     
-                    // 根據你的表格格式：A=比賽ID, B=日期, C=客隊, D=vs, E=主隊, F=主場, G=客場
-                    if (row.length >= 5) {
+                    // 根據你的表格格式：A=比賽ID, B=日期, C=客隊, D=客場分數, E=vs, F=主場分數, G=主隊
+                    if (row.length >= 7) {
                         const gameId = row[0] ? row[0].toLowerCase() : '';    // A欄：比賽ID (G44, G45...)
                         const gameDate = row[1];                             // B欄：日期 (6/17, 6/24...)
                         const awayTeam = row[2];                             // C欄：客隊
-                        const homeTeam = row[4];                             // E欄：主隊 (跳過 D欄的 vs)
+                        const homeTeam = row[6];                             // G欄：主隊
                         
                         console.log(`📝 處理第${i}行:`, { gameId, gameDate, awayTeam, homeTeam });
                         
