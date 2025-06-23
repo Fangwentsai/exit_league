@@ -148,13 +148,23 @@ function initializeStats(awayPlayers, homePlayers) {
     });
 }
 
-// DOM 載入檢查
-if (document.readyState === 'loading') {
-    console.log('DOM 尚未載入，等待中...');
-    document.addEventListener('DOMContentLoaded', initializeStats);
-} else {
-    console.log('DOM 已載入，直接執行初始化');
-    initializeStats();
+// DOM 載入檢查 - 只在非預覽模式下自動執行
+if (!window.location.href.includes('preview') && !document.querySelector('.preview-header')) {
+    if (document.readyState === 'loading') {
+        console.log('DOM 尚未載入，等待中...');
+        document.addEventListener('DOMContentLoaded', function() {
+            // 只有在一般比賽結果頁面才自動執行（有預設選手數據）
+            if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined') {
+                initializeStats(awayPlayers, homePlayers);
+            }
+        });
+    } else {
+        console.log('DOM 已載入，直接執行初始化');
+        // 只有在一般比賽結果頁面才自動執行（有預設選手數據）
+        if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined') {
+            initializeStats(awayPlayers, homePlayers);
+        }
+    }
 }
 
 // 計算比賽分數
