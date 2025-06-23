@@ -1,0 +1,674 @@
+// 🎮 比賽結果預覽生成器
+// 將 admin.html 的數據轉換為 game_result 格式的預覽
+
+class GameResultPreviewGenerator {
+    constructor() {
+        this.gameTypes = {
+            1: '501 (OI/MO)',
+            2: '501 (DI/DO)', 
+            3: '701 (OI/MO)',
+            4: '701 (OI/MO, 25/50)',
+            5: '三人賽 701<br>每人一鏢骰子賽',
+            6: 'Cricket',
+            7: 'Cricket',
+            8: 'Random Cricket',
+            9: 'Random Cricket', 
+            10: '三人賽 Cricket<br>每人一鏢骰子賽',
+            11: '701 雙人賽',
+            12: '701 雙人賽 FREEZE',
+            13: 'Cricket 雙人賽',
+            14: 'Team Cricket',
+            15: '四人賽 1101',
+            16: '四人賽 Cricket'
+        };
+        
+        this.sectionTitles = {
+            individual: '個人賽 01',
+            cricket: 'Cricket Games',
+            doubles: '雙人賽',
+            team: '四人賽'
+        };
+    }
+
+    // 🎯 主要功能：生成完整的預覽HTML
+    generatePreviewHTML(adminData) {
+        const gameInfo = this.extractGameInfo(adminData);
+        const matchData = this.convertToMatchData(adminData);
+        const finalScores = this.calculateFinalScores(matchData, adminData.drinkingBonus || {});
+        const awayPlayers = this.extractPlayers(adminData, 'away');
+        const homePlayers = this.extractPlayers(adminData, 'home');
+        
+        const html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../styles/common/game_result.css">
+    <style>
+        /* 預覽模式樣式增強 - 使用 #dc3545 主色調 */
+        .preview-header {
+            background: linear-gradient(135deg, #dc3545 0%, #b02a3a 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+        .preview-header h1 {
+            font-size: 20px;
+            margin: 0 0 8px 0;
+        }
+        .preview-header p {
+            font-size: 14px;
+            margin: 0;
+        }
+        .preview-notice {
+            background: #fdf2f2;
+            border: 2px dashed #dc3545;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 5px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+        /* 移除預覽按鈕區域 */
+        .preview-actions {
+            display: none;
+        }
+        /* 確保iframe內容不會覆蓋關閉按鈕 */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1>比賽預覽</h1>
+        <p>請確認以下資料正確</p>
+    </div>
+    
+    <div class="preview-notice">
+        這是預覽模式 - 資料尚未正式保存
+    </div>
+
+    <div class="container">
+        <!-- 比賽資訊區 -->
+        <div class="match-info">
+            <h2 class="match-date">${gameInfo.date}</h2>
+            <div class="venue-info">${gameInfo.venue}</div>
+            <div class="match-result">
+                <div class="team away">
+                    <div class="team-name">${gameInfo.awayTeam}</div>
+                    <div class="team-score">${finalScores.away}</div>
+                </div>
+                <div class="score-divider">:</div>
+                <div class="team home">
+                    <div class="team-score">${finalScores.home}</div>
+                    <div class="team-name">${gameInfo.homeTeam}</div>
+                </div>
+            </div>
+        </div>
+
+        ${this.generateScoreDetailsTable(finalScores, gameInfo)}
+
+        <div class="games-container">
+            ${this.generateGameSections(matchData)}
+            ${this.generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers)}
+        </div>
+    </div>
+
+    <script>
+        // 預覽專用的簡化統計切換
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('預覽頁面載入完成');
+            
+            // 設置統計按鈕切換
+            const statsBtns = document.querySelectorAll('.stats-btn');
+            const awayStats = document.getElementById('awayStats');
+            const homeStats = document.getElementById('homeStats');
+            
+            if (statsBtns.length && awayStats && homeStats) {
+                statsBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // 移除所有按鈕的活動狀態
+                        statsBtns.forEach(b => b.classList.remove('active'));
+                        // 添加當前按鈕的活動狀態
+                        this.classList.add('active');
+                        
+                        // 顯示對應的統計表格
+                        const team = this.getAttribute('data-team');
+                        if (team === 'away') {
+                            awayStats.classList.remove('hidden');
+                            homeStats.classList.add('hidden');
+                        } else {
+                            homeStats.classList.remove('hidden');
+                            awayStats.classList.add('hidden');
+                        }
+                    });
+                });
+                console.log('統計按鈕切換功能已設置');
+            } else {
+                console.warn('統計按鈕或表格未找到');
+            }
+        });
+    </script>
+</body>
+</html>`;
+        
+        return html;
+    }
+
+    // 📊 提取比賽基本資訊
+    extractGameInfo(adminData) {
+        // 從 adminData 中提取或設定預設值
+        return {
+            date: adminData.gameDate || new Date().toLocaleDateString('zh-TW').replace(/\//g, '/'),
+            venue: this.getVenueFromTeam(adminData.homeTeam),
+            gameCode: adminData.gameId || 'g00',
+            awayTeam: adminData.awayTeam || '客隊',
+            homeTeam: adminData.homeTeam || '主隊'
+        };
+    }
+
+    // 🏠 根據主隊決定比賽場地
+    getVenueFromTeam(homeTeam) {
+        const venues = {
+            '逃生入口A': '逃生入口 Bar',
+            '逃生入口C': '逃生入口 Bar', 
+            '酒空組': '逃生入口 Bar',
+            '海盜揪硬': '酒窩海盜聯盟',
+            '人生揪難': '酒窩海盜聯盟',
+            'Vivi朝酒晚舞': 'Vivi Bar',
+            'Jack': 'Jack',
+            '一鏢開天門': 'No.5'
+        };
+        return venues[homeTeam] || '比賽場地';
+    }
+
+    // 🔄 轉換 admin 數據為 match 格式
+    convertToMatchData(adminData) {
+        const matches = [];
+        
+        // 從 adminData.sets 陣列中取得每個SET的資料
+        for (let i = 1; i <= 16; i++) {
+            const setData = adminData.sets && adminData.sets[i-1];
+            if (setData) {
+                // 處理選手資料，如果沒有選擇則為空字串
+                const awayPlayers = setData.awayPlayers || [];
+                const homePlayers = setData.homePlayers || [];
+                
+                matches.push({
+                    set: i,
+                    type: this.getSetType(i),
+                    away: awayPlayers.length > 0 ? awayPlayers : '',
+                    home: homePlayers.length > 0 ? homePlayers : '',
+                    firstAttack: setData.firstAttack || null,
+                    winner: setData.winner || null
+                });
+            } else {
+                // 沒有資料時設為空
+                matches.push({
+                    set: i,
+                    type: this.getSetType(i),
+                    away: '',
+                    home: '',
+                    firstAttack: null,
+                    winner: null
+                });
+            }
+        }
+        
+        return matches;
+    }
+
+    // 🎮 決定SET類型
+    getSetType(setNumber) {
+        if (setNumber <= 5) return '01';
+        if (setNumber <= 10) return 'CR';
+        if (setNumber <= 14) return setNumber <= 12 ? '01' : 'CR';
+        return setNumber === 15 ? '01' : 'CR';
+    }
+
+    // 🏆 計算最終比分
+    calculateFinalScores(matchData, drinkingBonus = {}) {
+        let awayWins = 0;
+        let homeWins = 0;
+        
+        matchData.forEach(match => {
+            // 只有當選手都有選擇且有勝負結果時才計分
+            const awayPlayer = Array.isArray(match.away) ? match.away.join(', ') : (match.away || '');
+            const homePlayer = Array.isArray(match.home) ? match.home.join(', ') : (match.home || '');
+            
+            // 檢查選手是否都已填寫且有勝負結果
+            const hasAwayPlayers = awayPlayer.trim() !== '';
+            const hasHomePlayers = homePlayer.trim() !== '';
+            const hasWinner = match.winner && match.winner !== null;
+            
+            if (hasAwayPlayers && hasHomePlayers && hasWinner) {
+                if (match.winner === 'away') awayWins++;
+                if (match.winner === 'home') homeWins++;
+            }
+        });
+        
+        // 計算勝場加成（分數高的一方+1）
+        const winnerBonus = {
+            away: awayWins > homeWins ? 1 : 0,
+            home: homeWins > awayWins ? 1 : 0
+        };
+        
+        // 飲酒加成
+        const finalDrinkingBonus = {
+            away: drinkingBonus.away || 0,
+            home: drinkingBonus.home || 0
+        };
+        
+        return {
+            away: awayWins + winnerBonus.away + finalDrinkingBonus.away,
+            home: homeWins + winnerBonus.home + finalDrinkingBonus.home,
+            // 提供分數細分資訊
+            breakdown: {
+                baseScores: { away: awayWins, home: homeWins },
+                winnerBonus,
+                drinkingBonus: finalDrinkingBonus
+            }
+        };
+    }
+
+    // 📋 生成比賽區塊
+    generateGameSections(matchData) {
+        const sections = {
+            individual: matchData.slice(0, 5),   // SET 1-5
+            cricket: matchData.slice(5, 10),     // SET 6-10
+            doubles: matchData.slice(10, 14),    // SET 11-14
+            team: matchData.slice(14, 16)        // SET 15-16
+        };
+
+        let html = '';
+        
+        Object.entries(sections).forEach(([sectionKey, matches]) => {
+            html += `
+            <div class="game-section">
+                <h3>${this.sectionTitles[sectionKey]}</h3>
+                ${sectionKey === 'individual' ? '<h4>(黃底為先攻場次)</h4>' : ''}
+                <table class="game-table">
+                    <tr>
+                        <th>賽局</th>
+                        <th>客隊</th>
+                        <th>主隊</th>
+                    </tr>
+                    ${matches.map(match => this.generateMatchRow(match)).join('')}
+                </table>
+            </div>`;
+        });
+        
+        return html;
+    }
+
+    // 🎯 生成單場比賽行
+    generateMatchRow(match) {
+        // 如果選手資料不完整，顯示空白
+        const awayPlayer = Array.isArray(match.away) ? match.away.join(', ') : (match.away || '');
+        const homePlayer = Array.isArray(match.home) ? match.home.join(', ') : (match.home || '');
+        
+        // 只有當選手都有選擇時，才顯示先攻和勝負
+        let awayClass = '';
+        let homeClass = '';
+        let awayWinClass = '';
+        let homeWinClass = '';
+        let awayWinIcon = '';
+        let homeWinIcon = '';
+        
+        if (awayPlayer && homePlayer) {
+            awayClass = match.firstAttack === 'away' ? 'first-attack' : '';
+            homeClass = match.firstAttack === 'home' ? 'first-attack' : '';
+            awayWinClass = match.winner === 'away' ? 'winner' : '';
+            homeWinClass = match.winner === 'home' ? 'winner' : '';
+            awayWinIcon = match.winner === 'away' ? '<div class="winner-icon"></div>' : '';
+            homeWinIcon = match.winner === 'home' ? '<div class="winner-icon"></div>' : '';
+        }
+        
+        return `
+        <tr>
+            <td class="game-type">SET${match.set}<br><span class="game-detail">${this.gameTypes[match.set]}</span></td>
+            <td class="${awayClass} ${awayWinClass}">
+                ${awayWinIcon}
+                ${awayPlayer}
+            </td>
+            <td class="${homeClass} ${homeWinClass}">
+                ${homeWinIcon}
+                ${homePlayer}
+            </td>
+        </tr>`;
+    }
+
+    // 📊 生成統計區塊
+    generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers) {
+        const awayStatsData = this.calculatePlayerStats(matchData, awayPlayers, 'away');
+        const homeStatsData = this.calculatePlayerStats(matchData, homePlayers, 'home');
+        
+        return `
+        <div class="game-section">
+            <h3>選手統計</h3>
+            <div class="stats-buttons">
+                <button class="stats-btn active" data-team="away">客場選手</button>
+                <button class="stats-btn" data-team="home">主場選手</button>
+            </div>
+            
+            <table class="game-table stats-table" id="awayStats">
+                <tr>
+                    <th class="player-name">選手</th>
+                    <th class="stat-cell">01出賽</th>
+                    <th class="stat-cell">01勝場</th>
+                    <th class="stat-cell">CR出賽</th>
+                    <th class="stat-cell">CR勝場</th>
+                    <th class="stat-cell">合計出賽</th>
+                    <th class="stat-cell">合計勝場</th>
+                    <th class="stat-cell">先攻數</th>
+                </tr>
+                ${awayStatsData.map(stats => `
+                <tr>
+                    <td class="player-name">${stats.name}</td>
+                    <td class="stat-cell">${stats.o1Games}</td>
+                    <td class="stat-cell">${stats.o1Wins}</td>
+                    <td class="stat-cell">${stats.crGames}</td>
+                    <td class="stat-cell">${stats.crWins}</td>
+                    <td class="stat-cell">${stats.totalGames}</td>
+                    <td class="stat-cell">${stats.totalWins}</td>
+                    <td class="stat-cell">${stats.firstAttacks}</td>
+                </tr>
+                `).join('')}
+            </table>
+
+            <table class="game-table stats-table hidden" id="homeStats">
+                <tr>
+                    <th class="player-name">選手</th>
+                    <th class="stat-cell">01出賽</th>
+                    <th class="stat-cell">01勝場</th>
+                    <th class="stat-cell">CR出賽</th>
+                    <th class="stat-cell">CR勝場</th>
+                    <th class="stat-cell">合計出賽</th>
+                    <th class="stat-cell">合計勝場</th>
+                    <th class="stat-cell">先攻數</th>
+                </tr>
+                ${homeStatsData.map(stats => `
+                <tr>
+                    <td class="player-name">${stats.name}</td>
+                    <td class="stat-cell">${stats.o1Games}</td>
+                    <td class="stat-cell">${stats.o1Wins}</td>
+                    <td class="stat-cell">${stats.crGames}</td>
+                    <td class="stat-cell">${stats.crWins}</td>
+                    <td class="stat-cell">${stats.totalGames}</td>
+                    <td class="stat-cell">${stats.totalWins}</td>
+                    <td class="stat-cell">${stats.firstAttacks}</td>
+                </tr>
+                `).join('')}
+            </table>
+        </div>`;
+    }
+
+    // 📈 計算選手統計數據
+    calculatePlayerStats(matchData, players, team) {
+        return players.map(playerName => {
+            let o1Games = 0, o1Wins = 0, crGames = 0, crWins = 0, firstAttacks = 0;
+            
+            matchData.forEach(match => {
+                // 取得該隊的選手
+                const teamPlayers = match[team];
+                const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
+                
+                // 檢查該選手是否參與此場比賽
+                if (playersList.includes(playerName) && playersList[0] !== '') {
+                    // 計算出賽次數
+                    if (match.type === '01') {
+                        o1Games++;
+                        if (match.winner === team) o1Wins++;
+                    } else if (match.type === 'CR') {
+                        crGames++;
+                        if (match.winner === team) crWins++;
+                    }
+                    
+                    // 計算先攻次數
+                    if (match.firstAttack === team) {
+                        firstAttacks++;
+                    }
+                }
+            });
+            
+            return {
+                name: playerName,
+                o1Games,
+                o1Wins, 
+                crGames,
+                crWins,
+                totalGames: o1Games + crGames,
+                totalWins: o1Wins + crWins,
+                firstAttacks
+            };
+        });
+    }
+
+    // 💰 生成分數詳情表格
+    generateScoreDetailsTable(finalScores, gameInfo) {
+        // 使用 finalScores.breakdown 中的詳細分數資訊
+        const breakdown = finalScores.breakdown || {
+            baseScores: { away: 0, home: 0 },
+            winnerBonus: { away: 0, home: 0 },
+            drinkingBonus: { away: 0, home: 0 }
+        };
+
+        return `
+        <div class="score-details">
+            <table class="score-table">
+                <tr>
+                    <th></th>
+                    <th>${gameInfo.awayTeam}</th>
+                    <th>${gameInfo.homeTeam}</th>
+                </tr>
+                <tr>
+                    <td>比賽成績</td>
+                    <td>${breakdown.baseScores.away}</td>
+                    <td>${breakdown.baseScores.home}</td>
+                </tr>
+                <tr>
+                    <td>勝場加成</td>
+                    <td>${breakdown.winnerBonus.away}</td>
+                    <td>${breakdown.winnerBonus.home}</td>
+                </tr>
+                <tr>
+                    <td>飲酒加成</td>
+                    <td>${breakdown.drinkingBonus.away}</td>
+                    <td>${breakdown.drinkingBonus.home}</td>
+                </tr>
+                <tr>
+                    <td>最終總分</td>
+                    <td class="final-score">${finalScores.away}</td>
+                    <td class="final-score">${finalScores.home}</td>
+                </tr>
+            </table>
+        </div>`;
+    }
+
+
+
+    // 👥 提取選手清單
+    extractPlayers(adminData, team) {
+        console.log(`提取${team}隊選手`, adminData);
+        const players = [];
+        
+        if (adminData.sets) {
+            adminData.sets.forEach((set, index) => {
+                const teamPlayers = team === 'away' ? set.awayPlayers : set.homePlayers;
+                console.log(`SET${index + 1} ${team}隊選手:`, teamPlayers);
+                
+                if (Array.isArray(teamPlayers) && teamPlayers.length > 0) {
+                    teamPlayers.forEach(player => {
+                        if (player && player.trim() && !players.includes(player)) {
+                            players.push(player);
+                        }
+                    });
+                } else if (teamPlayers && typeof teamPlayers === 'string' && teamPlayers.trim() && !players.includes(teamPlayers)) {
+                    players.push(teamPlayers);
+                }
+            });
+        }
+        
+        console.log(`${team}隊最終選手清單:`, players);
+        
+        // 如果沒有選手，使用隊伍名稱加編號作為預設值
+        if (players.length === 0) {
+            const teamName = team === 'away' ? adminData.awayTeam : adminData.homeTeam;
+            return [`${teamName}選手1`, `${teamName}選手2`, `${teamName}選手3`];
+        }
+        
+        return players;
+    }
+}
+
+// 🚀 全域實例化
+const previewGenerator = new GameResultPreviewGenerator();
+
+// 📤 導出功能函數
+function generateGamePreview(adminData) {
+    return previewGenerator.generatePreviewHTML(adminData);
+}
+
+function showPreviewModal(adminData) {
+    const previewHTML = generateGamePreview(adminData);
+    
+    // 如果已經存在模態框，先移除
+    const existingModal = document.querySelector('.match-modal');
+    if (existingModal) {
+        document.body.removeChild(existingModal);
+    }
+    
+    // 創建模態框容器 - 使用和main.js相同的樣式
+    const modal = document.createElement('div');
+    modal.className = 'match-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+    
+         // 創建模態框內容
+     const modalContent = document.createElement('div');
+     modalContent.className = 'match-modal-content';
+     modalContent.style.cssText = `
+         position: relative;
+         width: 90%;
+         height: 90%;
+         background: white;
+         border-radius: 8px;
+         overflow: visible;
+         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+         transform: scale(0.95);
+         transition: transform 0.3s ease;
+     `;
+    
+         // 添加關閉按鈕 - 使用和main.js相同的樣式
+     const closeButton = document.createElement('button');
+     closeButton.className = 'modal-close';
+     closeButton.innerHTML = '&times;';
+     closeButton.style.cssText = `
+         position: absolute;
+         right: -15px;
+         top: -15px;
+         width: 30px;
+         height: 30px;
+         border-radius: 50%;
+         background-color: #fa363a;
+         color: white;
+         border: none;
+         cursor: pointer;
+         font-size: 20px;
+         line-height: 1;
+         z-index: 10001;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+         transition: all 0.2s ease;
+     `;
+     closeButton.addEventListener('mouseenter', function() {
+         this.style.backgroundColor = '#e62e32';
+         this.style.transform = 'scale(1.1)';
+     });
+     closeButton.addEventListener('mouseleave', function() {
+         this.style.backgroundColor = '#fa363a';
+         this.style.transform = 'scale(1)';
+     });
+    closeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMatchModal(modal);
+    });
+    
+         // 創建iframe來加載比賽結果頁面
+     const iframe = document.createElement('iframe');
+     iframe.className = 'match-iframe';
+     iframe.style.cssText = `
+         width: 100%;
+         height: 100%;
+         border: none;
+         border-radius: 8px;
+         opacity: 0;
+         transition: opacity 0.3s ease 0.1s;
+     `;
+     iframe.srcdoc = previewHTML;
+    
+         modalContent.appendChild(closeButton);
+     modalContent.appendChild(iframe);
+     modal.appendChild(modalContent);
+     document.body.appendChild(modal);
+     
+     // 確保模態框顯示 - 使用和main.js相同的動畫邏輯
+     setTimeout(function() {
+         modal.classList.add('visible');
+         modalContent.style.transform = 'scale(1)';
+         iframe.style.opacity = '1';
+     }, 10);
+     
+     // 點擊模態框外部關閉
+     modal.addEventListener('click', function(e) {
+         if (e.target === modal) {
+             closeMatchModal(modal);
+         }
+     });
+     
+     // ESC鍵關閉
+     const handleKeyPress = function(e) {
+         if (e.key === 'Escape') {
+             closeMatchModal(modal);
+             document.removeEventListener('keydown', handleKeyPress);
+         }
+     };
+     document.addEventListener('keydown', handleKeyPress);
+}
+
+// 關閉模態框的函數 - 使用和main.js相同的邏輯
+function closeMatchModal(modal) {
+    modal.classList.remove('visible');
+    
+    // 等待動畫完成後再移除元素
+    setTimeout(() => {
+        if (document.body.contains(modal)) {
+            document.body.removeChild(modal);
+        }
+    }, 300);
+} 
