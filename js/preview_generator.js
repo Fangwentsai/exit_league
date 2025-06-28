@@ -88,6 +88,28 @@ class GameResultPreviewGenerator {
             position: relative;
             z-index: 1;
         }
+        
+        /* 預覽模式專用的勝利圖標樣式 */
+        .winner-icon {
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            width: 30px;
+            height: 30px;
+            transform: translateY(-50%);
+            background-image: url('../../images/winner.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 5;
+        }
+        
+        /* 確保勝方標示有足夠的左側空間 */
+        .winner {
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px 6px 8px 38px !important;
+        }
     </style>
 </head>
 <body>
@@ -338,6 +360,9 @@ class GameResultPreviewGenerator {
         const awayPlayer = Array.isArray(match.away) ? match.away.join(', ') : (match.away || '');
         const homePlayer = Array.isArray(match.home) ? match.home.join(', ') : (match.home || '');
         
+        // 調試信息：檢查 winner 數據
+        console.log(`SET${match.set} - Away: "${awayPlayer}", Home: "${homePlayer}", Winner: "${match.winner}", FirstAttack: "${match.firstAttack}"`);
+        
         // 只有當選手都有選擇時，才顯示先攻和勝負
         let awayClass = '';
         let homeClass = '';
@@ -353,6 +378,10 @@ class GameResultPreviewGenerator {
             homeWinClass = match.winner === 'home' ? 'winner' : '';
             awayWinIcon = match.winner === 'away' ? '<div class="winner-icon"></div>' : '';
             homeWinIcon = match.winner === 'home' ? '<div class="winner-icon"></div>' : '';
+            
+            // 調試信息：檢查生成的樣式類別和圖標
+            console.log(`SET${match.set} - Away Classes: "${awayClass} ${awayWinClass}", Home Classes: "${homeClass} ${homeWinClass}"`);
+            console.log(`SET${match.set} - Away Icon: "${awayWinIcon}", Home Icon: "${homeWinIcon}"`);
         }
         
         return `
@@ -515,8 +544,6 @@ class GameResultPreviewGenerator {
             </table>
         </div>`;
     }
-
-
 
     // 👥 提取選手清單
     extractPlayers(adminData, team) {
