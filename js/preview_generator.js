@@ -240,6 +240,19 @@ class GameResultPreviewGenerator {
 
     // 🏆 計算最終比分
     calculateFinalScores(matchData, drinkingBonus = {}) {
+        // SET分數定義
+        const setScores = {
+            1: 1, 2: 1, 3: 1, 4: 1,     // SET1-4: 1分（單人賽）
+            5: 3,                        // SET5: 3分（三人賽 701）
+            6: 1, 7: 1, 8: 1, 9: 1,     // SET6-9: 1分（單人Cricket）
+            10: 3,                       // SET10: 3分（三人賽 Cricket）
+            11: 2, 12: 2,               // SET11-12: 2分（雙人賽）
+            13: 2, 14: 2,               // SET13-14: 2分（雙人賽 Cricket）
+            15: 4, 16: 4                // SET15-16: 4分（四人賽）
+        };
+        
+        let awayScore = 0;
+        let homeScore = 0;
         let awayWins = 0;
         let homeWins = 0;
         
@@ -254,15 +267,21 @@ class GameResultPreviewGenerator {
             const hasWinner = match.winner && match.winner !== null;
             
             if (hasAwayPlayers && hasHomePlayers && hasWinner) {
-                if (match.winner === 'away') awayWins++;
-                if (match.winner === 'home') homeWins++;
+                const setScore = setScores[match.set] || 1;
+                if (match.winner === 'away') {
+                    awayScore += setScore;
+                    awayWins++;
+                } else if (match.winner === 'home') {
+                    homeScore += setScore;
+                    homeWins++;
+                }
             }
         });
         
-        // 計算勝場加成（分數高的一方+1）
+        // 勝方加分（比賽成績較高的隊伍加1分）
         const winnerBonus = {
-            away: awayWins > homeWins ? 1 : 0,
-            home: homeWins > awayWins ? 1 : 0
+            away: awayScore > homeScore ? 1 : 0,
+            home: homeScore > awayScore ? 1 : 0
         };
         
         // 飲酒加成
@@ -272,11 +291,11 @@ class GameResultPreviewGenerator {
         };
         
         return {
-            away: awayWins + winnerBonus.away + finalDrinkingBonus.away,
-            home: homeWins + winnerBonus.home + finalDrinkingBonus.home,
+            away: awayScore + winnerBonus.away + finalDrinkingBonus.away,
+            home: homeScore + winnerBonus.home + finalDrinkingBonus.home,
             // 提供分數細分資訊
             breakdown: {
-                baseScores: { away: awayWins, home: homeWins },
+                baseScores: { away: awayScore, home: homeScore },
                 winnerBonus,
                 drinkingBonus: finalDrinkingBonus
             }
@@ -479,7 +498,7 @@ class GameResultPreviewGenerator {
                     <td>${breakdown.baseScores.home}</td>
                 </tr>
                 <tr>
-                    <td>勝場加成</td>
+                    <td>勝方加分</td>
                     <td>${breakdown.winnerBonus.away}</td>
                     <td>${breakdown.winnerBonus.home}</td>
                 </tr>

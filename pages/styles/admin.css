@@ -1,0 +1,921 @@
+/* ===== Admin 管理頁面樣式 ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft JhengHei', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.logo p {
+    color: #666;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: #f8f9fa;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #dc3545;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #dc3545 0%, #b02a3a 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 15px;
+    display: none;
+    padding: 10px;
+    background: #fdf2f2;
+    border-radius: 5px;
+}
+
+.admin-dashboard {
+    display: none;
+    background: #f5f5f5;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.admin-header {
+    background: #dc3545;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logout-btn {
+    background: #b02a3a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background: #8b1e2b;
+}
+
+.admin-content {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.game-selector {
+    background: white;
+    padding: 25px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.game-selector h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.game-select {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    background: white;
+    transition: all 0.3s;
+}
+
+.game-select:focus {
+    outline: none;
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.game-details {
+    display: none;
+    margin-top: 30px;
+}
+
+/* 新的遊戲佈局 */
+.game-board {
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.game-board-header {
+    display: grid;
+    grid-template-columns: 60px 4fr 4fr 80px 80px;
+    gap: 0;
+    background: #c44451;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.header-cell {
+    padding: 20px 15px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.header-cell:last-child {
+    border-right: none;
+}
+
+.game-board-body {
+    background: white;
+}
+
+.game-row {
+    display: grid;
+    grid-template-columns: 60px 4fr 4fr 80px 80px;
+    gap: 0;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.game-row:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.game-row:last-child {
+    border-bottom: none;
+}
+
+.set-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c44451;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.team-button {
+    padding: 20px 15px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.team-button:hover {
+    background: #f0f7ff;
+}
+
+.team-button.selected {
+    background: #495057;
+    color: white;
+}
+
+.team-button.home-team.selected {
+    background: #495057;
+}
+
+.team-button.away-team.selected {
+    background: #495057;
+}
+
+.set-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.set-type {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.player-info {
+    font-size: 12px;
+    color: #dc3545;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player-display {
+    flex: 1;
+}
+
+.select-player-btn {
+    padding: 4px 8px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select-player-btn:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.team-button.selected .set-title,
+.team-button.selected .set-type,
+.team-button.selected .player-info {
+    color: white;
+}
+
+.team-button.selected .select-player-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.team-button.selected .select-player-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.team-button.incomplete {
+    background: #fff8dc;
+    border-left: 4px solid #ffc107;
+}
+
+.team-button.incomplete .player-info {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.control-button {
+    padding: 20px 15px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.control-button:last-child {
+    border-right: none;
+}
+
+.control-button:hover {
+    background: #fdf2f2;
+    color: #dc3545;
+}
+
+.control-button.home-selected {
+    background: #dc3545;
+    color: white;
+    font-weight: bold;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+}
+
+.control-button.away-selected {
+    background: #f8a5aa;
+    color: #721c24;
+    font-weight: bold;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(248, 165, 170, 0.4);
+}
+
+/* 飲酒加成簡單版 */
+.bonus-simple {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.bonus-simple h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.bonus-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.bonus-btn {
+    padding: 12px 25px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.bonus-btn:hover {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.bonus-btn.home-selected,
+.bonus-btn.away-selected {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* 分數計算區域 */
+.score-calculation {
+    background: white;
+    padding: 25px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.score-calculation h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.score-summary {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+.score-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.team-name {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+}
+
+.team-name.home-team {
+    background: #dc9435;
+}
+
+.team-name.away-team {
+    background: #dc9435;
+}
+
+.score-detail {
+    font-size: 14px;
+    color: #666;
+    background: white;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+.total-score {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+
+.total-score.home-total {
+    background: #dc9435;
+}
+
+.total-score.away-total {
+    background: #dc9435;
+}
+
+.vs-divider {
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+    padding: 0 20px;
+}
+
+/* 保存按鈕 */
+.save-btn {
+    padding: 15px 40px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
+    width: 150px;
+}
+
+.save-btn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+}
+
+.save-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 按鈕區域 */
+.save-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* 預覽按鈕 */
+.preview-btn {
+    padding: 15px 30px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
+    width: 150px;
+}
+
+.preview-btn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+}
+
+.preview-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 彈窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.player-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 450px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.modal-header h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.player-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.player-option {
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.player-option:hover {
+    border-color: #dc3545;
+    background: #fdf2f2;
+    transform: translateY(-2px);
+}
+
+.player-option.selected {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+    transform: translateY(-2px);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: all 0.3s;
+}
+
+.close-modal:hover {
+    color: #dc3545;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 16px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .game-board-header,
+    .game-row {
+        grid-template-columns: 50px 4fr 4fr 70px 70px;
+    }
+    
+    .header-cell,
+    .control-button {
+        padding: 15px 6px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 20px;
+    }
+    
+    .game-board-header,
+    .game-row {
+        grid-template-columns: 40px 3fr 3fr 60px 60px;
+    }
+    
+    .header-cell {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+    
+    .team-button {
+        padding: 15px 10px;
+    }
+    
+    .set-title {
+        font-size: 12px;
+    }
+    
+    .set-type {
+        font-size: 10px;
+    }
+    
+    .player-info {
+        font-size: 10px;
+    }
+    
+    .control-button {
+        padding: 15px 4px;
+        font-size: 10px;
+    }
+    
+    .score-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .score-row {
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .team-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .team-name {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .score-detail {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+
+    .total-score {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .vs-divider {
+        font-size: 16px;
+        padding: 0 8px;
+        flex-shrink: 0;
+    }
+
+    .bonus-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* 客製化對話框樣式 */
+.custom-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.custom-dialog {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+.custom-dialog-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.custom-dialog-icon.success { color: #28a745; }
+.custom-dialog-icon.error { color: #dc3545; }
+.custom-dialog-icon.warning { color: #ffc107; }
+.custom-dialog-icon.info { color: #17a2b8; }
+
+.custom-dialog-message {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #333;
+    white-space: pre-line;
+}
+
+.custom-dialog-remember {
+    margin: 16px 0;
+    text-align: center;
+}
+
+.custom-dialog-remember label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
+
+.custom-dialog-remember input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.custom-dialog-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.custom-dialog-button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.custom-dialog-button.primary {
+    background-color: #dc3545;
+    color: white;
+}
+
+.custom-dialog-button.primary:hover {
+    background-color: #c44451;
+}
+
+.custom-dialog-button.secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.custom-dialog-button.secondary:hover {
+    background-color: #545b62;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+} 
