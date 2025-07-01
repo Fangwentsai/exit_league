@@ -248,7 +248,7 @@
       {
         "set": 3,
         "type": "01",
-        "away": "范姜姊",
+        "away": "范姜姐",
         "home": "小虎",
         "firstAttack": "home",
         "winner": "home"
@@ -330,7 +330,7 @@
         "type": "01",
         "away": [
           "無名",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "Stan",
@@ -425,7 +425,7 @@
     "away_players": [
       "慶文",
       "阿鴻",
-      "范姜姊",
+      "范姜姐",
       "瘦子",
       "無名",
       "范姜哥"
@@ -464,7 +464,7 @@
       {
         "set": 2,
         "type": "01",
-        "away": "阿猴",
+        "away": "猴子",
         "home": "宏哥",
         "firstAttack": "away",
         "winner": "away"
@@ -491,7 +491,7 @@
         "away": [
           "小芬",
           "阿達",
-          "阿猴"
+          "猴子"
         ],
         "home": [
           "凱哥",
@@ -553,7 +553,7 @@
         "set": 11,
         "type": "01",
         "away": [
-          "阿猴",
+          "猴子",
           "小芬"
         ],
         "home": [
@@ -627,7 +627,7 @@
         "set": 16,
         "type": "CR",
         "away": [
-          "阿猴",
+          "猴子",
           "阿倫",
           "阿達",
           "老丹"
@@ -648,7 +648,7 @@
     },
     "away_players": [
       "Kelvin",
-      "阿猴",
+      "猴子",
       "老丹",
       "土豆",
       "小芬",
@@ -677,8 +677,8 @@
     "game_number": 4,
     "date": "2024/11/05 21:00",
     "venue": "酒窩海盜聯盟",
-    "away_team": "海盜揪難",
-    "home_team": "人生揪硬",
+    "away_team": "海盜揪硬",
+    "home_team": "人生揪難",
     "away_score": 0,
     "home_score": 0,
     "matches": [
@@ -1118,7 +1118,7 @@
     "game_number": 6,
     "date": "2024/11/12 21:00",
     "venue": "逃生入口Exit Bar",
-    "away_team": "ViVi朝酒晚舞",
+    "away_team": "Vivi朝酒晚舞",
     "home_team": "酒空組",
     "away_score": 0,
     "home_score": 0,
@@ -1134,7 +1134,7 @@
       {
         "set": 2,
         "type": "01",
-        "away": "阿猴",
+        "away": "猴子",
         "home": "范姜哥",
         "firstAttack": "home",
         "winner": "home"
@@ -1161,7 +1161,7 @@
         "away": [
           "阿國",
           "阿淦",
-          "阿猴"
+          "猴子"
         ],
         "home": [
           "瘦子",
@@ -1223,7 +1223,7 @@
         "set": 11,
         "type": "01",
         "away": [
-          "阿猴",
+          "猴子",
           "阿國"
         ],
         "home": [
@@ -1251,7 +1251,7 @@
         "set": 13,
         "type": "CR",
         "away": [
-          "阿猴",
+          "猴子",
           "怪頭"
         ],
         "home": [
@@ -1279,7 +1279,7 @@
         "set": 15,
         "type": "01",
         "away": [
-          "阿猴",
+          "猴子",
           "阿國",
           "阿淦",
           "石頭"
@@ -1318,7 +1318,7 @@
     },
     "away_players": [
       "Kelvin",
-      "阿猴",
+      "猴子",
       "阿淦",
       "阿倫",
       "阿國",
@@ -1849,7 +1849,7 @@
         "set": 7,
         "type": "CR",
         "away": "孟瑄",
-        "home": "大毛",
+        "home": "大根毛",
         "firstAttack": "home",
         "winner": "away"
       },
@@ -1878,7 +1878,7 @@
           "Eric"
         ],
         "home": [
-          "大毛",
+          "大根毛",
           "阿福",
           "+0"
         ],
@@ -1907,7 +1907,7 @@
           "Jesse"
         ],
         "home": [
-          "大毛",
+          "大根毛",
           "Leo"
         ],
         "firstAttack": "away",
@@ -1996,7 +1996,7 @@
       "B哥",
       "小虎",
       "+0",
-      "大毛",
+      "大根毛",
       "阿俊",
       "小建",
       "Leo",
@@ -2018,7 +2018,7 @@
         "set": 1,
         "type": "01",
         "away": "亮亮",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "home",
         "winner": "home"
       },
@@ -2119,7 +2119,7 @@
         ],
         "home": [
           "虎哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -2216,7 +2216,7 @@
       "宗燁"
     ],
     "home_players": [
-      "范姜姊",
+      "范姜姐",
       "虎哥",
       "宓哥",
       "阿鴻",
@@ -2340,7 +2340,7 @@
         ],
         "home": [
           "猴子",
-          "長老芬"
+          "小芬"
         ],
         "firstAttack": "home",
         "winner": "home"
@@ -2400,7 +2400,7 @@
           "阿淦",
           "阿倫",
           "小羊",
-          "長老芬"
+          "小芬"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -2443,7 +2443,7 @@
       "阿淦",
       "小耿",
       "小羊",
-      "長老芬",
+      "小芬",
       "阿倫",
       "怪頭"
     ],
@@ -2921,7 +2921,7 @@
       {
         "set": 3,
         "type": "01",
-        "away": "范姜姊",
+        "away": "范姜姐",
         "home": "蘇ㄟ",
         "firstAttack": "home",
         "winner": "home"
@@ -3003,7 +3003,7 @@
         "type": "01",
         "away": [
           "宓哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "蘇ㄟ",
@@ -3060,7 +3060,7 @@
         "away": [
           "祥哥",
           "范姜哥",
-          "范姜姊",
+          "范姜姐",
           "慶文"
         ],
         "home": [
@@ -3098,7 +3098,7 @@
     "away_players": [
       "慶文",
       "范姜哥",
-      "范姜姊",
+      "范姜姐",
       "宓哥",
       "祥哥",
       "小惠"
@@ -3117,7 +3117,7 @@
     "date": "2024/11/26 21:00",
     "venue": "逃生入口 Bar",
     "away_team": "人生揪難",
-    "home_team": "酒空組",
+    "home_team": "逃生入口C",
     "away_score": 0,
     "home_score": 0,
     "matches": [
@@ -3125,7 +3125,7 @@
         "set": 1,
         "type": "01",
         "away": "阿朋",
-        "home": "隼哥",
+        "home": "隼隼",
         "firstAttack": "away",
         "winner": "away"
       },
@@ -3163,7 +3163,7 @@
         ],
         "home": [
           "華華",
-          "隼哥",
+          "隼隼",
           "Ace"
         ],
         "firstAttack": "home",
@@ -3226,7 +3226,7 @@
         ],
         "home": [
           "阿仁",
-          "隼哥"
+          "隼隼"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -3284,7 +3284,7 @@
         ],
         "home": [
           "華華",
-          "隼哥",
+          "隼隼",
           "阿仁",
           "喇叭"
         ],
@@ -3325,7 +3325,7 @@
       "小傅"
     ],
     "home_players": [
-      "隼哥",
+      "隼隼",
       "華華",
       "阿仁",
       "喇叭",
@@ -3894,7 +3894,7 @@
         "type": "01",
         "away": [
           "無名",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "小齊",
@@ -3970,7 +3970,7 @@
           "阿鴻",
           "無名",
           "范姜哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "阿鄧",
@@ -3992,7 +3992,7 @@
       "小惠",
       "阿鴻",
       "宓哥",
-      "范姜姊",
+      "范姜姐",
       "慶文"
     ],
     "home_players": [
@@ -4466,7 +4466,7 @@
         "set": 1,
         "type": "01",
         "away": "Lucas",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "away",
         "winner": "away"
       },
@@ -4664,7 +4664,7 @@
       "小倫"
     ],
     "home_players": [
-      "范姜姊",
+      "范姜姐",
       "阿鴻",
       "宓哥",
       "瘦子",
@@ -4818,7 +4818,7 @@
         ],
         "home": [
           "老丹",
-          "韋"
+          "小韋"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -4898,7 +4898,7 @@
       "猴子",
       "怪頭",
       "浩子",
-      "韋"
+      "小韋"
     ],
     "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season3/g22.html"
   },
@@ -5582,7 +5582,7 @@
         "set": 1,
         "type": "01",
         "away": "隼隼",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "home",
         "winner": "away"
       },
@@ -5683,7 +5683,7 @@
         ],
         "home": [
           "瘦子",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "away",
         "winner": "home"
@@ -5779,7 +5779,7 @@
       "Ace"
     ],
     "home_players": [
-      "范姜姊",
+      "范姜姐",
       "瘦子",
       "慶文",
       "無名",
@@ -5849,7 +5849,7 @@
       {
         "set": 6,
         "type": "CR",
-        "away": "大毛",
+        "away": "大根毛",
         "home": "小齊",
         "firstAttack": "home",
         "winner": "home"
@@ -5941,7 +5941,7 @@
         "type": "CR",
         "away": [
           "老師",
-          "大毛"
+          "大根毛"
         ],
         "home": [
           "凱哥",
@@ -5972,7 +5972,7 @@
         "set": 16,
         "type": "CR",
         "away": [
-          "大毛",
+          "大根毛",
           "老師",
           "Stan",
           "耀楠"
@@ -5997,7 +5997,7 @@
       "老師",
       "耀楠",
       "B哥",
-      "大毛",
+      "大根毛",
       "小建",
       "Leo"
     ],
@@ -6469,7 +6469,7 @@
         "set": 1,
         "type": "01",
         "away": "阿元",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "home",
         "winner": "away"
       },
@@ -6517,7 +6517,7 @@
         "set": 6,
         "type": "CR",
         "away": "老師",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "home",
         "winner": "away"
       },
@@ -6570,7 +6570,7 @@
         ],
         "home": [
           "慶文",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "home",
         "winner": "away"
@@ -6598,7 +6598,7 @@
         ],
         "home": [
           "宓哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "home",
         "winner": "away"
@@ -6630,7 +6630,7 @@
           "范姜哥",
           "宓哥",
           "慶文",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -6648,7 +6648,7 @@
           "范姜哥",
           "宓哥",
           "慶文",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -6666,7 +6666,7 @@
       "B哥"
     ],
     "home_players": [
-      "范姜姊",
+      "范姜姐",
       "慶文",
       "宓哥",
       "范姜哥"
@@ -7450,7 +7450,7 @@
         "type": "01",
         "away": [
           "無名",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "猴子",
@@ -7508,7 +7508,7 @@
           "瘦子",
           "無名",
           "慶文",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "猴子",
@@ -7548,7 +7548,7 @@
       "范姜哥",
       "瘦子",
       "宓哥",
-      "范姜姊"
+      "范姜姐"
     ],
     "home_players": [
       "阿達",
@@ -8242,189 +8242,189 @@
       {
         "set": 1,
         "type": "01",
-        "away": "小姜",
-        "home": "慶文",
-        "firstAttack": "home",
+        "away": "慶文",
+        "home": "小姜",
+        "firstAttack": "away",
         "winner": "away"
       },
       {
         "set": 2,
         "type": "01",
-        "away": "小魚",
-        "home": "阿堯",
-        "firstAttack": "home",
+        "away": "阿堯",
+        "home": "小魚",
+        "firstAttack": "away",
         "winner": "away"
       },
       {
         "set": 3,
         "type": "01",
-        "away": "亮亮",
-        "home": "宓哥",
-        "firstAttack": "away",
+        "away": "宓哥",
+        "home": "亮亮",
+        "firstAttack": "home",
         "winner": "home"
       },
       {
         "set": 4,
         "type": "01",
-        "away": "歪歪",
-        "home": "范姜哥",
-        "firstAttack": "away",
+        "away": "范姜哥",
+        "home": "歪歪",
+        "firstAttack": "home",
         "winner": "away"
       },
       {
         "set": 5,
         "type": "01",
         "away": [
-          "歪歪",
-          "阿朋",
-          "小傅"
-        ],
-        "home": [
           "范姜哥",
           "阿堯",
           "慶文"
         ],
-        "firstAttack": "away",
+        "home": [
+          "歪歪",
+          "阿朋",
+          "小傅"
+        ],
+        "firstAttack": "home",
         "winner": "away"
       },
       {
         "set": 6,
         "type": "CR",
-        "away": "小傅",
-        "home": "慶文",
-        "firstAttack": "away",
+        "away": "慶文",
+        "home": "小傅",
+        "firstAttack": "home",
         "winner": "home"
       },
       {
         "set": 7,
         "type": "CR",
-        "away": "阿朋",
-        "home": "宓哥",
-        "firstAttack": "away",
+        "away": "宓哥",
+        "home": "阿朋",
+        "firstAttack": "home",
         "winner": "home"
       },
       {
         "set": 8,
         "type": "CR",
-        "away": "亮亮",
-        "home": "范姜哥",
-        "firstAttack": "home",
+        "away": "范姜哥",
+        "home": "亮亮",
+        "firstAttack": "away",
         "winner": "away"
       },
       {
         "set": 9,
         "type": "CR",
-        "away": "小姜",
-        "home": "阿堯",
-        "firstAttack": "home",
+        "away": "阿堯",
+        "home": "小姜",
+        "firstAttack": "away",
         "winner": "away"
       },
       {
         "set": 10,
         "type": "CR",
         "away": [
+          "范姜哥",
+          "阿堯",
+          "范姜姐"
+        ],
+        "home": [
           "亮亮",
           "小魚",
           "小姜"
         ],
-        "home": [
-          "范姜哥",
-          "阿堯",
-          "范姜姊"
-        ],
-        "firstAttack": "home",
+        "firstAttack": "away",
         "winner": "home"
       },
       {
         "set": 11,
         "type": "01",
         "away": [
-          "歪歪",
-          "阿朋"
-        ],
-        "home": [
           "范姜哥",
           "Sandy"
         ],
-        "firstAttack": "away",
+        "home": [
+          "歪歪",
+          "阿朋"
+        ],
+        "firstAttack": "home",
         "winner": "away"
       },
       {
         "set": 12,
         "type": "01",
         "away": [
-          "小魚",
-          "小傅"
-        ],
-        "home": [
           "宓哥",
           "阿堯"
         ],
-        "firstAttack": "home",
+        "home": [
+          "小魚",
+          "小傅"
+        ],
+        "firstAttack": "away",
         "winner": "home"
       },
       {
         "set": 13,
         "type": "CR",
         "away": [
-          "阿朋",
-          "歪歪"
-        ],
-        "home": [
           "宓哥",
           "慶文"
         ],
-        "firstAttack": "home",
+        "home": [
+          "阿朋",
+          "歪歪"
+        ],
+        "firstAttack": "away",
         "winner": "home"
       },
       {
         "set": 14,
         "type": "CR",
         "away": [
-          "亮亮",
-          "小姜"
-        ],
-        "home": [
           "范姜哥",
           "宓哥"
         ],
-        "firstAttack": "home",
+        "home": [
+          "亮亮",
+          "小姜"
+        ],
+        "firstAttack": "away",
         "winner": "home"
       },
       {
         "set": 15,
         "type": "01",
         "away": [
+          "范姜哥",
+          "阿堯",
+          "慶文",
+          "范姜姐"
+        ],
+        "home": [
           "阿朋",
           "小魚",
           "歪歪",
           "小傅"
         ],
-        "home": [
-          "范姜哥",
-          "阿堯",
-          "慶文",
-          "范姜姊"
-        ],
-        "firstAttack": "away",
+        "firstAttack": "home",
         "winner": "away"
       },
       {
         "set": 16,
         "type": "CR",
         "away": [
-          "亮亮",
-          "小傅",
-          "小姜",
-          "小魚"
-        ],
-        "home": [
           "范姜哥",
           "阿堯",
           "宓哥",
           "Sandy"
         ],
-        "firstAttack": "home",
+        "home": [
+          "亮亮",
+          "小傅",
+          "小姜",
+          "小魚"
+        ],
+        "firstAttack": "away",
         "winner": "home"
       }
     ],
@@ -8433,20 +8433,20 @@
       "home": 5
     },
     "away_players": [
+      "慶文",
+      "阿堯",
+      "宓哥",
+      "范姜哥",
+      "范姜姐",
+      "Sandy"
+    ],
+    "home_players": [
       "小姜",
       "小魚",
       "亮亮",
       "歪歪",
       "阿朋",
       "小傅"
-    ],
-    "home_players": [
-      "慶文",
-      "阿堯",
-      "宓哥",
-      "范姜哥",
-      "范姜姊",
-      "Sandy"
     ],
     "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season3/g38.html"
   },
@@ -9125,7 +9125,7 @@
         "set": 1,
         "type": "01",
         "away": "船長",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "away",
         "winner": "home"
       },
@@ -9140,7 +9140,7 @@
       {
         "set": 3,
         "type": "01",
-        "away": "阿雞",
+        "away": "阿基",
         "home": "宓哥",
         "firstAttack": "away",
         "winner": "away"
@@ -9196,7 +9196,7 @@
       {
         "set": 9,
         "type": "CR",
-        "away": "阿雞",
+        "away": "阿基",
         "home": "瘦子",
         "firstAttack": "home",
         "winner": "home"
@@ -9221,7 +9221,7 @@
         "set": 11,
         "type": "01",
         "away": [
-          "阿雞",
+          "阿基",
           "阿祺"
         ],
         "home": [
@@ -9263,7 +9263,7 @@
         "set": 14,
         "type": "CR",
         "away": [
-          "阿雞",
+          "阿基",
           "小薩"
         ],
         "home": [
@@ -9286,7 +9286,7 @@
           "瘦子",
           "阿堯",
           "宓哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "home",
         "winner": "away"
@@ -9295,7 +9295,7 @@
         "set": 16,
         "type": "CR",
         "away": [
-          "阿雞",
+          "阿基",
           "阿肥",
           "阿祺",
           "蘇ㄟ"
@@ -9317,13 +9317,13 @@
     "away_players": [
       "船長",
       "阿肥",
-      "阿雞",
+      "阿基",
       "蘇ㄟ",
       "阿祺",
       "小薩"
     ],
     "home_players": [
-      "范姜姊",
+      "范姜姐",
       "阿堯",
       "宓哥",
       "瘦子",
@@ -9568,7 +9568,7 @@
       {
         "set": 1,
         "type": "01",
-        "away": "蘇蘇",
+        "away": "酥酥",
         "home": "小建",
         "firstAttack": "away",
         "winner": "home"
@@ -9759,7 +9759,7 @@
       "home": 0
     },
     "away_players": [
-      "蘇蘇",
+      "酥酥",
       "老丹",
       "石頭",
       "阿淦",
@@ -10092,7 +10092,7 @@
         "set": 9,
         "type": "CR",
         "away": "小齊",
-        "home": "范姜姊",
+        "home": "范姜姐",
         "firstAttack": "home",
         "winner": "away"
       },
@@ -10121,7 +10121,7 @@
         ],
         "home": [
           "阿堯",
-          "范姜姊"
+          "范姜姐"
         ],
         "firstAttack": "home",
         "winner": "away"
@@ -10222,7 +10222,7 @@
       "宓哥",
       "阿堯",
       "范姜哥",
-      "范姜姊",
+      "范姜姐",
       "Sandy"
     ],
     "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season3/g46.html"
@@ -10686,7 +10686,7 @@
       {
         "set": 1,
         "type": "01",
-        "away": "范姜姊",
+        "away": "范姜姐",
         "home": "阿樂",
         "firstAttack": "home",
         "winner": "home"
@@ -10758,7 +10758,7 @@
       {
         "set": 9,
         "type": "CR",
-        "away": "范姜姊",
+        "away": "范姜姐",
         "home": "Terry",
         "firstAttack": "home",
         "winner": "home"
@@ -10877,7 +10877,7 @@
       "home": 5
     },
     "away_players": [
-      "范姜姊",
+      "范姜姐",
       "慶文",
       "宓哥",
       "虎哥",
@@ -11601,7 +11601,7 @@
         "set": 4,
         "type": "01",
         "away": "阿朋",
-        "home": "阿倫",
+        "home": "小倫",
         "firstAttack": "away",
         "winner": "home"
       },
@@ -11641,7 +11641,7 @@
         "set": 8,
         "type": "CR",
         "away": "亮亮",
-        "home": "阿倫",
+        "home": "小倫",
         "firstAttack": "home",
         "winner": "home"
       },
@@ -11662,7 +11662,7 @@
           "羿珩"
         ],
         "home": [
-          "阿倫",
+          "小倫",
           "阿樂",
           "Jesse"
         ],
@@ -11691,7 +11691,7 @@
           "小傅"
         ],
         "home": [
-          "阿倫",
+          "小倫",
           "Jesse"
         ],
         "firstAttack": "home",
@@ -11719,7 +11719,7 @@
           "亮亮"
         ],
         "home": [
-          "阿倫",
+          "小倫",
           "Terry"
         ],
         "firstAttack": "away",
@@ -11735,7 +11735,7 @@
           "小傅"
         ],
         "home": [
-          "阿倫",
+          "小倫",
           "Eric",
           "Terry",
           "Jesse"
@@ -11753,7 +11753,7 @@
           "羿珩"
         ],
         "home": [
-          "阿倫",
+          "小倫",
           "Terry",
           "阿樂",
           "Eric"
@@ -11780,7 +11780,7 @@
       "阿樂",
       "Terry",
       "Jesse",
-      "阿倫",
+      "小倫",
       "Lucas",
       "Eric"
     ],
@@ -11799,7 +11799,7 @@
       {
         "set": 1,
         "type": "01",
-        "away": "范姜姊",
+        "away": "范姜姐",
         "home": "禹辰",
         "firstAttack": "home",
         "winner": "away"
@@ -11897,7 +11897,7 @@
         "type": "01",
         "away": [
           "虎哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "喇叭",
@@ -11955,7 +11955,7 @@
           "虎哥",
           "阿堯",
           "范姜哥",
-          "范姜姊"
+          "范姜姐"
         ],
         "home": [
           "小歪",
@@ -11990,7 +11990,7 @@
       "home": 2
     },
     "away_players": [
-      "范姜姊",
+      "范姜姐",
       "阿堯",
       "范姜哥",
       "虎哥",
@@ -12245,7 +12245,7 @@
       {
         "set": 1,
         "type": "01",
-        "away": "蘇蘇",
+        "away": "酥酥",
         "home": "小偉",
         "firstAttack": "home",
         "winner": "home"
@@ -12347,7 +12347,7 @@
         ],
         "home": [
           "蘇ㄟ",
-          "凡"
+          "伊凡"
         ],
         "firstAttack": "away",
         "winner": "away"
@@ -12436,7 +12436,7 @@
       "home": 0
     },
     "away_players": [
-      "蘇蘇",
+      "酥酥",
       "老丹",
       "威廉",
       "阿倫",
@@ -12455,7 +12455,7 @@
       "蘇ㄟ",
       "船長",
       "Louis",
-      "凡"
+      "伊凡"
     ],
     "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season3/g56.html"
   },
@@ -13966,7 +13966,7 @@
           "土豆",
           "猴子",
           "阿淦",
-          "蘇蘇"
+          "酥酥"
         ],
         "home": [
           "Stan",
@@ -14011,7 +14011,7 @@
       "浩子",
       "阿倫",
       "芝芝",
-      "蘇蘇"
+      "酥酥"
     ],
     "home_players": [
       "B哥",
@@ -16497,7 +16497,7 @@
       {
         "set": 1,
         "type": "01",
-        "away": "蘇蘇",
+        "away": "酥酥",
         "home": "棠棠",
         "firstAttack": "home",
         "winner": "away"
@@ -16671,7 +16671,7 @@
           "猴子",
           "老丹",
           "阿淦",
-          "蘇蘇"
+          "酥酥"
         ],
         "home": [
           "蘇ㄟ",
@@ -16688,7 +16688,7 @@
       "home": 0
     },
     "away_players": [
-      "蘇蘇",
+      "酥酥",
       "老丹",
       "小洋",
       "猴子",
@@ -18073,7 +18073,7 @@
         "set": 1,
         "type": "01",
         "away": "無名",
-        "home": "蘇蘇",
+        "home": "酥酥",
         "firstAttack": "away",
         "winner": "home"
       },
@@ -18271,7 +18271,7 @@
       "慶文"
     ],
     "home_players": [
-      "蘇蘇",
+      "酥酥",
       "老丹",
       "小耿",
       "猴子",
@@ -22331,5 +22331,902 @@
       "小胖"
     ],
     "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season4/g44.html"
+  },
+  {
+    "season": "season4",
+    "game_number": 45,
+    "date": "2025/6/24 21:00",
+    "venue": "逃生入口 Bar",
+    "away_team": "逃生入口A",
+    "home_team": "逃生入口C",
+    "away_score": 8,
+    "home_score": 13,
+    "matches": [
+      {
+        "set": 1,
+        "type": "01",
+        "away": "阿傑",
+        "home": "Lucas",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 2,
+        "type": "01",
+        "away": "小倫",
+        "home": "Jesse",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 3,
+        "type": "01",
+        "away": "Ace",
+        "home": "承翰",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 4,
+        "type": "01",
+        "away": "孟瑄",
+        "home": "乳來",
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 5,
+        "type": "01",
+        "away": [
+          "Terry",
+          "Ace",
+          "阿傑"
+        ],
+        "home": [
+          "Lucas",
+          "隼隼",
+          "承翰"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 6,
+        "type": "CR",
+        "away": "小倫",
+        "home": "乳來",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 7,
+        "type": "CR",
+        "away": "華華",
+        "home": "Jesse",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 8,
+        "type": "CR",
+        "away": "孟瑄",
+        "home": "小歪",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 9,
+        "type": "CR",
+        "away": "Terry",
+        "home": "Lucas",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 10,
+        "type": "CR",
+        "away": [
+          "禹辰",
+          "Ace",
+          "阿傑"
+        ],
+        "home": [
+          "乳來",
+          "Jesse",
+          "小歪"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 11,
+        "type": "01",
+        "away": [
+          "Terry",
+          "Ace"
+        ],
+        "home": [
+          "乳來",
+          "隼隼"
+        ],
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 12,
+        "type": "01",
+        "away": [
+          "小倫",
+          "華華"
+        ],
+        "home": [
+          "Lucas",
+          "小歪"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 13,
+        "type": "CR",
+        "away": [
+          "阿傑",
+          "禹辰"
+        ],
+        "home": [
+          "承翰",
+          "隼隼"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 14,
+        "type": "CR",
+        "away": [
+          "華華",
+          "孟瑄"
+        ],
+        "home": [
+          "乳來",
+          "Jesse"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 15,
+        "type": "01",
+        "away": [
+          "小倫",
+          "華華",
+          "孟瑄",
+          "Terry"
+        ],
+        "home": [
+          "承翰",
+          "Lucas",
+          "隼隼",
+          "小歪"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 16,
+        "type": "CR",
+        "away": [
+          "小倫",
+          "孟瑄",
+          "華華",
+          "禹辰"
+        ],
+        "home": [
+          "承翰",
+          "乳來",
+          "Jesse",
+          "隼隼"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      }
+    ],
+    "drinking_bonus": {
+      "away": 0,
+      "home": 5
+    },
+    "away_players": [
+      "阿傑",
+      "小倫",
+      "Ace",
+      "孟瑄",
+      "Terry",
+      "華華",
+      "禹辰"
+    ],
+    "home_players": [
+      "Lucas",
+      "Jesse",
+      "承翰",
+      "乳來",
+      "隼隼",
+      "小歪"
+    ],
+    "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season4/g45.html"
+  },
+  {
+    "season": "season4",
+    "game_number": 46,
+    "date": "2025/6/24 21:00",
+    "venue": "逃生入口 Bar",
+    "away_team": "一鏢開天門",
+    "home_team": "酒空組",
+    "away_score": 7,
+    "home_score": 14,
+    "matches": [
+      {
+        "set": 1,
+        "type": "01",
+        "away": "Ray",
+        "home": "慶文",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 2,
+        "type": "01",
+        "away": "飛",
+        "home": "虎哥",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 3,
+        "type": "01",
+        "away": "丹",
+        "home": "宓哥",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 4,
+        "type": "01",
+        "away": "chi",
+        "home": "阿堯",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 5,
+        "type": "01",
+        "away": [
+          "chi",
+          "丹",
+          "飛"
+        ],
+        "home": [
+          "虎哥",
+          "阿堯",
+          "小宇"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 6,
+        "type": "CR",
+        "away": "Ray",
+        "home": "阿仁",
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 7,
+        "type": "CR",
+        "away": "飛",
+        "home": "無名",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 8,
+        "type": "CR",
+        "away": "丹",
+        "home": "虎哥",
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 9,
+        "type": "CR",
+        "away": "chi",
+        "home": "阿堯",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 10,
+        "type": "CR",
+        "away": [
+          "chi",
+          "Ray",
+          "飛"
+        ],
+        "home": [
+          "虎哥",
+          "阿堯",
+          "無名"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 11,
+        "type": "01",
+        "away": [
+          "丹",
+          "Ray"
+        ],
+        "home": [
+          "阿堯",
+          "小宇"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 12,
+        "type": "01",
+        "away": [
+          "chi",
+          "飛"
+        ],
+        "home": [
+          "宓哥",
+          "虎哥"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 13,
+        "type": "CR",
+        "away": [
+          "丹",
+          "Ray"
+        ],
+        "home": [
+          "虎哥",
+          "無名"
+        ],
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 14,
+        "type": "CR",
+        "away": [
+          "chi",
+          "飛"
+        ],
+        "home": [
+          "阿堯",
+          "阿仁"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 15,
+        "type": "01",
+        "away": [
+          "飛",
+          "Ray",
+          "丹",
+          "chi"
+        ],
+        "home": [
+          "虎哥",
+          "小宇",
+          "阿堯",
+          "慶文"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 16,
+        "type": "CR",
+        "away": [
+          "飛",
+          "Ray",
+          "丹",
+          "chi"
+        ],
+        "home": [
+          "虎哥",
+          "阿堯",
+          "無名",
+          "阿仁"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      }
+    ],
+    "drinking_bonus": {
+      "away": 0,
+      "home": 5
+    },
+    "away_players": [
+      "Ray",
+      "飛",
+      "丹",
+      "chi"
+    ],
+    "home_players": [
+      "慶文",
+      "虎哥",
+      "宓哥",
+      "阿堯",
+      "小宇",
+      "阿仁",
+      "無名"
+    ],
+    "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season4/g46.html"
+  },
+  {
+    "season": "season4",
+    "game_number": 47,
+    "date": "2025/6/24 21:00",
+    "venue": "Vivi Bar",
+    "away_team": "海盜揪硬",
+    "home_team": "Vivi朝酒晚舞",
+    "away_score": 11,
+    "home_score": 10,
+    "matches": [
+      {
+        "set": 1,
+        "type": "01",
+        "away": "旭容",
+        "home": "Kelvin",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 2,
+        "type": "01",
+        "away": "小宇",
+        "home": "老丹",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 3,
+        "type": "01",
+        "away": "胖胖",
+        "home": "阿淦",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 4,
+        "type": "01",
+        "away": "卷毛",
+        "home": "阿倫",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 5,
+        "type": "01",
+        "away": [
+          "卷毛",
+          "胖胖",
+          "小偉"
+        ],
+        "home": [
+          "阿淦",
+          "老丹",
+          "阿倫"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 6,
+        "type": "CR",
+        "away": "船長",
+        "home": "老丹",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 7,
+        "type": "CR",
+        "away": "小偉",
+        "home": "小耿",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 8,
+        "type": "CR",
+        "away": "胖胖",
+        "home": "阿淦",
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 9,
+        "type": "CR",
+        "away": "卷毛",
+        "home": "Kelvin",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 10,
+        "type": "CR",
+        "away": [
+          "卷毛",
+          "胖胖",
+          "阿琪"
+        ],
+        "home": [
+          "阿淦",
+          "小耿",
+          "老丹"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 11,
+        "type": "01",
+        "away": [
+          "胖胖",
+          "阿琪"
+        ],
+        "home": [
+          "阿倫",
+          "小芬"
+        ],
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 12,
+        "type": "01",
+        "away": [
+          "船長",
+          "小8"
+        ],
+        "home": [
+          "老丹",
+          "小耿"
+        ],
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 13,
+        "type": "CR",
+        "away": [
+          "卷毛",
+          "小8"
+        ],
+        "home": [
+          "阿倫",
+          "Kelvin"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 14,
+        "type": "CR",
+        "away": [
+          "小薩",
+          "小宇"
+        ],
+        "home": [
+          "阿淦",
+          "老丹"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 15,
+        "type": "01",
+        "away": [
+          "胖胖",
+          "小宇",
+          "Louis",
+          "伊凡"
+        ],
+        "home": [
+          "阿淦",
+          "阿倫",
+          "小芬",
+          "小耿"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 16,
+        "type": "CR",
+        "away": [
+          "卷毛",
+          "小薩",
+          "Louis",
+          "旭容"
+        ],
+        "home": [
+          "阿倫",
+          "老丹",
+          "阿淦",
+          "怪頭"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      }
+    ],
+    "drinking_bonus": {
+      "away": 0,
+      "home": 5
+    },
+    "away_players": [
+      "旭容",
+      "小宇",
+      "胖胖",
+      "卷毛",
+      "小偉",
+      "船長",
+      "阿琪",
+      "小8",
+      "小薩",
+      "Louis",
+      "伊凡"
+    ],
+    "home_players": [
+      "Kelvin",
+      "老丹",
+      "阿淦",
+      "阿倫",
+      "小耿",
+      "小芬",
+      "怪頭"
+    ],
+    "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season4/g47.html"
+  },
+  {
+    "season": "season4",
+    "game_number": 48,
+    "date": "2025/6/24 21:00",
+    "venue": "酒窩海盜聯盟",
+    "away_team": "Jack",
+    "home_team": "人生揪難",
+    "away_score": 9,
+    "home_score": 12,
+    "matches": [
+      {
+        "set": 1,
+        "type": "01",
+        "away": "B哥",
+        "home": "宗燁",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 2,
+        "type": "01",
+        "away": "小虎",
+        "home": "躲躲",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 3,
+        "type": "01",
+        "away": "Stan",
+        "home": "小安",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 4,
+        "type": "01",
+        "away": "阿元",
+        "home": "大頭",
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 5,
+        "type": "01",
+        "away": [
+          "Stan",
+          "小魚",
+          "阿元"
+        ],
+        "home": [
+          "躲躲",
+          "宗燁",
+          "小姜"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 6,
+        "type": "CR",
+        "away": "小魚",
+        "home": "宗燁",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 7,
+        "type": "CR",
+        "away": "小虎",
+        "home": "大頭",
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 8,
+        "type": "CR",
+        "away": "祐祐",
+        "home": "亮亮",
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 9,
+        "type": "CR",
+        "away": "老師",
+        "home": "小傅",
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 10,
+        "type": "CR",
+        "away": [
+          "小魚",
+          "小建",
+          "阿福"
+        ],
+        "home": [
+          "阿朋",
+          "羿珩",
+          "歪歪"
+        ],
+        "firstAttack": "home",
+        "winner": "home"
+      },
+      {
+        "set": 11,
+        "type": "01",
+        "away": [
+          "Stan",
+          "阿福"
+        ],
+        "home": [
+          "小傅",
+          "亮亮"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 12,
+        "type": "01",
+        "away": [
+          "阿元",
+          "小魚"
+        ],
+        "home": [
+          "大頭",
+          "躲躲"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 13,
+        "type": "CR",
+        "away": [
+          "小建",
+          "祐祐"
+        ],
+        "home": [
+          "歪歪",
+          "小安"
+        ],
+        "firstAttack": "home",
+        "winner": "away"
+      },
+      {
+        "set": 14,
+        "type": "CR",
+        "away": [
+          "阿福",
+          "老師"
+        ],
+        "home": [
+          "羿珩",
+          "阿朋"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      },
+      {
+        "set": 15,
+        "type": "01",
+        "away": [
+          "Stan",
+          "老師",
+          "阿元",
+          "小魚"
+        ],
+        "home": [
+          "小安",
+          "亮亮",
+          "羿珩",
+          "宗燁"
+        ],
+        "firstAttack": "away",
+        "winner": "home"
+      },
+      {
+        "set": 16,
+        "type": "CR",
+        "away": [
+          "小建",
+          "祐祐",
+          "阿福",
+          "小虎"
+        ],
+        "home": [
+          "小傅",
+          "阿朋",
+          "大頭",
+          "歪歪"
+        ],
+        "firstAttack": "away",
+        "winner": "away"
+      }
+    ],
+    "drinking_bonus": {
+      "away": 0,
+      "home": 5
+    },
+    "away_players": [
+      "B哥",
+      "小虎",
+      "Stan",
+      "阿元",
+      "小魚",
+      "祐祐",
+      "老師",
+      "小建",
+      "阿福"
+    ],
+    "home_players": [
+      "宗燁",
+      "躲躲",
+      "小安",
+      "大頭",
+      "小姜",
+      "亮亮",
+      "小傅",
+      "阿朋",
+      "羿珩",
+      "歪歪"
+    ],
+    "file_path": "/Users/tsaifang-wen/Cursor/schedule/game_result/season4/g48.html"
   }
 ]

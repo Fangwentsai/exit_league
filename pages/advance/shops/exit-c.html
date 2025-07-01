@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>難找的聯賽 | 逃生入口C</title>
+    <link rel="stylesheet" href="../../../styles/index.css">
+    <link rel="stylesheet" href="../../../styles/team-detail.css">
+    <link rel="icon" href="../../../images/favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- 漢堡選單按鈕 -->
+    <div class="hamburger-btn">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </div>
+
+    <!-- 側邊欄 -->
+    <div class="sidebar">
+        <div class="sidebar-nav">
+            <div class="sidebar-btn" onclick="window.location.href='../../../index.html'">首頁</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../news.html'">聯賽公告</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../schedule.html'">每週賽程</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../rank.html'">聯賽排名</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../rule.html'">聯賽規則</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../shops.html'">參賽店家</div>
+            <div class="sidebar-btn" onclick="window.location.href='../../about.html'">關於我們</div>
+        </div>
+    </div>
+
+    <!-- 遮罩層 -->
+    <div class="overlay"></div>
+    <!-- 標題區域 -->
+    <div class="header-section">
+        <div class="container">
+            <h1 class="main-title">
+                <div class="title-container">
+                    <a href="../../../index.html" class="title-link">難找的聯賽</a>
+                </div>
+            </h1>
+        </div>
+    </div>
+
+    <!-- 內容區域 -->
+    <div class="content-container">
+        <div class="team-detail-container">
+        <!-- 隊伍信息區域 -->
+        <div class="team-info">
+            <div class="team-name-section">
+                <h1 class="team-name">逃生入口C</h1>
+            </div>
+            <div class="team-details">
+                <div class="detail-item">
+                    <span class="detail-label">🏠主場 逃生入口Exit Bar</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">飲酒強度:</span>
+                    <span class="detail-value">極高 ⭐⭐⭐⭐⭐</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 統計區域 -->
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                        <div class="stat-label">總勝場</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                        <div class="stat-label">總敗場</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">38.5%</div>
+                        <div class="stat-label">勝率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">16</div>
+                        <div class="stat-label">成員數</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SET分析區域 -->
+        <div class="analysis-section">
+            <h2>SET分析</h2>
+            
+            <!-- SET分析表格 -->
+            <div class="set-analysis-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SET</th>
+                            <th>勝率</th>
+                            <th>排行榜</th>
+                        </tr>
+                    </thead>
+                    <tbody id="setAnalysisBody">
+                        <!-- 表格內容由JavaScript動態生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../js/team-detail.js"></script>
+    <script>
+        const setTopPlayers = {
+    "1": ["隼隼", "小歪", "禹辰"],
+    "2": ["華華", "阿仁", "喇叭"],
+    "3": ["禹辰", "Ace", "隼隼"],
+    "4": ["華華", "喇叭", "禹辰"],
+    "5": ["阿仁", "Ace", "喇叭"],
+    "6": ["喇叭", "華華", "阿仁"],
+    "7": ["喇叭", "Ace", "小歪"],
+    "8": ["華華", "喇叭", "禹辰"],
+    "9": ["喇叭", "禹辰", "華華"],
+    "10": ["華華", "喇叭", "Ace"],
+    "11": ["禹辰", "阿仁", "Ace"],
+    "12": ["阿仁", "禹辰", "華華"],
+    "13": ["小歪", "隼隼", "阿仁"],
+    "14": ["禹辰", "華華", "喇叭"],
+    "15": ["小歪", "禹辰", "Ace"],
+    "16": ["喇叭", "Ace", "阿仁"],
+};
+        
+        // 初始化頁面
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTeamDetail(setTopPlayers);
+        });
+
+        // 漢堡選單功能
+        document.querySelector('.hamburger-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+        });
+
+        // 點擊遮罩關閉側邊欄
+        document.querySelector('.overlay').addEventListener('click', function() {
+            document.querySelector('.hamburger-btn').classList.remove('active');
+            document.querySelector('.sidebar').classList.remove('active');
+            this.classList.remove('active');
+        });
+    </script>
+    </div>
+</body>
+</html>

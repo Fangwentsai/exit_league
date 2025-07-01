@@ -1,0 +1,116 @@
+/* 進階數據頁面樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.banner {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.banner-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.page-subtitle {
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.team-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border-color: #667eea;
+}
+
+.team-logo {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.team-card h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.team-stats {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* 手機版適配 */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .teams-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .team-card {
+        padding: 20px;
+    }
+    
+    .team-logo {
+        font-size: 2.5rem;
+    }
+    
+    .team-card h3 {
+        font-size: 1.2rem;
+    }
+} 

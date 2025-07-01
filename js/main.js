@@ -14,7 +14,7 @@ const CONFIG = {
 };
 
 // 添加一個全局變量來控制是否顯示調試日誌
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 // 定義一個調試日誌函數
 function debugLog(...args) {
@@ -27,6 +27,35 @@ function debugLog(...args) {
 // console.log('CONFIG 對象已加載');
 // console.log('CONFIG.SEASON3:', CONFIG.SEASON3);
 // console.log('CONFIG.SEASON4:', CONFIG.SEASON4);
+
+// 頁面載入完成後自動初始化
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DOMContentLoaded 事件觸發 ===');
+    console.log('當前頁面路徑:', window.location.pathname);
+    console.log('seasonOverride:', typeof seasonOverride !== 'undefined' ? seasonOverride : '未定義');
+    
+    // 檢查是否為獨立的賽程頁面
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('schedule.html')) {
+        console.log('檢測到獨立的 schedule.html 頁面，開始載入第三屆資料');
+        // 確保 seasonOverride 已設定
+        if (typeof seasonOverride === 'undefined') {
+            window.seasonOverride = 's3';
+        }
+        // 延遲執行以確保所有腳本都已載入
+        setTimeout(() => {
+            loadScheduleData('schedule');
+        }, 500);
+    } else if (currentPath.includes('scheduleS4.html')) {
+        console.log('檢測到獨立的 scheduleS4.html 頁面，開始載入第四屆資料');
+        if (typeof seasonOverride === 'undefined') {
+            window.seasonOverride = 's4';
+        }
+        setTimeout(() => {
+            loadScheduleData('scheduleS4');
+        }, 500);
+    }
+});
 
 // 漢堡選單處理
 function setupHamburgerMenu() {
@@ -545,25 +574,29 @@ function generateMatchesHTML(matches) {
     return html;
 }
 
-function parseScheduleData(values) {
-    debugLog('開始解析 schedule 工作表數據');
+function parseScheduleData(values, season = 'SEASON4') {
+    debugLog('開始解析 schedule 工作表數據，季度:', season);
     debugLog('數據行數:', values.length);
     const result = [];
+    
     for (let i = 0; i < values.length; i++) {
         const row = values[i];
-        if (!row || row.length < 7) continue;
+        if (!row || row.length < 6) continue;
+        
+        // 統一使用 SEASON4 的格式：A=遊戲編號, B=日期, C=客場隊伍, D=客場分數, E=vs, F=主場分數, G=主場隊伍, H=比賽地點
         const gameCode = row[0];
         if (gameCode && typeof gameCode === 'string' && gameCode.startsWith('G') && row[1]) {
-            debugLog(`處理比賽: ${gameCode} - ${row[1]}`);
+            debugLog(`處理比賽 (${season}): ${gameCode} - ${row[1]}`);
+            debugLog(`${season} 解析 - C欄(客隊):`, row[2], 'D欄(客隊分數):', row[3], 'F欄(主隊分數):', row[5], 'G欄(主隊):', row[6]);
             result.push({
                 gameCode: gameCode,
                 date: row[1] || '',
-                team1: row[2] || '',
-                score1: row[3] || '',
-                vs: row[4] || 'vs',
-                score2: row[5] || '',
-                team2: row[6] || '',
-                venue: row[7] || ''
+                team1: row[2] || '',  // C欄：客場隊伍
+                score1: row[3] || '',  // D欄：客場分數
+                vs: row[4] || 'vs',    // E欄：vs
+                score2: row[5] || '',  // F欄：主場分數
+                team2: row[6] || '',   // G欄：主場隊伍
+                venue: row[7] || ''    // H欄：比賽地點
             });
         }
     }
@@ -667,7 +700,7 @@ async function loadMatches() {
         if (!jsonData.values || jsonData.values.length === 0) {
             throw new Error('Google Sheets 數據為空');
         }
-        const data = parseScheduleData(jsonData.values);
+        const data = parseScheduleData(jsonData.values, 'SEASON4');
         debugLog('解析後的比賽數據:', data);
         if (data.length === 0) {
             throw new Error('沒有有效的比賽數據');
@@ -968,27 +1001,49 @@ function updateTeamRankings(data) {
 
 // 載入賽程數據
 async function loadScheduleData(page) {
+    console.log('=== 開始載入賽程數據 ===', page);
+    console.log('當前頁面:', window.location.href);
+    console.log('seasonOverride:', typeof seasonOverride !== 'undefined' ? seasonOverride : '未定義');
     debugLog('開始載入賽程數據:', page);
     debugLog('當前頁面:', window.location.href);
     let config = null;
     
     // 檢查是否有明確指定的賽季覆蓋設定
-    if (typeof seasonOverride !== 'undefined') {
+    if (typeof seasonOverride !== 'undefined' && seasonOverride) {
         debugLog('使用明確指定的賽季:', seasonOverride);
-        if (seasonOverride === 's4') {
+        if (seasonOverride === 's4' || seasonOverride === 'SEASON4') {
             config = CONFIG.SEASON4;
-        } else if (seasonOverride === 's3') {
+        } else if (seasonOverride === 's3' || seasonOverride === 'SEASON3') {
+            config = CONFIG.SEASON3;
+        }
+    } else if (typeof window.seasonOverride !== 'undefined' && window.seasonOverride) {
+        debugLog('使用 window.seasonOverride:', window.seasonOverride);
+        if (window.seasonOverride === 's4' || window.seasonOverride === 'SEASON4') {
+            config = CONFIG.SEASON4;
+        } else if (window.seasonOverride === 's3' || window.seasonOverride === 'SEASON3') {
             config = CONFIG.SEASON3;
         }
     } else {
         // 根據頁面確定要使用的配置
         if (page === 'scheduleS4') {
+            debugLog('根據頁面名稱判斷為第四屆');
             config = CONFIG.SEASON4;
         } else if (page === 'schedule') {  // schedule.html 對應第三屆
+            debugLog('根據頁面名稱判斷為第三屆');
             config = CONFIG.SEASON3;
         } else {
-            debugLog('未知的賽程頁面:', page);
-            return;
+            // 最後嘗試根據 URL 路徑判斷
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('scheduleS4') || currentPath.includes('schedule4')) {
+                debugLog('根據 URL 路徑判斷為第四屆');
+                config = CONFIG.SEASON4;
+            } else if (currentPath.includes('schedule')) {
+                debugLog('根據 URL 路徑判斷為第三屆');
+                config = CONFIG.SEASON3;
+            } else {
+                debugLog('未知的賽程頁面:', page, '當前路徑:', currentPath);
+                return;
+            }
         }
     }
 
@@ -1022,38 +1077,38 @@ async function loadScheduleData(page) {
         const rows = data.values;
         debugLog('收到的數據行數:', rows.length);
         
-        // 跳過標題行，從第二行開始處理
-        const scheduleData = [];
-        for (let i = 1; i < rows.length; i++) {
-            const row = rows[i];
-            if (row.length < 7) continue; // 確保有足夠的欄位
-            
-            const gameNumber = row[0]; // A欄：遊戲編號
-            const dateStr = row[1];    // B欄：日期
-            const awayTeam = row[2];   // C欄：客場隊伍
-            const awayScore = row[3];  // D欄：客場分數
-            // E欄是 "vs"，跳過
-            const homeScore = row[5];  // F欄：主場分數
-            const homeTeam = row[6];   // G欄：主場隊伍
-            
-            // 跳過空行或無效數據
-            if (!gameNumber || !dateStr || !awayTeam || !homeTeam) continue;
-            
-            // 轉換日期格式 (從 "4/8" 轉為 "2025/4/8")
-            let fullDate = dateStr;
-            if (!dateStr.includes('2025')) {
-                fullDate = `2025/${dateStr}`;
+        // 使用統一的解析函數，並傳入正確的季度參數
+        const currentSeason = config === CONFIG.SEASON3 ? 'SEASON3' : 'SEASON4';
+        console.log('=== 使用的配置 ===');
+        console.log('currentSeason:', currentSeason);
+        console.log('config.SHEET_ID:', config.SHEET_ID);
+        console.log('原始資料前3行:', rows.slice(0, 3));
+        const parseResults = parseScheduleData(rows.slice(1), currentSeason); // 跳過標題行
+        console.log('解析結果前3個:', parseResults.slice(0, 3));
+        
+        // 轉換解析結果為適合表格顯示的格式
+        const scheduleData = parseResults.map(match => {
+            // 轉換日期格式 - 確保年份正確
+            let fullDate = match.date;
+            if (currentSeason === 'SEASON4' && !match.date.includes('2025')) {
+                fullDate = `2025/${match.date}`;
+            } else if (currentSeason === 'SEASON3') {
+                // SEASON3 的日期維持原樣，不加年份
+                fullDate = match.date;
             }
             
-            scheduleData.push({
-                gameNumber,
-                date: fullDate,
-                awayTeam,
-                awayScore: awayScore || '',
-                homeTeam, 
-                homeScore: homeScore || ''
-            });
-        }
+            debugLog('原始 match 資料:', match);
+            const result = {
+                gameNumber: match.gameCode,
+                date: fullDate,           // A欄：日期
+                awayTeam: match.team1,    // B欄：客隊
+                awayScore: match.score1 || '',  // C欄：客隊分數
+                homeTeam: match.team2,    // F欄：主隊
+                homeScore: match.score2 || ''   // E欄：主隊分數
+            };
+            debugLog('轉換後的 result:', result);
+            return result;
+        });
         
                  debugLog('解析的比賽數據:', scheduleData.length, '場比賽');
         
@@ -1068,8 +1123,8 @@ async function loadScheduleData(page) {
             const hasScores = match.awayScore && match.homeScore && match.awayScore !== '' && match.homeScore !== '';
             const isPastMatch = matchDate < currentDate;
             
-            // 提取遊戲編號數字部分 (G01 -> 01)
-            const gameNumber = match.gameNumber.substring(1);
+            // 提取遊戲編號數字部分 (G01 -> 01)，確保是兩位數格式
+            const gameNumber = match.gameNumber.substring(1).padStart(2, '0');
             let gameResultPath = '';
             
             // 根據配置設定正確的路徑
@@ -1088,10 +1143,21 @@ async function loadScheduleData(page) {
                 dateHtml = match.date;
             }
 
-            // 準備比分單元格的內容
+            // 準備比分單元格的內容 - C欄(客隊分數) - E欄(主隊分數)
             let scoreContent = hasScores 
-                ? `<span class="score">${match.awayScore}</span><span class="score-separator">-</span><span class="score">${match.homeScore}</span>` 
-                : '-';
+                ? `${match.awayScore} - ${match.homeScore}` 
+                : 'vs';
+
+            // 調試用：強制檢查資料
+            console.log('表格行資料:', {
+                gameNumber,
+                date: match.date,
+                awayTeam: match.awayTeam,
+                awayScore: match.awayScore,
+                homeTeam: match.homeTeam,
+                homeScore: match.homeScore,
+                scoreContent
+            });
 
             // 生成表格行
             tableContent += `
