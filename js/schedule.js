@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const rows = leagueTable.querySelectorAll('tbody tr');
         rows.forEach(row => {
             if (row.cells.length >= 4) {
-                const homeTeam = row.cells[1].textContent; // 主隊在第2列
-                const awayTeam = row.cells[5].textContent; // 客隊在第6列
+                const awayTeam = row.cells[1].textContent; // 客隊在第2列
+                const homeTeam = row.cells[3].textContent; // 主隊在第4列
                 
                 if (selectedTeams.includes(homeTeam) || selectedTeams.includes(awayTeam)) {
                     row.style.display = '';
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 處理數據
             if (!data || !data.values || data.values.length === 0) {
                 console.error('沒有數據');
-                leagueTable.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">沒有數據</td></tr>';
+                leagueTable.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">沒有數據</td></tr>';
                 return;
             }
             
@@ -223,8 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 清空表格
             leagueTable.innerHTML = '';
             
-            // 定義固定的表頭 (移除結果欄)
-            const headers = ['日期/場次', '客隊', '客隊得分', '', '主隊得分', '主隊'];
+            // 定義固定的表頭
+            const headers = ['日期', '客隊', '比分', '主隊'];
             console.log('使用固定表頭:', headers);
             
             // 創建表頭
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     continue;
                 }
                 
-                // 跳過長度不足的行
+                // 跳過長度不足的行 (至少需要A,B,C,D,E,F欄)
                 if (rowData.length < 6) {
                     console.log(`跳過行 ${i}: 數據不完整`, rowData);
                     continue;
@@ -303,36 +303,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 dateCell.appendChild(dateLink);
                 row.appendChild(dateCell);
                 
-                // 添加主隊
-                const homeTeamCell = document.createElement('td');
-                homeTeamCell.className = 'team-cell';
-                homeTeamCell.textContent = rowData[1] || '';
-                row.appendChild(homeTeamCell);
-                
-                // 添加主隊得分
-                const homeScoreCell = document.createElement('td');
-                homeScoreCell.className = 'score-cell';
-                homeScoreCell.textContent = rowData[2] || '';
-                row.appendChild(homeScoreCell);
-                
-                // 添加 vs
-                const vsCell = document.createElement('td');
-                vsCell.className = 'vs-cell';
-                vsCell.textContent = rowData[3] || 'vs';
-                vsCell.style.textAlign = 'center';
-                row.appendChild(vsCell);
-                
-                // 添加客隊得分
-                const awayScoreCell = document.createElement('td');
-                awayScoreCell.className = 'score-cell';
-                awayScoreCell.textContent = rowData[4] || '';
-                row.appendChild(awayScoreCell);
-                
-                // 添加客隊
+                // 添加客隊（B欄）
                 const awayTeamCell = document.createElement('td');
                 awayTeamCell.className = 'team-cell';
-                awayTeamCell.textContent = rowData[5] || '';
+                awayTeamCell.textContent = rowData[1] || '';
                 row.appendChild(awayTeamCell);
+                
+                // 添加比分（C欄客隊分數 - E欄主隊分數）
+                const scoreCell = document.createElement('td');
+                scoreCell.className = 'score-cell';
+                const awayScore = rowData[2] || '';
+                const homeScore = rowData[4] || '';
+                scoreCell.textContent = (awayScore && homeScore) ? `${awayScore} - ${homeScore}` : 'vs';
+                scoreCell.style.textAlign = 'center';
+                row.appendChild(scoreCell);
+                
+                // 添加主隊（F欄）
+                const homeTeamCell = document.createElement('td');
+                homeTeamCell.className = 'team-cell';
+                homeTeamCell.textContent = rowData[5] || '';
+                row.appendChild(homeTeamCell);
                 
                 tbody.appendChild(row);
                 rowCount++;
@@ -389,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
             leagueTable.innerHTML = '';
             const errorRow = document.createElement('tr');
             const errorCell = document.createElement('td');
-            errorCell.colSpan = 6; // 修改為6列（移除結果欄）
+            errorCell.colSpan = 4; // 修改為4列
             errorCell.textContent = `獲取數據時出錯: ${error.message}`;
             errorCell.style.color = 'red';
             errorCell.style.padding = '20px';

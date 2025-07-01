@@ -1,0 +1,878 @@
+/* 隊伍詳細頁面樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 確保主頁樣式不被覆蓋 */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    color: #333;
+}
+
+.team-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 0;
+    margin-top: 60px; /* 為固定header留出空間 */
+}
+
+/* 上方30% - 隊伍簡介 */
+.team-header {
+    height: auto;
+    min-height: 20vh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-info {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    margin: 0;
+}
+
+.team-name-section {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.team-details {
+    width: 100%;
+    text-align: center;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.detail-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #333;
+    font-weight: bold;
+}
+
+.team-logo {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.team-detail-container .team-name {
+    font-size: 2.2rem !important;
+    color: #333 !important;
+    margin-bottom: 8px;
+    font-weight: bold !important;
+    text-align: center !important;
+    width: 100%;
+}
+
+.team-venue {
+    text-align: center;
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.team-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.meta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 200px;
+}
+
+.meta-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.meta-value {
+    color: #333;
+    font-weight: bold;
+    background: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+/* 下方75% - 進階數據 */
+.stats-section {
+    flex: 1;
+    background: white;
+    width: 100%;
+    margin: 0;
+    border-radius: 0 0 20px 20px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* 分頁籤 */
+.tabs {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    font-weight: bold;
+}
+
+.tab-btn:hover {
+    color: #667eea;
+}
+
+/* 分頁內容 */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 基本統計卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stat-card {
+    background: #E85D72;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(232, 93, 114, 0.3);
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* SET分析 */
+.analysis-section {
+    margin-top: 30px;
+}
+
+.analysis-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.set-analysis h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.set-analysis-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.chart-container {
+    height: 300px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.set-stats-table, .set-analysis-table {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 0;
+}
+
+.set-stats-table table, .set-analysis-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.set-stats-table th,
+.set-stats-table td,
+.set-analysis-table th,
+.set-analysis-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.95rem;
+}
+
+.set-stats-table th:first-child,
+.set-stats-table td:first-child,
+.set-analysis-table th:first-child,
+.set-analysis-table td:first-child {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.set-stats-table th,
+.set-analysis-table th {
+    background: #CC3F54;
+    color: white;
+    font-weight: bold;
+}
+
+.set-stats-table tr:hover,
+.set-analysis-table tr:hover {
+    background: rgba(204, 63, 84, 0.1);
+}
+
+.coming-soon {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 50px;
+    font-size: 1.1rem;
+}
+
+/* 手機版適配 */
+@media screen and (max-width: 768px) {
+    .team-detail-container {
+        margin: 0;
+        padding: 80px 15px 15px 15px;
+    }
+    
+    .team-header {
+        height: auto;
+        min-height: 20vh;
+        padding: 10px;
+    }
+    
+    .team-info {
+        padding: 20px;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .team-detail-container .team-name {
+        font-size: 1.8rem !important;
+        margin-bottom: 6px;
+    }
+    
+    .team-venue {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+    
+    .meta-item {
+        min-width: 180px;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .stats-section {
+        margin: 0;
+        padding: 20px;
+        border-radius: 0 0 15px 15px;
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        max-width: 100%;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        min-height: 85px;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+    }
+    
+    .chart-container {
+        height: 250px;
+        padding: 15px;
+    }
+    
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* 375px寬度優化 */
+@media screen and (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .team-info {
+        padding: 15px;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .team-detail-container .team-name {
+        font-size: 1.6rem !important;
+        margin-bottom: 5px;
+    }
+    
+    .team-venue {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+    
+    .meta-item {
+        min-width: 160px;
+    }
+    
+    .stats-section {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    .stat-card {
+        padding: 10px 6px;
+        min-height: 75px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .stat-number {
+        font-size: 1.4rem;
+        margin-bottom: 2px;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+        line-height: 1.1;
+    }
+}
+
+/* 更小螢幕優化 */
+@media screen and (max-width: 400px) {
+    .stats-grid {
+        gap: 6px;
+    }
+    
+    .stat-card {
+        padding: 8px 5px;
+        min-height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .stat-number {
+        font-size: 1.3rem;
+        margin-bottom: 2px;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        line-height: 1;
+    }
+}
+
+/* 極小螢幕適配 (320px以下) */
+@media screen and (max-width: 320px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+    
+    .stat-card {
+        padding: 8px 4px;
+        min-height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        line-height: 1;
+    }
+}
+
+/* SET資訊樣式 */
+.set-info {
+    text-align: center;
+}
+
+.set-number {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.set-type {
+    font-size: 0.75rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* 長條圖樣式 */
+.bar-cell {
+    width: 150px;
+    padding: 8px 12px !important;
+}
+
+.win-rate-display {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.win-rate-bar {
+    background: #e9ecef;
+    border-radius: 10px;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    transition: width 0.5s ease;
+    min-width: 30px;
+}
+
+/* TOP3選手樣式 */
+.top-players-cell {
+    width: 180px;
+    padding: 8px 12px !important;
+}
+
+.top-players {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.top-player {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    padding: 1px 0;
+}
+
+.player-name {
+    font-weight: bold;
+    color: #333;
+    min-width: 30px;
+    font-size: 0.85rem;
+}
+
+.player-rate {
+    color: #666;
+    font-size: 0.75rem;
+    margin-left: auto;
+}
+
+.no-data {
+    color: #999;
+    font-style: italic;
+    font-size: 0.75rem;
+}
+
+.bar-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    text-align: center;
+    width: 100%;
+    z-index: 3;
+}
+
+/* 手機版長條圖適配 */
+@media screen and (max-width: 768px) {
+    .bar-cell {
+        width: 120px;
+    }
+    
+
+    
+    .win-rate-bar {
+        height: 18px;
+    }
+    
+    .bar-text {
+        font-size: 0.7rem;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        text-align: center;
+        width: 100%;
+        z-index: 3;
+    }
+    
+    .set-stats-table {
+        font-size: 0.9rem;
+    }
+    
+    .set-type {
+        font-size: 0.7rem;
+    }
+    
+    .top-players-cell {
+        width: 150px;
+    }
+    
+    .top-player {
+        font-size: 0.7rem;
+    }
+    
+    .player-name {
+        min-width: 25px;
+        font-size: 0.75rem;
+    }
+    
+    .player-rate {
+        font-size: 0.65rem;
+    }
+}
+
+/* 390px寬度優化 */
+@media screen and (max-width: 480px) {
+    .set-stats-table {
+        padding: 8px;
+    }
+    
+    .set-stats-table th,
+    .set-stats-table td {
+        padding: 8px 4px;
+        font-size: 0.9rem;
+    }
+    
+    .bar-cell {
+        width: 100px;
+    }
+    
+    .win-rate-display {
+        gap: 2px;
+    }
+    
+    .win-rate-bar {
+        height: 14px;
+    }
+    
+    .bar-text {
+        font-size: 0.75rem;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+        z-index: 3;
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+    
+    .top-players-cell {
+        width: 110px;
+    }
+    
+    .top-player {
+        font-size: 0.65rem;
+        gap: 2px;
+    }
+    
+    .player-name {
+        min-width: 18px;
+        font-size: 0.8rem;
+    }
+    
+    .player-rate {
+        font-size: 0.7rem;
+    }
+    
+    .set-info {
+        padding: 2px;
+    }
+    
+    .set-number {
+        font-size: 0.85rem;
+        margin-bottom: 1px;
+    }
+    
+    .set-type {
+        font-size: 0.7rem;
+    }
+}
+
+/* 390px專門優化 */
+@media screen and (max-width: 410px) {
+    .set-stats-table {
+        padding: 6px;
+    }
+    
+    .bar-cell {
+        width: 90px;
+    }
+    
+    .top-players-cell {
+        width: 100px;
+    }
+}
+
+/* 更小螢幕優化 */
+@media screen and (max-width: 380px) {
+    .set-stats-table {
+        padding: 4px;
+    }
+    
+    .set-stats-table th,
+    .set-stats-table td {
+        padding: 6px 3px;
+        font-size: 0.85rem;
+    }
+    
+    .bar-cell {
+        width: 80px;
+    }
+    
+    .top-players-cell {
+        width: 85px;
+    }
+    
+    .top-player {
+        font-size: 0.6rem;
+    }
+    
+    .player-name {
+        min-width: 15px;
+        font-size: 0.7rem;
+    }
+    
+    .player-rate {
+        font-size: 0.6rem;
+    }
+}
+
+/* SET分析表格樣式 */
+.set-analysis-table table,
+.set-stats-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.set-analysis-table th,
+.set-stats-table th,
+.set-analysis-table td,
+.set-stats-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.set-analysis-table th,
+.set-stats-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+/* 統計欄位樣式 */
+.stat-cell {
+    width: 120px;
+    text-align: center !important;
+}
+
+.stat-numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+}
+
+.stat-line {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* SET信息樣式 */
+.set-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.set-number {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+.set-type {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.2;
+}
+
+/* 長條圖樣式 */
+.bar-cell {
+    width: 200px;
+    padding: 8px !important;
+}
+
+.win-rate-display {
+    width: 100%;
+}
+
+.win-rate-bar {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: 20px;
+}
+
+.bar-text {
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+/* 排行榜前三名樣式 */
+.top-players-cell {
+    width: 180px;
+    padding: 8px !important;
+}
+
+.top-players {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.top-player {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 2px 0;
+}
+
+.medal {
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+}
+
+.player-name {
+    color: #333;
+    font-weight: 500;
+}
+
+.no-data {
+    color: #999;
+    font-style: italic;
+    font-size: 11px;
+    text-align: center;
+}

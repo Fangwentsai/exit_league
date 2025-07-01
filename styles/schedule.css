@@ -904,7 +904,7 @@ tr:has(.highlight-team) {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 999999;
     opacity: 0;
     transition: opacity 0.3s ease;
     backdrop-filter: blur(2px);
@@ -956,7 +956,7 @@ tr:has(.highlight-team) {
     cursor: pointer;
     font-size: 20px;
     line-height: 1;
-    z-index: 1001;
+    z-index: 9999999;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -980,17 +980,6 @@ tr:has(.highlight-team) {
 @media (hover: none) {
     tr.clickable-match:active {
         background-color: #ffeeef;
-    }
-    
-    tr.clickable-match:after {
-        content: "點擊查看";
-        right: 5px;
-        font-size: 10px;
-        opacity: 0.7;
-        background-color: #dc3545;
-        color: white;
-        padding: 2px 5px;
-        border-radius: 10px;
     }
 }
 
@@ -1053,26 +1042,7 @@ tr.clickable-match:active {
     transition: all 0.1s ease;
 }
 
-/* 改進可點擊比賽的指示符 */
-tr.clickable-match:after {
-    content: "查看";  /* 改用文字而非符號，更明確 */
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #dc3545;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    font-size: 12px;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 2px 4px;
-    border-radius: 2px;
-}
-
-tr.clickable-match:hover:after {
-    opacity: 0.9;
-    transform: translateY(-50%) translateX(-2px); /* 懸停時向左移動一點 */
-}
+/* 移除可點擊比賽的指示符文字 */
 
 /* 模態框相關樣式 */
 .match-link {

@@ -1,31 +1,81 @@
 {
-  "阿潤": {
-    "name": "阿潤",
-    "total_games": 21,
-    "total_wins": 13,
-    "o1_games": 14,
-    "o1_wins": 7,
-    "cr_games": 7,
-    "cr_wins": 6,
-    "first_attacks": 9,
+  "凱哥": {
+    "name": "凱哥",
+    "total_games": 56,
+    "total_wins": 27,
+    "o1_games": 27,
+    "o1_wins": 10,
+    "cr_games": 29,
+    "cr_wins": 17,
+    "first_attacks": 22,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "醉販"
+    ]
+  },
+  "Ray": {
+    "name": "Ray",
+    "total_games": 92,
+    "total_wins": 38,
+    "o1_games": 45,
+    "o1_wins": 17,
+    "cr_games": 47,
+    "cr_wins": 21,
+    "first_attacks": 39,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "一鏢開天門",
-      "醉販"
+      "醉販",
+      "一鏢開天門"
     ]
   },
-  "小虎": {
-    "name": "小虎",
-    "total_games": 44,
-    "total_wins": 15,
-    "o1_games": 22,
-    "o1_wins": 8,
-    "cr_games": 22,
-    "cr_wins": 7,
-    "first_attacks": 29,
+  "阿倫": {
+    "name": "阿倫",
+    "total_games": 89,
+    "total_wins": 58,
+    "o1_games": 37,
+    "o1_wins": 22,
+    "cr_games": 52,
+    "cr_wins": 36,
+    "first_attacks": 37,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "瘦子": {
+    "name": "瘦子",
+    "total_games": 107,
+    "total_wins": 77,
+    "o1_games": 55,
+    "o1_wins": 40,
+    "cr_games": 52,
+    "cr_wins": 37,
+    "first_attacks": 59,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "小胖": {
+    "name": "小胖",
+    "total_games": 30,
+    "total_wins": 7,
+    "o1_games": 13,
+    "o1_wins": 5,
+    "cr_games": 17,
+    "cr_wins": 2,
+    "first_attacks": 17,
     "seasons": [
       "season3",
       "season4"
@@ -34,74 +84,38 @@
       "Jack"
     ]
   },
-  "宏哥": {
-    "name": "宏哥",
-    "total_games": 27,
-    "total_wins": 14,
-    "o1_games": 21,
-    "o1_wins": 11,
-    "cr_games": 6,
-    "cr_wins": 3,
-    "first_attacks": 5,
+  "B哥": {
+    "name": "B哥",
+    "total_games": 66,
+    "total_wins": 20,
+    "o1_games": 39,
+    "o1_wins": 14,
+    "cr_games": 27,
+    "cr_wins": 6,
+    "first_attacks": 33,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "一鏢開天門",
-      "醉販"
+      "Jack"
     ]
   },
-  "上銘": {
-    "name": "上銘",
-    "total_games": 10,
-    "total_wins": 2,
-    "o1_games": 6,
-    "o1_wins": 1,
-    "cr_games": 4,
-    "cr_wins": 1,
-    "first_attacks": 7,
+  "Terry": {
+    "name": "Terry",
+    "total_games": 91,
+    "total_wins": 46,
+    "o1_games": 54,
+    "o1_wins": 26,
+    "cr_games": 37,
+    "cr_wins": 20,
+    "first_attacks": 44,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "人生揪難"
-    ]
-  },
-  "慶文": {
-    "name": "慶文",
-    "total_games": 73,
-    "total_wins": 32,
-    "o1_games": 45,
-    "o1_wins": 21,
-    "cr_games": 28,
-    "cr_wins": 11,
-    "first_attacks": 39,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難"
-    ]
-  },
-  "小惠": {
-    "name": "小惠",
-    "total_games": 7,
-    "total_wins": 1,
-    "o1_games": 4,
-    "o1_wins": 1,
-    "cr_games": 3,
-    "cr_wins": 0,
-    "first_attacks": 3,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組"
+      "逃生入口A"
     ]
   },
   "發哥": {
@@ -121,47 +135,32 @@
       "Jack"
     ]
   },
-  "承翰": {
-    "name": "承翰",
-    "total_games": 37,
-    "total_wins": 14,
-    "o1_games": 17,
-    "o1_wins": 5,
-    "cr_games": 20,
-    "cr_wins": 9,
-    "first_attacks": 24,
+  "小耿": {
+    "name": "小耿",
+    "total_games": 21,
+    "total_wins": 12,
+    "o1_games": 8,
+    "o1_wins": 6,
+    "cr_games": 13,
+    "cr_wins": 6,
+    "first_attacks": 10,
     "seasons": [
+      "season3",
       "season4"
     ],
     "teams": [
-      "逃生入口C"
+      "Vivi朝酒晚舞"
     ]
   },
-  "小萱": {
-    "name": "小萱",
-    "total_games": 1,
-    "total_wins": 0,
-    "o1_games": 1,
-    "o1_wins": 0,
+  "栗子": {
+    "name": "栗子",
+    "total_games": 2,
+    "total_wins": 1,
+    "o1_games": 2,
+    "o1_wins": 1,
     "cr_games": 0,
     "cr_wins": 0,
     "first_attacks": 1,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "邱昱": {
-    "name": "邱昱",
-    "total_games": 39,
-    "total_wins": 19,
-    "o1_games": 18,
-    "o1_wins": 9,
-    "cr_games": 21,
-    "cr_wins": 10,
-    "first_attacks": 17,
     "seasons": [
       "season4"
     ],
@@ -169,67 +168,32 @@
       "人生揪難"
     ]
   },
-  "阿仁": {
-    "name": "阿仁",
-    "total_games": 114,
-    "total_wins": 47,
-    "o1_games": 49,
-    "o1_wins": 19,
-    "cr_games": 65,
-    "cr_wins": 28,
-    "first_attacks": 59,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "逃生入口C"
-    ]
-  },
-  "家綸": {
-    "name": "家綸",
-    "total_games": 26,
-    "total_wins": 12,
-    "o1_games": 12,
-    "o1_wins": 6,
-    "cr_games": 14,
-    "cr_wins": 6,
-    "first_attacks": 14,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "醉販"
-    ]
-  },
-  "阿樂": {
-    "name": "阿樂",
-    "total_games": 75,
-    "total_wins": 36,
-    "o1_games": 34,
-    "o1_wins": 14,
-    "cr_games": 41,
-    "cr_wins": 22,
-    "first_attacks": 38,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "小8": {
-    "name": "小8",
-    "total_games": 32,
-    "total_wins": 17,
+  "羿珩": {
+    "name": "羿珩",
+    "total_games": 80,
+    "total_wins": 26,
     "o1_games": 23,
-    "o1_wins": 14,
-    "cr_games": 9,
-    "cr_wins": 3,
-    "first_attacks": 19,
+    "o1_wins": 8,
+    "cr_games": 57,
+    "cr_wins": 18,
+    "first_attacks": 44,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "伊帆": {
+    "name": "伊帆",
+    "total_games": 2,
+    "total_wins": 1,
+    "o1_games": 1,
+    "o1_wins": 1,
+    "cr_games": 1,
+    "cr_wins": 0,
+    "first_attacks": 1,
     "seasons": [
       "season4"
     ],
@@ -237,205 +201,31 @@
       "海盜揪硬"
     ]
   },
-  "小飛": {
-    "name": "小飛",
-    "total_games": 166,
-    "total_wins": 95,
-    "o1_games": 85,
-    "o1_wins": 47,
-    "cr_games": 81,
-    "cr_wins": 48,
-    "first_attacks": 58,
+  "亮亮": {
+    "name": "亮亮",
+    "total_games": 76,
+    "total_wins": 19,
+    "o1_games": 21,
+    "o1_wins": 7,
+    "cr_games": 55,
+    "cr_wins": 12,
+    "first_attacks": 31,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "一鏢開天門",
-      "醉販"
+      "人生揪難"
     ]
   },
-  "小耿": {
-    "name": "小耿",
-    "total_games": 17,
-    "total_wins": 11,
-    "o1_games": 6,
-    "o1_wins": 5,
-    "cr_games": 11,
-    "cr_wins": 6,
-    "first_attacks": 9,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "山豬": {
-    "name": "山豬",
-    "total_games": 24,
-    "total_wins": 11,
-    "o1_games": 12,
-    "o1_wins": 6,
-    "cr_games": 12,
-    "cr_wins": 5,
-    "first_attacks": 10,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門",
-      "醉販"
-    ]
-  },
-  "Ace": {
-    "name": "Ace",
-    "total_games": 97,
-    "total_wins": 42,
-    "o1_games": 45,
-    "o1_wins": 17,
-    "cr_games": 52,
-    "cr_wins": 25,
-    "first_attacks": 54,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "石頭": {
-    "name": "石頭",
-    "total_games": 7,
-    "total_wins": 3,
-    "o1_games": 5,
-    "o1_wins": 2,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
-    ]
-  },
-  "大毛": {
-    "name": "大毛",
-    "total_games": 6,
-    "total_wins": 2,
-    "o1_games": 1,
-    "o1_wins": 1,
-    "cr_games": 5,
-    "cr_wins": 1,
-    "first_attacks": 2,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "阿元": {
-    "name": "阿元",
-    "total_games": 37,
+  "躲躲": {
+    "name": "躲躲",
+    "total_games": 25,
     "total_wins": 14,
-    "o1_games": 23,
-    "o1_wins": 9,
-    "cr_games": 14,
-    "cr_wins": 5,
-    "first_attacks": 21,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "小羊": {
-    "name": "小羊",
-    "total_games": 5,
-    "total_wins": 4,
-    "o1_games": 4,
-    "o1_wins": 3,
-    "cr_games": 1,
-    "cr_wins": 1,
-    "first_attacks": 0,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "阿誠": {
-    "name": "阿誠",
-    "total_games": 34,
-    "total_wins": 8,
-    "o1_games": 13,
-    "o1_wins": 3,
-    "cr_games": 21,
-    "cr_wins": 5,
-    "first_attacks": 21,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "Ray": {
-    "name": "Ray",
-    "total_games": 85,
-    "total_wins": 36,
-    "o1_games": 42,
-    "o1_wins": 16,
-    "cr_games": 43,
-    "cr_wins": 20,
-    "first_attacks": 36,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門",
-      "醉販"
-    ]
-  },
-  "喵喵": {
-    "name": "喵喵",
-    "total_games": 1,
-    "total_wins": 0,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 1,
-    "cr_wins": 0,
-    "first_attacks": 1,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "大頭": {
-    "name": "大頭",
-    "total_games": 22,
-    "total_wins": 12,
-    "o1_games": 8,
-    "o1_wins": 5,
-    "cr_games": 14,
-    "cr_wins": 7,
+    "o1_games": 20,
+    "o1_wins": 11,
+    "cr_games": 5,
+    "cr_wins": 3,
     "first_attacks": 11,
     "seasons": [
       "season4"
@@ -444,120 +234,21 @@
       "人生揪難"
     ]
   },
-  "威廉": {
-    "name": "威廉",
-    "total_games": 9,
-    "total_wins": 3,
-    "o1_games": 5,
-    "o1_wins": 2,
-    "cr_games": 4,
-    "cr_wins": 1,
-    "first_attacks": 4,
+  "蘇ㄟ": {
+    "name": "蘇ㄟ",
+    "total_games": 116,
+    "total_wins": 76,
+    "o1_games": 58,
+    "o1_wins": 38,
+    "cr_games": 58,
+    "cr_wins": 38,
+    "first_attacks": 56,
     "seasons": [
       "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "羿珩": {
-    "name": "羿珩",
-    "total_games": 77,
-    "total_wins": 24,
-    "o1_games": 22,
-    "o1_wins": 7,
-    "cr_games": 55,
-    "cr_wins": 17,
-    "first_attacks": 43,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "人生揪難",
-      "人生揪硬"
-    ]
-  },
-  "阿鄧": {
-    "name": "阿鄧",
-    "total_games": 27,
-    "total_wins": 11,
-    "o1_games": 6,
-    "o1_wins": 1,
-    "cr_games": 21,
-    "cr_wins": 10,
-    "first_attacks": 14,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "醉販"
-    ]
-  },
-  "蘇聖軒": {
-    "name": "蘇聖軒",
-    "total_games": 5,
-    "total_wins": 2,
-    "o1_games": 2,
-    "o1_wins": 1,
-    "cr_games": 3,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
       "season4"
     ],
     "teams": [
       "海盜揪硬"
-    ]
-  },
-  "阿雞": {
-    "name": "阿雞",
-    "total_games": 5,
-    "total_wins": 4,
-    "o1_games": 2,
-    "o1_wins": 2,
-    "cr_games": 3,
-    "cr_wins": 2,
-    "first_attacks": 1,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "老師": {
-    "name": "老師",
-    "total_games": 99,
-    "total_wins": 48,
-    "o1_games": 54,
-    "o1_wins": 25,
-    "cr_games": 45,
-    "cr_wins": 23,
-    "first_attacks": 61,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "偶素小東": {
-    "name": "偶素小東",
-    "total_games": 12,
-    "total_wins": 5,
-    "o1_games": 3,
-    "o1_wins": 3,
-    "cr_games": 9,
-    "cr_wins": 2,
-    "first_attacks": 6,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
     ]
   },
   "Eric": {
@@ -578,321 +269,15 @@
       "逃生入口C"
     ]
   },
-  "Terry": {
-    "name": "Terry",
-    "total_games": 87,
-    "total_wins": 44,
-    "o1_games": 51,
-    "o1_wins": 25,
-    "cr_games": 36,
-    "cr_wins": 19,
-    "first_attacks": 43,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "阿基": {
-    "name": "阿基",
-    "total_games": 18,
-    "total_wins": 14,
-    "o1_games": 8,
-    "o1_wins": 5,
-    "cr_games": 10,
-    "cr_wins": 9,
-    "first_attacks": 10,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "小姜": {
-    "name": "小姜",
-    "total_games": 77,
-    "total_wins": 20,
-    "o1_games": 21,
-    "o1_wins": 9,
-    "cr_games": 56,
-    "cr_wins": 11,
-    "first_attacks": 33,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難",
-      "人生揪硬"
-    ]
-  },
-  "B哥": {
-    "name": "B哥",
-    "total_games": 65,
-    "total_wins": 19,
-    "o1_games": 38,
-    "o1_wins": 13,
-    "cr_games": 27,
-    "cr_wins": 6,
-    "first_attacks": 32,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "凡": {
-    "name": "凡",
-    "total_games": 1,
-    "total_wins": 0,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 0,
-    "cr_wins": 0,
-    "first_attacks": 0,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "阿鴻": {
-    "name": "阿鴻",
-    "total_games": 31,
-    "total_wins": 20,
-    "o1_games": 15,
-    "o1_wins": 11,
-    "cr_games": 16,
-    "cr_wins": 9,
-    "first_attacks": 15,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "酒空組"
-    ]
-  },
-  "阿冠": {
-    "name": "阿冠",
-    "total_games": 61,
-    "total_wins": 28,
-    "o1_games": 29,
-    "o1_wins": 16,
-    "cr_games": 32,
-    "cr_wins": 12,
-    "first_attacks": 23,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門",
-      "醉販"
-    ]
-  },
-  "宗燁": {
-    "name": "宗燁",
-    "total_games": 85,
-    "total_wins": 30,
-    "o1_games": 64,
-    "o1_wins": 25,
-    "cr_games": 21,
-    "cr_wins": 5,
-    "first_attacks": 45,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "人生揪難",
-      "人生揪硬"
-    ]
-  },
-  "加成": {
-    "name": "加成",
-    "total_games": 21,
-    "total_wins": 8,
-    "o1_games": 11,
-    "o1_wins": 4,
-    "cr_games": 10,
-    "cr_wins": 4,
-    "first_attacks": 7,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "祥哥": {
-    "name": "祥哥",
-    "total_games": 7,
-    "total_wins": 0,
-    "o1_games": 3,
-    "o1_wins": 0,
-    "cr_games": 4,
-    "cr_wins": 0,
-    "first_attacks": 3,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "酒空組"
-    ]
-  },
-  "芝芝": {
-    "name": "芝芝",
-    "total_games": 12,
-    "total_wins": 7,
-    "o1_games": 10,
-    "o1_wins": 5,
-    "cr_games": 2,
-    "cr_wins": 2,
-    "first_attacks": 7,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "柯柯": {
-    "name": "柯柯",
-    "total_games": 10,
-    "total_wins": 5,
-    "o1_games": 8,
-    "o1_wins": 3,
-    "cr_games": 2,
-    "cr_wins": 2,
-    "first_attacks": 7,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "喇叭": {
-    "name": "喇叭",
-    "total_games": 62,
-    "total_wins": 33,
-    "o1_games": 31,
-    "o1_wins": 12,
-    "cr_games": 31,
-    "cr_wins": 21,
-    "first_attacks": 29,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "美美": {
-    "name": "美美",
-    "total_games": 3,
-    "total_wins": 3,
-    "o1_games": 1,
-    "o1_wins": 1,
-    "cr_games": 2,
-    "cr_wins": 2,
-    "first_attacks": 3,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "飛": {
-    "name": "飛",
-    "total_games": 8,
-    "total_wins": 4,
-    "o1_games": 4,
-    "o1_wins": 2,
-    "cr_games": 4,
-    "cr_wins": 2,
-    "first_attacks": 6,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門"
-    ]
-  },
-  "范姜姐": {
-    "name": "范姜姐",
-    "total_games": 19,
-    "total_wins": 11,
-    "o1_games": 19,
-    "o1_wins": 11,
-    "cr_games": 0,
-    "cr_wins": 0,
-    "first_attacks": 10,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組"
-    ]
-  },
-  "蘇ㄟ": {
-    "name": "蘇ㄟ",
-    "total_games": 116,
-    "total_wins": 76,
-    "o1_games": 58,
-    "o1_wins": 38,
-    "cr_games": 58,
-    "cr_wins": 38,
-    "first_attacks": 56,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "歪歪": {
-    "name": "歪歪",
-    "total_games": 75,
-    "total_wins": 30,
-    "o1_games": 46,
-    "o1_wins": 19,
-    "cr_games": 29,
-    "cr_wins": 11,
-    "first_attacks": 39,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難",
-      "人生揪硬"
-    ]
-  },
   "猴子": {
     "name": "猴子",
-    "total_games": 142,
-    "total_wins": 96,
-    "o1_games": 72,
-    "o1_wins": 44,
-    "cr_games": 70,
-    "cr_wins": 52,
-    "first_attacks": 71,
+    "total_games": 151,
+    "total_wins": 102,
+    "o1_games": 79,
+    "o1_wins": 48,
+    "cr_games": 72,
+    "cr_wins": 54,
+    "first_attacks": 76,
     "seasons": [
       "season3",
       "season4"
@@ -901,310 +286,121 @@
       "Vivi朝酒晚舞"
     ]
   },
-  "阿堯": {
-    "name": "阿堯",
-    "total_games": 123,
-    "total_wins": 80,
-    "o1_games": 61,
-    "o1_wins": 36,
-    "cr_games": 62,
-    "cr_wins": 44,
-    "first_attacks": 63,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難"
-    ]
-  },
-  "阿祺": {
-    "name": "阿祺",
-    "total_games": 30,
-    "total_wins": 24,
-    "o1_games": 16,
-    "o1_wins": 13,
-    "cr_games": 14,
-    "cr_wins": 11,
-    "first_attacks": 8,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "海盜揪硬",
-      "海盜揪難"
-    ]
-  },
-  "伊帆": {
-    "name": "伊帆",
-    "total_games": 2,
-    "total_wins": 1,
-    "o1_games": 1,
-    "o1_wins": 1,
-    "cr_games": 1,
-    "cr_wins": 0,
-    "first_attacks": 1,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "栗子": {
-    "name": "栗子",
-    "total_games": 2,
-    "total_wins": 1,
-    "o1_games": 2,
-    "o1_wins": 1,
-    "cr_games": 0,
-    "cr_wins": 0,
-    "first_attacks": 1,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "小歪": {
-    "name": "小歪",
-    "total_games": 56,
-    "total_wins": 17,
-    "o1_games": 31,
-    "o1_wins": 9,
-    "cr_games": 25,
-    "cr_wins": 8,
-    "first_attacks": 31,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
-    ]
-  },
-  "村": {
-    "name": "村",
-    "total_games": 1,
-    "total_wins": 1,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 1,
-    "cr_wins": 1,
-    "first_attacks": 1,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "少bro": {
-    "name": "少bro",
-    "total_games": 6,
-    "total_wins": 3,
-    "o1_games": 2,
-    "o1_wins": 2,
-    "cr_games": 4,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
-    ]
-  },
-  "小魚": {
-    "name": "小魚",
-    "total_games": 111,
-    "total_wins": 52,
-    "o1_games": 58,
-    "o1_wins": 27,
-    "cr_games": 53,
-    "cr_wins": 25,
-    "first_attacks": 59,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "Jack",
-      "人生揪難",
-      "人生揪硬"
-    ]
-  },
-  "培熹": {
-    "name": "培熹",
-    "total_games": 2,
-    "total_wins": 1,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 0,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "阿朋": {
-    "name": "阿朋",
-    "total_games": 35,
-    "total_wins": 9,
-    "o1_games": 20,
-    "o1_wins": 7,
-    "cr_games": 15,
-    "cr_wins": 2,
+  "胖胖": {
+    "name": "胖胖",
+    "total_games": 41,
+    "total_wins": 28,
+    "o1_games": 22,
+    "o1_wins": 15,
+    "cr_games": 19,
+    "cr_wins": 13,
     "first_attacks": 20,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "酒空組",
+      "海盜揪硬"
+    ]
+  },
+  "上銘": {
+    "name": "上銘",
+    "total_games": 10,
+    "total_wins": 2,
+    "o1_games": 6,
+    "o1_wins": 1,
+    "cr_games": 4,
+    "cr_wins": 1,
+    "first_attacks": 7,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
       "人生揪難"
     ]
   },
-  "胖胖": {
-    "name": "胖胖",
-    "total_games": 35,
-    "total_wins": 25,
-    "o1_games": 18,
-    "o1_wins": 13,
-    "cr_games": 17,
-    "cr_wins": 12,
-    "first_attacks": 16,
+  "阿樂": {
+    "name": "阿樂",
+    "total_games": 75,
+    "total_wins": 36,
+    "o1_games": 34,
+    "o1_wins": 14,
+    "cr_games": 41,
+    "cr_wins": 22,
+    "first_attacks": 38,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "海盜揪硬",
-      "海盜揪難"
-    ]
-  },
-  "晨晨": {
-    "name": "晨晨",
-    "total_games": 9,
-    "total_wins": 1,
-    "o1_games": 7,
-    "o1_wins": 1,
-    "cr_games": 2,
-    "cr_wins": 0,
-    "first_attacks": 6,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
+      "逃生入口A",
       "逃生入口C"
     ]
   },
-  "范姜哥": {
-    "name": "范姜哥",
-    "total_games": 91,
-    "total_wins": 37,
-    "o1_games": 29,
+  "邱昱": {
+    "name": "邱昱",
+    "total_games": 39,
+    "total_wins": 19,
+    "o1_games": 18,
     "o1_wins": 9,
-    "cr_games": 62,
-    "cr_wins": 28,
-    "first_attacks": 55,
+    "cr_games": 21,
+    "cr_wins": 10,
+    "first_attacks": 17,
     "seasons": [
-      "season3",
       "season4"
     ],
     "teams": [
-      "酒空組",
       "人生揪難"
     ]
   },
-  "孟瑄": {
-    "name": "孟瑄",
-    "total_games": 75,
-    "total_wins": 37,
-    "o1_games": 31,
-    "o1_wins": 16,
-    "cr_games": 44,
-    "cr_wins": 21,
-    "first_attacks": 36,
+  "阿達": {
+    "name": "阿達",
+    "total_games": 25,
+    "total_wins": 19,
+    "o1_games": 9,
+    "o1_wins": 6,
+    "cr_games": 16,
+    "cr_wins": 13,
+    "first_attacks": 15,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "逃生入口A"
+      "Vivi朝酒晚舞"
     ]
   },
-  "阿琪": {
-    "name": "阿琪",
-    "total_games": 7,
-    "total_wins": 5,
-    "o1_games": 3,
-    "o1_wins": 2,
-    "cr_games": 4,
+  "旭容": {
+    "name": "旭容",
+    "total_games": 9,
+    "total_wins": 7,
+    "o1_games": 4,
+    "o1_wins": 4,
+    "cr_games": 5,
     "cr_wins": 3,
+    "first_attacks": 6,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "光": {
+    "name": "光",
+    "total_games": 4,
+    "total_wins": 1,
+    "o1_games": 2,
+    "o1_wins": 0,
+    "cr_games": 2,
+    "cr_wins": 1,
     "first_attacks": 3,
     "seasons": [
       "season4"
     ],
     "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "彥廷": {
-    "name": "彥廷",
-    "total_games": 4,
-    "total_wins": 3,
-    "o1_games": 2,
-    "o1_wins": 1,
-    "cr_games": 2,
-    "cr_wins": 2,
-    "first_attacks": 2,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "小偉": {
-    "name": "小偉",
-    "total_games": 58,
-    "total_wins": 41,
-    "o1_games": 32,
-    "o1_wins": 23,
-    "cr_games": 26,
-    "cr_wins": 18,
-    "first_attacks": 35,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "健龍": {
-    "name": "健龍",
-    "total_games": 27,
-    "total_wins": 14,
-    "o1_games": 13,
-    "o1_wins": 5,
-    "cr_games": 14,
-    "cr_wins": 9,
-    "first_attacks": 10,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A"
+      "一鏢開天門"
     ]
   },
   "lun": {
@@ -1223,460 +419,36 @@
       "一鏢開天門"
     ]
   },
-  "隼隼": {
-    "name": "隼隼",
-    "total_games": 89,
-    "total_wins": 26,
-    "o1_games": 50,
-    "o1_wins": 15,
-    "cr_games": 39,
-    "cr_wins": 11,
-    "first_attacks": 42,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
-    ]
-  },
-  "阿俊": {
-    "name": "阿俊",
-    "total_games": 48,
-    "total_wins": 21,
-    "o1_games": 29,
-    "o1_wins": 14,
-    "cr_games": 19,
-    "cr_wins": 7,
-    "first_attacks": 28,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "蘇蘇": {
-    "name": "蘇蘇",
-    "total_games": 6,
-    "total_wins": 3,
-    "o1_games": 5,
-    "o1_wins": 3,
-    "cr_games": 1,
-    "cr_wins": 0,
-    "first_attacks": 1,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "阿達": {
-    "name": "阿達",
-    "total_games": 25,
-    "total_wins": 19,
-    "o1_games": 9,
-    "o1_wins": 6,
-    "cr_games": 16,
-    "cr_wins": 13,
-    "first_attacks": 15,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
-    ]
-  },
-  "Sandy": {
-    "name": "Sandy",
-    "total_games": 10,
-    "total_wins": 5,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 9,
-    "cr_wins": 5,
-    "first_attacks": 6,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難"
-    ]
-  },
-  "小齊": {
-    "name": "小齊",
-    "total_games": 66,
-    "total_wins": 36,
-    "o1_games": 37,
-    "o1_wins": 20,
-    "cr_games": 29,
-    "cr_wins": 16,
-    "first_attacks": 29,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "人生揪難",
-      "醉販"
-    ]
-  },
-  "伊凡": {
-    "name": "伊凡",
-    "total_games": 11,
-    "total_wins": 10,
-    "o1_games": 10,
-    "o1_wins": 9,
-    "cr_games": 1,
-    "cr_wins": 1,
-    "first_attacks": 5,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "棠棠": {
-    "name": "棠棠",
-    "total_games": 31,
-    "total_wins": 15,
-    "o1_games": 15,
-    "o1_wins": 6,
-    "cr_games": 16,
-    "cr_wins": 9,
-    "first_attacks": 13,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "丹": {
-    "name": "丹",
-    "total_games": 28,
-    "total_wins": 14,
-    "o1_games": 14,
-    "o1_wins": 9,
-    "cr_games": 14,
-    "cr_wins": 5,
-    "first_attacks": 15,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門"
-    ]
-  },
-  "小薩": {
-    "name": "小薩",
-    "total_games": 116,
-    "total_wins": 85,
-    "o1_games": 45,
-    "o1_wins": 33,
-    "cr_games": 71,
-    "cr_wins": 52,
-    "first_attacks": 62,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬",
-      "海盜揪難"
-    ]
-  },
-  "阿國": {
-    "name": "阿國",
-    "total_games": 16,
-    "total_wins": 11,
-    "o1_games": 13,
-    "o1_wins": 9,
-    "cr_games": 3,
-    "cr_wins": 2,
-    "first_attacks": 4,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
-    ]
-  },
-  "長老芬": {
-    "name": "長老芬",
-    "total_games": 2,
-    "total_wins": 1,
-    "o1_games": 2,
-    "o1_wins": 1,
-    "cr_games": 0,
-    "cr_wins": 0,
-    "first_attacks": 1,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "老丹": {
-    "name": "老丹",
-    "total_games": 109,
-    "total_wins": 78,
-    "o1_games": 51,
-    "o1_wins": 32,
-    "cr_games": 58,
-    "cr_wins": 46,
-    "first_attacks": 57,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "虎哥": {
-    "name": "虎哥",
-    "total_games": 45,
-    "total_wins": 31,
-    "o1_games": 22,
-    "o1_wins": 13,
-    "cr_games": 23,
-    "cr_wins": 18,
-    "first_attacks": 21,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組"
-    ]
-  },
-  "阿肥": {
-    "name": "阿肥",
-    "total_games": 121,
-    "total_wins": 86,
-    "o1_games": 58,
-    "o1_wins": 41,
-    "cr_games": 63,
-    "cr_wins": 45,
-    "first_attacks": 56,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬",
-      "海盜揪難",
-      "人生揪難"
-    ]
-  },
-  "阿傑": {
-    "name": "阿傑",
-    "total_games": 19,
-    "total_wins": 9,
+  "耀楠": {
+    "name": "耀楠",
+    "total_games": 34,
+    "total_wins": 13,
     "o1_games": 11,
-    "o1_wins": 5,
-    "cr_games": 8,
-    "cr_wins": 4,
-    "first_attacks": 12,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "Connie": {
-    "name": "Connie",
-    "total_games": 3,
-    "total_wins": 1,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 2,
+    "o1_wins": 7,
+    "cr_games": 23,
+    "cr_wins": 6,
+    "first_attacks": 17,
     "seasons": [
       "season3"
     ],
     "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "小宇": {
-    "name": "小宇",
-    "total_games": 49,
-    "total_wins": 31,
-    "o1_games": 21,
-    "o1_wins": 14,
-    "cr_games": 28,
-    "cr_wins": 17,
-    "first_attacks": 32,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬",
-      "酒空組"
-    ]
-  },
-  "小倫": {
-    "name": "小倫",
-    "total_games": 121,
-    "total_wins": 63,
-    "o1_games": 53,
-    "o1_wins": 33,
-    "cr_games": 68,
-    "cr_wins": 30,
-    "first_attacks": 65,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "阿福": {
-    "name": "阿福",
-    "total_games": 103,
-    "total_wins": 47,
-    "o1_games": 52,
-    "o1_wins": 24,
-    "cr_games": 51,
-    "cr_wins": 23,
-    "first_attacks": 56,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
       "Jack"
     ]
   },
-  "祐祐": {
-    "name": "祐祐",
-    "total_games": 11,
-    "total_wins": 3,
-    "o1_games": 3,
-    "o1_wins": 1,
-    "cr_games": 8,
-    "cr_wins": 2,
-    "first_attacks": 6,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "軒軒": {
-    "name": "軒軒",
-    "total_games": 6,
+  "蘇聖軒": {
+    "name": "蘇聖軒",
+    "total_games": 5,
     "total_wins": 2,
-    "o1_games": 3,
+    "o1_games": 2,
     "o1_wins": 1,
     "cr_games": 3,
     "cr_wins": 1,
     "first_attacks": 3,
     "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "小蘇": {
-    "name": "小蘇",
-    "total_games": 4,
-    "total_wins": 3,
-    "o1_games": 2,
-    "o1_wins": 2,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 4,
-    "seasons": [
       "season4"
     ],
     "teams": [
       "海盜揪硬"
-    ]
-  },
-  "船長": {
-    "name": "船長",
-    "total_games": 94,
-    "total_wins": 61,
-    "o1_games": 56,
-    "o1_wins": 38,
-    "cr_games": 38,
-    "cr_wins": 23,
-    "first_attacks": 45,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "小安": {
-    "name": "小安",
-    "total_games": 8,
-    "total_wins": 3,
-    "o1_games": 3,
-    "o1_wins": 1,
-    "cr_games": 5,
-    "cr_wins": 2,
-    "first_attacks": 3,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "阿淦": {
-    "name": "阿淦",
-    "total_games": 115,
-    "total_wins": 69,
-    "o1_games": 51,
-    "o1_wins": 31,
-    "cr_games": 64,
-    "cr_wins": 38,
-    "first_attacks": 47,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
-    ]
-  },
-  "浩子": {
-    "name": "浩子",
-    "total_games": 14,
-    "total_wins": 9,
-    "o1_games": 3,
-    "o1_wins": 1,
-    "cr_games": 11,
-    "cr_wins": 8,
-    "first_attacks": 6,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
     ]
   },
   "Lun": {
@@ -1695,15 +467,201 @@
       "一鏢開天門"
     ]
   },
-  "君君": {
-    "name": "君君",
-    "total_games": 1,
-    "total_wins": 0,
+  "伊凡": {
+    "name": "伊凡",
+    "total_games": 13,
+    "total_wins": 10,
+    "o1_games": 12,
+    "o1_wins": 9,
+    "cr_games": 1,
+    "cr_wins": 1,
+    "first_attacks": 6,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "阿仁": {
+    "name": "阿仁",
+    "total_games": 117,
+    "total_wins": 50,
+    "o1_games": 49,
+    "o1_wins": 19,
+    "cr_games": 68,
+    "cr_wins": 31,
+    "first_attacks": 60,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "酒空組"
+    ]
+  },
+  "玉米": {
+    "name": "玉米",
+    "total_games": 33,
+    "total_wins": 14,
+    "o1_games": 16,
+    "o1_wins": 5,
+    "cr_games": 17,
+    "cr_wins": 9,
+    "first_attacks": 13,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "醉販",
+      "一鏢開天門"
+    ]
+  },
+  "小虎": {
+    "name": "小虎",
+    "total_games": 47,
+    "total_wins": 17,
+    "o1_games": 23,
+    "o1_wins": 8,
+    "cr_games": 24,
+    "cr_wins": 9,
+    "first_attacks": 30,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "阿斌": {
+    "name": "阿斌",
+    "total_games": 5,
+    "total_wins": 1,
     "o1_games": 1,
     "o1_wins": 0,
-    "cr_games": 0,
-    "cr_wins": 0,
+    "cr_games": 4,
+    "cr_wins": 1,
+    "first_attacks": 3,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "老師": {
+    "name": "老師",
+    "total_games": 102,
+    "total_wins": 49,
+    "o1_games": 55,
+    "o1_wins": 25,
+    "cr_games": 47,
+    "cr_wins": 24,
+    "first_attacks": 64,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "棠棠": {
+    "name": "棠棠",
+    "total_games": 31,
+    "total_wins": 15,
+    "o1_games": 15,
+    "o1_wins": 6,
+    "cr_games": 16,
+    "cr_wins": 9,
+    "first_attacks": 13,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "阿朋": {
+    "name": "阿朋",
+    "total_games": 38,
+    "total_wins": 9,
+    "o1_games": 20,
+    "o1_wins": 4,
+    "cr_games": 18,
+    "cr_wins": 5,
+    "first_attacks": 21,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "Louis": {
+    "name": "Louis",
+    "total_games": 45,
+    "total_wins": 28,
+    "o1_games": 18,
+    "o1_wins": 13,
+    "cr_games": 27,
+    "cr_wins": 15,
+    "first_attacks": 29,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "小羊": {
+    "name": "小羊",
+    "total_games": 5,
+    "total_wins": 4,
+    "o1_games": 4,
+    "o1_wins": 3,
+    "cr_games": 1,
+    "cr_wins": 1,
     "first_attacks": 0,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "酥酥": {
+    "name": "酥酥",
+    "total_games": 6,
+    "total_wins": 3,
+    "o1_games": 5,
+    "o1_wins": 3,
+    "cr_games": 1,
+    "cr_wins": 0,
+    "first_attacks": 1,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "小洋": {
+    "name": "小洋",
+    "total_games": 5,
+    "total_wins": 4,
+    "o1_games": 4,
+    "o1_wins": 3,
+    "cr_games": 1,
+    "cr_wins": 1,
+    "first_attacks": 4,
     "seasons": [
       "season4"
     ],
@@ -1711,67 +669,82 @@
       "Vivi朝酒晚舞"
     ]
   },
-  "華華": {
-    "name": "華華",
-    "total_games": 174,
-    "total_wins": 99,
-    "o1_games": 82,
-    "o1_wins": 43,
-    "cr_games": 92,
-    "cr_wins": 56,
-    "first_attacks": 88,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "chi": {
-    "name": "chi",
-    "total_games": 71,
-    "total_wins": 37,
-    "o1_games": 35,
-    "o1_wins": 18,
-    "cr_games": 36,
-    "cr_wins": 19,
-    "first_attacks": 34,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門"
-    ]
-  },
-  "禹辰": {
-    "name": "禹辰",
-    "total_games": 62,
-    "total_wins": 33,
-    "o1_games": 21,
-    "o1_wins": 12,
-    "cr_games": 41,
-    "cr_wins": 21,
-    "first_attacks": 31,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "捲毛": {
-    "name": "捲毛",
-    "total_games": 4,
-    "total_wins": 3,
-    "o1_games": 3,
+  "阿琪": {
+    "name": "阿琪",
+    "total_games": 9,
+    "total_wins": 7,
+    "o1_games": 4,
     "o1_wins": 3,
-    "cr_games": 1,
-    "cr_wins": 0,
+    "cr_games": 5,
+    "cr_wins": 4,
+    "first_attacks": 4,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "阿肥": {
+    "name": "阿肥",
+    "total_games": 121,
+    "total_wins": 86,
+    "o1_games": 58,
+    "o1_wins": 41,
+    "cr_games": 63,
+    "cr_wins": 45,
+    "first_attacks": 56,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難",
+      "海盜揪硬"
+    ]
+  },
+  "Lucas": {
+    "name": "Lucas",
+    "total_games": 113,
+    "total_wins": 40,
+    "o1_games": 75,
+    "o1_wins": 31,
+    "cr_games": 38,
+    "cr_wins": 9,
+    "first_attacks": 45,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A",
+      "逃生入口C"
+    ]
+  },
+  "阿鄧": {
+    "name": "阿鄧",
+    "total_games": 27,
+    "total_wins": 11,
+    "o1_games": 6,
+    "o1_wins": 1,
+    "cr_games": 21,
+    "cr_wins": 10,
+    "first_attacks": 14,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "醉販"
+    ]
+  },
+  "暘暘": {
+    "name": "暘暘",
+    "total_games": 5,
+    "total_wins": 1,
+    "o1_games": 1,
+    "o1_wins": 0,
+    "cr_games": 4,
+    "cr_wins": 1,
     "first_attacks": 2,
     "seasons": [
       "season4"
@@ -1780,48 +753,31 @@
       "海盜揪硬"
     ]
   },
-  "小建": {
-    "name": "小建",
-    "total_games": 68,
-    "total_wins": 32,
-    "o1_games": 30,
-    "o1_wins": 16,
-    "cr_games": 38,
-    "cr_wins": 16,
-    "first_attacks": 38,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "Leo": {
-    "name": "Leo",
-    "total_games": 17,
-    "total_wins": 5,
-    "o1_games": 11,
-    "o1_wins": 2,
-    "cr_games": 6,
-    "cr_wins": 3,
-    "first_attacks": 11,
+  "小萱": {
+    "name": "小萱",
+    "total_games": 1,
+    "total_wins": 0,
+    "o1_games": 1,
+    "o1_wins": 0,
+    "cr_games": 0,
+    "cr_wins": 0,
+    "first_attacks": 1,
     "seasons": [
       "season3"
     ],
     "teams": [
-      "Jack"
+      "逃生入口A"
     ]
   },
-  "瘦子": {
-    "name": "瘦子",
-    "total_games": 107,
-    "total_wins": 77,
-    "o1_games": 55,
-    "o1_wins": 40,
-    "cr_games": 52,
-    "cr_wins": 37,
-    "first_attacks": 59,
+  "宓哥": {
+    "name": "宓哥",
+    "total_games": 77,
+    "total_wins": 29,
+    "o1_games": 51,
+    "o1_wins": 23,
+    "cr_games": 26,
+    "cr_wins": 6,
+    "first_attacks": 45,
     "seasons": [
       "season3",
       "season4"
@@ -1830,58 +786,53 @@
       "酒空組"
     ]
   },
-  "阿猴": {
-    "name": "阿猴",
-    "total_games": 9,
-    "total_wins": 6,
-    "o1_games": 7,
-    "o1_wins": 4,
+  "Connie": {
+    "name": "Connie",
+    "total_games": 3,
+    "total_wins": 1,
+    "o1_games": 1,
+    "o1_wins": 0,
     "cr_games": 2,
-    "cr_wins": 2,
-    "first_attacks": 5,
+    "cr_wins": 1,
+    "first_attacks": 2,
     "seasons": [
       "season3"
     ],
     "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
+      "Vivi朝酒晚舞"
     ]
   },
-  "Kelvin": {
-    "name": "Kelvin",
-    "total_games": 28,
-    "total_wins": 18,
-    "o1_games": 13,
-    "o1_wins": 8,
-    "cr_games": 15,
-    "cr_wins": 10,
-    "first_attacks": 13,
+  "IKE": {
+    "name": "IKE",
+    "total_games": 4,
+    "total_wins": 1,
+    "o1_games": 2,
+    "o1_wins": 0,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 1,
     "seasons": [
-      "season3",
-      "season4"
+      "season3"
     ],
     "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
+      "醉販"
     ]
   },
-  "小傅": {
-    "name": "小傅",
-    "total_games": 71,
-    "total_wins": 29,
-    "o1_games": 39,
-    "o1_wins": 17,
-    "cr_games": 32,
-    "cr_wins": 12,
-    "first_attacks": 30,
+  "小齊": {
+    "name": "小齊",
+    "total_games": 66,
+    "total_wins": 36,
+    "o1_games": 37,
+    "o1_wins": 20,
+    "cr_games": 29,
+    "cr_wins": 16,
+    "first_attacks": 29,
     "seasons": [
-      "season3",
-      "season4"
+      "season3"
     ],
     "teams": [
-      "酒空組",
-      "人生揪難",
-      "人生揪硬"
+      "醉販",
+      "人生揪難"
     ]
   },
   "克林": {
@@ -1901,53 +852,221 @@
       "人生揪難"
     ]
   },
-  "小洋": {
-    "name": "小洋",
-    "total_games": 5,
-    "total_wins": 4,
-    "o1_games": 4,
-    "o1_wins": 3,
-    "cr_games": 1,
-    "cr_wins": 1,
-    "first_attacks": 4,
+  "小傅": {
+    "name": "小傅",
+    "total_games": 74,
+    "total_wins": 32,
+    "o1_games": 40,
+    "o1_wins": 17,
+    "cr_games": 34,
+    "cr_wins": 15,
+    "first_attacks": 30,
     "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "家綸": {
+    "name": "家綸",
+    "total_games": 26,
+    "total_wins": 12,
+    "o1_games": 12,
+    "o1_wins": 6,
+    "cr_games": 14,
+    "cr_wins": 6,
+    "first_attacks": 14,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "醉販"
+    ]
+  },
+  "小韋": {
+    "name": "小韋",
+    "total_games": 6,
+    "total_wins": 1,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 6,
+    "cr_wins": 1,
+    "first_attacks": 3,
+    "seasons": [
+      "season3",
       "season4"
     ],
     "teams": [
       "Vivi朝酒晚舞"
     ]
   },
-  "暘暘": {
-    "name": "暘暘",
-    "total_games": 5,
-    "total_wins": 1,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 4,
-    "cr_wins": 1,
-    "first_attacks": 2,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "Stan": {
-    "name": "Stan",
-    "total_games": 101,
-    "total_wins": 56,
-    "o1_games": 56,
+  "老丹": {
+    "name": "老丹",
+    "total_games": 116,
+    "total_wins": 80,
+    "o1_games": 54,
     "o1_wins": 33,
-    "cr_games": 45,
-    "cr_wins": 23,
-    "first_attacks": 50,
+    "cr_games": 62,
+    "cr_wins": 47,
+    "first_attacks": 60,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "Jack"
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "培熹": {
+    "name": "培熹",
+    "total_games": 2,
+    "total_wins": 1,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 0,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "歪歪": {
+    "name": "歪歪",
+    "total_games": 78,
+    "total_wins": 28,
+    "o1_games": 46,
+    "o1_wins": 15,
+    "cr_games": 32,
+    "cr_wins": 13,
+    "first_attacks": 41,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "丹": {
+    "name": "丹",
+    "total_games": 35,
+    "total_wins": 17,
+    "o1_games": 18,
+    "o1_wins": 11,
+    "cr_games": 17,
+    "cr_wins": 6,
+    "first_attacks": 20,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "一鏢開天門"
+    ]
+  },
+  "小飛": {
+    "name": "小飛",
+    "total_games": 166,
+    "total_wins": 95,
+    "o1_games": 85,
+    "o1_wins": 47,
+    "cr_games": 81,
+    "cr_wins": 48,
+    "first_attacks": 58,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "醉販",
+      "一鏢開天門"
+    ]
+  },
+  "健龍": {
+    "name": "健龍",
+    "total_games": 27,
+    "total_wins": 14,
+    "o1_games": 13,
+    "o1_wins": 5,
+    "cr_games": 14,
+    "cr_wins": 9,
+    "first_attacks": 10,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "小姜": {
+    "name": "小姜",
+    "total_games": 78,
+    "total_wins": 21,
+    "o1_games": 22,
+    "o1_wins": 8,
+    "cr_games": 56,
+    "cr_wins": 13,
+    "first_attacks": 33,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "乳來": {
+    "name": "乳來",
+    "total_games": 47,
+    "total_wins": 16,
+    "o1_games": 29,
+    "o1_wins": 9,
+    "cr_games": 18,
+    "cr_wins": 7,
+    "first_attacks": 24,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "禹辰": {
+    "name": "禹辰",
+    "total_games": 65,
+    "total_wins": 33,
+    "o1_games": 21,
+    "o1_wins": 12,
+    "cr_games": 44,
+    "cr_wins": 21,
+    "first_attacks": 33,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "逃生入口A"
+    ]
+  },
+  "芝芝": {
+    "name": "芝芝",
+    "total_games": 12,
+    "total_wins": 7,
+    "o1_games": 10,
+    "o1_wins": 5,
+    "cr_games": 2,
+    "cr_wins": 2,
+    "first_attacks": 7,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
     ]
   },
   "小孟": {
@@ -1964,20 +1083,20 @@
       "season4"
     ],
     "teams": [
-      "海盜揪硬",
+      "逃生入口A",
       "人生揪難",
-      "逃生入口A"
+      "海盜揪硬"
     ]
   },
-  "妹妹": {
-    "name": "妹妹",
-    "total_games": 2,
-    "total_wins": 0,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 2,
+  "捲毛": {
+    "name": "捲毛",
+    "total_games": 4,
+    "total_wins": 3,
+    "o1_games": 3,
+    "o1_wins": 3,
+    "cr_games": 1,
     "cr_wins": 0,
-    "first_attacks": 1,
+    "first_attacks": 2,
     "seasons": [
       "season4"
     ],
@@ -1985,105 +1104,20 @@
       "海盜揪硬"
     ]
   },
-  "小東": {
-    "name": "小東",
-    "total_games": 3,
-    "total_wins": 2,
-    "o1_games": 0,
+  "33": {
+    "name": "33",
+    "total_games": 2,
+    "total_wins": 0,
+    "o1_games": 2,
     "o1_wins": 0,
-    "cr_games": 3,
-    "cr_wins": 2,
+    "cr_games": 0,
+    "cr_wins": 0,
     "first_attacks": 1,
     "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
-    ]
-  },
-  "Jesse": {
-    "name": "Jesse",
-    "total_games": 124,
-    "total_wins": 38,
-    "o1_games": 76,
-    "o1_wins": 26,
-    "cr_games": 48,
-    "cr_wins": 12,
-    "first_attacks": 60,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "Lucas": {
-    "name": "Lucas",
-    "total_games": 108,
-    "total_wins": 38,
-    "o1_games": 71,
-    "o1_wins": 29,
-    "cr_games": 37,
-    "cr_wins": 9,
-    "first_attacks": 42,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "逃生入口A",
-      "逃生入口C"
-    ]
-  },
-  "乳來": {
-    "name": "乳來",
-    "total_games": 41,
-    "total_wins": 12,
-    "o1_games": 27,
-    "o1_wins": 8,
-    "cr_games": 14,
-    "cr_wins": 4,
-    "first_attacks": 21,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "逃生入口C"
-    ]
-  },
-  "范姜姊": {
-    "name": "范姜姊",
-    "total_games": 31,
-    "total_wins": 9,
-    "o1_games": 24,
-    "o1_wins": 8,
-    "cr_games": 7,
-    "cr_wins": 1,
-    "first_attacks": 13,
-    "seasons": [
       "season3"
     ],
     "teams": [
-      "酒空組",
-      "人生揪難"
-    ]
-  },
-  "韋": {
-    "name": "韋",
-    "total_games": 1,
-    "total_wins": 0,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 1,
-    "cr_wins": 0,
-    "first_attacks": 0,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
+      "醉販"
     ]
   },
   "小高": {
@@ -2102,215 +1136,17 @@
       "醉販"
     ]
   },
-  "耀楠": {
-    "name": "耀楠",
-    "total_games": 34,
-    "total_wins": 13,
-    "o1_games": 11,
-    "o1_wins": 7,
-    "cr_games": 23,
-    "cr_wins": 6,
-    "first_attacks": 17,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "宓哥": {
-    "name": "宓哥",
-    "total_games": 75,
-    "total_wins": 34,
-    "o1_games": 49,
-    "o1_wins": 24,
-    "cr_games": 26,
-    "cr_wins": 10,
-    "first_attacks": 45,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組",
-      "人生揪難"
-    ]
-  },
-  "光": {
-    "name": "光",
-    "total_games": 4,
-    "total_wins": 1,
-    "o1_games": 2,
-    "o1_wins": 0,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門"
-    ]
-  },
-  "旭容": {
-    "name": "旭容",
-    "total_games": 7,
-    "total_wins": 5,
-    "o1_games": 3,
-    "o1_wins": 3,
-    "cr_games": 4,
+  "阿國": {
+    "name": "阿國",
+    "total_games": 16,
+    "total_wins": 11,
+    "o1_games": 13,
+    "o1_wins": 9,
+    "cr_games": 3,
     "cr_wins": 2,
     "first_attacks": 4,
     "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "海盜揪硬"
-    ]
-  },
-  "阿斌": {
-    "name": "阿斌",
-    "total_games": 5,
-    "total_wins": 1,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 4,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "逃生入口A"
-    ]
-  },
-  "凱哥": {
-    "name": "凱哥",
-    "total_games": 56,
-    "total_wins": 27,
-    "o1_games": 27,
-    "o1_wins": 10,
-    "cr_games": 29,
-    "cr_wins": 17,
-    "first_attacks": 22,
-    "seasons": [
-      "season3"
-    ],
-    "teams": [
-      "醉販"
-    ]
-  },
-  "躲躲": {
-    "name": "躲躲",
-    "total_games": 22,
-    "total_wins": 13,
-    "o1_games": 17,
-    "o1_wins": 10,
-    "cr_games": 5,
-    "cr_wins": 3,
-    "first_attacks": 10,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "人生揪難"
-    ]
-  },
-  "小胖": {
-    "name": "小胖",
-    "total_games": 30,
-    "total_wins": 7,
-    "o1_games": 13,
-    "o1_wins": 5,
-    "cr_games": 17,
-    "cr_wins": 2,
-    "first_attacks": 17,
-    "seasons": [
       "season3",
-      "season4"
-    ],
-    "teams": [
-      "Jack"
-    ]
-  },
-  "怪頭": {
-    "name": "怪頭",
-    "total_games": 31,
-    "total_wins": 14,
-    "o1_games": 9,
-    "o1_wins": 4,
-    "cr_games": 22,
-    "cr_wins": 10,
-    "first_attacks": 11,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞"
-    ]
-  },
-  "無名": {
-    "name": "無名",
-    "total_games": 62,
-    "total_wins": 40,
-    "o1_games": 23,
-    "o1_wins": 14,
-    "cr_games": 39,
-    "cr_wins": 26,
-    "first_attacks": 36,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "酒空組"
-    ]
-  },
-  "阿棋": {
-    "name": "阿棋",
-    "total_games": 3,
-    "total_wins": 1,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
-      "season3",
-      "season4"
-    ],
-    "teams": [
-      "Vivi朝酒晚舞"
-    ]
-  },
-  "艾克": {
-    "name": "艾克",
-    "total_games": 7,
-    "total_wins": 5,
-    "o1_games": 3,
-    "o1_wins": 2,
-    "cr_games": 4,
-    "cr_wins": 3,
-    "first_attacks": 5,
-    "seasons": [
-      "season4"
-    ],
-    "teams": [
-      "一鏢開天門"
-    ]
-  },
-  "小韋": {
-    "name": "小韋",
-    "total_games": 5,
-    "total_wins": 1,
-    "o1_games": 0,
-    "o1_wins": 0,
-    "cr_games": 5,
-    "cr_wins": 1,
-    "first_attacks": 3,
-    "seasons": [
       "season4"
     ],
     "teams": [
@@ -2334,15 +1170,351 @@
       "Vivi朝酒晚舞"
     ]
   },
-  "小芬": {
-    "name": "小芬",
-    "total_games": 43,
-    "total_wins": 19,
-    "o1_games": 41,
-    "o1_wins": 18,
-    "cr_games": 2,
-    "cr_wins": 1,
+  "阿鴻": {
+    "name": "阿鴻",
+    "total_games": 31,
+    "total_wins": 20,
+    "o1_games": 15,
+    "o1_wins": 11,
+    "cr_games": 16,
+    "cr_wins": 9,
+    "first_attacks": 15,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "阿元": {
+    "name": "阿元",
+    "total_games": 41,
+    "total_wins": 16,
+    "o1_games": 27,
+    "o1_wins": 11,
+    "cr_games": 14,
+    "cr_wins": 5,
     "first_attacks": 24,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "小歪": {
+    "name": "小歪",
+    "total_games": 60,
+    "total_wins": 19,
+    "o1_games": 33,
+    "o1_wins": 10,
+    "cr_games": 27,
+    "cr_wins": 9,
+    "first_attacks": 33,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "少bro": {
+    "name": "少bro",
+    "total_games": 6,
+    "total_wins": 3,
+    "o1_games": 2,
+    "o1_wins": 2,
+    "cr_games": 4,
+    "cr_wins": 1,
+    "first_attacks": 3,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "阿福": {
+    "name": "阿福",
+    "total_games": 107,
+    "total_wins": 49,
+    "o1_games": 53,
+    "o1_wins": 24,
+    "cr_games": 54,
+    "cr_wins": 25,
+    "first_attacks": 59,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "阿潤": {
+    "name": "阿潤",
+    "total_games": 21,
+    "total_wins": 13,
+    "o1_games": 14,
+    "o1_wins": 7,
+    "cr_games": 7,
+    "cr_wins": 6,
+    "first_attacks": 9,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "醉販",
+      "一鏢開天門"
+    ]
+  },
+  "Stan": {
+    "name": "Stan",
+    "total_games": 105,
+    "total_wins": 57,
+    "o1_games": 60,
+    "o1_wins": 34,
+    "cr_games": 45,
+    "cr_wins": 23,
+    "first_attacks": 53,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "小建": {
+    "name": "小建",
+    "total_games": 71,
+    "total_wins": 34,
+    "o1_games": 30,
+    "o1_wins": 16,
+    "cr_games": 41,
+    "cr_wins": 18,
+    "first_attacks": 39,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "妹妹": {
+    "name": "妹妹",
+    "total_games": 2,
+    "total_wins": 0,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 2,
+    "cr_wins": 0,
+    "first_attacks": 1,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "無名": {
+    "name": "無名",
+    "total_games": 66,
+    "total_wins": 42,
+    "o1_games": 23,
+    "o1_wins": 14,
+    "cr_games": 43,
+    "cr_wins": 28,
+    "first_attacks": 39,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "范姜姐": {
+    "name": "范姜姐",
+    "total_games": 50,
+    "total_wins": 20,
+    "o1_games": 43,
+    "o1_wins": 20,
+    "cr_games": 7,
+    "cr_wins": 0,
+    "first_attacks": 23,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "小安": {
+    "name": "小安",
+    "total_games": 11,
+    "total_wins": 5,
+    "o1_games": 5,
+    "o1_wins": 3,
+    "cr_games": 6,
+    "cr_wins": 2,
+    "first_attacks": 5,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "君君": {
+    "name": "君君",
+    "total_games": 1,
+    "total_wins": 0,
+    "o1_games": 1,
+    "o1_wins": 0,
+    "cr_games": 0,
+    "cr_wins": 0,
+    "first_attacks": 0,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "阿基": {
+    "name": "阿基",
+    "total_games": 23,
+    "total_wins": 18,
+    "o1_games": 10,
+    "o1_wins": 7,
+    "cr_games": 13,
+    "cr_wins": 11,
+    "first_attacks": 11,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "晨晨": {
+    "name": "晨晨",
+    "total_games": 9,
+    "total_wins": 1,
+    "o1_games": 7,
+    "o1_wins": 1,
+    "cr_games": 2,
+    "cr_wins": 0,
+    "first_attacks": 6,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "酒空組"
+    ]
+  },
+  "山豬": {
+    "name": "山豬",
+    "total_games": 24,
+    "total_wins": 11,
+    "o1_games": 12,
+    "o1_wins": 6,
+    "cr_games": 12,
+    "cr_wins": 5,
+    "first_attacks": 10,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "醉販",
+      "一鏢開天門"
+    ]
+  },
+  "隼隼": {
+    "name": "隼隼",
+    "total_games": 98,
+    "total_wins": 31,
+    "o1_games": 57,
+    "o1_wins": 18,
+    "cr_games": 41,
+    "cr_wins": 13,
+    "first_attacks": 47,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "喵喵": {
+    "name": "喵喵",
+    "total_games": 1,
+    "total_wins": 0,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 1,
+    "cr_wins": 0,
+    "first_attacks": 1,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "小薩": {
+    "name": "小薩",
+    "total_games": 118,
+    "total_wins": 86,
+    "o1_games": 45,
+    "o1_wins": 33,
+    "cr_games": 73,
+    "cr_wins": 53,
+    "first_attacks": 63,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "小倫": {
+    "name": "小倫",
+    "total_games": 133,
+    "total_wins": 70,
+    "o1_games": 59,
+    "o1_wins": 36,
+    "cr_games": 74,
+    "cr_wins": 34,
+    "first_attacks": 71,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "威廉": {
+    "name": "威廉",
+    "total_games": 9,
+    "total_wins": 3,
+    "o1_games": 5,
+    "o1_wins": 2,
+    "cr_games": 4,
+    "cr_wins": 1,
+    "first_attacks": 4,
     "seasons": [
       "season3",
       "season4"
@@ -2351,38 +1523,289 @@
       "Vivi朝酒晚舞"
     ]
   },
-  "玉米": {
-    "name": "玉米",
-    "total_games": 33,
-    "total_wins": 14,
-    "o1_games": 16,
-    "o1_wins": 5,
-    "cr_games": 17,
-    "cr_wins": 9,
-    "first_attacks": 13,
+  "村": {
+    "name": "村",
+    "total_games": 1,
+    "total_wins": 1,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 1,
+    "cr_wins": 1,
+    "first_attacks": 1,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "飛": {
+    "name": "飛",
+    "total_games": 16,
+    "total_wins": 7,
+    "o1_games": 8,
+    "o1_wins": 4,
+    "cr_games": 8,
+    "cr_wins": 3,
+    "first_attacks": 11,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "一鏢開天門"
+    ]
+  },
+  "阿棋": {
+    "name": "阿棋",
+    "total_games": 3,
+    "total_wins": 1,
+    "o1_games": 1,
+    "o1_wins": 0,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 3,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "一鏢開天門",
-      "醉販"
+      "Vivi朝酒晚舞"
     ]
   },
-  "IKE": {
-    "name": "IKE",
-    "total_games": 4,
-    "total_wins": 1,
-    "o1_games": 2,
-    "o1_wins": 0,
-    "cr_games": 2,
-    "cr_wins": 1,
-    "first_attacks": 1,
+  "承翰": {
+    "name": "承翰",
+    "total_games": 42,
+    "total_wins": 18,
+    "o1_games": 20,
+    "o1_wins": 7,
+    "cr_games": 22,
+    "cr_wins": 11,
+    "first_attacks": 26,
     "seasons": [
-      "season3"
+      "season4"
     ],
     "teams": [
-      "醉販"
+      "逃生入口C"
+    ]
+  },
+  "孟瑄": {
+    "name": "孟瑄",
+    "total_games": 80,
+    "total_wins": 38,
+    "o1_games": 33,
+    "o1_wins": 16,
+    "cr_games": 47,
+    "cr_wins": 22,
+    "first_attacks": 40,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "艾克": {
+    "name": "艾克",
+    "total_games": 7,
+    "total_wins": 5,
+    "o1_games": 3,
+    "o1_wins": 2,
+    "cr_games": 4,
+    "cr_wins": 3,
+    "first_attacks": 5,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "一鏢開天門"
+    ]
+  },
+  "Ace": {
+    "name": "Ace",
+    "total_games": 101,
+    "total_wins": 44,
+    "o1_games": 48,
+    "o1_wins": 19,
+    "cr_games": 53,
+    "cr_wins": 25,
+    "first_attacks": 55,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "逃生入口A"
+    ]
+  },
+  "怪頭": {
+    "name": "怪頭",
+    "total_games": 32,
+    "total_wins": 14,
+    "o1_games": 9,
+    "o1_wins": 4,
+    "cr_games": 23,
+    "cr_wins": 10,
+    "first_attacks": 11,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "偶素小東": {
+    "name": "偶素小東",
+    "total_games": 12,
+    "total_wins": 5,
+    "o1_games": 3,
+    "o1_wins": 3,
+    "cr_games": 9,
+    "cr_wins": 2,
+    "first_attacks": 6,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "Jesse": {
+    "name": "Jesse",
+    "total_games": 129,
+    "total_wins": 42,
+    "o1_games": 77,
+    "o1_wins": 26,
+    "cr_games": 52,
+    "cr_wins": 16,
+    "first_attacks": 63,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A",
+      "逃生入口C"
+    ]
+  },
+  "宗燁": {
+    "name": "宗燁",
+    "total_games": 89,
+    "total_wins": 31,
+    "o1_games": 67,
+    "o1_wins": 26,
+    "cr_games": 22,
+    "cr_wins": 5,
+    "first_attacks": 45,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "阿堯": {
+    "name": "阿堯",
+    "total_games": 131,
+    "total_wins": 87,
+    "o1_games": 65,
+    "o1_wins": 40,
+    "cr_games": 66,
+    "cr_wins": 47,
+    "first_attacks": 67,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "虎哥": {
+    "name": "虎哥",
+    "total_games": 53,
+    "total_wins": 36,
+    "o1_games": 26,
+    "o1_wins": 15,
+    "cr_games": 27,
+    "cr_wins": 21,
+    "first_attacks": 23,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "浩子": {
+    "name": "浩子",
+    "total_games": 14,
+    "total_wins": 9,
+    "o1_games": 3,
+    "o1_wins": 1,
+    "cr_games": 11,
+    "cr_wins": 8,
+    "first_attacks": 6,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "大頭": {
+    "name": "大頭",
+    "total_games": 26,
+    "total_wins": 13,
+    "o1_games": 10,
+    "o1_wins": 6,
+    "cr_games": 16,
+    "cr_wins": 7,
+    "first_attacks": 13,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "彥廷": {
+    "name": "彥廷",
+    "total_games": 4,
+    "total_wins": 3,
+    "o1_games": 2,
+    "o1_wins": 1,
+    "cr_games": 2,
+    "cr_wins": 2,
+    "first_attacks": 2,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "華華": {
+    "name": "華華",
+    "total_games": 179,
+    "total_wins": 100,
+    "o1_games": 84,
+    "o1_wins": 44,
+    "cr_games": 95,
+    "cr_wins": 56,
+    "first_attacks": 91,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "逃生入口A"
     ]
   },
   "+0": {
@@ -2399,56 +1822,387 @@
       "season4"
     ],
     "teams": [
-      "Vivi朝酒晚舞",
-      "Jack"
+      "Jack",
+      "Vivi朝酒晚舞"
     ]
   },
-  "Louis": {
-    "name": "Louis",
-    "total_games": 43,
-    "total_wins": 27,
-    "o1_games": 17,
-    "o1_wins": 13,
-    "cr_games": 26,
-    "cr_wins": 14,
-    "first_attacks": 27,
+  "軒軒": {
+    "name": "軒軒",
+    "total_games": 6,
+    "total_wins": 2,
+    "o1_games": 3,
+    "o1_wins": 1,
+    "cr_games": 3,
+    "cr_wins": 1,
+    "first_attacks": 3,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "阿俊": {
+    "name": "阿俊",
+    "total_games": 48,
+    "total_wins": 21,
+    "o1_games": 29,
+    "o1_wins": 14,
+    "cr_games": 19,
+    "cr_wins": 7,
+    "first_attacks": 28,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "海盜揪硬",
-      "海盜揪難"
+      "Jack"
     ]
   },
-  "阿倫": {
-    "name": "阿倫",
-    "total_games": 90,
-    "total_wins": 61,
-    "o1_games": 36,
-    "o1_wins": 22,
-    "cr_games": 54,
-    "cr_wins": 39,
+  "Kelvin": {
+    "name": "Kelvin",
+    "total_games": 31,
+    "total_wins": 18,
+    "o1_games": 14,
+    "o1_wins": 8,
+    "cr_games": 17,
+    "cr_wins": 10,
+    "first_attacks": 13,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "chi": {
+    "name": "chi",
+    "total_games": 79,
+    "total_wins": 39,
+    "o1_games": 39,
+    "o1_wins": 20,
+    "cr_games": 40,
+    "cr_wins": 19,
+    "first_attacks": 39,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "一鏢開天門"
+    ]
+  },
+  "阿淦": {
+    "name": "阿淦",
+    "total_games": 122,
+    "total_wins": 73,
+    "o1_games": 54,
+    "o1_wins": 33,
+    "cr_games": 68,
+    "cr_wins": 40,
+    "first_attacks": 49,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "Sandy": {
+    "name": "Sandy",
+    "total_games": 10,
+    "total_wins": 5,
+    "o1_games": 1,
+    "o1_wins": 1,
+    "cr_games": 9,
+    "cr_wins": 4,
+    "first_attacks": 6,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "阿祺": {
+    "name": "阿祺",
+    "total_games": 30,
+    "total_wins": 24,
+    "o1_games": 16,
+    "o1_wins": 13,
+    "cr_games": 14,
+    "cr_wins": 11,
+    "first_attacks": 8,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "美美": {
+    "name": "美美",
+    "total_games": 3,
+    "total_wins": 3,
+    "o1_games": 1,
+    "o1_wins": 1,
+    "cr_games": 2,
+    "cr_wins": 2,
+    "first_attacks": 3,
+    "seasons": [
+      "season3"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "石頭": {
+    "name": "石頭",
+    "total_games": 7,
+    "total_wins": 3,
+    "o1_games": 5,
+    "o1_wins": 2,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 3,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "船長": {
+    "name": "船長",
+    "total_games": 96,
+    "total_wins": 63,
+    "o1_games": 57,
+    "o1_wins": 39,
+    "cr_games": 39,
+    "cr_wins": 24,
+    "first_attacks": 46,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "小魚": {
+    "name": "小魚",
+    "total_games": 116,
+    "total_wins": 56,
+    "o1_games": 61,
+    "o1_wins": 28,
+    "cr_games": 55,
+    "cr_wins": 28,
+    "first_attacks": 63,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack",
+      "人生揪難"
+    ]
+  },
+  "大根毛": {
+    "name": "大根毛",
+    "total_games": 17,
+    "total_wins": 4,
+    "o1_games": 2,
+    "o1_wins": 1,
+    "cr_games": 15,
+    "cr_wins": 3,
+    "first_attacks": 5,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "小東": {
+    "name": "小東",
+    "total_games": 3,
+    "total_wins": 2,
+    "o1_games": 0,
+    "o1_wins": 0,
+    "cr_games": 3,
+    "cr_wins": 2,
+    "first_attacks": 1,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C"
+    ]
+  },
+  "慶文": {
+    "name": "慶文",
+    "total_games": 75,
+    "total_wins": 34,
+    "o1_games": 47,
+    "o1_wins": 25,
+    "cr_games": 28,
+    "cr_wins": 9,
     "first_attacks": 40,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "Vivi朝酒晚舞",
-      "ViVi朝酒晚舞",
-      "逃生入口A"
+      "酒空組"
     ]
   },
-  "隼哥": {
-    "name": "隼哥",
-    "total_games": 4,
+  "祐祐": {
+    "name": "祐祐",
+    "total_games": 14,
+    "total_wins": 6,
+    "o1_games": 3,
+    "o1_wins": 1,
+    "cr_games": 11,
+    "cr_wins": 5,
+    "first_attacks": 8,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "Jack"
+    ]
+  },
+  "小宇": {
+    "name": "小宇",
+    "total_games": 55,
+    "total_wins": 33,
+    "o1_games": 26,
+    "o1_wins": 16,
+    "cr_games": 29,
+    "cr_wins": 17,
+    "first_attacks": 34,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "酒空組",
+      "海盜揪硬"
+    ]
+  },
+  "小惠": {
+    "name": "小惠",
+    "total_games": 7,
     "total_wins": 1,
     "o1_games": 4,
     "o1_wins": 1,
-    "cr_games": 0,
+    "cr_games": 3,
     "cr_wins": 0,
-    "first_attacks": 2,
+    "first_attacks": 3,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "喇叭": {
+    "name": "喇叭",
+    "total_games": 62,
+    "total_wins": 33,
+    "o1_games": 31,
+    "o1_wins": 12,
+    "cr_games": 31,
+    "cr_wins": 21,
+    "first_attacks": 29,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口C",
+      "逃生入口A"
+    ]
+  },
+  "加成": {
+    "name": "加成",
+    "total_games": 21,
+    "total_wins": 8,
+    "o1_games": 11,
+    "o1_wins": 4,
+    "cr_games": 10,
+    "cr_wins": 4,
+    "first_attacks": 7,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A"
+    ]
+  },
+  "柯柯": {
+    "name": "柯柯",
+    "total_games": 10,
+    "total_wins": 5,
+    "o1_games": 8,
+    "o1_wins": 3,
+    "cr_games": 2,
+    "cr_wins": 2,
+    "first_attacks": 7,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "人生揪難"
+    ]
+  },
+  "小蘇": {
+    "name": "小蘇",
+    "total_games": 4,
+    "total_wins": 3,
+    "o1_games": 2,
+    "o1_wins": 2,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 4,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "小偉": {
+    "name": "小偉",
+    "total_games": 60,
+    "total_wins": 43,
+    "o1_games": 33,
+    "o1_wins": 24,
+    "cr_games": 27,
+    "cr_wins": 19,
+    "first_attacks": 37,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "祥哥": {
+    "name": "祥哥",
+    "total_games": 7,
+    "total_wins": 0,
+    "o1_games": 3,
+    "o1_wins": 0,
+    "cr_games": 4,
+    "cr_wins": 0,
+    "first_attacks": 3,
     "seasons": [
       "season3"
     ],
@@ -2456,56 +2210,156 @@
       "酒空組"
     ]
   },
-  "亮亮": {
-    "name": "亮亮",
-    "total_games": 73,
-    "total_wins": 14,
-    "o1_games": 19,
-    "o1_wins": 4,
-    "cr_games": 54,
-    "cr_wins": 10,
-    "first_attacks": 31,
+  "阿冠": {
+    "name": "阿冠",
+    "total_games": 61,
+    "total_wins": 28,
+    "o1_games": 29,
+    "o1_wins": 16,
+    "cr_games": 32,
+    "cr_wins": 12,
+    "first_attacks": 23,
     "seasons": [
       "season3",
       "season4"
     ],
     "teams": [
-      "酒空組",
-      "人生揪難",
-      "人生揪硬"
+      "醉販",
+      "一鏢開天門"
     ]
   },
-  "大根毛": {
-    "name": "大根毛",
-    "total_games": 11,
-    "total_wins": 2,
-    "o1_games": 1,
-    "o1_wins": 0,
-    "cr_games": 10,
-    "cr_wins": 2,
-    "first_attacks": 3,
+  "Leo": {
+    "name": "Leo",
+    "total_games": 17,
+    "total_wins": 5,
+    "o1_games": 11,
+    "o1_wins": 2,
+    "cr_games": 6,
+    "cr_wins": 3,
+    "first_attacks": 11,
     "seasons": [
-      "season3",
-      "season4"
+      "season3"
     ],
     "teams": [
       "Jack"
     ]
   },
-  "33": {
-    "name": "33",
-    "total_games": 2,
-    "total_wins": 0,
-    "o1_games": 2,
-    "o1_wins": 0,
-    "cr_games": 0,
-    "cr_wins": 0,
-    "first_attacks": 1,
+  "阿傑": {
+    "name": "阿傑",
+    "total_games": 23,
+    "total_wins": 10,
+    "o1_games": 13,
+    "o1_wins": 6,
+    "cr_games": 10,
+    "cr_wins": 4,
+    "first_attacks": 13,
     "seasons": [
-      "season3"
+      "season4"
     ],
     "teams": [
-      "醉販"
+      "逃生入口A"
+    ]
+  },
+  "卷毛": {
+    "name": "卷毛",
+    "total_games": 6,
+    "total_wins": 6,
+    "o1_games": 2,
+    "o1_wins": 2,
+    "cr_games": 4,
+    "cr_wins": 4,
+    "first_attacks": 6,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "范姜哥": {
+    "name": "范姜哥",
+    "total_games": 91,
+    "total_wins": 39,
+    "o1_games": 29,
+    "o1_wins": 13,
+    "cr_games": 62,
+    "cr_wins": 26,
+    "first_attacks": 55,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "酒空組"
+    ]
+  },
+  "小8": {
+    "name": "小8",
+    "total_games": 34,
+    "total_wins": 19,
+    "o1_games": 24,
+    "o1_wins": 15,
+    "cr_games": 10,
+    "cr_wins": 4,
+    "first_attacks": 20,
+    "seasons": [
+      "season4"
+    ],
+    "teams": [
+      "海盜揪硬"
+    ]
+  },
+  "小芬": {
+    "name": "小芬",
+    "total_games": 47,
+    "total_wins": 21,
+    "o1_games": 45,
+    "o1_wins": 20,
+    "cr_games": 2,
+    "cr_wins": 1,
+    "first_attacks": 26,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "Vivi朝酒晚舞"
+    ]
+  },
+  "阿誠": {
+    "name": "阿誠",
+    "total_games": 34,
+    "total_wins": 8,
+    "o1_games": 13,
+    "o1_wins": 3,
+    "cr_games": 21,
+    "cr_wins": 5,
+    "first_attacks": 21,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "逃生入口A",
+      "逃生入口C"
+    ]
+  },
+  "宏哥": {
+    "name": "宏哥",
+    "total_games": 27,
+    "total_wins": 14,
+    "o1_games": 21,
+    "o1_wins": 11,
+    "cr_games": 6,
+    "cr_wins": 3,
+    "first_attacks": 5,
+    "seasons": [
+      "season3",
+      "season4"
+    ],
+    "teams": [
+      "醉販",
+      "一鏢開天門"
     ]
   }
 }
