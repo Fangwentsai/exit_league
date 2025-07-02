@@ -23,16 +23,16 @@ const setTypes = {
     16: "四人賽 Cricket"
 };
 
-// 正確的隊伍戰績數據（從season3的56場比賽計算得出）
+// 正確的隊伍戰績數據（從Season 3統計計算方法說明的最終排名表）
 const teamRecords = {
-    "海盜揪硬": { wins: 13, losses: 1, draws: 0 },
-    "Vivi朝酒晚舞": { wins: 12, losses: 2, draws: 0 },
-    "醉販": { wins: 7, losses: 5, draws: 2 },
+    "Vivi朝酒晚舞": { wins: 11, losses: 1, draws: 2 },
+    "海盜揪硬": { wins: 12, losses: 1, draws: 1 },
+    "醉販": { wins: 9, losses: 5, draws: 0 },
     "酒空組": { wins: 6, losses: 7, draws: 1 },
-    "逃生入口A": { wins: 5, losses: 7, draws: 2 },
-    "逃生入口C": { wins: 5, losses: 8, draws: 1 },
-    "Jack": { wins: 3, losses: 9, draws: 2 },
-    "人生揪難": { wins: 0, losses: 12, draws: 2 }
+    "Jack": { wins: 4, losses: 10, draws: 0 },
+    "逃生入口C": { wins: 5, losses: 9, draws: 0 },
+    "逃生入口A": { wins: 5, losses: 8, draws: 1 },
+    "人生揪難": { wins: 1, losses: 12, draws: 1 }
 };
 
 // 正確的SET統計數據（從真實比賽解析得出）
@@ -190,8 +190,8 @@ function initializeSetAnalysisTable() {
                 <div class="win-rate-display">
                     <div class="win-rate-bar">
                         <div class="bar-fill" style="width: ${Math.max(winRate, 5)}%; background-color: ${barColor};">
-                            <span class="bar-text">${winRate}%</span>
                         </div>
+                        <span class="bar-text">${winRate}%</span>
                     </div>
                 </div>
             </td>

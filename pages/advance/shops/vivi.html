@@ -8,6 +8,216 @@
     <link rel="stylesheet" href="../../../styles/team-detail.css">
     <link rel="icon" href="../../../images/favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 頁籤樣式 */
+        .season-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0 10px 0;
+            border-bottom: 2px solid #e0e0e0;
+            width: 90%; /* 增加寬度 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* 修復SET分析表格欄位寬度 */
+        .set-analysis-table th:nth-child(1) {
+            width: 40% !important; /* SET欄位 */
+        }
+        
+        .set-analysis-table th:nth-child(2) {
+            width: 30% !important; /* 勝率欄位 */
+        }
+        
+        .set-analysis-table th:nth-child(3) {
+            width: 30% !important; /* 排行榜欄位 */
+        }
+        
+        .set-analysis-table td:nth-child(1) {
+            width: 40% !important;
+        }
+        
+        .set-analysis-table td:nth-child(2) {
+            width: 30% !important;
+        }
+        
+        .set-analysis-table td:nth-child(3) {
+            width: 30% !important;
+        }
+        
+        /* 確保勝率欄位內容不會太擠 */
+        .stat-cell {
+            padding: 8px 12px !important;
+        }
+        
+        .win-rate-display {
+            min-width: 120px !important;
+        }
+        
+        .win-rate-bar {
+            min-width: 80px !important;
+        }
+
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: #d4647a;
+            border-bottom-color: #d4647a;
+        }
+        
+        .tab-button:hover {
+            color: #d4647a;
+        }
+        
+        .tab-content {
+            display: none;
+            width: 90%; /* 增加寬度 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 30px 15px;
+            color: #666;
+            font-size: 18px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .coming-soon .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* 增加各區域寬度 */
+        .team-info {
+            margin-bottom: 15px !important;
+            width: 90% !important; /* 增加寬度 */
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        .stats-section {
+            margin-top: 10px !important;
+            margin-bottom: 15px !important;
+            width: 100% !important; /* 統計區域保持100% */
+        }
+        
+        .analysis-section {
+            margin-top: 10px !important;
+            width: 100% !important; /* 分析區域保持100% */
+        }
+        
+        .analysis-section h2 {
+            margin-top: 10px !important;
+            margin-bottom: 15px !important;
+        }
+        
+        /* 優化表格顯示 */
+        .set-analysis-table {
+            margin-top: 10px;
+            width: 100% !important; /* 表格寬度保持100% */
+        }
+        
+        .set-analysis-table table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        /* 修復表頭樣式 */
+        .set-analysis-table th {
+            text-align: center !important;
+            padding: 12px 8px !important;
+            font-weight: bold !important;
+            background-color: #f8f9fa !important;
+            border-bottom: 2px solid #dee2e6 !important;
+        }
+        
+        /* bar-text 置中對齊 */
+        .win-rate-display {
+            text-align: center !important;
+            position: relative !important;
+        }
+        
+        .bar-text {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            font-weight: bold !important;
+            color: #333 !important;
+            z-index: 2 !important;
+        }
+        
+        /* 確保內容區域不會被遮擋 */
+        .content-container {
+            padding-bottom: 30px;
+            width: 95%; /* 增加主容器寬度 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .team-detail-container {
+            width: 100% !important; /* 詳細容器寬度 */
+            max-width: none !important;
+        /* 修復SET分析表格欄位寬度 */
+        .set-analysis-table th:nth-child(1) {
+            width: 40% !important; /* SET欄位 */
+        }
+        
+        .set-analysis-table th:nth-child(2) {
+            width: 30% !important; /* 勝率欄位 */
+        }
+        
+        .set-analysis-table th:nth-child(3) {
+            width: 30% !important; /* 排行榜欄位 */
+        }
+        
+        .set-analysis-table td:nth-child(1) {
+            width: 40% !important;
+        }
+        
+        .set-analysis-table td:nth-child(2) {
+            width: 30% !important;
+        }
+        
+        .set-analysis-table td:nth-child(3) {
+            width: 30% !important;
+        }
+        
+        /* 確保勝率欄位內容不會太擠 */
+        .stat-cell {
+            padding: 8px 12px !important;
+        }
+        
+        .win-rate-display {
+            min-width: 120px !important;
+        }
+        
+        .win-rate-bar {
+            min-width: 80px !important;
+        }
+
+        }
+    </style>
 </head>
 <body>
     <!-- 漢堡選單按鈕 -->
@@ -32,6 +242,7 @@
 
     <!-- 遮罩層 -->
     <div class="overlay"></div>
+    
     <!-- 標題區域 -->
     <div class="header-section">
         <div class="container">
@@ -46,86 +257,197 @@
     <!-- 內容區域 -->
     <div class="content-container">
         <div class="team-detail-container">
-        <!-- 隊伍信息區域 -->
-        <div class="team-info">
-            <div class="team-name-section">
-                <h1 class="team-name">Vivi朝酒晚舞</h1>
-            </div>
-            <div class="team-details">
-                <div class="detail-item">
-                    <span class="detail-label">🏠主場 Vivi Bar</span>
+            <!-- 隊伍信息區域 (移到上方) -->
+            <div class="team-info">
+                <div class="team-name-section">
+                    <h1 class="team-name">Vivi朝酒晚舞</h1>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">飲酒強度:</span>
-                    <span class="detail-value">極高 ⭐⭐⭐⭐⭐</span>
+                <div class="team-details">
+                    <div class="detail-item">
+                        <span class="detail-label">🏠主場 Vivi朝酒晚舞</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">飲酒強度:</span>
+                        <span class="detail-value">極高 ⭐⭐⭐⭐⭐</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 統計區域 -->
-        <div class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                        <div class="stat-label">總勝場</div>
+            <!-- 季度頁籤 -->
+            <div class="season-tabs">
+                <button class="tab-button active" onclick="switchTab('season3')">第三屆</button>
+                <button class="tab-button" onclick="switchTab('season4')">第四屆</button>
+                <button class="tab-button" onclick="switchTab('total')">合計</button>
+            </div>
+
+            <!-- 第三屆數據 -->
+            <div id="season3" class="tab-content active">
+                <!-- 統計區域 -->
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">11</div>
+                            <div class="stat-label">總勝場</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">總敗場</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">78.6%</div>
+                            <div class="stat-label">勝率</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">65</div>
+                            <div class="stat-label">飲酒加成</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">2</div>
-                        <div class="stat-label">總敗場</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">85.7%</div>
-                        <div class="stat-label">勝率</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">15</div>
-                        <div class="stat-label">成員數</div>
+
+                <!-- SET分析區域 -->
+                <div class="analysis-section">
+                    <h2>SET分析</h2>
+                    
+                    <!-- SET分析表格 -->
+                    <div class="set-analysis-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SET</th>
+                                    <th>勝率</th>
+                                    <th>排行榜</th>
+                                </tr>
+                            </thead>
+                            <tbody id="setAnalysisBody">
+                                <!-- 表格內容由JavaScript動態生成 -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SET分析區域 -->
-        <div class="analysis-section">
-            <h2>SET分析</h2>
-            
-            <!-- SET分析表格 -->
-            <div class="set-analysis-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SET</th>
-                            <th>勝率</th>
-                            <th>排行榜</th>
-                        </tr>
-                    </thead>
-                    <tbody id="setAnalysisBody">
-                        <!-- 表格內容由JavaScript動態生成 -->
-                    </tbody>
-                </table>
+            <!-- 第四屆數據 -->
+            <div id="season4" class="tab-content">
+                <div class="coming-soon">
+                    <span class="icon">📊</span>
+                    <div>第四屆數據統計中...</div>
+                    <div style="font-size: 14px; margin-top: 10px; color: #999;">敬請期待</div>
+                </div>
+            </div>
+
+            <!-- 合計數據 -->
+            <div id="total" class="tab-content">
+                <div class="coming-soon">
+                    <span class="icon">🔢</span>
+                    <div>合計數據統計中...</div>
+                    <div style="font-size: 14px; margin-top: 10px; color: #999;">第三屆 + 第四屆總和統計</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="../../../js/team-detail.js"></script>
-    <script>
-        const setTopPlayers = {
-    "1": ["阿達", "小羊", "威廉"],
-    "2": ["猴子", "老丹", "阿淦"],
-    "3": ["Kelvin", "阿倫", "阿淦"],
-    "4": ["猴子", "阿淦", "阿倫"],
-    "5": ["土豆", "小芬", "阿達"],
-    "6": ["Kelvin", "小耿", "阿淦"],
-    "7": ["猴子", "老丹", "阿達"],
-    "8": ["猴子", "老丹", "土豆"],
-    "9": ["老丹", "猴子", "阿淦"],
-    "10": ["土豆", "阿達", "浩子"],
-    "11": ["阿倫", "阿國", "猴子"],
-    "12": ["猴子", "土豆", "阿達"],
-    "13": ["阿倫", "美美", "浩子"],
-    "14": ["阿淦", "猴子", "老丹"],
-    "15": ["老丹", "土豆", "怪頭"],
-    "16": ["老丹", "阿達", "阿國"],
+    <script>        const setTopPlayers = {
+    "1": [
+        "阿達",
+        "Kelvin",
+        "阿淦"
+    ],
+    "2": [
+        "猴子",
+        "老丹",
+        "阿淦"
+    ],
+    "3": [
+        "Kelvin",
+        "阿淦",
+        "阿倫"
+    ],
+    "4": [
+        "阿淦",
+        "猴子",
+        "阿倫"
+    ],
+    "5": [
+        "阿國",
+        "阿倫",
+        "小芬"
+    ],
+    "6": [
+        "Kelvin",
+        "阿淦",
+        "浩子"
+    ],
+    "7": [
+        "老丹",
+        "阿達",
+        "猴子"
+    ],
+    "8": [
+        "老丹",
+        "猴子",
+        "阿達"
+    ],
+    "9": [
+        "老丹",
+        "猴子",
+        "阿淦"
+    ],
+    "10": [
+        "阿達",
+        "浩子",
+        "阿倫"
+    ],
+    "11": [
+        "阿倫",
+        "阿國",
+        "猴子"
+    ],
+    "12": [
+        "猴子",
+        "阿達",
+        "老丹"
+    ],
+    "13": [
+        "阿倫",
+        "浩子",
+        "阿淦"
+    ],
+    "14": [
+        "阿淦",
+        "猴子",
+        "老丹"
+    ],
+    "15": [
+        "老丹",
+        "怪頭",
+        "猴子"
+    ],
+    "16": [
+        "老丹",
+        "阿達",
+        "阿國"
+    ]
 };
+        
+        // 頁籤切換功能
+        function switchTab(tabName) {
+            // 隱藏所有tab內容
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 移除所有tab按鈕的active狀態
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 顯示選中的tab內容
+            document.getElementById(tabName).classList.add('active');
+            
+            // 添加對應按鈕的active狀態
+            event.target.classList.add('active');
+        }
         
         // 初始化頁面
         document.addEventListener('DOMContentLoaded', function() {
@@ -146,6 +468,5 @@
             this.classList.remove('active');
         });
     </script>
-    </div>
 </body>
 </html>

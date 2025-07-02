@@ -1,0 +1,737 @@
+{
+  "team_players": {
+    "逃生入口A": [
+      {
+        "name": "Jesse",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "Lucas",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "孟瑄",
+        "appearances": 11,
+        "total_games": 22
+      },
+      {
+        "name": "小倫",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "Terry",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "阿樂",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "Eric",
+        "appearances": 7,
+        "total_games": 14
+      },
+      {
+        "name": "小倫阿樂",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿樂孟瑄",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "小倫Lucas",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "逃生入口C": [
+      {
+        "name": "華華",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "隼隼",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "Ace",
+        "appearances": 13,
+        "total_games": 26
+      },
+      {
+        "name": "阿仁",
+        "appearances": 13,
+        "total_games": 26
+      },
+      {
+        "name": "禹辰",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "小歪",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "喇叭",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "隼隼阿仁",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "晨晨",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "隼隼Ace",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Ace阿仁",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Ace禹辰",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿仁Ace",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Ace隼隼",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "酒空組": [
+      {
+        "name": "慶文",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "范姜姐",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "范姜哥",
+        "appearances": 12,
+        "total_games": 24
+      },
+      {
+        "name": "宓哥",
+        "appearances": 12,
+        "total_games": 24
+      },
+      {
+        "name": "無名",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "瘦子",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "虎哥",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "阿堯",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "Sandy",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "阿鴻",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "阿堯范姜哥",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "小惠",
+        "appearances": 3,
+        "total_games": 6
+      },
+      {
+        "name": "范姜哥無名",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿堯慶文",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿堯宓哥",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "Jack": [
+      {
+        "name": "阿福",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "老師",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "B哥",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "Stan",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "耀楠",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "阿俊",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "+0",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "小建",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "小虎",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "Leo",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "阿元",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "大根毛",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "小胖",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "B哥老師",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿福Leo",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Stan老師",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "+0B哥",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Stan小建",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "醉販": [
+      {
+        "name": "小飛",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "小齊",
+        "appearances": 12,
+        "total_games": 28
+      },
+      {
+        "name": "Ray",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "凱哥",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "阿冠",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "玉米",
+        "appearances": 7,
+        "total_games": 14
+      },
+      {
+        "name": "阿鄧",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "宏哥",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "阿潤",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "山豬",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "小高",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "家綸",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "玉米小飛",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "Vivi朝酒晚舞": [
+      {
+        "name": "猴子",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "阿淦",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "老丹",
+        "appearances": 13,
+        "total_games": 26
+      },
+      {
+        "name": "小芬",
+        "appearances": 12,
+        "total_games": 24
+      },
+      {
+        "name": "阿倫",
+        "appearances": 11,
+        "total_games": 22
+      },
+      {
+        "name": "怪頭",
+        "appearances": 11,
+        "total_games": 22
+      },
+      {
+        "name": "Kelvin",
+        "appearances": 8,
+        "total_games": 16
+      },
+      {
+        "name": "阿達",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "阿國",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "浩子",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "土豆",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "小耿",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "石頭",
+        "appearances": 3,
+        "total_games": 6
+      },
+      {
+        "name": "威廉",
+        "appearances": 3,
+        "total_games": 6
+      },
+      {
+        "name": "怪頭阿淦",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "小羊",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "老丹阿倫",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "Connie",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "怪頭阿倫",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "小芬阿倫",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "酥酥",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿棋",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "猴子阿淦",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "猴子阿倫",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "海盜揪硬": [
+      {
+        "name": "小薩",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "阿肥",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "蘇ㄟ",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "船長",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "小偉",
+        "appearances": 9,
+        "total_games": 18
+      },
+      {
+        "name": "阿祺",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "Louis",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "阿基",
+        "appearances": 4,
+        "total_games": 8
+      },
+      {
+        "name": "胖胖",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿肥小薩",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "阿肥船長",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ],
+    "人生揪難": [
+      {
+        "name": "小姜",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "小魚",
+        "appearances": 14,
+        "total_games": 28
+      },
+      {
+        "name": "宗燁",
+        "appearances": 13,
+        "total_games": 26
+      },
+      {
+        "name": "亮亮",
+        "appearances": 13,
+        "total_games": 26
+      },
+      {
+        "name": "羿珩",
+        "appearances": 12,
+        "total_games": 24
+      },
+      {
+        "name": "小傅",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "歪歪",
+        "appearances": 10,
+        "total_games": 20
+      },
+      {
+        "name": "阿朋",
+        "appearances": 6,
+        "total_games": 12
+      },
+      {
+        "name": "小魚小姜",
+        "appearances": 5,
+        "total_games": 10
+      },
+      {
+        "name": "克林",
+        "appearances": 3,
+        "total_games": 6
+      },
+      {
+        "name": "柯柯",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "軒軒",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "克林小魚",
+        "appearances": 2,
+        "total_games": 4
+      },
+      {
+        "name": "羿珩小姜",
+        "appearances": 2,
+        "total_games": 4
+      }
+    ]
+  },
+  "player_teams": {
+    "小倫": "逃生入口A",
+    "Jesse": "逃生入口A",
+    "華華": "逃生入口C",
+    "Ace": "逃生入口C",
+    "隼隼Ace": "逃生入口C",
+    "Terry": "逃生入口A",
+    "Lucas": "逃生入口A",
+    "Eric": "逃生入口A",
+    "禹辰": "逃生入口C",
+    "隼隼": "逃生入口C",
+    "阿仁": "逃生入口C",
+    "慶文": "酒空組",
+    "無名": "酒空組",
+    "瘦子": "酒空組",
+    "范姜哥無名": "酒空組",
+    "阿福": "Jack",
+    "范姜哥": "酒空組",
+    "阿鴻": "酒空組",
+    "老師": "Jack",
+    "耀楠": "Jack",
+    "小胖": "Jack",
+    "阿俊": "Jack",
+    "Stan": "Jack",
+    "+0": "Jack",
+    "小虎": "Jack",
+    "B哥": "Jack",
+    "范姜姐": "酒空組",
+    "Ray": "醉販",
+    "山豬": "醉販",
+    "凱哥": "醉販",
+    "小齊": "醉販",
+    "Kelvin": "Vivi朝酒晚舞",
+    "老丹": "Vivi朝酒晚舞",
+    "怪頭阿淦": "Vivi朝酒晚舞",
+    "土豆": "Vivi朝酒晚舞",
+    "小芬": "Vivi朝酒晚舞",
+    "小高": "醉販",
+    "阿冠": "醉販",
+    "阿鄧": "醉販",
+    "宏哥": "醉販",
+    "家綸": "醉販",
+    "小飛": "醉販",
+    "阿達": "Vivi朝酒晚舞",
+    "阿倫": "Vivi朝酒晚舞",
+    "猴子": "Vivi朝酒晚舞",
+    "阿淦": "Vivi朝酒晚舞",
+    "玉米": "醉販",
+    "小薩": "海盜揪硬",
+    "小傅": "人生揪難",
+    "宗燁": "人生揪難",
+    "阿祺": "海盜揪硬",
+    "胖胖": "海盜揪硬",
+    "亮亮": "人生揪難",
+    "阿肥": "海盜揪硬",
+    "歪歪": "人生揪難",
+    "羿珩": "人生揪難",
+    "小姜": "人生揪難",
+    "Louis": "海盜揪硬",
+    "小魚": "人生揪難",
+    "孟瑄": "逃生入口A",
+    "小偉": "海盜揪硬",
+    "阿基": "海盜揪硬",
+    "蘇ㄟ": "海盜揪硬",
+    "阿肥小薩": "海盜揪硬",
+    "石頭": "Vivi朝酒晚舞",
+    "宓哥": "酒空組",
+    "怪頭": "Vivi朝酒晚舞",
+    "阿國": "Vivi朝酒晚舞",
+    "小建": "Jack",
+    "喇叭": "逃生入口C",
+    "B哥老師": "Jack",
+    "玉米小飛": "醉販",
+    "阿潤": "醉販",
+    "阿福Leo": "Jack",
+    "Leo": "Jack",
+    "大根毛": "Jack",
+    "虎哥": "酒空組",
+    "小魚小姜": "人生揪難",
+    "小羊": "Vivi朝酒晚舞",
+    "小耿": "Vivi朝酒晚舞",
+    "隼隼阿仁": "逃生入口C",
+    "小歪": "逃生入口C",
+    "Ace阿仁": "逃生入口C",
+    "阿樂": "逃生入口A",
+    "小惠": "酒空組",
+    "阿朋": "人生揪難",
+    "浩子": "Vivi朝酒晚舞",
+    "船長": "海盜揪硬",
+    "Ace禹辰": "逃生入口C",
+    "小倫阿樂": "逃生入口A",
+    "阿樂孟瑄": "逃生入口A",
+    "柯柯": "人生揪難",
+    "晨晨": "逃生入口C",
+    "軒軒": "人生揪難",
+    "小倫Lucas": "逃生入口A",
+    "阿仁Ace": "逃生入口C",
+    "Stan老師": "Jack",
+    "阿元": "Jack",
+    "老丹阿倫": "Vivi朝酒晚舞",
+    "Connie": "Vivi朝酒晚舞",
+    "克林小魚": "人生揪難",
+    "克林": "人生揪難",
+    "羿珩小姜": "人生揪難",
+    "阿肥船長": "海盜揪硬",
+    "怪頭阿倫": "Vivi朝酒晚舞",
+    "小芬阿倫": "Vivi朝酒晚舞",
+    "+0B哥": "Jack",
+    "阿堯": "酒空組",
+    "阿堯慶文": "酒空組",
+    "阿堯宓哥": "酒空組",
+    "Sandy": "酒空組",
+    "Ace隼隼": "逃生入口C",
+    "阿堯范姜哥": "酒空組",
+    "威廉": "Vivi朝酒晚舞",
+    "酥酥": "Vivi朝酒晚舞",
+    "阿棋": "Vivi朝酒晚舞",
+    "猴子阿淦": "Vivi朝酒晚舞",
+    "猴子阿倫": "Vivi朝酒晚舞",
+    "Stan小建": "Jack"
+  },
+  "team_matches": {
+    "逃生入口A": 
