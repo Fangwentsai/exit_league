@@ -7,7 +7,7 @@
 const SHEETS_CONFIG = {
     CLIENT_ID: '945502427007-dq3ldlv77r1u0h6me3s6jj948dajk6gm.apps.googleusercontent.com',
     API_KEY: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
-    SCHEDULE_SHEET_ID: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE', // 讀取比賽場次
+    SCHEDULE_SHEET_ID: '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY', // 讀取比賽場次 (第五屆)
     RESULT_SHEET_ID: '1V2hj-9R-C2GWYu6Wo-por-gNvm56vGFPjx4ELcx3XtE'    // 寫入比賽結果
 };
 

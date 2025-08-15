@@ -8,7 +8,9 @@ const fileName = currentPath.split('/').pop();
 console.log('當前頁面:', fileName);
 
 // 根據文件名確定賽季
-if (fileName.includes('S4') || fileName.includes('s4') || fileName.includes('4')) {
+if (fileName.includes('S5') || fileName.includes('s5') || fileName.includes('5')) {
+    currentSeason = 'SEASON5';
+} else if (fileName.includes('S4') || fileName.includes('s4') || fileName.includes('4')) {
     currentSeason = 'SEASON4';
 } else if (fileName.includes('S3') || fileName.includes('s3') || fileName.includes('3')) {
     currentSeason = 'SEASON3';

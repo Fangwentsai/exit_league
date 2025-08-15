@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('當前頁面:', fileName);
     
     // 根據文件名確定賽季
-    if (fileName.includes('S4') || fileName.includes('s4') || fileName.includes('4')) {
+    if (fileName.includes('S5') || fileName.includes('s5') || fileName.includes('5')) {
+        currentSeason = 'SEASON5';
+    } else if (fileName.includes('S4') || fileName.includes('s4') || fileName.includes('4')) {
         currentSeason = 'SEASON4';
     } else if (fileName.includes('S3') || fileName.includes('s3') || fileName.includes('3')) {
         currentSeason = 'SEASON3';
@@ -177,8 +179,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // 獲取當前頁面的URL
         const currentUrl = window.location.pathname;
         
-        // 檢查URL中是否包含"scheduleS4.html"
-        if (currentUrl.includes('scheduleS4.html')) {
+        // 檢查URL中是否包含"scheduleS5.html"
+        if (currentUrl.includes('scheduleS5.html')) {
+            console.log('檢測到第5賽季頁面，連結到season5目錄');
+            return 'season5';
+        } else if (currentUrl.includes('scheduleS4.html')) {
             console.log('檢測到第4賽季頁面，連結到season4目錄');
             return 'season4';
         } else {

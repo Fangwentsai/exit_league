@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../styles/schedule.css">
+    
+    <!-- 移除有問題的廣告脚本，使用簡化版 -->
+    <script>
+        console.log('Ad script loaded');
+        // 簡化的廣告初始化脚本
+        window.adInitialized = true;
+    </script>
+    <!-- 明確指定只加載 s5 的數據 -->
+    <script>
+        const seasonOverride = 's5';
+        console.log('設置 seasonOverride =', seasonOverride);
+        
+        // 頁面加載完成後檢查篩選按鈕
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('scheduleS5.html 頁面加載完成，開始檢查篩選按鈕');
+            const teamButtons = document.querySelectorAll('.team-btn');
+            console.log('頁面載入時找到篩選按鈕數量:', teamButtons.length);
+            
+            // 記錄每個按鈕信息
+            if (teamButtons.length > 0) {
+                teamButtons.forEach((btn, idx) => {
+                    console.log(`載入時按鈕 ${idx}: ${btn.getAttribute('data-team')}, 文本="${btn.textContent}"`);
+                });
+            }
+        });
+    </script>
+    <style>
+        /* 移动端优化内联样式 */
+        @media screen and (max-width: 480px) {
+            .content-wrapper {
+                overflow-x: auto;
+                width: 100%;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+    <title>第五屆賽程 | 難找的聯賽</title>
+</head>
+<body>
+    <!-- 加入 banner 圖片 -->
+    <div class="banner">
+        <img src="../images/season5.png" alt="Banner" class="banner-image">
+    </div>
+
+    <div class="container">
+        <!-- 加入進度條 -->
+        <div id="loadingBar" class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        
+        <!-- 搜尋區域 -->
+        <div class="search-section">
+            <div class="search-title">快速篩選隊伍(可複選)</div>
+                    <div class="team-filters">
+            <div class="filter-row">
+                <button class="team-btn" data-team="逃生入口A">逃生入口A</button>
+                <button class="team-btn" data-team="酒空組">酒空組</button>
+                <button class="team-btn" data-team="逃生入口C">逃生入口C</button>
+                <button class="team-btn" data-team="Jack">Jack</button>
+            </div>
+            <div class="filter-row">
+                <button class="team-btn" data-team="海盜揪硬">海盜揪硬</button>
+                <button class="team-btn" data-team="人生揪難">人生揪難</button>
+                <button class="team-btn" data-team="Vivi嘻嘻隊">Vivi嘻嘻隊</button>
+                <button class="team-btn" data-team="Vivi哈哈隊">Vivi哈哈隊</button>
+            </div>
+            <div class="filter-row">
+                <button class="team-btn" data-team="一鏢開天門">一鏢開天門</button>
+                <button class="team-btn" data-team="來都來了">來都來了</button>
+            </div>
+        </div>
+        </div>
+
+        <!-- 提示文字 -->
+        <div class="schedule-hint">提醒：點擊日期/場次可以查看先前比賽紀錄喔</div>
+
+        <!-- 使用包裝器确保表格可滚动 -->
+        <div class="content-wrapper">
+            <!-- 賽程表格 - 使用固定寬度的表格布局 -->
+            <table class="schedule-table" id="leagueTable">
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>客隊</th>
+                        <th>比分</th>
+                        <th>主隊</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 比賽資料將由 JavaScript 動態載入 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 引入配置和主腳本 -->
+    <script src="../config/config.js"></script>
+    <!-- 引入筛选功能专用脚本 (先加载) -->
+    <script src="../js/filter.js?v=1.1"></script>
+    <script src="../js/main.js"></script>
+    
+    <!-- 確保篩選功能初始化 -->
+    <script>
+        console.log('頁面腳本加載完成，準備初始化篩選功能');
+        // 延遲調用篩選函數初始化
+        setTimeout(function() {
+            console.log('延遲檢查篩選按鈕');
+            const teamButtons = document.querySelectorAll('.team-btn');
+            console.log('延遲後找到篩選按鈕數量:', teamButtons.length);
+            
+            if (typeof initializeFilters === 'function') {
+                console.log('找到initializeFilters函數，調用初始化');
+                initializeFilters();
+            } else {
+                console.error('未找到initializeFilters函數');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
