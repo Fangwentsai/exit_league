@@ -7,7 +7,7 @@ import requests
 from datetime import datetime
 
 # Google Apps Script 部署 URL
-SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5SfP4OrBiNM5t4TPJ0zKsI9Zm5AL12DQ2m3Wssyb8QoQtCr36HSgCAfjkHQiddhJE/exec'
+SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBJwojHfXLvm_uMTd1aalSrKyD3pRjIJ5IJr0jpHFFNyMf8ga4mZ_74-p0RvCIYPro/exec'
 
 def test_complete_game_data():
     """測試完整的比賽資料"""

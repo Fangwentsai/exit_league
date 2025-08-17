@@ -9,7 +9,7 @@ import requests
 from datetime import datetime
 
 # 新的部署 URL（完整的）
-SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5SfP4OrBiNM5t4TPJ0zKsI9Zm5AL12DQ2m3Wssyb8QoQtCr36HSgCAfjkHQiddhJE/exec'
+SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBJwojHfXLvm_uMTd1aalSrKyD3pRjIJ5IJr0jpHFFNyMf8ga4mZ_74-p0RvCIYPro/exec'
 
 def test_new_deployment():
     """測試新的部署"""
