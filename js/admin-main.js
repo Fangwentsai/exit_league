@@ -1268,10 +1268,10 @@ function calculatePlayerStats(gameData, playerName, team) {
     
     // 檢查每個 SET
     for (let i = 1; i <= 16; i++) {
-        const setData = gameData.selectedPlayers[i];
+        const setData = gameData.sets[i - 1]; // 使用 sets 陣列
         if (!setData) continue;
         
-        const teamPlayers = setData[team] || [];
+        const teamPlayers = setData[team === 'away' ? 'awayPlayers' : 'homePlayers'] || [];
         const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
         
         // 檢查該選手是否參與此場比賽
@@ -1285,14 +1285,14 @@ function calculatePlayerStats(gameData, playerName, team) {
             // 計算出賽次數
             if (gameType === '01') {
                 o1Games++;
-                if (gameData.winLoseData[i] === team) o1Wins++;
+                if (setData.winner === team) o1Wins++;
             } else if (gameType === 'CR') {
                 crGames++;
-                if (gameData.winLoseData[i] === team) crWins++;
+                if (setData.winner === team) crWins++;
             }
             
             // 計算先攻次數
-            if (gameData.firstAttackData[i] === team) {
+            if (setData.firstAttack === team) {
                 firstAttacks++;
             }
         }
