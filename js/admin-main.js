@@ -737,8 +737,8 @@ function updateControlButton(setNumber, type, choice) {
 // ===== 飲酒加成功能 =====
 function selectBonus(team) {
     // 清除之前的選擇
-    document.getElementById('homeBonusBtn').classList.remove('selected');
-    document.getElementById('awayBonusBtn').classList.remove('selected');
+    document.getElementById('homeBonusBtn').classList.remove('home-selected');
+    document.getElementById('awayBonusBtn').classList.remove('away-selected');
     
     if (bonusTeam === team) {
         // 如果點擊相同的隊伍，取消選擇
@@ -746,7 +746,11 @@ function selectBonus(team) {
     } else {
         // 選擇新隊伍
         bonusTeam = team;
-        document.getElementById(`${team}BonusBtn`).classList.add('selected');
+        if (team === 'home') {
+            document.getElementById('homeBonusBtn').classList.add('home-selected');
+        } else {
+            document.getElementById('awayBonusBtn').classList.add('away-selected');
+        }
     }
     
     // 標記有變更
