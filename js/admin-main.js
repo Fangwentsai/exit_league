@@ -1039,7 +1039,7 @@ async function saveToGoogleSheetsWithHTML(gameData) {
         const htmlContent = previewGenerator.generatePreviewHTML(gameData);
         
         // 生成選手統計資料
-        const playerStats = generatePlayerStatistics(gameData);
+        const playerStats = await generatePlayerStatistics(gameData);
         
         // 準備寫入 Google Sheets 的資料
         const sheetsData = {
@@ -1229,15 +1229,18 @@ async function saveToGoogleSheets(gameData) {
 }
 
 // 生成選手統計資料
-function generatePlayerStatistics(gameData) {
+async function generatePlayerStatistics(gameData) {
     const stats = {
         away: [],
         home: []
     };
     
     // 從 player.json 獲取選手名單
-    const awayPlayers = getTeamPlayers(gameData.awayTeam);
-    const homePlayers = getTeamPlayers(gameData.homeTeam);
+    const awayPlayers = await getTeamPlayers(gameData.awayTeam);
+    const homePlayers = await getTeamPlayers(gameData.homeTeam);
+    
+    console.log('客場選手:', awayPlayers);
+    console.log('主場選手:', homePlayers);
     
     // 計算客場選手統計
     awayPlayers.forEach(playerName => {
@@ -1255,6 +1258,7 @@ function generatePlayerStatistics(gameData) {
         }
     });
     
+    console.log('選手統計結果:', stats);
     return stats;
 }
 
@@ -1307,23 +1311,34 @@ function calculatePlayerStats(gameData, playerName, team) {
 }
 
 // 從 player.json 獲取隊伍選手名單
-function getTeamPlayers(teamName) {
-    // 這裡應該從 player.json 讀取，但為了簡化，先使用硬編碼
-    // 實際實作時應該從 data/player.json 讀取
-    const teamPlayers = {
-        '逃生入口A': ['小倫', 'Ace', '華華', '小孟', '大胖', '禹辰', '喇叭'],
-        '酒空組': ['宓哥', '范姜哥', '范姜姐', '小惠', '慶文', '無名', '阿鴻', '瘦子', '虎哥', '阿堯', '小宇', '阿仁', '晨晨', '阿輔'],
-        '逃生入口C': ['Lucas', 'Eric', '傑西', '乳來', '承翰', '小東', '小歪', '阿誠', '阿隼', '少博', '阿樂', '土豆'],
-        'Jack': ['小建', '阿福', 'B哥', '阿俊', '老師', '大根毛', 'Stan', '小魚', '小虎', '發哥', 'Terry', '阿元', '小胖', '祐祐', '雯雯', '小準', '阿翰'],
-        'VIVI哈哈隊': ['阿倫', '小芬', '美美', '威廉', '小韋', '小耿', '馬克', '石頭', '阿國', 'kelvin刺'],
-        '人生揪難': ['亮亮', '小姜', '栗子', '阿肥', '邱昱', '羿珩', '阿朋', '小傅', '歪歪', '小安', '柯柯', '克林', '上銘', '軒軒', '蘇仔', '紅閎', '彎彎'],
-        '海盜揪硬': ['船長', '小8', '伊凡', '小宇', '阿琪', '小偉', '小孟', '孟女', '阿軒', '棠棠', '鎮宇', '胖胖', '君君', '旭容', '捲毛', '小齊'],
-        '來都來了': ['躲躲', '大頭', '小宇', '大瀚', '小薩', 'Louis', '宗燁', '阿翔', '阿全', 'YY', '羅賓', '阿霖', '阿嘎', '阿達', '小洋', '阿志', 'Allen', '小象', '阿霖', '阿倪', '阿賢'],
-        'VIVI嘻嘻隊': ['怪頭', '老丹', '猴子', '芝芝', '浩子', '阿淦', '蘇蘇', 'Jason', '光頭', '+0'],
-        '一鏢開天門': ['飛', '宏', 'Chi', '丹', 'Ray', '倫', '冠', '光', '潤']
-    };
-    
-    return teamPlayers[teamName] || [];
+async function getTeamPlayers(teamName) {
+    try {
+        // 從 data/player.json 讀取選手資料
+        const response = await fetch('data/player.json');
+        if (!response.ok) {
+            console.error('無法讀取 player.json:', response.status);
+            return [];
+        }
+        
+        const playerData = await response.json();
+        return playerData[teamName] || [];
+    } catch (error) {
+        console.error('讀取選手資料失敗:', error);
+        // 降級到硬編碼資料
+        const fallbackPlayers = {
+            '逃生入口A': ['小倫', 'Ace', '華華', '小孟', '大胖', '禹辰', '喇叭'],
+            '酒空組': ['宓哥', '范姜哥', '范姜姐', '小惠', '慶文', '無名', '阿鴻', '瘦子', '虎哥', '阿堯', '小宇', '阿仁', '晨晨', '阿輔'],
+            '逃生入口C': ['Lucas', 'Eric', '傑西', '乳來', '承翰', '小東', '小歪', '阿誠', '阿隼', '少博', '阿樂', '土豆'],
+            'Jack': ['小建', '阿福', 'B哥', '阿俊', '老師', '大根毛', 'Stan', '小魚', '小虎', '發哥', 'Terry', '阿元', '小胖', '祐祐', '雯雯', '小準', '阿翰'],
+            'VIVI哈哈隊': ['阿倫', '小芬', '美美', '威廉', '小韋', '小耿', '馬克', '石頭', '阿國', 'kelvin刺'],
+            '人生揪難': ['亮亮', '小姜', '栗子', '阿肥', '邱昱', '羿珩', '阿朋', '小傅', '歪歪', '小安', '柯柯', '克林', '上銘', '軒軒', '蘇仔', '紅閎', '彎彎'],
+            '海盜揪硬': ['船長', '小8', '伊凡', '小宇', '阿琪', '小偉', '小孟', '孟女', '阿軒', '棠棠', '鎮宇', '胖胖', '君君', '旭容', '捲毛', '小齊'],
+            '來都來了': ['躲躲', '大頭', '小宇', '大瀚', '小薩', 'Louis', '宗燁', '阿翔', '阿全', 'YY', '羅賓', '阿霖', '阿嘎', '阿達', '小洋', '阿志', 'Allen', '小象', '阿霖', '阿倪', '阿賢'],
+            'VIVI嘻嘻隊': ['怪頭', '老丹', '猴子', '芝芝', '浩子', '阿淦', '蘇蘇', 'Jason', '光頭', '+0'],
+            '一鏢開天門': ['飛', '宏', 'Chi', '丹', 'Ray', '倫', '冠', '光', '潤']
+        };
+        return fallbackPlayers[teamName] || [];
+    }
 }
 
 // 保存到本地存儲（降級方案）
