@@ -23,11 +23,11 @@ async function loadGames() {
         document.getElementById('loadingGames').style.display = 'block';
         document.getElementById('loadingGames').textContent = '載入比賽資料中...';
         
-        // 獲取相關的日期範圍（前3天到後3天）
+        // 獲取相關的日期範圍（前4天到後2天）
         const today = new Date();
         const dates = [];
         
-        for (let i = 3; i >= -3; i--) {
+        for (let i = 4; i >= -2; i--) {
             const date = new Date(today);
             date.setDate(today.getDate() - i);
             dates.push(date);
