@@ -980,30 +980,22 @@ async function saveGameData() {
     }
     
     // 準備保存的資料
-    const gameData = {
-        gameId: document.getElementById('gameSelect').value,
-        homeTeam: currentGame.home,
-        awayTeam: currentGame.away,
-        selectedPlayers: selectedPlayers,
-        firstAttackData: firstAttackData,
-        winLoseData: winLoseData,
-        bonusTeam: bonusTeam,
-        scores: {
-            home: {
-                original: parseInt(document.getElementById('homeOriginalScore').textContent),
-                winBonus: parseInt(document.getElementById('homeWinBonus').textContent),
-                drinkBonus: parseInt(document.getElementById('homeDrinkBonus').textContent),
-                total: parseInt(document.getElementById('homeTotalScore').textContent)
-            },
-            away: {
-                original: parseInt(document.getElementById('awayOriginalScore').textContent),
-                winBonus: parseInt(document.getElementById('awayWinBonus').textContent),
-                drinkBonus: parseInt(document.getElementById('awayDrinkBonus').textContent),
-                total: parseInt(document.getElementById('awayTotalScore').textContent)
-            }
+    const gameData = collectAdminData(); // 使用 collectAdminData 來收集資料
+    gameData.scores = {
+        home: {
+            original: parseInt(document.getElementById('homeOriginalScore').textContent),
+            winBonus: parseInt(document.getElementById('homeWinBonus').textContent),
+            drinkBonus: parseInt(document.getElementById('homeDrinkBonus').textContent),
+            total: parseInt(document.getElementById('homeTotalScore').textContent)
         },
-        timestamp: new Date().toISOString()
+        away: {
+            original: parseInt(document.getElementById('awayOriginalScore').textContent),
+            winBonus: parseInt(document.getElementById('awayWinBonus').textContent),
+            drinkBonus: parseInt(document.getElementById('awayDrinkBonus').textContent),
+            total: parseInt(document.getElementById('awayTotalScore').textContent)
+        }
     };
+    gameData.timestamp = new Date().toISOString();
     
     // 確認對話框 - 顯示比分
     const confirmMessage = `請確認比賽結果：\n\n比賽：${gameData.gameId.toUpperCase()}\n\n${gameData.homeTeam}：${gameData.scores.home.total} 分\n${gameData.awayTeam}：${gameData.scores.away.total} 分\n\n確認無誤後將寫入`;
@@ -1275,7 +1267,7 @@ function calculatePlayerStats(gameData, playerName, team) {
         const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
         
         // 檢查該選手是否參與此場比賽
-        if (playersList.includes(playerName) && playersList[0] !== '') {
+        if (playersList.includes(playerName) && playersList.length > 0 && playersList[0] !== '') {
             // 判斷比賽類型
             let gameType = '01';
             if (i >= 6 && i <= 10) gameType = 'CR';
