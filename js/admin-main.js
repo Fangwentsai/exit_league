@@ -1009,11 +1009,130 @@ async function saveGameData() {
     const confirmMessage = `請確認比賽結果：\n\n比賽：${gameData.gameId.toUpperCase()}\n\n${gameData.homeTeam}：${gameData.scores.home.total} 分\n${gameData.awayTeam}：${gameData.scores.away.total} 分\n\n確認無誤後將寫入`;
     
     if (confirm(confirmMessage)) {
-        saveToGoogleSheets(gameData);
+        await saveToGoogleSheetsWithHTML(gameData);
     }
 }
 
-// 保存到 Google Sheets
+// 保存到 Google Sheets（包含 HTML 和選手統計）
+async function saveToGoogleSheetsWithHTML(gameData) {
+    const saveBtn = document.querySelector('.save-btn');
+    if (!saveBtn) {
+        console.error('❌ 找不到保存按鈕');
+        await showCustomAlert('❌ 系統錯誤：找不到保存按鈕', 'error');
+        return;
+    }
+    const originalText = saveBtn.textContent;
+    
+    try {
+        // 顯示載入狀態
+        saveBtn.textContent = '保存中...';
+        saveBtn.disabled = true;
+        
+        console.log('準備保存資料：', gameData);
+        
+        // 生成時間戳記
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        const gameCode = gameData.gameId;
+        
+        // 生成預覽 HTML
+        const previewGenerator = new GameResultPreviewGenerator();
+        const htmlContent = previewGenerator.generatePreviewHTML(gameData);
+        
+        // 生成選手統計資料
+        const playerStats = generatePlayerStatistics(gameData);
+        
+        // 準備寫入 Google Sheets 的資料
+        const sheetsData = {
+            ...gameData,
+            htmlContent: htmlContent,
+            playerStats: playerStats,
+            htmlSheetName: `${gameCode}_${timestamp}`,
+            statsSheetName: `result_${timestamp}`,
+            timestamp: timestamp
+        };
+        
+        // Google Apps Script Web App URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwG06esXLPr-jbZKS9lCVfVYN3Gfl9ag4WDdjfHYMivMPmGbMaZR3rioOfJhofpBFX8/exec';
+        
+        console.log('發送請求到：', scriptURL);
+        console.log('HTML 工作表名稱：', sheetsData.htmlSheetName);
+        console.log('統計工作表名稱：', sheetsData.statsSheetName);
+        
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(sheetsData)
+        });
+        
+        console.log('收到回應：', response.status, response.statusText);
+        
+        if (response.ok) {
+            const resultText = await response.text();
+            console.log('回應內容：', resultText);
+            
+            try {
+                const result = JSON.parse(resultText);
+                if (result.status === 'success') {
+                    markAsSaved();
+                    await showCustomAlert(`✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\nHTML 工作表：${sheetsData.htmlSheetName}\n統計工作表：${sheetsData.statsSheetName}\n時間：${new Date(result.timestamp).toLocaleString()}\n\n頁面將自動關閉...`, 'success');
+                    console.log('保存成功：', result);
+                    
+                    // 延遲 1 秒後關閉分頁
+                    setTimeout(() => {
+                        window.close();
+                    }, 1000);
+                } else {
+                    throw new Error(result.message || '保存失敗');
+                }
+            } catch (parseError) {
+                console.error('解析回應失敗：', parseError);
+                // 如果無法解析 JSON，但狀態碼是 200，可能還是成功了
+                if (resultText.includes('success') || resultText.includes('成功') || resultText.includes('"status":"success"')) {
+                    markAsSaved();
+                    await showCustomAlert(`✅ 比賽資料已保存完成！\n\nHTML 工作表：${sheetsData.htmlSheetName}\n統計工作表：${sheetsData.statsSheetName}\n\n頁面將自動關閉...`, 'success');
+                    
+                    // 延遲 1 秒後關閉分頁
+                    setTimeout(() => {
+                        window.close();
+                    }, 1000);
+                } else {
+                    throw new Error('伺服器回應格式錯誤：' + resultText.substring(0, 100));
+                }
+            }
+        } else {
+            const errorText = await response.text();
+            console.error('HTTP 錯誤：', response.status, errorText);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+    } catch (error) {
+        console.error('保存到 Google Sheets 失敗：', error);
+        
+        let errorMessage = '保存失敗！';
+        if (error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
+            errorMessage += '\n\n可能原因：\n1. 網路連線問題\n2. Google Apps Script 未正確部署\n3. 跨域請求被阻擋';
+        } else {
+            errorMessage += '\n\n錯誤資訊：' + error.message;
+        }
+        
+        await showCustomAlert(errorMessage, 'error');
+        
+        // 降級保存到本地存儲
+        const confirmResult = await showCustomConfirm('是否改為保存到本地存儲？');
+        if (confirmResult) {
+            await saveToLocalStorage(gameData);
+        }
+    } finally {
+        // 恢復按鈕狀態
+        saveBtn.textContent = originalText;
+        saveBtn.disabled = false;
+    }
+}
+
+// 保存到 Google Sheets（原始版本，保留作為備用）
 async function saveToGoogleSheets(gameData) {
     const saveBtn = document.querySelector('.save-btn');
     if (!saveBtn) {
@@ -1107,6 +1226,104 @@ async function saveToGoogleSheets(gameData) {
         saveBtn.textContent = originalText;
         saveBtn.disabled = false;
     }
+}
+
+// 生成選手統計資料
+function generatePlayerStatistics(gameData) {
+    const stats = {
+        away: [],
+        home: []
+    };
+    
+    // 從 player.json 獲取選手名單
+    const awayPlayers = getTeamPlayers(gameData.awayTeam);
+    const homePlayers = getTeamPlayers(gameData.homeTeam);
+    
+    // 計算客場選手統計
+    awayPlayers.forEach(playerName => {
+        const playerStats = calculatePlayerStats(gameData, playerName, 'away');
+        if (playerStats.totalGames > 0) {
+            stats.away.push(playerStats);
+        }
+    });
+    
+    // 計算主場選手統計
+    homePlayers.forEach(playerName => {
+        const playerStats = calculatePlayerStats(gameData, playerName, 'home');
+        if (playerStats.totalGames > 0) {
+            stats.home.push(playerStats);
+        }
+    });
+    
+    return stats;
+}
+
+// 計算單一選手統計
+function calculatePlayerStats(gameData, playerName, team) {
+    let o1Games = 0, o1Wins = 0, crGames = 0, crWins = 0, firstAttacks = 0;
+    
+    // 檢查每個 SET
+    for (let i = 1; i <= 16; i++) {
+        const setData = gameData.selectedPlayers[i];
+        if (!setData) continue;
+        
+        const teamPlayers = setData[team] || [];
+        const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
+        
+        // 檢查該選手是否參與此場比賽
+        if (playersList.includes(playerName) && playersList[0] !== '') {
+            // 判斷比賽類型
+            let gameType = '01';
+            if (i >= 6 && i <= 10) gameType = 'CR';
+            else if (i >= 11 && i <= 14) gameType = '01'; // 雙人賽
+            else if (i >= 15 && i <= 16) gameType = '01'; // 四人賽
+            
+            // 計算出賽次數
+            if (gameType === '01') {
+                o1Games++;
+                if (gameData.winLoseData[i] === team) o1Wins++;
+            } else if (gameType === 'CR') {
+                crGames++;
+                if (gameData.winLoseData[i] === team) crWins++;
+            }
+            
+            // 計算先攻次數
+            if (gameData.firstAttackData[i] === team) {
+                firstAttacks++;
+            }
+        }
+    }
+    
+    return {
+        name: playerName,
+        o1Games,
+        o1Wins,
+        crGames,
+        crWins,
+        totalGames: o1Games + crGames,
+        totalWins: o1Wins + crWins,
+        firstAttacks
+    };
+}
+
+// 從 player.json 獲取隊伍選手名單
+function getTeamPlayers(teamName) {
+    // 這裡應該從 player.json 讀取，但為了簡化，先使用硬編碼
+    // 實際實作時應該從 data/player.json 讀取
+    const teamPlayers = {
+        '逃生入口A': ['小倫', 'Ace', '華華', '小孟', '大胖', '禹辰', '喇叭'],
+        '酒空組': ['宓哥', '范姜哥', '范姜姐', '小惠', '慶文', '無名', '阿鴻', '瘦子', '虎哥', '阿堯', '小宇', '阿仁', '晨晨', '阿輔'],
+        '逃生入口C': ['Lucas', 'Eric', '傑西', '乳來', '承翰', '小東', '小歪', '阿誠', '阿隼', '少博', '阿樂', '土豆'],
+        'Jack': ['小建', '阿福', 'B哥', '阿俊', '老師', '大根毛', 'Stan', '小魚', '小虎', '發哥', 'Terry', '阿元', '小胖', '祐祐', '雯雯', '小準', '阿翰'],
+        'VIVI哈哈隊': ['阿倫', '小芬', '美美', '威廉', '小韋', '小耿', '馬克', '石頭', '阿國', 'kelvin刺'],
+        '人生揪難': ['亮亮', '小姜', '栗子', '阿肥', '邱昱', '羿珩', '阿朋', '小傅', '歪歪', '小安', '柯柯', '克林', '上銘', '軒軒', '蘇仔', '紅閎', '彎彎'],
+        '海盜揪硬': ['船長', '小8', '伊凡', '小宇', '阿琪', '小偉', '小孟', '孟女', '阿軒', '棠棠', '鎮宇', '胖胖', '君君', '旭容', '捲毛', '小齊'],
+        '來都來了': ['躲躲', '大頭', '小宇', '大瀚', '小薩', 'Louis', '宗燁', '阿翔', '阿全', 'YY', '羅賓', '阿霖', '阿嘎', '阿達', '小洋', '阿志', 'Allen', '小象', '阿霖', '阿倪', '阿賢'],
+        'VIVI嘻嘻隊': ['怪頭', '老丹', '猴子', '芝芝', '浩子', '阿淦', '蘇蘇', 'Jason', '光頭', '+0'],
+        '一鏢開天門': ['飛', '宏', 'Chi', '丹', 'Ray', '倫', '冠', '光', '潤']
+    };
+    
+    return teamPlayers[teamName] || [];
 }
 
 // 保存到本地存儲（降級方案）
