@@ -1052,7 +1052,7 @@ async function saveToGoogleSheetsWithHTML(gameData) {
         };
         
         // Google Apps Script Web App URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbw5SfP4OrBiNM5t4TPJ0zKsI9Zm5AL12DQ2m3Wssyb8QoQtCr36HSgCAfjkHQiddhJE/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBJwojHfXLvm_uMTd1aalSrKyD3pRjIJ5IJr0jpHFFNyMf8ga4mZ_74-p0RvCIYPro/exec';
         
         console.log('發送請求到：', scriptURL);
         console.log('HTML 工作表名稱：', sheetsData.htmlSheetName);
@@ -1150,7 +1150,7 @@ async function saveToGoogleSheets(gameData) {
         console.log('準備保存資料：', gameData);
         
         // Google Apps Script Web App URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbw5SfP4OrBiNM5t4TPJ0zKsI9Zm5AL12DQ2m3Wssyb8QoQtCr36HSgCAfjkHQiddhJE/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBJwojHfXLvm_uMTd1aalSrKyD3pRjIJ5IJr0jpHFFNyMf8ga4mZ_74-p0RvCIYPro/exec';
         
         console.log('發送請求到：', scriptURL);
         
