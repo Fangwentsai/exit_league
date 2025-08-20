@@ -73,7 +73,7 @@ async function loadGames() {
 }
 
 /**
- * 格式化日期為 M/D 格式（只保留月和日）
+ * 格式化日期為 M/D 格式
  */
 function formatDate(date) {
     return `${date.getMonth() + 1}/${date.getDate()}`;
@@ -176,16 +176,14 @@ function parseGamesData(values, targetDates) {
             if (gameDate && gameId && awayTeam && homeTeam) {
                 // 檢查日期是否在目標範圍內（支援多種日期格式）
                 if (isDateInRange(gameDate, targetDateStrings)) {
-                    // 格式化日期為 M/D 格式
-                    const formattedDate = formatDate(parseGameDate(gameDate));
                     games.push({
                         id: gameId,
-                        date: formattedDate, // 使用格式化後的日期
+                        date: gameDate,
                         dateObj: parseGameDate(gameDate),
                         away: awayTeam,
                         home: homeTeam
                     });
-                    console.log(`✅ 加入比賽: ${gameId} - ${awayTeam} vs ${homeTeam} (${formattedDate})`);
+                    console.log(`✅ 加入比賽: ${gameId} - ${awayTeam} vs ${homeTeam} (${gameDate})`);
                 }
             }
         }
