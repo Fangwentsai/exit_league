@@ -6,6 +6,8 @@
 
 ```javascript
 function doPost(e) {
+  let result;
+  
   try {
     // 解析請求資料
     const data = JSON.parse(e.postData.contents);
@@ -57,6 +59,8 @@ function doPost(e) {
     
     // 寫入選手統計資料
     const playerStats = data.playerStats;
+    const awayTeamName = data.awayTeam || '客場隊伍';
+    const homeTeamName = data.homeTeam || '主場隊伍';
     
     // 寫入標題行
     const headers = ['選手', '01出賽', '01勝場', 'CR出賽', 'CR勝場', '合計出賽', '合計勝場', '先攻數'];
@@ -64,66 +68,78 @@ function doPost(e) {
     
     // 寫入客場選手統計
     let currentRow = 2;
-    statsSheet.getRange(currentRow, 1).setValue('=== 客場選手 ===');
+    statsSheet.getRange(currentRow, 1).setValue(awayTeamName);
     currentRow++;
     
-    playerStats.away.forEach(player => {
-      statsSheet.getRange(currentRow, 1, 1, 8).setValues([[
-        player.name,
-        player.o1Games,
-        player.o1Wins,
-        player.crGames,
-        player.crWins,
-        player.totalGames,
-        player.totalWins,
-        player.firstAttacks
-      ]]);
+    if (playerStats.away && playerStats.away.length > 0) {
+      playerStats.away.forEach(player => {
+        statsSheet.getRange(currentRow, 1, 1, 8).setValues([[
+          player.name,
+          player.o1Games,
+          player.o1Wins,
+          player.crGames,
+          player.crWins,
+          player.totalGames,
+          player.totalWins,
+          player.firstAttacks
+        ]]);
+        currentRow++;
+      });
+    } else {
+      statsSheet.getRange(currentRow, 1).setValue('無選手資料');
       currentRow++;
-    });
+    }
     
     // 寫入主場選手統計
     currentRow++;
-    statsSheet.getRange(currentRow, 1).setValue('=== 主場選手 ===');
+    statsSheet.getRange(currentRow, 1).setValue(homeTeamName);
     currentRow++;
     
-    playerStats.home.forEach(player => {
-      statsSheet.getRange(currentRow, 1, 1, 8).setValues([[
-        player.name,
-        player.o1Games,
-        player.o1Wins,
-        player.crGames,
-        player.crWins,
-        player.totalGames,
-        player.totalWins,
-        player.firstAttacks
-      ]]);
+    if (playerStats.home && playerStats.home.length > 0) {
+      playerStats.home.forEach(player => {
+        statsSheet.getRange(currentRow, 1, 1, 8).setValues([[
+          player.name,
+          player.o1Games,
+          player.o1Wins,
+          player.crGames,
+          player.crWins,
+          player.totalGames,
+          player.totalWins,
+          player.firstAttacks
+        ]]);
+        currentRow++;
+      });
+    } else {
+      statsSheet.getRange(currentRow, 1).setValue('無選手資料');
       currentRow++;
-    });
+    }
     
     // 設定欄寬
     statsSheet.autoResizeColumns(1, 8);
     
-    // 回傳成功訊息
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: 'success',
-        gameId: data.gameId,
-        htmlSheetName: htmlSheetName,
-        statsSheetName: statsSheetName,
-        timestamp: new Date().toISOString()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // 設定成功結果
+    result = {
+      status: 'success',
+      gameId: data.gameId,
+      htmlSheetName: htmlSheetName,
+      statsSheetName: statsSheetName,
+      timestamp: new Date().toISOString()
+    };
       
   } catch (error) {
     console.error('錯誤：', error);
     
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: 'error',
-        message: error.toString()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // 設定錯誤結果
+    result = {
+      status: 'error',
+      message: error.toString()
+    };
   }
+  
+  // 回傳結果
+  return ContentService
+    .createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet(e) {
@@ -152,3 +168,4 @@ function doGet(e) {
 - 每次保存會建立兩個新工作表：
   - HTML 工作表：`{gameCode}_{timestamp}`
   - 統計工作表：`result_{timestamp}`
+- 隊伍名稱會直接顯示，不會有 "ERROR!" 問題
