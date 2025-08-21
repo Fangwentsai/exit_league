@@ -17,11 +17,11 @@
             <div class="match-result">
                 <div class="team away">
                     <div class="team-name">海盜揪硬</div>
-                    <div class="team-score">8</div>
+                    <div class="team-score">20</div>
                 </div>
                 <div class="score-divider">:</div>
                 <div class="team home">
-                    <div class="team-score">14</div>
+                    <div class="team-score">15</div>
                     <div class="team-name">一鏢開天門</div>
                 </div>
             </div>
@@ -71,8 +71,8 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET5<br><span class="game-detail">三人賽 701<br>每人一鏢骰子賽</span></td>
-                        <td>阿琪, 君君, 海盜小宇</td>
-                        <td class="first-attack winner">
+                        <td class="first-attack">阿琪, 君君, 海盜小宇</td>
+                        <td class="winner">
                             <div class="winner-icon"></div>
                             小俠, Ray, 飛
                         </td>
@@ -91,8 +91,8 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET6<br><span class="game-detail">Cricket</span></td>
-                        <td>Lucy</td>
-                        <td class="first-attack winner">
+                        <td class="first-attack">Lucy</td>
+                        <td class="winner">
                             <div class="winner-icon"></div>
                             Ray
                         </td>
@@ -115,8 +115,8 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET9<br><span class="game-detail">HALF-IT</span></td>
-                        <td class="first-attack">鎮宇</td>
-                        <td class="winner">
+                        <td>鎮宇</td>
+                        <td class="first-attack winner">
                             <div class="winner-icon"></div>
                             倫
                         </td>
@@ -143,11 +143,11 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td>
-                        <td>小8, 君君</td>
                         <td class="first-attack winner">
                             <div class="winner-icon"></div>
-                            小俠, Ray
+                            小8, 君君
                         </td>
+                        <td>小俠, Ray</td>
                     </tr>
                     <tr>
                         <td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td>
@@ -167,8 +167,8 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td>
-                        <td>海盜小宇, 君君</td>
-                        <td class="first-attack winner">
+                        <td class="first-attack">海盜小宇, 君君</td>
+                        <td class="winner">
                             <div class="winner-icon"></div>
                             飛, 倫
                         </td>
@@ -187,11 +187,11 @@
                     </tr>
                     <tr>
                         <td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td>
-                        <td class="winner">
+                        <td class="first-attack winner">
                             <div class="winner-icon"></div>
                             海盜小宇, 小蘇<br>伊凡, 君君
                         </td>
-                        <td class="first-attack">小俠, 倫<br>飛, 小高</td>
+                        <td>小俠, 倫<br>飛, 小高</td>
                     </tr>
                     <tr>
                         <td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td>
@@ -268,8 +268,8 @@
 
     // 設定飲酒加成
     const drinkingBonus = {
-        away: 0,  // 客場隊伍無飲酒加成
-        home: 5   // 主場隊伍有飲酒加成
+        away: 5,  // 海盜揪硬有飲酒加成
+        home: 0    // 一鏢開天門有飲酒加成
     };
 
     // 定義本場比賽的選手名單
