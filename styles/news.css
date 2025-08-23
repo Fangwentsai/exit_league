@@ -582,19 +582,11 @@ body.news-page {
 }
 
 .matches-header .matches-date {
-    display: inline;
-    font-size: 14px;
-    color: #6c757d;
-    font-weight: 500;
-    margin-right: 12px;
-}
-
-.matches-header .matches-title {
-    display: inline;
-    font-size: 18px;
-    font-weight: 600;
+    display: block;
+    font-size: 16px;
     color: #333;
-    line-height: 1.4;
+    font-weight: 600;
+    text-align: center;
     margin: 0;
 }
 
@@ -617,34 +609,22 @@ body.news-page {
 
 /* 響應式樣式 */
 @media (max-width: 768px) {
-    .matches-header .matches-date {
-        display: block;
-        margin-bottom: 8px;
-        margin-right: 0;
-    }
-    
-    .matches-header .matches-title {
-        display: block;
-        font-size: 16px;
-    }
-    
     .matches-header {
         padding: 12px 15px;
+    }
+    
+    .matches-header .matches-date {
+        font-size: 15px;
     }
 }
 
 @media (max-width: 480px) {
-    .matches-header .matches-title {
-        font-size: 15px;
+    .matches-header {
+        padding: 10px 12px;
     }
     
     .matches-header .matches-date {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-    
-    .matches-header {
-        padding: 10px 12px;
+        font-size: 14px;
     }
 }
 
