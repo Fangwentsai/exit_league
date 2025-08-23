@@ -305,8 +305,8 @@ body {
 }
 
 .news-item {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
@@ -508,38 +508,37 @@ body {
     margin-bottom: 18px;
 }
 
+/* 新聞內容區域，限制底部間距 */
+.news-content {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* 新聞頁面容器優化 */
+.container {
+    min-height: auto !important;
+}
+
+/* 確保新聞頁面沒有多餘的底部空間 */
+body.news-page {
+    padding-bottom: 20px !important;
+}
+
 /* ==================== 折疊新聞功能樣式 ==================== */
 
 /* 可折疊新聞項目樣式 */
 .news-item.collapsible {
-    border: 1px solid #e0e0e0;
+    border: none;
     border-radius: 0;
-    margin-bottom: 0;
+    margin-bottom: 1px;
     overflow: hidden;
-    background: #ffffff;
+    background: transparent;
     box-shadow: none;
-    transition: box-shadow 0.3s ease;
-}
-
-/* 第一個新聞項目保留上邊圓角 */
-.news-item.collapsible:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-/* 最後一個新聞項目保留下邊圓角 */
-.news-item.collapsible:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-/* 相鄰項目的邊框合併 */
-.news-item.collapsible + .news-item.collapsible {
-    border-top: none;
+    transition: all 0.3s ease;
 }
 
 .news-item.collapsible:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 /* 新聞標題區域 */
