@@ -100,14 +100,8 @@ function initializeNewsToggle() {
                 header.style.userSelect = 'none';
             });
             
-            // 為第一篇新聞預設展開
-            const firstNews = contentNewsHeaders[0];
-            if (firstNews) {
-                console.log('🚀 準備展開第一篇新聞');
-                setTimeout(() => {
-                    toggleNews(firstNews);
-                }, 100);
-            }
+            // 不再自動展開第一篇新聞
+            console.log('📰 新聞折疊功能設置完成，等待用戶手動點擊');
             return;
         }
         
@@ -123,16 +117,8 @@ function initializeNewsToggle() {
             header.style.userSelect = 'none'; // 防止文字選取
         });
         
-        // 為第一篇新聞預設展開
-        const firstNews = newsHeaders[0];
-        if (firstNews) {
-            console.log('🚀 準備展開第一篇新聞');
-            setTimeout(() => {
-                toggleNews(firstNews);
-            }, 100);
-        } else {
-            console.log('❌ 找不到第一篇新聞');
-        }
+        // 不再自動展開第一篇新聞
+        console.log('📰 新聞折疊功能設置完成，等待用戶手動點擊');
         
         console.log('✅ 新聞折疊功能初始化完成');
     }, 200);
