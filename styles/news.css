@@ -22,7 +22,7 @@ body {
 .section-title,
 .ranking-section h2 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     color: #333;
     border-bottom: 2px solid #dc3545;
     padding-bottom: 8px;
@@ -505,23 +505,39 @@ body {
 
 /* 新聞區塊與其他區塊保持一致的間距 */
 .news-section {
-    margin-bottom: 18px;
+    margin-bottom: 5px;
 }
 
-/* 新聞內容區域，限制底部間距 */
+/* 新聞內容區域，限制間距 */
 .news-content {
     margin-bottom: 0;
     padding-bottom: 0;
+    margin-top: 5px;
 }
 
 /* 新聞頁面容器優化 */
 .container {
     min-height: auto !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 20px !important;
 }
 
 /* 確保新聞頁面沒有多餘的底部空間 */
 body.news-page {
-    padding-bottom: 20px !important;
+    padding-bottom: 10px !important;
+}
+
+/* 針對新聞頁面進一步優化間距 */
+.news-section .section-title {
+    margin-bottom: 3px;
+    margin-top: 0;
+}
+
+/* 新聞頁面內容區域優化 */
+#content {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
 }
 
 /* ==================== 折疊新聞功能樣式 ==================== */
