@@ -222,8 +222,17 @@ async function loadContent(page, anchor = null, pushState = true) {
             if (page === 'news') {
                 dataLoadPromise = loadNewsData().then(() => {
                     // 初始化新聞折疊功能
+                    console.log('📰 新聞頁面載入完成，準備初始化折疊功能');
+                    console.log('🔍 檢查 initializeNewsToggle 函數:', typeof window.initializeNewsToggle);
+                    
                     if (typeof window.initializeNewsToggle === 'function') {
-                        setTimeout(() => window.initializeNewsToggle(), 100);
+                        console.log('⏰ 延遲300ms後調用 initializeNewsToggle');
+                        setTimeout(() => {
+                            console.log('🚀 開始調用 initializeNewsToggle');
+                            window.initializeNewsToggle();
+                        }, 300);
+                    } else {
+                        console.log('❌ initializeNewsToggle 函數不存在');
                     }
                 });
             } 
@@ -317,8 +326,8 @@ async function loadContent(page, anchor = null, pushState = true) {
 
             // 更新瀏覽器歷史記錄
             if (pushState) {
-                // 如果是預設頁面(schedule)且沒有anchor，不添加hash
-                if (page === 'schedule' && !anchor) {
+                // 如果是預設頁面(news)且沒有anchor，不添加hash
+                if (page === 'news' && !anchor) {
                     debugLog('預設頁面，不添加hash');
                     history.pushState({ page, anchor }, '', window.location.pathname);
                 } else {
@@ -1826,7 +1835,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     } else {
         debugLog('沒有錨點，載入默認頁面');
-        loadContent('schedule', null, true);
+        loadContent('news', null, true);
     }
     
     // 監聽瀏覽器前進後退

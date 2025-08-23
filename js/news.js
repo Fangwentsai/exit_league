@@ -3,52 +3,92 @@ console.log('news.js 已載入');
 
 // 新聞折疊功能
 function toggleNews(headerElement) {
+    console.log('toggleNews 被調用', headerElement);
     const newsItem = headerElement.parentElement;
     const newsText = newsItem.querySelector('.news-text');
     
+    console.log('newsItem:', newsItem);
+    console.log('newsText:', newsText);
+    console.log('newsText classes before:', newsText.className);
+    
     if (newsText.classList.contains('collapsed')) {
         // 展開
+        console.log('展開新聞');
         newsText.classList.remove('collapsed');
         newsText.classList.add('expanded');
         headerElement.classList.add('expanded');
     } else {
         // 折疊
+        console.log('折疊新聞');
         newsText.classList.remove('expanded');
         newsText.classList.add('collapsed');
         headerElement.classList.remove('expanded');
     }
+    
+    console.log('newsText classes after:', newsText.className);
+    console.log('headerElement classes after:', headerElement.className);
 }
 
 // 初始化新聞折疊功能
 function initializeNewsToggle() {
-    console.log('初始化新聞折疊功能');
+    console.log('🔄 開始初始化新聞折疊功能');
+    console.log('當前頁面 URL:', window.location.href);
+    console.log('當前頁面內容區域:', document.getElementById('contentArea'));
     
-    // 移除之前的事件監聽器
-    const existingHeaders = document.querySelectorAll('.news-header');
-    existingHeaders.forEach(header => {
-        header.replaceWith(header.cloneNode(true));
-    });
-    
-    // 為所有新聞標題添加點擊事件
-    const newsHeaders = document.querySelectorAll('.news-header');
-    console.log('找到新聞標題數量:', newsHeaders.length);
-    
-    newsHeaders.forEach((header, index) => {
-        header.addEventListener('click', function() {
-            console.log(`點擊了第${index+1}個新聞標題`);
-            toggleNews(this);
-        });
-        header.style.cursor = 'pointer';
-    });
-    
-    // 為第一篇新聞預設展開
-    const firstNews = document.querySelector('.news-item.collapsible .news-header');
-    if (firstNews) {
-        console.log('展開第一篇新聞');
-        toggleNews(firstNews);
+    // 檢查是否在正確的頁面
+    const contentArea = document.getElementById('contentArea');
+    if (!contentArea) {
+        console.log('❌ 找不到 contentArea，初始化失敗');
+        return;
     }
     
-    console.log('新聞折疊功能初始化完成');
+    // 等待一下確保 DOM 完全載入
+    setTimeout(() => {
+        console.log('⏳ 延遲後開始初始化...');
+        
+        // 移除之前的事件監聽器
+        const existingHeaders = document.querySelectorAll('.news-header');
+        console.log('🔍 找到現有新聞標題數量:', existingHeaders.length);
+        
+        existingHeaders.forEach((header, index) => {
+            console.log(`📰 處理第${index+1}個新聞標題:`, header.querySelector('.news-title')?.textContent);
+            header.replaceWith(header.cloneNode(true));
+        });
+        
+        // 重新查詢新聞標題
+        const newsHeaders = document.querySelectorAll('.news-header');
+        console.log('✅ 重新查詢到新聞標題數量:', newsHeaders.length);
+        
+        if (newsHeaders.length === 0) {
+            console.log('❌ 沒有找到任何新聞標題，可能頁面還未載入完成');
+            return;
+        }
+        
+        newsHeaders.forEach((header, index) => {
+            console.log(`🖱️ 為第${index+1}個新聞標題添加點擊事件`);
+            header.addEventListener('click', function(event) {
+                console.log(`🖱️ 點擊了第${index+1}個新聞標題`, event);
+                event.preventDefault();
+                event.stopPropagation();
+                toggleNews(this);
+            });
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none'; // 防止文字選取
+        });
+        
+        // 為第一篇新聞預設展開
+        const firstNews = document.querySelector('.news-item.collapsible .news-header');
+        if (firstNews) {
+            console.log('🚀 準備展開第一篇新聞');
+            setTimeout(() => {
+                toggleNews(firstNews);
+            }, 100);
+        } else {
+            console.log('❌ 找不到第一篇新聞');
+        }
+        
+        console.log('✅ 新聞折疊功能初始化完成');
+    }, 200);
 }
 
 // 頁面載入完成後初始化
