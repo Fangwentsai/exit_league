@@ -312,9 +312,15 @@ async function loadContent(page, anchor = null, pushState = true) {
 
             // 更新瀏覽器歷史記錄
             if (pushState) {
-                const url = anchor ? `#${page}/${anchor}` : `#${page}`;
-                debugLog('更新瀏覽器歷史:', url);
-                history.pushState({ page, anchor }, '', url);
+                // 如果是預設頁面(schedule)且沒有anchor，不添加hash
+                if (page === 'schedule' && !anchor) {
+                    debugLog('預設頁面，不添加hash');
+                    history.pushState({ page, anchor }, '', window.location.pathname);
+                } else {
+                    const url = anchor ? `#${page}/${anchor}` : `#${page}`;
+                    debugLog('更新瀏覽器歷史:', url);
+                    history.pushState({ page, anchor }, '', url);
+                }
             }
         })
         .catch(error => {
@@ -1815,7 +1821,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     } else {
         debugLog('沒有錨點，載入默認頁面');
-        loadContent('news', null, true);
+        loadContent('schedule', null, true);
     }
     
     // 監聽瀏覽器前進後退
