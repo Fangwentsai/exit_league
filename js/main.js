@@ -220,7 +220,12 @@ async function loadContent(page, anchor = null, pushState = true) {
             // 根據頁面類型載入不同的數據
             let dataLoadPromise = Promise.resolve();
             if (page === 'news') {
-                dataLoadPromise = loadNewsData();
+                dataLoadPromise = loadNewsData().then(() => {
+                    // 初始化新聞折疊功能
+                    if (typeof window.initializeNewsToggle === 'function') {
+                        setTimeout(() => window.initializeNewsToggle(), 100);
+                    }
+                });
             } 
             else if (page === 'rule') {
                 dataLoadPromise = loadRuleData();
