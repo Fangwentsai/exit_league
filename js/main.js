@@ -28,6 +28,116 @@ function debugLog(...args) {
     }
 }
 
+// ==================== 新聞折疊功能 ====================
+
+// 新聞折疊功能
+function toggleNews(headerElement) {
+    console.log('toggleNews 被調用', headerElement);
+    const newsItem = headerElement.parentElement;
+    const newsText = newsItem.querySelector('.news-text');
+    
+    console.log('newsItem:', newsItem);
+    console.log('newsText:', newsText);
+    console.log('newsText classes before:', newsText.className);
+    
+    if (newsText.classList.contains('collapsed')) {
+        // 展開
+        console.log('展開新聞');
+        newsText.classList.remove('collapsed');
+        newsText.classList.add('expanded');
+        headerElement.classList.add('expanded');
+    } else {
+        // 折疊
+        console.log('折疊新聞');
+        newsText.classList.remove('expanded');
+        newsText.classList.add('collapsed');
+        headerElement.classList.remove('expanded');
+    }
+    
+    console.log('newsText classes after:', newsText.className);
+    console.log('headerElement classes after:', headerElement.className);
+}
+
+// 初始化新聞折疊功能
+function initializeNewsToggle() {
+    console.log('🔄 開始初始化新聞折疊功能');
+    console.log('當前頁面 URL:', window.location.href);
+    console.log('當前頁面內容區域:', document.getElementById('contentArea'));
+    
+    // 檢查是否在正確的頁面
+    const contentArea = document.getElementById('contentArea');
+    if (!contentArea) {
+        console.log('❌ 找不到 contentArea，初始化失敗');
+        return;
+    }
+    
+    // 等待一下確保 DOM 完全載入
+    setTimeout(() => {
+        console.log('⏳ 延遲後開始初始化...');
+        
+        // 查詢新聞標題
+        const newsHeaders = document.querySelectorAll('.news-header');
+        console.log('🔍 找到新聞標題數量:', newsHeaders.length);
+        
+        if (newsHeaders.length === 0) {
+            console.log('❌ 沒有找到任何新聞標題，可能頁面還未載入完成');
+            // 再試一次，從 contentArea 內部查找
+            const contentNewsHeaders = contentArea.querySelectorAll('.news-header');
+            console.log('🔍 從 contentArea 查找到新聞標題數量:', contentNewsHeaders.length);
+            if (contentNewsHeaders.length === 0) {
+                return;
+            }
+            // 使用從 contentArea 找到的標題
+            contentNewsHeaders.forEach((header, index) => {
+                console.log(`🖱️ 為第${index+1}個新聞標題添加點擊事件`);
+                header.addEventListener('click', function(event) {
+                    console.log(`🖱️ 點擊了第${index+1}個新聞標題`, event);
+                    event.preventDefault();
+                    event.stopPropagation();
+                    toggleNews(this);
+                });
+                header.style.cursor = 'pointer';
+                header.style.userSelect = 'none';
+            });
+            
+            // 為第一篇新聞預設展開
+            const firstNews = contentNewsHeaders[0];
+            if (firstNews) {
+                console.log('🚀 準備展開第一篇新聞');
+                setTimeout(() => {
+                    toggleNews(firstNews);
+                }, 100);
+            }
+            return;
+        }
+        
+        newsHeaders.forEach((header, index) => {
+            console.log(`🖱️ 為第${index+1}個新聞標題添加點擊事件`);
+            header.addEventListener('click', function(event) {
+                console.log(`🖱️ 點擊了第${index+1}個新聞標題`, event);
+                event.preventDefault();
+                event.stopPropagation();
+                toggleNews(this);
+            });
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none'; // 防止文字選取
+        });
+        
+        // 為第一篇新聞預設展開
+        const firstNews = newsHeaders[0];
+        if (firstNews) {
+            console.log('🚀 準備展開第一篇新聞');
+            setTimeout(() => {
+                toggleNews(firstNews);
+            }, 100);
+        } else {
+            console.log('❌ 找不到第一篇新聞');
+        }
+        
+        console.log('✅ 新聞折疊功能初始化完成');
+    }, 200);
+}
+
 // 調試輸出
 // console.log('CONFIG 對象已加載');
 // console.log('CONFIG.SEASON3:', CONFIG.SEASON3);
@@ -221,19 +331,11 @@ async function loadContent(page, anchor = null, pushState = true) {
             let dataLoadPromise = Promise.resolve();
             if (page === 'news') {
                 dataLoadPromise = loadNewsData().then(() => {
-                    // 初始化新聞折疊功能
+                    // 直接在這裡初始化新聞折疊功能
                     console.log('📰 新聞頁面載入完成，準備初始化折疊功能');
-                    console.log('🔍 檢查 initializeNewsToggle 函數:', typeof window.initializeNewsToggle);
-                    
-                    if (typeof window.initializeNewsToggle === 'function') {
-                        console.log('⏰ 延遲300ms後調用 initializeNewsToggle');
-                        setTimeout(() => {
-                            console.log('🚀 開始調用 initializeNewsToggle');
-                            window.initializeNewsToggle();
-                        }, 300);
-                    } else {
-                        console.log('❌ initializeNewsToggle 函數不存在');
-                    }
+                    setTimeout(() => {
+                        initializeNewsToggle();
+                    }, 300);
                 });
             } 
             else if (page === 'rule') {
