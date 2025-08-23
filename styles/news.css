@@ -507,7 +507,7 @@ body {
 .news-item.collapsible {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 2px;
     overflow: hidden;
     background: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);

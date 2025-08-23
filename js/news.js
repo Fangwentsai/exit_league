@@ -19,22 +19,45 @@ function toggleNews(headerElement) {
     }
 }
 
-// 頁面載入完成後初始化折疊功能
-document.addEventListener('DOMContentLoaded', function() {
+// 初始化新聞折疊功能
+function initializeNewsToggle() {
+    console.log('初始化新聞折疊功能');
+    
+    // 移除之前的事件監聽器
+    const existingHeaders = document.querySelectorAll('.news-header');
+    existingHeaders.forEach(header => {
+        header.replaceWith(header.cloneNode(true));
+    });
+    
     // 為所有新聞標題添加點擊事件
     const newsHeaders = document.querySelectorAll('.news-header');
-    newsHeaders.forEach(header => {
+    console.log('找到新聞標題數量:', newsHeaders.length);
+    
+    newsHeaders.forEach((header, index) => {
         header.addEventListener('click', function() {
+            console.log(`點擊了第${index+1}個新聞標題`);
             toggleNews(this);
         });
+        header.style.cursor = 'pointer';
     });
     
     // 為第一篇新聞預設展開
     const firstNews = document.querySelector('.news-item.collapsible .news-header');
     if (firstNews) {
+        console.log('展開第一篇新聞');
         toggleNews(firstNews);
     }
+    
+    console.log('新聞折疊功能初始化完成');
+}
+
+// 頁面載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNewsToggle();
 });
+
+// 當內容動態載入時也要重新初始化
+window.initializeNewsToggle = initializeNewsToggle;
 
 // 確保函數可以全域訪問
 window.toggleNews = toggleNews;
