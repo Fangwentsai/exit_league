@@ -819,8 +819,7 @@ function updateScoreCalculation() {
     });
 }
 
-// ===== 自動填入測試資料 (開發用功能，生產環境已隱藏) =====
-/*
+// ===== 自動填入測試資料 (開發用功能，測試用已啟用) =====
 function autoFillTestData() {
     if (!currentGame) {
         alert('❌ 請先選擇比賽！');
@@ -888,7 +887,6 @@ function autoFillTestData() {
     
     alert('🎲 自動填入完成！\n\n所有SET的選手、先攻、勝負都已隨機設定。');
 }
-*/
 
 function getRandomPlayers(players, count) {
     const shuffled = [...players].sort(() => Math.random() - 0.5);
@@ -1030,33 +1028,33 @@ async function saveToGoogleSheetsWithHTML(gameData) {
         
         console.log('準備保存資料：', gameData);
         
-        // 生成時間戳記
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        // 生成時間戳記 (GMT+8)
+        const now = new Date();
+        const gmt8Time = new Date(now.getTime() + (8 * 60 * 60 * 1000)).toISOString();
+        const formattedTime = gmt8Time.replace('T', ' ').replace(/\.\d{3}Z$/, '').replace(/:/g, '-');
         const gameCode = gameData.gameId;
+        
+        // 收集Admin格式的資料用於HTML生成
+        const adminFormatData = collectAdminData();
         
         // 生成預覽 HTML
         const previewGenerator = new GameResultPreviewGenerator();
-        const htmlContent = previewGenerator.generatePreviewHTML(gameData);
+        const htmlContent = previewGenerator.generatePreviewHTML(adminFormatData);
         
-        // 生成選手統計資料
-        const playerStats = generatePlayerStatistics(gameData);
-        
-        // 準備寫入 Google Sheets 的資料
+        // 準備寫入 Google Sheets 的資料（保持空的playerStats以相容舊版Google Apps Script）
         const sheetsData = {
             ...gameData,
             htmlContent: htmlContent,
-            playerStats: playerStats,
-            htmlSheetName: `${gameCode}_${timestamp}`,
-            statsSheetName: `result_${timestamp}`,
-            timestamp: timestamp
+            htmlSheetName: `${gameCode}.html`,
+            playerStats: { away: [], home: [] }, // 空統計資料，避免錯誤
+            timestamp: formattedTime
         };
         
         // Google Apps Script Web App URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwG06esXLPr-jbZKS9lCVfVYN3Gfl9ag4WDdjfHYMivMPmGbMaZR3rioOfJhofpBFX8/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbw96zr198osWO2HIeFbKMaHaM3-WqkHcDJ1F_OmTJdulf3Euv2E9K7LrdRpMORMr5lW/exec';
         
         console.log('發送請求到：', scriptURL);
         console.log('HTML 工作表名稱：', sheetsData.htmlSheetName);
-        console.log('統計工作表名稱：', sheetsData.statsSheetName);
         
         const response = await fetch(scriptURL, {
             method: 'POST',
@@ -1077,7 +1075,7 @@ async function saveToGoogleSheetsWithHTML(gameData) {
                 const result = JSON.parse(resultText);
                 if (result.status === 'success') {
                     markAsSaved();
-                    await showCustomAlert(`✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\nHTML 工作表：${sheetsData.htmlSheetName}\n統計工作表：${sheetsData.statsSheetName}\n時間：${new Date(result.timestamp).toLocaleString()}\n\n頁面將自動關閉...`, 'success');
+                    await showCustomAlert(`✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\nHTML 工作表：${sheetsData.htmlSheetName}\n時間：${formattedTime}\n\n頁面將自動關閉...`, 'success');
                     console.log('保存成功：', result);
                     
                     // 延遲 1 秒後關閉分頁
@@ -1092,7 +1090,7 @@ async function saveToGoogleSheetsWithHTML(gameData) {
                 // 如果無法解析 JSON，但狀態碼是 200，可能還是成功了
                 if (resultText.includes('success') || resultText.includes('成功') || resultText.includes('"status":"success"')) {
                     markAsSaved();
-                    await showCustomAlert(`✅ 比賽資料已保存完成！\n\nHTML 工作表：${sheetsData.htmlSheetName}\n統計工作表：${sheetsData.statsSheetName}\n\n頁面將自動關閉...`, 'success');
+                    await showCustomAlert(`✅ 比賽資料已保存完成！\n\nHTML 工作表：${sheetsData.htmlSheetName}\n\n頁面將自動關閉...`, 'success');
                     
                     // 延遲 1 秒後關閉分頁
                     setTimeout(() => {
@@ -1150,7 +1148,7 @@ async function saveToGoogleSheets(gameData) {
         console.log('準備保存資料：', gameData);
         
         // Google Apps Script Web App URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwG06esXLPr-jbZKS9lCVfVYN3Gfl9ag4WDdjfHYMivMPmGbMaZR3rioOfJhofpBFX8/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbw96zr198osWO2HIeFbKMaHaM3-WqkHcDJ1F_OmTJdulf3Euv2E9K7LrdRpMORMr5lW/exec';
         
         console.log('發送請求到：', scriptURL);
         
@@ -1229,6 +1227,8 @@ async function saveToGoogleSheets(gameData) {
 }
 
 // 生成選手統計資料
+// 統計工作表功能已關閉
+/*
 function generatePlayerStatistics(gameData) {
     const stats = {
         away: [],
@@ -1325,6 +1325,7 @@ function getTeamPlayers(teamName) {
     
     return teamPlayers[teamName] || [];
 }
+*/
 
 // 保存到本地存儲（降級方案）
 async function saveToLocalStorage(gameData) {
@@ -1392,11 +1393,38 @@ async function showGamePreview() {
     // 收集當前的比賽數據
     const adminData = collectAdminData();
     
-    // 跳過完整性檢查，直接顯示預覽（用戶無法保存不完整的資料）
+    // Console檢查模式：輸出詳細的資料和HTML
+    console.group('🎮 比賽預覽檢查');
+    console.log('📊 收集到的管理資料:', adminData);
+    
     try {
+        // 生成HTML預覽
+        const previewGenerator = new GameResultPreviewGenerator();
+        const htmlContent = previewGenerator.generatePreviewHTML(adminData);
+        
+        console.log('📄 生成的HTML內容:');
+        console.log(htmlContent);
+        
+        // 檢查選手資料
+        console.log('👥 選手資料檢查:');
+        console.log('主場選手:', previewGenerator.extractPlayers(adminData, 'home'));
+        console.log('客場選手:', previewGenerator.extractPlayers(adminData, 'away'));
+        
+        // 檢查比賽資料轉換
+        const matchData = previewGenerator.convertToMatchData(adminData);
+        console.log('🎯 轉換後的比賽資料:', matchData);
+        
+        // 檢查分數計算
+        const finalScores = previewGenerator.calculateFinalScores(matchData, adminData.drinkingBonus || {});
+        console.log('📊 最終分數:', finalScores);
+        
+        console.groupEnd();
+        
+        // 顯示預覽模態框
         showPreviewModal(adminData);
     } catch (error) {
-        console.error('預覽生成失敗:', error);
+        console.error('❌ 預覽生成失敗:', error);
+        console.groupEnd();
         await showCustomAlert('❌ 預覽生成失敗，請檢查資料填寫是否正確', 'error');
     }
 }
@@ -1426,6 +1454,6 @@ window.logout = logout;
 window.openPlayerModal = openPlayerModal;
 window.toggleControl = toggleControl;
 window.selectBonus = selectBonus;
-// window.autoFillTestData = autoFillTestData; // 開發用功能已隱藏
+window.autoFillTestData = autoFillTestData; // 開發用功能已啟用
 window.saveGameData = saveGameData;
 window.showGamePreview = showGamePreview; 
