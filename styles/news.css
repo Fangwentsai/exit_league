@@ -501,17 +501,41 @@ body {
     margin: 6px 0;
 }
 
+/* ==================== 新聞區塊樣式 ==================== */
+
+/* 新聞區塊與其他區塊保持一致的間距 */
+.news-section {
+    margin-bottom: 18px;
+}
+
 /* ==================== 折疊新聞功能樣式 ==================== */
 
 /* 可折疊新聞項目樣式 */
 .news-item.collapsible {
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 2px;
+    border-radius: 0;
+    margin-bottom: 0;
     overflow: hidden;
     background: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     transition: box-shadow 0.3s ease;
+}
+
+/* 第一個新聞項目保留上邊圓角 */
+.news-item.collapsible:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* 最後一個新聞項目保留下邊圓角 */
+.news-item.collapsible:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* 相鄰項目的邊框合併 */
+.news-item.collapsible + .news-item.collapsible {
+    border-top: none;
 }
 
 .news-item.collapsible:hover {
