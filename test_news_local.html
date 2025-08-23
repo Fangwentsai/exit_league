@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新聞折疊功能測試</title>
+    <link rel="stylesheet" href="styles/news.css">
+</head>
+<body>
+    <div class="container">
+        <h1>新聞折疊功能測試</h1>
+        
+        <div class="news-content">
+            <!-- 測試新聞1 -->
+            <div class="news-item collapsible">
+                <div class="news-header">
+                    <div class="news-date">2025/1/20</div>
+                    <div class="news-title">第五屆聯賽激戰正酣！VIVI嘻嘻隊與來都來了並列領先！(AI生成)</div>
+                </div>
+                <div class="news-text collapsed">
+                    第五屆難找的聯賽戰況激烈，目前賽程已進入白熱化階段！最新排行榜顯示，VIVI嘻嘻隊與來都來了兩支勁旅以25分並列榜首，展現出驚人的競爭力！
+                    <br><br>
+                    <strong>🏆 團隊排名戰況：</strong><br>
+                    VIVI嘻嘻隊與來都來了雙雙以25分領跑群雄，兩隊實力相當，誰能率先突破重圍成為本屆冠軍備受關注。
+                </div>
+            </div>
+
+            <!-- 測試新聞2 -->
+            <div class="news-item collapsible">
+                <div class="news-header">
+                    <div class="news-date">2025/8/15</div>
+                    <div class="news-title">🎯 第五屆難找的聯賽即將震撼登場！8/19首戰開火！🔥</div>
+                </div>
+                <div class="news-text collapsed">
+                    各位親愛的選手與酒友們，經歷了漫長的休賽季（其實也沒多長啦），我們終於要在 <strong>8/19</strong> 迎來第五屆比賽的首戰！🎊
+                    <br><br>
+                    經過四屆的淬煉與洗禮，難找的聯賽已經從一個「找個理由喝酒」的聚會，進化成一個「找個理由喝酒但會認真丟鏢」的專業賽事！
+                </div>
+            </div>
+
+            <!-- 測試新聞3 -->
+            <div class="news-item collapsible">
+                <div class="news-header">
+                    <div class="news-date">2025/7/8</div>
+                    <div class="news-title">第四屆聯賽完美落幕！酒空組逆轉奪冠</div>
+                </div>
+                <div class="news-text collapsed">
+                    歷經數月激戰，難找的聯賽第四屆終於圓滿落下帷幕！本週最後四場決戰為整屆聯賽畫下完美句號。
+                    <br><br>
+                    <strong>最終戰況回顧：</strong><br>
+                    人生揪難主場迎戰逃生入口A，雙方激戰成18:18完美平手，旗鼓相當難分高下。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入news.js來測試折疊功能 -->
+    <script src="js/news.js"></script>
+    
+    <!-- 額外的測試腳本 -->
+    <script>
+        // 等待頁面和news.js都載入完成
+        setTimeout(function() {
+            console.log('測試頁面初始化完成');
+            console.log('可用的新聞標題數量:', document.querySelectorAll('.news-header').length);
+            
+            // 手動為所有新聞標題添加點擊事件（備用方案）
+            const newsHeaders = document.querySelectorAll('.news-header');
+            newsHeaders.forEach((header, index) => {
+                console.log(`為第${index+1}個新聞標題添加點擊事件`);
+                header.addEventListener('click', function() {
+                    console.log(`點擊了第${index+1}個新聞標題`);
+                    
+                    const newsItem = this.parentElement;
+                    const newsText = newsItem.querySelector('.news-text');
+                    
+                    if (newsText.classList.contains('collapsed')) {
+                        newsText.classList.remove('collapsed');
+                        newsText.classList.add('expanded');
+                        this.classList.add('expanded');
+                        console.log('展開新聞');
+                    } else {
+                        newsText.classList.remove('expanded');
+                        newsText.classList.add('collapsed');
+                        this.classList.remove('expanded');
+                        console.log('收合新聞');
+                    }
+                });
+                
+                // 為第一個新聞預設展開
+                if (index === 0) {
+                    header.click();
+                }
+            });
+        }, 500);
+    </script>
+</body>
+</html>

@@ -1,6 +1,44 @@
 // 立即執行的測試
 console.log('news.js 已載入');
 
+// 新聞折疊功能
+function toggleNews(headerElement) {
+    const newsItem = headerElement.parentElement;
+    const newsText = newsItem.querySelector('.news-text');
+    
+    if (newsText.classList.contains('collapsed')) {
+        // 展開
+        newsText.classList.remove('collapsed');
+        newsText.classList.add('expanded');
+        headerElement.classList.add('expanded');
+    } else {
+        // 折疊
+        newsText.classList.remove('expanded');
+        newsText.classList.add('collapsed');
+        headerElement.classList.remove('expanded');
+    }
+}
+
+// 頁面載入完成後初始化折疊功能
+document.addEventListener('DOMContentLoaded', function() {
+    // 為所有新聞標題添加點擊事件
+    const newsHeaders = document.querySelectorAll('.news-header');
+    newsHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            toggleNews(this);
+        });
+    });
+    
+    // 為第一篇新聞預設展開
+    const firstNews = document.querySelector('.news-item.collapsible .news-header');
+    if (firstNews) {
+        toggleNews(firstNews);
+    }
+});
+
+// 確保函數可以全域訪問
+window.toggleNews = toggleNews;
+
 async function loadMatches() {
     try {
         console.log('開始載入比賽數據...');
