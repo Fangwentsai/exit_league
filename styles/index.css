@@ -126,7 +126,7 @@ body::-webkit-scrollbar {
     border: none;
     background-color: #fff;
     display: block;
-    margin-top: 80px;
+    margin-top: 62px;
     padding: 0;
 }
 
@@ -243,7 +243,7 @@ body::-webkit-scrollbar {
 /* 內容區域需要添加上方間距，避免被固定標題擋住 */
 .content-container {
     max-width: 1000px;
-    margin: 65px auto 5px auto;
+    margin: 62px auto 5px auto;
     padding: 10px;
 }
 
