@@ -568,9 +568,6 @@ function generateMatchesHTML(matches) {
     let html = `<div id="${uniqueId}">`;
     for (const date in matchesByDate) {
         html += `
-            <div class="match-date">
-                <span class="date">${date}</span>
-            </div>
             <div class="matches-container">
         `;
         for (const match of matchesByDate[date]) {
@@ -847,8 +844,8 @@ function displayMatches(matches) {
             
             // 更新上週戰況的日期顯示
             const lastWeekDate = lastWeekMatches.length > 0 ? lastWeekMatches[0].date : '上週';
-            const lastWeekDateElement = document.querySelector('.matches-header .matches-date');
-            if (lastWeekDateElement && lastWeekDateElement.textContent === '8/19') {
+            const lastWeekDateElement = document.getElementById('lastWeekDate');
+            if (lastWeekDateElement) {
                 lastWeekDateElement.textContent = lastWeekDate || '上週';
             }
         } else {
@@ -866,9 +863,9 @@ function displayMatches(matches) {
             
             // 更新近期比賽的日期顯示
             const upcomingDate = upcomingMatches.length > 0 ? upcomingMatches[0].date : '本週';
-            const upcomingDateElements = document.querySelectorAll('.matches-header .matches-date');
-            if (upcomingDateElements.length > 1 && upcomingDateElements[1].textContent === '本週') {
-                upcomingDateElements[1].textContent = upcomingDate || '本週';
+            const upcomingDateElement = document.getElementById('upcomingDate');
+            if (upcomingDateElement) {
+                upcomingDateElement.textContent = upcomingDate || '本週';
             }
         } else {
             upcomingContent.innerHTML = '<p>無近期比賽數據</p>';

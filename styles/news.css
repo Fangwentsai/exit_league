@@ -581,13 +581,28 @@ body.news-page {
     border-bottom: 2px solid #6c757d;
 }
 
+.matches-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
 .matches-header .matches-date {
-    display: block;
     font-size: 16px;
     color: #333;
     font-weight: 600;
-    text-align: center;
     margin: 0;
+}
+
+.matches-header .expand-icon {
+    font-size: 14px;
+    color: #6c757d;
+    transition: transform 0.3s ease;
+}
+
+.matches-header.expanded .expand-icon {
+    transform: rotate(45deg);
 }
 
 .matches-content.collapsed {
