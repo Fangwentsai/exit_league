@@ -540,6 +540,114 @@ body.news-page {
     padding-bottom: 10px !important;
 }
 
+/* ==================== 折疊功能樣式 ==================== */
+
+/* 比賽區塊折疊樣式 */
+.matches-section {
+    margin-bottom: 5px;
+}
+
+.matches-item.collapsible {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 1px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.matches-item.collapsible:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.matches-header {
+    display: block;
+    padding: 15px 20px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    position: relative;
+    user-select: none;
+}
+
+.matches-header:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.matches-header.expanded {
+    background: linear-gradient(135deg, #dee2e6 0%, #ced4da 100%);
+    border-bottom: 2px solid #6c757d;
+}
+
+.matches-header .matches-date {
+    display: inline;
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+    margin-right: 12px;
+}
+
+.matches-header .matches-title {
+    display: inline;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.matches-content.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.matches-content.expanded {
+    max-height: 1000px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+/* 響應式樣式 */
+@media (max-width: 768px) {
+    .matches-header .matches-date {
+        display: block;
+        margin-bottom: 8px;
+        margin-right: 0;
+    }
+    
+    .matches-header .matches-title {
+        display: block;
+        font-size: 16px;
+    }
+    
+    .matches-header {
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .matches-header .matches-title {
+        font-size: 15px;
+    }
+    
+    .matches-header .matches-date {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+    
+    .matches-header {
+        padding: 10px 12px;
+    }
+}
+
 /* ==================== 折疊新聞功能樣式 ==================== */
 
 /* 可折疊新聞項目樣式 */

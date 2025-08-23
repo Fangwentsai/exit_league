@@ -124,6 +124,68 @@ function initializeNewsToggle() {
     }, 200);
 }
 
+// 比賽區塊折疊切換功能
+function toggleMatches(headerElement) {
+    console.log('toggleMatches 被調用', headerElement);
+    const matchesItem = headerElement.parentElement;
+    const matchesContent = matchesItem.querySelector('.matches-content');
+    
+    if (!matchesContent) {
+        console.error('找不到比賽內容區域');
+        return;
+    }
+    
+    const isExpanded = matchesContent.classList.contains('expanded');
+    console.log('當前展開狀態:', isExpanded);
+    
+    if (isExpanded) {
+        // 收合
+        console.log('收合比賽內容');
+        matchesContent.classList.remove('expanded');
+        matchesContent.classList.add('collapsed');
+        headerElement.classList.remove('expanded');
+    } else {
+        // 展開
+        console.log('展開比賽內容');
+        matchesContent.classList.remove('collapsed');
+        matchesContent.classList.add('expanded');
+        headerElement.classList.add('expanded');
+    }
+}
+
+// 初始化比賽折疊功能
+function initializeMatchesToggle() {
+    console.log('🔄 開始初始化比賽折疊功能');
+    
+    // 等待一下確保 DOM 完全載入
+    setTimeout(() => {
+        console.log('⏳ 延遲後開始初始化比賽折疊...');
+        
+        const matchesHeaders = document.querySelectorAll('.matches-header');
+        console.log('🔍 找到比賽標題數量:', matchesHeaders.length);
+        
+        if (matchesHeaders.length === 0) {
+            console.log('❌ 沒有找到任何比賽標題');
+            return;
+        }
+        
+        matchesHeaders.forEach((header, index) => {
+            console.log(`🖱️ 為第${index+1}個比賽標題添加點擊事件`);
+            header.addEventListener('click', function(event) {
+                console.log(`🖱️ 點擊了第${index+1}個比賽標題`, event);
+                event.preventDefault();
+                event.stopPropagation();
+                toggleMatches(this);
+            });
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+        });
+        
+        console.log('🏆 比賽折疊功能設置完成，等待用戶手動點擊');
+        console.log('✅ 比賽折疊功能初始化完成');
+    }, 300);
+}
+
 // 調試輸出
 // console.log('CONFIG 對象已加載');
 // console.log('CONFIG.SEASON3:', CONFIG.SEASON3);
@@ -317,10 +379,11 @@ async function loadContent(page, anchor = null, pushState = true) {
             let dataLoadPromise = Promise.resolve();
             if (page === 'news') {
                 dataLoadPromise = loadNewsData().then(() => {
-                    // 直接在這裡初始化新聞折疊功能
+                    // 初始化新聞和比賽的折疊功能
                     console.log('📰 新聞頁面載入完成，準備初始化折疊功能');
                     setTimeout(() => {
                         initializeNewsToggle();
+                        initializeMatchesToggle();
                     }, 300);
                 });
             } 
@@ -781,6 +844,13 @@ function displayMatches(matches) {
         if (lastWeekMatches.length > 0) {
             lastWeekContent.innerHTML = generateMatchesHTML(lastWeekMatches);
             debugLog('上週戰況已更新');
+            
+            // 更新上週戰況的日期顯示
+            const lastWeekDate = lastWeekMatches.length > 0 ? lastWeekMatches[0].date : '上週';
+            const lastWeekDateElement = document.querySelector('.matches-header .matches-date');
+            if (lastWeekDateElement && lastWeekDateElement.textContent === '8/19') {
+                lastWeekDateElement.textContent = lastWeekDate || '上週';
+            }
         } else {
             lastWeekContent.innerHTML = '<p>無上週比賽數據</p>';
             debugLog('無上週比賽數據');
@@ -793,6 +863,13 @@ function displayMatches(matches) {
         if (upcomingMatches.length > 0) {
             upcomingContent.innerHTML = generateMatchesHTML(upcomingMatches);
             debugLog('近期比賽已更新');
+            
+            // 更新近期比賽的日期顯示
+            const upcomingDate = upcomingMatches.length > 0 ? upcomingMatches[0].date : '本週';
+            const upcomingDateElements = document.querySelectorAll('.matches-header .matches-date');
+            if (upcomingDateElements.length > 1 && upcomingDateElements[1].textContent === '本週') {
+                upcomingDateElements[1].textContent = upcomingDate || '本週';
+            }
         } else {
             upcomingContent.innerHTML = '<p>無近期比賽數據</p>';
             debugLog('無近期比賽數據');
