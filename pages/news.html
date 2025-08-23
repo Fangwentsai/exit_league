@@ -101,19 +101,29 @@
 <body>
     <div class="container">
         
-        <!-- 近期比賽區塊 (置頂) -->
-        <div class="upcoming-matches">
-            <h2 class="section-title">上週戰況</h2>
-            <div id="lastWeekMatchesContent" class="matches-content">
-                <div class="loading-indicator">數據加載中，請稍候...</div>
+        <!-- 上週戰況區塊 (可折疊) -->
+        <div class="matches-section">
+            <div class="matches-item collapsible">
+                <div class="matches-header">
+                    <div class="matches-date">8/19</div>
+                    <div class="matches-title">上週戰況</div>
+                </div>
+                <div class="matches-content collapsed" id="lastWeekMatchesContent">
+                    <div class="loading-indicator">數據加載中，請稍候...</div>
+                </div>
             </div>
         </div>
 
-        <!-- 近期比賽區塊 (置頂) -->
-        <div class="upcoming-matches">            
-            <h2 class="section-title">近期比賽</h2>
-            <div id="upcomingMatchesContent" class="matches-content">
-                <div class="loading-indicator">數據加載中，請稍候...</div>
+        <!-- 近期比賽區塊 (可折疊) -->
+        <div class="matches-section">
+            <div class="matches-item collapsible">
+                <div class="matches-header">
+                    <div class="matches-date">本週</div>
+                    <div class="matches-title">近期比賽</div>
+                </div>
+                <div class="matches-content collapsed" id="upcomingMatchesContent">
+                    <div class="loading-indicator">數據加載中，請稍候...</div>
+                </div>
             </div>
         </div>
         
