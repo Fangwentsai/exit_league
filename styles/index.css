@@ -420,6 +420,8 @@ body::-webkit-scrollbar {
     padding: 15px 0;
     background-color: #f8f9fa;
     width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .footer > div {
