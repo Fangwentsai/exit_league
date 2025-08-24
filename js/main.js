@@ -2010,3 +2010,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// 新聞展開/收起功能
+function toggleAllNews() {
+    console.log('toggleAllNews 被調用');
+    const expandableNews = document.getElementById('expandableNews');
+    const expandBtn = document.getElementById('expandBtn');
+    
+    if (!expandableNews || !expandBtn) {
+        console.log('找不到展開元素');
+        return;
+    }
+    
+    if (expandableNews.classList.contains('show-all')) {
+        // 收起
+        expandableNews.classList.remove('show-all');
+        expandBtn.textContent = '顯示全部';
+        console.log('新聞已收起');
+    } else {
+        // 展開
+        expandableNews.classList.add('show-all');
+        expandBtn.textContent = '收起';
+        console.log('新聞已展開');
+        
+        // 如果展開的新聞中有折疊項目，初始化它們
+        setTimeout(() => {
+            initializeNewsToggle();
+        }, 100);
+    }
+}

@@ -19,13 +19,34 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.section-title,
+/* 新聞頁面專用的紅色背景標題 */
+.news-section .section-title,
+.ranking-section .section-title,
 .ranking-section h2 {
     font-size: 22px;
     margin-bottom: 5px;
-    color: #333;
-    border-bottom: 2px solid #dc3545;
-    padding-bottom: 8px;
+    color: white;
+    background-color: #dc3545;
+    padding: 6px 16px;
+    border-radius: 4px;
+    margin-top: 0;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 比賽區塊專用的紅色背景標題 */
+.matches-section .section-title {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: white;
+    background-color: #dc3545;
+    padding: 6px 16px;
+    border-radius: 4px;
+    margin-top: 0;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* 日期樣式 */
@@ -244,9 +265,12 @@ body {
         padding: 15px;
     }
     
-    .section-title,
-    .ranking-section h2 {
+    .news-section .section-title,
+    .ranking-section .section-title,
+    .ranking-section h2,
+    .matches-section .section-title {
         font-size: 18px;
+        padding: 5px 14px;
     }
 }
 
@@ -378,6 +402,11 @@ body {
 
 .ranking-table tr:hover {
     background-color: #f9f9f9;
+}
+
+/* 姓名欄位粗體 */
+.ranking-table td:nth-child(2) {
+    font-weight: bold;
 }
 
 /* 當螢幕寬度大於 400px 時切換為雙欄 */
@@ -520,6 +549,37 @@ body {
     min-height: auto !important;
     /* margin-bottom: 20px !important; */
     padding-bottom: 20px !important;
+}
+
+/* 新聞展開/收起功能 */
+.news-expand-section {
+    display: none;
+}
+
+.news-expand-section.show-all {
+    display: block;
+}
+
+.expand-toggle {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.expand-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.expand-btn:hover {
+    background-color: #f8f9fa;
 }
 
 /* 確保新聞頁面沒有多餘的底部空間 */
