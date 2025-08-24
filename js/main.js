@@ -342,6 +342,9 @@ async function loadContent(page, anchor = null, pushState = true) {
     const contentArea = document.getElementById('contentArea');
     if (!contentArea) return;
 
+    // 停止照片輪播（如果有的話）
+    stopCarouselOnPageChange();
+
     // 顯示載入中
     contentArea.innerHTML = '<div class="loading">載入中...</div>';
     
@@ -384,6 +387,7 @@ async function loadContent(page, anchor = null, pushState = true) {
                     setTimeout(() => {
                         initializeNewsToggle();
                         initializeMatchesToggle();
+                        initializePhotoCarousel();
                     }, 300);
                 });
             } 
@@ -395,6 +399,9 @@ async function loadContent(page, anchor = null, pushState = true) {
             }
             else if (page === 'schedule' || page === 'scheduleS4' || page === 'scheduleS5') {
                 dataLoadPromise = loadScheduleData(page);
+            }
+            else if (page === 'awards') {
+                dataLoadPromise = initializeAwardsPage();
             }
             
             // 等待數據載入完成後再處理錨點
@@ -2038,4 +2045,622 @@ function toggleAllNews() {
             initializeNewsToggle();
         }, 100);
     }
+}
+
+// Awards頁面初始化函數
+async function initializeAwardsPage() {
+    console.log('🖼️ 開始初始化Awards頁面...');
+    
+    // 等待DOM載入完成
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // 檢查DOM元素是否存在
+    console.log('🔍 檢查Awards頁面DOM元素...');
+    const galleryS4 = document.getElementById('gallery-s4');
+    const galleryS3 = document.getElementById('gallery-s3');
+    const galleryS2 = document.getElementById('gallery-s2');
+    
+    console.log('Gallery elements found:', {
+        's4': !!galleryS4,
+        's3': !!galleryS3,
+        's2': !!galleryS2
+    });
+    
+    if (!galleryS4 || !galleryS3 || !galleryS2) {
+        console.error('❌ Awards頁面DOM元素未找到');
+        return;
+    }
+    
+    // 載入各季度照片
+    console.log('⏳ 開始載入各季度照片...');
+    
+    try {
+        await loadPhotosForSeason('s4');
+        console.log('✅ s4載入完成');
+    } catch (error) {
+        console.error('❌ s4載入失敗:', error);
+    }
+    
+    try {
+        await loadPhotosForSeason('s3');
+        console.log('✅ s3載入完成');
+    } catch (error) {
+        console.error('❌ s3載入失敗:', error);
+    }
+    
+    try {
+        await loadPhotosForSeason('s2');
+        console.log('✅ s2載入完成');
+    } catch (error) {
+        console.error('❌ s2載入失敗:', error);
+    }
+    
+    console.log('🏁 Awards頁面初始化完成！');
+}
+
+// 照片載入函數
+async function loadPhotosForSeason(season) {
+    console.log(`🔍 開始載入 ${season} 季度的照片...`);
+    
+    const galleryId = `gallery-${season}`;
+    const loadingId = `loading-${season}`;
+    const gallery = document.getElementById(galleryId);
+    const loading = document.getElementById(loadingId);
+    
+    if (!gallery || !loading) {
+        console.error(`❌ 找不到 ${season} 的DOM元素`);
+        return;
+    }
+    
+    try {
+        // 嘗試載入該季度的照片
+        const photoFiles = await getPhotoFiles(season);
+        console.log(`${season} 找到照片:`, photoFiles);
+        
+        if (photoFiles.length > 0) {
+            // 隱藏載入訊息
+            loading.style.display = 'none';
+            
+            // 修改路徑，指向正確的season資料夾
+            const seasonFolder = season.replace('s', 'season');
+            
+            // 顯示照片
+            photoFiles.forEach(fileName => {
+                console.log(`🖼️ 嘗試顯示照片: ${fileName}`);
+                
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                
+                // 使用絕對路徑
+                const imagePath = `/images/award/${seasonFolder}/${fileName}`;
+                
+                photoItem.onclick = () => {
+                    console.log(`🔍 點擊照片，使用路徑: ${imagePath}`);
+                    openLightbox(imagePath);
+                };
+                
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.className = 'photo-thumbnail';
+                img.alt = `${season} 賽事照片`;
+                img.onload = () => {
+                    console.log(`✅ 成功載入照片縮圖: ${fileName}`);
+                };
+                img.onerror = () => {
+                    console.log(`❌ 載入照片失敗: ${fileName}`);
+                    photoItem.innerHTML = `
+                        <div class="photo-placeholder">
+                            <div class="photo-icon">📷</div>
+                            <div class="photo-title">載入失敗</div>
+                        </div>
+                    `;
+                };
+                
+                photoItem.appendChild(img);
+                gallery.appendChild(photoItem);
+                console.log(`➕ 已添加照片元素到gallery: ${fileName}`);
+            });
+        } else {
+            // 沒有照片時顯示佔位符
+            console.log(`${season} 沒有找到照片，顯示佔位符`);
+            showPlaceholders(season);
+        }
+    } catch (error) {
+        console.log(`載入 ${season} 照片出錯:`, error);
+        showPlaceholders(season);
+    }
+}
+
+// 獲取照片檔案列表
+async function getPhotoFiles(season) {
+    console.log(`🔍 開始檢查 ${season} 季度的照片檔案...`);
+    
+    // 根據實際的季別資料夾和檔案名稱
+    const knownFiles = {
+        's4': ['IMG_9918.JPG', 'IMG_9919.JPG', 'IMG_9920.JPG', 'IMG_9921.JPG', 'IMG_9922.JPG', 'IMG_9923.JPG'],
+        's3': ['IMG_9924.JPG', 'IMG_9925.JPG', 'IMG_9926.JPG', 'IMG_9927.JPG', 'IMG_9928.JPG', 'IMG_9929.JPG', 'IMG_9930.JPG'],
+        's2': ['IMG_9931.JPG', 'IMG_9932.JPG', 'IMG_9933.JPG']
+    };
+    
+    const seasonFiles = knownFiles[season] || [];
+    console.log(`📋 ${season} 的已知檔案清單:`, seasonFiles);
+    
+    const existingFiles = [];
+    
+    // 修改路徑，指向正確的season資料夾
+    const seasonFolder = season.replace('s', 'season');
+    console.log(`📁 季度資料夾名稱: ${seasonFolder}`);
+    
+    for (const fileName of seasonFiles) {
+        const imagePath = `/images/award/${seasonFolder}/${fileName}`;
+        console.log(`🔗 檢查檔案路徑: ${imagePath}`);
+        
+        try {
+            // 嘗試載入圖片
+            const response = await fetch(imagePath);
+            console.log(`📡 Fetch狀態: ${response.status} ${response.statusText} for ${fileName}`);
+            
+            if (response.ok) {
+                console.log(`✅ 檔案存在: ${fileName} (${response.status})`);
+                existingFiles.push(fileName);
+            } else {
+                console.log(`❌ 檔案不存在: ${fileName} (${response.status})`);
+            }
+        } catch (error) {
+            console.log(`💥 檢查檔案失敗: ${fileName}`, error);
+        }
+    }
+    
+    console.log(`📊 ${season} 最終找到的檔案:`, existingFiles);
+    return existingFiles;
+}
+
+// 顯示佔位符
+function showPlaceholders(season) {
+    const galleryId = `gallery-${season}`;
+    const loadingId = `loading-${season}`;
+    const gallery = document.getElementById(galleryId);
+    const loading = document.getElementById(loadingId);
+    
+    if (!gallery || !loading) return;
+    
+    loading.textContent = `${season.toUpperCase()} 照片整理中，敬請期待！`;
+    loading.className = 'loading-message';
+    
+    // 根據不同季度顯示不同的佔位符
+    const placeholders = getPlaceholdersForSeason(season);
+    
+    placeholders.forEach(placeholder => {
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-placeholder';
+        photoItem.innerHTML = `
+            <div class="photo-icon">${placeholder.icon}</div>
+            <div class="photo-title">${placeholder.title}</div>
+        `;
+        gallery.appendChild(photoItem);
+    });
+}
+
+// 獲取各季度的佔位符
+function getPlaceholdersForSeason(season) {
+    const placeholderData = {
+        's4': [
+            { icon: '🏆', title: '冠軍頒獎' },
+            { icon: '🥇', title: 'MVP獎項' },
+            { icon: '📸', title: '大合照' },
+            { icon: '🎉', title: '慶祝派對' }
+        ],
+        's3': [
+            { icon: '🏆', title: '頒獎典禮' },
+            { icon: '🎯', title: '比賽瞬間' },
+            { icon: '👥', title: '團隊精神' }
+        ],
+        's2': [
+            { icon: '💰', title: '阿淦幣發行' },
+            { icon: '😈', title: '倒霉鬼獎' },
+            { icon: '🏆', title: '冠軍頒獎' },
+            { icon: '🍻', title: '首次消費' }
+        ]
+    };
+    
+    return placeholderData[season] || [];
+}
+
+// 燈箱功能相關變數
+let currentLightboxImages = [];
+let currentImageIndex = 0;
+
+// 燈箱功能
+function openLightbox(imageSrc, allImages = null, imageIndex = 0) {
+    console.log('🖼️ 打開燈箱:', imageSrc);
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    if (lightbox && lightboxImg) {
+        // 設定當前圖片列表和索引
+        if (allImages && Array.isArray(allImages)) {
+            currentLightboxImages = allImages;
+            currentImageIndex = imageIndex;
+        } else {
+            // 如果沒有提供圖片列表，嘗試從當前頁面獲取
+            currentLightboxImages = getCurrentPageImages();
+            currentImageIndex = currentLightboxImages.findIndex(img => img.includes(imageSrc.split('/').pop()));
+            if (currentImageIndex === -1) currentImageIndex = 0;
+        }
+        
+        lightboxImg.src = imageSrc;
+        lightbox.style.display = 'block';
+        
+        // 更新導航按鈕狀態
+        updateNavigationButtons();
+        
+        console.log(`📸 燈箱已開啟，當前圖片 ${currentImageIndex + 1}/${currentLightboxImages.length}`);
+    } else {
+        console.log('燈箱元素未找到，改用新視窗開啟');
+        window.open(imageSrc, '_blank');
+    }
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.style.display = 'none';
+        currentLightboxImages = [];
+        currentImageIndex = 0;
+    }
+}
+
+// 燈箱導航功能
+function navigateLightbox(direction) {
+    if (currentLightboxImages.length === 0) return;
+    
+    // 計算新的索引
+    const newIndex = currentImageIndex + direction;
+    
+    // 循環播放
+    if (newIndex >= currentLightboxImages.length) {
+        currentImageIndex = 0;
+    } else if (newIndex < 0) {
+        currentImageIndex = currentLightboxImages.length - 1;
+    } else {
+        currentImageIndex = newIndex;
+    }
+    
+    // 更新圖片
+    const lightboxImg = document.getElementById('lightbox-img');
+    if (lightboxImg) {
+        lightboxImg.src = currentLightboxImages[currentImageIndex];
+        console.log(`📸 切換到圖片 ${currentImageIndex + 1}/${currentLightboxImages.length}`);
+    }
+    
+    // 更新導航按鈕狀態
+    updateNavigationButtons();
+}
+
+// 更新導航按鈕狀態
+function updateNavigationButtons() {
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    
+    if (prevBtn && nextBtn) {
+        // 如果只有一張圖片，隱藏導航按鈕
+        if (currentLightboxImages.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+        }
+    }
+}
+
+// 獲取當前頁面的所有圖片
+function getCurrentPageImages() {
+    const images = [];
+    
+    // 根據實際的季別資料夾和檔案名稱
+    const knownFiles = {
+        's4': ['IMG_9918.JPG', 'IMG_9919.JPG', 'IMG_9920.JPG', 'IMG_9921.JPG', 'IMG_9922.JPG', 'IMG_9923.JPG'],
+        's3': ['IMG_9924.JPG', 'IMG_9925.JPG', 'IMG_9926.JPG', 'IMG_9927.JPG', 'IMG_9928.JPG', 'IMG_9929.JPG', 'IMG_9930.JPG'],
+        's2': ['IMG_9931.JPG', 'IMG_9932.JPG', 'IMG_9933.JPG']
+    };
+    
+    // 收集所有季度的圖片
+    ['s4', 's3', 's2'].forEach(season => {
+        const seasonFolder = season.replace('s', 'season');
+        const seasonFiles = knownFiles[season] || [];
+        seasonFiles.forEach(fileName => {
+            images.push(`/images/award/${seasonFolder}/${fileName}`);
+        });
+    });
+    
+    return images;
+}
+
+// 鍵盤導航支援
+function handleLightboxKeyboard(event) {
+    if (document.getElementById('lightbox').style.display === 'block') {
+        switch(event.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                navigateLightbox(-1);
+                break;
+            case 'ArrowRight':
+                navigateLightbox(1);
+                break;
+        }
+    }
+}
+
+// 添加鍵盤事件監聽器
+document.addEventListener('keydown', handleLightboxKeyboard);
+
+// 添加到window物件，讓awards.html能夠調用
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.navigateLightbox = navigateLightbox;
+
+// 照片輪播功能
+let carouselImages = [];
+let currentCarouselIndex = 0;
+let carouselInterval = null;
+
+// 初始化照片輪播
+function initializePhotoCarousel() {
+    console.log('🎠 開始初始化照片輪播...');
+    
+    // Season 4 的照片列表
+    const season4Images = [
+        '/images/award/season4/IMG_9918.JPG',
+        '/images/award/season4/IMG_9919.JPG',
+        '/images/award/season4/IMG_9920.JPG',
+        '/images/award/season4/IMG_9921.JPG',
+        '/images/award/season4/IMG_9922.JPG',
+        '/images/award/season4/IMG_9923.JPG'
+    ];
+    
+    carouselImages = season4Images;
+    
+    // 檢查DOM元素是否存在
+    const carouselImage = document.getElementById('carousel-image');
+    const carouselDots = document.getElementById('carousel-dots');
+    
+    if (!carouselImage || !carouselDots) {
+        console.log('❌ 輪播元素未找到');
+        return;
+    }
+    
+    // 初始化圓點指示器
+    createCarouselDots();
+    
+    // 載入第一張圖片
+    if (carouselImages.length > 0) {
+        loadCarouselImage(0);
+        startCarouselAutoPlay();
+        console.log(`✅ 照片輪播初始化完成，共 ${carouselImages.length} 張照片`);
+    }
+}
+
+
+
+// 創建輪播圓點
+function createCarouselDots() {
+    const carouselDots = document.getElementById('carousel-dots');
+    if (!carouselDots) return;
+    
+    carouselDots.innerHTML = '';
+    
+    carouselImages.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot';
+        if (index === 0) dot.classList.add('active');
+        
+        dot.addEventListener('click', () => {
+            goToCarouselImage(index);
+        });
+        
+        carouselDots.appendChild(dot);
+    });
+}
+
+// 全局變數來控制動畫狀態
+let isCarouselAnimating = false;
+
+// 輪播狀態追蹤：哪個圖片元素當前是主要的
+let currentMainImageId = 'carousel-image';
+
+// 載入指定索引的圖片（真正無縫左移動畫版本）
+function loadCarouselImage(index) {
+    const carouselImage = document.getElementById('carousel-image');
+    const carouselImageNext = document.getElementById('carousel-image-next');
+    const carouselLoading = document.getElementById('carousel-loading');
+    
+    if (!carouselImage || !carouselImageNext || !carouselImages[index]) return;
+    
+    // 如果正在動畫中，跳過這次切換
+    if (isCarouselAnimating) {
+        console.log('⏸️ 動畫進行中，跳過這次切換');
+        return;
+    }
+    
+    // 如果是第一次載入，直接顯示
+    if (carouselImage.src === '' || carouselImage.style.display === 'none') {
+        // 顯示載入指示器
+        if (carouselLoading) carouselLoading.style.display = 'flex';
+        
+        const firstImage = new Image();
+        firstImage.onload = () => {
+            carouselImage.src = carouselImages[index];
+            carouselImage.style.transform = 'translateX(0)';
+            carouselImage.style.display = 'block';
+            
+            // 確保另一個圖片隱藏
+            carouselImageNext.style.display = 'none';
+            carouselImageNext.style.transform = 'translateX(100%)';
+            
+            // 設置當前主圖片
+            currentMainImageId = 'carousel-image';
+            
+            // 添加點擊事件
+            setupImageClickEvent(carouselImage);
+            
+            // 隱藏載入指示器
+            if (carouselLoading) carouselLoading.style.display = 'none';
+            
+            // 更新圓點狀態
+            updateCarouselDots(index);
+            
+            console.log(`📸 首次載入第 ${index + 1} 張照片`);
+        };
+        firstImage.src = carouselImages[index];
+        return;
+    }
+    
+    // 設置動畫進行狀態
+    isCarouselAnimating = true;
+    
+    // 根據當前狀態決定哪個是主圖片，哪個是次圖片
+    let currentMain = document.getElementById(currentMainImageId);
+    let currentNext = currentMainImageId === 'carousel-image' ? carouselImageNext : carouselImage;
+    
+    // 創建新的圖片物件來預載入下一張圖片
+    const newImage = new Image();
+    
+    newImage.onload = () => {
+        // 確保當前主圖片在正常位置
+        currentMain.style.transform = 'translateX(0)';
+        currentMain.style.display = 'block';
+        
+        // 設置下一張圖片在右側準備位置（強制從右側開始）
+        currentNext.src = carouselImages[index];
+        // 先隱藏，確保沒有過渡效果，然後強制設置到右側
+        currentNext.style.display = 'none';
+        currentNext.style.transition = 'none'; // 暫時禁用過渡
+        currentNext.style.transform = 'translateX(100%)'; // 強制從右側開始
+        currentNext.style.display = 'block';
+        // 重新啟用過渡效果
+        setTimeout(() => {
+            currentNext.style.transition = 'transform 0.6s ease-in-out';
+        }, 10);
+        
+        // 添加點擊事件
+        setupImageClickEvent(currentNext);
+        
+        // 等待過渡效果重新啟用後再開始動畫
+        setTimeout(() => {
+            // 強制重繪，確保瀏覽器應用了初始狀態
+            currentMain.offsetHeight;
+            currentNext.offsetHeight;
+            
+            // 使用雙重requestAnimationFrame確保狀態完全穩定
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // 同時進行：舊圖左移離開，新圖從右滑入
+                    currentMain.style.transform = 'translateX(-100%)';
+                    currentNext.style.transform = 'translateX(0)';
+                    
+                    console.log(`🎬 開始無縫左移動畫：第 ${index + 1} 張照片`);
+                    console.log(`主圖片: ${currentMain.id}, 次圖片: ${currentNext.id}`);
+                    console.log(`主圖片起始位置: ${currentMain.style.transform}`);
+                    console.log(`次圖片起始位置: translateX(100%) -> translateX(0)`);
+                });
+            });
+        }, 20); // 等待過渡效果重新啟用
+        
+        // 動畫完成後，只切換當前主圖片的引用
+        setTimeout(() => {
+            // 切換主圖片引用
+            currentMainImageId = currentNext.id;
+            
+            // 動畫狀態重置
+            isCarouselAnimating = false;
+            
+            console.log(`✅ 動畫完成，新主圖片: ${currentMainImageId}`);
+        }, 650); // 等待CSS過渡完成 (0.6s + 50ms buffer)
+        
+        // 更新圓點狀態
+        updateCarouselDots(index);
+    };
+    
+    newImage.onerror = () => {
+        console.error(`❌ 照片載入失敗: ${carouselImages[index]}`);
+        // 重置動畫狀態
+        isCarouselAnimating = false;
+    };
+    
+    // 開始載入圖片
+    newImage.src = carouselImages[index];
+}
+
+// 設置圖片點擊事件的輔助函數
+function setupImageClickEvent(imageElement) {
+    imageElement.onclick = () => {
+        if (parent && parent.loadContent) {
+            parent.loadContent('awards');
+        } else {
+            window.location.href = '../pages/awards.html';
+        }
+    };
+    imageElement.style.cursor = 'pointer';
+}
+
+// 更新圓點指示器
+function updateCarouselDots(activeIndex) {
+    const dots = document.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, index) => {
+        if (index === activeIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+// 跳轉到指定圖片
+function goToCarouselImage(index) {
+    if (index >= 0 && index < carouselImages.length) {
+        currentCarouselIndex = index;
+        loadCarouselImage(index);
+        
+        // 重啟自動播放
+        stopCarouselAutoPlay();
+        startCarouselAutoPlay();
+    }
+}
+
+// 下一張圖片
+function nextCarouselImage() {
+    currentCarouselIndex = (currentCarouselIndex + 1) % carouselImages.length;
+    loadCarouselImage(currentCarouselIndex);
+}
+
+// 開始自動播放
+function startCarouselAutoPlay() {
+    if (carouselImages.length <= 1) return;
+    
+    carouselInterval = setInterval(() => {
+        nextCarouselImage();
+    }, 7000); // 每7秒切換
+    
+    console.log('▶️ 照片輪播自動播放已開始');
+}
+
+// 停止自動播放
+function stopCarouselAutoPlay() {
+    if (carouselInterval) {
+        clearInterval(carouselInterval);
+        carouselInterval = null;
+        console.log('⏸️ 照片輪播自動播放已停止');
+    }
+}
+
+// 當頁面切換時停止輪播
+function stopCarouselOnPageChange() {
+    stopCarouselAutoPlay();
+    carouselImages = [];
+    currentCarouselIndex = 0;
+    isCarouselAnimating = false; // 重置動畫狀態
+    currentMainImageId = 'carousel-image'; // 重置主圖片引用
 }

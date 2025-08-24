@@ -98,10 +98,162 @@
             height: 100%;
             border: none;
         }
+        
+        /* 照片輪播樣式 */
+        .photo-carousel {
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 28%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        #carousel-image {
+            z-index: 1;
+        }
+        
+        #carousel-image-next {
+            z-index: 2;
+        }
+        
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px;
+            color: white;
+        }
+        
+        .carousel-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        .carousel-dot:hover {
+            background-color: rgba(255,255,255,0.8);
+        }
+        
+        /* 載入指示器 */
+        .carousel-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e9ecef;
+            border-top: 4px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 200px;
+            }
+            
+            .carousel-title {
+                font-size: 16px;
+            }
+            
+            .carousel-overlay {
+                padding: 15px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .carousel-container {
+                height: 200px;
+            }
+            
+            .carousel-title {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        
+        <!-- 照片輪播區塊 -->
+        <div class="photo-carousel">
+            <div class="carousel-container">
+                <div class="carousel-loading" id="carousel-loading">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">載入照片中...</div>
+                </div>
+                <img id="carousel-image" src="" alt="賽事照片輪播" class="carousel-image" style="display: none;">
+                <img id="carousel-image-next" src="" alt="賽事照片輪播" class="carousel-image" style="display: none;">
+                <div class="carousel-overlay">
+                    <div class="carousel-dots" id="carousel-dots"></div>
+                </div>
+            </div>
+        </div>
         
         <!-- 上週戰況區塊 (可折疊) -->
         <div class="matches-section">
