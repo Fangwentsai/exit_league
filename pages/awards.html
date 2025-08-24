@@ -35,13 +35,14 @@
             text-align: left;
         }
         
-        .intro-text {
-            text-align: center;
-            font-size: 16px;
+        .description-text {
+            text-align: left;
             color: #666;
-            margin: 20px 0 40px 0;
-            line-height: 1.8;
-            max-width: 600px;
+            margin-top: 30px;
+            line-height: 1.6;
+            font-size: 14px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         .highlight {
@@ -308,34 +309,16 @@
 </head>
 <body>
     <div class="main-container">
-        <h1 class="page-title">賽事照片📷</h1>
-        
-        <div class="intro-text">
-            歡迎來到賽事照片區<br>
-            點擊縮圖即可查看原尺寸照片<br>
-            歡迎透過Line群組提供比賽照片，謝謝
+        <!-- 第四屆聯賽照片 -->
+        <div class="season-section">
+            <div class="loading-message" id="loading-s4">正在載入第四屆聯賽照片...</div>
+            <div class="photo-gallery" id="gallery-s4"></div>
         </div>
-                
-                <!-- 第四屆聯賽照片 -->
-                <div class="season-section">
-                    <h2 class="season-title">第四屆聯賽</h2>
-                    <div class="loading-message" id="loading-s4">正在載入第四屆聯賽照片...</div>
-                    <div class="photo-gallery" id="gallery-s4"></div>
-                </div>
-                
-                <!-- 第三屆聯賽照片 -->
-                <div class="season-section">
-                    <h2 class="season-title">第三屆聯賽</h2>
-                    <div class="loading-message" id="loading-s3">正在載入第三屆聯賽照片...</div>
-                    <div class="photo-gallery" id="gallery-s3"></div>
-                </div>
-                
-                <!-- 第二屆聯賽照片 -->
-                <div class="season-section">
-                    <h2 class="season-title">第二屆聯賽</h2>
-                    <div class="loading-message" id="loading-s2">正在載入第二屆聯賽照片...</div>
-                    <div class="photo-gallery" id="gallery-s2"></div>
-                </div>
+        
+        <!-- 說明文字 -->
+        <div class="description-text">
+            點擊縮圖即可查看原尺寸照片，歡迎透過Line群組提供比賽照片，謝謝
+        </div>
     </div>
     
     <!-- 燈箱 -->
