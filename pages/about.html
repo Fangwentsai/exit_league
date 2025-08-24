@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>關於我們 - 難找的聯賽</title>
-    
-    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,43 +20,185 @@
             color: #444;
             margin-top: 30px;
         }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #333;
+            border-bottom: 2px solid #dc3545;
+            padding-bottom: 8px;
+        }
         p {
             margin: 15px 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stats-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .stats-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #dc3545;
+            display: block;
+        }
+        .stats-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
+    <h1>關於我們 <a href="javascript:void(0)" onclick="if(parent && parent.loadContent) parent.loadContent('about-en')" style="font-size: 14px; color: #666; text-decoration: none; margin-left: 10px;">EN</a></h1>
+    <p><strong>建立日期：2023年春季</strong></p>
+    
+    <div class="highlight-box">
+        <p><strong>「難找的聯賽」</strong>是一個充滿活力的飛鏢愛好者社群，我們將競技精神與友誼相結合，致力於在新北市永和區推廣飛鏢運動文化，為所有水平的選手提供一個公平、友善且專業的競技平台。</p>
+    </div>
 
-    <h2>聯賽簡介</h2>
-    <p>「難找的聯賽」是一個由飛鏢愛好者組成的業餘聯賽。我們致力於推廣飛鏢運動，提供一個友善的競技平台，讓更多人能夠享受飛鏢運動的樂趣。</p>
-
-    <h2>我們的使命</h2>
+    <h2 class="section-title">1. 聯賽歷史與發展</h2>
+    <p>難找的聯賽成立於2023年春季，由一群熱愛飛鏢運動的朋友共同發起。我們從最初的幾支隊伍，逐漸發展成為新北市永和區最具影響力的業餘飛鏢聯賽之一。</p>
     <ul>
-        <li>推廣飛鏢運動文化</li>
-        <li>提供公平競技的平台</li>
-        <li>促進飛鏢愛好者交流</li>
-        <li>培養運動家精神</li>
+        <li><strong>第一屆（2023年）：</strong>聯賽成立，6支隊伍參與，奠定基礎制度</li>
+        <li><strong>第二屆（2023年下半年）：</strong>規模擴大，建立完整積分系統</li>
+        <li><strong>第三屆（2024年上半年）：</strong>引入數據統計，提升競賽專業度</li>
+        <li><strong>第四屆（2024年下半年）：</strong>合作店家增加，社群影響力擴大</li>
+        <li><strong>第五屆（2025年）：</strong>目前進行中，持續創新與成長</li>
     </ul>
 
-    <h2>聯賽特色</h2>
-    <p>我們的聯賽具有以下特色：</p>
+    <h2 class="section-title">2. 聯賽數據一覽</h2>
+    <div class="stats-grid">
+        <div class="stats-item">
+            <span class="stats-number">5</span>
+            <div class="stats-label">屆聯賽舉辦</div>
+        </div>
+        <div class="stats-item">
+            <span class="stats-number">50+</span>
+            <div class="stats-label">參賽選手</div>
+        </div>
+        <div class="stats-item">
+            <span class="stats-number">8</span>
+            <div class="stats-label">合作店家</div>
+        </div>
+        <div class="stats-item">
+            <span class="stats-number">200+</span>
+            <div class="stats-label">場比賽紀錄</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">3. 我們的使命與願景</h2>
+    <p><strong>使命：</strong>推廣飛鏢運動，建立友善競技社群，讓更多人體驗飛鏢的樂趣與挑戰。</p>
+    <p><strong>願景：</strong>成為台灣北部最具特色的業餘飛鏢聯賽，培養更多飛鏢愛好者，提升運動文化水平。</p>
+    
+    <h3>核心價值</h3>
     <ul>
-        <li>專業的比賽制度</li>
-        <li>完整的積分系統</li>
-        <li>即時的成績統計</li>
-        <li>友善的比賽環境</li>
+        <li><strong>公平競技：</strong>建立透明的比賽制度，確保每場比賽的公正性</li>
+        <li><strong>友善社群：</strong>營造溫馨的交流環境，促進選手間的友誼</li>
+        <li><strong>持續創新：</strong>運用科技提升比賽體驗，完善數據統計系統</li>
+        <li><strong>運動精神：</strong>培養選手的體育道德和團隊合作精神</li>
+        <li><strong>文化推廣：</strong>讓更多人認識並愛上飛鏢這項運動</li>
     </ul>
 
-    <h2>參與方式</h2>
-    <p>如果您想參加我們的聯賽，可以：</p>
+    <h2 class="section-title">4. 聯賽特色與優勢</h2>
     <ul>
-        <li>關注我們的最新公告</li>
-        <li>聯繫各隊伍負責人</li>
-        <li>參加我們的練習賽</li>
+        <li><strong>專業賽制：</strong>採用國際標準501賽制，提供專業競技體驗</li>
+        <li><strong>數據統計：</strong>完整記錄每位選手的表現，提供詳細數據分析</li>
+        <li><strong>即時更新：</strong>比賽結果即時上傳，排名隨時更新</li>
+        <li><strong>多元賽事：</strong>定期舉辦不同形式的比賽和挑戰</li>
+        <li><strong>設備支援：</strong>合作店家提供優質的比賽場地和設備</li>
+        <li><strong>社群互動：</strong>建立線上平台，促進選手交流討論</li>
     </ul>
 
-    <h2>聯繫我們</h2>
-    <p>如果您有任何問題或建議，歡迎聯繫我們：</p>
-    <p>Email:fangwentsai14@gmail.com</p>
+    <h2 class="section-title">5. 比賽制度與規則</h2>
+    <p>我們的聯賽採用完整的積分制度，確保比賽的公平性和競爭性：</p>
+    <ul>
+        <li><strong>賽季制度：</strong>每年舉辦兩屆聯賽，每屆約3-4個月</li>
+        <li><strong>積分系統：</strong>勝負積分、表現獎勵、出席獎勵等多元計分</li>
+        <li><strong>排名機制：</strong>團體排名和個人排名並重</li>
+        <li><strong>獎勵制度：</strong>提供獎品和榮譽證書給優秀表現者</li>
+        <li><strong>升降級：</strong>未來計劃建立多級別聯賽制度</li>
+    </ul>
+
+    <h2 class="section-title">6. 合作店家網絡</h2>
+    <p>我們與多家優質飛鏢店家合作，提供選手最佳的比賽環境：</p>
+    <ul>
+        <li><strong>逃生入口A：</strong>永和區主要比賽場地之一</li>
+        <li><strong>逃生入口C：</strong>設備完善的專業飛鏢場</li>
+        <li><strong>酒空組：</strong>氣氛輕鬆的休閒型場地</li>
+        <li><strong>海盜船：</strong>特色主題飛鏢店</li>
+        <li><strong>其他合作店家：</strong>持續擴展合作網絡</li>
+    </ul>
+
+    <h2 class="section-title">7. 參與方式與入會條件</h2>
+    <p>歡迎所有飛鏢愛好者加入我們的大家庭：</p>
+    
+    <h3>參賽條件</h3>
+    <ul>
+        <li>年滿18歲的飛鏢愛好者</li>
+        <li>願意遵守聯賽規則和運動精神</li>
+        <li>能夠定期參與比賽活動</li>
+        <li>具備基本的飛鏢技能（歡迎初學者）</li>
+    </ul>
+
+    <h3>加入流程</h3>
+    <ul>
+        <li><strong>聯繫我們：</strong>通過電子郵件或現場諮詢</li>
+        <li><strong>試玩體驗：</strong>參加練習賽或友誼賽</li>
+        <li><strong>組隊參與：</strong>加入現有隊伍或組建新隊伍</li>
+        <li><strong>正式報名：</strong>填寫參賽資料，開始聯賽之旅</li>
+    </ul>
+
+    <h2 class="section-title">8. 社群活動與交流</h2>
+    <p>除了正式比賽，我們也舉辦各種社群活動：</p>
+    <ul>
+        <li><strong>練習賽：</strong>定期舉辦非正式練習賽</li>
+        <li><strong>技巧分享：</strong>經驗選手指導新手技巧</li>
+        <li><strong>聚餐聯誼：</strong>增進選手間的友誼</li>
+        <li><strong>季末慶祝：</strong>每屆聯賽結束後的慶祝活動</li>
+        <li><strong>特別賽事：</strong>節日主題賽事和挑戰賽</li>
+    </ul>
+
+    <h2 class="section-title">9. 未來發展計劃</h2>
+    <p>我們持續成長，未來的發展方向包括：</p>
+    <ul>
+        <li><strong>擴大規模：</strong>吸引更多選手和隊伍參與</li>
+        <li><strong>技術升級：</strong>導入更先進的數據分析系統</li>
+        <li><strong>多元比賽：</strong>增加不同賽制和比賽類型</li>
+        <li><strong>區域合作：</strong>與其他地區的飛鏢聯賽建立交流</li>
+        <li><strong>青少年推廣：</strong>發展青少年飛鏢培訓計劃</li>
+        <li><strong>國際交流：</strong>參與更大規模的飛鏢賽事</li>
+    </ul>
+
+    <h2 class="section-title">10. 聯繫我們</h2>
+    <p>如果您對難找的聯賽有任何疑問，或想要加入我們的大家庭，歡迎透過以下方式聯繫：</p>
+    <ul>
+        <li><strong>電子郵件：</strong>fangwentsai14@gmail.com</li>
+        <li><strong>聯賽名稱：</strong>難找的聯賽</li>
+        <li><strong>主要活動地區：</strong>新北市永和區</li>
+        <li><strong>最佳聯繫時間：</strong>週一至週五 18:00-22:00</li>
+        <li><strong>現場諮詢：</strong>可至各合作店家了解詳情</li>
+    </ul>
+    
+    <div class="highlight-box">
+        <p><strong>加入難找的聯賽，一起享受飛鏢運動的魅力！</strong></p>
+        <p>無論您是初學者還是經驗豐富的選手，我們都歡迎您成為我們社群的一份子。在這裡，您不僅能提升飛鏢技巧，更能結交志同道合的朋友，體驗團隊合作的樂趣。</p>
+    </div>
+
 </body>
 </html>
