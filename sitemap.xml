@@ -1,63 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 主要頁面 -->
   <url>
     <loc>https://yhdarts.com/</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://yhdarts.com/pages/news.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/schedule.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/pages/rules.html</loc>
+    <loc>https://yhdarts.com/pages/scheduleS4.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/pages/ranking.html</loc>
+    <loc>https://yhdarts.com/pages/scheduleS5.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g01.html</loc>
+    <loc>https://yhdarts.com/pages/rank.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/rankS4.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/rankS5.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/rule.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/shops.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/pages/advance.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  
+  <!-- 法律頁面 -->
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g02.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yhdarts.com/pages/privacy.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g03.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yhdarts.com/pages/privacy-en.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g04.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yhdarts.com/pages/terms.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g05.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yhdarts.com/pages/terms-en.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g06.html</loc>
+    <loc>https://yhdarts.com/pages/about.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g07.html</loc>
+    <loc>https://yhdarts.com/pages/about-en.html</loc>
+    <lastmod>2025-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- 第五屆比賽結果 (最新，優先級較高) -->
+  <url>
+    <loc>https://yhdarts.com/game_result/season5/g01.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yhdarts.com/game_result/season4/g08.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://yhdarts.com/game_result/season5/g02.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/game_result/season5/g03.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/game_result/season5/g04.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yhdarts.com/game_result/season5/g05.html</loc>
+    <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
