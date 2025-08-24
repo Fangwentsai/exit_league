@@ -2479,6 +2479,9 @@ function loadCarouselImage(index) {
     
     if (!carouselImage || !carouselImageNext || !carouselImages[index]) return;
     
+    // 同步更新當前索引
+    currentCarouselIndex = index;
+    
     // 如果正在動畫中，跳過這次切換
     if (isCarouselAnimating) {
         console.log('⏸️ 動畫進行中，跳過這次切換');
@@ -2632,7 +2635,15 @@ function goToCarouselImage(index) {
 
 // 下一張圖片
 function nextCarouselImage() {
+    const previousIndex = currentCarouselIndex;
     currentCarouselIndex = (currentCarouselIndex + 1) % carouselImages.length;
+    console.log(`🔄 照片切換: ${previousIndex + 1} → ${currentCarouselIndex + 1} (共${carouselImages.length}張)`);
+    
+    // 如果回到第一張，顯示循環提示
+    if (previousIndex === carouselImages.length - 1 && currentCarouselIndex === 0) {
+        console.log('🔁 照片輪播已循環回到第一張');
+    }
+    
     loadCarouselImage(currentCarouselIndex);
 }
 
