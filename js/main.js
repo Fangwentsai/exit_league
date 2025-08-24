@@ -2057,12 +2057,16 @@ async function initializeAwardsPage() {
     // 檢查DOM元素是否存在
     console.log('🔍 檢查Awards頁面DOM元素...');
     const galleryS4 = document.getElementById('gallery-s4');
+    const galleryS3 = document.getElementById('gallery-s3');
+    const galleryS2 = document.getElementById('gallery-s2');
     
     console.log('Gallery elements found:', {
-        's4': !!galleryS4
+        's4': !!galleryS4,
+        's3': !!galleryS3,
+        's2': !!galleryS2
     });
     
-    if (!galleryS4) {
+    if (!galleryS4 || !galleryS3 || !galleryS2) {
         console.error('❌ Awards頁面DOM元素未找到');
         return;
     }
@@ -2077,7 +2081,19 @@ async function initializeAwardsPage() {
         console.error('❌ s4載入失敗:', error);
     }
     
-
+    try {
+        await loadPhotosForSeason('s3');
+        console.log('✅ s3載入完成');
+    } catch (error) {
+        console.error('❌ s3載入失敗:', error);
+    }
+    
+    try {
+        await loadPhotosForSeason('s2');
+        console.log('✅ s2載入完成');
+    } catch (error) {
+        console.error('❌ s2載入失敗:', error);
+    }
     
     console.log('🏁 Awards頁面初始化完成！');
 }
