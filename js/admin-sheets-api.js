@@ -23,11 +23,11 @@ async function loadGames() {
         document.getElementById('loadingGames').style.display = 'block';
         document.getElementById('loadingGames').textContent = '載入比賽資料中...';
         
-        // 獲取相關的日期範圍（前4天到後2天）
+        // 獲取相關的日期範圍（前2天到後4天）
         const today = new Date();
         const dates = [];
         
-        for (let i = 4; i >= -2; i--) {
+        for (let i = 2; i >= -4; i--) {
             const date = new Date(today);
             date.setDate(today.getDate() - i);
             dates.push(date);
@@ -266,25 +266,23 @@ function getStaticGames(targetDates) {
     console.log('📋 使用備用靜態比賽資料');
     
     const allGames = [
-        // 最新比賽
-        { id: 'g50', date: '12/30', away: 'Jack', home: '人生揪難' },
-        { id: 'g49', date: '12/30', away: '海盜揪硬', home: 'Vivi朝酒晚舞' },
-        { id: 'g48', date: '6/24', away: 'Jack', home: '人生揪難' },
-        { id: 'g47', date: '6/24', away: '海盜揪硬', home: 'Vivi朝酒晚舞' },
-        { id: 'g46', date: '6/24', away: '一鏢開天門', home: '逃生入口C' },
-        { id: 'g45', date: '6/24', away: '逃生入口A', home: '逃生入口C' },
+        // 2025年1月的比賽
+        { id: 'g57', date: '1/7', away: 'Jack', home: '人生揪難' },
+        { id: 'g58', date: '1/7', away: '海盜揪硬', home: 'VIVI朝酒晚舞' },
+        { id: 'g59', date: '1/14', away: '逃生入口A', home: '酒空組' },
+        { id: 'g60', date: '1/14', away: '一鏢開天門', home: '逃生入口C' },
         
-        // 昨天的比賽
-        { id: 'g44', date: '6/17', away: '逃生入口C', home: 'Jack' },
-        { id: 'g43', date: '6/17', away: 'Vivi朝酒晚舞', home: '人生揪難' },
-        { id: 'g42', date: '6/17', away: '海盜揪硬', home: '酒空組' },
-        { id: 'g41', date: '6/17', away: '逃生入口A', home: '一鏢開天門' },
-        
-        // 前天的比賽
-        { id: 'g40', date: '6/16', away: '海盜揪硬', home: '一鏢開天門' },
-        { id: 'g39', date: '6/16', away: 'Vivi朝酒晚舞', home: '逃生入口C' },
-        { id: 'g38', date: '6/16', away: 'Jack', home: '酒空組' },
-        { id: 'g37', date: '6/16', away: '人生揪難', home: '逃生入口A' },
+        // 已經開始的比賽（g01-g10）
+        { id: 'g01', date: '2025/4/8', away: '逃生入口A', home: 'VIVI朝酒晚舞' },
+        { id: 'g02', date: '2025/4/8', away: '酒空組', home: 'Jack' },
+        { id: 'g03', date: '2025/4/8', away: '一鏢開天門', home: '逃生入口C' },
+        { id: 'g04', date: '2025/4/8', away: '海盜揪硬', home: '人生揪難' },
+        { id: 'g05', date: '2025/4/15', away: '海盜揪硬', home: '逃生入口A' },
+        { id: 'g06', date: '2025/4/15', away: '逃生入口C', home: '酒空組' },
+        { id: 'g07', date: '2025/4/15', away: 'VIVI朝酒晚舞', home: 'Jack' },
+        { id: 'g08', date: '2025/4/15', away: '一鏢開天門', home: '人生揪難' },
+        { id: 'g09', date: '2025/4/22', away: '逃生入口A', home: 'Jack' },
+        { id: 'g10', date: '2025/4/22', away: '人生揪難', home: '酒空組' },
     ];
     
     const targetDateStrings = targetDates.map(date => formatDate(date));
