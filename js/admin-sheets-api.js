@@ -20,34 +20,44 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw96zr198osWO2HIeFbK
  */
 async function loadGames() {
     try {
+        console.log('🚀 開始載入比賽資料...');
         document.getElementById('loadingGames').style.display = 'block';
         document.getElementById('loadingGames').textContent = '載入比賽資料中...';
         
-        // 獲取相關的日期範圍（前2天到後4天）
+        // 獲取相關的日期範圍（今天到往後7天）
         const today = new Date();
+        console.log('📅 當前日期:', today.toLocaleDateString());
         const dates = [];
         
-        for (let i = 2; i >= -4; i--) {
+        for (let i = 0; i <= 7; i++) {
             const date = new Date(today);
-            date.setDate(today.getDate() - i);
+            date.setDate(today.getDate() + i);
             dates.push(date);
         }
         
         console.log('🗓️ 搜尋日期範圍:', dates.map(d => formatDate(d)));
+        console.log('🔧 使用的API配置:', {
+            API_KEY: SHEETS_CONFIG.API_KEY,
+            SHEET_ID: SHEETS_CONFIG.SCHEDULE_SHEET_ID
+        });
         
         // 從 Google Sheets 載入比賽資料
+        console.log('📡 開始呼叫Google Sheets API...');
         const games = await loadGamesFromSheet(dates);
+        console.log(`📊 API回傳 ${games.length} 場比賽:`, games);
         
         const select = document.getElementById('gameSelect');
         select.innerHTML = '<option value="">請選擇比賽...</option>';
         
         if (games.length === 0) {
+            console.log('⚠️ 沒有找到比賽，使用備用資料或檢查API');
             const option = document.createElement('option');
             option.value = '';
             option.textContent = '目前沒有可用的比賽';
             option.disabled = true;
             select.appendChild(option);
         } else {
+            console.log(`✅ 成功載入 ${games.length} 場比賽`);
             // 按 gamecode 數字排序（g41, g42, g43, g44...）
             games.sort((a, b) => {
                 // 提取數字部分進行比較
@@ -87,13 +97,14 @@ async function loadGamesFromSheet(targetDates) {
     try {
         console.log('🔍 開始從 Google Sheets 載入比賽資料...');
         
-        // 嘗試多種可能的工作表名稱
+        // 嘗試多種可能的工作表名稱（根據API測試結果更新）
         const possibleSheetNames = [
-            'schedule',      // 原始名稱
+            '賽程',          // 中文工作表名稱（API測試發現）
+            'schedule',      // 英文工作表名稱（API測試發現）
             'Schedule',      // 首字母大寫
             'SCHEDULE',      // 全大寫
-            'schedule_s4',   // 季度工作表
-            'Schedule_S4',   // 季度工作表（大寫）
+            'schedule_s5',   // 第五屆工作表
+            'Schedule_S5',   // 第五屆工作表（大寫）
             '工作表1',        // 預設中文名稱
             'Sheet1'         // 預設英文名稱
         ];
@@ -266,11 +277,17 @@ function getStaticGames(targetDates) {
     console.log('📋 使用備用靜態比賽資料');
     
     const allGames = [
-        // 2025年1月的比賽
-        { id: 'g57', date: '1/7', away: 'Jack', home: '人生揪難' },
-        { id: 'g58', date: '1/7', away: '海盜揪硬', home: 'VIVI朝酒晚舞' },
-        { id: 'g59', date: '1/14', away: '逃生入口A', home: '酒空組' },
-        { id: 'g60', date: '1/14', away: '一鏢開天門', home: '逃生入口C' },
+        // 當前週的比賽（8/26-9/1）
+        { id: 'g61', date: '8/26', away: '逃生入口A', home: 'VIVI朝酒晚舞' },
+        { id: 'g62', date: '8/26', away: '酒空組', home: 'Jack' },
+        { id: 'g63', date: '8/27', away: '一鏢開天門', home: '逃生入口C' },
+        { id: 'g64', date: '8/27', away: '海盜揪硬', home: '人生揪難' },
+        { id: 'g65', date: '8/28', away: '海盜揪硬', home: '逃生入口A' },
+        { id: 'g66', date: '8/29', away: '逃生入口C', home: '酒空組' },
+        { id: 'g67', date: '8/30', away: 'VIVI朝酒晚舞', home: 'Jack' },
+        { id: 'g68', date: '8/31', away: '一鏢開天門', home: '人生揪難' },
+        { id: 'g69', date: '9/1', away: '逃生入口A', home: 'Jack' },
+        { id: 'g70', date: '9/1', away: '人生揪難', home: '酒空組' },
         
         // 已經開始的比賽（g01-g10）
         { id: 'g01', date: '2025/4/8', away: '逃生入口A', home: 'VIVI朝酒晚舞' },
