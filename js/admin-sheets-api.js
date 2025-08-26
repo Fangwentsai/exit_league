@@ -27,15 +27,17 @@ async function loadGames() {
         // 獲取相關的日期範圍（今天到往後7天）
         const today = new Date();
         console.log('📅 當前日期:', today.toLocaleDateString());
-        const dates = [];
+        const targetDates = [];
         
         for (let i = 0; i <= 7; i++) {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
-            dates.push(date);
+            // 轉換成M/D格式以匹配Google Sheets的日期格式 (8/26, 8/27...)
+            const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`;
+            targetDates.push(formattedDate);
         }
         
-        console.log('🗓️ 搜尋日期範圍:', dates.map(d => formatDate(d)));
+        console.log('🗓️ 搜尋日期範圍:', targetDates);
         console.log('🔧 使用的API配置:', {
             API_KEY: SHEETS_CONFIG.API_KEY,
             SHEET_ID: SHEETS_CONFIG.SCHEDULE_SHEET_ID
@@ -43,7 +45,7 @@ async function loadGames() {
         
         // 從 Google Sheets 載入比賽資料
         console.log('📡 開始呼叫Google Sheets API...');
-        const games = await loadGamesFromSheet(dates);
+        const games = await loadGamesFromSheet(targetDates);
         console.log(`📊 API回傳 ${games.length} 場比賽:`, games);
         
         const select = document.getElementById('gameSelect');
@@ -99,7 +101,7 @@ async function loadGamesFromSheet(targetDates) {
         
         // 嘗試多種可能的工作表名稱（根據API測試結果更新）
         const possibleSheetNames = [
-            '賽程',          // 中文工作表名稱（API測試確認存在）
+            //'賽程',          // 中文工作表名稱（API測試確認存在）
             'schedule'       // 英文工作表名稱（API測試確認存在）
         ];
         
@@ -159,7 +161,8 @@ async function loadGamesFromSheet(targetDates) {
  */
 function parseGamesData(values, targetDates) {
     const games = [];
-    const targetDateStrings = targetDates.map(date => formatDate(date));
+    // targetDates 現在已經是字串陣列格式 ["8/26", "8/27", ...]
+    const targetDateStrings = targetDates;
     
     console.log('🎯 目標日期:', targetDateStrings);
     console.log('📊 Google Sheets 原始資料 (前10行):', values.slice(0, 10));
@@ -309,7 +312,8 @@ function getStaticGames(targetDates) {
         { id: 'g10', date: '2025/4/22', away: '人生揪難', home: '酒空組' },
     ];
     
-    const targetDateStrings = targetDates.map(date => formatDate(date));
+    // targetDates 現在已經是字串陣列格式 ["8/26", "8/27", ...]
+    const targetDateStrings = targetDates;
     
     return allGames.filter(game => targetDateStrings.includes(game.date))
                   .map(game => ({
