@@ -203,18 +203,25 @@ function parseGamesData(values, targetDates) {
  * 支援多種日期格式：M/D, MM/DD, YYYY/M/D 等
  */
 function isDateInRange(gameDate, targetDateStrings) {
+    console.log(`🔍 檢查日期 "${gameDate}" 是否在範圍內:`, targetDateStrings);
+    
     // 直接比對
     if (targetDateStrings.includes(gameDate)) {
+        console.log(`✅ 直接匹配: ${gameDate}`);
         return true;
     }
     
-    // 嘗試解析日期並格式化為 M/D 格式
+    // 嘗試解析Google Sheets的日期並格式化為 M/D 格式進行比對
     try {
         const parsedDate = parseGameDate(gameDate);
         const formattedDate = formatDate(parsedDate);
-        return targetDateStrings.includes(formattedDate);
+        console.log(`🔄 格式化後的日期: ${gameDate} -> ${formattedDate}`);
+        
+        const isInRange = targetDateStrings.includes(formattedDate);
+        console.log(`${isInRange ? '✅' : '❌'} 比對結果: ${formattedDate} in [${targetDateStrings.join(', ')}] = ${isInRange}`);
+        return isInRange;
     } catch (error) {
-        console.log(`⚠️ 無法解析日期: ${gameDate}`);
+        console.log(`⚠️ 無法解析日期: ${gameDate}`, error);
         return false;
     }
 }
