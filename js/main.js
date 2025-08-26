@@ -13,7 +13,7 @@ const CONFIG = {
     },
     SEASON5: {
         SHEET_ID: '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY',
-        API_KEY: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
+        API_KEY: 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4',
         SEASON_FILTER: '5'
     }
 };
