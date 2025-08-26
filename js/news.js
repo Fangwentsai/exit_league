@@ -114,8 +114,8 @@ async function loadMatches() {
         try {
             // 首先嘗試使用main.js中的Google Sheet API取得數據
             const sheetId = '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY'; // Season 5的Sheet ID
-            const apiKey = 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4';
-            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule?key=${apiKey}`;
+            const apiKey = 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0';
+            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/賽程?key=${apiKey}`;
             
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
             response = await fetch(gsheetUrl);
@@ -183,7 +183,7 @@ async function loadMatches() {
             fetchError = apiError;
             
             // API獲取失敗，嘗試使用本地JSON文件
-            const url = '/data/schedule_s4.json';
+            const url = '/data/schedule_s5.json';
             console.log('嘗試讀取本地JSON文件:', url);
             
             response = await fetch(url);
@@ -376,7 +376,7 @@ function createMatchesHTML(matchDay) {
                 
                 // 添加onclick屬性來打開模態窗口，僅在有比分時才添加點擊事件
                 const hasScores = team1Info.score && team2Info.score;
-                const clickAttr = hasScores ? `onclick="showMatchDetails('game_result/season4/${game.game_number}.html')"` : '';
+                const clickAttr = hasScores ? `onclick="showMatchDetails('game_result/season5/${game.game_number}.html')"` : '';
                 const cursorStyle = hasScores ? 'style="cursor: pointer;"' : '';
                 
                 // 使用表格布局確保對齊
