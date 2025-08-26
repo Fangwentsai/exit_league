@@ -175,7 +175,13 @@ function parseGamesData(values, targetDates) {
             const awayTeam = row[2] ? row[2].trim() : '';               // C欄：客隊
             const homeTeam = row[6] ? row[6].trim() : '';               // G欄：主隊
             
-            console.log(`📝 處理第${i}行:`, { gameId, gameDate, awayTeam, homeTeam });
+            console.log(`📝 處理第${i}行:`, { 
+                gameId, 
+                gameDate, 
+                awayTeam, 
+                homeTeam,
+                '完整行數據': row
+            });
             
             // 檢查必要欄位是否存在且日期在目標範圍內
             if (gameDate && gameId && awayTeam && homeTeam) {
