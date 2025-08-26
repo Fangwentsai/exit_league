@@ -24,12 +24,12 @@ async function loadGames() {
         document.getElementById('loadingGames').style.display = 'block';
         document.getElementById('loadingGames').textContent = '載入比賽資料中...';
         
-        // 獲取相關的日期範圍（今天到往後7天）
+        // 獲取相關的日期範圍（今天到往後6天）
         const today = new Date();
         console.log('📅 當前日期:', today.toLocaleDateString());
         const targetDates = [];
         
-        for (let i = 0; i <= 7; i++) {
+        for (let i = 0; i <= 6; i++) {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
             // 轉換成M/D格式以匹配Google Sheets的日期格式 (8/26, 8/27...)
