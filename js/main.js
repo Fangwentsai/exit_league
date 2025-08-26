@@ -522,7 +522,7 @@ function showError(message) {
 
 // ========== Google Sheets 新聞頁面數據加載與渲染 ========== //
 
-// 解析日期，格式為 "MM/DD"，添加當前年份
+// 解析日期，支援多種格式：YYYY/M/D, M/D, MM/DD
 function parseDate(dateStr) {
     if (!dateStr) return null;
     let parts;
@@ -540,19 +540,34 @@ function parseDate(dateStr) {
         debugLog('日期格式不完整:', dateStr);
         return null;
     }
-    let month, day;
+    
+    let year, month, day;
+    
     if (parts.length === 2) {
+        // 格式：M/D 或 MM/DD，使用當前年份
+        year = new Date().getFullYear();
         month = parseInt(parts[0], 10) - 1;
         day = parseInt(parts[1], 10);
     } else if (parts.length === 3) {
-        month = parseInt(parts[1], 10) - 1;
-        day = parseInt(parts[2], 10);
+        // 格式：YYYY/M/D 或 M/D/YYYY
+        if (parts[0].length === 4) {
+            // YYYY/M/D 格式
+            year = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10) - 1;
+            day = parseInt(parts[2], 10);
+        } else {
+            // M/D/YYYY 格式
+            year = parseInt(parts[2], 10);
+            month = parseInt(parts[0], 10) - 1;
+            day = parseInt(parts[1], 10);
+        }
     }
-    if (isNaN(month) || isNaN(day)) {
+    
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
         debugLog('日期解析失敗:', dateStr);
         return null;
     }
-    const year = new Date().getFullYear();
+    
     return new Date(year, month, day);
 }
 
@@ -818,8 +833,8 @@ function displayMatches(matches) {
             debugLog('分類為上週比賽:', match);
             lastWeekMatches.push(match);
         } 
-        // 只顯示未來 7 天的比賽作為近期比賽
-        else if (diffDays >= 0 && diffDays <= 7) {
+        // 只顯示未來 14 天的比賽作為近期比賽，但限制最多顯示8場
+        else if (diffDays >= 0 && diffDays <= 14) {
             debugLog('分類為近期比賽:', match);
             upcomingMatches.push(match);
         } else {
@@ -865,8 +880,10 @@ function displayMatches(matches) {
     const upcomingContent = document.getElementById('upcomingMatchesContent');
     if (upcomingContent) {
         if (upcomingMatches.length > 0) {
-            upcomingContent.innerHTML = generateMatchesHTML(upcomingMatches);
-            debugLog('近期比賽已更新');
+            // 限制最多顯示5場近期比賽
+            const limitedUpcomingMatches = upcomingMatches.slice(0, 5);
+            upcomingContent.innerHTML = generateMatchesHTML(limitedUpcomingMatches);
+            debugLog('近期比賽已更新，顯示', limitedUpcomingMatches.length, '場比賽');
             
             // 更新近期比賽的日期顯示
             const upcomingDate = upcomingMatches.length > 0 ? upcomingMatches[0].date : '本週';
