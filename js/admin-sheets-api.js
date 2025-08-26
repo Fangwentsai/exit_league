@@ -99,14 +99,8 @@ async function loadGamesFromSheet(targetDates) {
         
         // 嘗試多種可能的工作表名稱（根據API測試結果更新）
         const possibleSheetNames = [
-            '賽程',          // 中文工作表名稱（API測試發現）
-            'schedule',      // 英文工作表名稱（API測試發現）
-            'Schedule',      // 首字母大寫
-            'SCHEDULE',      // 全大寫
-            'schedule_s5',   // 第五屆工作表
-            'Schedule_S5',   // 第五屆工作表（大寫）
-            '工作表1',        // 預設中文名稱
-            'Sheet1'         // 預設英文名稱
+            '賽程',          // 中文工作表名稱（API測試確認存在）
+            'schedule'       // 英文工作表名稱（API測試確認存在）
         ];
         
         let games = [];
