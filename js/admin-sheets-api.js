@@ -171,12 +171,12 @@ function parseGamesData(values, targetDates) {
     for (let i = 1; i < values.length; i++) {
         const row = values[i];
         
-        // 根據實際Google Sheets結構：[Round, Date, HomeTeam, AwayTeam, 場地, '', Round, Date]
-        if (row.length >= 4) {
-            const gameId = row[0] ? `g${row[0].trim()}` : '';           // 第0列：輪數 (1, 2) -> g1, g2
-            const gameDate = row[1] ? row[1].trim() : '';               // 第1列：日期 (2025-08-19)
-            const homeTeam = row[2] ? row[2].trim() : '';               // 第2列：主場隊伍
-            const awayTeam = row[3] ? row[3].trim() : '';               // 第3列：客場隊伍
+        // 根據實際Google Sheets結構：A=遊戲編號, B=日期, C=客場隊伍, G=主場隊伍  
+        if (row.length >= 7) {
+            const gameId = row[0] ? row[0].trim() : '';                 // A欄：遊戲編號 (G01, G02...)
+            const gameDate = row[1] ? row[1].trim() : '';               // B欄：日期 (8/19, 8/26...)
+            const awayTeam = row[2] ? row[2].trim() : '';               // C欄：客場隊伍
+            const homeTeam = row[6] ? row[6].trim() : '';               // G欄：主場隊伍
             
             console.log(`📝 處理第${i}行:`, { 
                 gameId, 
