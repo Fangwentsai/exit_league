@@ -168,25 +168,12 @@ function parseGamesData(values, targetDates) {
     for (let i = 1; i < values.length; i++) {
         const row = values[i];
         
-        // 根據表格格式：A=比賽ID, C=日期+客隊, G=主隊
-        if (row.length >= 7) {
-            const gameId = row[0] ? row[0].toLowerCase().trim() : '';    // A欄：比賽ID (G01, G02...)
-            
-            // C欄包含日期和客隊，需要分離（例如：8/19 VIVI嘻嘻隊）
-            const dateAndAwayTeam = row[2] ? row[2].trim() : '';         // C欄：日期+客隊
-            let gameDate = '';
-            let awayTeam = '';
-            
-            if (dateAndAwayTeam) {
-                // 分離日期和隊伍名稱
-                const match = dateAndAwayTeam.match(/^(\d+\/\d+)\s+(.+)$/);
-                if (match) {
-                    gameDate = match[1];    // 8/19, 8/26, 9/2
-                    awayTeam = match[2];    // VIVI嘻嘻隊, 來都來了...
-                }
-            }
-            
-            const homeTeam = row[6] ? row[6].trim() : '';               // G欄：主隊
+        // 根據實際Google Sheets結構：[Round, Date, HomeTeam, AwayTeam, 場地, '', Round, Date]
+        if (row.length >= 4) {
+            const gameId = row[0] ? `g${row[0].trim()}` : '';           // 第0列：輪數 (1, 2) -> g1, g2
+            const gameDate = row[1] ? row[1].trim() : '';               // 第1列：日期 (2025-08-19)
+            const homeTeam = row[2] ? row[2].trim() : '';               // 第2列：主場隊伍
+            const awayTeam = row[3] ? row[3].trim() : '';               // 第3列：客場隊伍
             
             console.log(`📝 處理第${i}行:`, { 
                 gameId, 
