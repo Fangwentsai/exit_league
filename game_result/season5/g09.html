@@ -3,79 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>難找的聯賽 | 賽事紀錄</title>
+    
+    
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    
     <link rel="stylesheet" href="../../styles/common/game_result.css">
-    <style>
-        /* 預覽模式樣式增強 - 使用 #dc3545 主色調 */
-        .preview-header {
-            background: linear-gradient(135deg, #dc3545 0%, #b02a3a 100%);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
-        }
-        .preview-header h1 {
-            font-size: 20px;
-            margin: 0 0 8px 0;
-        }
-        .preview-header p {
-            font-size: 14px;
-            margin: 0;
-        }
-        .preview-notice {
-            background: #fdf2f2;
-            border: 2px dashed #dc3545;
-            padding: 10px;
-            margin: 10px 0;
-            text-align: center;
-            border-radius: 5px;
-            color: #dc3545;
-            font-weight: bold;
-        }
-        /* 移除預覽按鈕區域 */
-        .preview-actions {
-            display: none;
-        }
-        /* 確保iframe內容不會覆蓋關閉按鈕 */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: auto;
-        }
-        .container {
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* 預覽模式專用的勝利圖標樣式 */
-        .winner-icon {
-            position: absolute;
-            top: 50%;
-            left: 4px;
-            width: 30px;
-            height: 30px;
-            transform: translateY(-50%);
-            background-image: url('../../images/winner.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 5;
-        }
-        
-        /* 確保勝方標示有足夠的左側空間 */
-        .winner {
-            position: relative;
-            text-align: center;
-            vertical-align: middle;
-            padding: 8px 6px 8px 38px !important;
-        }
-    </style>
+    <!-- 如果有特定樣式需求 -->
+    <!-- <link rel="stylesheet" href="../styles/game_result/g09.css"> -->
 </head>
 <body>
     <div class="container">
         <!-- 比賽資訊區 -->
         <div class="match-info">
-            <h2 class="match-date">2025/8/26</h2>
+            <h2 class="match-date">2025/8/26 21:00</h2>
             <div class="venue-info">逃生入口 Bar</div>
             <div class="match-result">
                 <div class="team away">
@@ -90,263 +31,180 @@
             </div>
         </div>
 
-        
-        <div class="score-details">
-            <table class="score-table">
-                <tr>
-                    <th></th>
-                    <th>VIVI嘻嘻隊</th>
-                    <th>逃生入口C</th>
-                </tr>
-                <tr>
-                    <td>比賽成績</td>
-                    <td>22</td>
-                    <td>8</td>
-                </tr>
-                <tr>
-                    <td>勝方加分</td>
-                    <td>1</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>飲酒加成</td>
-                    <td>5</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>最終總分</td>
-                    <td class="final-score">28</td>
-                    <td class="final-score">8</td>
-                </tr>
-            </table>
-        </div>
+<div class="games-container">
+    <!-- 個人賽 01 -->
+    <div class="game-section">
+        <h3>個人賽 01</h3><h4>(黃底為先攻場次)</h4>
+        <table class="game-table">
+            <tr>
+                <th>賽局</th>
+                <th>客隊</th>
+                <th>主隊</th>
+            </tr>
+            <tr>
+                <td class="game-type">SET1<br><span class="game-detail">501 (OI/MO)</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    芝芝
+                </td>
+                <td>Lucas</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET2<br><span class="game-detail">501 (DI/DO)</span></td>
+                <td>老丹</td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    阿隼
+                </td>
+            </tr>
+            <tr>
+                <td class="game-type">SET3<br><span class="game-detail">701 (OI/MO)</span></td>
+                <td class="winner">
+                    <div class="winner-icon"></div>
+                    猴子
+                </td>
+                <td class="first-attack">承翰</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET4<br><span class="game-detail">701 (OI/MO, 25/50)</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    怪頭
+                </td>
+                <td>小歪</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET5<br><span class="game-detail">三人賽 701<br>每人一鏢骰子賽</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    猴子, 老丹, 芝芝
+                </td>
+                <td>阿隼, Lucas, 承翰</td>
+            </tr>
+        </table>
+    </div>
+    <!-- Cricket 賽局 -->
+    <div class="game-section">
+        <h3>Cricket Games</h3>
+        <table class="game-table">
+            <tr>
+                <th>賽局</th>
+                <th>客隊</th>
+                <th>主隊</th>
+            </tr>
+            <tr>
+                <td class="game-type">SET6<br><span class="game-detail">Cricket</span></td>
+                <td>怪頭</td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    小歪
+                </td>
+            </tr>
+            <tr>
+                <td class="game-type">SET7<br><span class="game-detail">Cricket</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    阿淦
+                </td>
+                <td>Lucas</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET8<br><span class="game-detail">HALF-IT</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    Jason
+                </td>
+                <td>阿隼</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET9<br><span class="game-detail">HALF-IT</span></td>
+                <td>猴子</td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    承翰
+                </td>
+            </tr>
+            <tr>
+                <td class="game-type">SET10<br><span class="game-detail">三人賽 Cricket<br>每人一鏢骰子賽</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    猴子, 老丹, 芝芝
+                </td>
+                <td>乳來, 阿誠, 小歪</td>
+            </tr>
+        </table>
+    </div>
+    <!-- 雙人賽 -->
+    <div class="game-section">
+        <h3>雙人賽</h3>
+        <table class="game-table">
+            <tr>
+                <th>賽局</th>
+                <th>客隊</th>
+                <th>主隊</th>
+            </tr>
+            <tr>
+                <td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    猴子, 芝芝
+                </td>
+                <td>阿隼, Lucas</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    Jason, 老丹
+                </td>
+                <td>乳來, 小歪</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET13<br><span class="game-detail">Cricket 雙人賽</span></td>
+                <td class="winner">
+                    <div class="winner-icon"></div>
+                    阿淦, 怪頭
+                </td>
+                <td class="first-attack">阿誠, 小歪</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td>
+                <td>猴子, 老丹</td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    承翰, 乳來
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <div class="games-container">
-            
-            <div class="game-section">
-                <h3>個人賽 01</h3>
-                <h4>(黃底為先攻場次)</h4>
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET1<br><span class="game-detail">501 (OI/MO)</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                芝芝
-            </td>
-            <td class=" ">
-                
-                Lucas
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET2<br><span class="game-detail">501 (DI/DO)</span></td>
-            <td class="first-attack ">
-                
-                老丹
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                阿隼
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET3<br><span class="game-detail">701 (OI/MO)</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                猴子
-            </td>
-            <td class="first-attack ">
-                
-                承翰
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET4<br><span class="game-detail">701 (OI/MO, 25/50)</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                怪頭
-            </td>
-            <td class=" ">
-                
-                小歪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET5<br><span class="game-detail">三人賽 701<br>每人一鏢骰子賽</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                猴子, 老丹, 芝芝
-            </td>
-            <td class=" ">
-                
-                阿隼, Lucas, 承翰
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>Cricket Games</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET6<br><span class="game-detail">Cricket</span></td>
-            <td class=" ">
-                
-                怪頭
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                小歪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET7<br><span class="game-detail">Cricket</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                阿淦
-            </td>
-            <td class=" ">
-                
-                Lucas
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET8<br><span class="game-detail">Random Cricket</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                Jason
-            </td>
-            <td class=" ">
-                
-                阿隼
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET9<br><span class="game-detail">Random Cricket</span></td>
-            <td class="first-attack ">
-                
-                猴子
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                承翰
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET10<br><span class="game-detail">三人賽 Cricket<br>每人一鏢骰子賽</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                猴子, 老丹, 芝芝
-            </td>
-            <td class=" ">
-                
-                乳來, 阿誠, 小歪
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>雙人賽</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                猴子, 芝芝
-            </td>
-            <td class=" ">
-                
-                阿隼, Lucas
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                Jason, 老丹
-            </td>
-            <td class=" ">
-                
-                乳來, 小歪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET13<br><span class="game-detail">Cricket 雙人賽</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                阿淦, 怪頭
-            </td>
-            <td class="first-attack ">
-                
-                阿誠, 小歪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td>
-            <td class=" ">
-                
-                猴子, 老丹
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                承翰, 乳來
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>四人賽</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                Jason, 猴子, 阿淦, 芝芝
-            </td>
-            <td class="first-attack ">
-                
-                乳來, 承翰, 阿誠, Lucas
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                猴子, 老丹, 阿淦, 怪頭
-            </td>
-            <td class=" ">
-                
-                乳來, 承翰, 阿誠, 阿隼
-            </td>
-        </tr>
-                </table>
-            </div>
+    <!-- 四人賽 -->
+    <div class="game-section">
+        <h3>四人賽</h3>
+        <table class="game-table">
+            <tr>
+                <th>賽局</th>
+                <th>客隊</th>
+                <th>主隊</th>
+            </tr>
+            <tr>
+                <td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td>
+                <td class="winner">
+                    <div class="winner-icon"></div>
+                    Jason, 猴子<br>阿淦, 芝芝
+                </td>
+                <td class="first-attack">乳來, 承翰<br>阿誠, Lucas</td>
+            </tr>
+            <tr>
+                <td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td>
+                <td class="first-attack winner">
+                    <div class="winner-icon"></div>
+                    猴子, 老丹<br>阿淦, 怪頭
+                </td>
+                <td>乳來, 承翰<br>阿誠, 阿隼</td>
+            </tr>
+        </table>
+    </div>
             
         <div class="game-section">
             <h3>選手統計</h3>
@@ -367,71 +225,7 @@
                     <th class="stat-cell">先攻數</th>
                 </tr>
                 
-                <tr>
-                    <td class="player-name">怪頭</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">1</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">老丹</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">6</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">4</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">猴子</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">8</td>
-                    <td class="stat-cell">6</td>
-                    <td class="stat-cell">3</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">阿淦</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">6</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">3</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">Jason</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">2</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">芝芝</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">3</td>
-                </tr>
+
                 
             </table>
 
@@ -447,111 +241,64 @@
                     <th class="stat-cell">先攻數</th>
                 </tr>
                 
-                <tr>
-                    <td class="player-name">小歪</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">2</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">阿隼</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">0</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">Lucas</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">2</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">承翰</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">6</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">2</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">乳來</td>
-                    <td class="stat-cell">2</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">5</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">2</td>
-                </tr>
-                
-                <tr>
-                    <td class="player-name">阿誠</td>
-                    <td class="stat-cell">1</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">3</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">4</td>
-                    <td class="stat-cell">0</td>
-                    <td class="stat-cell">2</td>
-                </tr>
+
                 
             </table>
         </div>
         </div>
     </div>
 
+<!-- 引入 JavaScript -->
+<script src="../../js/game_result.js"></script>
+<script>
+// 添加本場比賽資料
+const g09Matches = [
+    {set: 1, type: '01', away: '芝芝', home: 'Lucas', firstAttack: 'away', winner: 'away'},
+    {set: 2, type: '01', away: '老丹', home: '阿隼', firstAttack: 'home', winner: 'home'},
+    {set: 3, type: '01', away: '猴子', home: '承翰', firstAttack: 'home', winner: 'away'},
+    {set: 4, type: '01', away: '怪頭', home: '小歪', firstAttack: 'away', winner: 'away'},
+    {set: 5, type: '01', away: ['猴子','老丹','芝芝'], home: ['阿隼','Lucas','承翰'], firstAttack: 'away', winner: 'away'},
+    {set: 6, type: 'CR', away: '怪頭', home: '小歪', firstAttack: 'home', winner: 'home'},
+    {set: 7, type: 'CR', away: '阿淦', home: 'Lucas', firstAttack: 'away', winner: 'away'},
+    {set: 8, type: 'CR', away: 'Jason', home: '阿隼', firstAttack: 'away', winner: 'away'},
+    {set: 9, type: 'CR', away: '猴子', home: '承翰', firstAttack: 'home', winner: 'home'},
+    {set: 10, type: 'CR', away: ['猴子','老丹','芝芝'], home: ['乳來','阿誠','小歪'], firstAttack: 'away', winner: 'away'},
+    {set: 11, type: '01', away: ['猴子','芝芝'], home: ['阿隼','Lucas'], firstAttack: 'away', winner: 'away'},
+    {set: 12, type: '01', away: ['Jason','老丹'], home: ['乳來','小歪'], firstAttack: 'away', winner: 'away'},
+    {set: 13, type: 'CR', away: ['阿淦','怪頭'], home: ['阿誠','小歪'], firstAttack: 'home', winner: 'away'},
+    {set: 14, type: 'CR', away: ['猴子','老丹'], home: ['承翰','乳來'], firstAttack: 'home', winner: 'home'},
+    {set: 15, type: '01', away: ['Jason','猴子','阿淦','芝芝'], home: ['乳來','承翰','阿誠','Lucas'], firstAttack: 'home', winner: 'away'},
+    {set: 16, type: 'CR', away: ['猴子','老丹','阿淦','怪頭'], home: ['乳來','承翰','阿誠','阿隼'], firstAttack: 'away', winner: 'away'}
+];
+
+// 設定飲酒加成
+const drinkingBonus = {
+    away: 5,  // VIVI嘻嘻隊有飲酒加成
+    home: 0
+};
+
+// 定義本場比賽的選手名單
+const awayPlayers = ['芝芝', '老丹', '猴子', '怪頭', '阿淦', 'Jason'];
+const homePlayers = ['Lucas', '阿隼', '承翰', '小歪', '乳來', '阿誠'];
+
+// 初始化本場比賽
+addMatchData(g09Matches);
+const scores = calculateFinalScore(g09Matches, drinkingBonus);
+updateScoreDisplay(scores);
+initializeStats(awayPlayers, homePlayers);  // 使用本場比賽的選手名單
+</script>
+
+<!-- Google AdSense -->
+<div style="display: none; text-align: center; margin: 20px 0; padding: 10px; border-top: 1px solid #ddd;"><!-- AdSense暫時隱藏等待審核 -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4455508862703492"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
     <script>
-        // 統計切換功能
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('比賽結果頁面載入完成');
-            
-            // 設置統計按鈕切換
-            const statsBtns = document.querySelectorAll('.stats-btn');
-            const awayStats = document.getElementById('awayStats');
-            const homeStats = document.getElementById('homeStats');
-            
-            if (statsBtns.length && awayStats && homeStats) {
-                statsBtns.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // 移除所有按鈕的活動狀態
-                        statsBtns.forEach(b => b.classList.remove('active'));
-                        // 添加當前按鈕的活動狀態
-                        this.classList.add('active');
-                        
-                        // 顯示對應的統計表格
-                        const team = this.getAttribute('data-team');
-                        if (team === 'away') {
-                            awayStats.classList.remove('hidden');
-                            homeStats.classList.add('hidden');
-                        } else {
-                            homeStats.classList.remove('hidden');
-                            awayStats.classList.add('hidden');
-                        }
-                    });
-                });
-                console.log('統計按鈕切換功能已設置');
-            } else {
-                console.warn('統計按鈕或表格未找到');
-            }
-        });
+         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+</div>
 </body>
 </html>
