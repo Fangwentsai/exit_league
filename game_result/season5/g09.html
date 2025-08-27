@@ -45,14 +45,14 @@
                 <td class="game-type">SET1<br><span class="game-detail">501 (OI/MO)</span></td>
                 <td class="first-attack winner">
                     <div class="winner-icon"></div>
-                    芝芝
+                    怪頭
                 </td>
-                <td>Lucas</td>
+                <td>小歪</td>
             </tr>
             <tr>
                 <td class="game-type">SET2<br><span class="game-detail">501 (DI/DO)</span></td>
-                <td>老丹</td>
-                <td class="first-attack winner">
+                <td class="first-attack">老丹</td>
+                <td class="winner">
                     <div class="winner-icon"></div>
                     阿隼
                 </td>
@@ -63,21 +63,21 @@
                     <div class="winner-icon"></div>
                     猴子
                 </td>
-                <td class="first-attack">承翰</td>
+                <td class="first-attack">Lucas</td>
             </tr>
             <tr>
                 <td class="game-type">SET4<br><span class="game-detail">701 (OI/MO, 25/50)</span></td>
                 <td class="first-attack winner">
                     <div class="winner-icon"></div>
-                    怪頭
+                    阿淦
                 </td>
-                <td>小歪</td>
+                <td>承翰</td>
             </tr>
             <tr>
                 <td class="game-type">SET5<br><span class="game-detail">三人賽 701<br>每人一鏢骰子賽</span></td>
                 <td class="first-attack winner">
                     <div class="winner-icon"></div>
-                    猴子, 老丹, 芝芝
+                    猴子, 老丹, 阿淦
                 </td>
                 <td>阿隼, Lucas, 承翰</td>
             </tr>
@@ -94,11 +94,11 @@
             </tr>
             <tr>
                 <td class="game-type">SET6<br><span class="game-detail">Cricket</span></td>
-                <td>怪頭</td>
-                <td class="first-attack winner">
+                <td class="winner">
                     <div class="winner-icon"></div>
-                    小歪
+                    怪頭
                 </td>
+                <td class="first-attack">小歪</td>
             </tr>
             <tr>
                 <td class="game-type">SET7<br><span class="game-detail">Cricket</span></td>
@@ -118,17 +118,17 @@
             </tr>
             <tr>
                 <td class="game-type">SET9<br><span class="game-detail">HALF-IT</span></td>
-                <td>猴子</td>
                 <td class="first-attack winner">
                     <div class="winner-icon"></div>
-                    承翰
+                    猴子
                 </td>
+                <td>承翰</td>
             </tr>
             <tr>
                 <td class="game-type">SET10<br><span class="game-detail">三人賽 Cricket<br>每人一鏢骰子賽</span></td>
                 <td class="first-attack winner">
                     <div class="winner-icon"></div>
-                    猴子, 老丹, 芝芝
+                    猴子, 老丹, 阿淦
                 </td>
                 <td>乳來, 阿誠, 小歪</td>
             </tr>
@@ -191,17 +191,17 @@
                 <td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td>
                 <td class="winner">
                     <div class="winner-icon"></div>
-                    Jason, 猴子<br>阿淦, 芝芝
+                    Jason, 猴子, 阿淦, 芝芝
                 </td>
-                <td class="first-attack">乳來, 承翰<br>阿誠, Lucas</td>
+                <td class="first-attack">乳來, 承翰, 阿誠, Lucas</td>
             </tr>
             <tr>
                 <td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td>
-                <td class="first-attack winner">
+                <td class="first-attack">猴子, 老丹, 阿淦, 怪頭</td>
+                <td class="winner">
                     <div class="winner-icon"></div>
-                    猴子, 老丹<br>阿淦, 怪頭
+                    乳來, 承翰, 阿誠, 阿隼
                 </td>
-                <td>乳來, 承翰<br>阿誠, 阿隼</td>
             </tr>
         </table>
     </div>
@@ -251,24 +251,24 @@
 <!-- 引入 JavaScript -->
 <script src="../../js/game_result.js"></script>
 <script>
-// 添加本場比賽資料 - 根據HTML實際顯示內容
+// 添加本場比賽資料 - 根據提供的正確名單
 const g09Matches = [
-    {set: 1, type: '01', away: '芝芝', home: 'Lucas', firstAttack: 'away', winner: 'away'},
-    {set: 2, type: '01', away: '老丹', home: '阿隼', firstAttack: 'home', winner: 'home'},
-    {set: 3, type: '01', away: '猴子', home: '承翰', firstAttack: 'home', winner: 'away'},
-    {set: 4, type: '01', away: '怪頭', home: '小歪', firstAttack: 'away', winner: 'away'},
-    {set: 5, type: '01', away: ['猴子','老丹','芝芝'], home: ['阿隼','Lucas','承翰'], firstAttack: 'away', winner: 'away'},
-    {set: 6, type: 'CR', away: '怪頭', home: '小歪', firstAttack: 'home', winner: 'home'},
+    {set: 1, type: '01', away: '怪頭', home: '小歪', firstAttack: 'away', winner: 'away'},
+    {set: 2, type: '01', away: '老丹', home: '阿隼', firstAttack: 'away', winner: 'home'},
+    {set: 3, type: '01', away: '猴子', home: 'Lucas', firstAttack: 'home', winner: 'away'},
+    {set: 4, type: '01', away: '阿淦', home: '承翰', firstAttack: 'away', winner: 'away'},
+    {set: 5, type: '01', away: ['猴子','老丹','阿淦'], home: ['阿隼','Lucas','承翰'], firstAttack: 'away', winner: 'away'},
+    {set: 6, type: 'CR', away: '怪頭', home: '小歪', firstAttack: 'home', winner: 'away'},
     {set: 7, type: 'CR', away: '阿淦', home: 'Lucas', firstAttack: 'away', winner: 'away'},
     {set: 8, type: 'CR', away: 'Jason', home: '阿隼', firstAttack: 'away', winner: 'away'},
-    {set: 9, type: 'CR', away: '猴子', home: '承翰', firstAttack: 'home', winner: 'home'},
-    {set: 10, type: 'CR', away: ['猴子','老丹','芝芝'], home: ['乳來','阿誠','小歪'], firstAttack: 'away', winner: 'away'},
+    {set: 9, type: 'CR', away: '猴子', home: '承翰', firstAttack: 'away', winner: 'away'},
+    {set: 10, type: 'CR', away: ['猴子','老丹','阿淦'], home: ['乳來','阿誠','小歪'], firstAttack: 'away', winner: 'away'},
     {set: 11, type: '01', away: ['猴子','芝芝'], home: ['阿隼','Lucas'], firstAttack: 'away', winner: 'away'},
     {set: 12, type: '01', away: ['Jason','老丹'], home: ['乳來','小歪'], firstAttack: 'away', winner: 'away'},
     {set: 13, type: 'CR', away: ['阿淦','怪頭'], home: ['阿誠','小歪'], firstAttack: 'home', winner: 'away'},
-    {set: 14, type: 'CR', away: ['猴子','老丹'], home: ['承翰','乳來'], firstAttack: 'home', winner: 'home'},
+    {set: 14, type: 'CR', away: ['猴子','老丹'], home: ['承翰','乳來'], firstAttack: 'home', winner: 'away'},
     {set: 15, type: '01', away: ['Jason','猴子','阿淦','芝芝'], home: ['乳來','承翰','阿誠','Lucas'], firstAttack: 'home', winner: 'away'},
-    {set: 16, type: 'CR', away: ['猴子','老丹','阿淦','怪頭'], home: ['乳來','承翰','阿誠','阿隼'], firstAttack: 'away', winner: 'away'}
+    {set: 16, type: 'CR', away: ['猴子','老丹','阿淦','怪頭'], home: ['乳來','承翰','阿誠','阿隼'], firstAttack: 'away', winner: 'home'}
 ];
 
 // 設定飲酒加成
@@ -278,8 +278,8 @@ const drinkingBonus = {
 };
 
 // 定義本場比賽的選手名單
-const awayPlayers = ['芝芝', '老丹', '猴子', '怪頭', '阿淦', 'Jason'];
-const homePlayers = ['Lucas', '阿隼', '承翰', '小歪', '乳來', '阿誠'];
+const awayPlayers = ['怪頭', '老丹', '猴子', '阿淦', 'Jason', '芝芝'];
+const homePlayers = ['小歪', '阿隼', 'Lucas', '承翰', '乳來', '阿誠'];
 
 // 初始化本場比賽
 addMatchData(g09Matches);
