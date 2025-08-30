@@ -15,6 +15,22 @@
       gtag('config', 'AW-17514530743');
     </script>
     
+    <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17514530743/PWRNCNSo5ZAbELePyp9B',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+    
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
     
     <link rel="stylesheet" href="../../styles/common/game_result.css">
