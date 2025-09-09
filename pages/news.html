@@ -243,6 +243,58 @@
             font-weight: 500;
         }
         
+        /* 提案示意圖片區塊樣式 */
+        .proposal-image-section {
+            width: 100%;
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .proposal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .proposal-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+        }
+        
+        .image-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .image-description {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
         /* 響應式設計 */
         @media (max-width: 768px) {
             .carousel-container {
@@ -256,6 +308,18 @@
             .carousel-overlay {
                 padding: 15px;
             }
+            
+            .image-container {
+                height: 200px;
+            }
+            
+            .image-title {
+                font-size: 16px;
+            }
+            
+            .image-description {
+                font-size: 12px;
+            }
         }
         
         @media (min-width: 769px) {
@@ -265,6 +329,18 @@
             
             .carousel-title {
                 font-size: 20px;
+            }
+            
+            .image-container {
+                height: 300px;
+            }
+            
+            .image-title {
+                font-size: 20px;
+            }
+            
+            .image-description {
+                font-size: 16px;
             }
         }
     </style>
@@ -312,6 +388,17 @@
                 </div>
                 <div class="matches-content collapsed" id="upcomingMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 提案示意圖片區塊 -->
+        <div class="proposal-image-section">
+            <div class="image-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcRJ3v77AbBZS2AsXG-_noLHhFxK9jV95thA&s" alt="提案示意圖" class="proposal-image">
+                <div class="image-overlay">
+                    <div class="image-title">提案示意圖</div>
+                    <div class="image-description">此為廣告或活動提案示意，僅供參考展示</div>
                 </div>
             </div>
         </div>
