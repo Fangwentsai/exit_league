@@ -35,6 +35,20 @@ body {
     box-sizing: border-box;
 }
 
+/* Top Lady 專用的粉紅色背景標題 */
+.ranking-section h3.section-title {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: white;
+    background-color: #F33994 !important;
+    padding: 6px 16px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 /* 比賽區塊專用的紅色背景標題 */
 .matches-section .section-title {
     font-size: 22px;

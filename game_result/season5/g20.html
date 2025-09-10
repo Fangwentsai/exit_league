@@ -44,7 +44,7 @@
     <div class="container">
         <!-- 比賽資訊區 -->
         <div class="match-info">
-            <h2 class="match-date">2025/9/10</h2>
+            <h2 class="match-date">2025/9/9 21:00</h2>
             <div class="venue-info">酒窩海盜聯盟</div>
             <div class="match-result">
                 <div class="team away">
@@ -59,35 +59,6 @@
             </div>
         </div>
 
-        <div class="score-details">
-            <table class="score-table">
-                <tr>
-                    <th></th>
-                    <th>逃生入口C</th>
-                    <th>海盜揪硬</th>
-                </tr>
-                <tr>
-                    <td>比賽成績</td>
-                    <td>17</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>勝方加分</td>
-                    <td>1</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>飲酒加成</td>
-                    <td>0</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>最終總分</td>
-                    <td class="final-score">18</td>
-                    <td class="final-score">18</td>
-                </tr>
-            </table>
-        </div>
 
         <div class="games-container">
             <!-- 個人賽 01 -->
@@ -309,39 +280,31 @@
 
 <script>
 // g20 比賽數據
-const g20Matches = {
-    matchInfo: {
-        date: "2025/9/10",
-        venue: "酒窩海盜聯盟",
-        awayTeam: "逃生入口C",
-        homeTeam: "海盜揪硬"
-    },
-    results: [
-        // 個人賽 01
-        { set: 1, awayPlayer: "小歪", homePlayer: "伊凡", winner: "away", firstAttack: "home" },
-        { set: 2, awayPlayer: "傑西", homePlayer: "胖胖", winner: "home", firstAttack: "away" },
-        { set: 3, awayPlayer: "Lucas", homePlayer: "彥廷", winner: "home", firstAttack: "away" },
-        { set: 4, awayPlayer: "承翰", homePlayer: "小偉", winner: "away", firstAttack: "home" },
-        { set: 5, awayPlayer: "Lucas, 承翰, 傑西", homePlayer: "小偉, 彥廷, 胖胖", winner: "away", firstAttack: "away" },
-        
-        // Cricket Games
-        { set: 6, awayPlayer: "傑西", homePlayer: "小8", winner: "home", firstAttack: "home" },
-        { set: 7, awayPlayer: "小歪", homePlayer: "阿琪", winner: "home", firstAttack: "home" },
-        { set: 8, awayPlayer: "承翰", homePlayer: "小偉", winner: "home", firstAttack: "away" },
-        { set: 9, awayPlayer: "Eric", homePlayer: "船長", winner: "home", firstAttack: "home" },
-        { set: 10, awayPlayer: "小歪, Lucas, Eric", homePlayer: "胖胖, 船長, 阿琪", winner: "home", firstAttack: "away" },
-        
-        // 雙人賽
-        { set: 11, awayPlayer: "小歪, Eric", homePlayer: "阿琪, 小8", winner: "away", firstAttack: "away" },
-        { set: 12, awayPlayer: "承翰, 傑西", homePlayer: "胖胖, 伊凡", winner: "away", firstAttack: "away" },
-        { set: 13, awayPlayer: "Lucas, 小歪", homePlayer: "彥廷, 船長", winner: "home", firstAttack: "away" },
-        { set: 14, awayPlayer: "承翰, Eric", homePlayer: "小偉, 阿琪", winner: "home", firstAttack: "home" },
-        
-        // 四人賽
-        { set: 15, awayPlayer: "承翰, Lucas, 傑西, Eric", homePlayer: "船長, 彥廷, 伊凡, 阿琪", winner: "away", firstAttack: "away" },
-        { set: 16, awayPlayer: "Eric, 傑西, 承翰, Lucas", homePlayer: "小偉, 胖胖, 小8, 彥廷", winner: "away", firstAttack: "home" }
-    ]
-};
+const g20Matches = [
+    // 個人賽 01
+    {set: 1, type: '01', away: '小歪', home: '伊凡', firstAttack: 'home', winner: 'away'},
+    {set: 2, type: '01', away: '傑西', home: '胖胖', firstAttack: 'away', winner: 'home'},
+    {set: 3, type: '01', away: 'Lucas', home: '彥廷', firstAttack: 'away', winner: 'home'},
+    {set: 4, type: '01', away: '承翰', home: '小偉', firstAttack: 'home', winner: 'away'},
+    {set: 5, type: '01', away: ['Lucas','承翰','傑西'], home: ['小偉','彥廷','胖胖'], firstAttack: 'away', winner: 'away'},
+    
+    // Cricket Games
+    {set: 6, type: 'CR', away: '傑西', home: '小8', firstAttack: 'home', winner: 'home'},
+    {set: 7, type: 'CR', away: '小歪', home: '阿琪', firstAttack: 'home', winner: 'home'},
+    {set: 8, type: 'CR', away: '承翰', home: '小偉', firstAttack: 'away', winner: 'home'},
+    {set: 9, type: 'CR', away: 'Eric', home: '船長', firstAttack: 'home', winner: 'home'},
+    {set: 10, type: 'CR', away: ['小歪','Lucas','Eric'], home: ['胖胖','船長','阿琪'], firstAttack: 'away', winner: 'home'},
+    
+    // 雙人賽
+    {set: 11, type: '01', away: ['小歪','Eric'], home: ['阿琪','小8'], firstAttack: 'away', winner: 'away'},
+    {set: 12, type: '01', away: ['承翰','傑西'], home: ['胖胖','伊凡'], firstAttack: 'away', winner: 'away'},
+    {set: 13, type: 'CR', away: ['Lucas','小歪'], home: ['彥廷','船長'], firstAttack: 'away', winner: 'home'},
+    {set: 14, type: 'CR', away: ['承翰','Eric'], home: ['小偉','阿琪'], firstAttack: 'home', winner: 'home'},
+    
+    // 四人賽
+    {set: 15, type: '01', away: ['承翰','Lucas','傑西','Eric'], home: ['船長','彥廷','伊凡','阿琪'], firstAttack: 'away', winner: 'away'},
+    {set: 16, type: 'CR', away: ['Eric','傑西','承翰','Lucas'], home: ['小偉','胖胖','小8','彥廷'], firstAttack: 'home', winner: 'away'}
+];
 
 // 飲酒加成設定
 const drinkingBonus = {
@@ -350,13 +313,14 @@ const drinkingBonus = {
 };
 
 // 選手名單
-const awayPlayers = ["小歪", "傑西", "Lucas", "承翰", "Eric"];
-const homePlayers = ["伊凡", "胖胖", "彥廷", "小偉", "小8", "阿琪", "船長"];
+const awayPlayers = ['小歪', '傑西', 'Lucas', '承翰', 'Eric'];
+const homePlayers = ['伊凡', '胖胖', '彥廷', '小偉', '小8', '阿琪', '船長'];
 
-// 計算並顯示分數
+// 初始化本場比賽
+addMatchData(g20Matches);
 const scores = calculateFinalScore(g20Matches, drinkingBonus);
 updateScoreDisplay(scores);
-initializeStats(awayPlayers, homePlayers);  // 使用本場比賽的選手名單
+initializeStats(awayPlayers, homePlayers);
 </script>
 
     <!-- Google AdSense -->

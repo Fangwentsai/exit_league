@@ -59,35 +59,6 @@
             </div>
         </div>
 
-        <div class="score-details">
-            <table class="score-table">
-                <tr>
-                    <th></th>
-                    <th>酒空組</th>
-                    <th>一鏢開天門</th>
-                </tr>
-                <tr>
-                    <td>比賽成績</td>
-                    <td>15</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>勝方加分</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>飲酒加成</td>
-                    <td>5</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>最終總分</td>
-                    <td class="final-score">20</td>
-                    <td class="final-score">15</td>
-                </tr>
-            </table>
-        </div>
 
         <div class="games-container">
             <!-- 個人賽 01 -->
@@ -309,39 +280,31 @@
 
 <script>
 // g17 比賽數據
-const g17Matches = {
-    matchInfo: {
-        date: "2025/9/9",
-        venue: "No.5",
-        awayTeam: "酒空組",
-        homeTeam: "一鏢開天門"
-    },
-    results: [
-        // 個人賽 01
-        { set: 1, awayPlayer: "范姜姐", homePlayer: "小承", winner: "away", firstAttack: "away" },
-        { set: 2, awayPlayer: "阿堯", homePlayer: "Chi", winner: "home", firstAttack: "away" },
-        { set: 3, awayPlayer: "慶文", homePlayer: "倫", winner: "home", firstAttack: "home" },
-        { set: 4, awayPlayer: "瘦子", homePlayer: "飛", winner: "home", firstAttack: "away" },
-        { set: 5, awayPlayer: "瘦子, 阿堯, 酒空小宇", homePlayer: "飛, Chi, 倫", winner: "home", firstAttack: "home" },
-        
-        // Cricket Games
-        { set: 6, awayPlayer: "晨晨", homePlayer: "宏", winner: "away", firstAttack: "away" },
-        { set: 7, awayPlayer: "阿仁", homePlayer: "倫", winner: "home", firstAttack: "home" },
-        { set: 8, awayPlayer: "瘦子", homePlayer: "Chi", winner: "away", firstAttack: "home" },
-        { set: 9, awayPlayer: "阿輔", homePlayer: "飛", winner: "home", firstAttack: "home" },
-        { set: 10, awayPlayer: "瘦子, 阿輔, 阿仁", homePlayer: "飛, Chi, 倫", winner: "home", firstAttack: "home" },
-        
-        // 雙人賽
-        { set: 11, awayPlayer: "瘦子, 范姜姐", homePlayer: "小承, 飛", winner: "away", firstAttack: "home" },
-        { set: 12, awayPlayer: "阿輔, 宓哥", homePlayer: "倫, Chi", winner: "home", firstAttack: "home" },
-        { set: 13, awayPlayer: "瘦子, 阿輔", homePlayer: "小承, 倫", winner: "away", firstAttack: "away" },
-        { set: 14, awayPlayer: "阿堯, 酒空小宇", homePlayer: "飛, Chi", winner: "home", firstAttack: "away" },
-        
-        // 四人賽
-        { set: 15, awayPlayer: "瘦子, 阿輔, 阿堯, 慶文", homePlayer: "宏, 倫, Chi, 飛", winner: "away", firstAttack: "away" },
-        { set: 16, awayPlayer: "瘦子, 阿輔, 阿堯, 慶文", homePlayer: "宏, 倫, Chi, 飛", winner: "away", firstAttack: "away" }
-    ]
-};
+const g17Matches = [
+    // 個人賽 01
+    {set: 1, type: '01', away: '范姜姐', home: '小承', firstAttack: 'away', winner: 'away'},
+    {set: 2, type: '01', away: '阿堯', home: 'Chi', firstAttack: 'away', winner: 'home'},
+    {set: 3, type: '01', away: '慶文', home: '倫', firstAttack: 'home', winner: 'home'},
+    {set: 4, type: '01', away: '瘦子', home: '飛', firstAttack: 'away', winner: 'home'},
+    {set: 5, type: '01', away: ['瘦子','阿堯','酒空小宇'], home: ['飛','Chi','倫'], firstAttack: 'home', winner: 'home'},
+    
+    // Cricket Games
+    {set: 6, type: 'CR', away: '晨晨', home: '宏', firstAttack: 'away', winner: 'away'},
+    {set: 7, type: 'CR', away: '阿仁', home: '倫', firstAttack: 'home', winner: 'home'},
+    {set: 8, type: 'CR', away: '瘦子', home: 'Chi', firstAttack: 'home', winner: 'away'},
+    {set: 9, type: 'CR', away: '阿輔', home: '飛', firstAttack: 'home', winner: 'home'},
+    {set: 10, type: 'CR', away: ['瘦子','阿輔','阿仁'], home: ['飛','Chi','倫'], firstAttack: 'home', winner: 'home'},
+    
+    // 雙人賽
+    {set: 11, type: '01', away: ['瘦子','范姜姐'], home: ['小承','飛'], firstAttack: 'home', winner: 'away'},
+    {set: 12, type: '01', away: ['阿輔','宓哥'], home: ['倫','Chi'], firstAttack: 'home', winner: 'home'},
+    {set: 13, type: 'CR', away: ['瘦子','阿輔'], home: ['小承','倫'], firstAttack: 'away', winner: 'away'},
+    {set: 14, type: 'CR', away: ['阿堯','酒空小宇'], home: ['飛','Chi'], firstAttack: 'away', winner: 'home'},
+    
+    // 四人賽
+    {set: 15, type: '01', away: ['瘦子','阿輔','阿堯','慶文'], home: ['宏','倫','Chi','飛'], firstAttack: 'away', winner: 'away'},
+    {set: 16, type: 'CR', away: ['瘦子','阿輔','阿堯','慶文'], home: ['宏','倫','Chi','飛'], firstAttack: 'away', winner: 'away'}
+];
 
 // 飲酒加成設定
 const drinkingBonus = {
@@ -350,13 +313,14 @@ const drinkingBonus = {
 };
 
 // 選手名單
-const awayPlayers = ["范姜姐", "阿堯", "慶文", "瘦子", "酒空小宇", "晨晨", "阿仁", "阿輔", "宓哥"];
-const homePlayers = ["小承", "Chi", "倫", "飛", "宏"];
+const awayPlayers = ['范姜姐', '阿堯', '慶文', '瘦子', '酒空小宇', '晨晨', '阿仁', '阿輔', '宓哥'];
+const homePlayers = ['小承', 'Chi', '倫', '飛', '宏'];
 
-// 計算並顯示分數
+// 初始化本場比賽
+addMatchData(g17Matches);
 const scores = calculateFinalScore(g17Matches, drinkingBonus);
 updateScoreDisplay(scores);
-initializeStats(awayPlayers, homePlayers);  // 使用本場比賽的選手名單
+initializeStats(awayPlayers, homePlayers);
 </script>
 
     <!-- Google AdSense -->
