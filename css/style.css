@@ -5,12 +5,34 @@
     box-sizing: border-box;
 }
 
-/* 隱藏 Google 錨定廣告（如果覺得干擾用戶體驗） */
+/* 隱藏 Google 錨定廣告和自動標籤（如果覺得干擾用戶體驗） */
 .google-anno-skip,
 .google-anno-sc,
-[class*="google-anno"] {
+[class*="google-anno"],
+/* 更具體的 Google AdSense 標籤選擇器 */
+div.google-anno-skip.google-anno-sc,
+div[class*="google-anno-skip"],
+div[class*="google-anno-sc"],
+/* 針對新聞區域中的 Google 標籤 */
+.news-section .google-anno-skip,
+.news-section .google-anno-sc,
+.news-section [class*="google-anno"],
+.news-item .google-anno-skip,
+.news-item .google-anno-sc,
+.news-item [class*="google-anno"],
+.news-header .google-anno-skip,
+.news-header .google-anno-sc,
+.news-header [class*="google-anno"] {
     display: none !important;
     visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
 }
 
 /* 隱藏可能干擾的標籤按鈕（如飛鏢運動服、飛鏢配件等） */

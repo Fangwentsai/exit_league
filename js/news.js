@@ -3,51 +3,120 @@ console.log('news.js 已載入');
 
 // 移除干擾的標籤按鈕
 function removeInterfereingTags() {
-    // 移除包含特定文字的元素
+    console.log('🔍 檢查並移除干擾標籤...');
+    
+    // 1. 直接移除 Google AdSense 自動標籤
+    const googleAnnoElements = document.querySelectorAll('.google-anno-skip, .google-anno-sc, [class*="google-anno"]');
+    googleAnnoElements.forEach(element => {
+        console.log('移除 Google AdSense 標籤:', element);
+        element.style.display = 'none !important';
+        element.style.visibility = 'hidden !important';
+        element.remove(); // 直接移除元素
+    });
+    
+    // 2. 移除包含特定文字的藍色按鈕元素
     const interfereingTexts = ['飛鏢運動服', '飛鏢配件'];
     
     interfereingTexts.forEach(text => {
-        // 查找所有包含這些文字的元素
-        const elements = document.querySelectorAll('*');
+        // 使用更精確的選擇器
+        const elements = document.querySelectorAll(`
+            .news-section *,
+            .news-item *,
+            .news-header *,
+            div[style*="background-color: rgb(0, 123, 255)"],
+            div[style*="background: rgb(0, 123, 255)"],
+            span[style*="background-color: rgb(0, 123, 255)"],
+            button[style*="background-color: rgb(0, 123, 255)"]
+        `);
+        
         elements.forEach(element => {
             if (element.textContent && element.textContent.trim() === text) {
-                // 檢查是否是小按鈕樣式的元素
-                const style = window.getComputedStyle(element);
-                if (style.backgroundColor === 'rgb(0, 123, 255)' || 
-                    style.backgroundColor === '#007bff' ||
-                    element.tagName === 'BUTTON' ||
-                    element.className.includes('tag') ||
-                    element.className.includes('badge') ||
-                    element.className.includes('label')) {
-                    console.log('移除干擾標籤:', text, element);
-                    element.style.display = 'none';
-                    element.style.visibility = 'hidden';
-                }
+                console.log('移除干擾標籤:', text, element);
+                element.style.display = 'none !important';
+                element.style.visibility = 'hidden !important';
+                element.remove(); // 直接移除元素
             }
         });
+    });
+    
+    // 3. 移除任何包含這些文字的小型元素（可能是動態生成的）
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(element => {
+        if (element.textContent && 
+            (element.textContent.trim() === '飛鏢運動服' || element.textContent.trim() === '飛鏢配件')) {
+            const rect = element.getBoundingClientRect();
+            // 如果是小型元素（可能是標籤按鈕）
+            if (rect.width < 150 && rect.height < 50 && rect.width > 0) {
+                console.log('移除小型干擾元素:', element.textContent.trim(), element);
+                element.style.display = 'none !important';
+                element.style.visibility = 'hidden !important';
+                element.remove();
+            }
+        }
     });
 }
 
 // 定期檢查並移除干擾標籤（因為它們可能是動態生成的）
 function startTagRemovalMonitor() {
+    console.log('🚀 啟動標籤移除監控');
+    
     // 立即執行一次
     removeInterfereingTags();
     
-    // 每2秒檢查一次
-    setInterval(removeInterfereingTags, 2000);
+    // 更頻繁地檢查（每1秒一次）
+    setInterval(removeInterfereingTags, 1000);
     
     // 監聽DOM變化
     const observer = new MutationObserver(function(mutations) {
+        let hasNewElements = false;
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes.length > 0) {
-                setTimeout(removeInterfereingTags, 100);
+                // 檢查是否有新增的元素包含我們要移除的類別或文字
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        if (node.classList && (
+                            node.classList.contains('google-anno-skip') ||
+                            node.classList.contains('google-anno-sc') ||
+                            node.className.includes('google-anno')
+                        )) {
+                            hasNewElements = true;
+                        }
+                        
+                        // 檢查是否包含干擾文字
+                        if (node.textContent && (
+                            node.textContent.includes('飛鏢運動服') ||
+                            node.textContent.includes('飛鏢配件')
+                        )) {
+                            hasNewElements = true;
+                        }
+                    }
+                });
             }
         });
+        
+        if (hasNewElements) {
+            console.log('🔄 檢測到新的可能干擾元素，執行清理');
+            setTimeout(removeInterfereingTags, 50);
+        }
     });
     
     observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+    
+    // 也監聽頁面載入完成事件
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(removeInterfereingTags, 500);
+        });
+    }
+    
+    // 監聽頁面完全載入
+    window.addEventListener('load', function() {
+        setTimeout(removeInterfereingTags, 1000);
     });
 }
 
