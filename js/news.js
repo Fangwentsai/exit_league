@@ -1,6 +1,56 @@
 // 立即執行的測試
 console.log('news.js 已載入');
 
+// 移除干擾的標籤按鈕
+function removeInterfereingTags() {
+    // 移除包含特定文字的元素
+    const interfereingTexts = ['飛鏢運動服', '飛鏢配件'];
+    
+    interfereingTexts.forEach(text => {
+        // 查找所有包含這些文字的元素
+        const elements = document.querySelectorAll('*');
+        elements.forEach(element => {
+            if (element.textContent && element.textContent.trim() === text) {
+                // 檢查是否是小按鈕樣式的元素
+                const style = window.getComputedStyle(element);
+                if (style.backgroundColor === 'rgb(0, 123, 255)' || 
+                    style.backgroundColor === '#007bff' ||
+                    element.tagName === 'BUTTON' ||
+                    element.className.includes('tag') ||
+                    element.className.includes('badge') ||
+                    element.className.includes('label')) {
+                    console.log('移除干擾標籤:', text, element);
+                    element.style.display = 'none';
+                    element.style.visibility = 'hidden';
+                }
+            }
+        });
+    });
+}
+
+// 定期檢查並移除干擾標籤（因為它們可能是動態生成的）
+function startTagRemovalMonitor() {
+    // 立即執行一次
+    removeInterfereingTags();
+    
+    // 每2秒檢查一次
+    setInterval(removeInterfereingTags, 2000);
+    
+    // 監聽DOM變化
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length > 0) {
+                setTimeout(removeInterfereingTags, 100);
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
 // 新聞折疊功能
 function toggleNews(headerElement) {
     console.log('toggleNews 被調用', headerElement);
@@ -94,6 +144,7 @@ function initializeNewsToggle() {
 // 頁面載入完成後初始化
 document.addEventListener('DOMContentLoaded', function() {
     initializeNewsToggle();
+    startTagRemovalMonitor(); // 啟動標籤移除監控
 });
 
 // 當內容動態載入時也要重新初始化

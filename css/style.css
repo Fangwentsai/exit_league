@@ -5,6 +5,47 @@
     box-sizing: border-box;
 }
 
+/* 隱藏 Google 錨定廣告（如果覺得干擾用戶體驗） */
+.google-anno-skip,
+.google-anno-sc,
+[class*="google-anno"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 隱藏可能干擾的標籤按鈕（如飛鏢運動服、飛鏢配件等） */
+.news-title + div[style*="margin"],
+.news-title ~ div[class*="tag"],
+.news-title ~ div[class*="badge"],
+.news-title ~ div[class*="label"],
+.news-title ~ span[class*="tag"],
+.news-title ~ span[class*="badge"],
+.news-header div[style*="background-color: #007bff"],
+.news-header div[style*="background: #007bff"],
+.news-header button[style*="background-color: #007bff"],
+.news-header button[style*="background: #007bff"],
+[class*="auto-tag"],
+[class*="content-tag"],
+[data-content*="飛鏢運動服"],
+[data-content*="飛鏢配件"],
+/* 更通用的藍色按鈕隱藏規則 */
+.news-section div[style*="background-color: rgb(0, 123, 255)"],
+.news-section span[style*="background-color: rgb(0, 123, 255)"],
+.news-section button[style*="background-color: rgb(0, 123, 255)"],
+.news-section div[style*="background: rgb(0, 123, 255)"],
+.news-section span[style*="background: rgb(0, 123, 255)"],
+.news-section button[style*="background: rgb(0, 123, 255)"],
+/* 隱藏包含特定文字的小按鈕 */
+.news-section div:contains("飛鏢運動服"),
+.news-section div:contains("飛鏢配件"),
+.news-section span:contains("飛鏢運動服"),
+.news-section span:contains("飛鏢配件"),
+.news-section button:contains("飛鏢運動服"),
+.news-section button:contains("飛鏢配件") {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 /* 確保整個頁面都有背景色 */
 html, 
 body {
