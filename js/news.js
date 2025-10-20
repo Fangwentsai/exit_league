@@ -235,7 +235,7 @@ async function loadMatches() {
             // 首先嘗試使用main.js中的Google Sheet API取得數據
             const sheetId = '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY'; // Season 5的Sheet ID
             const apiKey = 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0';
-            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/賽程?key=${apiKey}`;
+            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!O:V?key=${apiKey}`;
             
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
             response = await fetch(gsheetUrl);
@@ -255,13 +255,20 @@ async function loadMatches() {
                 let currentDate = '';
                 let currentGames = [];
                 
-                // 假設數據格式: [日期, 比賽號碼, 客隊, 客隊分數, 主隊分數, 主隊, ...]
+                // O:V 欄位格式: O=日期, P=比賽號碼, Q=客隊, R=客隊分數, S=主隊分數, T=主隊, U=場地, V=其他資訊
                 rawData.values.forEach(row => {
                     if (row.length >= 6) {
-                        const date = row[0];
-                        const gameNumber = row[1];
-                        const team1 = row[2] + (row[3] ? ` ${row[3]}` : '');
-                        const team2 = (row[4] ? `${row[4]} ` : '') + row[5];
+                        const date = row[0];        // O欄 - 日期
+                        const gameNumber = row[1];  // P欄 - 比賽號碼
+                        const awayTeam = row[2];    // Q欄 - 客隊
+                        const awayScore = row[3];   // R欄 - 客隊分數
+                        const homeScore = row[4];   // S欄 - 主隊分數
+                        const homeTeam = row[5];    // T欄 - 主隊
+                        const venue = row[6] || ''; // U欄 - 場地
+                        
+                        // 組合隊伍名稱和分數
+                        const team1 = awayTeam + (awayScore ? ` ${awayScore}` : '');
+                        const team2 = (homeScore ? `${homeScore} ` : '') + homeTeam + (venue ? ` (${venue})` : '');
                         
                         // 如果日期變了，創建新的比賽日
                         if (date && date !== currentDate) {
@@ -280,7 +287,8 @@ async function loadMatches() {
                             currentGames.push({
                                 game_number: gameNumber,
                                 team1: team1,
-                                team2: team2
+                                team2: team2,
+                                venue: venue
                             });
                         }
                     }
@@ -474,9 +482,11 @@ function createMatchesHTML(matchDay) {
                 let team1Info = extractTeamInfo(game.team1);
                 let team2Info = extractTeamInfo(game.team2);
                 
-                // 獲取比賽場地
+                // 獲取比賽場地 - 優先使用 game.venue，其次從隊伍資訊中提取
                 let venueText = '';
-                if (team1Info.venue) {
+                if (game.venue) {
+                    venueText = game.venue;
+                } else if (team1Info.venue) {
                     venueText = team1Info.venue;
                 } else if (team2Info.venue) {
                     venueText = team2Info.venue;

@@ -190,10 +190,16 @@ const drinkingBonus = {
 const awayPlayers = ['婠婠', '蘇仔', '紅閎', '阿肥', '小姜', '亮亮', '羿珩'];
 const homePlayers = ['哞哞', 'Chi', '倫', '飛', '宏', '小承'];
 
-// 初始化本場比賽
+// *** 修正後的初始化呼叫 ***
+// 1. 載入比賽資料
+addMatchData(matchData);
+
+// 2. 計算並更新總分
 const scores = calculateFinalScore(matchData, drinkingBonus);
 updateScoreDisplay(scores);
-initializeStats(awayPlayers, homePlayers, matchData);
+
+// 3. 初始化統計表格 (不需傳入 matchData)
+initializeStats(awayPlayers, homePlayers);
 </script>
 
     <div style="text-align: center; margin: 20px 0; padding: 10px; border-top: 1px solid #ddd;"><ins class="adsbygoogle"
