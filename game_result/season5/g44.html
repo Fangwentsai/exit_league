@@ -98,10 +98,10 @@
                 <h3>雙人賽</h3>
                 <table class="game-table">
                     <tr><th>賽局</th><th>客隊</th><th>主隊</th></tr>
-                    <tr><td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td><td class="winner"><div class="winner-icon"></div>小倫, Ace</td><td class="first-attack">船長, 伊凡</td></tr>
-                    <tr><td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td><td class="first-attack">大胖, 華華</td><td class="winner"><div class="winner-icon"></div>阿琪, 阿民</td></tr>
-                    <tr><td class="game-type">SET13<br><span class="game-detail">Cricket 雙人賽</span></td><td class="first-attack">小倫, Ace</td><td class="winner"><div class="winner-icon"></div>船長, 伊凡</td></tr>
-                    <tr><td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td><td class="first-attack">大胖, 華華</td><td class="winner"><div class="winner-icon"></div>阿琪, 阿民</td></tr>
+                    <tr><td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td><td>小倫, Ace</td><td class="first-attack winner"><div class="winner-icon"></div>船長, 伊凡</td></tr>
+                    <tr><td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td><td class="first-attack winner"><div class="winner-icon"></div>大胖, 華華</td><td>阿琪, 阿民</td></tr>
+                    <tr><td class="game-type">SET13<br><span class="game-detail">Cricket 雙人賽</span></td><td class="first-attack winner"><div class="winner-icon"></div>小倫, Ace</td><td>船長, 伊凡</td></tr>
+                    <tr><td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td><td class="first-attack winner"><div class="winner-icon"></div>大胖, 華華</td><td>阿琪, 阿民</td></tr>
                 </table>
             </div>
 
@@ -109,8 +109,8 @@
                 <h3>四人賽</h3>
                 <table class="game-table">
                     <tr><th>賽局</th><th>客隊</th><th>主隊</th></tr>
-                    <tr><td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td><td class="first-attack">華華, 大胖, 小倫, Ace</td><td class="winner"><div class="winner-icon"></div>船長, 阿琪, 阿民, 伊凡</td></tr>
-                    <tr><td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td><td class="first-attack">華華, 大胖, 小倫, Ace</td><td class="winner"><div class="winner-icon"></div>船長, 阿琪, 阿民, 伊凡</td></tr>
+                    <tr><td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td><td class="winner"><div class="winner-icon"></div>華華, 大胖, 小倫, Ace</td><td class="first-attack">船長, 阿琪, 阿民, 伊凡</td></tr>
+                    <tr><td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td><td class="winner"><div class="winner-icon"></div>華華, 大胖, 小倫, Ace</td><td class="first-attack">船長, 阿琪, 阿民, 伊凡</td></tr>
                 </table>
             </div>
             
@@ -169,15 +169,15 @@ const matchData = [
     {set: 9, type: 'CR', away: '大胖', home: '阿琪', firstAttack: 'home', winner: 'away'},
     {set: 10, type: 'CR', away: ['華華', '小倫', 'Ace'], home: ['阿民', '阿琪', '船長'], firstAttack: 'home', winner: 'home'},
     
-    // 雙人賽
-    {set: 11, type: '01', away: ['小倫', 'Ace'], home: ['船長', '伊凡'], firstAttack: 'home', winner: 'away'},
-    {set: 12, type: '01', away: ['大胖', '華華'], home: ['阿琪', '阿民'], firstAttack: 'away', winner: 'home'},
-    {set: 13, type: 'CR', away: ['小倫', 'Ace'], home: ['船長', '伊凡'], firstAttack: 'away', winner: 'home'},
-    {set: 14, type: 'CR', away: ['大胖', '華華'], home: ['阿琪', '阿民'], firstAttack: 'away', winner: 'home'},
+    // 雙人賽 (SET 11-14) - 勝敗已交換
+    {set: 11, type: '01', away: ['小倫', 'Ace'], home: ['船長', '伊凡'], firstAttack: 'home', winner: 'home'},
+    {set: 12, type: '01', away: ['大胖', '華華'], home: ['阿琪', '阿民'], firstAttack: 'away', winner: 'away'},
+    {set: 13, type: 'CR', away: ['小倫', 'Ace'], home: ['船長', '伊凡'], firstAttack: 'away', winner: 'away'},
+    {set: 14, type: 'CR', away: ['大胖', '華華'], home: ['阿琪', '阿民'], firstAttack: 'away', winner: 'away'},
     
-    // 四人賽
-    {set: 15, type: '01', away: ['華華', '大胖', '小倫', 'Ace'], home: ['船長', '阿琪', '阿民', '伊凡'], firstAttack: 'away', winner: 'home'},
-    {set: 16, type: 'CR', away: ['華華', '大胖', '小倫', 'Ace'], home: ['船長', '阿琪', '阿民', '伊凡'], firstAttack: 'away', winner: 'home'}
+    // *** 四人賽 (SET 15-16) - 勝敗已交換, 先攻已修改 ***
+    {set: 15, type: '01', away: ['華華', '大胖', '小倫', 'Ace'], home: ['船長', '阿琪', '阿民', '伊凡'], firstAttack: 'home', winner: 'away'},
+    {set: 16, type: 'CR', away: ['華華', '大胖', '小倫', 'Ace'], home: ['船長', '阿琪', '阿民', '伊凡'], firstAttack: 'home', winner: 'away'}
 ];
 
 // 飲酒加成設定
@@ -190,15 +190,10 @@ const drinkingBonus = {
 const awayPlayers = ['Ace', '小倫', '華華', '大胖'];
 const homePlayers = ['伊凡', '阿民', '阿琪', '船長'];
 
-// *** 修正後的初始化呼叫 ***
-// 1. 載入比賽資料
+// 初始化呼叫
 addMatchData(matchData); 
-
-// 2. 計算並更新總分
 const scores = calculateFinalScore(matchData, drinkingBonus);
 updateScoreDisplay(scores);
-
-// 3. 初始化統計表格 (不需傳入 matchData)
 initializeStats(awayPlayers, homePlayers);
 </script>
 
