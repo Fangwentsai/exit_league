@@ -37,7 +37,11 @@ if (!CONFIG[currentSeason]) {
     
     async function loadRankings() {
         try {
-            const range = 'schedule!K:Q';
+            // 不同賽季的隊伍排名欄位位置不同：
+            // - SEASON3/SEASON4 使用 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
+            // - SEASON5 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
+            const isS5 = currentSeason === 'SEASON5';
+            const range = isS5 ? 'schedule!O:V' : 'schedule!K:Q';
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
             console.log("正在請求 URL:", url);
@@ -60,15 +64,30 @@ if (!CONFIG[currentSeason]) {
             
             // 將數據轉換為對象數組以便排序
             let rankings = data.values.slice(1)
-                .map((row, index) => ({
-                    team: row[0] || '',        // K欄: 隊名
-                    wins: row[1] || '',        // L欄: 勝
-                    losses: row[2] || '',      // M欄: 敗
-                    draws: row[3] || '',       // N欄: 和
-                    points: row[4] || '',      // O欄: 積分
-                    bonus: row[5] || '',       // P欄: 飲酒加成
-                    total: parseFloat(row[6] || 0)  // Q欄: 總分，轉換為數字
-                }));
+                .map((row) => {
+                    if (isS5) {
+                        // O:V，其中 O 為排名（忽略，改由我們重排計算）
+                        return {
+                            team: row[1] || '',       // P 欄: 隊名
+                            wins: row[2] || '',       // Q 欄: 勝
+                            losses: row[3] || '',     // R 欄: 敗
+                            draws: row[4] || '',      // S 欄: 和
+                            points: row[5] || '',     // T 欄: 積分
+                            bonus: row[6] || '',      // U 欄: 飲酒加成
+                            total: parseFloat(row[7] || 0) // V 欄: 總分
+                        };
+                    }
+                    // S3/S4 欄位
+                    return {
+                        team: row[0] || '',        // K 欄: 隊名
+                        wins: row[1] || '',        // L 欄: 勝
+                        losses: row[2] || '',      // M 欄: 敗
+                        draws: row[3] || '',       // N 欄: 和
+                        points: row[4] || '',      // O 欄: 積分
+                        bonus: row[5] || '',       // P 欄: 飲酒加成
+                        total: parseFloat(row[6] || 0) // Q 欄: 總分
+                    };
+                });
 
             // 依總分排序（降序）
             rankings.sort((a, b) => b.total - a.total);
