@@ -975,55 +975,66 @@ function updateNewsContent(lastMatch, nextMatch) {
     }
 }
 
-// 排名頁面數據加載
+// 【修改 main.js (大檔案) 裡的這個函式】
 async function loadRankData(page) {
-    try {
-        const currentSeason = page === 'rankS5' ? 'SEASON5' : (page === 'rankS4' ? 'SEASON4' : 'SEASON3');
-        const config = CONFIG[currentSeason];
-        if (!config) throw new Error('找不到配置');
-
-        // 載入團隊排名
-        const rankResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/schedule!K:Q?key=${config.API_KEY}`);
-        if (!rankResponse.ok) throw new Error(`HTTP 錯誤! 狀態: ${rankResponse.status}`);
-        
-        const rankData = await rankResponse.json();
-        if (!rankData.values || rankData.values.length === 0) {
-            throw new Error('No data found in sheet');
-        }
-
-        // 更新團隊排名表格
-        updateTeamRankings(rankData.values.slice(1));
-
-        // 載入個人排名
-        const personalResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A:I?key=${config.API_KEY}`);
-        if (!personalResponse.ok) throw new Error(`HTTP 錯誤! 狀態: ${personalResponse.status}`);
-        
-        const personalData = await personalResponse.json();
-        if (!personalData.values || personalData.values.length === 0) {
-            throw new Error('No personal data found in sheet');
-        }
-
-        // 更新個人排名表格並設置功能
-        const personalRankings = personalData.values.slice(1).map(row => ({
-            team: row[0] || '',
-            name: row[1] || '',
-            wins01: parseFloat(row[2]) || 0,
-            rate01: parseFloat(row[3]) || 0,
-            winsCR: parseFloat(row[4]) || 0,
-            rateCR: parseFloat(row[5]) || 0,
-            totalWins: parseFloat(row[6]) || 0,
-            totalRate: parseFloat(row[7]) || 0,
-            firstRate: parseFloat(row[8]) || 0
-        }));
-
-        // 初始化個人排名相關功能
-        initializePersonalRankings(personalRankings);
-
-    } catch (error) {
-        console.error('載入排名數據時發生錯誤:', error);
-        showRankError(error.message);
+        try {
+            // 這裡的 'page' 變數來自 loadContent (例如 'rankS5')
+            const currentSeason = page === 'rankS5' ? 'SEASON5' : (page === 'rankS4' ? 'SEASON4' : 'SEASON3');
+            const config = CONFIG[currentSeason];
+            if (!config) throw new Error('找不到配置');
+    
+            // === 【這就是我們新增的 S5 判斷邏輯】 ===
+            // 根據 'page' 變數來判斷
+            const isS5 = (currentSeason === 'SEASON5'); 
+            const rankRange = isS5 ? 'schedule!O:V' : 'schedule!K:Q';
+            const rankUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${rankRange}?key=${config.API_KEY}`;
+            
+            console.log('判斷為 S5:', isS5);
+            console.log('正在請求團隊排名 URL:', rankUrl);
+            // ==========================================
+    
+            // 載入團隊排名 (【修改這裡】使用我們剛建立的 rankUrl 變數)
+            const rankResponse = await fetch(rankUrl); 
+            if (!rankResponse.ok) throw new Error(`HTTP 錯誤! 狀態: ${rankResponse.status}`);
+            
+            const rankData = await rankResponse.json();
+            if (!rankData.values || rankData.values.length === 0) {
+                throw new Error('No data found in sheet');
+            }
+    
+            // 【修改這裡】把 isS5 傳遞下去，讓 updateTeamRankings 知道如何解析
+            updateTeamRankings(rankData.values.slice(1), isS5);
+    
+            // 載入個人排名
+            const personalResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A:I?key=${config.API_KEY}`);
+            if (!personalResponse.ok) throw new Error(`HTTP 錯誤! 狀態: ${personalResponse.status}`);
+            
+            const personalData = await personalResponse.json();
+            if (!personalData.values || personalData.values.length === 0) {
+                throw new Error('No personal data found in sheet');
+            }
+    
+            // 更新個人排名表格並設置功能 (這部分邏輯不變)
+            const personalRankings = personalData.values.slice(1).map(row => ({
+                team: row[0] || '',
+                name: row[1] || '',
+                wins01: parseFloat(row[2]) || 0,
+                rate01: parseFloat(row[3]) || 0,
+                winsCR: parseFloat(row[4]) || 0,
+                rateCR: parseFloat(row[5]) || 0,
+                totalWins: parseFloat(row[6]) || 0,
+                totalRate: parseFloat(row[7]) || 0,
+                firstRate: parseFloat(row[8]) || 0
+            }));
+    
+            // 初始化個人排名相關功能
+            initializePersonalRankings(personalRankings);
+    
+        } catch (error) {
+            console.error('載入排名數據時發生錯誤:', error);
+            showRankError(error.message);
+        }
     }
-}
 
 // 初始化個人排名功能
 function initializePersonalRankings(rankings) {
@@ -1189,21 +1200,47 @@ function initializePersonalRankings(rankings) {
     updatePersonalTable();
 }
 
-// 更新團隊排名
-function updateTeamRankings(data) {
+// 【修改 main.js (大檔案) 裡的這個函式】
+
+function updateTeamRankings(data, isS5 = false) {
     const tableBody = document.getElementById('rankTableBody');
     if (!tableBody) return;
 
-    const rankings = data.map(row => ({
-        team: row[0] || '',
-        wins: row[1] || '',
-        losses: row[2] || '',
-        draws: row[3] || '',
-        points: row[4] || '',
-        bonus: row[5] || '',
-        total: parseFloat(row[6] || 0)
-    })).sort((a, b) => b.total - a.total);
+    const rankings = data.map(row => {
+        // S5 判斷
+        if (isS5) {
+            // S5: O:V (O排名, P隊名, Q勝, R敗, S和, T積分, U飲酒, V總分)
+            const team = row[1] || ''; // P 隊名
+            const total = parseFloat(row[7] || 0); // V 總分
+            return {
+                team,
+                wins: row[2] || '',   // Q 勝
+                losses: row[3] || '', // R 敗
+                draws: row[4] || '',  // S 和
+                points: row[5] || '', // T 積分
+                bonus: row[6] || '',  // U 飲酒
+                total: isNaN(total) ? 0 : total
+            };
+        }
 
+        // S3/S4: K:Q (K隊名, L勝, M敗, N和, O積分, P飲酒, Q總分)
+        return {
+            team: row[0] || '',
+            wins: row[1] || '',
+            losses: row[2] || '',
+            draws: row[3] || '',
+            points: row[4] || '',
+            bonus: row[5] || '',
+            total: parseFloat(row[6] || 0)
+        };
+    })
+    // 過濾空行
+    .filter(item => item.team && !isNaN(item.total))
+    // 排序
+    .sort((a, b) => b.total - a.total);
+
+    // === 【這就是你要修正的地方】 ===
+    // 確保所有 <td> 都在 同一個 <tr> 裡面
     tableBody.innerHTML = rankings.map((row, index) => `
         <tr>
             <td>${index + 1}</td>
@@ -1216,6 +1253,7 @@ function updateTeamRankings(data) {
             <td>${row.total}</td>
         </tr>
     `).join('');
+    // =================================
 }
 
 // 載入賽程數據
