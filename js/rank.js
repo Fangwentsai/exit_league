@@ -1,22 +1,53 @@
-// 根據頁面 URL 自動確定當前賽季
+// 【已修改】
+// 你的網站是一個單頁應用 (SPA)，頁面路徑 (pathname) 始終是 "/"
+// 我們必須改用 URL 的 "錨點" (hash) 來判斷要載入哪個賽季
+
+// 獲取當前頁面的 "錨點" (hash), 例如 "#rankS5"
+const currentHash = window.location.hash; 
+
+// 從 hash 中提取 "page" 名稱 (移除 '#')，例如 "rankS5"
+let pageIdentifier = currentHash.substring(1); 
+
+console.log('當前路徑 (Path):', window.location.pathname); // 會是 "/"
+console.log('當前錨點 (Hash):', currentHash); // 應該是 "#rankS5"
+console.log('解析到的頁面 (pageIdentifier):', pageIdentifier); 
+
+// 【重要】
+// 你的 loadRankings 函式中也需要 fileName 變數
+// 我們就把 pageIdentifier 賦值給它
+const fileName = pageIdentifier; 
+
+// 根據文件名 (來自 hash) 確定賽季
 let currentSeason = 'SEASON3'; // 默認為第三屆
-    
-// 獲取當前頁面的文件名
-const currentPath = window.location.pathname;
-const fileName = currentPath.split('/').pop();
 
-console.log('當前頁面:', fileName);
-
-// 根據文件名確定賽季
-if (fileName.includes('S5') || fileName.includes('s5') || fileName.includes('5')) {
+if (fileName.toLowerCase().includes('s5') || fileName.toLowerCase().includes('ranks5')) {
     currentSeason = 'SEASON5';
-} else if (fileName.includes('S4') || fileName.includes('s4') || fileName.includes('4')) {
+} else if (fileName.toLowerCase().includes('s4') || fileName.toLowerCase().includes('ranks4')) {
     currentSeason = 'SEASON4';
-} else if (fileName.includes('S3') || fileName.includes('s3') || fileName.includes('3')) {
+} else if (fileName.toLowerCase().includes('s3') || fileName.toLowerCase().includes('ranks3')) {
     currentSeason = 'SEASON3';
+} else if (fileName === '' && window.location.pathname === '/') {
+    // 如果 Hash 為空 (在 / 頁面)
+    // 根據你的日誌，它似乎會默認加載 rankS5，所以我們也默認為 S5
+    currentSeason = 'SEASON5';
+    console.log('Hash 為空，默認為 SEASON5');
 }
 
+// 這裡的 console.log 會顯示正確的賽季
 console.log('自動檢測到賽季:', currentSeason);
+
+// 若頁面提供覆寫變數 seasonOverride，則以其為最高優先權
+try {
+    if (typeof window !== 'undefined' && typeof window.seasonOverride !== 'undefined') {
+        const ov = String(window.seasonOverride).toLowerCase();
+        if (ov.includes('5')) currentSeason = 'SEASON5';
+        else if (ov.includes('4')) currentSeason = 'SEASON4';
+        else if (ov.includes('3')) currentSeason = 'SEASON3';
+        console.log('套用 seasonOverride 覆寫為:', currentSeason);
+    }
+} catch (e) {
+    console.warn('讀取 seasonOverride 失敗，使用自動偵測:', e);
+}
 
 // 從 CONFIG 對象中獲取對應賽季的配置
 if (!CONFIG[currentSeason]) {
@@ -40,7 +71,8 @@ if (!CONFIG[currentSeason]) {
             // 不同賽季的隊伍排名欄位位置不同：
             // - SEASON3/SEASON4 使用 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
             // - SEASON5 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
-            const isS5 = currentSeason === 'SEASON5';
+            // 為避免任何偵測誤差，除了看 currentSeason，也直接根據檔名判斷是否為 S5 頁面
+            const isS5 = (currentSeason === 'SEASON5') || /rankS5|ranks5|\bs5\b/i.test(fileName);
             const range = isS5 ? 'schedule!O:V' : 'schedule!K:Q';
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
@@ -67,14 +99,16 @@ if (!CONFIG[currentSeason]) {
                 .map((row) => {
                     if (isS5) {
                         // O:V，其中 O 為排名（忽略，改由我們重排計算）
+                        const team = row[1] || '';
+                        const total = parseFloat(row[7]);
                         return {
-                            team: row[1] || '',       // P 欄: 隊名
+                            team,
                             wins: row[2] || '',       // Q 欄: 勝
                             losses: row[3] || '',     // R 欄: 敗
                             draws: row[4] || '',      // S 欄: 和
                             points: row[5] || '',     // T 欄: 積分
                             bonus: row[6] || '',      // U 欄: 飲酒加成
-                            total: parseFloat(row[7] || 0) // V 欄: 總分
+                            total: isNaN(total) ? 0 : total // V 欄: 總分
                         };
                     }
                     // S3/S4 欄位
@@ -87,6 +121,13 @@ if (!CONFIG[currentSeason]) {
                         bonus: row[5] || '',       // P 欄: 飲酒加成
                         total: parseFloat(row[6] || 0) // Q 欄: 總分
                     };
+                })
+                // 過濾出真正的排名列，避免把賽程行混入
+                .filter(item => {
+                    if (isS5) {
+                        return item.team && !isNaN(item.total) && item.total > 0;
+                    }
+                    return item.team && !isNaN(item.total);
                 });
 
             // 依總分排序（降序）
