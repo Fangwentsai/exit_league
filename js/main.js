@@ -906,9 +906,9 @@ async function loadMatches() {
         const sheetId = CONFIG.SEASON5.SHEET_ID;
         const apiKey = CONFIG.SEASON5.API_KEY;
         debugLog('使用的 Google Sheets ID:', sheetId);
-        debugLog('使用的 API Key:', apiKey);
+        // debugLog('使用的 API Key:', apiKey); // 已註釋：隱藏敏感資訊
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A:H?key=${apiKey}`;
-        debugLog('請求的 URL:', url);
+        // debugLog('請求的 URL:', url); // 已註釋：隱藏敏感資訊
         const response = await fetch(url);
         debugLog('fetch 響應狀態:', response.status);
         if (!response.ok) {
@@ -990,7 +990,7 @@ async function loadRankData(page) {
             const rankUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${rankRange}?key=${config.API_KEY}`;
             
             console.log('判斷為 S5:', isS5);
-            console.log('正在請求團隊排名 URL:', rankUrl);
+            // console.log('正在請求團隊排名 URL:', rankUrl); // 已註釋：隱藏敏感資訊
             // ==========================================
     
             // 載入團隊排名 (【修改這裡】使用我們剛建立的 rankUrl 變數)
