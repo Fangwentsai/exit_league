@@ -813,6 +813,9 @@ function displayMatches(matches) {
     debugLog('當前日期:', today.toISOString().split('T')[0]);
     const lastWeekMatches = [];
     const upcomingMatches = [];
+    
+    // 先找出所有過去的比賽，按日期排序
+    const pastMatches = [];
     for (const match of matches) {
         if (!match.date) {
             debugLog('跳過沒有日期的比賽:', match);
@@ -828,17 +831,32 @@ function displayMatches(matches) {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         debugLog('比賽與今天相差天數:', diffDays);
         
-        // 只顯示最近 7 天內的比賽作為上週戰況
-        if (diffDays < 0 && diffDays >= -7) {
-            debugLog('分類為上週比賽:', match);
-            lastWeekMatches.push(match);
-        } 
-        // 只顯示未來 14 天的比賽作為近期比賽，但限制最多顯示8場
-        else if (diffDays >= 0 && diffDays <= 14) {
+        if (diffDays < 0) {
+            // 過去的比賽
+            pastMatches.push({ ...match, diffDays, matchDate });
+        } else if (diffDays >= 0 && diffDays <= 14) {
+            // 未來 14 天的比賽
             debugLog('分類為近期比賽:', match);
             upcomingMatches.push(match);
         } else {
             debugLog('不在顯示範圍內的比賽:', match);
+        }
+    }
+    
+    // 將過去的比賽按日期降序排列（最近的在前）
+    pastMatches.sort((a, b) => b.matchDate - a.matchDate);
+    
+    // 只顯示最近一場比賽日的所有比賽
+    if (pastMatches.length > 0) {
+        const mostRecentDate = pastMatches[0].matchDate;
+        const mostRecentDateStr = mostRecentDate.toISOString().split('T')[0];
+        
+        for (const match of pastMatches) {
+            const matchDateStr = match.matchDate.toISOString().split('T')[0];
+            if (matchDateStr === mostRecentDateStr) {
+                debugLog('分類為上週比賽:', match);
+                lastWeekMatches.push(match);
+            }
         }
     }
     
