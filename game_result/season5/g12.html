@@ -11,6 +11,19 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-4455508862703492",
+            enable_page_level_ads: true,
+            overlays: {bottom: false},
+            anchor_ads: {enabled: true},  // 啟用錨定廣告（85.80%可視率）
+            vignette_ads: {enabled: true},  // 啟用穿插廣告（95.12%可視率）
+            content_ads: {enabled: false},
+            multiplex_ads: {enabled: false},
+            matched_content_ads: {enabled: false},
+            display_ads: {enabled: false}  // 禁用網頁內廣告（26.20%可視率）
+        });
+    </script>
     <link rel="stylesheet" href="../../styles/common/game_result.css">
 </head>
 <body>
@@ -33,11 +46,11 @@
         </div>
 
         <!-- 靜態廣告版位 -->
-        <div class="ad-section" style="text-align: center; margin: 5px auto; max-width: 728px; width: 100%;">
+        <div class="ad-section" style="text-align: center; margin: 5px auto; max-width: 728px; width: 100%;; min-height: 90px;">
             <ins class="adsbygoogle"
                  style="display:block;width:100%;max-width:728px;height:90px"
                  data-ad-client="ca-pub-4455508862703492"
-                 data-ad-format="auto"
+                 data-ad-format="horizontal"
                  data-full-width-responsive="true"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
@@ -298,18 +311,5 @@
     const scores = calculateFinalScore(g12Matches, drinkingBonus);
     updateScoreDisplay(scores);
     initializeStats(awayPlayers, homePlayers);  // 使用本場比賽的選手名單
-    </script>
-
-    <!-- Google AdSense -->
-    <div style="text-align: center; margin: 20px 0; padding: 10px; border-top: 1px solid #ddd;"><!-- AdSense 已啟用 -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-4455508862703492"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-</body>
+    </script></body>
 </html>

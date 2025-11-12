@@ -41,18 +41,18 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
     
-    <!-- 配置 AdSense 以禁用自動內容標籤和多媒體廣告 -->
+    <!-- 配置 AdSense 優化可視率 - 只啟用高可視率廣告 -->
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-4455508862703492",
             enable_page_level_ads: true,
             overlays: {bottom: false}, // 禁用底部覆蓋廣告
-            anchor_ads: {enabled: false}, // 禁用錨定廣告
-            vignette_ads: {enabled: false}, // 禁用插頁廣告
+            anchor_ads: {enabled: true}, // 啟用錨定廣告（85.80%可視率）
+            vignette_ads: {enabled: true}, // 啟用插頁廣告（95.12%可視率）
             content_ads: {enabled: false}, // 禁用內容標籤
-            multiplex_ads: {enabled: false}, // 禁用多媒體廣告
+            multiplex_ads: {enabled: false}, // 禁用多媒體廣告（手動36.25%）
             matched_content_ads: {enabled: false}, // 禁用相關內容廣告
-            display_ads: {enabled: false} // 禁用多媒體展示廣告
+            display_ads: {enabled: false} // 禁用網頁內廣告（26.20%可視率太低）
         });
     </script>
     
@@ -414,12 +414,12 @@
             </div>
         </div>
         
-        <!-- Google AdSense 中間廣告 -->
-        <div style="text-align: center; margin: 30px auto; padding: 20px; max-width: 728px;">
+        <!-- Google AdSense 中間廣告 - 優化位置提高可視率 -->
+        <div style="text-align: center; margin: 20px auto 30px; padding: 15px; max-width: 728px; min-height: 90px;">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-4455508862703492"
-                 data-ad-format="auto"
+                 data-ad-format="horizontal"
                  data-full-width-responsive="true"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
@@ -439,52 +439,52 @@
                     <tr>
                         <td>1</td>
                         <td>VIVI嘻嘻隊</td>
-                        <td>245</td>
+                        <td>258</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>VIVI哈哈隊</td>
-                        <td>228</td>
+                        <td>251</td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>酒空組</td>
-                        <td>217</td>
+                        <td>234</td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>來都來了</td>
-                        <td>206</td>
+                        <td>225</td>
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td>Jack</td>
-                        <td>197</td>
+                        <td>逃生入口A</td>
+                        <td>223</td>
                     </tr>
                     <tr>
                         <td>6</td>
-                        <td>逃生入口A</td>
-                        <td>196</td>
+                        <td>Jack</td>
+                        <td>206</td>
                     </tr>
                     <tr>
                         <td>7</td>
                         <td>人生揪難</td>
-                        <td>183</td>
+                        <td>202</td>
                     </tr>
                     <tr>
                         <td>8</td>
                         <td>一鏢開天門</td>
-                        <td>171</td>
+                        <td>188</td>
                     </tr>
                     <tr>
                         <td>9</td>
                         <td>海盜揪硬</td>
-                        <td>166</td>
+                        <td>185</td>
                     </tr>
                     <tr>
                         <td>10</td>
                         <td>逃生入口C</td>
-                        <td>164</td>
+                        <td>181</td>
                     </tr>
                 </table>
             </div>
@@ -498,29 +498,29 @@
                         <th>勝場數</th>
                     </tr>
                     <tr>
-                        <td>VIVI嘻嘻隊</td>
-                        <td>猴子</td>
-                        <td>52</td>
-                    </tr>
-                    <tr>
                         <td>一鏢開天門</td>
                         <td>飛</td>
-                        <td>52</td>
+                        <td>57</td>
+                    </tr>
+                    <tr>
+                        <td>VIVI嘻嘻隊</td>
+                        <td>猴子</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>VIVI嘻嘻隊</td>
+                        <td>小倫</td>
+                        <td>50</td>
                     </tr>
                     <tr>
                         <td>VIVI嘻嘻隊</td>
                         <td>小耿</td>
-                        <td>45</td>
+                        <td>48</td>
                     </tr>
                     <tr>
                         <td>逃生入口A</td>
-                        <td>小倫</td>
-                        <td>44</td>
-                    </tr>
-                    <tr>
-                        <td>VIVI哈哈隊</td>
-                        <td>阿淦</td>
-                        <td>42</td>
+                        <td>華華</td>
+                        <td>48</td>
                     </tr>
                 </table>
                 
@@ -534,22 +534,27 @@
                     <tr>
                         <td>來都來了</td>
                         <td>躲躲</td>
-                        <td>26</td>
+                        <td>30</td>
                     </tr>
                     <tr>
                         <td>人生揪難</td>
                         <td>婠婠</td>
-                        <td>21</td>
+                        <td>23</td>
                     </tr>
                     <tr>
                         <td>人生揪難</td>
                         <td>亮亮</td>
-                        <td>13</td>
+                        <td>15</td>
                     </tr>
                     <tr>
                         <td>酒空組</td>
                         <td>范姜姐</td>
-                        <td>12</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>VIVI哈哈隊</td>
+                        <td>小芬</td>
+                        <td>13</td>
                     </tr>
                 </table>
             </div>
@@ -565,7 +570,7 @@
                     <tr>
                         <td>Jack</td>
                         <td>B哥</td>
-                        <td>8.33% (1-12)</td>
+                        <td>7.69% (1-13)</td>
                     </tr>
                     <tr>
                         <td>人生揪難</td>
@@ -575,17 +580,17 @@
                     <tr>
                         <td>VIVI哈哈隊</td>
                         <td>石頭</td>
-                        <td>28.57% (8-28)</td>
-                    </tr>
-                    <tr>
-                        <td>海盜揪硬</td>
-                        <td>嘉宸</td>
-                        <td>28.57% (6-21)</td>
+                        <td>26.67% (8-30)</td>
                     </tr>
                     <tr>
                         <td>酒空組</td>
                         <td>阿仁</td>
-                        <td>29.03% (9-31)</td>
+                        <td>29.41% (10-34)</td>
+                    </tr>
+                    <tr>
+                        <td>VIVI哈哈隊</td>
+                        <td>阿倫</td>
+                        <td>30% (21-70)</td>
                     </tr>
                 </table>
             </div>
@@ -594,6 +599,39 @@
         <div class="news-section" data-ad-client-ignore="true">
             <h2 class="section-title">賽事新聞</h2>
             <div class="news-content" id="newsContent">
+              <div class="news-item collapsible">
+                <div class="news-header">
+                  <div class="news-date">2025/11/12</div>
+                  <div class="news-title">👑 王者易主！飛57勝超越猴子56勝登頂個人榜</div>
+                </div>
+                <div class="news-text collapsed">第五屆難找的聯賽進入第十二週，VIVI內戰落幕！VIVI嘻嘻隊以258分持續領先，但VIVI哈哈隊以251分緊追不捨，雙方差距縮小至僅7分！個人榜迎來歷史性時刻，飛以57勝超越猴子56勝，成為新的個人勝場王！
+<br><br>
+<strong>👑 VIVI內戰結束，嘻嘻隊險勝：</strong><br>
+VIVI嘻嘻隊以258分繼續穩坐龍頭寶座，但領先VIVI哈哈隊251分僅剩7分！這場關鍵的VIVI內戰中，嘻嘻隊險勝保住領先優勢，但哈哈隊的強勢追趕讓冠軍爭奪充滿懸念。7分的差距意味著任何一場比賽都可能改變冠軍歸屬，VIVI雙雄爭霸進入最激烈階段！
+<br><br>
+<strong>🚀 酒空組穩居第三，中段競爭激烈：</strong><br>
+酒空組以234分穩居第三名，與第二名哈哈隊差距17分。來都來了225分位居第四，逃生入口A 223分緊隨其後排名第五。第4到第5名僅相差2分，中段競爭依然白熱化！Jack 206分排名第六，人生揪難202分位居第七，一鏢開天門188分排名第八。
+<br><br>
+<strong>⚡ 下位圈排名穩定：</strong><br>
+海盜揪硬185分排名第九，逃生入口C 181分墊底。下位圈排名相對穩定，但分差不大，仍有變數！
+<br><br>
+<strong>🌟 個人榜王者易主，飛登頂！</strong><br>
+本週最大震撼！飛以57勝超越猴子56勝，成為新的個人勝場王！這是自第十週以來，首次有選手打破雙雄並列的局面。飛的強勢表現成功帶領一鏢開天門在個人榜占據榜首，展現個人英雄的強大影響力！小倫50勝躍升第三，小耿48勝與華華48勝並列第四。個人榜競爭進入新階段！
+<br><br>
+<strong>🌹 Top Lady榜躲躲持續擴大領先：</strong><br>
+來都來了躲躲以30勝持續擴大領先優勢，超越人生揪難婠婠23勝達7勝差距！人生揪難亮亮15勝穩居第三。酒空組范姜姐13勝與VIVI哈哈隊小芬13勝並列第四。躲躲的統治地位愈發穩固，展現女性選手的強大實力！
+<br><br>
+<strong>💀 地獄倒霉鬼榜B哥再創新低：</strong><br>
+地獄倒霉鬼榜再次震撼！Jack B哥以7.69% (1-13)的史詩級慘烈先攻率再創聯賽最低紀錄，13場比賽只有1次先攻機會！人生揪難克林23.53% (4-17)穩居第二，VIVI哈哈隊石頭26.67% (8-30)排名第三。酒空組阿仁29.41% (10-34)位居第四，VIVI哈哈隊阿倫30% (21-70)位居第五。B哥的倒霉傳奇持續刷新下限！
+<br><br>
+<strong>📊 賽季進度分析：</strong><br>
+第十二週賽事圓滿落幕，聯賽已完成約67%的賽程！VIVI雙雄爭霸進入最激烈階段，7分的差距讓冠軍爭奪充滿懸念。個人榜飛超越猴子登頂，打破雙雄並列的局面，成為本週最大看點。Top Lady榜躲躲的統治地位愈發穩固，B哥史詩級的倒霉紀錄持續刷新，都為聯賽增添無數話題！
+<br><br>
+距離18週的完整賽程還有6週比賽，每一場比賽都將決定最終的冠軍歸屬。VIVI內戰的結果會如何影響最終排名？飛能否繼續保持領先？猴子能否反超奪回榜首？B哥能否在剩餘比賽中擺脫地獄倒霉鬼的命運？精彩還在後頭！
+<br><br>
+                <em>※ 本戰報由AI自動生成，數據統計截至2025/11/12</em>
+                </div>
+              </div>
               <div class="news-item collapsible">
                 <div class="news-header">
                   <div class="news-date">2025/11/7</div>
@@ -629,7 +667,7 @@ VIVI嘻嘻隊以245分繼續穩坐龍頭寶座，領先VIVI哈哈隊228分達17�
 <br><br>
 VIVI內戰能否持續到最後？猴子與飛的勝率拉鋸戰誰能笑到最後？B哥能否在剩餘比賽中擺脫地獄倒霉鬼的命運？精彩還在後頭！
 <br><br>
-                <em>※ 本戰報由AI自動生成，數據統計截至2025/11/5</em>
+                <em>※ 本戰報由AI自動生成，數據統計截至2025/11/7</em>
                 </div>
               </div>
               <div class="news-item collapsible">
@@ -1122,18 +1160,6 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
               </div> <!-- 結束 news-expand-section -->
             </div>
         </div>
-    </div>
-
-    <!-- Google AdSense -->
-    <div style="text-align: center; margin: 30px auto; padding: 20px;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-4455508862703492"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
     </div>
 
 </body>
