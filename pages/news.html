@@ -41,18 +41,18 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
     
-    <!-- 配置 AdSense 優化可視率 - 只啟用高可視率廣告 -->
+    <!-- 完全禁用自動廣告，避免在低可視率位置插入廣告 -->
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-4455508862703492",
-            enable_page_level_ads: true,
-            overlays: {bottom: false}, // 禁用底部覆蓋廣告
-            anchor_ads: {enabled: true}, // 啟用錨定廣告（85.80%可視率）
-            vignette_ads: {enabled: true}, // 啟用插頁廣告（95.12%可視率）
-            content_ads: {enabled: false}, // 禁用內容標籤
-            multiplex_ads: {enabled: false}, // 禁用多媒體廣告（手動36.25%）
-            matched_content_ads: {enabled: false}, // 禁用相關內容廣告
-            display_ads: {enabled: false} // 禁用網頁內廣告（26.20%可視率太低）
+            enable_page_level_ads: false, // 完全禁用自動廣告
+            overlays: {bottom: false},
+            anchor_ads: {enabled: false}, // 禁用錨定廣告
+            vignette_ads: {enabled: false}, // 禁用插頁廣告
+            content_ads: {enabled: false},
+            multiplex_ads: {enabled: false},
+            matched_content_ads: {enabled: false},
+            display_ads: {enabled: false}
         });
     </script>
     
@@ -414,8 +414,8 @@
             </div>
         </div>
         
-        <!-- Google AdSense 中間廣告 - 優化位置提高可視率 -->
-        <div style="text-align: center; margin: 20px auto 30px; padding: 15px; max-width: 728px; min-height: 90px;">
+        <!-- Google AdSense 中間廣告 - 在排行榜前，用戶停留時間長 -->
+        <div style="text-align: center; margin: 25px auto; padding: 10px; max-width: 728px; min-height: 90px;">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-4455508862703492"
