@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理系統 - 開發環境 | 難找的聯賽</title>
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+    <div class="dev-banner">
+        🚧 開發環境 (dev.yhdarts.com) 🚧
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>難找的聯賽 - 後台管理系統</h1>
+            <p class="subtitle">開發測試環境</p>
+        </header>
+
+        <nav class="main-nav">
+            <a href="#dashboard" class="nav-item active">儀表板</a>
+            <a href="#matches" class="nav-item">比賽管理</a>
+            <a href="#players" class="nav-item">選手管理</a>
+            <a href="#teams" class="nav-item">隊伍管理</a>
+            <a href="#stats" class="nav-item">數據統計</a>
+            <a href="#settings" class="nav-item">系統設定</a>
+        </nav>
+
+        <main id="content">
+            <section id="dashboard">
+                <h2>儀表板</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>本季比賽</h3>
+                        <p class="stat-number">57</p>
+                        <p class="stat-label">場比賽</p>
+                    </div>
+                    <div class="card">
+                        <h3>參賽隊伍</h3>
+                        <p class="stat-number">10</p>
+                        <p class="stat-label">支隊伍</p>
+                    </div>
+                    <div class="card">
+                        <h3>註冊選手</h3>
+                        <p class="stat-number">80+</p>
+                        <p class="stat-label">位選手</p>
+                    </div>
+                    <div class="card">
+                        <h3>系統狀態</h3>
+                        <p class="stat-number">✅</p>
+                        <p class="stat-label">正常運作</p>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h3>快速操作</h3>
+                    <button class="btn btn-primary">新增比賽</button>
+                    <button class="btn btn-secondary">更新排行榜</button>
+                    <button class="btn btn-secondary">發布新聞</button>
+                    <button class="btn btn-secondary">匯出數據</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2025 難找的聯賽 - 開發環境</p>
+            <p>當前分支: dev | 環境: Development</p>
+        </footer>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
+
