@@ -84,20 +84,24 @@
     margin-left: 10px;
   }
 
-  /* 選手卡片 */
+  /* --- 修改重點：選手卡片列表改為 Grid 佈局 (兩欄) --- */
   .player-list {
     padding: 0 15px;
+    display: grid; /* 開啟網格模式 */
+    grid-template-columns: 1fr 1fr; /* 切分兩欄，比例 1:1 */
+    gap: 10px; /* 卡片間距 */
   }
 
+  /* --- 修改重點：卡片樣式微調 --- */
   .card {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--card-bg);
-    margin-bottom: 8px;
-    padding: 12px 18px;
+    padding: 10px 12px; /* 縮小一點內距 */
     border-radius: 4px;
     border-left: 3px solid var(--gold);
+    min-height: 50px; /* 確保高度一致好看 */
   }
 
   .card.elite {
@@ -108,25 +112,31 @@
   .card-info {
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* 防止文字過長爆版 */
   }
 
   .player-name {
-    font-size: 17px;
+    font-size: 15px; /*稍微縮小一點字體適應兩欄 */
     font-weight: bold;
     color: #fff;
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 
   .team-name {
-    font-size: 11px;
+    font-size: 10px;
     color: #AAAAAA;
     margin-top: 3px;
     text-transform: uppercase;
     font-weight: 500;
+    white-space: nowrap; /* 不換行 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 太長顯示... */
   }
 
   .stats {
     text-align: right;
+    min-width: 35px; /* 固定勝場寬度，避免數字跳動影響排版 */
   }
 
   .win-count {
@@ -141,17 +151,17 @@
   }
 
   .win-label {
-    font-size: 9px;
+    font-size: 8px;
     color: #888888;
     font-weight: bold;
   }
 
-  /* 候補區樣式 */
+  /* 候補區樣式 (本來就是兩欄，保持原樣) */
   .waitlist-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    padding: 0 20px;
+    padding: 0 20px; /* 因為不是用 .player-list 所以要維持 padding */
   }
 
   .waitlist-card {
@@ -189,7 +199,7 @@
     font-family: 'Impact', sans-serif;
   }
 
-  /* --- 新增：規則與獎勵區塊樣式 --- */
+  /* 賽事資訊樣式 */
   .info-section {
     padding: 0 20px;
     margin-top: 10px;
@@ -292,7 +302,7 @@
     <p style="font-size: 14px;">最後更新時間：2025/11/19</p>
   </div>
 
-  <!-- 第一區：隊伍王者 -->
+  <!-- 第一區：隊伍王者 (Grid) -->
   <div class="section-title">👑 Team Leader (各隊第一)</div>
   <div class="player-list">
     <div class="card"><div class="card-info"><span class="player-name">猴子</span><span class="team-name">VIVI嘻嘻隊</span></div><div class="stats"><div class="win-count">62</div><div class="win-label">WINS</div></div></div>
@@ -307,7 +317,7 @@
     <div class="card"><div class="card-info"><span class="player-name">小魚</span><span class="team-name">Jack</span></div><div class="stats"><div class="win-count">25</div><div class="win-label">WINS</div></div></div>
   </div>
 
-  <!-- 第二區：菁英組 -->
+  <!-- 第二區：菁英組 (Grid) -->
   <div class="section-title" style="color: #D93025;">🔥 Global Elite (勝場菁英)</div>
   <div class="player-list">
     <div class="card elite"><div class="card-info"><span class="player-name">小倫</span><span class="team-name">逃生入口A</span></div><div class="stats"><div class="win-count">53</div><div class="win-label">WINS</div></div></div>
@@ -329,11 +339,10 @@
     <div class="waitlist-card"><div class="wait-info"><span class="wait-name">6. 孟瑄</span><span class="wait-team">逃生入口A</span></div><div class="wait-wins">27W</div></div>
   </div>
 
-  <!-- 新增區塊：規則與獎勵 -->
+  <!-- 賽事資訊區塊 -->
   <div class="section-title">📜 Tournament Info (賽事資訊)</div>
   <div class="info-section">
     
-    <!-- 規則 -->
     <div class="info-box">
       <div class="info-header">🏆 個人季後賽規則</div>
       <div class="info-content">
@@ -346,9 +355,8 @@
       </div>
     </div>
 
-    <!-- 獎勵 -->
     <div class="info-box">
-      <div class="info-header" style="color: #ff4d4d;">季後賽獎勵</div>
+      <div class="info-header" style="color: #ff4d4d;">🎁 獎勵辦法</div>
       <ul class="reward-list">
         <li class="reward-item">
           <span class="place">季後賽冠軍</span>
