@@ -55,11 +55,10 @@
     letter-spacing: 1px;
   }
 
-  /* 修改 1: 副標題字體加大、顏色變亮 */
   .header p {
-    color: #E0E0E0; /* 改為很亮的銀灰色 */
-    font-size: 16px; /* 加大字體 */
-    font-weight: 700; /* 加粗 */
+    color: #E0E0E0;
+    font-size: 16px;
+    font-weight: 700;
     margin-top: 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -118,10 +117,9 @@
     letter-spacing: 0.5px;
   }
 
-  /* 修改 2: 隊名顏色調亮 */
   .team-name {
     font-size: 11px;
-    color: #AAAAAA; /* 從深灰改為淺灰，更易讀 */
+    color: #AAAAAA;
     margin-top: 3px;
     text-transform: uppercase;
     font-weight: 500;
@@ -142,14 +140,13 @@
     color: #ff4d4d;
   }
 
-  /* 修改 2: WINS 標籤顏色調亮 */
   .win-label {
     font-size: 9px;
-    color: #888888; /* 稍微調亮 */
+    color: #888888;
     font-weight: bold;
   }
 
-  /* --- 候補區樣式 --- */
+  /* 候補區樣式 */
   .waitlist-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -179,10 +176,9 @@
     font-weight: bold;
   }
 
-  /* 修改 3: 候補區隊名顏色調亮 */
   .wait-team {
     font-size: 10px;
-    color: #999999; /* 顯著調亮 */
+    color: #999999;
     font-weight: 500;
   }
   
@@ -193,9 +189,91 @@
     font-family: 'Impact', sans-serif;
   }
 
+  /* --- 新增：規則與獎勵區塊樣式 --- */
+  .info-section {
+    padding: 0 20px;
+    margin-top: 10px;
+  }
+
+  .info-box {
+    background-color: #161616;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .info-header {
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+  }
+
+  .info-content {
+    font-size: 12px;
+    color: #ccc;
+    line-height: 1.8;
+  }
+
+  .rule-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  
+  .rule-label {
+    color: #888;
+    min-width: 60px;
+  }
+
+  .rule-val {
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .reward-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #2a2a2a;
+  }
+
+  .reward-item:last-child {
+    border-bottom: none;
+  }
+
+  .place {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .prize {
+    font-size: 13px;
+    color: #ddd;
+  }
+
+  .prize.gold {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 15px;
+  }
+
   .footer {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #1a1a1a;
     font-size: 9px;
@@ -210,7 +288,7 @@
 <div class="container">
   <div class="header">
     <h1>難找的聯賽</h1>
-    <p>第五屆個人季後賽戰況</p>
+    <p>第五屆個人季後賽戰報</p>
     <p style="font-size: 14px;">最後更新時間：2025/11/19</p>
   </div>
 
@@ -240,62 +318,55 @@
     <div class="card elite"><div class="card-info"><span class="player-name">阿輔</span><span class="team-name">酒空組</span></div><div class="stats"><div class="win-count">36</div><div class="win-label">WINS</div></div></div>
   </div>
 
-  <!-- 第三區：候補 (含隊名) -->
-  <div class="section-title" style="font-size: 12px; color: #666;">⚔️ 晉級觀察名單 (Promotion Watch List)</div>
+  <!-- 第三區：候補 -->
+  <div class="section-title" style="font-size: 12px; color: #666;">⚔️ 晉級觀察名單</div>
   <div class="waitlist-grid">
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">1. 馬克</span><span class="wait-team">VIVI哈哈隊</span></div><div class="wait-wins">34W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">2. Ace</span><span class="wait-team">逃生入口A</span></div><div class="wait-wins">33W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">3. 威廉</span><span class="wait-team">VIVI哈哈隊</span></div><div class="wait-wins">33W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">4. 乳來</span><span class="wait-team">逃生入口C</span></div><div class="wait-wins">32W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">5. 倫</span><span class="wait-team">一鏢開天門</span></div><div class="wait-wins">30W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">6. 孟瑄</span><span class="wait-team">逃生入口A</span></div><div class="wait-wins">27W</div></div>
+  </div>
+
+  <!-- 新增區塊：規則與獎勵 -->
+  <div class="section-title">📜 Tournament Info (賽事資訊)</div>
+  <div class="info-section">
     
-    <!-- 1. 馬克 -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">1. 馬克</span>
-        <span class="wait-team">VIVI哈哈隊</span>
+    <!-- 規則 -->
+    <div class="info-box">
+      <div class="info-header">🏆 個人季後賽規則</div>
+      <div class="info-content">
+        <div class="rule-row"><span class="rule-label">日期</span><span class="rule-val">2025/12/30</span></div>
+        <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">冠軍店家</span></div>
+        <div class="rule-row"><span class="rule-label">資格</span><span class="rule-val">每隊勝場最高 + 排名前六</span></div>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+        <div class="rule-row"><span class="rule-label">初賽</span><span class="rule-val">501 單淘汰 (讓級/OI/MO)</span></div>
+        <div class="rule-row"><span class="rule-label">決賽</span><span class="rule-val">701 三戰二 (讓級/OI/MO)</span></div>
       </div>
-      <div class="wait-wins">34W</div>
     </div>
 
-    <!-- 2. Ace -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">2. Ace</span>
-        <span class="wait-team">逃生入口A</span>
-      </div>
-      <div class="wait-wins">33W</div>
-    </div>
-
-    <!-- 3. 威廉 -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">3. 威廉</span>
-        <span class="wait-team">VIVI哈哈隊</span>
-      </div>
-      <div class="wait-wins">33W</div>
-    </div>
-
-    <!-- 4. 乳來 -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">4. 乳來</span>
-        <span class="wait-team">逃生入口C</span>
-      </div>
-      <div class="wait-wins">32W</div>
-    </div>
-
-    <!-- 5. 倫 -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">5. 倫</span>
-        <span class="wait-team">一鏢開天門</span>
-      </div>
-      <div class="wait-wins">30W</div>
-    </div>
-
-    <!-- 6. 孟瑄 -->
-    <div class="waitlist-card">
-      <div class="wait-info">
-        <span class="wait-name">6. 孟瑄</span>
-        <span class="wait-team">逃生入口A</span>
-      </div>
-      <div class="wait-wins">27W</div>
+    <!-- 獎勵 -->
+    <div class="info-box">
+      <div class="info-header" style="color: #ff4d4d;">季後賽獎勵</div>
+      <ul class="reward-list">
+        <li class="reward-item">
+          <span class="place">季後賽冠軍</span>
+          <span class="prize gold">$ 2,000</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽亞軍</span>
+          <span class="prize">🍺 啤酒一手</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽季軍</span>
+          <span class="prize">🍺 啤酒三支</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽殿軍</span>
+          <span class="prize">🍺 啤酒兩支</span>
+        </li>
+      </ul>
     </div>
 
   </div>
