@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>難找的聯賽 第五屆季後賽戰報</title>
+<style>
+  /* YH DARTS 風格定義 */
+  :root {
+    --bg-color: #0F0F0F;
+    --card-bg: #1A1A1A;
+    --gold: #C9A063;
+    --gold-gradient: linear-gradient(135deg, #C9A063 0%, #F0D398 50%, #C9A063 100%);
+    --text-white: #FFFFFF;
+    --text-grey: #888888;
+    --highlight: #D93025;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-white);
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--bg-color);
+    padding-bottom: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 35px 20px;
+    background: radial-gradient(circle at top, #2a2a2a 0%, #0f0f0f 70%);
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 32px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+
+  /* 修改 1: 副標題字體加大、顏色變亮 */
+  .header p {
+    color: #E0E0E0; /* 改為很亮的銀灰色 */
+    font-size: 16px; /* 加大字體 */
+    font-weight: 700; /* 加粗 */
+    margin-top: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* 分區標題 */
+  .section-title {
+    display: flex;
+    align-items: center;
+    margin: 30px 20px 15px;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #333;
+    margin-left: 10px;
+  }
+
+  /* 選手卡片 */
+  .player-list {
+    padding: 0 15px;
+  }
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    margin-bottom: 8px;
+    padding: 12px 18px;
+    border-radius: 4px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .card.elite {
+    border-left-color: var(--highlight);
+    background: linear-gradient(90deg, #1A1A1A 0%, #251010 100%);
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .player-name {
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  /* 修改 2: 隊名顏色調亮 */
+  .team-name {
+    font-size: 11px;
+    color: #AAAAAA; /* 從深灰改為淺灰，更易讀 */
+    margin-top: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .stats {
+    text-align: right;
+  }
+
+  .win-count {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: 'Impact', sans-serif;
+  }
+  
+  .card.elite .win-count {
+    color: #ff4d4d;
+  }
+
+  /* 修改 2: WINS 標籤顏色調亮 */
+  .win-label {
+    font-size: 9px;
+    color: #888888; /* 稍微調亮 */
+    font-weight: bold;
+  }
+
+  /* --- 候補區樣式 --- */
+  .waitlist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .waitlist-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    padding: 10px 12px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wait-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wait-name {
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: bold;
+  }
+
+  /* 修改 3: 候補區隊名顏色調亮 */
+  .wait-team {
+    font-size: 10px;
+    color: #999999; /* 顯著調亮 */
+    font-weight: 500;
+  }
+  
+  .wait-wins {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: bold;
+    font-family: 'Impact', sans-serif;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+    font-size: 9px;
+    color: #555;
+    letter-spacing: 1px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>難找的聯賽</h1>
+    <p>第五屆個人季後賽戰況</p>
+    <p style="font-size: 14px;">最後更新時間：2025/11/19</p>
+  </div>
+
+  <!-- 第一區：隊伍王者 -->
+  <div class="section-title">👑 Team Leader (各隊第一)</div>
+  <div class="player-list">
+    <div class="card"><div class="card-info"><span class="player-name">猴子</span><span class="team-name">VIVI嘻嘻隊</span></div><div class="stats"><div class="win-count">62</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">飛</span><span class="team-name">一鏢開天門</span></div><div class="stats"><div class="win-count">62</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">華華</span><span class="team-name">逃生入口A</span></div><div class="stats"><div class="win-count">54</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">小耿</span><span class="team-name">VIVI哈哈隊</span></div><div class="stats"><div class="win-count">52</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">阿堯</span><span class="team-name">酒空組</span></div><div class="stats"><div class="win-count">46</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">蘇仔</span><span class="team-name">人生揪難</span></div><div class="stats"><div class="win-count">41</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">承翰</span><span class="team-name">逃生入口C</span></div><div class="stats"><div class="win-count">39</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">船長</span><span class="team-name">海盜揪硬</span></div><div class="stats"><div class="win-count">39</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">躲躲</span><span class="team-name">來都來了</span></div><div class="stats"><div class="win-count">34</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">小魚</span><span class="team-name">Jack</span></div><div class="stats"><div class="win-count">25</div><div class="win-label">WINS</div></div></div>
+  </div>
+
+  <!-- 第二區：菁英組 -->
+  <div class="section-title" style="color: #D93025;">🔥 Global Elite (勝場菁英)</div>
+  <div class="player-list">
+    <div class="card elite"><div class="card-info"><span class="player-name">小倫</span><span class="team-name">逃生入口A</span></div><div class="stats"><div class="win-count">53</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">阿淦</span><span class="team-name">VIVI嘻嘻隊</span></div><div class="stats"><div class="win-count">50</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">老丹</span><span class="team-name">VIVI嘻嘻隊</span></div><div class="stats"><div class="win-count">48</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">Chi</span><span class="team-name">一鏢開天門</span></div><div class="stats"><div class="win-count">48</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">阿倫</span><span class="team-name">VIVI哈哈隊</span></div><div class="stats"><div class="win-count">47</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">阿輔</span><span class="team-name">酒空組</span></div><div class="stats"><div class="win-count">36</div><div class="win-label">WINS</div></div></div>
+  </div>
+
+  <!-- 第三區：候補 (含隊名) -->
+  <div class="section-title" style="font-size: 12px; color: #666;">⚔️ 晉級觀察名單 (Promotion Watch List)</div>
+  <div class="waitlist-grid">
+    
+    <!-- 1. 馬克 -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">1. 馬克</span>
+        <span class="wait-team">VIVI哈哈隊</span>
+      </div>
+      <div class="wait-wins">34W</div>
+    </div>
+
+    <!-- 2. Ace -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">2. Ace</span>
+        <span class="wait-team">逃生入口A</span>
+      </div>
+      <div class="wait-wins">33W</div>
+    </div>
+
+    <!-- 3. 威廉 -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">3. 威廉</span>
+        <span class="wait-team">VIVI哈哈隊</span>
+      </div>
+      <div class="wait-wins">33W</div>
+    </div>
+
+    <!-- 4. 乳來 -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">4. 乳來</span>
+        <span class="wait-team">逃生入口C</span>
+      </div>
+      <div class="wait-wins">32W</div>
+    </div>
+
+    <!-- 5. 倫 -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">5. 倫</span>
+        <span class="wait-team">一鏢開天門</span>
+      </div>
+      <div class="wait-wins">30W</div>
+    </div>
+
+    <!-- 6. 孟瑄 -->
+    <div class="waitlist-card">
+      <div class="wait-info">
+        <span class="wait-name">6. 孟瑄</span>
+        <span class="wait-team">逃生入口A</span>
+      </div>
+      <div class="wait-wins">27W</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © 2025 難找的聯賽. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>

@@ -57,6 +57,7 @@
     </script>
     
     <link rel="stylesheet" href="../styles/news.css">
+    <script src="../js/news.js" defer></script>
     
     <style>
         /* 加載指示器樣式 */
@@ -145,6 +146,42 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+        
+        /* 季後賽區塊樣式 */
+        .playoffs-section {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .playoffs-image-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .playoffs-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .playoffs-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .playoffs-hint {
+            margin-top: 12px;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
         }
         
         /* 照片輪播樣式 */
@@ -411,6 +448,17 @@
                 <div class="matches-content collapsed" id="upcomingMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- 季後賽對戰表 -->
+        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-top: 20px; margin-bottom: 15px;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
+        
+        <!-- 季後賽詳細資訊模態窗口 -->
+        <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { this.classList.remove('visible'); document.body.style.overflow=''; }">
+            <div class="match-modal-content">
+                <button class="modal-close" onclick="document.getElementById('playoffsModal').classList.remove('visible'); document.body.style.overflow=''; event.stopPropagation();">✕</button>
+                <iframe src="../pages/s5_playoffs.html" class="match-iframe"></iframe>
             </div>
         </div>
         
@@ -1194,6 +1242,19 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             </div>
         </div>
     </div>
+
+    <script>
+        // ESC鍵關閉季後賽模態窗口
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('playoffsModal');
+                if (modal && modal.classList.contains('visible')) {
+                    modal.classList.remove('visible');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
