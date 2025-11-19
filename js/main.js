@@ -1,5 +1,7 @@
+// main.js v2.0 - 已修復季後賽模態窗口衝突問題 (2025-11-19)
 // 修复未关闭的模板字符串
 // 配置信息
+console.log('🚀 main.js v2.0 已載入 - 修復版本');
 const CONFIG = {
     SEASON3: {
         SHEET_ID: '1Rjxr6rT_NfonXtYYsxpo3caYJbvI-fxc2WQh3tKBSC8',
@@ -1547,12 +1549,14 @@ async function loadScheduleData(page) {
 
 // 顯示比賽詳情
 function showMatchDetails(gameUrl) {
-    console.log('嘗試顯示比賽詳情:', gameUrl);
+    console.log('✅ showMatchDetails (已修復版本) - 顯示比賽詳情:', gameUrl);
     
-    // 如果已經存在模態框，先移除
-    const existingModal = document.querySelector('.match-modal');
-    if (existingModal) {
-        document.body.removeChild(existingModal);
+    // 如果已經存在模態框，先移除（但不要移除季後賽模態窗口）
+    const existingModal = document.querySelector('.match-modal:not(#playoffsModal)');
+    console.log('找到的現有模態窗口:', existingModal);
+    if (existingModal && existingModal.parentNode) {
+        console.log('移除模態窗口:', existingModal);
+        existingModal.parentNode.removeChild(existingModal);
     }
     
     // 創建模態框容器

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>750x100 Banner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap');
+
+  body {
+    margin: 0;
+    padding: 50px;
+    background-color: #ffffff; /* 背景白，方便截圖 */
+    font-family: 'Noto Sans TC', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+
+  :root {
+    --yh-red: #D1383F;
+    --yh-gold: #F2C94C;
+  }
+
+  /* --- 750x100 容器設定 --- */
+  .banner-container {
+    width: 750px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--yh-red) 0%, #b02a30 100%);
+    border-radius: 12px; /* 圓角 */
+    box-shadow: 0 5px 15px rgba(176, 42, 48, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    box-sizing: border-box; /* 確保內距不撐大寬度 */
+  }
+
+  /* 背景裝飾線條 */
+  .deco-line {
+    position: absolute;
+    right: -20px;
+    top: -40px;
+    width: 100px;
+    height: 200px;
+    background: rgba(255,255,255,0.07);
+    transform: rotate(25deg);
+    pointer-events: none;
+  }
+
+  /* --- 版本 A：置中堆疊 (延續之前的風格) --- */
+  .style-a {
+    justify-content: center; /* 內容置中 */
+    gap: 20px; /* 圖示與文字的距離 */
+  }
+
+  .text-group-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 文字置中 */
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .sub-a {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 6px; /* 極寬字距，撐開寬度 */
+    margin-bottom: 6px;
+    margin-left: 6px; /* 視覺修正字距帶來的偏移 */
+  }
+
+  .main-a {
+    color: white;
+    font-size: 36px; /* 大字體 */
+    font-weight: 900;
+    font-style: italic;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+  }
+
+  .icon-crown {
+    font-size: 42px;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+  }
+
+  /* --- 版本 B：左右分佈 (橫向排版) --- */
+  .style-b {
+    justify-content: space-between; /* 左右撐開 */
+  }
+
+  .left-part {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .sub-b {
+    color: var(--yh-gold); /* 金色強調 */
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    border-right: 2px solid rgba(255,255,255,0.3);
+    padding-right: 20px;
+  }
+
+  .main-b {
+    color: white;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: italic;
+  }
+
+  .label {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- 版本 A -->
+  <div style="text-align: center;">
+    <div class="label">版本 A：經典置中 (維持原有風格，適合大多數情況)</div>
+    <div class="banner-container style-a">
+      <div class="deco-line"></div>
+      <!-- 文字組 -->
+      <div class="text-group-center">
+        <div class="sub-a">難找的聯賽</div>
+        <div class="main-a">第五屆季後賽預測</div>
+      </div>
+      <!-- 皇冠放右邊點綴，或可移除 -->
+      <div class="icon-crown" style="position: absolute; right: 30px;">👑</div> 
+    </div>
+  </div>
+
+  <!-- 版本 B -->
+  <div style="text-align: center;">
+    <div class="label">版本 B：左右橫排 (文字更大，資訊更明確)</div>
+    <div class="banner-container style-b">
+      <div class="deco-line"></div>
+      
+      <div class="left-part">
+        <div class="icon-crown">👑</div>
+        <div class="sub-b">難找的聯賽</div>
+      </div>
+
+      <div class="main-b">第五屆季後賽戰況 ➔</div>
+    </div>
+  </div>
+
+</body>
+</html>

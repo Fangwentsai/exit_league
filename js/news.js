@@ -154,11 +154,10 @@ function initializeNewsToggle() {
     console.log('當前頁面 URL:', window.location.href);
     console.log('當前頁面內容區域:', document.getElementById('contentArea'));
     
-    // 檢查是否在正確的頁面
+    // 檢查是否在正確的頁面（contentArea 是可選的）
     const contentArea = document.getElementById('contentArea');
     if (!contentArea) {
-        console.log('❌ 找不到 contentArea，初始化失敗');
-        return;
+        console.log('⚠️ 找不到 contentArea，但繼續初始化（可能是獨立新聞頁面）');
     }
     
     // 等待一下確保 DOM 完全載入
