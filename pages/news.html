@@ -452,7 +452,7 @@
         </div>
         
         <!-- 季後賽對戰表 -->
-        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-top: 20px; margin-bottom: 15px;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
+        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-top: 20px; margin-bottom: 20px;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
         
         <!-- 季後賽詳細資訊模態窗口 -->
         <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { this.classList.remove('visible'); document.body.style.overflow=''; }">
@@ -463,60 +463,14 @@
         </div>
         
         <!-- Google AdSense 中間廣告 - 在排行榜前，用戶停留時間長 -->
-        <div id="adsense-container" style="text-align: center; margin: 25px auto; padding: 10px; max-width: 728px; min-height: 90px; border: 1px dashed #ccc;">
+        <!-- 注意：此處的廣告初始化在 main.js 中處理（因為使用 innerHTML 載入時 script 不會執行） -->
+        <div id="adsense-container" style="text-align: center; margin: 25px auto; padding: 10px; max-width: 728px; min-height: 90px;">
             <ins class="adsbygoogle"
                  id="middle-ad"
                  style="display:block"
                  data-ad-client="ca-pub-4455508862703492"
                  data-ad-format="horizontal"
                  data-full-width-responsive="true"></ins>
-            <script>
-                (function() {
-                    console.log('=== AdSense 中間廣告 Debug ===');
-                    console.log('1️⃣ 腳本開始執行');
-                    console.log('2️⃣ adsbygoogle 是否存在:', typeof window.adsbygoogle);
-                    console.log('3️⃣ adsbygoogle 內容:', window.adsbygoogle);
-                    
-                    const adElement = document.getElementById('middle-ad');
-                    console.log('4️⃣ 廣告元素:', adElement);
-                    console.log('5️⃣ 廣告元素屬性:', {
-                        'data-ad-client': adElement.getAttribute('data-ad-client'),
-                        'data-ad-format': adElement.getAttribute('data-ad-format'),
-                        'data-full-width-responsive': adElement.getAttribute('data-full-width-responsive')
-                    });
-                    
-                    try {
-                        console.log('6️⃣ 準備 push 廣告...');
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                        console.log('✅ 廣告 push 成功!');
-                        console.log('7️⃣ adsbygoogle 長度:', window.adsbygoogle.length);
-                        
-                        // 檢查廣告是否實際渲染
-                        setTimeout(function() {
-                            const container = document.getElementById('adsense-container');
-                            const adIframe = container.querySelector('iframe');
-                            console.log('8️⃣ 2秒後檢查 - 是否有 iframe:', !!adIframe);
-                            if (adIframe) {
-                                console.log('✅ 廣告 iframe 已生成:', adIframe);
-                                console.log('   - iframe src:', adIframe.src);
-                                console.log('   - iframe 寬度:', adIframe.offsetWidth);
-                                console.log('   - iframe 高度:', adIframe.offsetHeight);
-                            } else {
-                                console.warn('⚠️ 2秒後仍無 iframe，廣告可能未載入');
-                                console.log('   - ins 元素內容:', adElement.innerHTML);
-                                console.log('   - ins 元素 class:', adElement.className);
-                            }
-                        }, 2000);
-                        
-                    } catch (e) {
-                        console.error('❌ 廣告 push 失敗:', e);
-                        console.error('   - 錯誤訊息:', e.message);
-                        console.error('   - 錯誤堆疊:', e.stack);
-                    }
-                    
-                    console.log('=== Debug 結束 ===');
-                })();
-            </script>
         </div>
         
         <!-- 排行榜區塊 -->
@@ -868,6 +822,14 @@ Jack 158分位居第六，人生揪難153分位居第七。第4到第7名分差�
                 <em>※ 本戰報由AI自動生成，數據統計截至2025/10/17</em>
                 </div>
               </div>
+              
+              <!-- 展開/收起按鈕 -->
+              <div class="expand-toggle">
+                <button class="expand-btn" onclick="toggleAllNews()" id="expandBtn">顯示全部</button>
+              </div>
+              
+              <!-- 可展開的新聞區域 -->
+              <div class="news-expand-section" id="expandableNews">
               <div class="news-item collapsible">
                 <div class="news-header">
                   <div class="news-date">2025/10/10</div>
@@ -1176,14 +1138,6 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
 <strong>賽季總結：</strong><br>
 第四屆聯賽充滿戲劇性，從Vivi朝酒晚舞的領先到酒空組的逆轉奪冠，每一場比賽都牽動著排行榜的變化。阿堯的王者統治力、猴子和華華的高效表現、以及地獄倒霉鬼們的悲慘遭遇，都為本屆聯賽增添了無數話題。感謝所有參賽選手的精彩表現，我們第五屆聯賽再見！</div>
               </div>
-              
-              <!-- 展開/收起按鈕 -->
-              <div class="expand-toggle">
-                <button class="expand-btn" onclick="toggleAllNews()" id="expandBtn">顯示全部</button>
-              </div>
-              
-              <!-- 可展開的新聞區域 -->
-              <div class="news-expand-section" id="expandableNews">
               <div class="news-item collapsible">
                 <div class="news-header">
                   <div class="news-date">2025/7/2</div>
