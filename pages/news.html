@@ -452,7 +452,7 @@
         </div>
         
         <!-- 季後賽對戰表 -->
-        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-bottom: 0;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
+        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
         
         <!-- 季後賽詳細資訊模態窗口 -->
         <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { this.classList.remove('visible'); document.body.style.overflow=''; }">
@@ -464,7 +464,7 @@
         
         <!-- Google AdSense 中間廣告 - 在排行榜前，用戶停留時間長 -->
         <!-- 注意：此處的廣告初始化在 main.js 中處理（因為使用 innerHTML 載入時 script 不會執行） -->
-        <div id="adsense-container" style="text-align: center; margin: 0 auto; padding: 0; max-width: 100%; max-height: 120px; overflow: hidden;">
+        <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; max-height: 120px; overflow: hidden;">
             <ins class="adsbygoogle"
                  id="middle-ad"
                  style="display:block; width: 100%; max-width: 728px; height: 90px; margin: 0 auto;"
