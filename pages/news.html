@@ -448,15 +448,41 @@
         
         <!-- Google AdSense 中間廣告 - 在排行榜前，用戶停留時間長 -->
         <!-- 注意：此處的廣告初始化在 main.js 中處理（因為使用 innerHTML 載入時 script 不會執行） -->
-        <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; max-height: 120px; overflow: hidden;">
+        <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; overflow: hidden;">
             <ins class="adsbygoogle"
                  id="middle-ad"
-                 style="display:block; width: 100%; max-width: 728px; height: 90px; margin: 0 auto;"
+                 style="display:block; margin: 0 auto;"
                  data-ad-client="ca-pub-4455508862703492"
                  data-ad-format="horizontal"
                  data-full-width-responsive="false"
                  loading="lazy"></ins>
         </div>
+        
+        <style>
+            /* 桌面版：標準 728x90 橫幅廣告 */
+            @media (min-width: 769px) {
+                #adsense-container {
+                    max-height: 120px;
+                }
+                #middle-ad {
+                    width: 100%;
+                    max-width: 728px;
+                    height: 90px;
+                }
+            }
+            
+            /* 手機版：小型 320x50 橫幅廣告 */
+            @media (max-width: 768px) {
+                #adsense-container {
+                    max-height: 60px;
+                }
+                #middle-ad {
+                    width: 320px;
+                    max-width: 100%;
+                    height: 50px;
+                }
+            }
+        </style>
         
         <!-- 排行榜區塊 -->
         <div class="rankings">
