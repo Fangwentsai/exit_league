@@ -38,23 +38,7 @@
     }
     </script>
     
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
-    
-    <!-- 完全禁用自動廣告，避免在低可視率位置插入廣告 -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-4455508862703492",
-            enable_page_level_ads: false, // 完全禁用自動廣告
-            overlays: {bottom: false},
-            anchor_ads: {enabled: false}, // 禁用錨定廣告
-            vignette_ads: {enabled: false}, // 禁用插頁廣告
-            content_ads: {enabled: false},
-            multiplex_ads: {enabled: false},
-            matched_content_ads: {enabled: false},
-            display_ads: {enabled: false}
-        });
-    </script>
+    <!-- Google AdSense 已在 index.html 中載入，此處不需要重複載入 -->
     
     <link rel="stylesheet" href="../styles/news.css">
     <script src="../js/news.js" defer></script>
@@ -470,7 +454,8 @@
                  style="display:block; width: 100%; max-width: 728px; height: 90px; margin: 0 auto;"
                  data-ad-client="ca-pub-4455508862703492"
                  data-ad-format="horizontal"
-                 data-full-width-responsive="false"></ins>
+                 data-full-width-responsive="false"
+                 loading="lazy"></ins>
         </div>
         
         <!-- 排行榜區塊 -->
