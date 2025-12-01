@@ -54,33 +54,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
-    
-    <!-- 禁用所有自動廣告，只保留手動廣告單元 -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-4455508862703492",
-            enable_page_level_ads: false,
-            overlays: {bottom: false}, // 禁用底部覆蓋廣告
-            anchor_ads: {enabled: false}, // 禁用錨定廣告（這個就是底部的廣告）
-            vignette_ads: {enabled: false}, // 禁用插頁廣告
-            content_ads: {enabled: false},
-            multiplex_ads: {enabled: false},
-            matched_content_ads: {enabled: false},
-            display_ads: {enabled: false}
-        });
-    </script>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-17514530743');
-    </script>
+    <!-- AdSense 和 GTM 已移至延遲載入腳本（body 底部），改善性能 -->
     
     <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
     <script>
@@ -234,6 +208,63 @@
     <!-- CSS 載入 polyfill -->
     <script>
     !function(n){if(!window.loadCSS){window.loadCSS=function(){}}var o=loadCSS.relpreload={};if(o.support=function(){try{return n.querySelector('link[rel="preload"]').relList.supports("preload")}catch(e){return!1}},o.poly=function(){for(var e=n.querySelectorAll('link[rel="preload"][as="style"]'),t=0;t<e.length;t++){var r=e[t];r.rel="stylesheet",r.removeAttribute("as")}},!o.support()){o.poly();var e=n.setInterval(o.poly,300);n.addEventListener?n.addEventListener("load",function(){o.poly(),clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){clearInterval(e)})}}(document);
+    </script>
+    
+    <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
+    <script>
+    // 設定 AdSense 和 GTM ID
+    var adsenseID = "ca-pub-4455508862703492";
+    var gtmID = "AW-17514530743";
+    
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        // 1. 載入 GTM / GA4
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        // 2. 載入 AdSense
+        var scriptAd = document.createElement('script');
+        scriptAd.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsenseID;
+        scriptAd.async = true;
+        scriptAd.crossOrigin = "anonymous";
+        document.head.appendChild(scriptAd);
+        
+        // 3. AdSense 設定 - 禁用自動廣告
+        scriptAd.onload = function() {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: adsenseID,
+                enable_page_level_ads: false,
+                overlays: {bottom: false},
+                anchor_ads: {enabled: false},
+                vignette_ads: {enabled: false},
+                content_ads: {enabled: false},
+                multiplex_ads: {enabled: false},
+                matched_content_ads: {enabled: false},
+                display_ads: {enabled: false}
+            });
+        };
+        
+        console.log("✅ Google Scripts 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
     </script>
 </body>
 </html>

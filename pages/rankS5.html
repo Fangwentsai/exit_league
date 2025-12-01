@@ -5,15 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>第五屆排名 | 難找的聯賽</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-17514530743');
-    </script>
+    <!-- GTM 已移至延遲載入腳本（body 底部） -->
     
     <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
     <script>
@@ -108,5 +100,36 @@
     <!-- 確保路徑正確 -->
     <script src="../config/config.js"></script>
     <script src="../js/rank.js"></script>
+    
+    <!-- 延遲載入 GTM - 終極性能優化 -->
+    <script>
+    var gtmID = "AW-17514530743";
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        console.log("✅ GTM 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
+    </script>
 </body>
 </html>

@@ -316,5 +316,61 @@ addMatchData(g09Matches);
 const scores = calculateFinalScore(g09Matches, drinkingBonus);
 updateScoreDisplay(scores);
 initializeStats(awayPlayers, homePlayers);  // 使用本場比賽的選手名單
-</script></body>
+</script>
+    <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
+    <script>
+    // 設定 AdSense 和 GTM ID
+    var adsenseID = "ca-pub-4455508862703492";
+    var gtmID = "AW-17514530743";
+    
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        // 1. 載入 GTM / GA4
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        // 2. 載入 AdSense
+        var scriptAd = document.createElement('script');
+        scriptAd.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsenseID;
+        scriptAd.async = true;
+        scriptAd.crossOrigin = "anonymous";
+        document.head.appendChild(scriptAd);
+        
+        // 3. AdSense 設定
+        scriptAd.onload = function() {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: adsenseID,
+                enable_page_level_ads: true,
+                overlays: {bottom: false},
+                anchor_ads: {enabled: true},
+                vignette_ads: {enabled: true},
+                multiplex_ads: {enabled: false},
+                matched_content_ads: {enabled: false},
+                display_ads: {enabled: false}
+            });
+        };
+        
+        console.log("✅ Google Scripts 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
+    </script>
+</body>
 </html>

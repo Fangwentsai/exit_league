@@ -7,15 +7,7 @@
     <meta name="description" content="查看 難找的聯賽 飛鏢05季 G34 的詳細賽果。本場比賽由逃生入口C對決酒空組，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。">
     <meta name="keywords" content="飛鏢聯賽, YHDARTS, 賽果, 逃生入口C, 酒空組, 飛鏢比賽, dart league, match result, phoenix darts, dartslive">
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-17514530743');
-    </script>
+    <!-- GTM 已移至延遲載入腳本（body 底部） -->
     
     <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
     <script>
@@ -347,5 +339,61 @@ addMatchData(g34Matches);
 const scores = calculateFinalScore(g34Matches, drinkingBonus);
 updateScoreDisplay(scores);
 initializeStats(awayPlayers, homePlayers);
-</script></body>
+</script>
+    <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
+    <script>
+    // 設定 AdSense 和 GTM ID
+    var adsenseID = "ca-pub-4455508862703492";
+    var gtmID = "AW-17514530743";
+    
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        // 1. 載入 GTM / GA4
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        // 2. 載入 AdSense
+        var scriptAd = document.createElement('script');
+        scriptAd.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsenseID;
+        scriptAd.async = true;
+        scriptAd.crossOrigin = "anonymous";
+        document.head.appendChild(scriptAd);
+        
+        // 3. AdSense 設定
+        scriptAd.onload = function() {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: adsenseID,
+                enable_page_level_ads: true,
+                overlays: {bottom: false},
+                anchor_ads: {enabled: true},
+                vignette_ads: {enabled: true},
+                multiplex_ads: {enabled: false},
+                matched_content_ads: {enabled: false},
+                display_ads: {enabled: false}
+            });
+        };
+        
+        console.log("✅ Google Scripts 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
+    </script>
+</body>
 </html>
