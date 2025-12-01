@@ -259,12 +259,25 @@
             position: absolute;
             top: 0;
             left: 0;
-            transition: transform 0.6s ease-in-out;
             /* 確保圖片佔位，減少 CLS */
             aspect-ratio: 16/9;
             /* GPU 加速 */
             transform: translateZ(0);
             backface-visibility: hidden;
+            /* 淡入淡出過渡效果 */
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        /* 第一張圖片立即顯示（LCP 優化 - 無需等待 JS）*/
+        #carousel-image {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        /* 第二張圖片初始隱藏 */
+        #carousel-image-next {
+            opacity: 0;
+            z-index: 1;
         }
         
         #carousel-image {
@@ -335,6 +348,8 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
+            /* 防止 CLS：確保載入動畫不影響容器高度 */
+            pointer-events: none;
         }
         
         .loading-spinner {
@@ -481,24 +496,23 @@
                     <div class="loading-text">載入照片中...</div>
                 </div>
                 <!-- 為圖片設置明確尺寸以減少 CLS -->
-                <!-- 第一張圖片使用 eager loading，因為是 LCP 元素 -->
+                <!-- 第一張圖片：直接設定 src，立即顯示（LCP 優化）-->
                 <img id="carousel-image" 
-                     src="" 
-                     alt="賽事照片輪播" 
+                     src="../images/award/season4/IMG_9918.webp" 
+                     alt="難找的聯賽第四屆頒獎典禮照片" 
                      class="carousel-image" 
                      width="800" 
                      height="400"
                      loading="eager"
-                     fetchpriority="high"
-                     style="display: none;">
+                     fetchpriority="high">
+                <!-- 第二張圖片：延遲載入 -->
                 <img id="carousel-image-next" 
                      src="" 
                      alt="賽事照片輪播" 
                      class="carousel-image" 
                      width="800" 
                      height="400"
-                     loading="lazy"
-                     style="display: none;">
+                     loading="lazy">
                 <div class="carousel-overlay">
                     <div class="carousel-title">難找的聯賽第四屆頒獎典禮</div>
                     <div class="carousel-dots" id="carousel-dots"></div>
@@ -534,8 +548,8 @@
             </div>
         </div>
         
-        <!-- 季後賽對戰表 - WebP 格式 -->
-        <img src="../images/playoffs.webp" 
+        <!-- 季後賽對戰表 - PNG 格式（檔案小，無需轉換）-->
+        <img src="../images/playoffs.png" 
              alt="季後賽對戰表" 
              width="800" 
              height="600"
@@ -1406,6 +1420,104 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
                 }
             }
         });
+        
+        // 輪播圖初始化 - LCP 優化版本
+        // 第一張圖片已在 HTML 中直接載入，JavaScript 只負責輪播功能
+        (function initCarousel() {
+            const season4Images = [
+                '../images/award/season4/IMG_9918.webp',
+                '../images/award/season4/IMG_9919.webp',
+                '../images/award/season4/IMG_9920.webp',
+                '../images/award/season4/IMG_9921.webp',
+                '../images/award/season4/IMG_9922.webp',
+                '../images/award/season4/IMG_9923.webp'
+            ];
+            
+            let currentIndex = 0;
+            const carouselImage = document.getElementById('carousel-image');
+            const carouselImageNext = document.getElementById('carousel-image-next');
+            const carouselLoading = document.getElementById('carousel-loading');
+            const carouselDots = document.getElementById('carousel-dots');
+            const carouselContainer = document.querySelector('.carousel-container');
+            
+            if (!carouselImage || !season4Images.length) return;
+            
+            // 第一張圖片已經顯示，立即隱藏載入指示器
+            if (carouselLoading) carouselLoading.style.display = 'none';
+            
+            // 創建圓點
+            if (carouselDots) {
+                carouselDots.innerHTML = season4Images.map((_, i) => 
+                    `<div class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
+                ).join('');
+                
+                // 圓點點擊事件
+                carouselDots.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        stopAutoPlay();
+                        goToSlide(i);
+                        startAutoPlay();
+                    });
+                });
+            }
+            
+            // 切換到指定幻燈片（使用淡入淡出）
+            function goToSlide(index) {
+                if (index === currentIndex) return;
+                
+                currentIndex = index;
+                
+                // 淡出當前圖片
+                carouselImage.style.opacity = '0';
+                
+                // 等待淡出完成後更換圖片
+                setTimeout(() => {
+                    carouselImage.src = season4Images[index];
+                    // 淡入新圖片
+                    carouselImage.style.opacity = '1';
+                    updateDots();
+                }, 300);
+            }
+            
+            // 更新圓點
+            function updateDots() {
+                if (!carouselDots) return;
+                carouselDots.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+            
+            // 下一張
+            function nextSlide() {
+                const nextIndex = (currentIndex + 1) % season4Images.length;
+                goToSlide(nextIndex);
+            }
+            
+            // 自動播放
+            let autoPlayInterval;
+            function startAutoPlay() {
+                if (autoPlayInterval) clearInterval(autoPlayInterval);
+                autoPlayInterval = setInterval(nextSlide, 7000);
+            }
+            
+            function stopAutoPlay() {
+                if (autoPlayInterval) {
+                    clearInterval(autoPlayInterval);
+                    autoPlayInterval = null;
+                }
+            }
+            
+            // 滑鼠互動控制
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+                carouselContainer.addEventListener('mouseleave', startAutoPlay);
+            }
+            
+            // 立即開始自動播放
+            startAutoPlay();
+            
+            console.log('✅ 輪播圖初始化完成（首圖已預載）');
+        })();
     </script>
     
     <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
