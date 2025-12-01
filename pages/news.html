@@ -280,14 +280,6 @@
             z-index: 1;
         }
         
-        #carousel-image {
-            z-index: 1;
-        }
-        
-        #carousel-image-next {
-            z-index: 2;
-        }
-        
         .carousel-overlay {
             position: absolute;
             bottom: 0;
@@ -300,11 +292,11 @@
         }
         
         .carousel-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 10px;
             color: white !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
             display: block;
             opacity: 1;
             z-index: 11;
@@ -343,13 +335,16 @@
             width: 100%;
             height: 100%;
             background-color: #f8f9fa;
-            display: flex;
+            display: none; /* 默認隱藏，因為首圖已經設定 */
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10;
-            /* 防止 CLS：確保載入動畫不影響容器高度 */
+            z-index: 5;
             pointer-events: none;
+        }
+        
+        .carousel-loading.visible {
+            display: flex;
         }
         
         .loading-spinner {
@@ -437,7 +432,7 @@
             }
             
             .carousel-title {
-                font-size: 16px;
+                font-size: 14px;
             }
             
             .carousel-overlay {
@@ -468,7 +463,7 @@
             }
             
             .carousel-title {
-                font-size: 20px;
+                font-size: 18px;
             }
             
             .image-container {
