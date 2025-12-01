@@ -2,6 +2,53 @@
 // 修复未关闭的模板字符串
 // 配置信息
 console.log('🚀 main.js v2.0 已載入 - 修復版本');
+
+// ==================== 全局函數：Playoffs 模態窗口 ====================
+// 這些函數需要在全局作用域，供 HTML onclick 使用
+var scrollPosition = 0;
+
+window.openPlayoffsModal = function() {
+    console.log('✅ [main.js] openPlayoffsModal 被調用');
+    const modal = document.getElementById('playoffsModal');
+    if (!modal) {
+        console.log('❌ 找不到 playoffsModal');
+        return;
+    }
+    
+    // 保存當前滾動位置
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    console.log('💾 保存滾動位置:', scrollPosition);
+    
+    // 防止背景滾動
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = '0px';
+    
+    // 顯示模態窗口
+    modal.classList.add('visible');
+    
+    // ⭐ 關鍵修復：強制保持滾動位置（防止焦點跳動）
+    requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosition);
+        console.log('✅ Playoffs 模態窗口已打開，滾動位置已鎖定在:', scrollPosition);
+    });
+};
+
+window.closePlayoffsModal = function() {
+    console.log('✅ [main.js] closePlayoffsModal 被調用');
+    const modal = document.getElementById('playoffsModal');
+    if (!modal) return;
+    
+    // 隱藏模態窗口
+    modal.classList.remove('visible');
+    
+    // 恢復背景滾動
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    
+    console.log('✅ Playoffs 模態窗口已關閉，滾動位置保持在:', window.pageYOffset);
+};
+
+console.log('✅ Playoffs 模態窗口函數已註冊到全局');
 const CONFIG = {
     SEASON3: {
         SHEET_ID: '1Rjxr6rT_NfonXtYYsxpo3caYJbvI-fxc2WQh3tKBSC8',
@@ -1853,7 +1900,7 @@ async function preloadResources(page = 'news') {
 
     // 共用圖片（立即加載）- 使用 WebP 格式
     const commonImages = [
-        'images/banner.webp'
+        'images/banner.png'
     ];
 
     // 頁面特定的圖片（按需加載）
@@ -2590,130 +2637,35 @@ let isCarouselAnimating = false;
 // 輪播狀態追蹤：哪個圖片元素當前是主要的
 let currentMainImageId = 'carousel-image';
 
-// 載入指定索引的圖片（真正無縫左移動畫版本）
+// 載入指定索引的圖片（簡化版 - 使用 opacity 淡入淡出）
 function loadCarouselImage(index) {
     const carouselImage = document.getElementById('carousel-image');
-    const carouselImageNext = document.getElementById('carousel-image-next');
-    const carouselLoading = document.getElementById('carousel-loading');
-    
-    if (!carouselImage || !carouselImageNext || !carouselImages[index]) return;
+    if (!carouselImage || !carouselImages[index]) return;
     
     // 同步更新當前索引
     currentCarouselIndex = index;
     
-    // 如果正在動畫中，跳過這次切換
-    if (isCarouselAnimating) {
-        console.log('⏸️ 動畫進行中，跳過這次切換');
-        return;
-    }
+    // 如果正在動畫中，跳過
+    if (isCarouselAnimating) return;
     
-    // 如果是第一次載入，直接顯示
-    if (carouselImage.src === '' || carouselImage.style.display === 'none') {
-        // 顯示載入指示器
-        if (carouselLoading) carouselLoading.style.display = 'flex';
-        
-        const firstImage = new Image();
-        firstImage.onload = () => {
-            carouselImage.src = carouselImages[index];
-            carouselImage.style.transform = 'translateX(0)';
-            carouselImage.style.display = 'block';
-            
-            // 確保另一個圖片隱藏
-            carouselImageNext.style.display = 'none';
-            carouselImageNext.style.transform = 'translateX(100%)';
-            
-            // 設置當前主圖片
-            currentMainImageId = 'carousel-image';
-            
-            // 添加點擊事件
-            setupImageClickEvent(carouselImage);
-            
-            // 隱藏載入指示器
-            if (carouselLoading) carouselLoading.style.display = 'none';
-            
-            // 更新圓點狀態
-            updateCarouselDots(index);
-            
-            console.log(`📸 首次載入第 ${index + 1} 張照片`);
-        };
-        firstImage.src = carouselImages[index];
-        return;
-    }
-    
-    // 設置動畫進行狀態
     isCarouselAnimating = true;
     
-    // 根據當前狀態決定哪個是主圖片，哪個是次圖片
-    let currentMain = document.getElementById(currentMainImageId);
-    let currentNext = currentMainImageId === 'carousel-image' ? carouselImageNext : carouselImage;
+    // 淡出當前圖片
+    carouselImage.style.opacity = '0';
     
-    // 創建新的圖片物件來預載入下一張圖片
-    const newImage = new Image();
-    
-    newImage.onload = () => {
-        // 確保當前主圖片在正常位置
-        currentMain.style.transform = 'translateX(0)';
-        currentMain.style.display = 'block';
+    // 等待淡出完成後更換圖片
+    setTimeout(() => {
+        carouselImage.src = carouselImages[index];
+        // 淡入新圖片
+        carouselImage.style.opacity = '1';
         
-        // 設置下一張圖片在右側準備位置（強制從右側開始）
-        currentNext.src = carouselImages[index];
-        // 先隱藏，確保沒有過渡效果，然後強制設置到右側
-        currentNext.style.display = 'none';
-        currentNext.style.transition = 'none'; // 暫時禁用過渡
-        currentNext.style.transform = 'translateX(100%)'; // 強制從右側開始
-        currentNext.style.display = 'block';
-        // 重新啟用過渡效果
-        setTimeout(() => {
-            currentNext.style.transition = 'transform 0.6s ease-in-out';
-        }, 10);
-        
-        // 添加點擊事件
-        setupImageClickEvent(currentNext);
-        
-        // 等待過渡效果重新啟用後再開始動畫
-        setTimeout(() => {
-            // 強制重繪，確保瀏覽器應用了初始狀態
-            currentMain.offsetHeight;
-            currentNext.offsetHeight;
-            
-            // 使用雙重requestAnimationFrame確保狀態完全穩定
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    // 同時進行：舊圖左移離開，新圖從右滑入
-                    currentMain.style.transform = 'translateX(-100%)';
-                    currentNext.style.transform = 'translateX(0)';
-                    
-                    console.log(`🎬 開始無縫左移動畫：第 ${index + 1} 張照片`);
-                    console.log(`主圖片: ${currentMain.id}, 次圖片: ${currentNext.id}`);
-                    console.log(`主圖片起始位置: ${currentMain.style.transform}`);
-                    console.log(`次圖片起始位置: translateX(100%) -> translateX(0)`);
-                });
-            });
-        }, 20); // 等待過渡效果重新啟用
-        
-        // 動畫完成後，只切換當前主圖片的引用
-        setTimeout(() => {
-            // 切換主圖片引用
-            currentMainImageId = currentNext.id;
-            
-            // 動畫狀態重置
-            isCarouselAnimating = false;
-            
-            console.log(`✅ 動畫完成，新主圖片: ${currentMainImageId}`);
-        }, 650); // 等待CSS過渡完成 (0.6s + 50ms buffer)
-        
-        // 更新圓點狀態
+        // 更新圓點
         updateCarouselDots(index);
-    };
-    
-    newImage.onerror = () => {
-        console.error(`❌ 照片載入失敗: ${carouselImages[index]}`);
-        // 重置動畫狀態
+        
         isCarouselAnimating = false;
-    };
-    
-    // 開始載入圖片
-    newImage.src = carouselImages[index];
+        
+        console.log(`✅ 切換到第 ${index + 1} 張圖片`);
+    }, 500);
 }
 
 // 設置圖片點擊事件的輔助函數
