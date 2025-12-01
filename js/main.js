@@ -1851,9 +1851,9 @@ async function preloadResources(page = 'news') {
         'shops': ['styles/shops.css']
     };
 
-    // 共用圖片（立即加載）
+    // 共用圖片（立即加載）- 使用 WebP 格式
     const commonImages = [
-        'images/banner.png'
+        'images/banner.webp'
     ];
 
     // 頁面特定的圖片（按需加載）
@@ -2296,9 +2296,9 @@ async function getPhotoFiles(season) {
     
     // 根據實際的季別資料夾和檔案名稱
     const knownFiles = {
-        's4': ['IMG_9918.JPG', 'IMG_9919.JPG', 'IMG_9920.JPG', 'IMG_9921.JPG', 'IMG_9922.JPG', 'IMG_9923.JPG'],
-        's3': ['IMG_9924.JPG', 'IMG_9925.JPG', 'IMG_9926.JPG', 'IMG_9927.JPG', 'IMG_9928.JPG', 'IMG_9929.JPG', 'IMG_9930.JPG'],
-        's2': ['IMG_9931.JPG', 'IMG_9932.JPG', 'IMG_9933.JPG']
+        's4': ['IMG_9918.webp', 'IMG_9919.webp', 'IMG_9920.webp', 'IMG_9921.webp', 'IMG_9922.webp', 'IMG_9923.webp'],
+        's3': ['IMG_9924.webp', 'IMG_9925.webp', 'IMG_9926.webp', 'IMG_9927.webp', 'IMG_9928.webp', 'IMG_9929.webp', 'IMG_9930.webp'],
+        's2': ['IMG_9931.webp', 'IMG_9932.webp', 'IMG_9933.webp']
     };
     
     const seasonFiles = knownFiles[season] || [];
@@ -2479,9 +2479,9 @@ function getCurrentPageImages() {
     
     // 根據實際的季別資料夾和檔案名稱
     const knownFiles = {
-        's4': ['IMG_9918.JPG', 'IMG_9919.JPG', 'IMG_9920.JPG', 'IMG_9921.JPG', 'IMG_9922.JPG', 'IMG_9923.JPG'],
-        's3': ['IMG_9924.JPG', 'IMG_9925.JPG', 'IMG_9926.JPG', 'IMG_9927.JPG', 'IMG_9928.JPG', 'IMG_9929.JPG', 'IMG_9930.JPG'],
-        's2': ['IMG_9931.JPG', 'IMG_9932.JPG', 'IMG_9933.JPG']
+        's4': ['IMG_9918.webp', 'IMG_9919.webp', 'IMG_9920.webp', 'IMG_9921.webp', 'IMG_9922.webp', 'IMG_9923.webp'],
+        's3': ['IMG_9924.webp', 'IMG_9925.webp', 'IMG_9926.webp', 'IMG_9927.webp', 'IMG_9928.webp', 'IMG_9929.webp', 'IMG_9930.webp'],
+        's2': ['IMG_9931.webp', 'IMG_9932.webp', 'IMG_9933.webp']
     };
     
     // 收集所有季度的圖片
