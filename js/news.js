@@ -160,8 +160,8 @@ function initializeNewsToggle() {
         console.log('⚠️ 找不到 contentArea，但繼續初始化（可能是獨立新聞頁面）');
     }
     
-    // 等待一下確保 DOM 完全載入
-    setTimeout(() => {
+    // 使用 requestIdleCallback 延遲初始化，改善 TBT
+    const initTask = () => {
         console.log('⏳ 延遲後開始初始化...');
         
         // 移除之前的事件監聽器
@@ -206,7 +206,14 @@ function initializeNewsToggle() {
         }
         
         console.log('✅ 新聞折疊功能初始化完成');
-    }, 200);
+    };
+    
+    // 使用 requestIdleCallback 或 setTimeout
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(initTask, { timeout: 500 });
+    } else {
+        setTimeout(initTask, 200);
+    }
 }
 
 // 頁面載入完成後初始化
@@ -224,6 +231,13 @@ window.toggleNews = toggleNews;
 async function loadMatches() {
     try {
         console.log('開始載入比賽數據...');
+        
+        // 使用 requestIdleCallback 延遲執行以改善 TBT
+        if ('requestIdleCallback' in window) {
+            await new Promise(resolve => {
+                requestIdleCallback(() => resolve(), { timeout: 2000 });
+            });
+        }
         
         // 首先嘗試從API獲取數據
         let response = null;
@@ -533,8 +547,19 @@ function createMatchesHTML(matchDay) {
     `;
 }
 
-// 確保 DOM 載入完成後才執行
+// 確保 DOM 載入完成後才執行，使用 requestIdleCallback 優化 TBT
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM 已載入，開始執行 loadMatches');
-    loadMatches();
+    console.log('DOM 已載入，準備執行 loadMatches');
+    
+    // 延遲載入比賽數據，不阻塞主執行緒
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            loadMatches();
+        }, { timeout: 1000 });
+    } else {
+        // 降級方案
+        setTimeout(() => {
+            loadMatches();
+        }, 100);
+    }
 });

@@ -8,23 +8,59 @@
     <meta name="keywords" content="飛鏢新聞,飛鏢排行榜,比賽結果,飛鏢成績,難找的聯賽,永和飛鏢,飛鏢統計,比賽戰況,聯賽排名,飛鏢聯賽新聞">
     <link rel="canonical" href="https://yhdarts.com/pages/news.html">
     
+    <!-- 預載入關鍵資源以改善 LCP -->
+    <!-- 預載入第一張輪播圖片（LCP 元素） -->
+    <link rel="preload" as="image" href="../images/award/season4/IMG_9918.JPG" imagesrcset="../images/award/season4/IMG_9918.JPG 800w" imagesizes="100vw" fetchpriority="high">
+    
+    <!-- DNS 預解析，加速第三方資源載入 -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://sheets.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- 預連接關鍵域名 -->
+    <link rel="preconnect" href="https://sheets.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    
     <!-- 禁用 AdSense 自動內容標籤 -->
     <meta name="google-adsense-platform-account" content="ca-pub-4455508862703492">
     <meta name="google-adsense-platform-domain" content="yhdarts.com">
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
+    <!-- Google tag (gtag.js) - 延遲載入以改善 TBT -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-17514530743');
+      // 延遲載入 Google Analytics，等待頁面互動或 3 秒後
+      function loadGoogleAnalytics() {
+        if (window.gaLoaded) return;
+        window.gaLoaded = true;
+        
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17514530743';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17514530743');
+      }
+      
+      // 監聽使用者互動事件
+      ['scroll', 'click', 'mousemove', 'touchstart'].forEach(event => {
+        window.addEventListener(event, loadGoogleAnalytics, { once: true, passive: true });
+      });
+      
+      // 3 秒後載入（如果沒有互動）
+      setTimeout(loadGoogleAnalytics, 3000);
     </script>
     
     <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
     <script>
     function gtag_report_conversion(url) {
+      if (typeof gtag === 'undefined') {
+        loadGoogleAnalytics();
+        setTimeout(() => gtag_report_conversion(url), 500);
+        return false;
+      }
       var callback = function () {
         if (typeof(url) != 'undefined') {
           window.location = url;
@@ -40,10 +76,61 @@
     
     <!-- Google AdSense 已在 index.html 中載入，此處不需要重複載入 -->
     
-    <link rel="stylesheet" href="../styles/news.css">
+    <!-- 預載入關鍵 CSS 以改善 LCP -->
+    <link rel="preload" href="../styles/news.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../styles/news.css"></noscript>
+    
+    <!-- CSS 載入 polyfill -->
+    <script>
+    !function(n){if(!window.loadCSS){window.loadCSS=function(){}}var o=loadCSS.relpreload={};if(o.support=function(){try{return n.querySelector('link[rel="preload"]').relList.supports("preload")}catch(e){return!1}},o.poly=function(){for(var e=n.querySelectorAll('link[rel="preload"][as="style"]'),t=0;t<e.length;t++){var r=e[t];r.rel="stylesheet",r.removeAttribute("as")}},!o.support()){o.poly();var e=n.setInterval(o.poly,300);n.addEventListener?n.addEventListener("load",function(){o.poly(),clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){clearInterval(e)})}}(document);
+    </script>
+    
+    <!-- 延遲載入 JavaScript -->
     <script src="../js/news.js" defer></script>
     
     <style>
+        /* ========== 字體顯示優化 ========== */
+        /* 使用系統字體，無需載入外部字體 */
+        body {
+            font-display: swap; /* 字體載入時使用備用字體 */
+        }
+        
+        /* ========== CLS 優化：預留空間 ========== */
+        
+        /* 為輪播圖預留固定空間，防止 CLS */
+        .carousel-container {
+            min-height: 200px; /* 手機版 */
+            contain: layout style paint; /* CSS Containment 優化渲染 */
+        }
+        
+        @media (min-width: 769px) {
+            .carousel-container {
+                min-height: 400px; /* 桌面版 */
+            }
+        }
+        
+        /* 為廣告容器預留固定空間 */
+        #adsense-container {
+            min-height: 60px; /* 手機版最小高度 */
+            contain: layout style paint;
+        }
+        
+        @media (min-width: 769px) {
+            #adsense-container {
+                min-height: 120px; /* 桌面版最小高度 */
+            }
+        }
+        
+        /* 為排行榜表格預留空間 */
+        .ranking-table {
+            contain: layout style;
+        }
+        
+        /* 為新聞區塊優化，減少折疊時的 CLS */
+        .news-item.collapsible {
+            contain: layout style paint;
+        }
+        
         /* 加載指示器樣式 */
         .loading-indicator {
             text-align: center;
@@ -175,13 +262,18 @@
             border-radius: 0; /* 90度直角 */
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            /* 防止 CLS */
+            min-height: 200px;
         }
         
         .carousel-container {
             position: relative;
             width: 100%;
             height: 200px; /* 手機版預設高度 */
+            min-height: 200px; /* 防止 CLS */
             overflow: hidden;
+            /* CSS Containment 優化 */
+            contain: layout style paint;
         }
         
         .carousel-image {
@@ -193,6 +285,11 @@
             top: 0;
             left: 0;
             transition: transform 0.6s ease-in-out;
+            /* 確保圖片佔位，減少 CLS */
+            aspect-ratio: 16/9;
+            /* GPU 加速 */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
         #carousel-image {
@@ -342,6 +439,11 @@
         @media (max-width: 768px) {
             .carousel-container {
                 height: 200px;
+                min-height: 200px;
+            }
+            
+            .photo-carousel {
+                min-height: 200px;
             }
             
             .carousel-title {
@@ -368,6 +470,11 @@
         @media (min-width: 769px) {
             .carousel-container {
                 height: 400px; /* 電腦版高度 */
+                min-height: 400px;
+            }
+            
+            .photo-carousel {
+                min-height: 400px;
             }
             
             .carousel-title {
@@ -393,13 +500,30 @@
         
         <!-- 照片輪播區塊 -->
         <div class="photo-carousel">
-            <div class="carousel-container">
+            <div class="carousel-container" style="min-height: 200px;">
                 <div class="carousel-loading" id="carousel-loading">
                     <div class="loading-spinner"></div>
                     <div class="loading-text">載入照片中...</div>
                 </div>
-                <img id="carousel-image" src="" alt="賽事照片輪播" class="carousel-image" style="display: none;">
-                <img id="carousel-image-next" src="" alt="賽事照片輪播" class="carousel-image" style="display: none;">
+                <!-- 為圖片設置明確尺寸以減少 CLS -->
+                <!-- 第一張圖片使用 eager loading，因為是 LCP 元素 -->
+                <img id="carousel-image" 
+                     src="" 
+                     alt="賽事照片輪播" 
+                     class="carousel-image" 
+                     width="800" 
+                     height="400"
+                     loading="eager"
+                     fetchpriority="high"
+                     style="display: none;">
+                <img id="carousel-image-next" 
+                     src="" 
+                     alt="賽事照片輪播" 
+                     class="carousel-image" 
+                     width="800" 
+                     height="400"
+                     loading="lazy"
+                     style="display: none;">
                 <div class="carousel-overlay">
                     <div class="carousel-title">難找的聯賽第四屆頒獎典禮</div>
                     <div class="carousel-dots" id="carousel-dots"></div>
@@ -436,7 +560,13 @@
         </div>
         
         <!-- 季後賽對戰表 -->
-        <img src="../images/playoffs.png" alt="季後賽對戰表" style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
+        <img src="../images/playoffs.png" 
+             alt="季後賽對戰表" 
+             width="800" 
+             height="600"
+             loading="lazy"
+             style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" 
+             onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
         
         <!-- 季後賽詳細資訊模態窗口 -->
         <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { this.classList.remove('visible'); document.body.style.overflow=''; }">
@@ -446,17 +576,45 @@
             </div>
         </div>
         
-        <!-- Google AdSense 中間廣告 - 在排行榜前，用戶停留時間長 -->
-        <!-- 注意：此處的廣告初始化在 main.js 中處理（因為使用 innerHTML 載入時 script 不會執行） -->
-        <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; overflow: hidden;">
+        <!-- Google AdSense 中間廣告 - 延遲載入以改善 TBT -->
+        <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; overflow: hidden; min-height: 60px;">
             <ins class="adsbygoogle"
                  id="middle-ad"
                  style="display:block; margin: 0 auto;"
                  data-ad-client="ca-pub-4455508862703492"
                  data-ad-format="horizontal"
                  data-full-width-responsive="false"
-                 loading="lazy"></ins>
+                 data-lazy-load="true"></ins>
         </div>
+        
+        <script>
+        // 延遲載入 AdSense，等待使用者互動或頁面載入 2 秒後
+        function loadAdSense() {
+            if (window.adsenseLoaded) return;
+            window.adsenseLoaded = true;
+            
+            const adScript = document.createElement('script');
+            adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492';
+            adScript.async = true;
+            adScript.crossOrigin = 'anonymous';
+            adScript.onload = function() {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.error('AdSense 載入錯誤:', e);
+                }
+            };
+            document.head.appendChild(adScript);
+        }
+        
+        // 監聽使用者互動
+        ['scroll', 'click', 'mousemove', 'touchstart'].forEach(event => {
+            window.addEventListener(event, loadAdSense, { once: true, passive: true });
+        });
+        
+        // 2 秒後載入（如果沒有互動）
+        setTimeout(loadAdSense, 2000);
+        </script>
         
         <style>
             /* 桌面版：標準 728x90 橫幅廣告 */
