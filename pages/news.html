@@ -264,7 +264,11 @@
             /* GPU 加速 */
             transform: translateZ(0);
             backface-visibility: hidden;
-            /* 淡入淡出過渡效果 */
+            /* 不要在頁面載入時就啟用過渡效果 */
+        }
+        
+        /* 啟用過渡效果（由 JavaScript 添加）*/
+        .carousel-image.transition-enabled {
             transition: opacity 0.3s ease-in-out;
         }
         
@@ -550,12 +554,12 @@
              height="600"
              loading="lazy"
              style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" 
-             onclick="document.getElementById('playoffsModal').classList.add('visible'); document.body.style.overflow='hidden';">
+             onclick="openPlayoffsModal();">
         
         <!-- 季後賽詳細資訊模態窗口 -->
-        <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { this.classList.remove('visible'); document.body.style.overflow=''; }">
+        <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
             <div class="match-modal-content">
-                <button class="modal-close" onclick="document.getElementById('playoffsModal').classList.remove('visible'); document.body.style.overflow=''; event.stopPropagation();">✕</button>
+                <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
                 <iframe src="../pages/s5_playoffs.html" class="match-iframe"></iframe>
             </div>
         </div>
@@ -1405,13 +1409,47 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     </div>
 
     <script>
+        // 模態窗口滾動位置管理
+        let scrollPosition = 0;
+        
+        function openPlayoffsModal() {
+            const modal = document.getElementById('playoffsModal');
+            if (!modal) return;
+            
+            // 保存當前滾動位置
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // 固定 body 位置（防止頁面跳動）
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            
+            // 顯示模態窗口
+            modal.classList.add('visible');
+        }
+        
+        function closePlayoffsModal() {
+            const modal = document.getElementById('playoffsModal');
+            if (!modal) return;
+            
+            // 隱藏模態窗口
+            modal.classList.remove('visible');
+            
+            // 恢復 body 樣式
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            
+            // 恢復滾動位置
+            window.scrollTo(0, scrollPosition);
+        }
+        
         // ESC鍵關閉季後賽模態窗口
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const modal = document.getElementById('playoffsModal');
                 if (modal && modal.classList.contains('visible')) {
-                    modal.classList.remove('visible');
-                    document.body.style.overflow = '';
+                    closePlayoffsModal();
                 }
             }
         });
@@ -1440,6 +1478,12 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             // 第一張圖片已經顯示，立即隱藏載入指示器
             if (carouselLoading) carouselLoading.style.display = 'none';
             
+            // 啟用過渡效果（避免頁面載入時的閃爍）
+            setTimeout(() => {
+                carouselImage.classList.add('transition-enabled');
+                if (carouselImageNext) carouselImageNext.classList.add('transition-enabled');
+            }, 100);
+            
             // 創建圓點
             if (carouselDots) {
                 carouselDots.innerHTML = season4Images.map((_, i) => 
@@ -1459,7 +1503,9 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             // 切換到指定幻燈片（使用淡入淡出）
             function goToSlide(index) {
                 if (index === currentIndex) return;
+                if (!carouselImage.classList.contains('transition-enabled')) return;
                 
+                const prevIndex = currentIndex;
                 currentIndex = index;
                 
                 // 淡出當前圖片
