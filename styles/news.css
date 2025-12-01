@@ -4,12 +4,17 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #fff;
+    /* 優化渲染性能 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    /* CSS Containment 優化 */
+    contain: layout style;
 }
 
 .upcoming-matches {
@@ -88,6 +93,10 @@ body {
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* CSS Containment 優化 */
+    contain: layout style paint;
+    /* GPU 加速 */
+    will-change: transform;
 }
 
 .match-item:hover {
@@ -728,6 +737,8 @@ body.news-page {
     background: transparent;
     box-shadow: none;
     transition: all 0.3s ease;
+    /* CSS Containment 優化，減少重新計算 */
+    contain: layout style paint;
 }
 
 .news-item.collapsible:hover {
@@ -789,8 +800,10 @@ body.news-page {
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: all 0.4s ease;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
     background: #ffffff;
+    /* 優化渲染 */
+    contain: layout style;
 }
 
 .news-text.collapsed {
@@ -798,6 +811,8 @@ body.news-page {
     padding-top: 0;
     padding-bottom: 0;
     opacity: 0;
+    /* 減少重排 */
+    visibility: hidden;
 }
 
 .news-text.expanded {
@@ -805,6 +820,7 @@ body.news-page {
     padding-top: 20px;
     padding-bottom: 20px;
     opacity: 1;
+    visibility: visible;
 }
 
 /* 新聞內容文字樣式 */
