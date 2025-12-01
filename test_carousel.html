@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>輪播圖測試</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-info {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-info h2 {
+            color: #dc3545;
+            margin-top: 0;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+            background: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        #carousel-image {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px;
+            color: white;
+            z-index: 10;
+        }
+        
+        .carousel-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            margin-bottom: 10px;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.3);
+        }
+        
+        .test-image {
+            max-width: 600px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.visible {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .status {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>🧪 輪播圖與模態窗口測試頁面</h2>
+        <p><strong>測試時間：</strong><span id="test-time"></span></p>
+        <div id="status-messages"></div>
+    </div>
+    
+    <div class="carousel-container">
+        <img id="carousel-image" 
+             src="./images/award/season4/IMG_9918.webp" 
+             alt="輪播圖" 
+             class="carousel-image">
+        <div class="carousel-overlay">
+            <div class="carousel-title">難找的聯賽第四屆頒獎典禮</div>
+            <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+    </div>
+    
+    <div class="test-info" style="margin-top: 20px;">
+        <h3>測試 Playoffs 按鈕</h3>
+        <img src="./images/playoffs.png" 
+             alt="Playoffs" 
+             class="test-image"
+             onclick="openTestModal()">
+        <p style="text-align: center; color: #666;">點擊圖片測試模態窗口</p>
+    </div>
+    
+    <div id="testModal" class="modal">
+        <button class="modal-close" onclick="closeTestModal()">✕</button>
+        <div class="modal-content">
+            <h2>✅ 模態窗口正常運作！</h2>
+            <p>如果你看到這個訊息，表示 onclick 函數正常工作。</p>
+            <button onclick="closeTestModal()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">關閉</button>
+        </div>
+    </div>
+    
+    <script>
+        // 顯示測試時間
+        document.getElementById('test-time').textContent = new Date().toLocaleString('zh-TW');
+        
+        function addStatus(message, isSuccess = true) {
+            const statusDiv = document.getElementById('status-messages');
+            const status = document.createElement('div');
+            status.className = 'status';
+            status.style.background = isSuccess ? '#4CAF50' : '#f44336';
+            status.textContent = message;
+            statusDiv.appendChild(status);
+        }
+        
+        // 測試模態窗口函數（全局）
+        window.openTestModal = function() {
+            console.log('✅ openTestModal 被調用');
+            addStatus('✅ 模態窗口函數正常工作！');
+            document.getElementById('testModal').classList.add('visible');
+        };
+        
+        window.closeTestModal = function() {
+            console.log('✅ closeTestModal 被調用');
+            document.getElementById('testModal').classList.remove('visible');
+        };
+        
+        // 輪播圖測試
+        (function initCarousel() {
+            const images = [
+                './images/award/season4/IMG_9918.webp',
+                './images/award/season4/IMG_9919.webp',
+                './images/award/season4/IMG_9920.webp',
+                './images/award/season4/IMG_9921.webp',
+                './images/award/season4/IMG_9922.webp',
+                './images/award/season4/IMG_9923.webp'
+            ];
+            
+            let currentIndex = 0;
+            let isTransitioning = false;
+            const carouselImage = document.getElementById('carousel-image');
+            const carouselDots = document.getElementById('carousel-dots');
+            
+            if (!carouselImage) {
+                addStatus('❌ 找不到輪播圖元素', false);
+                return;
+            }
+            
+            addStatus('✅ 輪播圖元素已找到');
+            
+            // 創建圓點
+            if (carouselDots) {
+                carouselDots.innerHTML = images.map((_, i) => 
+                    `<div class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
+                ).join('');
+                
+                carouselDots.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.addEventListener('click', () => goToSlide(i));
+                });
+                
+                addStatus('✅ 圓點已創建（6 個）');
+            }
+            
+            function goToSlide(index) {
+                if (index === currentIndex || isTransitioning) return;
+                
+                isTransitioning = true;
+                currentIndex = index;
+                
+                console.log(`切換到第 ${index + 1} 張圖片`);
+                
+                carouselImage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    carouselImage.src = images[index];
+                    carouselImage.style.opacity = '1';
+                    updateDots();
+                    isTransitioning = false;
+                    addStatus(`✅ 已切換到第 ${index + 1} 張圖片`);
+                }, 500);
+            }
+            
+            function updateDots() {
+                if (!carouselDots) return;
+                carouselDots.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+            
+            function nextSlide() {
+                const nextIndex = (currentIndex + 1) % images.length;
+                goToSlide(nextIndex);
+            }
+            
+            let interval;
+            function startAutoPlay() {
+                if (interval) clearInterval(interval);
+                interval = setInterval(nextSlide, 5000);
+                addStatus('✅ 自動播放已啟動（每 5 秒切換）');
+            }
+            
+            startAutoPlay();
+            
+            console.log('✅ 輪播圖初始化完成');
+            addStatus('✅ 輪播圖初始化完成');
+        })();
+        
+        // 測試全局函數是否可用
+        setTimeout(() => {
+            if (typeof openTestModal === 'function') {
+                addStatus('✅ openTestModal 函數已正確註冊到全局');
+            } else {
+                addStatus('❌ openTestModal 函數未找到', false);
+            }
+            
+            if (typeof closeTestModal === 'function') {
+                addStatus('✅ closeTestModal 函數已正確註冊到全局');
+            } else {
+                addStatus('❌ closeTestModal 函數未找到', false);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
+

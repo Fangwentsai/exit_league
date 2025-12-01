@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 防止快取 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>賽事新聞與排行榜 | 難找的聯賽 - 新北市永和區飛鏢聯賽</title>
     <meta name="description" content="追蹤中永和地區規模最大的跨機台飛鏢聯賽「難找的聯賽」第五季最新動態。我們提供最完整的官方排行榜、賽程表及每週賽事新聞，一手掌握所有關鍵資訊。">
     <meta name="keywords" content="飛鏢新聞,飛鏢排行榜,比賽結果,飛鏢成績,難找的聯賽,永和飛鏢,飛鏢統計,比賽戰況,聯賽排名,飛鏢聯賽新聞">
@@ -60,8 +64,8 @@
     !function(n){if(!window.loadCSS){window.loadCSS=function(){}}var o=loadCSS.relpreload={};if(o.support=function(){try{return n.querySelector('link[rel="preload"]').relList.supports("preload")}catch(e){return!1}},o.poly=function(){for(var e=n.querySelectorAll('link[rel="preload"][as="style"]'),t=0;t<e.length;t++){var r=e[t];r.rel="stylesheet",r.removeAttribute("as")}},!o.support()){o.poly();var e=n.setInterval(o.poly,300);n.addEventListener?n.addEventListener("load",function(){o.poly(),clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){clearInterval(e)})}}(document);
     </script>
     
-    <!-- 延遲載入 JavaScript -->
-    <script src="../js/news.js" defer></script>
+    <!-- 延遲載入 JavaScript（添加時間戳防止快取）-->
+    <script src="../js/news.js?v=20251201-2" defer></script>
     
     <style>
         /* ========== 字體顯示優化 ========== */
@@ -141,17 +145,18 @@
         .match-modal {
             display: flex;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
             background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
+            z-index: 9999;
             justify-content: center;
             align-items: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            overflow: auto;
         }
         
         .match-modal.visible {
@@ -264,12 +269,8 @@
             /* GPU 加速 */
             transform: translateZ(0);
             backface-visibility: hidden;
-            /* 不要在頁面載入時就啟用過渡效果 */
-        }
-        
-        /* 啟用過渡效果（由 JavaScript 添加）*/
-        .carousel-image.transition-enabled {
-            transition: opacity 0.3s ease-in-out;
+            /* 平滑過渡效果 */
+            transition: opacity 0.5s ease-in-out;
         }
         
         /* 第一張圖片立即顯示（LCP 優化 - 無需等待 JS）*/
@@ -555,14 +556,6 @@
              loading="lazy"
              style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" 
              onclick="openPlayoffsModal();">
-        
-        <!-- 季後賽詳細資訊模態窗口 -->
-        <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
-            <div class="match-modal-content">
-                <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
-                <iframe src="../pages/s5_playoffs.html" class="match-iframe"></iframe>
-            </div>
-        </div>
         
         <!-- Google AdSense 中間廣告 - 延遲載入以改善 TBT -->
         <div id="adsense-container" style="text-align: center; margin: 15px auto; padding: 0; max-width: 100%; overflow: hidden; min-height: 60px;">
@@ -1409,40 +1402,52 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     </div>
 
     <script>
-        // 模態窗口滾動位置管理
-        let scrollPosition = 0;
+        // 調試：確認腳本載入
+        console.log('🔧 [DEBUG] Script loaded at:', new Date().toLocaleTimeString());
+        console.log('🔧 [DEBUG] Page URL:', window.location.href);
         
-        function openPlayoffsModal() {
+        // 模態窗口滾動位置管理（全局變數）
+        var scrollPosition = 0;
+        
+        // 全局函數：打開季後賽模態窗口
+        window.openPlayoffsModal = function() {
+            console.log('✅ [DEBUG] openPlayoffsModal 被調用');
             const modal = document.getElementById('playoffsModal');
             if (!modal) return;
             
             // 保存當前滾動位置
             scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            console.log('💾 保存滾動位置:', scrollPosition);
             
-            // 固定 body 位置（防止頁面跳動）
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollPosition}px`;
-            document.body.style.width = '100%';
+            // 防止背景滾動
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = '0px';
             
             // 顯示模態窗口
             modal.classList.add('visible');
-        }
+            
+            // ⭐ 關鍵修復：強制保持滾動位置（防止焦點跳動）
+            requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPosition);
+                console.log('✅ Playoffs 模態窗口已打開，滾動位置已鎖定在:', scrollPosition);
+            });
+        };
         
-        function closePlayoffsModal() {
+        // 全局函數：關閉季後賽模態窗口
+        window.closePlayoffsModal = function() {
+            console.log('✅ [DEBUG] closePlayoffsModal 被調用');
             const modal = document.getElementById('playoffsModal');
             if (!modal) return;
             
             // 隱藏模態窗口
             modal.classList.remove('visible');
             
-            // 恢復 body 樣式
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
+            // 恢復背景滾動
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
             
-            // 恢復滾動位置
-            window.scrollTo(0, scrollPosition);
-        }
+            console.log('✅ Playoffs 模態窗口已關閉，滾動位置保持在:', window.pageYOffset);
+        };
         
         // ESC鍵關閉季後賽模態窗口
         document.addEventListener('keydown', function(e) {
@@ -1454,8 +1459,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             }
         });
         
-        // 輪播圖初始化 - LCP 優化版本
-        // 第一張圖片已在 HTML 中直接載入，JavaScript 只負責輪播功能
+        // 輪播圖初始化 - 簡化版本
         (function initCarousel() {
             const season4Images = [
                 '../images/award/season4/IMG_9918.webp',
@@ -1467,22 +1471,20 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             ];
             
             let currentIndex = 0;
+            let isTransitioning = false;
             const carouselImage = document.getElementById('carousel-image');
             const carouselImageNext = document.getElementById('carousel-image-next');
             const carouselLoading = document.getElementById('carousel-loading');
             const carouselDots = document.getElementById('carousel-dots');
             const carouselContainer = document.querySelector('.carousel-container');
             
-            if (!carouselImage || !season4Images.length) return;
+            if (!carouselImage || !season4Images.length) {
+                console.log('❌ 輪播圖元素未找到');
+                return;
+            }
             
-            // 第一張圖片已經顯示，立即隱藏載入指示器
+            // 隱藏載入指示器
             if (carouselLoading) carouselLoading.style.display = 'none';
-            
-            // 啟用過渡效果（避免頁面載入時的閃爍）
-            setTimeout(() => {
-                carouselImage.classList.add('transition-enabled');
-                if (carouselImageNext) carouselImageNext.classList.add('transition-enabled');
-            }, 100);
             
             // 創建圓點
             if (carouselDots) {
@@ -1500,24 +1502,23 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
                 });
             }
             
-            // 切換到指定幻燈片（使用淡入淡出）
+            // 切換到指定幻燈片
             function goToSlide(index) {
-                if (index === currentIndex) return;
-                if (!carouselImage.classList.contains('transition-enabled')) return;
+                if (index === currentIndex || isTransitioning) return;
                 
-                const prevIndex = currentIndex;
+                isTransitioning = true;
                 currentIndex = index;
                 
-                // 淡出當前圖片
+                // 淡出
                 carouselImage.style.opacity = '0';
                 
-                // 等待淡出完成後更換圖片
+                // 更換圖片並淡入
                 setTimeout(() => {
                     carouselImage.src = season4Images[index];
-                    // 淡入新圖片
                     carouselImage.style.opacity = '1';
                     updateDots();
-                }, 300);
+                    isTransitioning = false;
+                }, 500);
             }
             
             // 更新圓點
@@ -1559,6 +1560,18 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             
             console.log('✅ 輪播圖初始化完成（首圖已預載）');
         })();
+        
+        // 確認全局函數已註冊
+        setTimeout(() => {
+            console.log('🔧 [DEBUG] 檢查全局函數:');
+            console.log('  - openPlayoffsModal:', typeof window.openPlayoffsModal);
+            console.log('  - closePlayoffsModal:', typeof window.closePlayoffsModal);
+            if (typeof window.openPlayoffsModal !== 'function') {
+                console.error('❌ openPlayoffsModal 未正確註冊！');
+            } else {
+                console.log('✅ 所有全局函數已正確註冊');
+            }
+        }, 100);
     </script>
     
     <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
@@ -1611,6 +1624,14 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     // 保險機制：4 秒後自動載入
     setTimeout(loadGoogleScripts, 4000);
     </script>
+    
+    <!-- 季後賽詳細資訊模態窗口 - 放在最底部避免定位問題 -->
+    <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
+        <div class="match-modal-content">
+            <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
+            <iframe src="pages/s5_playoffs.html" class="match-iframe"></iframe>
+        </div>
+    </div>
 
 </body>
 </html>
