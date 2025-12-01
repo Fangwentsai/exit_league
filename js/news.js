@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // 降級方案
         setTimeout(() => {
-            loadMatches();
+    loadMatches();
         }, 100);
     }
 });
