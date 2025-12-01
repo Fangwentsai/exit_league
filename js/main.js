@@ -2530,14 +2530,14 @@ let carouselInterval = null;
 function initializePhotoCarousel() {
     console.log('🎠 開始初始化照片輪播...');
     
-    // Season 4 的照片列表
+    // Season 4 的照片列表 - 使用 WebP 格式以改善性能
     const season4Images = [
-        '/images/award/season4/IMG_9918.JPG',
-        '/images/award/season4/IMG_9919.JPG',
-        '/images/award/season4/IMG_9920.JPG',
-        '/images/award/season4/IMG_9921.JPG',
-        '/images/award/season4/IMG_9922.JPG',
-        '/images/award/season4/IMG_9923.JPG'
+        '/images/award/season4/IMG_9918.webp',
+        '/images/award/season4/IMG_9919.webp',
+        '/images/award/season4/IMG_9920.webp',
+        '/images/award/season4/IMG_9921.webp',
+        '/images/award/season4/IMG_9922.webp',
+        '/images/award/season4/IMG_9923.webp'
     ];
     
     carouselImages = season4Images;

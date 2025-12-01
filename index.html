@@ -30,10 +30,29 @@
     <link rel="canonical" href="https://yhdarts.com/">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     
-    <link rel="stylesheet" href="styles/index.css">
+    <!-- 關鍵 CSS 內嵌，減少轉譯封鎖 -->
+    <style>
+        /* 關鍵 CSS - 首屏內容所需 */
+        body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f5f5f5}
+        .header-section{background:#dc3545;padding:20px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+        .main-title{color:#fff;font-size:28px;text-align:center;margin:0}
+        .hamburger-btn{position:fixed;top:15px;left:15px;width:40px;height:40px;background:#dc3545;border-radius:8px;cursor:pointer;z-index:1001;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+        .hamburger-line{width:24px;height:3px;background:#fff;border-radius:2px;transition:all 0.3s}
+        .content-container{max-width:1200px;margin:20px auto;padding:0 15px}
+        .sidebar{position:fixed;left:-280px;top:0;width:280px;height:100%;background:#fff;box-shadow:2px 0 5px rgba(0,0,0,0.1);z-index:1002;transition:left 0.3s;overflow-y:auto}
+        .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;display:none}
+    </style>
+    
+    <!-- 完整 CSS 非同步載入 -->
+    <link rel="preload" href="styles/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles/index.css"></noscript>
+    
+    <!-- 字體優化：預連接 + 非同步載入 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 使用 media="print" 技巧非同步載入字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4455508862703492" crossorigin="anonymous"></script>
@@ -79,7 +98,8 @@
     }
     </script>
     
-    <script src="scripts/jquery-3.6.0.min.js"></script>
+    <!-- jQuery 延遲載入，不阻塞渲染 -->
+    <script src="scripts/jquery-3.6.0.min.js" defer></script>
     <!-- <script src="scripts/index.js"></script> -->
     
     <!-- JSON-LD 結構化數據 -->
@@ -208,8 +228,13 @@
         </div>
     </div>
 
-    <!-- 添加主要JavaScript，確保頁面功能正常 -->
-    <script src="js/main.js"></script>
+    <!-- 添加主要JavaScript，確保頁面功能正常 - 使用 defer 延遲載入 -->
+    <script src="js/main.js" defer></script>
+    
+    <!-- CSS 載入 polyfill -->
+    <script>
+    !function(n){if(!window.loadCSS){window.loadCSS=function(){}}var o=loadCSS.relpreload={};if(o.support=function(){try{return n.querySelector('link[rel="preload"]').relList.supports("preload")}catch(e){return!1}},o.poly=function(){for(var e=n.querySelectorAll('link[rel="preload"][as="style"]'),t=0;t<e.length;t++){var r=e[t];r.rel="stylesheet",r.removeAttribute("as")}},!o.support()){o.poly();var e=n.setInterval(o.poly,300);n.addEventListener?n.addEventListener("load",function(){o.poly(),clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){clearInterval(e)})}}(document);
+    </script>
 </body>
 </html>
 
