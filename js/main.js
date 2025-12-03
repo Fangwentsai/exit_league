@@ -437,48 +437,6 @@ async function loadContent(page, anchor = null, pushState = true) {
                         initializeNewsToggle();
                         initializeMatchesToggle();
                         initializePhotoCarousel();
-                        
-                        // 初始化 AdSense 中間廣告
-                        console.log('=== AdSense 中間廣告 Debug (from main.js) ===');
-                        const adElement = document.getElementById('middle-ad');
-                        if (adElement) {
-                            console.log('✅ 找到 AdSense 廣告元素');
-                            console.log('廣告元素屬性:', {
-                                'data-ad-client': adElement.getAttribute('data-ad-client'),
-                                'data-ad-format': adElement.getAttribute('data-ad-format'),
-                                'data-full-width-responsive': adElement.getAttribute('data-full-width-responsive')
-                            });
-                            
-                            try {
-                                console.log('🛡️ 準備 push 廣告...');
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                                console.log('✅ 廣告 push 成功!');
-                                
-                                // 檢查廣告是否實際渲染
-                                setTimeout(function() {
-                                    const container = document.getElementById('adsense-container');
-                                    if (container) {
-                                        const adIframe = container.querySelector('iframe');
-                                        console.log('⏱️ 2秒後檢查 - 是否有 iframe:', !!adIframe);
-                                        if (adIframe) {
-                                            console.log('✅ 廣告 iframe 已生成');
-                                            console.log('   - iframe src:', adIframe.src);
-                                            console.log('   - iframe 寬度:', adIframe.offsetWidth);
-                                            console.log('   - iframe 高度:', adIframe.offsetHeight);
-                                        } else {
-                                            console.warn('⚠️ 2秒後仍無 iframe，廣告可能未載入');
-                                            console.log('   - ins 元素內容:', adElement.innerHTML);
-                                        }
-                                    }
-                                }, 2000);
-                                
-                            } catch (e) {
-                                console.error('❌ 廣告 push 失敗:', e);
-                            }
-                        } else {
-                            console.warn('❌ 找不到 AdSense 廣告元素 (#middle-ad)');
-                        }
-                        console.log('=== AdSense Debug 結束 ===');
                     }, 300);
                 });
             } 
