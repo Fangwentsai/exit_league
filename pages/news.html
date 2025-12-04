@@ -154,7 +154,8 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch; /* Safari 滾動支援 */
         }
         
         .modal-close {
@@ -178,7 +179,9 @@
         .match-iframe {
             width: 100%;
             height: 100%;
+            min-height: 100%;
             border: none;
+            -webkit-overflow-scrolling: touch; /* Safari iframe 滾動支援 */
         }
         
         /* 季後賽區塊樣式 */
@@ -1590,7 +1593,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
         <div class="match-modal-content">
             <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
-            <iframe src="pages/s5_playoffs.html?v=20251203" class="match-iframe"></iframe>
+            <iframe src="pages/s5_playoffs.html?v=20251204" class="match-iframe" scrolling="yes"></iframe>
         </div>
     </div>
 

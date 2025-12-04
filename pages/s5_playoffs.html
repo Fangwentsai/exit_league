@@ -24,6 +24,16 @@
     color: var(--text-white);
     display: flex;
     justify-content: center;
+    /* Safari iframe 滾動修復 */
+    min-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  html {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .container {
