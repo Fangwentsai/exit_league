@@ -22,18 +22,7 @@
     background-color: var(--bg-color);
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-white);
-    display: flex;
-    justify-content: center;
-    /* Safari iframe 滾動修復 */
-    min-height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  html {
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    /* 移除 display: flex 以修復 Safari iframe 滾動問題 */
   }
 
   .container {
@@ -305,7 +294,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="margin: 0 auto;">
   <div class="header">
     <h1>難找的聯賽</h1>
     <p>第五屆個人季後賽戰報</p>
