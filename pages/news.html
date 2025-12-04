@@ -155,8 +155,6 @@
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
         
         .modal-close {
@@ -177,18 +175,9 @@
             align-items: center;
         }
         
-        /* Safari iframe 滾動修復：wrapper 方案 */
-        .iframe-scroll-wrapper {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            overflow: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
-        
         .match-iframe {
             width: 100%;
-            height: 2000px; /* 設定足夠高度讓 Safari 可滾動 */
+            height: 100%;
             border: none;
         }
         
@@ -1601,9 +1590,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
         <div class="match-modal-content">
             <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
-            <div class="iframe-scroll-wrapper">
-                <iframe src="pages/s5_playoffs.html?v=20251204b" class="match-iframe" scrolling="yes"></iframe>
-            </div>
+            <iframe src="pages/s5_playoffs.html?v=20251204c" class="match-iframe"></iframe>
         </div>
     </div>
 
