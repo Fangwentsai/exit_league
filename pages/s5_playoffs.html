@@ -414,27 +414,45 @@
 </div>
 
 <script>
-// 關閉模態框函數
+// 關閉模態框函數 - 適配 main.js 中的 match-modal
 function closeModal() {
     try {
-        // 嘗試調用父頁面的關閉函數
+        // 檢查是否在 iframe 中
         if (window.parent && window.parent !== window) {
-            // 找到父頁面的模態框並關閉
+            // 方法1：嘗試調用父頁面的 closeMatchModal 函數
+            if (typeof window.parent.closeMatchModal === 'function') {
+                const parentModal = window.parent.document.querySelector('.match-modal');
+                if (parentModal) {
+                    window.parent.closeMatchModal(parentModal);
+                    return;
+                }
+            }
+            
+            // 方法2：直接操作父頁面的模態框
             const parentModal = window.parent.document.querySelector('.match-modal');
-            if (parentModal && typeof window.parent.closeMatchModal === 'function') {
-                window.parent.closeMatchModal(parentModal);
-            } else if (parentModal) {
-                // 備用方案：直接移除模態框
+            if (parentModal) {
                 parentModal.classList.remove('visible');
                 setTimeout(() => {
                     if (parentModal.parentNode) {
                         parentModal.parentNode.removeChild(parentModal);
                     }
                 }, 300);
+                return;
             }
         }
+        
+        // 如果不在 iframe 中，可能是直接打開頁面，嘗試返回上一頁
+        if (window.history.length > 1) {
+            window.history.back();
+        }
     } catch (e) {
-        console.log('無法關閉父頁面模態框:', e);
+        console.log('關閉模態框時發生錯誤:', e);
+        // 跨域情況下可能會報錯，嘗試 postMessage
+        try {
+            window.parent.postMessage({ action: 'closeModal' }, '*');
+        } catch (e2) {
+            console.log('postMessage 也失敗:', e2);
+        }
     }
 }
 
