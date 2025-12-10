@@ -290,9 +290,39 @@
     letter-spacing: 1px;
   }
 
+  /* 關閉按鈕樣式 */
+  .close-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    background: var(--gold);
+    color: #000;
+    transform: scale(1.1);
+  }
+
 </style>
 </head>
 <body>
+
+<!-- 關閉按鈕 -->
+<button class="close-btn" onclick="closeModal()" title="關閉 (ESC)">&times;</button>
 
 <div class="container" style="margin: 0 auto;">
   <div class="header">
@@ -382,6 +412,50 @@
     © 2025 難找的聯賽. All rights reserved.
   </div>
 </div>
+
+<script>
+// 關閉模態框函數
+function closeModal() {
+    try {
+        // 嘗試調用父頁面的關閉函數
+        if (window.parent && window.parent !== window) {
+            // 找到父頁面的模態框並關閉
+            const parentModal = window.parent.document.querySelector('.match-modal');
+            if (parentModal && typeof window.parent.closeMatchModal === 'function') {
+                window.parent.closeMatchModal(parentModal);
+            } else if (parentModal) {
+                // 備用方案：直接移除模態框
+                parentModal.classList.remove('visible');
+                setTimeout(() => {
+                    if (parentModal.parentNode) {
+                        parentModal.parentNode.removeChild(parentModal);
+                    }
+                }, 300);
+            }
+        }
+    } catch (e) {
+        console.log('無法關閉父頁面模態框:', e);
+    }
+}
+
+// ESC 鍵關閉
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// 點擊頁面空白處關閉（container 外部區域）
+document.body.addEventListener('click', function(e) {
+    const container = document.querySelector('.container');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // 如果點擊的不是 container 內部，也不是關閉按鈕，則關閉
+    if (!container.contains(e.target) && e.target !== closeBtn) {
+        closeModal();
+    }
+});
+</script>
 
 </body>
 </html>
