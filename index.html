@@ -213,8 +213,24 @@
         </div>
     </div>
 
+    <!-- Shopee 商品輪播區塊 - 固定底部 -->
+    <section class="shopee-carousel-section" id="shopee-carousel">
+        <div class="shopee-carousel-header">
+            <span class="shopee-carousel-title">🎯 補備品囉，這邊都是AA的產品👍</span>
+            <div class="shopee-carousel-nav">
+                <button class="carousel-nav-btn" id="shopee-prev" aria-label="上一頁">‹</button>
+                <button class="carousel-nav-btn" id="shopee-next" aria-label="下一頁">›</button>
+            </div>
+        </div>
+        <div class="shopee-carousel-container">
+            <div class="shopee-carousel-track" id="shopee-track"></div>
+        </div>
+        <div class="shopee-carousel-dots" id="shopee-dots"></div>
+    </section>
+
     <!-- 添加主要JavaScript，確保頁面功能正常 - 使用 defer 延遲載入 -->
     <script src="js/main.js?v=20251203" defer></script>
+    <script src="js/shopee-carousel.js" defer></script>
     
     <!-- CSS 載入 polyfill -->
     <script>
