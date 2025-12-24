@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>難找的聯賽 第五屆比賽結果</title>
+<style>
+  :root {
+    --bg-color: #0F0F0F;
+    --card-bg: #1A1A1A;
+    --gold: #C9A063;
+    --gold-gradient: linear-gradient(135deg, #C9A063 0%, #F0D398 50%, #C9A063 100%);
+    --silver: #B8B8B8;
+    --bronze: #A46628;
+    --text-white: #FFFFFF;
+    --highlight: #D93025;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-white);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
+    padding-bottom: 50px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 45px 20px;
+    background: radial-gradient(circle at top, #2a2a2a 0%, #0f0f0f 70%);
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 32px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+
+  .header p {
+    color: #E0E0E0;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+
+  /* 頒獎資訊樣式 */
+  .event-info {
+    margin: 25px 20px 10px;
+    padding: 15px;
+    background: rgba(201, 160, 99, 0.1);
+    border: 1px solid rgba(201, 160, 99, 0.3);
+    border-radius: 8px;
+  }
+
+  .event-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .event-info p::before {
+    content: '📍';
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  .event-info p:first-child::before {
+    content: '⏰';
+  }
+
+  /* 分區標題 */
+  .section-title {
+    display: flex;
+    align-items: center;
+    margin: 35px 20px 15px;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #333;
+    margin-left: 10px;
+  }
+
+  /* 獎項列表 */
+  .award-list {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .award-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 18px 20px;
+    border-radius: 6px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+
+  .rank-1 { border-left-color: var(--gold); background: linear-gradient(90deg, #1A1A1A 0%, #2a2318 100%); }
+  .rank-2 { border-left-color: var(--silver); }
+  .rank-3 { border-left-color: var(--bronze); }
+  .playoff-elite { border-left-color: var(--highlight); background: linear-gradient(90deg, #1A1A1A 0%, #251010 100%); }
+
+  .award-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .award-label {
+    font-size: 12px;
+    color: #888;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .winner-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .prize-tag {
+    text-align: right;
+  }
+
+  .prize-val {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: 'Impact', sans-serif;
+  }
+
+  .playoff-elite .prize-val {
+    color: #ff4d4d;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    font-size: 10px;
+    color: #444;
+    border-top: 1px solid #1a1a1a;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>難找的聯賽</h1>
+    <p>第五屆 最終榮譽榜</p>
+  </div>
+
+  <div class="event-info">
+    <p>頒獎時間：2025/12/30 21:00</p>
+    <p>頒獎地點：Vivi Bar</p>
+  </div>
+
+  <div class="section-title">🏆 League Season Rankings</div>
+  <div class="award-list">
+    <div class="award-card rank-1">
+      <div class="award-info">
+        <span class="award-label">Season Champion 冠軍</span>
+        <span class="winner-name">VIVI嘻嘻隊 (374)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 8,000</span></div>
+    </div>
+    <div class="award-card rank-2">
+      <div class="award-info">
+        <span class="award-label">Runner-up 亞軍</span>
+        <span class="winner-name">酒空組 (341)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 5,000</span></div>
+    </div>
+    <div class="award-card rank-3">
+      <div class="award-info">
+        <span class="award-label">Third Place 季軍</span>
+        <span class="winner-name">VIVI嘻嘻隊 (339)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 3,000</span></div>
+    </div>
+  </div>
+
+  <div class="section-title">✨ Special Awards</div>
+  <div class="award-list">
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">最強飲酒店家</span>
+        <span class="winner-name">Jack (85)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 3,000</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">Top Lady</span>
+        <span class="winner-name">躲躲 (43)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 1,000</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">聯賽勝場王</span>
+        <span class="winner-name">飛 (79)</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 1,000</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">地獄倒霉鬼</span>
+        <span class="winner-name">待公布</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">待公布</span></div>
+    </div>
+  </div>
+
+  <div class="section-title" style="color: var(--highlight);">🔥 Playoff Results</div>
+  <div class="award-list">
+    <div class="award-card playoff-elite">
+      <div class="award-info">
+        <span class="award-label">Playoff Champion 季後賽冠軍</span>
+        <span class="winner-name">當日公布</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val">$ 2,000</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">季後賽亞軍</span>
+        <span class="winner-name">當日公布</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒一手 🍺</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">季後賽季軍</span>
+        <span class="winner-name">當日公布</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒三支 🍺</span></div>
+    </div>
+    <div class="award-card">
+      <div class="award-info">
+        <span class="award-label">季後賽殿軍</span>
+        <span class="winner-name">當日公布</span>
+      </div>
+      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒兩支 🍺</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2025 難找的聯賽. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>
