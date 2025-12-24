@@ -138,7 +138,7 @@
             }
         }
         
-        /* 模態窗口樣式 */
+        /* 模態窗口樣式 - z-index 設為 10001 確保覆蓋 shopee carousel (9999) */
         .match-modal {
             display: flex;
             position: fixed;
@@ -147,7 +147,7 @@
             right: 0 !important;
             bottom: 0 !important;
             background-color: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
+            z-index: 10001;
             justify-content: center;
             align-items: center;
             opacity: 0;
@@ -480,6 +480,232 @@
                 font-size: 16px;
             }
         }
+        
+        /* ========== 季後賽 Banner 按鈕樣式 (版本 A) ========== */
+        .playoffs-banner {
+            --yh-red: #D1383F;
+            --yh-gold: #F2C94C;
+            
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, var(--yh-red) 0%, #b02a30 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(176, 42, 48, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .playoffs-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(176, 42, 48, 0.4);
+        }
+        
+        .playoffs-banner:active {
+            transform: translateY(0);
+        }
+        
+        /* 背景裝飾線條 */
+        .playoffs-banner .deco-line {
+            position: absolute;
+            right: -15px;
+            top: -30px;
+            width: 80px;
+            height: 160px;
+            background: rgba(255,255,255,0.07);
+            transform: rotate(25deg);
+            pointer-events: none;
+        }
+        
+        .playoffs-banner .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            z-index: 1;
+        }
+        
+        .playoffs-banner .sub-title {
+            color: rgba(255,255,255,0.9);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 4px;
+            margin-left: 5px;
+        }
+        
+        .playoffs-banner .main-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 900;
+            font-style: italic;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+        }
+        
+        .playoffs-banner .icon-crown {
+            position: absolute;
+            right: 20px;
+            font-size: 32px;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+        
+        /* 響應式調整 */
+        @media (max-width: 480px) {
+            .playoffs-banner {
+                height: 60px;
+            }
+            
+            .playoffs-banner .sub-title {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+            
+            .playoffs-banner .main-title {
+                font-size: 18px;
+            }
+            
+            .playoffs-banner .icon-crown {
+                font-size: 26px;
+                right: 15px;
+            }
+        }
+        
+        /* ========== 比賽結果 Banner 按鈕樣式 (金色主題) ========== */
+        .reward-banner {
+            --gold-dark: #1a1a1a;
+            --gold-accent: #C9A063;
+            --gold-light: #F0D398;
+            
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2318 60%, #1a1a1a 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+            border: 2px solid var(--gold-accent);
+            margin-bottom: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .reward-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 160, 99, 0.3);
+            border-color: var(--gold-light);
+        }
+        
+        .reward-banner:active {
+            transform: translateY(0);
+        }
+        
+        /* 背景裝飾 - 金色光暈 */
+        .reward-banner .deco-glow {
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(201, 160, 99, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .reward-banner .deco-glow-right {
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(240, 211, 152, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .reward-banner .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            z-index: 1;
+        }
+        
+        .reward-banner .sub-title {
+            color: var(--gold-accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 4px;
+            margin-left: 5px;
+        }
+        
+        .reward-banner .main-title {
+            background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-light) 50%, var(--gold-accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 22px;
+            font-weight: 900;
+            font-style: italic;
+            text-shadow: none;
+        }
+        
+        .reward-banner .icon-trophy {
+            position: absolute;
+            right: 20px;
+            font-size: 32px;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+        }
+        
+        .reward-banner .icon-trophy-left {
+            position: absolute;
+            left: 20px;
+            font-size: 28px;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+        }
+        
+        /* 響應式調整 */
+        @media (max-width: 480px) {
+            .reward-banner {
+                height: 60px;
+            }
+            
+            .reward-banner .sub-title {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+            
+            .reward-banner .main-title {
+                font-size: 18px;
+            }
+            
+            .reward-banner .icon-trophy {
+                font-size: 26px;
+                right: 15px;
+            }
+            
+            .reward-banner .icon-trophy-left {
+                font-size: 22px;
+                left: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -517,6 +743,18 @@
             </div>
         </div>
         
+        <!-- 第五季成績公告 Banner (CSS 版本，避免圖片失真) -->
+        <button class="reward-banner" onclick="window.openRewardModal();">
+            <div class="deco-glow"></div>
+            <div class="deco-glow-right"></div>
+            <div class="icon-trophy-left">🎖️</div>
+            <div class="text-group">
+                <div class="sub-title">難找的聯賽</div>
+                <div class="main-title">第五屆比賽結果</div>
+            </div>
+            <div class="icon-trophy">🏆</div>
+        </button>
+        
         <!-- 上週戰況區塊 (可折疊) -->
         <div class="matches-section">
             <h2 class="section-title">上週戰況</h2>
@@ -547,27 +785,15 @@
         </div>
         -->
         
-        <!-- 第五季成績公告 Banner -->
-        <a href="pages/s5_reward.html" class="playoffs-section" style="display: block; text-decoration: none;">
-            <div class="playoffs-image-container">
-                <img src="../images/season5_result.webp" 
-                     alt="第五季成績公告" 
-                     class="playoffs-image"
-                     width="800" 
-                     height="auto"
-                     loading="lazy">
-                <p class="playoffs-hint">👆 點擊查看第五季完整成績</p>
-        </div>
-        </a>
-        
-        <!-- 季後賽對戰表 - PNG 格式（檔案小，無需轉換）-->
-        <img src="../images/playoffs.png" 
-             alt="季後賽對戰表" 
-             width="800" 
-             height="600"
-             loading="lazy"
-             style="width: 100%; height: auto; cursor: pointer; margin-bottom: 15px;" 
-             onclick="openPlayoffsModal();">
+        <!-- 季後賽 Banner 按鈕 (CSS 版本，避免圖片失真) -->
+        <button class="playoffs-banner" onclick="window.openPlayoffsModal();">
+            <div class="deco-line"></div>
+            <div class="text-group">
+                <div class="sub-title">難找的聯賽</div>
+                <div class="main-title">第五屆季後賽戰況</div>
+            </div>
+            <div class="icon-crown">👑</div>
+        </button>
         
         <!-- 排行榜區塊 -->
         <div class="rankings">
@@ -1529,61 +1755,9 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
 
         <script>
         // 調試：確認腳本載入
-        console.log('🔧 [DEBUG] Script loaded at:', new Date().toLocaleTimeString());
-        console.log('🔧 [DEBUG] Page URL:', window.location.href);
+        console.log('🔧 [DEBUG] news.html Script loaded at:', new Date().toLocaleTimeString());
         
-        // 模態窗口滾動位置管理（全局變數）
-        var scrollPosition = 0;
-        
-        // 全局函數：打開季後賽模態窗口
-        window.openPlayoffsModal = function() {
-            console.log('✅ [DEBUG] openPlayoffsModal 被調用');
-            const modal = document.getElementById('playoffsModal');
-            if (!modal) return;
-            
-            // 保存當前滾動位置
-            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-            console.log('💾 保存滾動位置:', scrollPosition);
-            
-            // 防止背景滾動
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0px';
-            
-            // 顯示模態窗口
-            modal.classList.add('visible');
-            
-            // ⭐ 關鍵修復：強制保持滾動位置（防止焦點跳動）
-            requestAnimationFrame(() => {
-                window.scrollTo(0, scrollPosition);
-                console.log('✅ Playoffs 模態窗口已打開，滾動位置已鎖定在:', scrollPosition);
-            });
-        };
-        
-        // 全局函數：關閉季後賽模態窗口
-        window.closePlayoffsModal = function() {
-            console.log('✅ [DEBUG] closePlayoffsModal 被調用');
-            const modal = document.getElementById('playoffsModal');
-            if (!modal) return;
-            
-            // 隱藏模態窗口
-            modal.classList.remove('visible');
-            
-            // 恢復背景滾動
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-            
-            console.log('✅ Playoffs 模態窗口已關閉，滾動位置保持在:', window.pageYOffset);
-        };
-        
-        // ESC鍵關閉季後賽模態窗口
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('playoffsModal');
-                if (modal && modal.classList.contains('visible')) {
-                    closePlayoffsModal();
-                }
-            }
-        });
+        // 模態窗口函數已移至 main.js (openPlayoffsModal, closePlayoffsModal, openRewardModal, closeRewardModal)
         
         // 輪播圖初始化 - 簡化版本
         (function initCarousel() {
@@ -1732,14 +1906,8 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
     setTimeout(loadGoogleScripts, 4000);
     </script>
     
-    <!-- 版本時間戳記：2025-12-01 23:30 -->
-    <!-- 季後賽詳細資訊模態窗口 - 放在最底部避免定位問題 -->
-    <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
-        <div class="match-modal-content">
-            <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
-            <iframe src="pages/s5_playoffs.html?v=20251210" class="match-iframe"></iframe>
-        </div>
-    </div>
+    <!-- 版本時間戳記：2025-12-24 -->
+    <!-- 模態窗口已移至 index.html，由 main.js 控制 -->
 
 </body>
 </html>

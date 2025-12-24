@@ -31,7 +31,7 @@ body::-webkit-scrollbar {
     left: 0;
     width: 100%;
     margin: 0;
-    height: 46px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -243,7 +243,7 @@ body::-webkit-scrollbar {
 /* 內容區域需要添加上方間距，避免被固定標題擋住 */
 .content-container {
     max-width: 1000px;
-    margin: 55px auto 5px auto;
+    margin: 40px auto 5px auto;
     padding: 10px;
 }
 
@@ -321,7 +321,7 @@ body::-webkit-scrollbar {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     z-index: 999;
-    padding-top: 46px;
+    padding-top: 32px;
 }
 
 .sidebar.active {
@@ -662,4 +662,68 @@ body {
     .product-sold {
         display: none;
     }
+}
+
+/* ========== 模態窗口樣式 - z-index 設為 10001 確保覆蓋 shopee carousel (9999) ========== */
+.match-modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10001;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    overflow: auto;
+}
+
+.match-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.match-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    height: 85vh;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f44336;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 10002;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background-color: #d32f2f;
+    transform: scale(1.1);
+}
+
+.match-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }

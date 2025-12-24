@@ -228,8 +228,24 @@
         <div class="shopee-carousel-dots" id="shopee-dots"></div>
     </section>
 
+    <!-- 季後賽詳細資訊模態窗口 -->
+    <div id="playoffsModal" class="match-modal" onclick="if(event.target === this) { closePlayoffsModal(); }">
+        <div class="match-modal-content">
+            <button class="modal-close" onclick="closePlayoffsModal(); event.stopPropagation();">✕</button>
+            <iframe src="pages/s5_playoffs.html?v=20251224" class="match-iframe"></iframe>
+        </div>
+    </div>
+    
+    <!-- 獎勵榮譽榜模態窗口 -->
+    <div id="rewardModal" class="match-modal" onclick="if(event.target === this) { closeRewardModal(); }">
+        <div class="match-modal-content">
+            <button class="modal-close" onclick="closeRewardModal(); event.stopPropagation();">✕</button>
+            <iframe src="pages/s5_reward.html?v=20251224" class="match-iframe"></iframe>
+        </div>
+    </div>
+
     <!-- 添加主要JavaScript，確保頁面功能正常 - 使用 defer 延遲載入 -->
-    <script src="js/main.js?v=20251203" defer></script>
+    <script src="js/main.js?v=20251224" defer></script>
     <script src="js/shopee-carousel.js" defer></script>
     
     <!-- CSS 載入 polyfill -->

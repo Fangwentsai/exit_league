@@ -893,7 +893,7 @@ tr:has(.highlight-team) {
     transition: opacity 0.2s ease;
 }
 
-/* 模態框改進樣式 */
+/* 模態框改進樣式 - z-index 設為 10001 確保覆蓋 shopee carousel (9999) */
 .match-modal {
     position: fixed;
     top: 0;
@@ -904,7 +904,7 @@ tr:has(.highlight-team) {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999999;
+    z-index: 10001;
     opacity: 0;
     transition: opacity 0.3s ease;
     backdrop-filter: blur(2px);

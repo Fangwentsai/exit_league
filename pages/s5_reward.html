@@ -20,8 +20,10 @@
     margin: 0;
     padding: 0;
     background-color: var(--bg-color);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
     color: var(--text-white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
 
   .container {
@@ -29,48 +31,50 @@
     max-width: 420px;
     margin: 0 auto;
     background-color: var(--bg-color);
-    padding-bottom: 50px;
+    padding-bottom: 40px;
   }
 
   /* Header */
   .header {
     text-align: center;
-    padding: 45px 20px;
+    padding: 30px 20px;
     background: radial-gradient(circle at top, #2a2a2a 0%, #0f0f0f 70%);
     border-bottom: 2px solid var(--gold);
   }
 
   .header h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 28px;
     background: var(--gold-gradient);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 900;
+    letter-spacing: 2px;
   }
 
   .header p {
-    color: #E0E0E0;
-    font-size: 16px;
-    font-weight: 700;
-    margin-top: 8px;
-    letter-spacing: 2px;
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 6px;
+    letter-spacing: 1.5px;
   }
 
   /* 頒獎資訊樣式 */
   .event-info {
-    margin: 25px 20px 10px;
-    padding: 15px;
-    background: rgba(201, 160, 99, 0.1);
-    border: 1px solid rgba(201, 160, 99, 0.3);
+    margin: 20px 15px 10px;
+    padding: 12px 15px;
+    background: rgba(201, 160, 99, 0.08);
+    border: 1px solid rgba(201, 160, 99, 0.25);
     border-radius: 8px;
   }
 
   .event-info p {
-    margin: 5px 0;
-    font-size: 14px;
+    margin: 4px 0;
+    font-size: 12px;
     color: var(--gold);
-    font-weight: bold;
+    font-weight: 500;
     display: flex;
     align-items: center;
   }
@@ -78,7 +82,7 @@
   .event-info p::before {
     content: '📍';
     margin-right: 8px;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .event-info p:first-child::before {
@@ -89,12 +93,12 @@
   .section-title {
     display: flex;
     align-items: center;
-    margin: 35px 20px 15px;
+    margin: 25px 15px 12px;
     color: var(--gold);
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
   }
 
   .section-title::after {
@@ -110,7 +114,7 @@
     padding: 0 15px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .award-card {
@@ -118,10 +122,10 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--card-bg);
-    padding: 18px 20px;
+    padding: 14px 16px;
     border-radius: 6px;
-    border-left: 4px solid var(--gold);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border-left: 3px solid var(--gold);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
   .rank-1 { border-left-color: var(--gold); background: linear-gradient(90deg, #1A1A1A 0%, #2a2318 100%); }
@@ -132,54 +136,91 @@
   .award-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
 
   .award-label {
-    font-size: 12px;
-    color: #888;
-    font-weight: bold;
+    font-size: 10px;
+    color: #777;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
   }
 
   .winner-name {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 15px;
+    font-weight: 600;
     color: #fff;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
   }
 
   .prize-tag {
     text-align: right;
+    flex-shrink: 0;
   }
 
   .prize-val {
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 700;
     color: var(--gold);
-    font-family: 'Impact', sans-serif;
   }
 
   .playoff-elite .prize-val {
     color: #ff4d4d;
   }
 
+  /* 啤酒獎勵特殊樣式 */
+  .prize-val.beer-prize {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
   .footer {
     text-align: center;
-    margin-top: 50px;
-    padding: 20px;
-    font-size: 10px;
+    margin-top: 35px;
+    padding: 15px;
+    font-size: 9px;
     color: #444;
     border-top: 1px solid #1a1a1a;
+  }
+
+  /* 關閉按鈕樣式 */
+  .close-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    background: var(--gold);
+    color: #000;
+    transform: scale(1.1);
   }
 </style>
 </head>
 <body>
 
+<!-- 關閉按鈕 -->
+<button class="close-btn" onclick="closeModal()" title="關閉 (ESC)">&times;</button>
+
 <div class="container">
   <div class="header">
     <h1>難找的聯賽</h1>
-    <p>第五屆 最終榮譽榜</p>
+    <p>第五屆 例行賽得獎名單</p>
   </div>
 
   <div class="event-info">
@@ -187,7 +228,7 @@
     <p>頒獎地點：Vivi Bar</p>
   </div>
 
-  <div class="section-title">🏆 League Season Rankings</div>
+  <div class="section-title">🏆 最終團隊排名 League Season Rankings</div>
   <div class="award-list">
     <div class="award-card rank-1">
       <div class="award-info">
@@ -212,7 +253,7 @@
     </div>
   </div>
 
-  <div class="section-title">✨ Special Awards</div>
+  <div class="section-title">✨ 特別獎項 Special Awards</div>
   <div class="award-list">
     <div class="award-card">
       <div class="award-info">
@@ -238,7 +279,7 @@
     <div class="award-card">
       <div class="award-info">
         <span class="award-label">地獄倒霉鬼</span>
-        <span class="winner-name">待公布</span>
+        <span class="winner-name">B哥 (12.5%)</span>
       </div>
       <div class="prize-tag"><span class="prize-val">待公布</span></div>
     </div>
@@ -258,21 +299,21 @@
         <span class="award-label">季後賽亞軍</span>
         <span class="winner-name">當日公布</span>
       </div>
-      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒一手 🍺</span></div>
+      <div class="prize-tag"><span class="prize-val beer-prize">啤酒一手 🍺</span></div>
     </div>
     <div class="award-card">
       <div class="award-info">
         <span class="award-label">季後賽季軍</span>
         <span class="winner-name">當日公布</span>
       </div>
-      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒三支 🍺</span></div>
+      <div class="prize-tag"><span class="prize-val beer-prize">啤酒三支 🍺</span></div>
     </div>
     <div class="award-card">
       <div class="award-info">
         <span class="award-label">季後賽殿軍</span>
         <span class="winner-name">當日公布</span>
       </div>
-      <div class="prize-tag"><span class="prize-val" style="font-size: 14px; font-family: sans-serif;">啤酒兩支 🍺</span></div>
+      <div class="prize-tag"><span class="prize-val beer-prize">啤酒兩支 🍺</span></div>
     </div>
   </div>
 
@@ -280,6 +321,63 @@
     © 2025 難找的聯賽. All rights reserved.
   </div>
 </div>
+
+<script>
+// 關閉模態框函數 - 適配 news.html 中的 rewardModal
+function closeModal() {
+    try {
+        // 檢查是否在 iframe 中
+        if (window.parent && window.parent !== window) {
+            // 方法1：嘗試調用父頁面的 closeRewardModal 函數
+            if (typeof window.parent.closeRewardModal === 'function') {
+                window.parent.closeRewardModal();
+                return;
+            }
+            
+            // 方法2：直接操作父頁面的模態框
+            const parentModal = window.parent.document.querySelector('#rewardModal');
+            if (parentModal) {
+                parentModal.classList.remove('visible');
+                // 恢復背景滾動
+                window.parent.document.body.style.overflow = '';
+                window.parent.document.body.style.paddingRight = '';
+                return;
+            }
+        }
+        
+        // 如果不在 iframe 中，可能是直接打開頁面，嘗試返回上一頁
+        if (window.history.length > 1) {
+            window.history.back();
+        }
+    } catch (e) {
+        console.log('關閉模態框時發生錯誤:', e);
+        // 跨域情況下可能會報錯，嘗試 postMessage
+        try {
+            window.parent.postMessage({ action: 'closeRewardModal' }, '*');
+        } catch (e2) {
+            console.log('postMessage 也失敗:', e2);
+        }
+    }
+}
+
+// ESC 鍵關閉
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// 點擊頁面空白處關閉（container 外部區域）
+document.body.addEventListener('click', function(e) {
+    const container = document.querySelector('.container');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // 如果點擊的不是 container 內部，也不是關閉按鈕，則關閉
+    if (!container.contains(e.target) && e.target !== closeBtn) {
+        closeModal();
+    }
+});
+</script>
 
 </body>
 </html>
