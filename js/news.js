@@ -563,3 +563,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 });
+
+// ========== 第五季成績公告 Modal 函數 ==========
+window.openS5RewardModal = function() {
+    console.log('✅ [DEBUG] openS5RewardModal 被調用');
+    const modal = document.getElementById('s5RewardModal');
+    if (!modal) {
+        console.error('找不到 s5RewardModal');
+        return;
+    }
+    window.savedScrollPosition = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('visible'), 10);
+};
+
+window.closeS5RewardModal = function() {
+    console.log('✅ [DEBUG] closeS5RewardModal 被調用');
+    const modal = document.getElementById('s5RewardModal');
+    if (!modal) return;
+    modal.classList.remove('visible');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+        modal.style.display = 'none';
+        if (window.savedScrollPosition !== undefined) {
+            window.scrollTo(0, window.savedScrollPosition);
+        }
+    }, 300);
+};
+
+// ESC鍵關閉 S5Reward Modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('s5RewardModal');
+        if (modal && modal.classList.contains('visible')) {
+            closeS5RewardModal();
+        }
+    }
+});

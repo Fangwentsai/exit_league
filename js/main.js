@@ -48,7 +48,63 @@ window.closePlayoffsModal = function() {
     console.log('✅ Playoffs 模態窗口已關閉，滾動位置保持在:', window.pageYOffset);
 };
 
-console.log('✅ Playoffs 模態窗口函數已註冊到全局');
+// ==================== 全局函數：Reward 模態窗口 ====================
+window.openRewardModal = function() {
+    console.log('✅ [main.js] openRewardModal 被調用');
+    const modal = document.getElementById('rewardModal');
+    if (!modal) {
+        console.log('❌ 找不到 rewardModal');
+        return;
+    }
+    
+    // 保存當前滾動位置
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    console.log('💾 保存滾動位置:', scrollPosition);
+    
+    // 防止背景滾動
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = '0px';
+    
+    // 顯示模態窗口
+    modal.classList.add('visible');
+    
+    // ⭐ 關鍵修復：強制保持滾動位置（防止焦點跳動）
+    requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosition);
+        console.log('✅ Reward 模態窗口已打開，滾動位置已鎖定在:', scrollPosition);
+    });
+};
+
+window.closeRewardModal = function() {
+    console.log('✅ [main.js] closeRewardModal 被調用');
+    const modal = document.getElementById('rewardModal');
+    if (!modal) return;
+    
+    // 隱藏模態窗口
+    modal.classList.remove('visible');
+    
+    // 恢復背景滾動
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    
+    console.log('✅ Reward 模態窗口已關閉，滾動位置保持在:', window.pageYOffset);
+};
+
+// ESC鍵關閉模態窗口
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const playoffsModal = document.getElementById('playoffsModal');
+        const rewardModal = document.getElementById('rewardModal');
+        if (playoffsModal && playoffsModal.classList.contains('visible')) {
+            window.closePlayoffsModal();
+        }
+        if (rewardModal && rewardModal.classList.contains('visible')) {
+            window.closeRewardModal();
+        }
+    }
+});
+
+console.log('✅ Playoffs 和 Reward 模態窗口函數已註冊到全局');
 const CONFIG = {
     SEASON3: {
         SHEET_ID: '1Rjxr6rT_NfonXtYYsxpo3caYJbvI-fxc2WQh3tKBSC8',
