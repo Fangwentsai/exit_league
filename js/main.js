@@ -2591,17 +2591,34 @@ let carouselInterval = null;
 function initializePhotoCarousel() {
     console.log('🎠 開始初始化照片輪播...');
     
-    // Season 4 的照片列表 - 使用 WebP 格式以改善性能
-    const season4Images = [
-        '/images/award/season4/IMG_9918.webp',
-        '/images/award/season4/IMG_9919.webp',
-        '/images/award/season4/IMG_9920.webp',
-        '/images/award/season4/IMG_9921.webp',
-        '/images/award/season4/IMG_9922.webp',
-        '/images/award/season4/IMG_9923.webp'
+    // Season 5 的照片列表 - 使用 WebP 格式以改善性能
+    const season5Images = [
+        '/images/award/season5/season5_01.webp',
+        '/images/award/season5/season5_02.webp',
+        '/images/award/season5/season5_03.webp',
+        '/images/award/season5/season5_04.webp',
+        '/images/award/season5/season5_05.webp',
+        '/images/award/season5/season5_06.webp',
+        '/images/award/season5/season5_07.webp',
+        '/images/award/season5/season5_08.webp',
+        '/images/award/season5/season5_09.webp',
+        '/images/award/season5/season5_10.webp',
+        '/images/award/season5/season5_11.webp',
+        '/images/award/season5/season5_12.webp',
+        '/images/award/season5/season5_13.webp',
+        '/images/award/season5/season5_14.webp',
+        '/images/award/season5/season5_15.webp',
+        '/images/award/season5/season5_16.webp',
+        '/images/award/season5/season5_17.webp'
     ];
     
-    carouselImages = season4Images;
+    // 隨機打亂照片順序 (Fisher-Yates shuffle)
+    for (let i = season5Images.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [season5Images[i], season5Images[j]] = [season5Images[j], season5Images[i]];
+    }
+    
+    carouselImages = season5Images;
     
     // 檢查DOM元素是否存在
     const carouselImage = document.getElementById('carousel-image');
