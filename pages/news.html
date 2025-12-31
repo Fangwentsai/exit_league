@@ -87,13 +87,13 @@
         
         /* 為輪播圖預留固定空間，防止 CLS */
         .carousel-container {
-            min-height: 200px; /* 手機版 */
+            min-height: 150px; /* 手機版 75% */
             contain: layout style paint; /* CSS Containment 優化渲染 */
         }
         
         @media (min-width: 769px) {
             .carousel-container {
-                min-height: 400px; /* 桌面版 */
+                min-height: 300px; /* 桌面版 75% */
             }
         }
         
@@ -240,14 +240,14 @@
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             /* 防止 CLS */
-            min-height: 200px;
+            min-height: 150px;
         }
         
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 200px; /* 手機版預設高度 */
-            min-height: 200px; /* 防止 CLS */
+            height: 150px; /* 手機版預設高度 75% */
+            min-height: 150px; /* 防止 CLS */
             overflow: hidden;
             /* CSS Containment 優化 */
             contain: layout style paint;
@@ -425,12 +425,12 @@
         /* 響應式設計 */
         @media (max-width: 768px) {
             .carousel-container {
-                height: 200px;
-                min-height: 200px;
+                height: 150px;
+                min-height: 150px;
             }
             
             .photo-carousel {
-                min-height: 200px;
+                min-height: 150px;
             }
             
             .carousel-title {
@@ -456,12 +456,12 @@
         
         @media (min-width: 769px) {
             .carousel-container {
-                height: 400px; /* 電腦版高度 */
-                min-height: 400px;
+                height: 300px; /* 電腦版高度 75% */
+                min-height: 300px;
             }
             
             .photo-carousel {
-                min-height: 400px;
+                min-height: 300px;
             }
             
             .carousel-title {
@@ -713,7 +713,7 @@
         
         <!-- 照片輪播區塊 -->
         <div class="photo-carousel">
-            <div class="carousel-container" style="min-height: 200px;">
+            <div class="carousel-container" style="min-height: 150px;">
                 <div class="carousel-loading" id="carousel-loading">
                     <div class="loading-spinner"></div>
                     <div class="loading-text">載入照片中...</div>
