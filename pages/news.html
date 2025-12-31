@@ -29,7 +29,7 @@
     
     <!-- 預載入關鍵資源以改善 LCP -->
     <!-- 預載入第一張輪播圖片（LCP 元素）- WebP 格式 -->
-    <link rel="preload" as="image" href="../images/award/season4/IMG_9918.webp" imagesrcset="../images/award/season4/IMG_9918.webp 800w" imagesizes="100vw" fetchpriority="high">
+    <link rel="preload" as="image" href="../images/award/season5/season5_01.webp" imagesrcset="../images/award/season5/season5_01.webp 800w" imagesizes="100vw" fetchpriority="high">
     
     <!-- DNS 預解析，加速第三方資源載入 -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -721,8 +721,8 @@
                 <!-- 為圖片設置明確尺寸以減少 CLS -->
                 <!-- 第一張圖片：直接設定 src，立即顯示（LCP 優化）-->
                 <img id="carousel-image" 
-                     src="../images/award/season4/IMG_9918.webp" 
-                     alt="難找的聯賽第四屆頒獎典禮照片" 
+                     src="../images/award/season5/season5_01.webp" 
+                     alt="難找的聯賽第五屆頒獎典禮照片" 
                      class="carousel-image" 
                      width="800" 
                      height="400"
@@ -737,7 +737,7 @@
                      height="400"
                      loading="lazy">
                 <div class="carousel-overlay">
-                    <div class="carousel-title">難找的聯賽第四屆頒獎典禮</div>
+                    <div class="carousel-title">難找的聯賽第五屆頒獎典禮</div>
                     <div class="carousel-dots" id="carousel-dots"></div>
                 </div>
             </div>
@@ -1761,13 +1761,24 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
         
         // 輪播圖初始化 - 簡化版本
         (function initCarousel() {
-            const season4Images = [
-                '../images/award/season4/IMG_9918.webp',
-                '../images/award/season4/IMG_9919.webp',
-                '../images/award/season4/IMG_9920.webp',
-                '../images/award/season4/IMG_9921.webp',
-                '../images/award/season4/IMG_9922.webp',
-                '../images/award/season4/IMG_9923.webp'
+            const season5Images = [
+                '../images/award/season5/season5_01.webp',
+                '../images/award/season5/season5_02.webp',
+                '../images/award/season5/season5_03.webp',
+                '../images/award/season5/season5_04.webp',
+                '../images/award/season5/season5_05.webp',
+                '../images/award/season5/season5_06.webp',
+                '../images/award/season5/season5_07.webp',
+                '../images/award/season5/season5_08.webp',
+                '../images/award/season5/season5_09.webp',
+                '../images/award/season5/season5_10.webp',
+                '../images/award/season5/season5_11.webp',
+                '../images/award/season5/season5_12.webp',
+                '../images/award/season5/season5_13.webp',
+                '../images/award/season5/season5_14.webp',
+                '../images/award/season5/season5_15.webp',
+                '../images/award/season5/season5_16.webp',
+                '../images/award/season5/season5_17.webp'
             ];
             
             let currentIndex = 0;
@@ -1778,7 +1789,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             const carouselDots = document.getElementById('carousel-dots');
             const carouselContainer = document.querySelector('.carousel-container');
             
-            if (!carouselImage || !season4Images.length) {
+            if (!carouselImage || !season5Images.length) {
                 console.log('❌ 輪播圖元素未找到');
                 return;
             }
@@ -1788,7 +1799,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             
             // 創建圓點
             if (carouselDots) {
-                carouselDots.innerHTML = season4Images.map((_, i) => 
+                carouselDots.innerHTML = season5Images.map((_, i) => 
                     `<div class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
                 ).join('');
                 
@@ -1814,7 +1825,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
                 
                 // 更換圖片並淡入
                 setTimeout(() => {
-                    carouselImage.src = season4Images[index];
+                    carouselImage.src = season5Images[index];
                     carouselImage.style.opacity = '1';
                     updateDots();
                     isTransitioning = false;
@@ -1831,7 +1842,7 @@ VIVI嘻嘻隊的猴子與阿淦雙雙以6場勝利並列個人勝場榜首，展
             
             // 下一張
             function nextSlide() {
-                const nextIndex = (currentIndex + 1) % season4Images.length;
+                const nextIndex = (currentIndex + 1) % season5Images.length;
                 goToSlide(nextIndex);
             }
             
