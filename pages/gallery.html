@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片集 | 難找的聯賽</title>
+    <meta name="description" content="難找的聯賽歷屆頒獎典禮精彩照片回顧，記錄每一個榮耀時刻。">
+    <meta name="keywords" content="飛鏢聯賽, 難找的聯賽, 頒獎典禮, 照片集, YHDARTS">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="照片集 | 難找的聯賽">
+    <meta property="og:description" content="難找的聯賽歷屆頒獎典禮精彩照片回顧">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yhdarts.com/pages/gallery.html">
+    <meta property="og:image" content="https://yhdarts.com/images/award/season5/season5_01.webp">
+    
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #151515;
+            --gold: #C9A063;
+            --gold-light: #F0D398;
+            --text-white: #ffffff;
+            --text-grey: #888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            color: var(--text-white);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, #1a1a1a 0%, var(--bg-dark) 100%);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .header p {
+            color: var(--text-grey);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(201, 160, 99, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        /* Season Tabs */
+        .season-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            flex-wrap: wrap;
+        }
+        
+        .season-tab {
+            padding: 10px 24px;
+            background: var(--bg-card);
+            border: 1px solid #333;
+            border-radius: 25px;
+            color: var(--text-grey);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .season-tab:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .season-tab.active {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: #000;
+            border-color: var(--gold);
+        }
+        
+        /* Gallery Container */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .gallery-section {
+            display: none;
+        }
+        
+        .gallery-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
+            margin-left: 15px;
+        }
+        
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 30px 15px 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+        
+        .photo-number {
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold);
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .lightbox-close:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold);
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-nav:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+        
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-grey);
+            font-size: 14px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-grey);
+        }
+        
+        .empty-state span {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .back-btn {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+                transform: none;
+            }
+            
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="../index.html" class="back-btn">← 返回首頁</a>
+    <h1>📸 照片集</h1>
+    <p>歷屆頒獎典禮精彩回顧</p>
+</div>
+
+<div class="season-tabs">
+    <button class="season-tab active" data-season="5">第五屆 (2025)</button>
+    <button class="season-tab" data-season="4">第四屆 (2024)</button>
+    <button class="season-tab" data-season="3">第三屆 (2023)</button>
+    <button class="season-tab" data-season="2">第二屆 (2022)</button>
+</div>
+
+<div class="gallery-container">
+    <!-- 第五屆 -->
+    <div class="gallery-section active" id="season-5">
+        <div class="section-header">🏆 第五屆頒獎典禮 (17張)</div>
+        <div class="photo-grid" id="grid-5"></div>
+    </div>
+    
+    <!-- 第四屆 -->
+    <div class="gallery-section" id="season-4">
+        <div class="section-header">🏆 第四屆頒獎典禮 (6張)</div>
+        <div class="photo-grid" id="grid-4"></div>
+    </div>
+    
+    <!-- 第三屆 -->
+    <div class="gallery-section" id="season-3">
+        <div class="section-header">🏆 第三屆頒獎典禮 (7張)</div>
+        <div class="photo-grid" id="grid-3"></div>
+    </div>
+    
+    <!-- 第二屆 -->
+    <div class="gallery-section" id="season-2">
+        <div class="section-header">🏆 第二屆頒獎典禮 (3張)</div>
+        <div class="photo-grid" id="grid-2"></div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="prevImage()">‹</button>
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="照片">
+    </div>
+    <button class="lightbox-nav lightbox-next" onclick="nextImage()">›</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<div class="footer">
+    © 2025 難找的聯賽. All rights reserved.
+</div>
+
+<script>
+// 照片數據
+const galleries = {
+    5: {
+        path: '../images/award/season5/',
+        images: Array.from({length: 17}, (_, i) => `season5_${String(i+1).padStart(2, '0')}.webp`)
+    },
+    4: {
+        path: '../images/award/season4/',
+        images: ['IMG_9918.webp', 'IMG_9919.webp', 'IMG_9920.webp', 'IMG_9921.webp', 'IMG_9922.webp', 'IMG_9923.webp']
+    },
+    3: {
+        path: '../images/award/season3/',
+        images: ['IMG_9924.JPG', 'IMG_9925.JPG', 'IMG_9926.JPG', 'IMG_9927.JPG', 'IMG_9928.JPG', 'IMG_9929.JPG', 'IMG_9930.JPG']
+    },
+    2: {
+        path: '../images/award/season2/',
+        images: ['IMG_9931.JPG', 'IMG_9932.JPG', 'IMG_9933.JPG']
+    }
+};
+
+let currentSeason = 5;
+let currentIndex = 0;
+let currentImages = [];
+
+// 初始化照片網格
+function initGallery(season) {
+    const gallery = galleries[season];
+    const grid = document.getElementById(`grid-${season}`);
+    
+    if (!gallery || !grid) return;
+    
+    grid.innerHTML = gallery.images.map((img, i) => `
+        <div class="photo-item" onclick="openLightbox(${season}, ${i})">
+            <img src="${gallery.path}${img}" alt="第${season}屆頒獎典禮照片 ${i+1}" loading="lazy">
+            <div class="photo-overlay">
+                <span class="photo-number">#${i+1}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 切換季度
+document.querySelectorAll('.season-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const season = this.dataset.season;
+        
+        // 更新 tab 狀態
+        document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // 切換顯示區塊
+        document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(`season-${season}`).classList.add('active');
+        
+        currentSeason = parseInt(season);
+    });
+});
+
+// Lightbox 功能
+function openLightbox(season, index) {
+    currentSeason = season;
+    currentIndex = index;
+    currentImages = galleries[season].images;
+    
+    updateLightboxImage();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function updateLightboxImage() {
+    const gallery = galleries[currentSeason];
+    const img = document.getElementById('lightbox-img');
+    img.src = gallery.path + currentImages[currentIndex];
+    document.getElementById('lightbox-counter').textContent = 
+        `${currentIndex + 1} / ${currentImages.length}`;
+}
+
+function prevImage() {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    updateLightboxImage();
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    updateLightboxImage();
+}
+
+// 鍵盤控制
+document.addEventListener('keydown', function(e) {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+});
+
+// 點擊背景關閉
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+});
+
+// 初始化所有 gallery
+Object.keys(galleries).forEach(season => initGallery(parseInt(season)));
+</script>
+
+</body>
+</html>
+
