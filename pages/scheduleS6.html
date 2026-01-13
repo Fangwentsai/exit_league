@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>第六季賽程表 | 台北新北飛鏢比賽 - 難找的聯賽</title>
+    <meta name="description" content="查看台北新北地區最受歡迎的飛鏢聯賽「難找的聯賽」第六季完整賽程表。每週比賽時間、對戰組合一目了然，歡迎雙北飛鏢愛好者關注！">
+    <meta name="keywords" content="台北飛鏢比賽賽程,新北飛鏢比賽賽程,飛鏢聯賽賽程表,難找的聯賽賽程,雙北飛鏢,永和飛鏢比賽時間">
+    <link rel="canonical" href="https://yhdarts.com/pages/scheduleS6.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yhdarts.com/pages/scheduleS6.html">
+    <meta property="og:title" content="第六季賽程表 | 台北新北飛鏢比賽 - 難找的聯賽">
+    <meta property="og:description" content="查看台北新北地區飛鏢聯賽第六季完整賽程表，每週比賽時間、對戰組合一目了然！">
+    <meta property="og:image" content="https://yhdarts.com/images/season6.webp">
+    
+    <!-- GTM 已移至延遲載入腳本（body 底部） -->
+    
+    <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17514530743/PWRNCNSo5ZAbELePyp9B',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+    
+    <link rel="stylesheet" href="../styles/schedule.css">
+    
+    <!-- 移除有問題的廣告脚本，使用簡化版 -->
+    <script>
+        console.log('Ad script loaded');
+        // 簡化的廣告初始化脚本
+        window.adInitialized = true;
+    </script>
+    <!-- 明確指定只加載 s6 的數據 -->
+    <script>
+        const seasonOverride = 's6';
+        console.log('設置 seasonOverride =', seasonOverride);
+        
+        // 頁面加載完成後檢查篩選按鈕
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('scheduleS6.html 頁面加載完成，開始檢查篩選按鈕');
+            const teamButtons = document.querySelectorAll('.team-btn');
+            console.log('頁面載入時找到篩選按鈕數量:', teamButtons.length);
+            
+            // 記錄每個按鈕信息
+            if (teamButtons.length > 0) {
+                teamButtons.forEach((btn, idx) => {
+                    console.log(`載入時按鈕 ${idx}: ${btn.getAttribute('data-team')}, 文本="${btn.textContent}"`);
+                });
+            }
+        });
+    </script>
+    <style>
+        /* 移动端优化内联样式 */
+        @media screen and (max-width: 480px) {
+            .content-wrapper {
+                overflow-x: auto;
+                width: 100%;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+    <title>第六屆賽程 | 難找的聯賽</title>
+</head>
+<body>
+    <!-- 加入 banner 圖片 - WebP 格式 -->
+    <div class="banner">
+        <img src="images/season6.webp" alt="Banner" class="banner-image" loading="lazy">
+    </div>
+
+    <div class="container">
+        <!-- 加入進度條 -->
+        <div id="loadingBar" class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        
+        <!-- 搜尋區域 -->
+        <div class="search-section">
+            <div class="search-title">快速篩選隊伍(可複選)</div>
+                    <div class="team-filters">
+            <div class="filter-row">
+                <button class="team-btn" data-team="逃生入口A">逃生入口A</button>
+                <button class="team-btn" data-team="酒空組">酒空組</button>
+                <button class="team-btn" data-team="逃生入口C">逃生入口C</button>
+                <button class="team-btn" data-team="Jack">Jack</button>
+            </div>
+            <div class="filter-row">
+                <button class="team-btn" data-team="海盜揪硬">海盜揪硬</button>
+                <button class="team-btn" data-team="人生揪難">人生揪難</button>
+                <button class="team-btn" data-team="VIVI嘻嘻隊">VIVI嘻嘻隊</button>
+                <button class="team-btn" data-team="VIVI哈哈隊">VIVI哈哈隊</button>
+            </div>
+            <div class="filter-row">
+                <button class="team-btn" data-team="一鏢開天門">一鏢開天門</button>
+                <button class="team-btn" data-team="來都來了">來都來了</button>
+            </div>
+        </div>
+        </div>
+
+        <!-- 提示文字 -->
+        <div class="schedule-hint">提醒：點擊日期/場次可以查看先前比賽紀錄喔</div>
+
+        <!-- 使用包裝器确保表格可滚动 -->
+        <div class="content-wrapper">
+            <!-- 賽程表格 - 使用固定寬度的表格布局 -->
+            <table class="schedule-table" id="leagueTable">
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>客隊</th>
+                        <th>比分</th>
+                        <th>主隊</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 比賽資料將由 JavaScript 動態載入 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 引入配置和主腳本 -->
+    <script src="../config/config.js"></script>
+    <!-- 引入筛选功能专用脚本 (先加载) -->
+    <script src="../js/filter.js?v=1.1"></script>
+    <script src="../js/main.js"></script>
+    
+    <!-- 確保篩選功能初始化 -->
+    <script>
+        console.log('頁面腳本加載完成，準備初始化篩選功能');
+        // 延遲調用篩選函數初始化
+        setTimeout(function() {
+            console.log('延遲檢查篩選按鈕');
+            const teamButtons = document.querySelectorAll('.team-btn');
+            console.log('延遲後找到篩選按鈕數量:', teamButtons.length);
+            
+            if (typeof initializeFilters === 'function') {
+                console.log('找到initializeFilters函數，調用初始化');
+                initializeFilters();
+            } else {
+                console.error('未找到initializeFilters函數');
+            }
+        }, 1000);
+    </script>
+    
+    <!-- 延遲載入 GTM - 終極性能優化 -->
+    <script>
+    var gtmID = "AW-17514530743";
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        console.log("✅ GTM 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
+    </script>
+</body>
+</html>
+

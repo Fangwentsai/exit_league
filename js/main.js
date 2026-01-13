@@ -330,6 +330,14 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             loadScheduleData('scheduleS5');
         }, 500);
+    } else if (currentPath.includes('scheduleS6.html')) {
+        console.log('檢測到獨立的 scheduleS6.html 頁面，開始載入第六屆資料');
+        if (typeof seasonOverride === 'undefined') {
+            window.seasonOverride = 's6';
+        }
+        setTimeout(() => {
+            loadScheduleData('scheduleS6');
+        }, 500);
     }
 });
 
@@ -502,7 +510,7 @@ async function loadContent(page, anchor = null, pushState = true) {
             else if (page === 'rank' || page === 'rankS4' || page === 'rankS5') {
                 dataLoadPromise = loadRankData(page);
             }
-            else if (page === 'schedule' || page === 'scheduleS4' || page === 'scheduleS5') {
+            else if (page === 'schedule' || page === 'scheduleS4' || page === 'scheduleS5' || page === 'scheduleS6') {
                 dataLoadPromise = loadScheduleData(page);
             }
             else if (page === 'awards') {
@@ -1391,7 +1399,9 @@ async function loadScheduleData(page) {
     // 檢查是否有明確指定的賽季覆蓋設定
     if (typeof seasonOverride !== 'undefined' && seasonOverride) {
         debugLog('使用明確指定的賽季:', seasonOverride);
-        if (seasonOverride === 's5' || seasonOverride === 'SEASON5') {
+        if (seasonOverride === 's6' || seasonOverride === 'SEASON6') {
+            config = CONFIG.SEASON6;
+        } else if (seasonOverride === 's5' || seasonOverride === 'SEASON5') {
             config = CONFIG.SEASON5;
         } else if (seasonOverride === 's4' || seasonOverride === 'SEASON4') {
             config = CONFIG.SEASON4;
@@ -1400,7 +1410,9 @@ async function loadScheduleData(page) {
         }
     } else if (typeof window.seasonOverride !== 'undefined' && window.seasonOverride) {
         debugLog('使用 window.seasonOverride:', window.seasonOverride);
-        if (window.seasonOverride === 's5' || window.seasonOverride === 'SEASON5') {
+        if (window.seasonOverride === 's6' || window.seasonOverride === 'SEASON6') {
+            config = CONFIG.SEASON6;
+        } else if (window.seasonOverride === 's5' || window.seasonOverride === 'SEASON5') {
             config = CONFIG.SEASON5;
         } else if (window.seasonOverride === 's4' || window.seasonOverride === 'SEASON4') {
             config = CONFIG.SEASON4;
@@ -1409,7 +1421,10 @@ async function loadScheduleData(page) {
         }
     } else {
         // 根據頁面確定要使用的配置
-        if (page === 'scheduleS5') {
+        if (page === 'scheduleS6') {
+            debugLog('根據頁面名稱判斷為第六屆');
+            config = CONFIG.SEASON6;
+        } else if (page === 'scheduleS5') {
             debugLog('根據頁面名稱判斷為第五屆');
             config = CONFIG.SEASON5;
         } else if (page === 'scheduleS4') {
@@ -1421,7 +1436,10 @@ async function loadScheduleData(page) {
         } else {
             // 最後嘗試根據 URL 路徑判斷
             const currentPath = window.location.pathname;
-            if (currentPath.includes('scheduleS5') || currentPath.includes('schedule5')) {
+            if (currentPath.includes('scheduleS6') || currentPath.includes('schedule6')) {
+                debugLog('根據 URL 路徑判斷為第六屆');
+                config = CONFIG.SEASON6;
+            } else if (currentPath.includes('scheduleS5') || currentPath.includes('schedule5')) {
                 debugLog('根據 URL 路徑判斷為第五屆');
                 config = CONFIG.SEASON5;
             } else if (currentPath.includes('scheduleS4') || currentPath.includes('schedule4')) {
@@ -1469,7 +1487,9 @@ async function loadScheduleData(page) {
         
         // 使用統一的解析函數，並傳入正確的季度參數
         let currentSeason = 'SEASON3';
-        if (config === CONFIG.SEASON5) {
+        if (config === CONFIG.SEASON6) {
+            currentSeason = 'SEASON6';
+        } else if (config === CONFIG.SEASON5) {
             currentSeason = 'SEASON5';
         } else if (config === CONFIG.SEASON4) {
             currentSeason = 'SEASON4';
@@ -1487,7 +1507,9 @@ async function loadScheduleData(page) {
         const scheduleData = parseResults.map(match => {
             // 轉換日期格式 - 確保年份正確
             let fullDate = match.date;
-            if (currentSeason === 'SEASON5' && !match.date.includes('2025')) {
+            if (currentSeason === 'SEASON6' && !match.date.includes('2026')) {
+                fullDate = `2026/${match.date}`;
+            } else if (currentSeason === 'SEASON5' && !match.date.includes('2025')) {
                 fullDate = `2025/${match.date}`;
             } else if (currentSeason === 'SEASON4' && !match.date.includes('2025')) {
                 fullDate = `2025/${match.date}`;
@@ -1527,7 +1549,9 @@ async function loadScheduleData(page) {
             let gameResultPath = '';
             
             // 根據配置設定正確的路徑
-            if (config === CONFIG.SEASON5) {
+            if (config === CONFIG.SEASON6) {
+                gameResultPath = `game_result/season6/g${gameNumber}.html`;
+            } else if (config === CONFIG.SEASON5) {
                 gameResultPath = `game_result/season5/g${gameNumber}.html`;
             } else if (config === CONFIG.SEASON4) {
                 gameResultPath = `game_result/season4/g${gameNumber}.html`;
@@ -1909,6 +1933,7 @@ async function preloadResources(page = 'news') {
         'schedule': ['styles/schedule.css'],
         'scheduleS4': ['styles/schedule.css'],
         'scheduleS5': ['styles/schedule.css'],
+        'scheduleS6': ['styles/schedule.css'],
         'shops': ['styles/shops.css']
     };
 
@@ -1985,6 +2010,7 @@ function setupPreloadOnHover() {
                 'schedule': ['styles/schedule.css'],
                 'scheduleS4': ['styles/schedule.css'],
                 'scheduleS5': ['styles/schedule.css'],
+        'scheduleS6': ['styles/schedule.css'],
                 'shops': ['styles/shops.css']
             };
             
