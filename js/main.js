@@ -1565,12 +1565,25 @@ async function loadScheduleData(page) {
             }
 
             // 生成日期單元格的HTML，添加點擊事件
+            // 格式化顯示日期 (去掉年份，只顯示 M/D)
+            let displayDate = match.date;
+            if (match.date && match.date.includes('/')) {
+                const dateParts = match.date.split('/');
+                if (dateParts.length >= 3) {
+                    // 從 2026/06/02 轉換成 6/2
+                    displayDate = `${parseInt(dateParts[1])}/${parseInt(dateParts[2])}`;
+                } else if (dateParts.length === 2) {
+                    // 如果已經是 M/D 格式，去掉前導零
+                    displayDate = `${parseInt(dateParts[0])}/${parseInt(dateParts[1])}`;
+                }
+            }
+            
             let dateHtml = '';
             if (isPastMatch && hasScores) {
                 // 為過去的比賽添加可點擊的日期，顯示比賽結果
-                dateHtml = `<span class="clickable-date" data-game-url="${gameResultPath}">${match.date}</span>`;
+                dateHtml = `<span class="clickable-date" data-game-url="${gameResultPath}">${displayDate}</span>`;
             } else {
-                dateHtml = match.date;
+                dateHtml = displayDate;
             }
 
             // 準備比分單元格的內容 - C欄(客隊分數) - E欄(主隊分數)
