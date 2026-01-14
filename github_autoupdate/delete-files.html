@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刪除 GitHub 檔案</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #dc3545;
+            padding-bottom: 10px;
+        }
+        .file-list {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #dc3545;
+            border-radius: 5px;
+        }
+        .file-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #c82333;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-primary {
+            background: #007bff;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .config-display {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .config-item {
+            margin: 5px 0;
+        }
+        .config-label {
+            font-weight: bold;
+            color: #666;
+        }
+        .config-value {
+            color: #333;
+            word-break: break-all;
+        }
+        .masked {
+            color: #999;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pending {
+            background: #ffc107;
+            color: #856404;
+        }
+        .status-success {
+            background: #28a745;
+            color: white;
+        }
+        .status-error {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ 刪除 GitHub 檔案</h1>
+        
+        <div class="test-section">
+            <h2>📋 配置載入</h2>
+            <div style="margin-bottom: 15px;">
+                <label>
+                    <input type="radio" name="configSource" value="file" checked onchange="toggleConfigSource()">
+                    從檔案載入 (config.json)
+                </label>
+                <label style="margin-left: 20px;">
+                    <input type="radio" name="configSource" value="manual" onchange="toggleConfigSource()">
+                    手動輸入配置
+                </label>
+            </div>
+            
+            <div id="fileInputSection">
+                <input type="file" id="configFile" accept=".json" onchange="loadConfigFromFile(event)" style="margin-bottom: 10px;">
+                <div class="result info" style="display: none;" id="fileHint">
+                    💡 提示：選擇 github_autoupdate/config.json 檔案
+                </div>
+            </div>
+            
+            <div id="manualInputSection" style="display: none;">
+                <div style="margin-bottom: 10px;">
+                    <label>Google Apps Script URL:</label>
+                    <input type="text" id="manualScriptUrl" placeholder="https://script.google.com/..." style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <button onclick="loadConfigFromManual()">載入配置</button>
+            </div>
+            
+            <div class="config-display" id="configDisplay" style="margin-top: 20px;">
+                <div class="config-item">
+                    <span class="config-label">Google Apps Script URL:</span>
+                    <span class="config-value" id="scriptUrl">未載入</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="file-list">
+            <h2>📁 待刪除檔案列表</h2>
+            <div id="filesList">
+                <div class="file-item">
+                    <span>game_result/season6/g01.html</span>
+                    <span class="status status-pending" id="status-g01">待處理</span>
+                </div>
+                <div class="file-item">
+                    <span>game_result/season6/text.html</span>
+                    <span class="status status-pending" id="status-text">待處理</span>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn-primary" onclick="deleteAllFiles()">🗑️ 刪除所有檔案</button>
+                <button onclick="clearResults()">🗑️ 清除結果</button>
+            </div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let config = null;
+        const filesToDelete = [
+            'game_result/season6/g01.html',
+            'game_result/season6/text.html'
+        ];
+
+        // 切換配置來源
+        function toggleConfigSource() {
+            const source = document.querySelector('input[name="configSource"]:checked').value;
+            document.getElementById('fileInputSection').style.display = source === 'file' ? 'block' : 'none';
+            document.getElementById('manualInputSection').style.display = source === 'manual' ? 'block' : 'none';
+        }
+
+        // 從檔案載入配置
+        function loadConfigFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    config = JSON.parse(e.target.result);
+                    displayConfig(config);
+                    addResult('success', '✅ 配置檔案載入成功！');
+                } catch (error) {
+                    addResult('error', `❌ 解析配置檔案失敗: ${error.message}\n請確認 JSON 格式正確。`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 從手動輸入載入配置
+        function loadConfigFromManual() {
+            const scriptUrl = document.getElementById('manualScriptUrl').value.trim();
+            
+            if (!scriptUrl) {
+                addResult('error', '❌ 請填寫 Google Apps Script URL');
+                return;
+            }
+
+            config = {
+                googleAppsScript: {
+                    webAppUrl: scriptUrl
+                }
+            };
+
+            displayConfig(config);
+            addResult('success', '✅ 配置載入成功！');
+        }
+
+        // 顯示配置
+        function displayConfig(config) {
+            document.getElementById('scriptUrl').textContent = config.googleAppsScript?.webAppUrl || '未設置';
+        }
+
+        // 嘗試從 URL 載入配置（如果使用本地服務器）
+        async function tryLoadConfigFromUrl() {
+            try {
+                const response = await fetch('config.json');
+                if (response.ok) {
+                    config = await response.json();
+                    displayConfig(config);
+                    addResult('success', '✅ 從 URL 載入配置成功！');
+                    return true;
+                }
+            } catch (error) {
+                // 忽略錯誤，使用檔案輸入或手動輸入
+            }
+            return false;
+        }
+
+        // 刪除單個檔案
+        async function deleteFile(filePath) {
+            if (!config || !config.googleAppsScript?.webAppUrl) {
+                throw new Error('請先載入配置');
+            }
+
+            const scriptUrl = config.googleAppsScript.webAppUrl;
+            const fileName = filePath.split('/').pop();
+            const statusId = `status-${fileName.replace('.html', '')}`;
+            
+            // 更新狀態
+            updateStatus(statusId, 'pending', '處理中...');
+
+            try {
+                const requestData = {
+                    action: 'deleteFromGitHub',
+                    filePath: filePath,
+                    commitMessage: `Delete ${filePath}`
+                };
+
+                addResult('info', `🗑️ 開始刪除: ${filePath}`);
+
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const responseText = await response.text();
+                addResult('info', `📥 回應狀態: HTTP ${response.status}`);
+
+                if (response.ok) {
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (e) {
+                        // 如果解析失敗，檢查文字內容
+                        if (responseText.includes('success') || responseText.includes('成功')) {
+                            result = { status: 'success', message: '刪除成功' };
+                        } else {
+                            throw new Error('無法解析回應: ' + responseText.substring(0, 100));
+                        }
+                    }
+
+                    if (result.status === 'success') {
+                        updateStatus(statusId, 'success', '已刪除');
+                        addResult('success', `✅ 刪除成功: ${filePath}\n${result.commitUrl ? 'Commit: ' + result.commitUrl : ''}`);
+                        return { success: true, filePath };
+                    } else {
+                        throw new Error(result.message || '刪除失敗');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${responseText.substring(0, 200)}`);
+                }
+            } catch (error) {
+                updateStatus(statusId, 'error', '失敗');
+                addResult('error', `❌ 刪除失敗: ${filePath}\n錯誤: ${error.message}`);
+                return { success: false, filePath, error: error.message };
+            }
+        }
+
+        // 更新狀態顯示
+        function updateStatus(statusId, status, text) {
+            const statusEl = document.getElementById(statusId);
+            if (statusEl) {
+                statusEl.className = `status status-${status}`;
+                statusEl.textContent = text;
+            }
+        }
+
+        // 刪除所有檔案
+        async function deleteAllFiles() {
+            if (!config || !config.googleAppsScript?.webAppUrl) {
+                addResult('error', '❌ 請先載入配置');
+                return;
+            }
+
+            clearResults();
+            addResult('info', '🚀 開始刪除所有檔案...\n');
+
+            const results = [];
+            for (const filePath of filesToDelete) {
+                const result = await deleteFile(filePath);
+                results.push(result);
+                // 稍微延遲，避免 API 限制
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+
+            // 總結
+            const successCount = results.filter(r => r.success).length;
+            const failCount = results.filter(r => !r.success).length;
+            
+            addResult('info', `\n---\n📊 刪除完成：成功 ${successCount} 個，失敗 ${failCount} 個`);
+
+            if (failCount === 0) {
+                addResult('success', '✅ 所有檔案已成功刪除！');
+            } else {
+                addResult('error', '⚠️ 部分檔案刪除失敗，請檢查上方錯誤訊息');
+            }
+        }
+
+        function addResult(type, message) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            // 重置狀態
+            filesToDelete.forEach(filePath => {
+                const fileName = filePath.split('/').pop();
+                const statusId = `status-${fileName.replace('.html', '')}`;
+                updateStatus(statusId, 'pending', '待處理');
+            });
+        }
+
+        // 頁面載入時嘗試載入配置
+        window.addEventListener('DOMContentLoaded', async function() {
+            // 嘗試從 URL 載入（如果使用本地服務器）
+            const loaded = await tryLoadConfigFromUrl();
+            if (!loaded) {
+                document.getElementById('fileHint').style.display = 'block';
+                addResult('info', '💡 請選擇 config.json 檔案或手動輸入配置');
+            }
+        });
+    </script>
+</body>
+</html>

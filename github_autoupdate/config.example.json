@@ -1,0 +1,18 @@
+{
+  "github": {
+    "token": "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN",
+    "repoOwner": "Fangwentsai",
+    "repoName": "exit_league",
+    "branch": "main"
+  },
+  "googleAppsScript": {
+    "webAppUrl": "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+  },
+  "paths": {
+    "basePath": "game_result/season6",
+    "seasonMapping": {
+      "season5": "game_result/season5",
+      "season6": "game_result/season6"
+    }
+  }
+}

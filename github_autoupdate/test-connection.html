@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試 API 連線</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #dc3545;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .config-display {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .config-item {
+            margin: 5px 0;
+        }
+        .config-label {
+            font-weight: bold;
+            color: #666;
+        }
+        .config-value {
+            color: #333;
+            word-break: break-all;
+        }
+        .masked {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 API 連線測試</h1>
+        
+        <div class="test-section">
+            <h2>📋 配置載入</h2>
+            <div style="margin-bottom: 15px;">
+                <label>
+                    <input type="radio" name="configSource" value="file" checked onchange="toggleConfigSource()">
+                    從檔案載入 (config.json)
+                </label>
+                <label style="margin-left: 20px;">
+                    <input type="radio" name="configSource" value="manual" onchange="toggleConfigSource()">
+                    手動輸入配置
+                </label>
+            </div>
+            
+            <div id="fileInputSection">
+                <input type="file" id="configFile" accept=".json" onchange="loadConfigFromFile(event)" style="margin-bottom: 10px;">
+                <div class="result info" style="display: none;" id="fileHint">
+                    💡 提示：選擇 github_autoupdate/config.json 檔案
+                </div>
+            </div>
+            
+            <div id="manualInputSection" style="display: none;">
+                <div style="margin-bottom: 10px;">
+                    <label>GitHub Token:</label>
+                    <input type="text" id="manualToken" placeholder="ghp_..." style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label>GitHub Repo Owner:</label>
+                    <input type="text" id="manualRepoOwner" placeholder="Fangwentsai" style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label>GitHub Repo Name:</label>
+                    <input type="text" id="manualRepoName" placeholder="exit_league" style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label>GitHub Branch:</label>
+                    <input type="text" id="manualBranch" placeholder="main" style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label>Google Apps Script URL:</label>
+                    <input type="text" id="manualScriptUrl" placeholder="https://script.google.com/..." style="width: 100%; padding: 5px; margin-top: 5px;">
+                </div>
+                <button onclick="loadConfigFromManual()">載入配置</button>
+            </div>
+            
+            <div class="config-display" id="configDisplay" style="margin-top: 20px;">
+                <div class="config-item">
+                    <span class="config-label">GitHub Repo Owner:</span>
+                    <span class="config-value" id="repoOwner">未載入</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">GitHub Repo Name:</span>
+                    <span class="config-value" id="repoName">未載入</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">GitHub Branch:</span>
+                    <span class="config-value" id="branch">未載入</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">GitHub Token:</span>
+                    <span class="config-value masked" id="token">未載入</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Google Apps Script URL:</span>
+                    <span class="config-value" id="scriptUrl">未載入</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 測試選項</h2>
+            <button onclick="testGitHubConnection()">🔗 測試 GitHub API</button>
+            <button onclick="testGoogleAppsScript()">📝 測試 Google Apps Script</button>
+            <button onclick="testAll()">🚀 測試全部</button>
+            <button onclick="clearResults()">🗑️ 清除結果</button>
+            <span id="loading" style="display:none;"><span class="loading"></span> 測試進行中...</span>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let config = null;
+
+        // 切換配置來源
+        function toggleConfigSource() {
+            const source = document.querySelector('input[name="configSource"]:checked').value;
+            document.getElementById('fileInputSection').style.display = source === 'file' ? 'block' : 'none';
+            document.getElementById('manualInputSection').style.display = source === 'manual' ? 'block' : 'none';
+        }
+
+        // 從檔案載入配置
+        function loadConfigFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    config = JSON.parse(e.target.result);
+                    displayConfig(config);
+                    addResult('success', '✅ 配置檔案載入成功！');
+                } catch (error) {
+                    addResult('error', `❌ 解析配置檔案失敗: ${error.message}\n請確認 JSON 格式正確。`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 從手動輸入載入配置
+        function loadConfigFromManual() {
+            config = {
+                github: {
+                    token: document.getElementById('manualToken').value.trim(),
+                    repoOwner: document.getElementById('manualRepoOwner').value.trim(),
+                    repoName: document.getElementById('manualRepoName').value.trim(),
+                    branch: document.getElementById('manualBranch').value.trim() || 'main'
+                },
+                googleAppsScript: {
+                    webAppUrl: document.getElementById('manualScriptUrl').value.trim()
+                }
+            };
+
+            if (!config.github.token || !config.github.repoOwner || !config.github.repoName) {
+                addResult('error', '❌ 請填寫所有必填欄位（Token、Repo Owner、Repo Name）');
+                return;
+            }
+
+            displayConfig(config);
+            addResult('success', '✅ 配置載入成功！');
+        }
+
+        // 顯示配置
+        function displayConfig(config) {
+            document.getElementById('repoOwner').textContent = config.github.repoOwner || '未設置';
+            document.getElementById('repoName').textContent = config.github.repoName || '未設置';
+            document.getElementById('branch').textContent = config.github.branch || 'main';
+            document.getElementById('token').textContent = config.github.token 
+                ? config.github.token.substring(0, 10) + '...' + config.github.token.substring(config.github.token.length - 4)
+                : '未設置';
+            document.getElementById('scriptUrl').textContent = config.googleAppsScript.webAppUrl || '未設置';
+        }
+
+        // 嘗試從 URL 載入配置（如果使用本地服務器）
+        async function tryLoadConfigFromUrl() {
+            try {
+                const response = await fetch('config.json');
+                if (response.ok) {
+                    config = await response.json();
+                    displayConfig(config);
+                    addResult('success', '✅ 從 URL 載入配置成功！');
+                    return true;
+                }
+            } catch (error) {
+                // 忽略錯誤，使用檔案輸入或手動輸入
+            }
+            return false;
+        }
+
+        // 測試 GitHub API 連線
+        async function testGitHubConnection() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'inline';
+            
+            if (!config) {
+                config = await loadConfig();
+                if (!config) return;
+            }
+
+            addResult('info', '🔗 開始測試 GitHub API 連線...');
+
+            try {
+                const { token, repoOwner, repoName, branch } = config.github;
+
+                // 檢查配置
+                if (!token) {
+                    throw new Error('GitHub Token 未設置');
+                }
+                if (!repoOwner) {
+                    throw new Error('GitHub Repo Owner 未設置');
+                }
+                if (!repoName) {
+                    throw new Error('GitHub Repo Name 未設置');
+                }
+
+                addResult('info', `📋 配置檢查通過\n- Repo: ${repoOwner}/${repoName}\n- Branch: ${branch || 'main'}`);
+
+                // 測試 API 連線（讀取 Repository 資訊）
+                const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+                
+                addResult('info', `🌐 發送請求到: ${apiUrl}`);
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'User-Agent': 'Exit-League-Test'
+                    }
+                });
+
+                addResult('info', `📥 回應狀態: HTTP ${response.status} ${response.statusText}`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult('success', `✅ GitHub API 連線成功！\n\n` +
+                        `Repository: ${data.full_name}\n` +
+                        `描述: ${data.description || '無'}\n` +
+                        `預設分支: ${data.default_branch}\n` +
+                        `公開狀態: ${data.private ? '私有' : '公開'}\n` +
+                        `URL: ${data.html_url}`);
+                } else {
+                    const errorText = await response.text();
+                    let errorMessage = `❌ GitHub API 連線失敗\nHTTP ${response.status}: ${response.statusText}`;
+                    
+                    try {
+                        const errorData = JSON.parse(errorText);
+                        if (errorData.message) {
+                            errorMessage += `\n錯誤訊息: ${errorData.message}`;
+                        }
+                    } catch (e) {
+                        errorMessage += `\n回應內容: ${errorText.substring(0, 200)}`;
+                    }
+                    
+                    addResult('error', errorMessage);
+                }
+
+            } catch (error) {
+                addResult('error', `❌ GitHub API 測試失敗\n錯誤: ${error.message}\n\n可能原因：\n1. Token 無效或過期\n2. Token 權限不足\n3. Repository 名稱錯誤\n4. 網路連線問題`);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // 測試 Google Apps Script
+        async function testGoogleAppsScript() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'inline';
+
+            if (!config) {
+                config = await loadConfig();
+                if (!config) return;
+            }
+
+            addResult('info', '📝 開始測試 Google Apps Script 連線...');
+
+            try {
+                const scriptUrl = config.googleAppsScript.webAppUrl;
+
+                if (!scriptUrl) {
+                    throw new Error('Google Apps Script URL 未設置');
+                }
+
+                addResult('info', `🌐 發送測試請求到: ${scriptUrl}`);
+
+                // 發送 GET 請求測試（如果支援）
+                const response = await fetch(scriptUrl, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                addResult('info', `📥 回應狀態: HTTP ${response.status} ${response.statusText}`);
+
+                const responseText = await response.text();
+                
+                if (response.ok) {
+                    addResult('success', `✅ Google Apps Script 連線成功！\n\n回應內容: ${responseText.substring(0, 200)}`);
+                } else {
+                    addResult('error', `❌ Google Apps Script 連線失敗\nHTTP ${response.status}: ${response.statusText}\n\n回應內容: ${responseText.substring(0, 200)}`);
+                }
+
+            } catch (error) {
+                addResult('error', `❌ Google Apps Script 測試失敗\n錯誤: ${error.message}\n\n可能原因：\n1. URL 錯誤\n2. Web App 未正確部署\n3. 權限設定問題\n4. 網路連線問題\n5. CORS 問題`);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // 測試全部
+        async function testAll() {
+            clearResults();
+            addResult('info', '🚀 開始測試所有連線...\n');
+            
+            await testGitHubConnection();
+            addResult('info', '\n---\n');
+            await testGoogleAppsScript();
+            
+            addResult('info', '\n✅ 所有測試完成！');
+        }
+
+        function addResult(type, message) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // 頁面載入時嘗試載入配置
+        window.addEventListener('DOMContentLoaded', async function() {
+            // 嘗試從 URL 載入（如果使用本地服務器）
+            const loaded = await tryLoadConfigFromUrl();
+            if (!loaded) {
+                document.getElementById('fileHint').style.display = 'block';
+                addResult('info', '💡 請選擇 config.json 檔案或手動輸入配置');
+            }
+        });
+    </script>
+</body>
+</html>

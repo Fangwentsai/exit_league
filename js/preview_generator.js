@@ -30,6 +30,215 @@ class GameResultPreviewGenerator {
         };
     }
 
+    // 🎯 生成完整的 HTML 文件格式（用於保存到 Google Sheets）
+    generateFullHTML(adminData) {
+        const gameInfo = this.extractGameInfo(adminData);
+        const matchData = this.convertToMatchData(adminData);
+        const finalScores = this.calculateFinalScores(matchData, adminData.drinkingBonus || {});
+        const awayPlayers = this.extractPlayers(adminData, 'away');
+        const homePlayers = this.extractPlayers(adminData, 'home');
+        
+        // 生成 SEO 標籤
+        const gameCode = gameInfo.gameCode.toUpperCase();
+        const gameCodeLower = gameCode.toLowerCase();
+        const season = this.getSeasonFromGameCode(gameCode);
+        const title = `難找的聯賽 第五季 ${gameCode} 賽果：${gameInfo.awayTeam} vs. ${gameInfo.homeTeam}｜飛鏢聯賽戰報`;
+        const description = `查看 難找的聯賽 飛鏢05季 ${gameCode} 的詳細賽果。本場比賽由${gameInfo.awayTeam}對決${gameInfo.homeTeam}，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。`;
+        const keywords = `飛鏢聯賽, YHDARTS, 賽果, ${gameInfo.awayTeam}, ${gameInfo.homeTeam}, 飛鏢比賽, dart league, match result, phoenix darts, dartslive`;
+        
+        // 生成比賽數據的 JavaScript 對象（傳入 gameCode 確保變量名正確）
+        const matchesJS = this.generateMatchesJS(matchData, gameCodeLower);
+        const drinkingBonusJS = this.generateDrinkingBonusJS(adminData.drinkingBonus || {});
+        const playersJS = this.generatePlayersJS(awayPlayers, homePlayers);
+        
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${title}</title>
+    <meta name="description" content="${description}">
+    <meta name="keywords" content="${keywords}">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17514530743');
+    </script>
+  
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+  
+    <link rel="stylesheet" href="../../styles/common/game_result.css">
+</head>
+<body>
+    <div class="container">
+        <div class="match-info">
+            <h2 class="match-date">${gameInfo.date}</h2>
+            <div class="venue-info">${gameInfo.venue}</div>
+            <div class="match-result">
+                <div class="team away">
+                    <div class="team-name">${gameInfo.awayTeam}</div>
+                    <div class="team-score">${finalScores.away}</div>
+                </div>
+                <div class="score-divider">:</div>
+                <div class="team home">
+                    <div class="team-score">${finalScores.home}</div>
+                    <div class="team-name">${gameInfo.homeTeam}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-section" style="text-align: center; margin: 5px auto; max-width: 728px; width: 100%;">
+            <ins class="adsbygoogle"
+                 style="display:block;width:100%;max-width:728px;height:90px"
+                 data-ad-client="ca-pub-4455508862703492"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+       
+        <div class="score-details"><table class="score-table"></table></div>
+
+        <div class="games-container">
+            ${this.generateGameSections(matchData)}
+            ${this.generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers)}
+        </div>
+    </div>
+
+<script src="../../js/game_result.js"></script>
+<script>
+// ${gameCode} 比賽數據
+${matchesJS}
+
+// 飲酒加成
+${drinkingBonusJS}
+
+// 選手名單
+${playersJS}
+
+// 初始化
+addMatchData(${gameCodeLower}Matches);
+const scores = calculateFinalScore(${gameCodeLower}Matches, drinkingBonus);
+updateScoreDisplay(scores);
+initializeStats(awayPlayers, homePlayers);
+</script>
+    <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
+    <script>
+    // 設定 AdSense 和 GTM ID
+    var adsenseID = "ca-pub-4455508862703492";
+    var gtmID = "AW-17514530743";
+    
+    var googleScriptsLoaded = false;
+    
+    function loadGoogleScripts() {
+        if (googleScriptsLoaded) return;
+        googleScriptsLoaded = true;
+        
+        // 1. 載入 GTM / GA4
+        var scriptGTM = document.createElement('script');
+        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+        scriptGTM.async = true;
+        document.head.appendChild(scriptGTM);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gtmID);
+        
+        // 2. 載入 AdSense
+        var scriptAd = document.createElement('script');
+        scriptAd.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsenseID;
+        scriptAd.async = true;
+        scriptAd.crossOrigin = "anonymous";
+        document.head.appendChild(scriptAd);
+        
+        // 3. AdSense 設定
+        scriptAd.onload = function() {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: adsenseID,
+                enable_page_level_ads: true,
+                overlays: {bottom: false},
+                anchor_ads: {enabled: true},
+                vignette_ads: {enabled: false},
+                multiplex_ads: {enabled: false},
+                matched_content_ads: {enabled: false},
+                display_ads: {enabled: false}
+            });
+        };
+        
+        console.log("✅ Google Scripts 延遲載入完成！");
+    }
+    
+    // 觸發條件：使用者互動時載入
+    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
+    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
+    
+    // 保險機制：4 秒後自動載入
+    setTimeout(loadGoogleScripts, 4000);
+    </script>
+</body>
+</html>`;
+        
+        return html;
+    }
+    
+    // 📝 生成比賽數據的 JavaScript 對象
+    generateMatchesJS(matchData, gameCode = null) {
+        if (!matchData || matchData.length === 0) {
+            const code = gameCode || 'g00';
+            return `const ${code}Matches = [];`;
+        }
+        
+        const code = gameCode || matchData[0]?.gameCode || 'g00';
+        const matchesArray = matchData.map(match => {
+            // 處理 away 選手
+            let away;
+            if (Array.isArray(match.away)) {
+                away = `[${match.away.map(p => `'${p}'`).join(', ')}]`;
+            } else if (match.away) {
+                away = `'${match.away}'`;
+            } else {
+                away = `''`;
+            }
+            
+            // 處理 home 選手
+            let home;
+            if (Array.isArray(match.home)) {
+                home = `[${match.home.map(p => `'${p}'`).join(', ')}]`;
+            } else if (match.home) {
+                home = `'${match.home}'`;
+            } else {
+                home = `''`;
+            }
+            
+            return `    {set: ${match.set}, type: '${match.type}', away: ${away}, home: ${home}, firstAttack: '${match.firstAttack || ''}', winner: '${match.winner || ''}'}`;
+        });
+        
+        return `const ${code}Matches = [\n${matchesArray.join(',\n')}\n];`;
+    }
+    
+    // 🍺 生成飲酒加成的 JavaScript 對象
+    generateDrinkingBonusJS(drinkingBonus) {
+        return `const drinkingBonus = { away: ${drinkingBonus.away || 0}, home: ${drinkingBonus.home || 0} };`;
+    }
+    
+    // 👥 生成選手名單的 JavaScript 對象
+    generatePlayersJS(awayPlayers, homePlayers) {
+        const awayPlayersStr = awayPlayers.map(p => `'${p}'`).join(', ');
+        const homePlayersStr = homePlayers.map(p => `'${p}'`).join(', ');
+        return `const awayPlayers = [${awayPlayersStr}];\nconst homePlayers = [${homePlayersStr}];`;
+    }
+    
+    // 📅 從比賽代碼獲取賽季
+    getSeasonFromGameCode(gameCode) {
+        // 這裡可以根據實際需求調整
+        return '第五季';
+    }
+
     // 🎯 主要功能：生成完整的預覽HTML
     generatePreviewHTML(adminData) {
         const gameInfo = this.extractGameInfo(adminData);
@@ -219,6 +428,7 @@ class GameResultPreviewGenerator {
     // 🔄 轉換 admin 數據為 match 格式
     convertToMatchData(adminData) {
         const matches = [];
+        const gameCode = adminData.gameId || 'g00';
         
         // 從 adminData.sets 陣列中取得每個SET的資料
         for (let i = 1; i <= 16; i++) {
@@ -228,13 +438,18 @@ class GameResultPreviewGenerator {
                 const awayPlayers = setData.awayPlayers || [];
                 const homePlayers = setData.homePlayers || [];
                 
+                // 如果只有一個選手，直接返回字串；多個選手返回陣列
+                const awayValue = awayPlayers.length === 0 ? '' : (awayPlayers.length === 1 ? awayPlayers[0] : awayPlayers);
+                const homeValue = homePlayers.length === 0 ? '' : (homePlayers.length === 1 ? homePlayers[0] : homePlayers);
+                
                 matches.push({
                     set: i,
                     type: this.getSetType(i),
-                    away: awayPlayers.length > 0 ? awayPlayers : '',
-                    home: homePlayers.length > 0 ? homePlayers : '',
+                    away: awayValue,
+                    home: homeValue,
                     firstAttack: setData.firstAttack || null,
-                    winner: setData.winner || null
+                    winner: setData.winner || null,
+                    gameCode: gameCode
                 });
             } else {
                 // 沒有資料時設為空
@@ -244,7 +459,8 @@ class GameResultPreviewGenerator {
                     away: '',
                     home: '',
                     firstAttack: null,
-                    winner: null
+                    winner: null,
+                    gameCode: gameCode
                 });
             }
         }

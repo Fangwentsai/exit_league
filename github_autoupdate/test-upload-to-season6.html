@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試上傳到 Season6</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #dc3545;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 測試上傳到 Season6</h1>
+        
+        <div class="test-section">
+            <h2>📋 測試配置</h2>
+            <div id="fileInputSection">
+                <label>選擇 config.json 檔案：</label>
+                <input type="file" id="configFile" accept=".json" onchange="loadConfig(event)">
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <label>測試比賽 ID（例如：g90）：</label>
+                <input type="text" id="testGameId" value="test-g90" placeholder="test-g90">
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🚀 測試操作</h2>
+            <p style="margin-bottom: 15px; color: #666;">
+                💡 <strong>測試流程說明：</strong><br>
+                1. 前端生成 HTML 並發送到 Google Apps Script<br>
+                2. Google Apps Script 自動保存到 Google Sheets<br>
+                3. Google Apps Script 自動上傳到 GitHub (game_result/season6/)
+            </p>
+            <button onclick="testFullUpload()">📤 測試完整上傳流程</button>
+            <button onclick="clearResults()">🗑️ 清除結果</button>
+            <span id="loading" style="display:none;"><span class="loading"></span> 測試進行中...</span>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <!-- 載入 preview_generator.js -->
+    <script src="../js/preview_generator.js"></script>
+    
+    <script>
+        let config = null;
+
+        // 載入配置
+        function loadConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    config = JSON.parse(e.target.result);
+                    addResult('success', '✅ 配置檔案載入成功！');
+                } catch (error) {
+                    addResult('error', `❌ 解析配置檔案失敗: ${error.message}`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 測試完整上傳流程
+        async function testFullUpload() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'inline';
+
+            if (!config) {
+                addResult('error', '❌ 請先載入 config.json 檔案');
+                loading.style.display = 'none';
+                return;
+            }
+
+            const gameId = document.getElementById('testGameId').value.trim() || 'test-g90';
+            
+            try {
+                addResult('info', '🚀 開始測試完整上傳流程...\n');
+                addResult('info', `📋 測試比賽 ID: ${gameId}\n`);
+
+                // 步驟 1: 生成測試 HTML（使用 g89 的格式）
+                addResult('info', '📝 步驟 1: 生成測試 HTML...');
+                
+                if (typeof GameResultPreviewGenerator === 'undefined') {
+                    throw new Error('GameResultPreviewGenerator 未載入，請確認 js/preview_generator.js 已正確載入');
+                }
+
+                // 使用 g89 的實際數據作為測試
+                const testAdminData = {
+                    gameId: gameId,
+                    gameDate: new Date().toLocaleDateString('zh-TW').replace(/\//g, '/'),
+                    awayTeam: '海盜揪硬',
+                    homeTeam: '逃生入口A',
+                    sets: [
+                        {setNumber: 1, setType: '501 (OI/MO)', awayPlayers: ['旭容'], homePlayers: ['Ace'], firstAttack: 'away', winner: 'away'},
+                        {setNumber: 2, setType: '501 (DI/DO)', awayPlayers: ['君君'], homePlayers: ['小倫'], firstAttack: 'away', winner: 'away'},
+                        {setNumber: 3, setType: '701 (OI/MO)', awayPlayers: ['阿民'], homePlayers: ['禹辰'], firstAttack: 'home', winner: 'home'},
+                        {setNumber: 4, setType: '701 (OI/MO, 25/50)', awayPlayers: ['捲毛'], homePlayers: ['華華'], firstAttack: 'away', winner: 'away'},
+                        {setNumber: 5, setType: '三人賽 701', awayPlayers: ['君君','阿民','嘉宸'], homePlayers: ['華華','小倫','Ace'], firstAttack: 'home', winner: 'home'},
+                        {setNumber: 6, setType: 'Cricket', awayPlayers: ['旭容'], homePlayers: ['禹辰'], firstAttack: 'away', winner: 'home'},
+                        {setNumber: 7, setType: 'Cricket', awayPlayers: ['嘉宸'], homePlayers: ['Ace'], firstAttack: 'home', winner: 'away'},
+                        {setNumber: 8, setType: 'HALF-IT', awayPlayers: ['君君'], homePlayers: ['華華'], firstAttack: 'home', winner: 'home'},
+                        {setNumber: 9, setType: 'HALF-IT', awayPlayers: ['海盜小宇'], homePlayers: ['小倫'], firstAttack: 'away', winner: 'home'},
+                        {setNumber: 10, setType: '三人賽 Cricket', awayPlayers: ['君君','嘉宸','海盜小宇'], homePlayers: ['華華','小倫','孟瑄'], firstAttack: 'home', winner: 'away'},
+                        {setNumber: 11, setType: '701 雙人賽', awayPlayers: ['阿民','旭容'], homePlayers: ['孟瑄','Ace'], firstAttack: 'away', winner: 'home'},
+                        {setNumber: 12, setType: '701 雙人賽 FREEZE', awayPlayers: ['嘉宸','海盜小宇'], homePlayers: ['華華','禹辰'], firstAttack: 'home', winner: 'away'},
+                        {setNumber: 13, setType: 'Cricket 雙人賽', awayPlayers: ['海盜小宇','阿民'], homePlayers: ['孟瑄','禹辰'], firstAttack: 'home', winner: 'home'},
+                        {setNumber: 14, setType: 'Team Cricket', awayPlayers: ['捲毛','君君'], homePlayers: ['華華','小倫'], firstAttack: 'away', winner: 'away'},
+                        {setNumber: 15, setType: '四人賽 1101', awayPlayers: ['君君','海盜小宇','嘉宸','阿民'], homePlayers: ['華華','小倫','孟瑄','Ace'], firstAttack: 'away', winner: 'home'},
+                        {setNumber: 16, setType: '四人賽 Cricket', awayPlayers: ['捲毛','旭容','海盜小宇','嘉宸'], homePlayers: ['華華','小倫','孟瑄','禹辰'], firstAttack: 'away', winner: 'home'}
+                    ],
+                    drinkingBonus: { away: 0, home: 5 }
+                };
+
+                const previewGenerator = new GameResultPreviewGenerator();
+                const htmlContent = previewGenerator.generateFullHTML(testAdminData);
+                
+                addResult('success', `✅ HTML 生成成功！\n長度: ${htmlContent.length} 字元\n行數: ${htmlContent.split('\n').length} 行\n`);
+
+                // 步驟 2: 準備發送到 Google Apps Script 的資料
+                addResult('info', '📤 步驟 2: 準備發送資料到 Google Apps Script...');
+                
+                const now = new Date();
+                const gmt8Time = new Date(now.getTime() + (8 * 60 * 60 * 1000)).toISOString();
+                const formattedTime = gmt8Time.replace('T', ' ').replace(/\.\d{3}Z$/, '').replace(/:/g, '-');
+                
+                const sheetsData = {
+                    gameId: gameId,
+                    homeTeam: testAdminData.homeTeam,
+                    awayTeam: testAdminData.awayTeam,
+                    htmlContent: htmlContent,
+                    htmlSheetName: `${gameId}.html`,
+                    playerStats: { away: [], home: [] },
+                    timestamp: formattedTime
+                };
+
+                addResult('info', `📋 資料準備完成：\n- 比賽ID: ${gameId}\n- 主隊: ${testAdminData.homeTeam}\n- 客隊: ${testAdminData.awayTeam}\n- HTML工作表名稱: ${sheetsData.htmlSheetName}\n`);
+
+                // 步驟 3: 發送到 Google Apps Script
+                addResult('info', `🚀 步驟 3: 發送請求到 Google Apps Script...\nURL: ${config.googleAppsScript.webAppUrl}\n`);
+                addResult('info', `📝 Google Apps Script 會自動處理：\n1. 保存 HTML 到 Google Sheets\n2. 自動上傳到 GitHub (game_result/season6/)\n`);
+
+                const response = await fetch(config.googleAppsScript.webAppUrl, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                    body: JSON.stringify(sheetsData)
+                });
+
+                addResult('info', `📥 收到回應：HTTP ${response.status} ${response.statusText}\n`);
+
+                if (response.ok) {
+                    const resultText = await response.text();
+                    
+                    try {
+                        const result = JSON.parse(resultText);
+                        
+                        if (result.status === 'success') {
+                            addResult('success', `✅ Google Sheets 保存成功！\n\n` +
+                                `📋 工作表名稱: ${result.htmlSheetName || sheetsData.htmlSheetName}\n` +
+                                `🔗 工作表URL: ${result.htmlSheetUrl || 'N/A'}\n` +
+                                `⏰ 時間戳記: ${result.timestamp || formattedTime}\n`);
+
+                            // 檢查 GitHub 上傳結果（由 Google Apps Script 自動處理）
+                            if (result.githubUpload) {
+                                if (result.githubUpload.success) {
+                                    addResult('success', `\n✅ GitHub 自動上傳成功！\n\n` +
+                                        `📁 文件路徑: ${result.githubUpload.filePath}\n` +
+                                        `🔗 文件URL: ${result.githubUpload.fileUrl || 'N/A'}\n` +
+                                        `📝 Commit URL: ${result.githubUpload.commitUrl || 'N/A'}\n\n` +
+                                        `🎉 完整流程測試成功！\n` +
+                                        `✅ Google Sheets 已保存\n` +
+                                        `✅ GitHub 已自動上傳到 season6 目錄\n` +
+                                        `📂 文件位置: game_result/season6/${gameId}.html`);
+                                } else {
+                                    addResult('error', `\n⚠️ GitHub 自動上傳失敗：\n${result.githubUpload.error || '未知錯誤'}\n\n可能原因：\n1. Google Apps Script 未設置 GitHub Token\n2. GitHub Token 無效或權限不足\n3. Repository 配置錯誤\n\n但 Google Sheets 保存成功。`);
+                                }
+                            } else {
+                                addResult('warning', `\n⚠️ 未返回 GitHub 上傳結果\n\n可能原因：\n1. Google Apps Script 未設置 GitHub 配置\n2. GitHub 上傳功能未啟用\n\n請檢查 Google Apps Script 的 Script Properties 是否已設置：\n- GITHUB_TOKEN\n- GITHUB_REPO_OWNER\n- GITHUB_REPO_NAME\n- GITHUB_BRANCH`);
+                            }
+                        } else {
+                            throw new Error(result.message || '保存失敗');
+                        }
+                    } catch (parseError) {
+                        addResult('error', `❌ 解析回應失敗：${parseError.message}\n回應內容: ${resultText.substring(0, 500)}`);
+                    }
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}\n${errorText.substring(0, 500)}`);
+                }
+
+            } catch (error) {
+                addResult('error', `❌ 測試失敗！\n\n錯誤訊息: ${error.message}\n\n錯誤堆疊: ${error.stack || 'N/A'}`);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function addResult(type, message) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
