@@ -498,6 +498,16 @@ tr:has(.highlight-team) {
         border-width: 1px;
         margin: 3px 2px;
     }
+    
+    /* Tonight29 系列隊名在手機版需要更大寬度 */
+    .team-btn[data-team*="Tonight29"] {
+        max-width: 140px;
+        padding: 8px 6px;
+        font-size: 0.75em;
+        text-align: center;
+        word-break: keep-all;
+        white-space: nowrap;
+    }
 
     .team-btn.selected {
         transform: none;
@@ -659,6 +669,16 @@ tr:has(.highlight-team) {
         max-width: 85px;
     }
     
+    /* Tonight29 系列隊名在小手機需要調整 */
+    .team-btn[data-team*="Tonight29"] {
+        max-width: 110px;
+        padding: 5px 4px;
+        font-size: 0.7em;
+        text-align: center;
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+    
     .schedule-table th:nth-child(3),
     .schedule-table td:nth-child(3) {
         width: 22%;
@@ -736,6 +756,16 @@ tr:has(.highlight-team) {
         margin: 2px;
     }
     
+    /* Tonight29 系列隊名在超小手機需要調整 */
+    .team-btn[data-team*="Tonight29"] {
+        max-width: 100px;
+        padding: 4px 3px;
+        font-size: 0.65em;
+        text-align: center;
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+    
     .filter-row {
         gap: 3px;
     }
@@ -807,6 +837,16 @@ tr:has(.highlight-team) {
         font-size: 0.78em;
         min-width: 62px;
         max-width: 88px;
+    }
+    
+    /* Tonight29 系列隊名需要調整 */
+    .team-btn[data-team*="Tonight29"] {
+        max-width: 115px;
+        padding: 5px 5px;
+        font-size: 0.72em;
+        text-align: center;
+        word-break: keep-all;
+        white-space: nowrap;
     }
     
     .schedule-table td:nth-child(2),
