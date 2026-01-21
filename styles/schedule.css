@@ -76,17 +76,17 @@ body {
 
 .filter-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
 }
 
 .filter-row .team-btn {
-    flex: 1 1 calc(25% - 7.5px);
+    flex: 0 0 calc(25% - 6px);
     min-width: 0;
-    max-width: none;
+    max-width: calc(25% - 6px);
 }
 
 /* 隊伍按鈕基本樣式 */
@@ -501,25 +501,27 @@ tr:has(.highlight-team) {
         font-weight: bold;
     }
 
+    .filter-row {
+        gap: 4px;
+    }
+    
     .team-btn {
-        padding: 8px 6px;
-        font-size: 0.75em;
+        padding: 8px 2px;
+        font-size: 0.7em;
         min-width: 0;
-        max-width: none;
         border-width: 1px;
-        margin: 3px 2px;
-        flex: 1 1 calc(25% - 8px);
+        margin: 0;
+        flex: 0 0 calc(25% - 3px);
+        max-width: calc(25% - 3px);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         box-sizing: border-box;
     }
     
-    /* Tonight29 系列隊名在手機版統一大小，只調整字體不改變寬度 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.68em;
-        letter-spacing: -0.3px;
-        padding: 8px 4px;
+        font-size: 0.62em;
+        letter-spacing: -0.5px;
     }
 
     .team-btn.selected {
@@ -528,10 +530,10 @@ tr:has(.highlight-team) {
     }
 
     .filter-row {
-        flex-wrap: wrap;
-        gap: 5px;
+        flex-wrap: nowrap;
+        gap: 4px;
         margin-bottom: 5px;
-        justify-content: center;
+        justify-content: flex-start;
     }
     
     .search-title {
@@ -675,12 +677,16 @@ tr:has(.highlight-team) {
         top: -1px;
     }
     
+    .filter-row {
+        gap: 3px;
+    }
+    
     .team-btn {
-        padding: 5px 4px;
-        font-size: 0.7em;
+        padding: 5px 1px;
+        font-size: 0.65em;
         min-width: 0;
-        max-width: none;
-        flex: 1 1 calc(25% - 8px);
+        flex: 0 0 calc(25% - 2.25px);
+        max-width: calc(25% - 2.25px);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -688,8 +694,8 @@ tr:has(.highlight-team) {
     }
     
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.65em;
-        letter-spacing: -0.3px;
+        font-size: 0.58em;
+        letter-spacing: -0.5px;
     }
     
     /* Tonight29 系列隊名在小手機統一大小，只調整字體 */
@@ -767,24 +773,26 @@ tr:has(.highlight-team) {
         margin: 10px 0;
     }
     
+    .filter-row {
+        gap: 2px;
+    }
+    
     .team-btn {
-        padding: 4px 3px;
-        font-size: 0.65em;
+        padding: 4px 1px;
+        font-size: 0.6em;
         min-width: 0;
-        max-width: none;
-        margin: 2px;
-        flex: 1 1 calc(25% - 8px);
+        margin: 0;
+        flex: 0 0 calc(25% - 1.5px);
+        max-width: calc(25% - 1.5px);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         box-sizing: border-box;
     }
     
-    /* Tonight29 系列隊名在超小手機統一大小，只調整字體 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.6em;
-        letter-spacing: -0.3px;
-        padding: 4px 2px;
+        font-size: 0.54em;
+        letter-spacing: -0.5px;
     }
     
     .filter-row {
@@ -853,23 +861,25 @@ tr:has(.highlight-team) {
         font-size: 1.02em;
     }
     
+    .filter-row {
+        gap: 4px;
+    }
+    
     .team-btn {
-        padding: 5px 6px;
-        font-size: 0.73em;
+        padding: 5px 2px;
+        font-size: 0.68em;
         min-width: 0;
-        max-width: none;
-        flex: 1 1 calc(25% - 8px);
+        flex: 0 0 calc(25% - 3px);
+        max-width: calc(25% - 3px);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         box-sizing: border-box;
     }
     
-    /* Tonight29 系列隊名統一大小，只調整字體 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.66em;
-        letter-spacing: -0.3px;
-        padding: 5px 4px;
+        font-size: 0.61em;
+        letter-spacing: -0.5px;
     }
     
     .schedule-table td:nth-child(2),
