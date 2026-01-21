@@ -90,9 +90,13 @@ if (!CONFIG[currentSeason]) {
             // - SEASON5/SEASON6 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
             // 為避免任何偵測誤差，除了看 currentSeason，也直接根據檔名判斷是否為 S5/S6 頁面
             const isS5OrS6 = (currentSeason === 'SEASON5' || currentSeason === 'SEASON6') || /rankS[56]|ranks[56]|\bs[56]\b/i.test(fileName);
-            const range = isS5OrS6 ? 'schedule!O:V' : 'schedule!K:Q';
+            // 檢查是否有獨立的排名工作表（如 rank 或 rankings），否則使用 schedule
+            let sheetName = 'schedule';
+            const range = isS5OrS6 ? `${sheetName}!O:V` : `${sheetName}!K:Q`;
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
+            console.log("當前賽季:", currentSeason);
+            console.log("是否為 S5/S6:", isS5OrS6);
             console.log("正在請求 URL:", url);
             
             const response = await fetch(url);
@@ -141,10 +145,20 @@ if (!CONFIG[currentSeason]) {
                 })
                 // 過濾出真正的排名列，避免把賽程行混入
                 .filter(item => {
-                    if (isS5OrS6) {
-                        return item.team && !isNaN(item.total) && item.total > 0;
+                    if (!item.team) return false; // 必須有隊名
+                    
+                    // 排除賽程相關的行（包含日期、比賽場次等關鍵字）
+                    const teamLower = item.team.toLowerCase();
+                    const excludeKeywords = ['日期', '遊戲編號', '客場', '主場', '比賽地點', 'g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9'];
+                    if (excludeKeywords.some(keyword => teamLower.includes(keyword))) {
+                        return false;
                     }
-                    return item.team && !isNaN(item.total);
+                    
+                    // 必須有有效的總分
+                    if (isS5OrS6) {
+                        return !isNaN(item.total) && item.total >= 0;
+                    }
+                    return !isNaN(item.total);
                 });
 
             // 依總分排序（降序）
