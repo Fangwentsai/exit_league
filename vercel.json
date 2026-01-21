@@ -1,9 +1,5 @@
 {
-  "version": 2,
-  "name": "exit-league-dev",
-  "github": {
-    "silent": true
-  }
+  "version": 2
 }
 
 

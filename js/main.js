@@ -512,7 +512,7 @@ async function loadContent(page, anchor = null, pushState = true) {
             else if (page === 'rule') {
                 dataLoadPromise = loadRuleData();
             }
-            else if (page === 'rank' || page === 'rankS4' || page === 'rankS5') {
+            else if (page === 'rank' || page === 'rankS4' || page === 'rankS5' || page === 'rankS6') {
                 dataLoadPromise = loadRankData(page);
             }
             else if (page === 'schedule' || page === 'scheduleS4' || page === 'scheduleS5' || page === 'scheduleS6') {
@@ -1113,21 +1113,21 @@ function updateNewsContent(lastMatch, nextMatch) {
 
 // 【修改 main.js (大檔案) 裡的這個函式】
 async function loadRankData(page) {
-        try {
-            // 這裡的 'page' 變數來自 loadContent (例如 'rankS5')
-            const currentSeason = page === 'rankS5' ? 'SEASON5' : (page === 'rankS4' ? 'SEASON4' : 'SEASON3');
-            const config = CONFIG[currentSeason];
-            if (!config) throw new Error('找不到配置');
-    
-            // === 【這就是我們新增的 S5 判斷邏輯】 ===
-            // 根據 'page' 變數來判斷
-            const isS5 = (currentSeason === 'SEASON5'); 
-            const rankRange = isS5 ? 'schedule!O:V' : 'schedule!K:Q';
-            const rankUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${rankRange}?key=${config.API_KEY}`;
-            
-            console.log('判斷為 S5:', isS5);
+        try {
+            // 這裡的 'page' 變數來自 loadContent (例如 'rankS5', 'rankS6')
+        const currentSeason = page === 'rankS6' ? 'SEASON6' : (page === 'rankS5' ? 'SEASON5' : (page === 'rankS4' ? 'SEASON4' : 'SEASON3'));
+        const config = CONFIG[currentSeason];
+        if (!config) throw new Error('找不到配置');
+
+            // === 【判斷使用哪種排名範圍】 ===
+            // S5 和 S6 使用 O:V，其他使用 K:Q
+        const isS5OrS6 = (currentSeason === 'SEASON5' || currentSeason === 'SEASON6'); 
+        const rankRange = isS5OrS6 ? 'schedule!O:V' : 'schedule!K:Q';
+        const rankUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${rankRange}?key=${config.API_KEY}`;
+        
+            console.log('判斷為 S5 或 S6:', isS5OrS6, '當前賽季:', currentSeason);
             // console.log('正在請求團隊排名 URL:', rankUrl); // 已註釋：隱藏敏感資訊
-            // ==========================================
+        // ==========================================
     
             // 載入團隊排名 (【修改這裡】使用我們剛建立的 rankUrl 變數)
             const rankResponse = await fetch(rankUrl); 
@@ -1138,8 +1138,8 @@ async function loadRankData(page) {
                 throw new Error('No data found in sheet');
             }
     
-            // 【修改這裡】把 isS5 傳遞下去，讓 updateTeamRankings 知道如何解析
-            updateTeamRankings(rankData.values.slice(1), isS5);
+        // 【修改這裡】把 isS5OrS6 傳遞下去，讓 updateTeamRankings 知道如何解析
+        updateTeamRankings(rankData.values.slice(1), isS5OrS6);
     
             // 載入個人排名
             const personalResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A:I?key=${config.API_KEY}`);
@@ -1338,14 +1338,14 @@ function initializePersonalRankings(rankings) {
 
 // 【修改 main.js (大檔案) 裡的這個函式】
 
-function updateTeamRankings(data, isS5 = false) {
+function updateTeamRankings(data, isS5OrS6 = false) {
     const tableBody = document.getElementById('rankTableBody');
     if (!tableBody) return;
 
     const rankings = data.map(row => {
-        // S5 判斷
-        if (isS5) {
-            // S5: O:V (O排名, P隊名, Q勝, R敗, S和, T積分, U飲酒, V總分)
+        // S5/S6 判斷
+        if (isS5OrS6) {
+            // S5/S6: O:V (O排名, P隊名, Q勝, R敗, S和, T積分, U飲酒, V總分)
             const team = row[1] || ''; // P 隊名
             const total = parseFloat(row[7] || 0); // V 總分
             return {
@@ -1948,6 +1948,7 @@ async function preloadResources(page = 'news') {
         'rank': ['styles/rank.css'],
         'rankS4': ['styles/rank.css'],
         'rankS5': ['styles/rank.css'],
+        'rankS6': ['styles/rank.css'],
         'schedule': ['styles/schedule.css'],
         'scheduleS4': ['styles/schedule.css'],
         'scheduleS5': ['styles/schedule.css'],
@@ -2025,6 +2026,7 @@ function setupPreloadOnHover() {
                 'rank': ['styles/rank.css'],
                 'rankS4': ['styles/rank.css'],
                 'rankS5': ['styles/rank.css'],
+                'rankS6': ['styles/rank.css'],
                 'schedule': ['styles/schedule.css'],
                 'scheduleS4': ['styles/schedule.css'],
                 'scheduleS5': ['styles/schedule.css'],
