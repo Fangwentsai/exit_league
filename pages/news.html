@@ -8,15 +8,15 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>台北新北飛鏢比賽新聞 | 難找的聯賽 - 雙北飛鏢聯賽戰報</title>
-    <meta name="description" content="追蹤台北新北地區規模最大的跨機台飛鏢聯賽「難找的聯賽」第五季最新動態。提供最完整的官方排行榜、賽程表及每週賽事新聞，雙北飛鏢愛好者必看！">
-    <meta name="keywords" content="台北飛鏢比賽,新北飛鏢比賽,台北飛鏢新聞,新北飛鏢新聞,雙北飛鏢,飛鏢新聞,飛鏢排行榜,比賽結果,飛鏢成績,難找的聯賽,永和飛鏢,飛鏢統計,比賽戰況,聯賽排名,飛鏢聯賽新聞">
+    <meta name="description" content="追蹤台北新北地區規模最大的跨機台飛鏢聯賽「難找的聯賽」第六屆最新動態。提供最完整的官方排行榜、賽程表及每週賽事新聞，1/2開打，雙北飛鏢愛好者必看！">
+    <meta name="keywords" content="台北飛鏢比賽,新北飛鏢比賽,台北飛鏢新聞,新北飛鏢新聞,雙北飛鏢,飛鏢新聞,飛鏢排行榜,比賽結果,飛鏢成績,難找的聯賽,永和飛鏢,飛鏢統計,比賽戰況,聯賽排名,飛鏢聯賽新聞,第六屆飛鏢聯賽">
     <link rel="canonical" href="https://yhdarts.com/pages/news.html">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yhdarts.com/pages/news.html">
     <meta property="og:title" content="台北新北飛鏢比賽新聞 | 難找的聯賽 - 雙北飛鏢聯賽">
-    <meta property="og:description" content="追蹤台北新北地區規模最大的跨機台飛鏢聯賽第五季最新動態。最完整的官方排行榜、賽程表及每週賽事新聞。">
+    <meta property="og:description" content="追蹤台北新北地區規模最大的跨機台飛鏢聯賽第六屆最新動態。1/2開打，最完整的官方排行榜、賽程表及每週賽事新聞。">
     <meta property="og:image" content="https://yhdarts.com/images/season5.webp">
     <meta property="og:locale" content="zh_TW">
     
@@ -24,7 +24,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://yhdarts.com/pages/news.html">
     <meta name="twitter:title" content="台北新北飛鏢比賽新聞 | 難找的聯賽">
-    <meta name="twitter:description" content="追蹤雙北地區規模最大的跨機台飛鏢聯賽第五季最新動態。">
+    <meta name="twitter:description" content="追蹤雙北地區規模最大的跨機台飛鏢聯賽第六屆最新動態。1/2開打。">
     <meta name="twitter:image" content="https://yhdarts.com/images/season5.webp">
     
     <!-- 預載入關鍵資源以改善 LCP -->
@@ -742,8 +742,7 @@
         </div>
         
         <!-- 第五季成績公告 Banner (CSS 版本，避免圖片失真) - 暫時隱藏 -->
-        <!--
-        <button class="reward-banner" onclick="window.openRewardModal();">
+        <button class="reward-banner" onclick="window.openRewardModal();" style="display: none !important;">
             <div class="deco-glow"></div>
             <div class="deco-glow-right"></div>
             <div class="icon-trophy-left">🎖️</div>
@@ -753,7 +752,6 @@
             </div>
             <div class="icon-trophy">🏆</div>
         </button>
-        -->
         
         <!-- 季後賽 Banner 按鈕 (暫時隱藏)
         <button class="playoffs-banner" onclick="window.openPlayoffsModal();">
@@ -780,15 +778,15 @@
             </div>
         </div>
 
-        <!-- 近期比賽區塊 (可折疊) -->
+        <!-- 近期比賽區塊 (可折疊) - 預設展開 -->
         <div class="matches-section">
             <h2 class="section-title">近期比賽</h2>
             <div class="matches-item collapsible">
-                <div class="matches-header">
+                <div class="matches-header expanded">
                     <div class="matches-date" id="upcomingDate">載入中...</div>
-                    <span class="expand-icon">➕</span>
+                    <span class="expand-icon">➖</span>
                 </div>
-                <div class="matches-content collapsed" id="upcomingMatchesContent">
+                <div class="matches-content expanded" id="upcomingMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
                 </div>
             </div>
