@@ -20,7 +20,9 @@ const fileName = pageIdentifier;
 // 根據文件名 (來自 hash) 確定賽季
 let currentSeason = 'SEASON3'; // 默認為第三屆
 
-if (fileName.toLowerCase().includes('s5') || fileName.toLowerCase().includes('ranks5')) {
+if (fileName.toLowerCase().includes('s6') || fileName.toLowerCase().includes('ranks6')) {
+    currentSeason = 'SEASON6';
+} else if (fileName.toLowerCase().includes('s5') || fileName.toLowerCase().includes('ranks5')) {
     currentSeason = 'SEASON5';
 } else if (fileName.toLowerCase().includes('s4') || fileName.toLowerCase().includes('ranks4')) {
     currentSeason = 'SEASON4';
@@ -40,7 +42,8 @@ console.log('自動檢測到賽季:', currentSeason);
 try {
     if (typeof window !== 'undefined' && typeof window.seasonOverride !== 'undefined') {
         const ov = String(window.seasonOverride).toLowerCase();
-        if (ov.includes('5')) currentSeason = 'SEASON5';
+        if (ov.includes('6')) currentSeason = 'SEASON6';
+        else if (ov.includes('5')) currentSeason = 'SEASON5';
         else if (ov.includes('4')) currentSeason = 'SEASON4';
         else if (ov.includes('3')) currentSeason = 'SEASON3';
         console.log('套用 seasonOverride 覆寫為:', currentSeason);
@@ -70,10 +73,10 @@ if (!CONFIG[currentSeason]) {
         try {
             // 不同賽季的隊伍排名欄位位置不同：
             // - SEASON3/SEASON4 使用 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
-            // - SEASON5 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
-            // 為避免任何偵測誤差，除了看 currentSeason，也直接根據檔名判斷是否為 S5 頁面
-            const isS5 = (currentSeason === 'SEASON5') || /rankS5|ranks5|\bs5\b/i.test(fileName);
-            const range = isS5 ? 'schedule!O:V' : 'schedule!K:Q';
+            // - SEASON5/SEASON6 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
+            // 為避免任何偵測誤差，除了看 currentSeason，也直接根據檔名判斷是否為 S5/S6 頁面
+            const isS5OrS6 = (currentSeason === 'SEASON5' || currentSeason === 'SEASON6') || /rankS[56]|ranks[56]|\bs[56]\b/i.test(fileName);
+            const range = isS5OrS6 ? 'schedule!O:V' : 'schedule!K:Q';
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
             console.log("正在請求 URL:", url);
@@ -97,7 +100,7 @@ if (!CONFIG[currentSeason]) {
             // 將數據轉換為對象數組以便排序
             let rankings = data.values.slice(1)
                 .map((row) => {
-                    if (isS5) {
+                    if (isS5OrS6) {
                         // O:V，其中 O 為排名（忽略，改由我們重排計算）
                         const team = row[1] || '';
                         const total = parseFloat(row[7]);
@@ -124,7 +127,7 @@ if (!CONFIG[currentSeason]) {
                 })
                 // 過濾出真正的排名列，避免把賽程行混入
                 .filter(item => {
-                    if (isS5) {
+                    if (isS5OrS6) {
                         return item.team && !isNaN(item.total) && item.total > 0;
                     }
                     return item.team && !isNaN(item.total);
