@@ -1016,13 +1016,14 @@ function displayMatches(matches) {
     const upcomingContent = document.getElementById('upcomingMatchesContent');
     if (upcomingContent) {
         if (upcomingMatches.length > 0) {
-            // 限制最多顯示5場近期比賽
-            const limitedUpcomingMatches = upcomingMatches.slice(0, 5);
-            upcomingContent.innerHTML = generateMatchesHTML(limitedUpcomingMatches);
-            debugLog('近期比賽已更新，顯示', limitedUpcomingMatches.length, '場比賽');
+            // 只顯示最近一個比賽日的所有比賽（第六屆每週有6場比賽）
+            const firstMatchDate = upcomingMatches[0].date;
+            const sameDateMatches = upcomingMatches.filter(match => match.date === firstMatchDate);
+            upcomingContent.innerHTML = generateMatchesHTML(sameDateMatches);
+            debugLog('近期比賽已更新，顯示', sameDateMatches.length, '場比賽（日期:', firstMatchDate, '）');
             
             // 更新近期比賽的日期顯示
-            const upcomingDate = upcomingMatches.length > 0 ? upcomingMatches[0].date : '本週';
+            const upcomingDate = firstMatchDate || '本週';
             const upcomingDateElement = document.getElementById('upcomingDate');
             if (upcomingDateElement) {
                 upcomingDateElement.textContent = upcomingDate || '本週';
