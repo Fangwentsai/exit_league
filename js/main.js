@@ -1039,8 +1039,8 @@ function displayMatches(matches) {
 async function loadMatches() {
     try {
         debugLog('開始從 Google Sheets 載入比賽數據...');
-        const sheetId = CONFIG.SEASON5.SHEET_ID;
-        const apiKey = CONFIG.SEASON5.API_KEY;
+        const sheetId = CONFIG.SEASON6.SHEET_ID;
+        const apiKey = CONFIG.SEASON6.API_KEY;
         debugLog('使用的 Google Sheets ID:', sheetId);
         // debugLog('使用的 API Key:', apiKey); // 已註釋：隱藏敏感資訊
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A:H?key=${apiKey}`;
@@ -1055,7 +1055,7 @@ async function loadMatches() {
         if (!jsonData.values || jsonData.values.length === 0) {
             throw new Error('Google Sheets 數據為空');
         }
-        const data = parseScheduleData(jsonData.values.slice(1), 'SEASON5'); // 跳過標題行
+        const data = parseScheduleData(jsonData.values.slice(1), 'SEASON6'); // 跳過標題行
         debugLog('解析後的比賽數據:', data);
         if (data.length === 0) {
             throw new Error('沒有有效的比賽數據');

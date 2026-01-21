@@ -245,9 +245,9 @@ async function loadMatches() {
         let fetchError = null;
         
         try {
-            // 首先嘗試使用main.js中的Google Sheet API取得數據
-            const sheetId = '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY'; // Season 5的Sheet ID
-            const apiKey = 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0';
+            // 使用第六屆的 Google Sheet API取得數據
+            const sheetId = CONFIG.SEASON6.SHEET_ID; // Season 6的Sheet ID
+            const apiKey = CONFIG.SEASON6.API_KEY;
             const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!O:V?key=${apiKey}`;
             
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
