@@ -111,6 +111,7 @@ body {
     font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
 /* 隊伍按鈕懸停效果 */
@@ -501,19 +502,24 @@ tr:has(.highlight-team) {
     }
 
     .team-btn {
-        padding: 8px 10px;
-        font-size: 0.8em;
+        padding: 8px 6px;
+        font-size: 0.75em;
         min-width: 0;
         max-width: none;
         border-width: 1px;
         margin: 3px 2px;
         flex: 1 1 calc(25% - 8px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
     }
     
     /* Tonight29 系列隊名在手機版統一大小，只調整字體不改變寬度 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.72em;
+        font-size: 0.68em;
         letter-spacing: -0.3px;
+        padding: 8px 4px;
     }
 
     .team-btn.selected {
@@ -670,11 +676,20 @@ tr:has(.highlight-team) {
     }
     
     .team-btn {
-        padding: 5px 6px;
-        font-size: 0.75em;
+        padding: 5px 4px;
+        font-size: 0.7em;
         min-width: 0;
         max-width: none;
         flex: 1 1 calc(25% - 8px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+    }
+    
+    .team-btn[data-team*="Tonight29"] {
+        font-size: 0.65em;
+        letter-spacing: -0.3px;
     }
     
     /* Tonight29 系列隊名在小手機統一大小，只調整字體 */
@@ -753,18 +768,23 @@ tr:has(.highlight-team) {
     }
     
     .team-btn {
-        padding: 4px 5px;
-        font-size: 0.7em;
+        padding: 4px 3px;
+        font-size: 0.65em;
         min-width: 0;
         max-width: none;
         margin: 2px;
         flex: 1 1 calc(25% - 8px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
     }
     
     /* Tonight29 系列隊名在超小手機統一大小，只調整字體 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.63em;
+        font-size: 0.6em;
         letter-spacing: -0.3px;
+        padding: 4px 2px;
     }
     
     .filter-row {
@@ -834,17 +854,22 @@ tr:has(.highlight-team) {
     }
     
     .team-btn {
-        padding: 5px 8px;
-        font-size: 0.78em;
+        padding: 5px 6px;
+        font-size: 0.73em;
         min-width: 0;
         max-width: none;
         flex: 1 1 calc(25% - 8px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
     }
     
     /* Tonight29 系列隊名統一大小，只調整字體 */
     .team-btn[data-team*="Tonight29"] {
-        font-size: 0.7em;
+        font-size: 0.66em;
         letter-spacing: -0.3px;
+        padding: 5px 4px;
     }
     
     .schedule-table td:nth-child(2),
