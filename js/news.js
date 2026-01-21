@@ -270,14 +270,21 @@ async function loadMatches() {
                 
                 // O:V 欄位格式: O=日期, P=比賽號碼, Q=客隊, R=客隊分數, S=主隊分數, T=主隊, U=場地, V=其他資訊
                 rawData.values.forEach(row => {
-                    if (row.length >= 6) {
-                        const date = row[0];        // O欄 - 日期
-                        const gameNumber = row[1];  // P欄 - 比賽號碼
-                        const awayTeam = row[2];    // Q欄 - 客隊
-                        const awayScore = row[3];   // R欄 - 客隊分數
-                        const homeScore = row[4];   // S欄 - 主隊分數
-                        const homeTeam = row[5];    // T欄 - 主隊
-                        const venue = row[6] || ''; // U欄 - 場地
+                    // 檢查至少要有日期和隊伍資訊（至少6欄，但可以容忍空分數）
+                    if (row.length >= 5 && row[0] && row[2] && row[5]) {
+                        const date = row[0] ? row[0].trim() : '';        // O欄 - 日期
+                        const gameNumber = row[1] ? row[1].trim() : '';  // P欄 - 比賽號碼
+                        const awayTeam = row[2] ? row[2].trim() : '';    // Q欄 - 客隊
+                        const awayScore = row[3] ? row[3].trim() : '';   // R欄 - 客隊分數
+                        const homeScore = row[4] ? row[4].trim() : '';   // S欄 - 主隊分數
+                        const homeTeam = row[5] ? row[5].trim() : '';    // T欄 - 主隊
+                        const venue = row[6] ? row[6].trim() : '';       // U欄 - 場地
+                        
+                        // 必須有日期、客隊和主隊才算有效的比賽
+                        if (!date || !awayTeam || !homeTeam) {
+                            console.log('跳過無效行（缺少必要資訊）:', row);
+                            return;
+                        }
                         
                         // 組合隊伍名稱和分數
                         const team1 = awayTeam + (awayScore ? ` ${awayScore}` : '');
@@ -290,20 +297,21 @@ async function loadMatches() {
                                     date: currentDate,
                                     games: [...currentGames]
                                 });
+                                console.log(`添加比賽日 ${currentDate}，包含 ${currentGames.length} 場比賽`);
                             }
                             currentDate = date;
                             currentGames = [];
                         }
                         
-                        // 添加比賽到當前日期
-                        if (gameNumber) {
-                            currentGames.push({
-                                game_number: gameNumber,
-                                team1: team1,
-                                team2: team2,
-                                venue: venue
-                            });
-                        }
+                        // 添加比賽到當前日期（有日期和隊伍就算有效，gameNumber 可以為空）
+                        const gameObj = {
+                            game_number: gameNumber || `g${currentGames.length + 1}`,
+                            team1: team1,
+                            team2: team2,
+                            venue: venue
+                        };
+                        currentGames.push(gameObj);
+                        console.log(`添加比賽: ${gameObj.game_number} - ${team1} vs ${team2}`);
                     }
                 });
                 
@@ -313,7 +321,13 @@ async function loadMatches() {
                         date: currentDate,
                         games: [...currentGames]
                     });
+                    console.log(`添加最後比賽日 ${currentDate}，包含 ${currentGames.length} 場比賽`);
                 }
+                
+                // 輸出每個比賽日的比賽數量
+                data.schedule.forEach(schedule => {
+                    console.log(`比賽日 ${schedule.date} 共有 ${schedule.games.length} 場比賽`);
+                });
                 
                 console.log('處理後的API數據:', data);
             } else {
@@ -389,18 +403,28 @@ async function loadMatches() {
 
         // 顯示上週比賽
         if (lastMatch) {
-            const lastWeekHTML = createMatchesHTML(lastMatch);
-            console.log('生成的上週比賽 HTML:', lastWeekHTML);
-            document.getElementById('lastWeekMatchesContent').innerHTML = lastWeekHTML;
+            console.log(`上週比賽日期: ${lastMatch.date}，共有 ${lastMatch.games ? lastMatch.games.length : 0} 場比賽`);
+            if (lastMatch.games && lastMatch.games.length > 0) {
+                const lastWeekHTML = createMatchesHTML(lastMatch);
+                console.log('生成的上週比賽 HTML:', lastWeekHTML);
+                document.getElementById('lastWeekMatchesContent').innerHTML = lastWeekHTML;
+            } else {
+                document.getElementById('lastWeekMatchesContent').innerHTML = '<p>上週比賽日沒有比賽數據</p>';
+            }
         } else {
             document.getElementById('lastWeekMatchesContent').innerHTML = '<p>沒有上週的比賽記錄</p>';
         }
 
         // 顯示下週比賽
         if (nextMatch) {
-            const nextWeekHTML = createMatchesHTML(nextMatch);
-            console.log('生成的下週比賽 HTML:', nextWeekHTML);
-            document.getElementById('upcomingMatchesContent').innerHTML = nextWeekHTML;
+            console.log(`近期比賽日期: ${nextMatch.date}，共有 ${nextMatch.games ? nextMatch.games.length : 0} 場比賽`);
+            if (nextMatch.games && nextMatch.games.length > 0) {
+                const nextWeekHTML = createMatchesHTML(nextMatch);
+                console.log('生成的近期比賽 HTML:', nextWeekHTML);
+                document.getElementById('upcomingMatchesContent').innerHTML = nextWeekHTML;
+            } else {
+                document.getElementById('upcomingMatchesContent').innerHTML = '<p>近期比賽日沒有比賽數據</p>';
+            }
         } else {
             document.getElementById('upcomingMatchesContent').innerHTML = '<p>沒有即將到來的比賽</p>';
         }
