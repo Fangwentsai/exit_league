@@ -398,7 +398,9 @@ tr:has(.highlight-team) {
     .team-btn {
         padding: 8px 12px;
         font-size: 0.95em;
-        min-width: 80px;
+        min-width: 0;
+        max-width: none;
+        flex: 1 1 calc(25% - 7.5px);
     }
     
     .team-cell {
