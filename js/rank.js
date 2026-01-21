@@ -6,10 +6,24 @@
 const currentHash = window.location.hash; 
 
 // 從 hash 中提取 "page" 名稱 (移除 '#')，例如 "rankS5"
-let pageIdentifier = currentHash.substring(1); 
+let pageIdentifier = currentHash.substring(1);
 
-console.log('當前路徑 (Path):', window.location.pathname); // 會是 "/"
-console.log('當前錨點 (Hash):', currentHash); // 應該是 "#rankS5"
+// 如果是獨立頁面（如 rankS6.html），從路徑名判斷
+if (!pageIdentifier && window.location.pathname) {
+    const pathname = window.location.pathname;
+    if (pathname.includes('rankS6') || pathname.includes('ranks6')) {
+        pageIdentifier = 'rankS6';
+    } else if (pathname.includes('rankS5') || pathname.includes('ranks5')) {
+        pageIdentifier = 'rankS5';
+    } else if (pathname.includes('rankS4') || pathname.includes('ranks4')) {
+        pageIdentifier = 'rankS4';
+    } else if (pathname.includes('rank') && !pathname.includes('rankS')) {
+        pageIdentifier = 'rank';
+    }
+}
+
+console.log('當前路徑 (Path):', window.location.pathname);
+console.log('當前錨點 (Hash):', currentHash);
 console.log('解析到的頁面 (pageIdentifier):', pageIdentifier); 
 
 // 【重要】
