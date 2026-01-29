@@ -41,9 +41,10 @@ class GameResultPreviewGenerator {
         // 生成 SEO 標籤
         const gameCode = gameInfo.gameCode.toUpperCase();
         const gameCodeLower = gameCode.toLowerCase();
-        const season = this.getSeasonFromGameCode(gameCode);
-        const title = `難找的聯賽 第五季 ${gameCode} 賽果：${gameInfo.awayTeam} vs. ${gameInfo.homeTeam}｜飛鏢聯賽戰報`;
-        const description = `查看 難找的聯賽 飛鏢05季 ${gameCode} 的詳細賽果。本場比賽由${gameInfo.awayTeam}對決${gameInfo.homeTeam}，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。`;
+        const season = this.getSeasonFromDate(gameInfo.date);
+        const seasonNum = this.getSeasonNumber(gameInfo.date);
+        const title = `難找的聯賽 ${season} ${gameCode} 賽果：${gameInfo.awayTeam} vs. ${gameInfo.homeTeam}｜飛鏢聯賽戰報`;
+        const description = `查看 難找的聯賽 飛鏢${seasonNum}季 ${gameCode} 的詳細賽果。本場比賽由${gameInfo.awayTeam}對決${gameInfo.homeTeam}，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。`;
         const keywords = `飛鏢聯賽, YHDARTS, 賽果, ${gameInfo.awayTeam}, ${gameInfo.homeTeam}, 飛鏢比賽, dart league, match result, phoenix darts, dartslive`;
         
         // 生成比賽數據的 JavaScript 對象（傳入 gameCode 確保變量名正確）
@@ -233,10 +234,45 @@ initializeStats(awayPlayers, homePlayers);
         return `const awayPlayers = [${awayPlayersStr}];\nconst homePlayers = [${homePlayersStr}];`;
     }
     
-    // 📅 從比賽代碼獲取賽季
-    getSeasonFromGameCode(gameCode) {
-        // 這裡可以根據實際需求調整
-        return '第五季';
+    // 📅 從比賽日期獲取賽季
+    getSeasonFromDate(dateStr) {
+        // 將日期字串轉換為 Date 物件
+        // 支援格式：2026/1/27 或 2026-1-27
+        const parts = dateStr.replace(/-/g, '/').split('/');
+        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        const season6Start = new Date(2026, 0, 27); // 2026/1/27
+        
+        if (gameDate >= season6Start) {
+            return '第六季';
+        } else {
+            return '第五季';
+        }
+    }
+    
+    // 📅 獲取賽季數字（用於 SEO 描述）
+    getSeasonNumber(dateStr) {
+        const parts = dateStr.replace(/-/g, '/').split('/');
+        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        const season6Start = new Date(2026, 0, 27); // 2026/1/27
+        
+        if (gameDate >= season6Start) {
+            return '06';
+        } else {
+            return '05';
+        }
+    }
+    
+    // 📅 獲取 GitHub 資料夾用的賽季名稱
+    getSeasonFolder(dateStr) {
+        const parts = dateStr.replace(/-/g, '/').split('/');
+        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        const season6Start = new Date(2026, 0, 27); // 2026/1/27
+        
+        if (gameDate >= season6Start) {
+            return 'season6';
+        } else {
+            return 'season5';
+        }
     }
 
     // 🎯 主要功能：生成完整的預覽HTML

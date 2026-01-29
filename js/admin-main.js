@@ -1405,7 +1405,7 @@ function collectAdminData() {
 
     return {
         gameId: document.getElementById('gameSelect').value,
-        gameDate: new Date().toLocaleDateString('zh-TW').replace(/\//g, '/'),
+        gameDate: currentGame.date || new Date().toLocaleDateString('zh-TW').replace(/\//g, '/'),
         awayTeam: currentGame.away,
         homeTeam: currentGame.home,
         sets: sets,
