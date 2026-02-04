@@ -299,6 +299,10 @@ body {
 
 /* iPhone SE/小螢幕設備(375px) */
 @media screen and (max-width: 375px) {
+    .ranking-table td, .ranking-table th {
+        font-size: 13px;
+        padding: 6px 2px;
+    }
     .match-item {
         padding: 5px 5px;
     }
