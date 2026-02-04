@@ -61,15 +61,6 @@ class GameResultPreviewGenerator {
     <meta name="description" content="${description}">
     <meta name="keywords" content="${keywords}">
   
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17514530743"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17514530743');
-    </script>
-  
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
   
     <link rel="stylesheet" href="../../styles/common/game_result.css">
@@ -92,15 +83,6 @@ class GameResultPreviewGenerator {
             </div>
         </div>
 
-        <div class="ad-section" style="text-align: center; margin: 5px auto; max-width: 728px; width: 100%;">
-            <ins class="adsbygoogle"
-                 style="display:block;width:100%;max-width:728px;height:90px"
-                 data-ad-client="ca-pub-4455508862703492"
-                 data-ad-format="horizontal"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-       
         <div class="score-details"><table class="score-table"></table></div>
 
         <div class="games-container">
@@ -126,61 +108,6 @@ const scores = calculateFinalScore(${gameCodeLower}Matches, drinkingBonus);
 updateScoreDisplay(scores);
 initializeStats(awayPlayers, homePlayers);
 </script>
-    <!-- 延遲載入 AdSense 與 GTM - 終極性能優化 -->
-    <script>
-    // 設定 AdSense 和 GTM ID
-    var adsenseID = "ca-pub-4455508862703492";
-    var gtmID = "AW-17514530743";
-    
-    var googleScriptsLoaded = false;
-    
-    function loadGoogleScripts() {
-        if (googleScriptsLoaded) return;
-        googleScriptsLoaded = true;
-        
-        // 1. 載入 GTM / GA4
-        var scriptGTM = document.createElement('script');
-        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
-        scriptGTM.async = true;
-        document.head.appendChild(scriptGTM);
-        
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', gtmID);
-        
-        // 2. 載入 AdSense
-        var scriptAd = document.createElement('script');
-        scriptAd.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsenseID;
-        scriptAd.async = true;
-        scriptAd.crossOrigin = "anonymous";
-        document.head.appendChild(scriptAd);
-        
-        // 3. AdSense 設定
-        scriptAd.onload = function() {
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: adsenseID,
-                enable_page_level_ads: true,
-                overlays: {bottom: false},
-                anchor_ads: {enabled: true},
-                vignette_ads: {enabled: false},
-                multiplex_ads: {enabled: false},
-                matched_content_ads: {enabled: false},
-                display_ads: {enabled: false}
-            });
-        };
-        
-        console.log("✅ Google Scripts 延遲載入完成！");
-    }
-    
-    // 觸發條件：使用者互動時載入
-    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
-    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
-    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
-    
-    // 保險機制：4 秒後自動載入
-    setTimeout(loadGoogleScripts, 4000);
-    </script>
 </body>
 </html>`;
         
