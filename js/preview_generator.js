@@ -375,17 +375,29 @@ initializeStats(awayPlayers, homePlayers);
 
     // 🏠 根據主隊決定比賽場地
     getVenueFromTeam(homeTeam) {
+        if (!homeTeam) return '比賽場地';
+        
         const venues = {
-            '逃生入口A': '逃生入口 Bar',
-            '逃生入口C': '逃生入口 Bar', 
-            '酒空組': '逃生入口 Bar',
-            '海盜揪硬': '酒窩海盜聯盟',
             '人生揪難': '酒窩海盜聯盟',
-            'Vivi朝酒晚舞': 'Vivi Bar',
-            'Jack': 'Jack',
-            '一鏢開天門': 'No.5'
+            '人生揪亮': '酒窩海盜聯盟',
+            'Vivi嘻嘻隊': 'Vivi Bar',
+            'Vivi哈哈隊': 'Vivi Bar',
+            'Tonight29大四喜': 'Tonight29',
+            'Tonight29大三元': 'Tonight29',
+            'Tonight29十三么': 'Tonight29',
+            '傑克黑桃': 'Jack',
+            '傑克紅心': 'Jack',
+            '逃生入口': '逃生入口 Bar',
+            '酒空組': '藍白拖',
+            '軟飯硬吃': '樂源A.K.A兩杯'
         };
-        return venues[homeTeam] || '比賽場地';
+        
+        // 模糊匹配，以防隊名有微小差異
+        for (const [team, venue] of Object.entries(venues)) {
+            if (homeTeam.includes(team)) return venue;
+        }
+        
+        return '比賽場地';
     }
 
     // 🔄 轉換 admin 數據為 match 格式
