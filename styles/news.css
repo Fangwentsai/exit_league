@@ -411,10 +411,11 @@ body {
 
 .ranking-table th,
 .ranking-table td {
-    padding: 6px;
+    padding: 6px 4px;
     text-align: center;
     border-bottom: 1px solid #eee;
     font-size: 15px;
+    white-space: nowrap;
 }
 
 .ranking-table th {
