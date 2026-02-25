@@ -1047,7 +1047,8 @@ async function saveToGoogleSheetsWithHTML(gameData) {
             htmlContent: htmlContent,
             htmlSheetName: `${gameCode}.html`,
             playerStats: { away: [], home: [] }, // 空統計資料，避免錯誤
-            timestamp: formattedTime
+            timestamp: formattedTime,
+            gameDate: adminFormatData.gameDate // 傳遞日期給 GAS 判斷賽季
         };
         
         // Google Apps Script Web App URL
@@ -1076,41 +1077,21 @@ async function saveToGoogleSheetsWithHTML(gameData) {
                 if (result.status === 'success') {
                     markAsSaved();
                     
-                    // 嘗試上傳到 GitHub
-                    let githubResult = null;
-                    let gamePath = null;
-                    if (typeof window.GitHubAPI !== 'undefined') {
-                        try {
-                            gamePath = window.GitHubAPI.getGamePath(gameCode);
-                            const commitMessage = `Add ${gameCode.toUpperCase()} game result - ${currentGame.awayTeam} vs ${currentGame.homeTeam}`;
-                            
-                            // 使用 Google Apps Script 上傳（推薦方式，更安全）
-                            // 如果 Google Apps Script 支援 GitHub 上傳功能
-                            githubResult = await window.GitHubAPI.uploadFileToGitHubViaScript(
-                                gamePath.filePath,
-                                htmlContent,
-                                commitMessage,
-                                scriptURL
-                            );
-                            
-                            if (githubResult && githubResult.success) {
-                                console.log('✅ GitHub 上傳成功:', githubResult);
-                            } else {
-                                console.warn('⚠️ GitHub 上傳失敗，但 Google Sheets 保存成功:', githubResult);
-                            }
-                        } catch (githubError) {
-                            console.error('❌ GitHub 上傳時發生錯誤:', githubError);
-                            // GitHub 上傳失敗不影響整體流程
-                        }
+                    // 讀取 GAS 伺服器端的 GitHub 上傳結果（GAS 已自動處理上傳，不需要前端再次上傳）
+                    const githubUpload = result.githubUpload;
+                    if (githubUpload && githubUpload.status === 'success') {
+                        console.log('✅ GitHub 上傳成功（由 GAS 伺服器端處理）:', githubUpload);
+                    } else if (githubUpload) {
+                        console.warn('⚠️ GitHub 上傳失敗，但 Google Sheets 保存成功:', githubUpload);
                     }
                     
                     // 構建成功訊息
                     let successMessage = `✅ 比賽資料已成功保存！\n\n比賽：${result.gameId}\nHTML 工作表：${sheetsData.htmlSheetName}\n時間：${formattedTime}`;
                     
-                    if (githubResult && githubResult.success && gamePath) {
-                        successMessage += `\n\n✅ 已上傳到 GitHub: ${gamePath.filePath}`;
-                    } else if (githubResult && !githubResult.success) {
-                        successMessage += `\n\n⚠️ GitHub 上傳失敗，但資料已保存到 Google Sheets`;
+                    if (githubUpload && githubUpload.status === 'success') {
+                        successMessage += `\n\n✅ 已上傳到 GitHub: ${githubUpload.filePath}`;
+                    } else if (githubUpload && githubUpload.status === 'error') {
+                        successMessage += `\n\n⚠️ GitHub 上傳失敗: ${githubUpload.message || '未知錯誤'}`;
                     }
                     
                     successMessage += `\n\n頁面將自動關閉...`;

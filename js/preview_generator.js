@@ -5,14 +5,14 @@ class GameResultPreviewGenerator {
     constructor() {
         this.gameTypes = {
             1: '501 (OI/MO)',
-            2: '501 (DI/DO)', 
+            2: '501 (DI/DO)',
             3: '701 (OI/MO)',
             4: '701 (OI/MO, 25/50)',
             5: '三人賽 701<br>每人一鏢骰子賽',
             6: 'Cricket',
             7: 'Cricket',
             8: 'HALF-IT',
-            9: 'HALF-IT', 
+            9: 'HALF-IT',
             10: '三人賽 Cricket<br>每人一鏢骰子賽',
             11: '701 雙人賽',
             12: '701 雙人賽 FREEZE',
@@ -21,7 +21,7 @@ class GameResultPreviewGenerator {
             15: '四人賽 1101',
             16: '四人賽 Cricket'
         };
-        
+
         this.sectionTitles = {
             individual: '個人賽 01',
             cricket: 'Cricket Games',
@@ -37,7 +37,7 @@ class GameResultPreviewGenerator {
         const finalScores = this.calculateFinalScores(matchData, adminData.drinkingBonus || {});
         const awayPlayers = this.extractPlayers(adminData, 'away');
         const homePlayers = this.extractPlayers(adminData, 'home');
-        
+
         // 生成 SEO 標籤
         const gameCode = gameInfo.gameCode.toUpperCase();
         const gameCodeLower = gameCode.toLowerCase();
@@ -46,12 +46,12 @@ class GameResultPreviewGenerator {
         const title = `難找的聯賽 ${season} ${gameCode} 賽果：${gameInfo.awayTeam} vs. ${gameInfo.homeTeam}｜飛鏢聯賽戰報`;
         const description = `查看 難找的聯賽 飛鏢${seasonNum}季 ${gameCode} 的詳細賽果。本場比賽由${gameInfo.awayTeam}對決${gameInfo.homeTeam}，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。`;
         const keywords = `飛鏢聯賽, YHDARTS, 賽果, ${gameInfo.awayTeam}, ${gameInfo.homeTeam}, 飛鏢比賽, dart league, match result, phoenix darts, dartslive`;
-        
+
         // 生成比賽數據的 JavaScript 對象（傳入 gameCode 確保變量名正確）
         const matchesJS = this.generateMatchesJS(matchData, gameCodeLower);
         const drinkingBonusJS = this.generateDrinkingBonusJS(adminData.drinkingBonus || {});
         const playersJS = this.generatePlayersJS(awayPlayers, homePlayers);
-        
+
         const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +87,20 @@ class GameResultPreviewGenerator {
 
         <div class="games-container">
             ${this.generateGameSections(matchData)}
-            ${this.generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers)}
+          
+            <div class="game-section">
+                <h3>選手統計</h3>
+                <div class="stats-buttons">
+                    <button class="stats-btn active" data-team="away">客場選手</button>
+                    <button class="stats-btn" data-team="home">主場選手</button>
+                </div>
+                <table class="game-table stats-table" id="awayStats">
+                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
+                </table>
+                <table class="game-table stats-table hidden" id="homeStats">
+                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -110,17 +123,17 @@ initializeStats(awayPlayers, homePlayers);
 </script>
 </body>
 </html>`;
-        
+
         return html;
     }
-    
+
     // 📝 生成比賽數據的 JavaScript 對象
     generateMatchesJS(matchData, gameCode = null) {
         if (!matchData || matchData.length === 0) {
             const code = gameCode || 'g00';
             return `const ${code}Matches = [];`;
         }
-        
+
         const code = gameCode || matchData[0]?.gameCode || 'g00';
         const matchesArray = matchData.map(match => {
             // 處理 away 選手
@@ -132,7 +145,7 @@ initializeStats(awayPlayers, homePlayers);
             } else {
                 away = `''`;
             }
-            
+
             // 處理 home 選手
             let home;
             if (Array.isArray(match.home)) {
@@ -142,25 +155,25 @@ initializeStats(awayPlayers, homePlayers);
             } else {
                 home = `''`;
             }
-            
+
             return `    {set: ${match.set}, type: '${match.type}', away: ${away}, home: ${home}, firstAttack: '${match.firstAttack || ''}', winner: '${match.winner || ''}'}`;
         });
-        
+
         return `const ${code}Matches = [\n${matchesArray.join(',\n')}\n];`;
     }
-    
+
     // 🍺 生成飲酒加成的 JavaScript 對象
     generateDrinkingBonusJS(drinkingBonus) {
         return `const drinkingBonus = { away: ${drinkingBonus.away || 0}, home: ${drinkingBonus.home || 0} };`;
     }
-    
+
     // 👥 生成選手名單的 JavaScript 對象
     generatePlayersJS(awayPlayers, homePlayers) {
         const awayPlayersStr = awayPlayers.map(p => `'${p}'`).join(', ');
         const homePlayersStr = homePlayers.map(p => `'${p}'`).join(', ');
         return `const awayPlayers = [${awayPlayersStr}];\nconst homePlayers = [${homePlayersStr}];`;
     }
-    
+
     // 📅 從比賽日期獲取賽季
     getSeasonFromDate(dateStr) {
         // 將日期字串轉換為 Date 物件
@@ -168,33 +181,33 @@ initializeStats(awayPlayers, homePlayers);
         const parts = dateStr.replace(/-/g, '/').split('/');
         const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
         const season6Start = new Date(2026, 0, 27); // 2026/1/27
-        
+
         if (gameDate >= season6Start) {
             return '第六季';
         } else {
             return '第五季';
         }
     }
-    
+
     // 📅 獲取賽季數字（用於 SEO 描述）
     getSeasonNumber(dateStr) {
         const parts = dateStr.replace(/-/g, '/').split('/');
         const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
         const season6Start = new Date(2026, 0, 27); // 2026/1/27
-        
+
         if (gameDate >= season6Start) {
             return '06';
         } else {
             return '05';
         }
     }
-    
+
     // 📅 獲取 GitHub 資料夾用的賽季名稱
     getSeasonFolder(dateStr) {
         const parts = dateStr.replace(/-/g, '/').split('/');
         const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
         const season6Start = new Date(2026, 0, 27); // 2026/1/27
-        
+
         if (gameDate >= season6Start) {
             return 'season6';
         } else {
@@ -209,7 +222,7 @@ initializeStats(awayPlayers, homePlayers);
         const finalScores = this.calculateFinalScores(matchData, adminData.drinkingBonus || {});
         const awayPlayers = this.extractPlayers(adminData, 'away');
         const homePlayers = this.extractPlayers(adminData, 'home');
-        
+
         const html = `
 <!DOCTYPE html>
 <html>
@@ -357,7 +370,7 @@ initializeStats(awayPlayers, homePlayers);
     </script>
 </body>
 </html>`;
-        
+
         return html;
     }
 
@@ -376,7 +389,7 @@ initializeStats(awayPlayers, homePlayers);
     // 🏠 根據主隊決定比賽場地
     getVenueFromTeam(homeTeam) {
         if (!homeTeam) return '比賽場地';
-        
+
         const venues = {
             '人生揪難': '酒窩海盜聯盟',
             '人生揪亮': '酒窩海盜聯盟',
@@ -391,12 +404,12 @@ initializeStats(awayPlayers, homePlayers);
             '酒空組': '藍白拖',
             '軟飯硬吃': '樂源A.K.A兩杯'
         };
-        
+
         // 模糊匹配，以防隊名有微小差異
         for (const [team, venue] of Object.entries(venues)) {
             if (homeTeam.includes(team)) return venue;
         }
-        
+
         return '比賽場地';
     }
 
@@ -404,19 +417,19 @@ initializeStats(awayPlayers, homePlayers);
     convertToMatchData(adminData) {
         const matches = [];
         const gameCode = adminData.gameId || 'g00';
-        
+
         // 從 adminData.sets 陣列中取得每個SET的資料
         for (let i = 1; i <= 16; i++) {
-            const setData = adminData.sets && adminData.sets[i-1];
+            const setData = adminData.sets && adminData.sets[i - 1];
             if (setData) {
                 // 處理選手資料，如果沒有選擇則為空字串
                 const awayPlayers = setData.awayPlayers || [];
                 const homePlayers = setData.homePlayers || [];
-                
+
                 // 如果只有一個選手，直接返回字串；多個選手返回陣列
                 const awayValue = awayPlayers.length === 0 ? '' : (awayPlayers.length === 1 ? awayPlayers[0] : awayPlayers);
                 const homeValue = homePlayers.length === 0 ? '' : (homePlayers.length === 1 ? homePlayers[0] : homePlayers);
-                
+
                 matches.push({
                     set: i,
                     type: this.getSetType(i),
@@ -439,7 +452,7 @@ initializeStats(awayPlayers, homePlayers);
                 });
             }
         }
-        
+
         return matches;
     }
 
@@ -463,22 +476,22 @@ initializeStats(awayPlayers, homePlayers);
             13: 2, 14: 2,               // SET13-14: 2分（雙人賽 Cricket）
             15: 4, 16: 4                // SET15-16: 4分（四人賽）
         };
-        
+
         let awayScore = 0;
         let homeScore = 0;
         let awayWins = 0;
         let homeWins = 0;
-        
+
         matchData.forEach(match => {
             // 只有當選手都有選擇且有勝負結果時才計分
             const awayPlayer = Array.isArray(match.away) ? match.away.join(', ') : (match.away || '');
             const homePlayer = Array.isArray(match.home) ? match.home.join(', ') : (match.home || '');
-            
+
             // 檢查選手是否都已填寫且有勝負結果
             const hasAwayPlayers = awayPlayer.trim() !== '';
             const hasHomePlayers = homePlayer.trim() !== '';
             const hasWinner = match.winner && match.winner !== null;
-            
+
             if (hasAwayPlayers && hasHomePlayers && hasWinner) {
                 const setScore = setScores[match.set] || 1;
                 if (match.winner === 'away') {
@@ -490,19 +503,19 @@ initializeStats(awayPlayers, homePlayers);
                 }
             }
         });
-        
+
         // 勝方加分（比賽成績較高的隊伍加1分）
         const winnerBonus = {
             away: awayScore > homeScore ? 1 : 0,
             home: homeScore > awayScore ? 1 : 0
         };
-        
+
         // 飲酒加成
         const finalDrinkingBonus = {
             away: drinkingBonus.away || 0,
             home: drinkingBonus.home || 0
         };
-        
+
         return {
             away: awayScore + winnerBonus.away + finalDrinkingBonus.away,
             home: homeScore + winnerBonus.home + finalDrinkingBonus.home,
@@ -525,7 +538,7 @@ initializeStats(awayPlayers, homePlayers);
         };
 
         let html = '';
-        
+
         Object.entries(sections).forEach(([sectionKey, matches]) => {
             html += `
             <div class="game-section">
@@ -541,7 +554,7 @@ initializeStats(awayPlayers, homePlayers);
                 </table>
             </div>`;
         });
-        
+
         return html;
     }
 
@@ -550,10 +563,10 @@ initializeStats(awayPlayers, homePlayers);
         // 如果選手資料不完整，顯示空白
         const awayPlayer = Array.isArray(match.away) ? match.away.join(', ') : (match.away || '');
         const homePlayer = Array.isArray(match.home) ? match.home.join(', ') : (match.home || '');
-        
+
         // 調試信息：檢查 winner 數據
         console.log(`SET${match.set} - Away: "${awayPlayer}", Home: "${homePlayer}", Winner: "${match.winner}", FirstAttack: "${match.firstAttack}"`);
-        
+
         // 只有當選手都有選擇時，才顯示先攻和勝負
         let awayClass = '';
         let homeClass = '';
@@ -561,7 +574,7 @@ initializeStats(awayPlayers, homePlayers);
         let homeWinClass = '';
         let awayWinIcon = '';
         let homeWinIcon = '';
-        
+
         if (awayPlayer && homePlayer) {
             awayClass = match.firstAttack === 'away' ? 'first-attack' : '';
             homeClass = match.firstAttack === 'home' ? 'first-attack' : '';
@@ -569,12 +582,12 @@ initializeStats(awayPlayers, homePlayers);
             homeWinClass = match.winner === 'home' ? 'winner' : '';
             awayWinIcon = match.winner === 'away' ? '<div class="winner-icon"></div>' : '';
             homeWinIcon = match.winner === 'home' ? '<div class="winner-icon"></div>' : '';
-            
+
             // 調試信息：檢查生成的樣式類別和圖標
             console.log(`SET${match.set} - Away Classes: "${awayClass} ${awayWinClass}", Home Classes: "${homeClass} ${homeWinClass}"`);
             console.log(`SET${match.set} - Away Icon: "${awayWinIcon}", Home Icon: "${homeWinIcon}"`);
         }
-        
+
         return `
         <tr>
             <td class="game-type">SET${match.set}<br><span class="game-detail">${this.gameTypes[match.set]}</span></td>
@@ -593,7 +606,7 @@ initializeStats(awayPlayers, homePlayers);
     generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers) {
         const awayStatsData = this.calculatePlayerStats(matchData, awayPlayers, 'away');
         const homeStatsData = this.calculatePlayerStats(matchData, homePlayers, 'home');
-        
+
         return `
         <div class="game-section">
             <h3>選手統計</h3>
@@ -658,12 +671,12 @@ initializeStats(awayPlayers, homePlayers);
     calculatePlayerStats(matchData, players, team) {
         return players.map(playerName => {
             let o1Games = 0, o1Wins = 0, crGames = 0, crWins = 0, firstAttacks = 0;
-            
+
             matchData.forEach(match => {
                 // 取得該隊的選手
                 const teamPlayers = match[team];
                 const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
-                
+
                 // 檢查該選手是否參與此場比賽
                 if (playersList.includes(playerName) && playersList[0] !== '') {
                     // 計算出賽次數
@@ -674,18 +687,18 @@ initializeStats(awayPlayers, homePlayers);
                         crGames++;
                         if (match.winner === team) crWins++;
                     }
-                    
+
                     // 計算先攻次數
                     if (match.firstAttack === team) {
                         firstAttacks++;
                     }
                 }
             });
-            
+
             return {
                 name: playerName,
                 o1Games,
-                o1Wins, 
+                o1Wins,
                 crGames,
                 crWins,
                 totalGames: o1Games + crGames,
@@ -740,12 +753,12 @@ initializeStats(awayPlayers, homePlayers);
     extractPlayers(adminData, team) {
         console.log(`提取${team}隊選手`, adminData);
         const players = [];
-        
+
         if (adminData.sets) {
             adminData.sets.forEach((set, index) => {
                 const teamPlayers = team === 'away' ? set.awayPlayers : set.homePlayers;
                 console.log(`SET${index + 1} ${team}隊選手:`, teamPlayers);
-                
+
                 if (Array.isArray(teamPlayers) && teamPlayers.length > 0) {
                     teamPlayers.forEach(player => {
                         if (player && player.trim() && !players.includes(player)) {
@@ -757,15 +770,15 @@ initializeStats(awayPlayers, homePlayers);
                 }
             });
         }
-        
+
         console.log(`${team}隊最終選手清單:`, players);
-        
+
         // 如果沒有選手，使用隊伍名稱加編號作為預設值
         if (players.length === 0) {
             const teamName = team === 'away' ? adminData.awayTeam : adminData.homeTeam;
             return [`${teamName}選手1`, `${teamName}選手2`, `${teamName}選手3`];
         }
-        
+
         return players;
     }
 }
@@ -780,13 +793,13 @@ function generateGamePreview(adminData) {
 
 function showPreviewModal(adminData) {
     const previewHTML = generateGamePreview(adminData);
-    
+
     // 如果已經存在模態框，先移除
     const existingModal = document.querySelector('.match-modal');
     if (existingModal) {
         document.body.removeChild(existingModal);
     }
-    
+
     // 創建模態框容器 - 使用和main.js相同的樣式
     const modal = document.createElement('div');
     modal.className = 'match-modal';
@@ -802,11 +815,11 @@ function showPreviewModal(adminData) {
         justify-content: center;
         align-items: center;
     `;
-    
-         // 創建模態框內容
-     const modalContent = document.createElement('div');
-     modalContent.className = 'match-modal-content';
-     modalContent.style.cssText = `
+
+    // 創建模態框內容
+    const modalContent = document.createElement('div');
+    modalContent.className = 'match-modal-content';
+    modalContent.style.cssText = `
          position: relative;
          width: 90%;
          height: 90%;
@@ -817,12 +830,12 @@ function showPreviewModal(adminData) {
          transform: scale(0.95);
          transition: transform 0.3s ease;
      `;
-    
-         // 添加關閉按鈕 - 使用和main.js相同的樣式
-     const closeButton = document.createElement('button');
-     closeButton.className = 'modal-close';
-     closeButton.innerHTML = '&times;';
-     closeButton.style.cssText = `
+
+    // 添加關閉按鈕 - 使用和main.js相同的樣式
+    const closeButton = document.createElement('button');
+    closeButton.className = 'modal-close';
+    closeButton.innerHTML = '&times;';
+    closeButton.style.cssText = `
          position: absolute;
          right: -15px;
          top: -15px;
@@ -842,24 +855,24 @@ function showPreviewModal(adminData) {
          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
          transition: all 0.2s ease;
      `;
-     closeButton.addEventListener('mouseenter', function() {
-         this.style.backgroundColor = '#e62e32';
-         this.style.transform = 'scale(1.1)';
-     });
-     closeButton.addEventListener('mouseleave', function() {
-         this.style.backgroundColor = '#fa363a';
-         this.style.transform = 'scale(1)';
-     });
-    closeButton.addEventListener('click', function(e) {
+    closeButton.addEventListener('mouseenter', function () {
+        this.style.backgroundColor = '#e62e32';
+        this.style.transform = 'scale(1.1)';
+    });
+    closeButton.addEventListener('mouseleave', function () {
+        this.style.backgroundColor = '#fa363a';
+        this.style.transform = 'scale(1)';
+    });
+    closeButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         closeMatchModal(modal);
     });
-    
-         // 創建iframe來加載比賽結果頁面
-     const iframe = document.createElement('iframe');
-     iframe.className = 'match-iframe';
-     iframe.style.cssText = `
+
+    // 創建iframe來加載比賽結果頁面
+    const iframe = document.createElement('iframe');
+    iframe.className = 'match-iframe';
+    iframe.style.cssText = `
          width: 100%;
          height: 100%;
          border: none;
@@ -867,41 +880,41 @@ function showPreviewModal(adminData) {
          opacity: 0;
          transition: opacity 0.3s ease 0.1s;
      `;
-     iframe.srcdoc = previewHTML;
-    
-         modalContent.appendChild(closeButton);
-     modalContent.appendChild(iframe);
-     modal.appendChild(modalContent);
-     document.body.appendChild(modal);
-     
-     // 確保模態框顯示 - 使用和main.js相同的動畫邏輯
-     setTimeout(function() {
-         modal.classList.add('visible');
-         modalContent.style.transform = 'scale(1)';
-         iframe.style.opacity = '1';
-     }, 10);
-     
-     // 點擊模態框外部關閉
-     modal.addEventListener('click', function(e) {
-         if (e.target === modal) {
-             closeMatchModal(modal);
-         }
-     });
-     
-     // ESC鍵關閉
-     const handleKeyPress = function(e) {
-         if (e.key === 'Escape') {
-             closeMatchModal(modal);
-             document.removeEventListener('keydown', handleKeyPress);
-         }
-     };
-     document.addEventListener('keydown', handleKeyPress);
+    iframe.srcdoc = previewHTML;
+
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(iframe);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    // 確保模態框顯示 - 使用和main.js相同的動畫邏輯
+    setTimeout(function () {
+        modal.classList.add('visible');
+        modalContent.style.transform = 'scale(1)';
+        iframe.style.opacity = '1';
+    }, 10);
+
+    // 點擊模態框外部關閉
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            closeMatchModal(modal);
+        }
+    });
+
+    // ESC鍵關閉
+    const handleKeyPress = function (e) {
+        if (e.key === 'Escape') {
+            closeMatchModal(modal);
+            document.removeEventListener('keydown', handleKeyPress);
+        }
+    };
+    document.addEventListener('keydown', handleKeyPress);
 }
 
 // 關閉模態框的函數 - 使用和main.js相同的邏輯
 function closeMatchModal(modal) {
     modal.classList.remove('visible');
-    
+
     // 等待動畫完成後再移除元素
     setTimeout(() => {
         if (document.body.contains(modal)) {
