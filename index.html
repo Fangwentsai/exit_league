@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
     <title>難找的聯賽 | 雙北飛鏢比賽 - 最有趣的飛鏢聯賽 (第五季進行中)</title>
-    <meta name="keywords" content="台北飛鏢比賽,新北飛鏢比賽,台北飛鏢聯賽,新北飛鏢聯賽,雙北飛鏢,永和飛鏢,中永和飛鏢,難找的聯賽,飛鏢比賽報名,飛鏢聯賽,台灣飛鏢,飛鏢愛好者,飛鏢社群,501飛鏢,Cricket飛鏢,飛鏢排行榜,飛鏢成績,Phoenix飛鏢,Dartslive飛鏢">
-    <meta name="description" content="台北新北地區最受歡迎的飛鏢聯賽「難找的聯賽」！位於永和，鄰近台北市，交通便利。我們提供佛系又專業的比賽環境，無論新手或高手都能同樂。第五季火熱開打中，歡迎雙北飛鏢愛好者加入！">
+    <meta name="keywords"
+        content="台北飛鏢比賽,新北飛鏢比賽,台北飛鏢聯賽,新北飛鏢聯賽,雙北飛鏢,永和飛鏢,中永和飛鏢,難找的聯賽,飛鏢比賽報名,飛鏢聯賽,台灣飛鏢,飛鏢愛好者,飛鏢社群,501飛鏢,Cricket飛鏢,飛鏢排行榜,飛鏢成績,Phoenix飛鏢,Dartslive飛鏢">
+    <meta name="description"
+        content="台北新北地區最受歡迎的飛鏢聯賽「難找的聯賽」！位於永和，鄰近台北市，交通便利。我們提供佛系又專業的比賽環境，無論新手或高手都能同樂。第五季火熱開打中，歡迎雙北飛鏢愛好者加入！">
     <meta name="author" content="Jesse Tsai">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yhdarts.com/">
@@ -18,65 +21,137 @@
     <meta property="og:description" content="台北新北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市，交通便利。佛系又專業的比賽環境，新手高手都能同樂。第五季火熱開打中！">
     <meta property="og:image" content="https://yhdarts.com/images/banner.png">
     <meta property="og:locale" content="zh_TW">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://yhdarts.com/">
     <meta name="twitter:title" content="難找的聯賽 | 雙北飛鏢比賽">
     <meta name="twitter:description" content="雙北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市。第五季火熱開打中！">
     <meta name="twitter:image" content="https://yhdarts.com/images/banner.png">
-    
+
     <!-- 其他SEO相關 -->
     <meta name="theme-color" content="#dc3545">
     <link rel="canonical" href="https://yhdarts.com/">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    
+
     <!-- 關鍵 CSS 內嵌，減少轉譯封鎖 -->
     <style>
         /* 關鍵 CSS - 首屏內容所需 */
-        body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f5f5f5}
-        .header-section{background:#dc3545;padding:20px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-        .main-title{color:#fff;font-size:28px;text-align:center;margin:0}
-        .hamburger-btn{position:fixed;top:15px;left:15px;width:40px;height:40px;background:#dc3545;border-radius:8px;cursor:pointer;z-index:1001;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}
-        .hamburger-line{width:24px;height:3px;background:#fff;border-radius:2px;transition:all 0.3s}
-        .content-container{max-width:1200px;margin:20px auto;padding:0 15px}
-        .sidebar{position:fixed;left:-280px;top:0;width:280px;height:100%;background:#fff;box-shadow:2px 0 5px rgba(0,0,0,0.1);z-index:1002;transition:left 0.3s;overflow-y:auto}
-        .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;display:none}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f5
+        }
+
+        .header-section {
+            background: #dc3545;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+        }
+
+        .main-title {
+            color: #fff;
+            font-size: 28px;
+            text-align: center;
+            margin: 0
+        }
+
+        .hamburger-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: #dc3545;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px
+        }
+
+        .hamburger-line {
+            width: 24px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px
+        }
+
+        .sidebar {
+            position: fixed;
+            left: -280px;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1002;
+            transition: left 0.3s;
+            overflow-y: auto
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none
+        }
     </style>
-    
+
     <!-- 完整 CSS 非同步載入 -->
     <link rel="preload" href="styles/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles/index.css"></noscript>
-    
+    <noscript>
+        <link rel="stylesheet" href="styles/index.css">
+    </noscript>
+
     <!-- 字體優化：預連接 + 非同步載入 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- 使用 media="print" 技巧非同步載入字體 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
+            rel="stylesheet">
+    </noscript>
+
     <!-- GTM 已移至延遲載入腳本（body 底部），改善性能 -->
-    
+
     <!-- Event snippet for 網頁瀏覽 (1) conversion page -->
     <script>
-    function gtag_report_conversion(url) {
-      var callback = function () {
-        if (typeof(url) != 'undefined') {
-          window.location = url;
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof (url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-17514530743/PWRNCNSo5ZAbELePyp9B',
+                'event_callback': callback
+            });
+            return false;
         }
-      };
-      gtag('event', 'conversion', {
-          'send_to': 'AW-17514530743/PWRNCNSo5ZAbELePyp9B',
-          'event_callback': callback
-      });
-      return false;
-    }
     </script>
-    
+
     <!-- jQuery 延遲載入，不阻塞渲染 -->
     <script src="scripts/jquery-3.6.0.min.js" defer></script>
     <!-- <script src="scripts/index.js"></script> -->
-    
+
     <!-- JSON-LD 結構化數據 -->
     <script type="application/ld+json">
     {
@@ -116,6 +191,7 @@
     }
     </script>
 </head>
+
 <body>
     <!-- 漢堡選單按鈕 -->
     <div class="hamburger-btn">
@@ -128,7 +204,7 @@
     <div class="sidebar">
         <div class="sidebar-nav">
             <div class="sidebar-btn" data-page="news">聯賽公告</div>
-            
+
             <!-- 賽程選項 -->
             <div class="sidebar-btn" data-page="schedule">每週賽程</div>
             <div class="sidebar-submenu">
@@ -137,7 +213,7 @@
                 <div class="sidebar-btn submenu-item" data-page="scheduleS4">第四屆</div>
                 <div class="sidebar-btn submenu-item" data-page="schedule">第三屆</div>
             </div>
-            
+
             <!-- 排名選項 -->
             <div class="sidebar-btn" data-page="rank">聯賽排名</div>
             <div class="sidebar-submenu">
@@ -146,9 +222,9 @@
                 <div class="sidebar-btn submenu-item" data-page="rankS4">第四屆</div>
                 <div class="sidebar-btn submenu-item" data-page="rank">第三屆</div>
             </div>
-            
+
             <div class="sidebar-btn" data-page="rule">聯賽規則</div>
-            
+
             <!-- 賽事照片選項 -->
             <div class="sidebar-btn" data-page="awards">賽事照片</div>
 
@@ -177,7 +253,8 @@
             </div>
             
             <!-- 管理後台連結 -->
-            <div class="sidebar-btn admin-link" onclick="window.open('pages/admin.html', '_blank')">管理後台<br/>(Beta)</div>
+            <div class="sidebar-btn admin-link" onclick="window.open('pages/admin.html', '_blank')">管理後台<br />(Beta)
+            </div>
         </div>
         <!-- 一些沒意義的宣告頁 -->
         </br>
@@ -204,7 +281,7 @@
     <!-- 內容區域 -->
     <div class="content-container">
         <div id="contentArea"></div>
-        
+
         <div class="footer">
             <div>
                 <div class="sidebar-btn" data-page="privacy">隱私政策</div> |
@@ -231,7 +308,7 @@
             <iframe src="pages/s5_playoffs.html?v=20251224" class="match-iframe"></iframe>
         </div>
     </div>
-    
+
     <!-- 獎勵榮譽榜模態窗口 -->
     <div id="rewardModal" class="match-modal" onclick="if(event.target === this) { closeRewardModal(); }">
         <div class="match-modal-content">
@@ -242,44 +319,45 @@
 
     <!-- 添加主要JavaScript，確保頁面功能正常 - 使用 defer 延遲載入 -->
     <script src="js/main.js?v=20251224" defer></script>
+    <script src="js/match-preview.js?v=20260302" defer></script>
     <script src="js/shopee-carousel.js" defer></script>
-    
+
     <!-- CSS 載入 polyfill -->
     <script>
-    !function(n){if(!window.loadCSS){window.loadCSS=function(){}}var o=loadCSS.relpreload={};if(o.support=function(){try{return n.querySelector('link[rel="preload"]').relList.supports("preload")}catch(e){return!1}},o.poly=function(){for(var e=n.querySelectorAll('link[rel="preload"][as="style"]'),t=0;t<e.length;t++){var r=e[t];r.rel="stylesheet",r.removeAttribute("as")}},!o.support()){o.poly();var e=n.setInterval(o.poly,300);n.addEventListener?n.addEventListener("load",function(){o.poly(),clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){clearInterval(e)})}}(document);
+        !function (n) { if (!window.loadCSS) { window.loadCSS = function () { } } var o = loadCSS.relpreload = {}; if (o.support = function () { try { return n.querySelector('link[rel="preload"]').relList.supports("preload") } catch (e) { return !1 } }, o.poly = function () { for (var e = n.querySelectorAll('link[rel="preload"][as="style"]'), t = 0; t < e.length; t++) { var r = e[t]; r.rel = "stylesheet", r.removeAttribute("as") } }, !o.support()) { o.poly(); var e = n.setInterval(o.poly, 300); n.addEventListener ? n.addEventListener("load", function () { o.poly(), clearInterval(e) }) : n.attachEvent && n.attachEvent("onload", function () { clearInterval(e) }) } }(document);
     </script>
-    
+
     <!-- 延遲載入 GTM - 性能優化 -->
     <script>
-    var gtmID = "AW-17514530743";
-    var googleScriptsLoaded = false;
-    
-    function loadGoogleScripts() {
-        if (googleScriptsLoaded) return;
-        googleScriptsLoaded = true;
-        
-        // 載入 GTM / GA4
-        var scriptGTM = document.createElement('script');
-        scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
-        scriptGTM.async = true;
-        document.head.appendChild(scriptGTM);
-        
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', gtmID);
-        
-        console.log("✅ GTM 延遲載入完成！");
-    }
-    
-    // 觸發條件：使用者互動時載入
-    window.addEventListener('mousemove', loadGoogleScripts, {passive: true, once: true});
-    window.addEventListener('touchstart', loadGoogleScripts, {passive: true, once: true});
-    window.addEventListener('scroll', loadGoogleScripts, {passive: true, once: true});
-    
-    // 保險機制：4 秒後自動載入
-    setTimeout(loadGoogleScripts, 4000);
+        var gtmID = "AW-17514530743";
+        var googleScriptsLoaded = false;
+
+        function loadGoogleScripts() {
+            if (googleScriptsLoaded) return;
+            googleScriptsLoaded = true;
+
+            // 載入 GTM / GA4
+            var scriptGTM = document.createElement('script');
+            scriptGTM.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtmID;
+            scriptGTM.async = true;
+            document.head.appendChild(scriptGTM);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', gtmID);
+
+            console.log("✅ GTM 延遲載入完成！");
+        }
+
+        // 觸發條件：使用者互動時載入
+        window.addEventListener('mousemove', loadGoogleScripts, { passive: true, once: true });
+        window.addEventListener('touchstart', loadGoogleScripts, { passive: true, once: true });
+        window.addEventListener('scroll', loadGoogleScripts, { passive: true, once: true });
+
+        // 保險機制：4 秒後自動載入
+        setTimeout(loadGoogleScripts, 4000);
     </script>
 </body>
-</html>
 
+</html>

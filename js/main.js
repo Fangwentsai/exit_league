@@ -662,8 +662,8 @@ function parseDate(dateStr) {
     let year, month, day;
 
     if (parts.length === 2) {
-        // 格式：M/D 或 MM/DD，使用當前年份
-        year = new Date().getFullYear();
+        // 格式：M/D 或 MM/DD，第六季固定使用2026年
+        year = 2026;
         month = parseInt(parts[0], 10) - 1;
         day = parseInt(parts[1], 10);
     } else if (parts.length === 3) {
@@ -723,8 +723,22 @@ function generateMatchesHTML(matches) {
             gameResultPath = `game_result/season6/g${gameNumber}.html`;
 
             // 如果有分數，添加可點擊的類和數據屬性
-            const dataAttr = hasScores ? `data-game-url="${gameResultPath}"` : '';
-            const clickableClass = hasScores ? 'clickable-match' : '';
+            // 未打比賽：檢查日期，比賽隔天起不顯示預覽
+            let showPreview = false;
+            if (!hasScores && match.date) {
+                const matchDate = parseDate(match.date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                if (matchDate && matchDate >= today) {
+                    showPreview = true;
+                }
+            }
+            const dataAttr = hasScores
+                ? `data-game-url="${gameResultPath}"`
+                : showPreview ? `data-team1="${match.team1}" data-team2="${match.team2}"` : '';
+            const clickableClass = hasScores
+                ? 'clickable-match'
+                : showPreview ? 'clickable-match preview-match' : '';
 
             html += `
                 <div class="match ${clickableClass}" ${dataAttr}>
@@ -737,7 +751,7 @@ function generateMatchesHTML(matches) {
                             <div class="team-name">${match.team1}</div>
                             <div class="score">${match.score1 || ''}</div>
                         </div>
-                        <div class="vs">vs</div>
+                        <div class="vs">${showPreview ? '<div style="font-size:14px;color:#dc3545;font-weight:700;letter-spacing:1px;">Preview</div>' : ''}vs</div>
                         <div class="team team2">
                             <div class="team-name">${match.team2}</div>
                             <div class="score">${match.score2 || ''}</div>
@@ -872,12 +886,21 @@ function generateMatchesHTML(matches) {
             match.parentNode.replaceChild(newMatch, match);
 
             newMatch.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 const gameUrl = this.getAttribute('data-game-url');
-                console.log('點擊比賽, URL:', gameUrl);
                 if (gameUrl) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    // 已完成的比賽：打開比賽結果
+                    console.log('點擊比賽, URL:', gameUrl);
                     showMatchDetails(gameUrl);
+                } else if (this.classList.contains('preview-match')) {
+                    // 未完成的比賽：打開名單預覽
+                    const team1 = this.getAttribute('data-team1');
+                    const team2 = this.getAttribute('data-team2');
+                    console.log('點擊預覽比賽:', team1, 'vs', team2);
+                    if (typeof openMatchPreview === 'function') {
+                        openMatchPreview(team1, team2);
+                    }
                 }
             });
         });
