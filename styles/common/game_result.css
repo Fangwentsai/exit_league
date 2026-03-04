@@ -94,14 +94,16 @@ body {
 
 .game-table th:first-child,
 .game-table td:first-child {
-    width: 30%;  /* 賽局欄位 */
+    width: 30%;
+    /* 賽局欄位 */
 }
 
 .game-table th:nth-child(2),
 .game-table td:nth-child(2),
 .game-table th:nth-child(3),
 .game-table td:nth-child(3) {
-    width: 35%;  /* 主隊和客隊欄位 */
+    width: 35%;
+    /* 主隊和客隊欄位 */
 }
 
 .game-table th,
@@ -181,26 +183,23 @@ body {
     position: relative;
     text-align: center;
     vertical-align: middle;
-    padding: 8px 6px 8px 38px !important; /* 左側添加空間以容納勝利圖標 */
+    padding: 8px 6px !important;
+    z-index: 1;
 }
 
-/* 多人賽的勝方標示 - 使用特定的類別替代:has選擇器 */
-.winner-multiline {
-    padding-left: 42px !important; /* 有換行時增加左側間距 */
-}
-
-/* 勝利圖標 */
+/* 勝利圖標 - 左上角浮水印 */
 .winner-icon {
     position: absolute;
-    top: 50%; /* 定位在垂直中間 */
-    left: 4px; /* 左側位置 */
-    width: 30px;
-    height: 30px;
-    transform: translateY(-50%); /* 垂直居中對齊 */
+    top: 2px;
+    left: 6%;
+    width: 37.5px;
+    height: 37.5px;
     background-image: url(../../images/winner.png);
     background-size: contain;
     background-repeat: no-repeat;
-    z-index: 5; /* 將圖標放在文字上方以確保可見 */
+    opacity: 1;
+    z-index: 0;
+    pointer-events: none;
 }
 
 /* 表格基本樣式 */
@@ -273,12 +272,13 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+
     .stats-table th,
     .stats-table td {
         padding: 6px 3px;
         font-size: 14px;
     }
-    
+
     .stats-btn {
         padding: 6px 12px;
         min-width: 80px;
@@ -322,7 +322,7 @@ body {
     border-collapse: collapse;
     font-size: 12px;
     background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .score-table th,
@@ -357,17 +357,18 @@ body {
 /* 為小屏幕設備調整勝利圖標 */
 @media screen and (max-width: 480px) {
     .winner {
-        padding: 8px 6px 8px 32px !important; /* 小屏幕上減少左側空間 */
+        padding: 8px 6px 8px 32px !important;
+        /* 小屏幕上減少左側空間 */
     }
-    
+
     .winner-multiline {
-        padding-left: 36px !important; /* 小屏幕上的多行文字左側間距 */
+        padding-left: 36px !important;
+        /* 小屏幕上的多行文字左側間距 */
     }
-    
+
     .winner-icon {
-        width: 24px; /* 小屏幕上縮小圖標 */
-        height: 24px;
-        left: 3px; /* 調整左側間距 */
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -378,7 +379,7 @@ body {
     margin: 20px auto;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .banner-container {
@@ -407,7 +408,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
     padding: 15px;
     color: white;
 }
@@ -417,13 +418,13 @@ body {
     font-weight: bold;
     margin-bottom: 5px;
     color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .banner-description {
     font-size: 12px;
-    color: rgba(255,255,255,0.9);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 /* 為iPhone 12 Pro等中等寬度設備設置特殊樣式 */
@@ -433,21 +434,21 @@ body {
         min-width: 60px;
         font-size: 11px;
     }
-    
+
     .game-table th,
     .game-table td {
         padding: 5px 3px;
         font-size: 9pt;
     }
-    
+
     .banner-container {
         height: 120px;
     }
-    
+
     .banner-title {
         font-size: 14px;
     }
-    
+
     .banner-description {
         font-size: 11px;
     }
@@ -458,11 +459,11 @@ body {
     .banner-container {
         height: 180px;
     }
-    
+
     .banner-title {
         font-size: 18px;
     }
-    
+
     .banner-description {
         font-size: 14px;
     }
