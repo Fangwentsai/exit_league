@@ -234,6 +234,9 @@ body {
     font-weight: bold;
     font-size: 1.05em;
     padding: 14px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 /* 表格雙數行背景色 */
