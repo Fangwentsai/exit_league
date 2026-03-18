@@ -3,7 +3,6 @@
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
-    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     margin-bottom: 20px;
     position: relative;
@@ -235,15 +234,6 @@ body {
     font-weight: bold;
     font-size: 1.05em;
     padding: 14px 10px;
-    position: sticky;
-    top: 32px;
-    z-index: 10;
-}
-
-/* 讓 sticky header 在被 fetch 注入主頁時也能正常運作 */
-.content-wrapper.sticky-enabled {
-    overflow-x: visible;
-    overflow-y: visible;
 }
 
 /* 表格雙數行背景色 */

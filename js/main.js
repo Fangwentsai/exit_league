@@ -1643,20 +1643,6 @@ async function loadScheduleData(page) {
             tableBody.innerHTML = tableContent;
             debugLog('表格內容已更新');
 
-            // 啟用表頭 sticky 功能
-            const contentWrapper = document.querySelector('.content-wrapper');
-            if (contentWrapper) {
-                contentWrapper.classList.add('sticky-enabled');
-            }
-            // 動態計算 sticky top（固定 header 高度）
-            const headerSection = document.querySelector('.header-section');
-            if (headerSection) {
-                const headerHeight = headerSection.offsetHeight || 32;
-                document.querySelectorAll('.schedule-table th').forEach(th => {
-                    th.style.top = headerHeight + 'px';
-                });
-            }
-
             // 添加日期單元格的點擊事件
             document.querySelectorAll('.clickable-date').forEach(dateElement => {
                 dateElement.addEventListener('click', function (e) {
