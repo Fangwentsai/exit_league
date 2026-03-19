@@ -834,8 +834,13 @@ function generateMatchesHTML(matches) {
             
             .team-name {
                 font-weight: bold;
-                font-size: 16px;
+                font-size: clamp(11.5px, 3.5vw, 16px);
                 margin-bottom: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+                letter-spacing: -0.2px;
             }
             
             .score {
@@ -939,11 +944,11 @@ function parseScheduleData(values, season = 'SEASON4') {
             result.push({
                 gameCode: gameCode,
                 date: row[1] || '',
-                team1: row[2] || '',  // C欄：客場隊伍
+                team1: (row[2] || '').replace(/\r?\n|\r/g, ""),  // C欄：客場隊伍
                 score1: row[3] || '',  // D欄：客場分數
                 vs: row[4] || 'vs',    // E欄：vs
                 score2: row[5] || '',  // F欄：主場分數
-                team2: row[6] || '',   // G欄：主場隊伍
+                team2: (row[6] || '').replace(/\r?\n|\r/g, ""),   // G欄：主場隊伍
                 venue: row[7] || ''    // H欄：比賽地點
             });
         }
