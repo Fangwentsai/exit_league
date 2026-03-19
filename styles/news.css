@@ -157,13 +157,14 @@ body {
 
 /* 隊伍名稱樣式 */
 .team-col .team-name {
-    font-size: 14px;
+    font-size: clamp(10.5px, 3.2vw, 14px);
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
     transition: color 0.2s ease;
+    letter-spacing: -0.2px;
 }
 
 .match-item:hover .team-col .team-name {
@@ -200,7 +201,8 @@ body {
     }
     
     .team-col .team-name {
-        font-size: 13px;
+        font-size: 12.5px;
+        letter-spacing: -0.3px;
     }
     
     .team-col .score {
@@ -235,7 +237,8 @@ body {
     }
     
     .team-col .team-name {
-        font-size: 13px;
+        font-size: 12px;
+        letter-spacing: -0.3px;
     }
     
     .team-left .team-name,
@@ -276,7 +279,8 @@ body {
     }
     
     .team-col .team-name {
-        font-size: 12px;
+        font-size: 11.5px;
+        letter-spacing: -0.4px;
     }
     
     .team-col .score {
@@ -316,7 +320,8 @@ body {
     }
     
     .team-col .team-name {
-        font-size: 12px;
+        font-size: 11px;
+        letter-spacing: -0.5px;
     }
     
     .team-col .score {
@@ -331,7 +336,8 @@ body {
 /* 超小螢幕設備(320px) */
 @media screen and (max-width: 320px) {
     .team-col .team-name {
-        font-size: 11px;
+        font-size: 10px;
+        letter-spacing: -0.5px;
     }
     
     .team-col .score {
