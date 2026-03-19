@@ -9,12 +9,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
+.news-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    /* CSS Containment 優化 */
-    contain: layout style;
+    /* 已移除 contain: layout 避免影響 sticky 定位 */
 }
 
 .upcoming-matches {
@@ -573,7 +572,7 @@ body {
 }
 
 /* 新聞頁面容器優化 */
-.container {
+.news-container {
     min-height: auto !important;
     /* margin-bottom: 20px !important; */
     padding-bottom: 20px !important;

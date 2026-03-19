@@ -31,7 +31,8 @@ body::-webkit-scrollbar {
     left: 0;
     width: 100%;
     margin: 0;
-    height: 32px;
+    padding: 0;
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +41,9 @@ body::-webkit-scrollbar {
 
 .main-title {
     margin: 0;
-    font-size: 30px;
+    padding: 0;
+    font-size: 24px;
+    line-height: 48px;
     font-weight: bold;
     width: 100%;
     text-align: center;
@@ -243,8 +246,9 @@ body::-webkit-scrollbar {
 /* 內容區域需要添加上方間距，避免被固定標題擋住 */
 .content-container {
     max-width: 1000px;
-    margin: 40px auto 5px auto;
+    margin: 48px auto 5px auto;
     padding: 10px;
+    padding-top: 0;
 }
 
 /* 內容區域 */
@@ -279,7 +283,7 @@ body::-webkit-scrollbar {
 /* 漢堡按鈕樣式 */
 .hamburger-btn {
     position: fixed;
-    top: 20px;
+    top: 14px;
     left: 15px;
     width: 25px;
     height: 20px;

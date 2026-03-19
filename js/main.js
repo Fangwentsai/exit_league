@@ -366,6 +366,7 @@ function setupHamburgerMenu() {
             const isClosing = sidebar.classList.contains('active');
             hamburger.classList.toggle('active');
             sidebar.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
             if (overlay) {
                 overlay.classList.toggle('active');
             }
@@ -382,6 +383,7 @@ function setupHamburgerMenu() {
                 hamburger.classList.remove('active');
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
+                document.body.classList.remove('menu-open');
                 closeAllSubmenus();
             });
         }
@@ -444,6 +446,7 @@ function closeSidebar() {
     if (sidebar) sidebar.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
     if (hamburger) hamburger.classList.remove('active');
+    document.body.classList.remove('menu-open');
 
     // 關閉所有子選單
     document.querySelectorAll('.sidebar-submenu').forEach(menu => {
@@ -474,8 +477,9 @@ async function loadContent(page, anchor = null, pushState = true) {
     // 預加載當前頁面所需資源
     await preloadResources(page);
 
-    // 構建頁面路徑
-    const pagePath = `pages/${page}.html`;
+    // 構建頁面路徑 (強制清除快取)
+    const timestamp = new Date().getTime();
+    const pagePath = `pages/${page}.html?v=${timestamp}`;
     debugLog('準備載入頁面:', pagePath);
 
     // 讀取頁面內容
@@ -2809,12 +2813,6 @@ function goToCarouselImage(index) {
 function nextCarouselImage() {
     const previousIndex = currentCarouselIndex;
     currentCarouselIndex = (currentCarouselIndex + 1) % carouselImages.length;
-    console.log(`🔄 照片切換: ${previousIndex + 1} → ${currentCarouselIndex + 1} (共${carouselImages.length}張)`);
-
-    // 如果回到第一張，顯示循環提示
-    if (previousIndex === carouselImages.length - 1 && currentCarouselIndex === 0) {
-        console.log('🔁 照片輪播已循環回到第一張');
-    }
 
     loadCarouselImage(currentCarouselIndex);
 }

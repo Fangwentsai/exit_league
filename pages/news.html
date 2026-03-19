@@ -66,7 +66,6 @@
         }
     </script>
 
-
     <!-- 預載入關鍵 CSS 以改善 LCP -->
     <link rel="preload" href="../styles/news.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
@@ -725,11 +724,96 @@
                 left: 15px;
             }
         }
+
+        /* ========== 手機版快速導航按鈕 ========== */
+        .mobile-quick-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-quick-nav {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                margin-top: -20px;
+                
+                /* Full bleed 滿版效果 */
+                width: 100vw !important;
+                max-width: 100vw !important;
+                margin-left: calc(50% - 50vw) !important;
+                margin-right: 0 !important;
+
+                position: relative;
+                height: 40px !important;
+            }
+            .mobile-quick-nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100% !important;
+                padding: 0 !important;
+                background-color: #dc3545;
+                color: #fff;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 700;
+                transition: background-color 0.2s ease;
+            }
+
+            .photo-carousel {
+                margin-top: 0 !important;
+                
+                /* Full bleed 滿版效果 */
+                width: 100vw !important;
+                max-width: 100vw !important;
+                margin-left: calc(50% - 50vw) !important;
+                margin-right: 0 !important;
+
+                border-radius: 0 !important;
+                margin-bottom: 20px !important;
+            }
+
+            /* 當漢堡選單開啟時隱藏 */
+            body.menu-open .mobile-quick-nav {
+                display: none !important;
+            }
+
+            .mobile-quick-nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px 0;
+                background-color: #dc3545;
+                color: #fff;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 0px;
+                transition: background-color 0.2s ease;
+            }
+
+            .mobile-quick-nav a:active {
+                background-color: #b02a37;
+            }
+
+            .mobile-quick-nav .nav-arrow {
+                margin-right: 3px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="news-container">
+
+        <!-- 手機版快速導航按鈕 -->
+        <div class="mobile-quick-nav">
+            <a href="javascript:void(0)" onclick="window.loadContent('scheduleS6')"><span class="nav-arrow">▸</span>賽程</a>
+            <a href="javascript:void(0)" onclick="window.loadContent('rankS6')"><span class="nav-arrow">▸</span>排名</a>
+            <a href="javascript:void(0)" onclick="const ns = document.getElementById('news-section'); if(ns) { window.scrollTo({top: ns.getBoundingClientRect().top + window.pageYOffset - 65, behavior: 'smooth'}); }"><span class="nav-arrow">▸</span>戰報</a>
+            <a href="javascript:void(0)" onclick="window.open('pages/admin.html', '_blank')"><span class="nav-arrow">▸</span>後台</a>
+        </div>
 
         <!-- 照片輪播區塊 -->
         <div class="photo-carousel">
@@ -751,6 +835,7 @@
                 </div>
             </div>
         </div>
+        <!-- 照片輪播區塊 -->
 
         <!-- 第五季成績公告 Banner (CSS 版本，避免圖片失真) - 暫時隱藏 -->
         <button class="reward-banner" onclick="window.openRewardModal();" style="display: none !important;">
@@ -797,7 +882,7 @@
                     <div class="matches-date" id="upcomingDate">載入中...</div>
                     <span class="expand-icon">➕</span>
                 </div>
-                <div class="matches-content expanded" id="upcomingMatchesContent">
+                <div class="matches-content collapsed" id="upcomingMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
                 </div>
             </div>
@@ -983,7 +1068,7 @@
             </div>
         </div>
         <!-- 新聞區塊 -->
-        <div class="news-section" data-ad-client-ignore="true">
+        <div class="news-section" id="news-section" data-ad-client-ignore="true">
             <h2 class="section-title">賽事新聞</h2>
             <div class="news-content" id="newsContent">
                 <div class="news-item collapsible">
@@ -1280,5 +1365,4 @@
         setTimeout(loadGoogleAnalytics, 4000);
     </script>
 </body>
-
 </html>
