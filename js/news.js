@@ -274,10 +274,10 @@ async function loadMatches() {
                     if (row.length >= 5 && row[0] && row[2] && row[5]) {
                         const date = row[0] ? row[0].trim() : '';        // O欄 - 日期
                         const gameNumber = row[1] ? row[1].trim() : '';  // P欄 - 比賽號碼
-                        const awayTeam = row[2] ? row[2].trim() : '';    // Q欄 - 客隊
+                        const awayTeam = row[2] ? row[2].trim().replace(/\r?\n|\r/g, "") : '';    // Q欄 - 客隊
                         const awayScore = row[3] ? row[3].trim() : '';   // R欄 - 客隊分數
                         const homeScore = row[4] ? row[4].trim() : '';   // S欄 - 主隊分數
-                        const homeTeam = row[5] ? row[5].trim() : '';    // T欄 - 主隊
+                        const homeTeam = row[5] ? row[5].trim().replace(/\r?\n|\r/g, "") : '';    // T欄 - 主隊
                         const venue = row[6] ? row[6].trim() : '';       // U欄 - 場地
 
                         // 必須有日期、客隊和主隊才算有效的比賽
