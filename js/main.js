@@ -1754,6 +1754,13 @@ function showMatchDetails(gameUrl) {
         e.stopPropagation();
         closeMatchModal(modal);
     });
+    
+    // 預防 iOS Ghost Click 觸發底層按鈕
+    closeButton.addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMatchModal(modal);
+    });
 
     // 創建iframe來加載比賽結果頁面
     const iframe = document.createElement('iframe');
@@ -1777,6 +1784,9 @@ function showMatchDetails(gameUrl) {
 
     // 添加到頁面
     document.body.appendChild(modal);
+    
+    // 鎖定背景滾動
+    document.body.style.overflow = 'hidden';
 
     // 確保模態框顯示
     setTimeout(function () {
@@ -1787,6 +1797,17 @@ function showMatchDetails(gameUrl) {
     // 添加點擊模態框背景關閉的功能
     modal.addEventListener('click', function (e) {
         if (e.target === modal) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMatchModal(modal);
+        }
+    });
+
+    // 預防 iOS Ghost Click
+    modal.addEventListener('touchend', function (e) {
+        if (e.target === modal) {
+            e.preventDefault();
+            e.stopPropagation();
             closeMatchModal(modal);
         }
     });
@@ -1806,13 +1827,19 @@ function showMatchDetails(gameUrl) {
 // 關閉模態框
 function closeMatchModal(modal) {
     modal.classList.remove('visible');
+    document.body.style.overflow = ''; // 恢復背景滾動
+
+    // 暫時禁用 body 的點擊，徹底防止 mobile ghost click 觸發底下的按鈕
+    const originalPointerEvents = document.body.style.pointerEvents;
+    document.body.style.pointerEvents = 'none';
 
     // 等待動畫完成後再移除元素
     setTimeout(() => {
         if (document.body.contains(modal)) {
             document.body.removeChild(modal);
         }
-    }, 300);
+        document.body.style.pointerEvents = originalPointerEvents;
+    }, 400); // 延長至 400ms 確保蓋過 ghost click 延遲
 }
 
 // 以下是原main.js中的筛选函数，為避免與filter.js衝突，將它们重命名
