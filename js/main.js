@@ -1738,9 +1738,10 @@ function showMatchDetails(gameUrl) {
     overlay.id = 'matchDetailOverlay';
     overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10002;display:flex;justify-content:center;align-items:center;padding:10px;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;';
 
-    // 建立 card（可滾動容器，同 match-preview-card）
+    // 建立 card（明確給 85vh 高度，讓子元素可正確算尺寸）
     const card = document.createElement('div');
-    card.style.cssText = 'background:#fff;border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);-webkit-overflow-scrolling:touch;position:relative;';
+    card.id = 'matchDetailCard';
+    card.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:visible;display:flex;flex-direction:column;';
 
     // 載入中畫面
     card.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">載入中...</div>';
@@ -1762,6 +1763,15 @@ function showMatchDetails(gameUrl) {
         if (e.target === overlay) _closeDetailOverlay(overlay);
     });
 
+    // 攔截 overlay 上的 touchmove，防止 iOS 底層頁面跟著滑動
+    overlay.addEventListener('touchmove', function (e) {
+        e.stopPropagation();
+        // 只有在 scrollWrap 內部才允許捲動，其餘位置完全阻擋
+        if (!e.target.closest || !e.target.closest('#matchDetailScrollWrap')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
     // ESC 關閉
     function onEsc(e) {
         if (e.key === 'Escape') { _closeDetailOverlay(overlay); document.removeEventListener('keydown', onEsc); }
@@ -1773,9 +1783,10 @@ function showMatchDetails(gameUrl) {
     card.style.overflow = 'visible'; // 讓按鈕可以超出卡片邊界
     card.innerHTML = closeHtml;
 
-    // 建立滾動容器，負責 iOS 原生滑動 (改回正常 in-flow 確保外層不會 collapse)
+    // 建立滾動容器，負責 iOS 原生滑動
     var scrollWrap = document.createElement('div');
-    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
+    scrollWrap.id = 'matchDetailScrollWrap';
+    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:scroll;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
     // 使用 iframe 以確保 game_result.js 等獨立腳本能存取全域 document 正常運作
     var iframe = document.createElement('iframe');

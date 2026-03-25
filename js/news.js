@@ -662,6 +662,14 @@ function showMatchDetails(gameUrl) {
         if (e.target === overlay) _closeDetailOverlay(overlay);
     });
 
+    // 攔截 overlay 上的 touchmove，防止 iOS 底層頁面跟著滑動
+    overlay.addEventListener('touchmove', function (e) {
+        e.stopPropagation();
+        if (!e.target.closest || !e.target.closest('#matchDetailScrollWrap')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
     function onEsc(e) {
         if (e.key === 'Escape') { _closeDetailOverlay(overlay); document.removeEventListener('keydown', onEsc); }
     }
@@ -674,7 +682,8 @@ function showMatchDetails(gameUrl) {
 
     // 建立滾動容器，負責 iOS 原生滑動
     var scrollWrap = document.createElement('div');
-    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
+    scrollWrap.id = 'matchDetailScrollWrap';
+    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:scroll;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
     // 使用 iframe 以確保 game_result.js 等獨立腳本能存取全域 document 正常運作
     var iframe = document.createElement('iframe');
