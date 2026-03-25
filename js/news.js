@@ -647,23 +647,20 @@ function showMatchDetails(gameUrl) {
     modal.className = 'match-modal';
     modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;justify-content:center;align-items:center;opacity:0;transition:opacity 0.3s ease;';
 
-    // 建立模態框內容
+    // 建立模態框內容容器
     const modalContent = document.createElement('div');
-    modalContent.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:hidden;';
 
     // 建立 iframe
     const iframe = document.createElement('iframe');
     iframe.src = gameUrl;
-    iframe.style.cssText = 'width:100%;height:100%;border:none;';
 
-    // 組裝（先放 iframe）
-    modalContent.appendChild(iframe);
-    modal.appendChild(modalContent);
+    // 組裝 — 使用 header bar 結構，避免 iframe 攔截按鈕點擊
+    const headerBar = document.createElement('div');
+    headerBar.style.cssText = 'display:flex;justify-content:flex-end;align-items:center;padding:6px 10px;background:#333;border-radius:8px 8px 0 0;flex-shrink:0;';
 
-    // 建立關閉按鈕（掛在 modal 最外層，position:fixed，不受 overflow 影響）
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '\u00d7';
-    closeBtn.style.cssText = 'position:fixed;top:15px;right:15px;width:36px;height:36px;font-size:24px;z-index:2147483647;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);';
+    closeBtn.style.cssText = 'width:30px;height:30px;font-size:20px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);flex-shrink:0;';
     closeBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -674,7 +671,19 @@ function showMatchDetails(gameUrl) {
         e.stopPropagation();
         closeMatchModal(modal);
     });
-    modal.appendChild(closeBtn);
+    headerBar.appendChild(closeBtn);
+
+    // iframe 容器（支援 iOS 滾動）
+    const iframeWrap = document.createElement('div');
+    iframeWrap.style.cssText = 'flex:1;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:0 0 8px 8px;';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+    iframeWrap.appendChild(iframe);
+
+    // modalContent 改為 flex column
+    modalContent.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:hidden;';
+    modalContent.appendChild(headerBar);
+    modalContent.appendChild(iframeWrap);
+    modal.appendChild(modalContent);
 
     // 加到 body
     document.body.appendChild(modal);

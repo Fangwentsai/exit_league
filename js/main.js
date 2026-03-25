@@ -1777,28 +1777,26 @@ function showMatchDetails(gameUrl) {
         </div>`;
     };
 
-    // 組裝模態框
-    modalContent.appendChild(iframe);
-    modal.appendChild(modalContent);
+    // 組裝模態框 — 使用 header bar 結構，避免 iframe 攔截 close 按鈕的點擊
+    // 建立 header bar（獨立於 iframe 之外）
+    const headerBar = document.createElement('div');
+    headerBar.style.cssText = 'display:flex;justify-content:flex-end;align-items:center;padding:6px 10px;background:#333;border-radius:8px 8px 0 0;flex-shrink:0;';
 
-    // 獨立處理關閉按鈕，確保它不受內部 iframe 或 overflow 影響，並放大點擊區塊
-    closeButton.style.position = 'fixed';
-    closeButton.style.top = '15px';
-    closeButton.style.right = '15px';
-    closeButton.style.width = '36px';
-    closeButton.style.height = '36px';
-    closeButton.style.fontSize = '24px';
-    closeButton.style.zIndex = '2147483647';
-    closeButton.style.display = 'flex';
-    closeButton.style.justifyContent = 'center';
-    closeButton.style.alignItems = 'center';
-    closeButton.style.backgroundColor = '#f44336';
-    closeButton.style.color = '#fff';
-    closeButton.style.border = 'none';
-    closeButton.style.borderRadius = '50%';
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.boxShadow = '0 2px 5px rgba(0,0,0,0.3)';
-    modal.appendChild(closeButton);
+    // 關閉按鈕放在 header bar 內
+    closeButton.style.cssText = 'width:30px;height:30px;font-size:20px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);flex-shrink:0;';
+    headerBar.appendChild(closeButton);
+
+    // iframe 容器（支援 iOS 滾動）
+    const iframeWrap = document.createElement('div');
+    iframeWrap.style.cssText = 'flex:1;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:0 0 8px 8px;';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+    iframeWrap.appendChild(iframe);
+
+    // modalContent 改為 flex column
+    modalContent.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:hidden;';
+    modalContent.appendChild(headerBar);
+    modalContent.appendChild(iframeWrap);
+    modal.appendChild(modalContent);
 
     // 添加到頁面
     document.body.appendChild(modal);
