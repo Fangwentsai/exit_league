@@ -645,7 +645,8 @@ function showMatchDetails(gameUrl) {
     overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10002;display:flex;justify-content:center;align-items:center;padding:10px;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;';
 
     var card = document.createElement('div');
-    card.style.cssText = 'background:#fff;border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);-webkit-overflow-scrolling:touch;position:relative;';
+    card.id = 'matchDetailCard';
+    card.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:visible;display:flex;flex-direction:column;';
     card.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">載入中...</div>';
 
     overlay.appendChild(card);
@@ -673,7 +674,7 @@ function showMatchDetails(gameUrl) {
 
     // 建立滾動容器，負責 iOS 原生滑動
     var scrollWrap = document.createElement('div');
-    scrollWrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
+    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
     // 使用 iframe 以確保 game_result.js 等獨立腳本能存取全域 document 正常運作
     var iframe = document.createElement('iframe');

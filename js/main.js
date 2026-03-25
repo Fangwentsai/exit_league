@@ -1773,9 +1773,9 @@ function showMatchDetails(gameUrl) {
     card.style.overflow = 'visible'; // 讓按鈕可以超出卡片邊界
     card.innerHTML = closeHtml;
 
-    // 建立滾動容器，負責 iOS 原生滑動
+    // 建立滾動容器，負責 iOS 原生滑動 (改回正常 in-flow 確保外層不會 collapse)
     var scrollWrap = document.createElement('div');
-    scrollWrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
+    scrollWrap.style.cssText = 'position:relative;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
     // 使用 iframe 以確保 game_result.js 等獨立腳本能存取全域 document 正常運作
     var iframe = document.createElement('iframe');
