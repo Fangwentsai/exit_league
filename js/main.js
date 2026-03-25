@@ -1768,78 +1768,54 @@ function showMatchDetails(gameUrl) {
     }
     document.addEventListener('keydown', onEsc);
 
-    // Fetch 遊戲結果 HTML
-    fetch(gameUrl)
-        .then(function (resp) {
-            if (!resp.ok) throw new Error('HTTP ' + resp.status);
-            return resp.text();
-        })
-        .then(function (html) {
-            // 解析 HTML，只取 body 內容
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
-            var body = doc.body;
+    // 建立關閉按鈕，浮動樣式 (絕對定位於 modalContent 右上角)
+    var closeHtml = '<button id="matchDetailCloseBtn" style="position:absolute;top:-12px;right:-12px;width:30px;height:30px;font-size:20px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);z-index:10005;">✕</button>';
+    card.style.overflow = 'visible'; // 讓按鈕可以超出卡片邊界
+    card.innerHTML = closeHtml;
 
-            // 建立關閉按鈕，浮動樣式 (絕對定位於 modalContent 右上角)
-            var closeHtml = '<button id="matchDetailCloseBtn" style="position:absolute;top:-12px;right:-12px;width:30px;height:30px;font-size:20px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);z-index:10005;">✕</button>';
-            card.style.overflow = 'visible'; // 讓按鈕可以超出卡片邊界
-            card.innerHTML = closeHtml;
+    // 建立滾動容器，負責 iOS 原生滑動
+    var scrollWrap = document.createElement('div');
+    scrollWrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
-            // 建立滾動容器，負責 iOS 原生滑動
-            var scrollWrap = document.createElement('div');
-            scrollWrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
+    // 使用 iframe 以確保 game_result.js 等獨立腳本能存取全域 document 正常運作
+    var iframe = document.createElement('iframe');
+    iframe.src = gameUrl;
+    iframe.style.cssText = 'width:100%;border:none;display:block;min-height:100%;';
+    iframe.scrolling = 'no'; // 禁用 iframe 內部滾動，由外層 scrollWrap 處理原生滾動
 
-            // 使用 Shadow DOM 完美隔離 CSS，避免 game_result.css 污染首頁
-            var shadowHost = document.createElement('div');
-            var shadowRoot = shadowHost.attachShadow({ mode: 'open' });
-
-            // 將原本抓到的 CSS 加進 Shadow DOM
-            var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
-            cssLinks.forEach(function (link) {
-                var href = link.getAttribute('href');
-                if (href && href.includes('game_result.css')) {
-                    var newLink = document.createElement('link');
-                    newLink.rel = 'stylesheet';
-                    newLink.href = 'styles/common/game_result.css';
-                    shadowRoot.appendChild(newLink);
-                }
-            });
-
-            // 將解析出來的 body 內容放進 Shadow DOM 中，並補上原本 body 的基礎樣式
-            var shadowBody = document.createElement('div');
-            shadowBody.style.cssText = 'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.5;color:#333;';
-            shadowBody.innerHTML = body.innerHTML;
-            shadowRoot.appendChild(shadowBody);
-
-            scrollWrap.appendChild(shadowHost);
-            card.appendChild(scrollWrap);
-
-            // 綁定關閉按鈕
-            var closeBtn = document.getElementById('matchDetailCloseBtn');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    _closeDetailOverlay(overlay);
-                });
+    // 等待 iframe 載入後，動態調整其高度，讓外層可以原生滾動
+    iframe.onload = function() {
+        try {
+            var doc = iframe.contentWindow.document;
+            var updateHeight = function() {
+                var h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight, doc.body.offsetHeight);
+                iframe.style.height = h + 20 + 'px'; // 加一點緩衝避免裁切
+            };
+            updateHeight();
+            // 監聽動態產生的表格高度變化
+            if (iframe.contentWindow.ResizeObserver) {
+                new iframe.contentWindow.ResizeObserver(updateHeight).observe(doc.body);
+            } else {
+                setInterval(updateHeight, 500);
             }
+        } catch(e) {
+            console.warn('Iframe 跨域或無法調整高度:', e);
+            iframe.scrolling = 'yes'; // 失敗時退回基本滾動
+        }
+    };
 
-            // 執行 game_result 頁面的 script（如果有的話）
-            var scripts = doc.querySelectorAll('script');
-            scripts.forEach(function (s) {
-                if (s.textContent && !s.src) {
-                    try { new Function(s.textContent)(); } catch (err) { console.warn('script 執行錯誤:', err); }
-                }
-            });
-        })
-        .catch(function (err) {
-            console.error('載入比賽詳情失敗:', err);
-            card.innerHTML = '<div style="padding:30px;text-align:center;">' +
-                '<h3>載入失敗</h3>' +
-                '<p>' + err.message + '</p>' +
-                '<a href="' + gameUrl + '" target="_blank" style="color:#dc3545;">在新分頁開啟</a>' +
-                '</div>';
+    scrollWrap.appendChild(iframe);
+    card.appendChild(scrollWrap);
+
+    // 綁定關閉按鈕
+    var closeBtn = document.getElementById('matchDetailCloseBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            _closeDetailOverlay(overlay);
         });
+    }
 }
 
 // 關閉比賽詳情彈窗
