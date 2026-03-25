@@ -543,7 +543,7 @@ function createMatchesHTML(matchDay) {
 
         // 添加onclick屬性來打開模態窗口，僅在有比分時才添加點擊事件
         const hasScores = team1Info.score && team2Info.score;
-        const clickAttr = hasScores ? `onclick="showMatchDetails('game_result/season6/${game.game_number}.html')"` : '';
+        const clickAttr = hasScores ? `onclick="showMatchDetails('../game_result/season6/${game.game_number}.html')"` : '';
         const cursorStyle = hasScores ? 'style="cursor: pointer;"' : '';
 
         // 使用表格布局確保對齊
@@ -623,5 +623,96 @@ document.addEventListener('keydown', function (e) {
         if (modal && modal.classList.contains('visible')) {
             closeS5RewardModal();
         }
+        // 也處理比賽詳情模態框
+        const matchModal = document.querySelector('.match-modal');
+        if (matchModal) {
+            closeMatchModal(matchModal);
+        }
     }
 });
+
+// ========== 比賽詳情 Modal（news.html 專用）==========
+// news.html 不載入 main.js，所以需要獨立定義此函數
+function showMatchDetails(gameUrl) {
+    console.log('✅ [news.js] showMatchDetails:', gameUrl);
+
+    // 移除既有模態框
+    const existingModal = document.querySelector('.match-modal');
+    if (existingModal && existingModal.parentNode) {
+        existingModal.parentNode.removeChild(existingModal);
+    }
+
+    // 建立模態框容器
+    const modal = document.createElement('div');
+    modal.className = 'match-modal';
+    modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;justify-content:center;align-items:center;opacity:0;transition:opacity 0.3s ease;';
+
+    // 建立模態框內容
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:hidden;';
+
+    // 建立 iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = gameUrl;
+    iframe.style.cssText = 'width:100%;height:100%;border:none;';
+
+    // 組裝（先放 iframe）
+    modalContent.appendChild(iframe);
+    modal.appendChild(modalContent);
+
+    // 建立關閉按鈕（掛在 modal 最外層，position:fixed，不受 overflow 影響）
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '\u00d7';
+    closeBtn.style.cssText = 'position:fixed;top:15px;right:15px;width:36px;height:36px;font-size:24px;z-index:2147483647;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);';
+    closeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMatchModal(modal);
+    });
+    closeBtn.addEventListener('touchend', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMatchModal(modal);
+    });
+    modal.appendChild(closeBtn);
+
+    // 加到 body
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+
+    // 淡入
+    setTimeout(function () { modal.style.opacity = '1'; }, 10);
+
+    // 點擊背景關閉
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMatchModal(modal);
+        }
+    });
+    modal.addEventListener('touchend', function (e) {
+        if (e.target === modal) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMatchModal(modal);
+        }
+    });
+}
+
+// 關閉比賽詳情模態框
+function closeMatchModal(modal) {
+    modal.style.opacity = '0';
+    document.body.style.overflow = '';
+
+    // 暫時禁止 pointer events 防止 ghost click
+    const prev = document.body.style.pointerEvents;
+    document.body.style.pointerEvents = 'none';
+
+    setTimeout(function () {
+        if (document.body.contains(modal)) {
+            document.body.removeChild(modal);
+        }
+        document.body.style.pointerEvents = prev;
+    }, 400);
+}
