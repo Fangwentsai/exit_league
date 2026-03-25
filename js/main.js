@@ -1787,7 +1787,7 @@ function showMatchDetails(gameUrl) {
 
             // 建立滾動容器，負責 iOS 原生滑動
             var scrollWrap = document.createElement('div');
-            scrollWrap.style.cssText = 'width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:12px;background-color:#f5f5f5;';
+            scrollWrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background-color:#f5f5f5;';
 
             // 使用 Shadow DOM 完美隔離 CSS，避免 game_result.css 污染首頁
             var shadowHost = document.createElement('div');
