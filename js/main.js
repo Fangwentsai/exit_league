@@ -1784,17 +1784,13 @@ function showMatchDetails(gameUrl) {
             var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
             cssLinks.forEach(function (link) {
                 var href = link.getAttribute('href');
-                if (href && !document.querySelector('link[href*="game_result"]')) {
+                if (href && href.includes('game_result.css') && !document.querySelector('link[href*="game_result.css"]')) {
                     var newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    // 修正相對路徑
-                    if (href.startsWith('../../')) {
-                        newLink.href = href.replace('../../', '');
-                    } else if (href.startsWith('../')) {
-                        newLink.href = href.replace('../', '');
-                    } else {
-                        newLink.href = href;
-                    }
+                    
+                    // 統一轉為從根目錄出發的絕對路徑
+                    // 因為首頁是在 /，所以可以直接用 styles/common/game_result.css
+                    newLink.href = 'styles/common/game_result.css';
                     document.head.appendChild(newLink);
                 }
             });

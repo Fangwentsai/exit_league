@@ -674,14 +674,17 @@ function showMatchDetails(gameUrl) {
         .then(function (html) {
             var parser = new DOMParser();
             var doc = parser.parseFromString(html, 'text/html');
-
+            // 取出 CSS 連結
             var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
             cssLinks.forEach(function (link) {
                 var href = link.getAttribute('href');
-                if (href && !document.querySelector('link[href*="game_result"]')) {
+                if (href && href.includes('game_result.css') && !document.querySelector('link[href*="game_result.css"]')) {
                     var newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    newLink.href = gameUrl.substring(0, gameUrl.lastIndexOf('/') + 1) + href;
+                    
+                    // 統一轉為從根目錄出發的絕對路徑
+                    // news.html 在 pages 資料夾下，所以需要回到上一層
+                    newLink.href = '../styles/common/game_result.css';
                     document.head.appendChild(newLink);
                 }
             });
