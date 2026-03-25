@@ -825,6 +825,9 @@ body {
     padding: 24px;
     max-width: 400px;
     width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     animation: slideIn 0.3s ease;
 }
@@ -847,6 +850,8 @@ body {
     text-align: center;
     color: #333;
     white-space: pre-line;
+    overflow-y: auto;
+    max-height: 60vh;
 }
 
 .custom-dialog-remember {
