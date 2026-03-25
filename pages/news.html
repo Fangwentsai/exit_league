@@ -77,9 +77,20 @@
         !function (n) { if (!window.loadCSS) { window.loadCSS = function () { } } var o = loadCSS.relpreload = {}; if (o.support = function () { try { return n.querySelector('link[rel="preload"]').relList.supports("preload") } catch (e) { return !1 } }, o.poly = function () { for (var e = n.querySelectorAll('link[rel="preload"][as="style"]'), t = 0; t < e.length; t++) { var r = e[t]; r.rel = "stylesheet", r.removeAttribute("as") } }, !o.support()) { o.poly(); var e = n.setInterval(o.poly, 300); n.addEventListener ? n.addEventListener("load", function () { o.poly(), clearInterval(e) }) : n.attachEvent && n.attachEvent("onload", function () { clearInterval(e) }) } }(document);
     </script>
 
+    <!-- CONFIG 設定（原定義在 main.js，news.html 不載入 main.js 所以需要獨立定義）-->
+    <script>
+        const CONFIG = {
+            SEASON6: {
+                SHEET_ID: '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM',
+                API_KEY: 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4',
+                SEASON_FILTER: '6'
+            }
+        };
+    </script>
+
     <!-- 延遲載入 JavaScript（添加時間戳防止快取）-->
-    <script src="../js/news.js?v=20260319" defer></script>
-    <script src="../js/match-preview.js?v=20260319" defer></script>
+    <script src="../js/news.js?v=20260325b" defer></script>
+    <script src="../js/match-preview.js?v=20260325" defer></script>
 
     <style>
         /* ========== 字體顯示優化 ========== */
