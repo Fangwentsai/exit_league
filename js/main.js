@@ -1778,9 +1778,27 @@ function showMatchDetails(gameUrl) {
     };
 
     // 組裝模態框
-    modalContent.appendChild(closeButton);
     modalContent.appendChild(iframe);
     modal.appendChild(modalContent);
+
+    // 獨立處理關閉按鈕，確保它不受內部 iframe 或 overflow 影響，並放大點擊區塊
+    closeButton.style.position = 'fixed';
+    closeButton.style.top = '15px';
+    closeButton.style.right = '15px';
+    closeButton.style.width = '36px';
+    closeButton.style.height = '36px';
+    closeButton.style.fontSize = '24px';
+    closeButton.style.zIndex = '2147483647';
+    closeButton.style.display = 'flex';
+    closeButton.style.justifyContent = 'center';
+    closeButton.style.alignItems = 'center';
+    closeButton.style.backgroundColor = '#f44336';
+    closeButton.style.color = '#fff';
+    closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '50%';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.boxShadow = '0 2px 5px rgba(0,0,0,0.3)';
+    modal.appendChild(closeButton);
 
     // 添加到頁面
     document.body.appendChild(modal);
