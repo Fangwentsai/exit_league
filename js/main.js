@@ -1725,119 +1725,121 @@ async function loadScheduleData(page) {
     }
 }
 
-// 顯示比賽詳情
+// 顯示比賽詳情 — 使用 fetch + inject（不使用 iframe，解決手機滾動與關閉問題）
 function showMatchDetails(gameUrl) {
-    console.log('✅ showMatchDetails (已修復版本) - 顯示比賽詳情:', gameUrl);
+    console.log('✅ showMatchDetails (fetch 版本):', gameUrl);
 
-    // 如果已經存在模態框，先移除（但不要移除季後賽模態窗口）
-    const existingModal = document.querySelector('.match-modal:not(#playoffsModal)');
-    console.log('找到的現有模態窗口:', existingModal);
-    if (existingModal && existingModal.parentNode) {
-        console.log('移除模態窗口:', existingModal);
-        existingModal.parentNode.removeChild(existingModal);
-    }
+    // 移除既有 modal
+    const existingModal = document.getElementById('matchDetailOverlay');
+    if (existingModal) existingModal.remove();
 
-    // 創建模態框容器
-    const modal = document.createElement('div');
-    modal.className = 'match-modal';
+    // 建立 overlay（同 match-preview-overlay 結構）
+    const overlay = document.createElement('div');
+    overlay.id = 'matchDetailOverlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10002;display:flex;justify-content:center;align-items:center;padding:10px;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;';
 
-    // 創建模態框內容
-    const modalContent = document.createElement('div');
-    modalContent.className = 'match-modal-content';
+    // 建立 card（可滾動容器，同 match-preview-card）
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#fff;border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);-webkit-overflow-scrolling:touch;position:relative;';
 
-    // 添加關閉按鈕
-    const closeButton = document.createElement('button');
-    closeButton.className = 'modal-close';
-    closeButton.innerHTML = '&times;';
-    closeButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMatchModal(modal);
-    });
-    
-    // 預防 iOS Ghost Click 觸發底層按鈕
-    closeButton.addEventListener('touchend', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMatchModal(modal);
-    });
+    // 載入中畫面
+    card.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">載入中...</div>';
 
-    // 創建iframe來加載比賽結果頁面
-    const iframe = document.createElement('iframe');
-    iframe.className = 'match-iframe';
-    iframe.src = gameUrl;
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
 
-    // 確保 iframe 加載正常
-    iframe.onerror = function () {
-        console.error('iframe 加載失敗:', gameUrl);
-        iframe.srcdoc = `<div style="padding: 20px; text-align: center;">
-            <h2>加載失敗</h2>
-            <p>無法加載比賽詳情: ${gameUrl}</p>
-            <p><a href="${gameUrl}" target="_blank">嘗試在新標籤頁打開</a></p>
-        </div>`;
-    };
-
-    // 組裝模態框 — 使用 header bar 結構，避免 iframe 攔截 close 按鈕的點擊
-    // 建立 header bar（獨立於 iframe 之外）
-    const headerBar = document.createElement('div');
-    headerBar.style.cssText = 'display:flex;justify-content:flex-end;align-items:center;padding:6px 10px;background:#333;border-radius:8px 8px 0 0;flex-shrink:0;';
-
-    // 關閉按鈕放在 header bar 內
-    closeButton.style.cssText = 'width:30px;height:30px;font-size:20px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);flex-shrink:0;';
-    headerBar.appendChild(closeButton);
-
-    // iframe 容器（支援 iOS 滾動）
-    const iframeWrap = document.createElement('div');
-    iframeWrap.style.cssText = 'flex:1;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:0 0 8px 8px;';
-    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
-    iframeWrap.appendChild(iframe);
-
-    // modalContent 改為 flex column
-    modalContent.style.cssText = 'position:relative;width:90%;max-width:500px;height:85vh;display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.3);overflow:hidden;';
-    modalContent.appendChild(headerBar);
-    modalContent.appendChild(iframeWrap);
-    modal.appendChild(modalContent);
-
-    // 添加到頁面
-    document.body.appendChild(modal);
-    
-    // 鎖定背景滾動
+    // 鎖定背景
     document.body.style.overflow = 'hidden';
 
-    // 確保模態框顯示
-    setTimeout(function () {
-        modal.classList.add('visible');
-        console.log('模態框已添加可見類');
-    }, 10);
-
-    // 添加點擊模態框背景關閉的功能
-    modal.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeMatchModal(modal);
-        }
+    // 淡入
+    requestAnimationFrame(function () {
+        overlay.style.opacity = '1';
+        overlay.style.visibility = 'visible';
     });
 
-    // 預防 iOS Ghost Click
-    modal.addEventListener('touchend', function (e) {
-        if (e.target === modal) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeMatchModal(modal);
-        }
+    // 點擊背景關閉
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) _closeDetailOverlay(overlay);
     });
 
-    // 添加ESC鍵關閉功能
-    const handleKeyDown = function (e) {
-        if (e.key === 'Escape') {
-            if (document.body.contains(modal)) {
-                closeMatchModal(modal);
+    // ESC 關閉
+    function onEsc(e) {
+        if (e.key === 'Escape') { _closeDetailOverlay(overlay); document.removeEventListener('keydown', onEsc); }
+    }
+    document.addEventListener('keydown', onEsc);
+
+    // Fetch 遊戲結果 HTML
+    fetch(gameUrl)
+        .then(function (resp) {
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            return resp.text();
+        })
+        .then(function (html) {
+            // 解析 HTML，只取 body 內容
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var body = doc.body;
+
+            // 取出 CSS 連結
+            var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
+            cssLinks.forEach(function (link) {
+                var href = link.getAttribute('href');
+                if (href && !document.querySelector('link[href*="game_result"]')) {
+                    var newLink = document.createElement('link');
+                    newLink.rel = 'stylesheet';
+                    // 修正相對路徑
+                    if (href.startsWith('../../')) {
+                        newLink.href = href.replace('../../', '');
+                    } else if (href.startsWith('../')) {
+                        newLink.href = href.replace('../', '');
+                    } else {
+                        newLink.href = href;
+                    }
+                    document.head.appendChild(newLink);
+                }
+            });
+
+            // 建立關閉按鈕（和 match-preview 一樣在卡片頂部）
+            var closeHtml = '<div style="display:flex;justify-content:flex-end;padding:8px 10px;position:sticky;top:0;z-index:10;background:rgba(255,255,255,0.95);">' +
+                '<button id="matchDetailCloseBtn" style="width:32px;height:32px;font-size:18px;display:flex;justify-content:center;align-items:center;background:#f44336;color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.3);">✕</button>' +
+                '</div>';
+
+            card.innerHTML = closeHtml + body.innerHTML;
+
+            // 綁定關閉按鈕
+            var closeBtn = document.getElementById('matchDetailCloseBtn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    _closeDetailOverlay(overlay);
+                });
             }
-            document.removeEventListener('keydown', handleKeyDown);
-        }
-    };
-    document.addEventListener('keydown', handleKeyDown);
+
+            // 執行 game_result 頁面的 script（如果有的話）
+            var scripts = doc.querySelectorAll('script');
+            scripts.forEach(function (s) {
+                if (s.textContent && !s.src) {
+                    try { new Function(s.textContent)(); } catch (err) { console.warn('script 執行錯誤:', err); }
+                }
+            });
+        })
+        .catch(function (err) {
+            console.error('載入比賽詳情失敗:', err);
+            card.innerHTML = '<div style="padding:30px;text-align:center;">' +
+                '<h3>載入失敗</h3>' +
+                '<p>' + err.message + '</p>' +
+                '<a href="' + gameUrl + '" target="_blank" style="color:#dc3545;">在新分頁開啟</a>' +
+                '</div>';
+        });
+}
+
+// 關閉比賽詳情彈窗
+function _closeDetailOverlay(overlay) {
+    overlay.style.opacity = '0';
+    overlay.style.visibility = 'hidden';
+    document.body.style.overflow = '';
+    setTimeout(function () { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 300);
 }
 
 // 關閉模態框
