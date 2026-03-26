@@ -129,6 +129,25 @@
         const track = document.getElementById('shopee-game-track');
         if (!track) return;
 
+        // 加入加載中動畫 (Loading Spinner)
+        track.innerHTML = `
+            <div style="width:100%; display:flex; justify-content:center; align-items:center; height:150px;">
+                <div class="shopee-game-spinner"></div>
+                <span style="margin-left:12px; color:#EE4D2D; font-size:14px; font-weight:bold; letter-spacing: 1px;">為您準備專屬推薦...</span>
+            </div>
+            <style>
+                .shopee-game-spinner {
+                    border: 3px solid #f3f3f3;
+                    border-top: 3px solid #EE4D2D;
+                    border-radius: 50%;
+                    width: 24px;
+                    height: 24px;
+                    animation: spin 1s linear infinite;
+                }
+                @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            </style>
+        `;
+
         const products = await fetchProducts();
         shuffled = shuffle(products);
         render(track);
@@ -140,8 +159,34 @@
         if (prev) prev.addEventListener('click', () => { goTo(currentPage - 1); resetAuto(); });
         if (next) next.addEventListener('click', () => { goTo(currentPage + 1); resetAuto(); });
 
+        // 手機手勢滑動 (Swipe)
+        const wrapper = document.querySelector('.shopee-game-track-wrapper');
+        if (wrapper) {
+            let startX = 0;
+            let endX = 0;
+            wrapper.addEventListener('touchstart', e => {
+                startX = e.changedTouches[0].screenX;
+                stopAuto();
+            }, {passive: true});
+            wrapper.addEventListener('touchend', e => {
+                endX = e.changedTouches[0].screenX;
+                handleSwipe(startX, endX);
+                resetAuto();
+            }, {passive: true});
+        }
+
         // resize
         window.addEventListener('resize', debounce(() => { render(track); }, 250));
+    }
+
+    // 處理手勢邏輯
+    function handleSwipe(startX, endX) {
+        const swipeThreshold = 40; // 只要滑動超過 40px 就觸發換頁
+        if (startX - endX > swipeThreshold) {
+            goTo(currentPage + 1); // 往左滑 (手指左移) -> 下一頁
+        } else if (endX - startX > swipeThreshold) {
+            goTo(currentPage - 1); // 往右滑 (手指右移) -> 上一頁
+        }
     }
 
     // ========== 渲染 ==========
