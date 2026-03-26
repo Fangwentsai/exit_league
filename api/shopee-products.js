@@ -222,6 +222,10 @@ module.exports = async function handler(req, res) {
                 .map(([id, image]) => ({ id: Number(id), image }));
                 
             console.log(`✅ 最終找到: ${images.length}/${itemList.length} 張圖`);
+            
+            // 加入快取機制：在 Vercel Edge 節點快取 24 小時（86400 秒），過期後在背景重新驗證（43200 秒）
+            res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=43200');
+            
             return res.status(200).json({ 
                 images, 
                 found: images.length,
