@@ -156,70 +156,55 @@ module.exports = async function handler(req, res) {
     try {
         const { mode = '', keyword = '飛鏢', shop = '', limit = '6', itemIds = '', shopId = '' } = req.query;
 
-        // ===== mode=images：依指定 itemId 清單取圖片 =====
+        // ===== mode=images：多組關鍵字並行搜尋，match itemId 取圖 =====
         if (mode === 'images' && itemIds) {
             const idList = itemIds.split(',').map(s => s.trim()).filter(Boolean);
             const idSet = new Set(idList.map(String));
-            console.log(`\n🖼️ === 取商品圖片 mode=images, ${idList.length} 個 itemId ===`);
+            console.log(`\n🖼️ === mode=images: 用關鍵字搜尋圖片，${idList.length} 個目標 itemId ===`);
 
-            const imageMap = {};
+            // 多組關鍵字覆蓋不同品類（與主頁 shopee-carousel.js 相同機制）
+            const keywords = [
+                'AA Darts Fit Point',
+                'AA Darts Fit Flight',
+                'AA Darts L-Flight',
+                'AA Darts K-FLEX',
+                'AA Darts Fit Shaft',
+                'AA Darts L-Shaft',
+            ];
 
-            // 策略 1：shopOfferV2 批次查（limit 200，盡量涵蓋整家店）
-            try {
-                const data = await callShopeeAPI('/graphql', {
-                    query: `
-                        query ($shopUrl: String, $limit: Int) {
-                            shopOfferV2(shopUrl: $shopUrl, limit: $limit) {
-                                nodes { itemId imageUrl }
-                            }
-                        }
-                    `,
-                    variables: { shopUrl: 'https://shopee.tw/aadarts', limit: 200 }
-                });
-                const nodes = data?.data?.shopOfferV2?.nodes || [];
-                nodes.forEach(n => {
-                    const id = String(n.itemId);
-                    if (idSet.has(id) && n.imageUrl) imageMap[id] = n.imageUrl;
-                });
-                console.log(`📦 shopOfferV2 回傳 ${nodes.length} 筆，匹配 ${Object.keys(imageMap).length} 張圖`);
-            } catch (e) {
-                console.warn('⚠️ shopOfferV2 失敗:', e.message);
-            }
-
-            // 策略 2：對還沒找到圖片的 itemId，用 productOfferV2 逐一關鍵字查詢
-            const missing = idList.filter(id => !imageMap[id]);
-            if (missing.length > 0) {
-                console.log(`🔍 策略2: 補查 ${missing.length} 個缺圖 itemId`);
-                // 並行查詢（每次 5 個一批，避免過多並發）
-                const BATCH = 5;
-                for (let i = 0; i < missing.length; i += BATCH) {
-                    const batch = missing.slice(i, i + BATCH);
-                    await Promise.all(batch.map(async (itemId) => {
-                        try {
-                            const d = await callShopeeAPI('/graphql', {
-                                query: `
-                                    query ($itemId: Int64, $shopId: Int64) {
-                                        productOfferV2(itemId: $itemId, shopId: $shopId) {
-                                            nodes { itemId imageUrl }
-                                        }
+            // 並行搜尋所有關鍵字
+            const allNodes = await Promise.all(
+                keywords.map(async (kw) => {
+                    try {
+                        const d = await callShopeeAPI('/graphql', {
+                            query: `
+                                query ($keyword: String!, $limit: Int, $sortType: Int) {
+                                    productOfferV2(keyword: $keyword, limit: $limit, sortType: $sortType) {
+                                        nodes { itemId imageUrl }
                                     }
-                                `,
-                                variables: { itemId: Number(itemId), shopId: 50984140 }
-                            });
-                            const nodes = d?.data?.productOfferV2?.nodes || [];
-                            nodes.forEach(n => {
-                                const id = String(n.itemId);
-                                if (idSet.has(id) && n.imageUrl) imageMap[id] = n.imageUrl;
-                            });
-                        } catch (e) {
-                            console.warn(`⚠️ itemId ${itemId} 查詢失敗:`, e.message);
-                        }
-                    }));
-                }
-            }
+                                }
+                            `,
+                            variables: { keyword: kw, limit: 20, sortType: 2 }
+                        });
+                        return d?.data?.productOfferV2?.nodes || [];
+                    } catch (e) {
+                        console.warn(`⚠️ 搜尋 "${kw}" 失敗:`, e.message);
+                        return [];
+                    }
+                })
+            );
 
+            // 聚合所有結果，建立 itemId -> imageUrl map
+            const imageMap = {};
+            allNodes.flat().forEach(n => {
+                const id = String(n.itemId);
+                if (idSet.has(id) && n.imageUrl && !imageMap[id]) {
+                    imageMap[id] = n.imageUrl;
+                }
+            });
+
+            console.log(`✅ 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
             const images = idList.map(id => ({ id: Number(id), image: imageMap[id] || '' }));
-            console.log(`✅ 最終: 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
             return res.status(200).json({ images, found: Object.keys(imageMap).length });
         }
 
