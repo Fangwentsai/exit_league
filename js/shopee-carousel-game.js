@@ -71,11 +71,11 @@
         { id: 54601029502, name: 'CONDOR AXE 120 Death or Practice 西哲平 選手款 [Shape]',   price: 380, url: 'https://s.shopee.tw/qf3gfNvQu',  productUrl: 'https://shopee.tw/product/50984140/54601029502',  image: '' },
     ];
 
-    // ========== 向 API 傳入商品名稱取圖片，merge 回 CSV 商品 ==========
-    async function fetchProducts() {
+    // ========== 向 API 傳入商品名稱取圖片，直接更新傳入的 batch 陣列 ==========
+    async function fetchImagesForBatch(batch) {
+        if (!batch || batch.length === 0) return;
         try {
-            // Shopee Affiliate API 較不支援直接傳入 URL，傳入商品精準名稱作為 keyword 搜尋最穩定
-            const itemNamesAndIds = csvProducts.map(p => {
+            const itemNamesAndIds = batch.map(p => {
                 const cleanName = p.name.replace('【AA飛鏢專賣店】', '').trim();
                 return `${p.id}::${cleanName}`;
             }).join('||');
@@ -87,13 +87,12 @@
             if (data.images && data.images.length > 0) {
                 const imageMap = {};
                 data.images.forEach(item => { if (item.image) imageMap[item.id] = item.image; });
-                console.log('✅ Shopee game carousel: 成功取得', Object.keys(imageMap).length, '張商品圖');
-                return csvProducts.map(p => ({ ...p, image: imageMap[p.id] || '' }));
+                batch.forEach(p => {
+                    if (imageMap[p.id]) p.image = imageMap[p.id];
+                });
             }
-            throw new Error(data.error || 'no images');
         } catch (err) {
-            console.warn('⚠️ Shopee game carousel: 圖片 API 失敗，使用 SVG 佔位圖', err.message);
-            return csvProducts;
+            console.warn('⚠️ Shopee chunk fetch failed:', err.message);
         }
     }
 
@@ -148,10 +147,34 @@
             </style>
         `;
 
-        const products = await fetchProducts();
-        shuffled = shuffle(products);
+        // 拆分兩個批次：首批 12 個 (約 20%)，剩餘 46 個
+        // 切分原始陣列以保持每次請求的 URL 完全相同，進而 100% 命中 Vercel 快取
+        const batch1 = csvProducts.slice(0, 12);
+        const batch2 = csvProducts.slice(12);
+
+        // 同時發出請求
+        const p1 = fetchImagesForBatch(batch1);
+        const p2 = fetchImagesForBatch(batch2);
+
+        // 只等待第一批 (約 12 個) 處理完，即刻渲染畫面
+        await p1;
+        
+        // 打亂順序展現給使用者
+        shuffled = shuffle([...csvProducts]);
         render(track);
         startAuto();
+
+        // 在背景等待剩餘的 46 個商品圖片載入
+        p2.then(() => {
+            // 載入完成後，將背景圖偷偷替換掉畫面上還是 SVG 佔位圖的元素
+            batch2.forEach(p => {
+                if (p.image) {
+                    const imgEl = track.querySelector(`.shopee-game-img[data-id="${p.id}"]`);
+                    if (imgEl) imgEl.src = p.image;
+                }
+            });
+            console.log('✅ Shopee 背景剩餘圖片載入完畢與替換完成');
+        });
 
         // 左右按鈕
         const prev = document.getElementById('shopee-game-prev');
@@ -195,7 +218,7 @@
             const img = p.image || placeholderImg(p.name, i);
             return `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="shopee-game-card" onclick="if(window.gtag) gtag('event', 'click_shopee_game_result', { 'event_category': 'Shopee', 'event_label': '${p.name.replace(/'/g, "\\'")}' });">
   <div class="shopee-game-img-wrap">
-    <img src="${img}" alt="${p.name}" class="shopee-game-img" loading="lazy" width="150" height="150"
+    <img src="${img}" data-id="${p.id}" alt="${p.name}" class="shopee-game-img" loading="lazy" width="150" height="150"
          onerror="this.src='${placeholderImg(p.name, i)}'">
   </div>
   <div class="shopee-game-name">${p.name}</div>
