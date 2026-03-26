@@ -172,19 +172,24 @@ module.exports = async function handler(req, res) {
                         const d = await callShopeeAPI('/graphql', {
                             query: `
                                 query ($productLink: String!) {
-                                    productOffer(productLink: $productLink) {
-                                        itemId
-                                        imageUrl
-                                        offerLink
+                                    productOfferV2(productLink: $productLink) {
+                                        nodes {
+                                            itemId
+                                            imageUrl
+                                            offerLink
+                                        }
                                     }
                                 }
                             `,
                             variables: { productLink: productUrl }
                         });
-                        const offer = d?.data?.productOffer;
-                        if (offer?.itemId && offer?.imageUrl) {
-                            imageMap[String(offer.itemId)] = offer.imageUrl;
-                            console.log(`✅ itemId ${offer.itemId}: 取得圖片`);
+                        const nodes = d?.data?.productOfferV2?.nodes;
+                        if (nodes && nodes.length > 0) {
+                            const offer = nodes[0];
+                            if (offer?.itemId && offer?.imageUrl) {
+                                imageMap[String(offer.itemId)] = offer.imageUrl;
+                                console.log(`✅ itemId ${offer.itemId}: 取得圖片`);
+                            }
                         }
                     } catch (e) {
                         console.warn(`⚠️ ${productUrl} 查詢失敗:`, e.message);
