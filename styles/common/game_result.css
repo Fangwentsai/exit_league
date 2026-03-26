@@ -468,3 +468,156 @@ body {
         font-size: 14px;
     }
 }
+
+/* ===== Shopee 商品輪播（game_result 頁面） ===== */
+.shopee-game-carousel {
+    max-width: 800px;
+    margin: 0 auto 0;
+    padding: 14px 14px 10px;
+    background: #fff8f6;
+    border-top: 2px solid #EE4D2D;
+}
+
+.shopee-game-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #EE4D2D;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.shopee-game-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shopee-game-nav-btn {
+    background: #EE4D2D;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.shopee-game-nav-btn:hover {
+    background: #cc3300;
+}
+
+.shopee-game-track-wrapper {
+    overflow: hidden;
+    flex: 1;
+}
+
+.shopee-game-track {
+    display: flex;
+    gap: 12px;
+    transition: transform 0.4s ease;
+    will-change: transform;
+}
+
+.shopee-game-card {
+    flex-shrink: 0;
+    width: calc(50% - 6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #f0ddd9;
+    border-radius: 8px;
+    padding: 8px;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.shopee-game-card:hover {
+    box-shadow: 0 3px 12px rgba(238, 77, 45, 0.18);
+    border-color: #EE4D2D;
+}
+
+.shopee-game-img-wrap {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+}
+
+.shopee-game-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.shopee-game-name {
+    font-size: 11px;
+    color: #333;
+    text-align: center;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: 100%;
+}
+
+.shopee-game-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: #EE4D2D;
+    margin-top: 4px;
+}
+
+.shopee-price-label {
+    font-size: 10px;
+}
+
+.shopee-game-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.shopee-game-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.shopee-game-dot.active {
+    background: #EE4D2D;
+}
+
+@media screen and (min-width: 600px) {
+    .shopee-game-card {
+        width: calc(33.333% - 8px);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .shopee-game-img-wrap,
+    .shopee-game-img {
+        width: 120px;
+        height: 120px;
+    }
+}
