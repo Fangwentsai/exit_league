@@ -154,7 +154,68 @@ module.exports = async function handler(req, res) {
     }
     
     try {
-        const { keyword = '飛鏢', shop = '', limit = '6' } = req.query;
+        const { mode = '', keyword = '飛鏢', shop = '', limit = '6', itemIds = '', shopId = '' } = req.query;
+
+        // ===== mode=images：依指定 itemId 清單取圖片 =====
+        if (mode === 'images' && itemIds) {
+            const idList = itemIds.split(',').map(s => s.trim()).filter(Boolean);
+            const idSet = new Set(idList.map(String));
+            console.log(`\n🖼️ === 取商品圖片 mode=images, ${idList.length} 個 itemId ===`);
+
+            // 用 shopOfferV2 抓整家店（含 imageUrl），再 filter 出指定商品
+            let nodes = [];
+            if (shopId) {
+                const shopUrl = `https://shopee.tw/aadarts`;
+                const data = await callShopeeAPI('/graphql', {
+                    query: `
+                        query ($shopUrl: String, $limit: Int) {
+                            shopOfferV2(shopUrl: $shopUrl, limit: $limit) {
+                                nodes {
+                                    itemId
+                                    imageUrl
+                                }
+                            }
+                        }
+                    `,
+                    variables: { shopUrl, limit: 100 }
+                });
+                nodes = data?.data?.shopOfferV2?.nodes || [];
+            }
+
+            // 也用 productOfferV2 補齊（有些商品可能不在 shopOffer 前100）
+            if (nodes.length < idList.length) {
+                const data2 = await callShopeeAPI('/graphql', {
+                    query: `
+                        query ($keyword: String!, $limit: Int) {
+                            productOfferV2(keyword: $keyword, limit: $limit) {
+                                nodes {
+                                    itemId
+                                    imageUrl
+                                }
+                            }
+                        }
+                    `,
+                    variables: { keyword: 'AA Darts 飛鏢', limit: 50 }
+                });
+                const extra = data2?.data?.productOfferV2?.nodes || [];
+                nodes = [...nodes, ...extra];
+            }
+
+            // 建立 itemId -> imageUrl map，只回傳指定的 id
+            const imageMap = {};
+            nodes.forEach(n => {
+                const id = String(n.itemId);
+                if (idSet.has(id) && n.imageUrl) {
+                    imageMap[id] = n.imageUrl;
+                }
+            });
+
+            const images = idList.map(id => ({ id: Number(id), image: imageMap[id] || '' }));
+            console.log(`✅ 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
+            return res.status(200).json({ images, found: Object.keys(imageMap).length });
+        }
+
+        // ===== 原有模式：回傳完整商品列表 =====
         const limitNum = parseInt(limit, 10);
         
         console.log(`\n🛒 === Shopee API 請求 ===`);
