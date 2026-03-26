@@ -176,7 +176,7 @@
             : `${product.sold} 已售`;
 
         return `
-            <a href="${product.url}" target="_blank" rel="noopener noreferrer" class="shopee-product-card">
+            <a href="${product.url}" target="_blank" rel="noopener noreferrer" class="shopee-product-card" onclick="if(window.gtag) gtag('event', 'click_shopee_index', { 'event_category': 'Shopee', 'event_label': '${product.name.replace(/'/g, "\\'")}' });">
                 <div class="product-image-container">
                     <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" width="100" height="100"
                          onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23EE4D2D%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22 font-family=%22sans-serif%22%3E商品%3C/text%3E%3C/svg%3E';">
