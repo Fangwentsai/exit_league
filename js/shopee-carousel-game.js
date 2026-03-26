@@ -147,20 +147,22 @@
             </style>
         `;
 
-        // 拆分兩個批次：首批 12 個 (約 20%)，剩餘 46 個
-        // 切分原始陣列以保持每次請求的 URL 完全相同，進而 100% 命中 Vercel 快取
-        const batch1 = csvProducts.slice(0, 12);
-        const batch2 = csvProducts.slice(12);
+        // 真隨機載入法 (放棄快取，追求第一頁滿圖且全亂數)
+        // 1. 先將 58 個商品全局洗牌
+        shuffled = shuffle([...csvProducts]);
+        
+        // 2. 擷取洗牌後的前 12 個與後 46 個
+        const batch1 = shuffled.slice(0, 12);
+        const batch2 = shuffled.slice(12);
 
-        // 同時發出請求
+        // 同時發出請求（因為網址每次隨機，快取將失效，約等 1~1.5 秒）
         const p1 = fetchImagesForBatch(batch1);
         const p2 = fetchImagesForBatch(batch2);
 
-        // 只等待第一批 (約 12 個) 處理完，即刻渲染畫面
+        // 只等待第一批 (也就是畫面上最前面的 12 個) 處理完，即刻渲染畫面
         await p1;
         
-        // 打亂順序展現給使用者
-        shuffled = shuffle([...csvProducts]);
+        // 渲染 (前 12 個保證有圖，後 46 個暫時為 SVG)
         render(track);
         startAuto();
 
