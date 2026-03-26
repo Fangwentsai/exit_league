@@ -162,56 +162,64 @@ module.exports = async function handler(req, res) {
             const idSet = new Set(idList.map(String));
             console.log(`\n🖼️ === 取商品圖片 mode=images, ${idList.length} 個 itemId ===`);
 
-            // 用 shopOfferV2 抓整家店（含 imageUrl），再 filter 出指定商品
-            let nodes = [];
-            if (shopId) {
-                const shopUrl = `https://shopee.tw/aadarts`;
+            const imageMap = {};
+
+            // 策略 1：shopOfferV2 批次查（limit 200，盡量涵蓋整家店）
+            try {
                 const data = await callShopeeAPI('/graphql', {
                     query: `
                         query ($shopUrl: String, $limit: Int) {
                             shopOfferV2(shopUrl: $shopUrl, limit: $limit) {
-                                nodes {
-                                    itemId
-                                    imageUrl
-                                }
+                                nodes { itemId imageUrl }
                             }
                         }
                     `,
-                    variables: { shopUrl, limit: 100 }
+                    variables: { shopUrl: 'https://shopee.tw/aadarts', limit: 200 }
                 });
-                nodes = data?.data?.shopOfferV2?.nodes || [];
+                const nodes = data?.data?.shopOfferV2?.nodes || [];
+                nodes.forEach(n => {
+                    const id = String(n.itemId);
+                    if (idSet.has(id) && n.imageUrl) imageMap[id] = n.imageUrl;
+                });
+                console.log(`📦 shopOfferV2 回傳 ${nodes.length} 筆，匹配 ${Object.keys(imageMap).length} 張圖`);
+            } catch (e) {
+                console.warn('⚠️ shopOfferV2 失敗:', e.message);
             }
 
-            // 也用 productOfferV2 補齊（有些商品可能不在 shopOffer 前100）
-            if (nodes.length < idList.length) {
-                const data2 = await callShopeeAPI('/graphql', {
-                    query: `
-                        query ($keyword: String!, $limit: Int) {
-                            productOfferV2(keyword: $keyword, limit: $limit) {
-                                nodes {
-                                    itemId
-                                    imageUrl
-                                }
-                            }
+            // 策略 2：對還沒找到圖片的 itemId，用 productOfferV2 逐一關鍵字查詢
+            const missing = idList.filter(id => !imageMap[id]);
+            if (missing.length > 0) {
+                console.log(`🔍 策略2: 補查 ${missing.length} 個缺圖 itemId`);
+                // 並行查詢（每次 5 個一批，避免過多並發）
+                const BATCH = 5;
+                for (let i = 0; i < missing.length; i += BATCH) {
+                    const batch = missing.slice(i, i + BATCH);
+                    await Promise.all(batch.map(async (itemId) => {
+                        try {
+                            const d = await callShopeeAPI('/graphql', {
+                                query: `
+                                    query ($itemId: Int64, $shopId: Int64) {
+                                        productOfferV2(itemId: $itemId, shopId: $shopId) {
+                                            nodes { itemId imageUrl }
+                                        }
+                                    }
+                                `,
+                                variables: { itemId: Number(itemId), shopId: 50984140 }
+                            });
+                            const nodes = d?.data?.productOfferV2?.nodes || [];
+                            nodes.forEach(n => {
+                                const id = String(n.itemId);
+                                if (idSet.has(id) && n.imageUrl) imageMap[id] = n.imageUrl;
+                            });
+                        } catch (e) {
+                            console.warn(`⚠️ itemId ${itemId} 查詢失敗:`, e.message);
                         }
-                    `,
-                    variables: { keyword: 'AA Darts 飛鏢', limit: 50 }
-                });
-                const extra = data2?.data?.productOfferV2?.nodes || [];
-                nodes = [...nodes, ...extra];
-            }
-
-            // 建立 itemId -> imageUrl map，只回傳指定的 id
-            const imageMap = {};
-            nodes.forEach(n => {
-                const id = String(n.itemId);
-                if (idSet.has(id) && n.imageUrl) {
-                    imageMap[id] = n.imageUrl;
+                    }));
                 }
-            });
+            }
 
             const images = idList.map(id => ({ id: Number(id), image: imageMap[id] || '' }));
-            console.log(`✅ 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
+            console.log(`✅ 最終: 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
             return res.status(200).json({ images, found: Object.keys(imageMap).length });
         }
 
