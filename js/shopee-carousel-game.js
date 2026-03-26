@@ -11,43 +11,43 @@
     // ========== 主商品清單：以 CSV 為主，名稱/價格/推廣連結固定 ==========
     // shopId: 50984140 (AA darts Shop AsiA 飛鏢專賣店)
     const csvProducts = [
-        { id: 868804330,    name: 'Fit Point Plus 50入裝 [2BA]',                         price: 95,  url: 'https://s.shopee.tw/5VQtBWKcVf', image: '' },
-        { id: 868833814,    name: 'L-style Premium Lippoint 30入裝 [2BA]',               price: 133, url: 'https://s.shopee.tw/6L00B3HRoq', image: '' },
-        { id: 903053372,    name: 'L-SHaft Lock Straight New Color 2020 塑膠/鎖桿(粗)',   price: 133, url: 'https://s.shopee.tw/6VJQNMGoTt', image: '' },
-        { id: 25027147618,  name: 'TARGET K-FLEX 素色一體式鏢翼 [Standard]',              price: 247, url: 'https://s.shopee.tw/60N9mRIiUo', image: '' },
-        { id: 13393284902,  name: 'Fit Point Plus SHORT 50入裝 [2BA]',                   price: 95,  url: 'https://s.shopee.tw/6AgZykI59r', image: '' },
-        { id: 28524447808,  name: '【限定】K-FLEX TARGET JAPAN Logo [Standard]',           price: 247, url: 'https://s.shopee.tw/70FgyHEuT2', image: '' },
-        { id: 2514448015,   name: 'L-SHaft Lock Slim New Color 2020 塑膠/鎖桿(細)',       price: 133, url: 'https://s.shopee.tw/7AZ7AaEH85', image: '' },
-        { id: 902648309,    name: 'Fit Flight AIR 薄鏢翼 3入裝 素色 [Shape]',             price: 142, url: 'https://s.shopee.tw/6fcqZfGB90', image: '' },
-        { id: 905309016,    name: 'Fit Shaft Gear Normal 塑膠/粗桿 (Purple)',              price: 161, url: 'https://s.shopee.tw/6pwGlyFXo3', image: '' },
-        { id: 2425955632,   name: 'Fit Shaft Gear Slim 塑膠/細桿 (Yellow)',               price: 161, url: 'https://s.shopee.tw/7fVNlVCN7E', image: '' },
-        { id: 2709255132,   name: 'L-Flight EZ Combined 3入裝 素色鏢翼 [Standard]',       price: 171, url: 'https://s.shopee.tw/7ponxoBjmH', image: '' },
-        { id: 2425916103,   name: 'Fit Shaft Gear Slim 塑膠/細桿 (Orange)',               price: 161, url: 'https://s.shopee.tw/7KsXMtDdnC', image: '' },
-        { id: 26038400230,  name: 'L-Flight EZ Dimple [Standard]',                       price: 171, url: 'https://s.shopee.tw/7VBxZCD0SF', image: '' },
-        { id: 41709116553,  name: 'Fit Flight 馬場善久 BURGER MONSTER 選手款 [Standard]',  price: 180, url: 'https://s.shopee.tw/8Kl4Yj9plQ', image: '' },
-        { id: 26771946818,  name: 'Fit Flight 川上真奈 ver.4 選手款 [Shape]',              price: 180, url: 'https://s.shopee.tw/8V4Ul29CQT', image: '' },
-        { id: 24311767535,  name: 'Fit Flight 厚鏢翼 Japanese Pattern2 [Standard/Shape]', price: 180, url: 'https://s.shopee.tw/808EA7B6RO', image: '' },
-        { id: 25267933019,  name: 'Fit Flight 厚鏢翼 The Modern [Standard/Shape]',        price: 180, url: 'https://s.shopee.tw/8AReMQAT6R', image: '' },
-        { id: 24481606486,  name: 'Fit Flight 柴崎晋之介 Ver.2 選手款 [Shape]',            price: 189, url: 'https://s.shopee.tw/900lLx7IPc', image: '' },
-        { id: 29274463910,  name: 'L-Flight x unicorn PRO 林桃加 ver.1 選手款 [Shape]',   price: 209, url: 'https://s.shopee.tw/9AKBYG6f4f', image: '' },
-        { id: 10030669557,  name: 'L-Flight PRO KAMI 坂口優希恵 ver.1 MIX 選手款 [Shape]',price: 209, url: 'https://s.shopee.tw/8fNuxL8Z5a', image: '' },
-        { id: 28301605320,  name: 'Fit Flight AIR 柴崎晋之介 Ver.2 選手款 [Shape]',        price: 218, url: 'https://s.shopee.tw/8phL9e7vkd', image: '' },
-        { id: 29613894594,  name: 'TARGET K-FLEX NEON 素色一體式鏢翼 [Shape]',            price: 247, url: 'https://s.shopee.tw/9fGS9B4l3o', image: '' },
-        { id: 24443888804,  name: '【限定】K-FLEX TARGET JAPAN Logo [Shape]',              price: 247, url: 'https://s.shopee.tw/9pZsLU47ir', image: '' },
-        { id: 20195963128,  name: 'TARGET K-FLEX RGB Series 一體式素色鏢翼 [Shape]',       price: 247, url: 'https://s.shopee.tw/9KdbkZ61jm', image: '' },
+        { id: 868804330,    name: 'Fit Point Plus 50入裝 [2BA]',                         price: 95,  url: 'https://s.shopee.tw/5VQtBWKcVf', productUrl: 'https://shopee.tw/product/50984140/868804330',    image: '' },
+        { id: 868833814,    name: 'L-style Premium Lippoint 30入裝 [2BA]',               price: 133, url: 'https://s.shopee.tw/6L00B3HRoq', productUrl: 'https://shopee.tw/product/50984140/868833814',    image: '' },
+        { id: 903053372,    name: 'L-SHaft Lock Straight New Color 2020 塑膠/鎖桿(粗)',   price: 133, url: 'https://s.shopee.tw/6VJQNMGoTt', productUrl: 'https://shopee.tw/product/50984140/903053372',    image: '' },
+        { id: 25027147618,  name: 'TARGET K-FLEX 素色一體式鏢翼 [Standard]',              price: 247, url: 'https://s.shopee.tw/60N9mRIiUo', productUrl: 'https://shopee.tw/product/50984140/25027147618',  image: '' },
+        { id: 13393284902,  name: 'Fit Point Plus SHORT 50入裝 [2BA]',                   price: 95,  url: 'https://s.shopee.tw/6AgZykI59r', productUrl: 'https://shopee.tw/product/50984140/13393284902',  image: '' },
+        { id: 28524447808,  name: '【限定】K-FLEX TARGET JAPAN Logo [Standard]',           price: 247, url: 'https://s.shopee.tw/70FgyHEuT2', productUrl: 'https://shopee.tw/product/50984140/28524447808',  image: '' },
+        { id: 2514448015,   name: 'L-SHaft Lock Slim New Color 2020 塑膠/鎖桿(細)',       price: 133, url: 'https://s.shopee.tw/7AZ7AaEH85', productUrl: 'https://shopee.tw/product/50984140/2514448015',   image: '' },
+        { id: 902648309,    name: 'Fit Flight AIR 薄鏢翼 3入裝 素色 [Shape]',             price: 142, url: 'https://s.shopee.tw/6fcqZfGB90', productUrl: 'https://shopee.tw/product/50984140/902648309',    image: '' },
+        { id: 905309016,    name: 'Fit Shaft Gear Normal 塑膠/粗桿 (Purple)',              price: 161, url: 'https://s.shopee.tw/6pwGlyFXo3', productUrl: 'https://shopee.tw/product/50984140/905309016',    image: '' },
+        { id: 2425955632,   name: 'Fit Shaft Gear Slim 塑膠/細桿 (Yellow)',               price: 161, url: 'https://s.shopee.tw/7fVNlVCN7E', productUrl: 'https://shopee.tw/product/50984140/2425955632',   image: '' },
+        { id: 2709255132,   name: 'L-Flight EZ Combined 3入裝 素色鏢翼 [Standard]',       price: 171, url: 'https://s.shopee.tw/7ponxoBjmH', productUrl: 'https://shopee.tw/product/50984140/2709255132',   image: '' },
+        { id: 2425916103,   name: 'Fit Shaft Gear Slim 塑膠/細桿 (Orange)',               price: 161, url: 'https://s.shopee.tw/7KsXMtDdnC', productUrl: 'https://shopee.tw/product/50984140/2425916103',   image: '' },
+        { id: 26038400230,  name: 'L-Flight EZ Dimple [Standard]',                       price: 171, url: 'https://s.shopee.tw/7VBxZCD0SF', productUrl: 'https://shopee.tw/product/50984140/26038400230',  image: '' },
+        { id: 41709116553,  name: 'Fit Flight 馬場善久 BURGER MONSTER 選手款 [Standard]',  price: 180, url: 'https://s.shopee.tw/8Kl4Yj9plQ', productUrl: 'https://shopee.tw/product/50984140/41709116553',  image: '' },
+        { id: 26771946818,  name: 'Fit Flight 川上真奈 ver.4 選手款 [Shape]',              price: 180, url: 'https://s.shopee.tw/8V4Ul29CQT', productUrl: 'https://shopee.tw/product/50984140/26771946818',  image: '' },
+        { id: 24311767535,  name: 'Fit Flight 厚鏢翼 Japanese Pattern2 [Standard/Shape]', price: 180, url: 'https://s.shopee.tw/808EA7B6RO', productUrl: 'https://shopee.tw/product/50984140/24311767535',  image: '' },
+        { id: 25267933019,  name: 'Fit Flight 厚鏢翼 The Modern [Standard/Shape]',        price: 180, url: 'https://s.shopee.tw/8AReMQAT6R', productUrl: 'https://shopee.tw/product/50984140/25267933019',  image: '' },
+        { id: 24481606486,  name: 'Fit Flight 柴崎晋之介 Ver.2 選手款 [Shape]',            price: 189, url: 'https://s.shopee.tw/900lLx7IPc', productUrl: 'https://shopee.tw/product/50984140/24481606486',  image: '' },
+        { id: 29274463910,  name: 'L-Flight x unicorn PRO 林桃加 ver.1 選手款 [Shape]',   price: 209, url: 'https://s.shopee.tw/9AKBYG6f4f', productUrl: 'https://shopee.tw/product/50984140/29274463910',  image: '' },
+        { id: 10030669557,  name: 'L-Flight PRO KAMI 坂口優希恵 ver.1 MIX 選手款 [Shape]',price: 209, url: 'https://s.shopee.tw/8fNuxL8Z5a', productUrl: 'https://shopee.tw/product/50984140/10030669557',  image: '' },
+        { id: 28301605320,  name: 'Fit Flight AIR 柴崎晋之介 Ver.2 選手款 [Shape]',        price: 218, url: 'https://s.shopee.tw/8phL9e7vkd', productUrl: 'https://shopee.tw/product/50984140/28301605320',  image: '' },
+        { id: 29613894594,  name: 'TARGET K-FLEX NEON 素色一體式鏢翼 [Shape]',            price: 247, url: 'https://s.shopee.tw/9fGS9B4l3o', productUrl: 'https://shopee.tw/product/50984140/29613894594',  image: '' },
+        { id: 24443888804,  name: '【限定】K-FLEX TARGET JAPAN Logo [Shape]',              price: 247, url: 'https://s.shopee.tw/9pZsLU47ir', productUrl: 'https://shopee.tw/product/50984140/24443888804',  image: '' },
+        { id: 20195963128,  name: 'TARGET K-FLEX RGB Series 一體式素色鏢翼 [Shape]',       price: 247, url: 'https://s.shopee.tw/9KdbkZ61jm', productUrl: 'https://shopee.tw/product/50984140/20195963128',  image: '' },
     ];
 
-    // ========== 向 API 取圖片，merge 回 CSV 商品（名稱/價格/推廣連結不動）==========
+    // ========== 向 API 傳入商品連結取圖片，merge 回 CSV 商品 ==========
     async function fetchProducts() {
         try {
-            const itemIds = csvProducts.map(p => p.id).join(',');
-            const response = await fetch(`/api/shopee-products?mode=images&itemIds=${itemIds}&shopId=50984140`);
+            const productUrls = csvProducts.map(p => p.productUrl).join(',');
+            const response = await fetch(`/api/shopee-products?mode=images&productUrls=${encodeURIComponent(productUrls)}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             if (data.images && data.images.length > 0) {
                 const imageMap = {};
-                data.images.forEach(item => { imageMap[item.id] = item.image; });
-                console.log('✅ Shopee game carousel: 成功取得', data.images.length, '張商品圖');
+                data.images.forEach(item => { if (item.image) imageMap[item.id] = item.image; });
+                console.log('✅ Shopee game carousel: 成功取得', Object.keys(imageMap).length, '張商品圖');
                 return csvProducts.map(p => ({ ...p, image: imageMap[p.id] || '' }));
             }
             throw new Error('no images');

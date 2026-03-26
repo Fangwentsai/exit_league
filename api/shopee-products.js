@@ -154,58 +154,47 @@ module.exports = async function handler(req, res) {
     }
     
     try {
-        const { mode = '', keyword = '飛鏢', shop = '', limit = '6', itemIds = '', shopId = '' } = req.query;
+        const { mode = '', keyword = '飛鏢', shop = '', limit = '6', itemIds = '', shopId = '', productUrls = '' } = req.query;
 
-        // ===== mode=images：多組關鍵字並行搜尋，match itemId 取圖 =====
-        if (mode === 'images' && itemIds) {
-            const idList = itemIds.split(',').map(s => s.trim()).filter(Boolean);
-            const idSet = new Set(idList.map(String));
-            console.log(`\n🖼️ === mode=images: 用關鍵字搜尋圖片，${idList.length} 個目標 itemId ===`);
+        // ===== mode=images：用直接商品連結查詢 imageUrl =====
+        if (mode === 'images' && productUrls) {
+            const urlList = decodeURIComponent(productUrls).split(',').map(s => s.trim()).filter(Boolean);
+            console.log(`\n🖼️ === mode=images: 直接商品連結查詢，${urlList.length} 個商品 ===`);
 
-            // 多組關鍵字覆蓋不同品類（與主頁 shopee-carousel.js 相同機制）
-            const keywords = [
-                'AA Darts Fit Point',
-                'AA Darts Fit Flight',
-                'AA Darts L-Flight',
-                'AA Darts K-FLEX',
-                'AA Darts Fit Shaft',
-                'AA Darts L-Shaft',
-            ];
+            // 並行查詢（每批 5 個）
+            const BATCH = 5;
+            const imageMap = {}; // productUrl -> { itemId, imageUrl }
 
-            // 並行搜尋所有關鍵字
-            const allNodes = await Promise.all(
-                keywords.map(async (kw) => {
+            for (let i = 0; i < urlList.length; i += BATCH) {
+                const batch = urlList.slice(i, i + BATCH);
+                await Promise.all(batch.map(async (productUrl) => {
                     try {
                         const d = await callShopeeAPI('/graphql', {
                             query: `
-                                query ($keyword: String!, $limit: Int, $sortType: Int) {
-                                    productOfferV2(keyword: $keyword, limit: $limit, sortType: $sortType) {
-                                        nodes { itemId imageUrl }
+                                query ($productLink: String!) {
+                                    productOffer(productLink: $productLink) {
+                                        itemId
+                                        imageUrl
+                                        offerLink
                                     }
                                 }
                             `,
-                            variables: { keyword: kw, limit: 20, sortType: 2 }
+                            variables: { productLink: productUrl }
                         });
-                        return d?.data?.productOfferV2?.nodes || [];
+                        const offer = d?.data?.productOffer;
+                        if (offer?.itemId && offer?.imageUrl) {
+                            imageMap[String(offer.itemId)] = offer.imageUrl;
+                            console.log(`✅ itemId ${offer.itemId}: 取得圖片`);
+                        }
                     } catch (e) {
-                        console.warn(`⚠️ 搜尋 "${kw}" 失敗:`, e.message);
-                        return [];
+                        console.warn(`⚠️ ${productUrl} 查詢失敗:`, e.message);
                     }
-                })
-            );
+                }));
+            }
 
-            // 聚合所有結果，建立 itemId -> imageUrl map
-            const imageMap = {};
-            allNodes.flat().forEach(n => {
-                const id = String(n.itemId);
-                if (idSet.has(id) && n.imageUrl && !imageMap[id]) {
-                    imageMap[id] = n.imageUrl;
-                }
-            });
-
-            console.log(`✅ 找到 ${Object.keys(imageMap).length}/${idList.length} 張圖`);
-            const images = idList.map(id => ({ id: Number(id), image: imageMap[id] || '' }));
-            return res.status(200).json({ images, found: Object.keys(imageMap).length });
+            const images = Object.entries(imageMap).map(([id, image]) => ({ id: Number(id), image }));
+            console.log(`✅ 最終: ${images.length}/${urlList.length} 張圖`);
+            return res.status(200).json({ images, found: images.length });
         }
 
         // ===== 原有模式：回傳完整商品列表 =====
