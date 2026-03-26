@@ -171,8 +171,8 @@ module.exports = async function handler(req, res) {
                     try {
                         const d = await callShopeeAPI('/graphql', {
                             query: `
-                                query ($productLink: String!) {
-                                    productOfferV2(productLink: $productLink) {
+                                query ($keyword: String!) {
+                                    productOfferV2(keyword: $keyword, limit: 1) {
                                         nodes {
                                             itemId
                                             imageUrl
@@ -181,7 +181,7 @@ module.exports = async function handler(req, res) {
                                     }
                                 }
                             `,
-                            variables: { productLink: productUrl }
+                            variables: { keyword: productUrl }
                         });
                         const nodes = d?.data?.productOfferV2?.nodes;
                         if (nodes && nodes.length > 0) {
