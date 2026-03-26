@@ -156,18 +156,32 @@ module.exports = async function handler(req, res) {
     try {
         const { mode = '', keyword = '飛鏢', shop = '', limit = '6', itemIds = '', shopId = '', productUrls = '' } = req.query;
 
-        // ===== mode=images：用直接商品連結查詢 imageUrl =====
-        if (mode === 'images' && productUrls) {
-            const urlList = decodeURIComponent(productUrls).split(',').map(s => s.trim()).filter(Boolean);
-            console.log(`\n🖼️ === mode=images: 直接商品連結查詢，${urlList.length} 個商品 ===`);
+        // ===== mode=images_by_name：用精準商品名稱查詢 imageUrl =====
+        const modeFlag = mode === 'images_by_name' || mode === 'images'; // fallback
+        const itemsPayload = mode === 'images_by_name' ? req.query.itemData : productUrls;
+        
+        if (modeFlag && itemsPayload) {
+            let itemList = [];
+            if (mode === 'images_by_name') {
+                // itemData format: "id1::name1||id2::name2"
+                itemList = decodeURIComponent(itemsPayload).split('||').map(s => {
+                    const [id, name] = s.split('::');
+                    return { id, keyword: name };
+                }).filter(i => i.id && i.keyword);
+                console.log(`\n🖼️ === mode=images_by_name: 精準名稱查詢，${itemList.length} 個商品 ===`);
+            } else {
+                // fallback for old cached clients
+                const urlList = decodeURIComponent(itemsPayload).split(',').map(s => s.trim()).filter(Boolean);
+                itemList = urlList.map(url => ({ id: null, keyword: url }));
+            }
 
-            // 並行查詢（每批 5 個）
-            const BATCH = 5;
-            const imageMap = {}; // productUrl -> { itemId, imageUrl }
+            // 並行查詢（每批 3 個，避免過多並發）
+            const BATCH = 3;
+            const imageMap = {}; // itemId -> imageUrl
 
-            for (let i = 0; i < urlList.length; i += BATCH) {
-                const batch = urlList.slice(i, i + BATCH);
-                await Promise.all(batch.map(async (productUrl) => {
+            for (let i = 0; i < itemList.length; i += BATCH) {
+                const batch = itemList.slice(i, i + BATCH);
+                await Promise.all(batch.map(async ({ id, keyword }) => {
                     try {
                         const d = await callShopeeAPI('/graphql', {
                             query: `
@@ -176,30 +190,43 @@ module.exports = async function handler(req, res) {
                                         nodes {
                                             itemId
                                             imageUrl
-                                            offerLink
                                         }
                                     }
                                 }
                             `,
-                            variables: { keyword: productUrl }
+                            variables: { keyword }
                         });
                         const nodes = d?.data?.productOfferV2?.nodes;
                         if (nodes && nodes.length > 0) {
                             const offer = nodes[0];
-                            if (offer?.itemId && offer?.imageUrl) {
-                                imageMap[String(offer.itemId)] = offer.imageUrl;
-                                console.log(`✅ itemId ${offer.itemId}: 取得圖片`);
+                            if (offer?.imageUrl) {
+                                // 如果有傳 id，就用指定的 id；沒有的話就用回傳的 itemId
+                                const targetId = id || String(offer.itemId);
+                                imageMap[targetId] = offer.imageUrl;
+                                console.log(`✅ 找到圖片: ${keyword.substring(0, 15)}...`);
                             }
+                        } else {
+                            console.log(`❌ 找不到圖片: ${keyword}`);
+                            // 記錄錯誤以便 debug
+                            imageMap.debug = imageMap.debug || [];
+                            imageMap.debug.push(keyword);
                         }
                     } catch (e) {
-                        console.warn(`⚠️ ${productUrl} 查詢失敗:`, e.message);
+                        console.warn(`⚠️ "${keyword}" 查詢失敗:`, e.message);
                     }
                 }));
             }
 
-            const images = Object.entries(imageMap).map(([id, image]) => ({ id: Number(id), image }));
-            console.log(`✅ 最終: ${images.length}/${urlList.length} 張圖`);
-            return res.status(200).json({ images, found: images.length });
+            const images = Object.entries(imageMap)
+                .filter(([k]) => k !== 'debug')
+                .map(([id, image]) => ({ id: Number(id), image }));
+                
+            console.log(`✅ 最終找到: ${images.length}/${itemList.length} 張圖`);
+            return res.status(200).json({ 
+                images, 
+                found: images.length,
+                missing: imageMap.debug || [] // 讓前端看哪些沒找到
+            });
         }
 
         // ===== 原有模式：回傳完整商品列表 =====

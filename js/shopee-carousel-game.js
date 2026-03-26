@@ -71,12 +71,18 @@
         { id: 54601029502, name: 'CONDOR AXE 120 Death or Practice 西哲平 選手款 [Shape]',   price: 380, url: 'https://s.shopee.tw/qf3gfNvQu',  productUrl: 'https://shopee.tw/product/50984140/54601029502',  image: '' },
     ];
 
-    // ========== 向 API 傳入商品連結取圖片，merge 回 CSV 商品 ==========
+    // ========== 向 API 傳入商品名稱取圖片，merge 回 CSV 商品 ==========
     async function fetchProducts() {
         try {
-            const productUrls = csvProducts.map(p => p.productUrl).join(',');
-            const response = await fetch(`/api/shopee-products?mode=images&productUrls=${encodeURIComponent(productUrls)}`);
+            // Shopee Affiliate API 較不支援直接傳入 URL，傳入商品精準名稱作為 keyword 搜尋最穩定
+            const itemNamesAndIds = csvProducts.map(p => {
+                const cleanName = p.name.replace('【AA飛鏢專賣店】', '').trim();
+                return `${p.id}::${cleanName}`;
+            }).join('||');
+            
+            const response = await fetch(`/api/shopee-products?mode=images_by_name&itemData=${encodeURIComponent(itemNamesAndIds)}&shopId=50984140`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
             const data = await response.json();
             if (data.images && data.images.length > 0) {
                 const imageMap = {};
@@ -84,7 +90,7 @@
                 console.log('✅ Shopee game carousel: 成功取得', Object.keys(imageMap).length, '張商品圖');
                 return csvProducts.map(p => ({ ...p, image: imageMap[p.id] || '' }));
             }
-            throw new Error('no images');
+            throw new Error(data.error || 'no images');
         } catch (err) {
             console.warn('⚠️ Shopee game carousel: 圖片 API 失敗，使用 SVG 佔位圖', err.message);
             return csvProducts;
