@@ -20,22 +20,22 @@ body {
     max-width: 800px;
     border-collapse: collapse;
     margin: 10px auto;
-    border: 2px solid #555;
+    border: 1px solid #dee2e6;
 }
 
 .rank-table th,
 .rank-table td {
     padding: 8px;
     text-align: center;
-    border: 1px solid #555;
+    border: 1px solid #dee2e6;
 }
 
 /* 表頭樣式 */
 .header-row th {
-    background-color: #555 !important;
+    background-color: #dc3545 !important;
     color: white !important;
     font-weight: bold;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #b02a37;
 }
 
 /* 響應式設計 */
@@ -126,7 +126,7 @@ body {
 .team-select {
     height: 25px;
     padding: 0 8px;
-    border: 1px solid #555;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     background-color: white;
@@ -143,7 +143,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 0 8px;
-    border: 1px solid #555;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
 }
@@ -152,8 +152,8 @@ body {
 .search-input:focus,
 .team-select:focus {
     outline: none;
-    border-color: #fa363a;
-    box-shadow: 0 0 3px rgba(250, 54, 58, 0.3);
+    border-color: #dc3545;
+    box-shadow: 0 0 3px rgba(220, 53, 69, 0.3);
 }
 
 /* 交替行背景色 */
@@ -161,7 +161,7 @@ body {
 #rankTableBody tr:nth-child(4),
 #rankTableBody tr:nth-child(6),
 #rankTableBody tr:nth-child(8) {
-    background-color: #ebebeb;
+    background-color: #f9f9f9;
     color: #333;
 }
 
@@ -173,7 +173,7 @@ body {
 }
 
 .sortable:hover {
-    background-color: #666;
+    background-color: #c82333;
 }
 
 .sortable.asc::after {
@@ -186,13 +186,17 @@ body {
     font-size: 0.8em;
 }
 
-/* 移除所有狀態的視覺效果 */
+/* 確保排序狀態的視覺效果一致 */
 .sortable:hover,
 .sortable:active,
-.sortable:focus,
+.sortable:focus {
+    background-color: #c82333 !important;
+    color: white !important;
+}
+
 .sortable.asc,
 .sortable.desc {
-    background-color: #555 !important;
+    background-color: #b02a37 !important;
     color: white !important;
 }
 
@@ -237,38 +241,40 @@ body {
 
 .pagination button {
     padding: 5px 10px;
-    border: 1px solid #555;
+    border: 1px solid #ddd;
     background-color: white;
     cursor: pointer;
     border-radius: 3px;
+    color: #333;
 }
 
 .pagination button.active {
-    background-color: #555;
+    background-color: #dc3545;
     color: white;
+    border-color: #dc3545;
 }
 
 .pagination button:hover {
-    background-color: #f0f0f0;
+    background-color: #f8f9fa;
 }
 
 .pagination button.active:hover {
-    background-color: #555;
+    background-color: #c82333;
 }
 
 /* 個人排名表格的交錯背景色 */
 #personalTableBody tr:nth-child(even) {
-    background-color: #e0e0e0;
+    background-color: #f9f9f9;
 }
 
 /* 或者如果要更具體的選擇器 */
 #personalTable tbody tr:nth-child(even) {
-    background-color: #e0e0e0;
+    background-color: #f9f9f9;
 }
 
 /* 確保 hover 效果也能覆蓋整行 */
 #personalTable tr:hover {
-    background-color: #ffd1d1;
+    background-color: #fff0f0;
 }
 
 /* 分頁控制樣式 */
@@ -282,10 +288,11 @@ body {
 
 .pagination-button {
     padding: 5px 10px;
-    border: 1px solid #555;
+    border: 1px solid #ddd;
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
+    color: #333;
 }
 
 .pagination-button:disabled {
@@ -301,17 +308,19 @@ body {
 .reset-button {
     height: 25px;
     padding: 0 12px;
-    border: 1px solid #555;
+    border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
     font-size: 14px;
     min-width: 50px;
     white-space: nowrap;
+    color: #333;
 }
 
 .reset-button:hover {
-    background-color: #e0e0e0;
+    background-color: #f8f9fa;
+    border-color: #bbb;
 }
 
 @media screen and (max-width: 768px) {
@@ -327,17 +336,17 @@ body {
 
 /* 統一 hover 效果 */
 .team-select:hover,
-.search-input:hover,
-.reset-button:hover {
-    border-color: #333;
+.search-input:hover {
+    border-color: #999;
 }
 
 /* 統一 focus 效果 */
 .team-select:focus,
-.search-input:focus {
+.search-input:focus,
+.reset-button:focus {
     outline: none;
-    border-color: #fa363a;
-    box-shadow: 0 0 3px rgba(250, 54, 58, 0.3);
+    border-color: #dc3545;
+    box-shadow: 0 0 3px rgba(220, 53, 69, 0.3);
 }
 
 h3 {

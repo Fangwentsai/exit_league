@@ -525,6 +525,11 @@ async function loadContent(page, anchor = null, pushState = true) {
             else if (page === 'awards') {
                 dataLoadPromise = initializeAwardsPage();
             }
+            else if (page === 'live') {
+                if (typeof checkLiveStream !== 'undefined') {
+                    checkLiveStream();
+                }
+            }
 
             // 等待數據載入完成後再處理錨點
             dataLoadPromise.then(() => {
@@ -1231,9 +1236,7 @@ function initializePersonalRankings(rankings) {
                 <td>${start + index + 1}</td>
                 <td>${row.team}</td>
                 <td>${row.name}</td>
-                <td>${row.wins01}</td>
                 <td>${row.rate01}%</td>
-                <td>${row.winsCR}</td>
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
                 <td>${row.totalRate}%</td>
