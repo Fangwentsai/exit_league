@@ -175,8 +175,8 @@
             ? `${(product.sold / 1000).toFixed(1)}k 已售` 
             : `${product.sold} 已售`;
 
-        // 首頁輪播固定用 sub_id=index
-        const urlWithSubId = product.url + (product.url.includes('?') ? '&' : '?') + 'sub_id=index';
+        // 首頁輪播固定用 sub_id1=index
+        const urlWithSubId = product.url + (product.url.includes('?') ? '&' : '?') + 'sub_id1=index';
 
         return `
             <a href="${urlWithSubId}" target="_blank" rel="noopener noreferrer" class="shopee-product-card" onclick="if(window.gtag) gtag('event', 'click_shopee_product', { 'event_category': 'Shopee', 'event_label': '${product.name.replace(/'/g, "\\'")}', 'shopee_url': '${urlWithSubId}', 'page_source': window.location.pathname });">
