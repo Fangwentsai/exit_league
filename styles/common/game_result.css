@@ -489,6 +489,13 @@ body {
     letter-spacing: 0.5px;
 }
 
+.shopee-game-header img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 .shopee-game-nav {
     display: flex;
     align-items: center;
