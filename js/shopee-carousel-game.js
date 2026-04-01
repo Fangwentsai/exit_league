@@ -279,7 +279,7 @@
     function render(track) {
         track.innerHTML = shuffled.map((p, i) => {
             const img = p.image || placeholderImg(p.name, i);
-            return `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="shopee-game-card" onclick="if(window.gtag) gtag('event', 'click_shopee_game_result', { 'event_category': 'Shopee', 'event_label': '${p.name.replace(/'/g, "\\'")}' });">
+            return `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="shopee-game-card" onclick="if(window.gtag) gtag('event', 'click_shopee_product', { 'event_category': 'Shopee', 'event_label': '${p.name.replace(/'/g, "\\'")}', 'shopee_url': '${p.url}', 'page_source': window.location.pathname });">
   <div class="shopee-game-img-wrap">
     <img src="${img}" data-id="${p.id}" alt="${p.name}" class="shopee-game-img" loading="lazy" width="150" height="150"
          onerror="this.src='${placeholderImg(p.name, i)}'">
