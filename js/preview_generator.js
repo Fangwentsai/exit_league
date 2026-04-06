@@ -406,8 +406,8 @@ initializeStats(awayPlayers, homePlayers);
         if (!homeTeam) return '比賽場地';
 
         const venues = {
-            '人生揪難': '酒窩海盜聯盟',
-            '人生揪亮': '酒窩海盜聯盟',
+            '人生揪難': 'No.5 飛鏢Bar',
+            '人生揪亮': 'No.5 飛鏢Bar',
             'Vivi嘻嘻隊': 'Vivi Bar',
             'Vivi哈哈隊': 'Vivi Bar',
             'Tonight29大四喜': 'Tonight29',
