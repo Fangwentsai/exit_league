@@ -826,7 +826,7 @@ body.news-page {
 }
 
 .news-text.expanded {
-    max-height: 2000px; /* 足夠大的值來容納內容 */
+    max-height: 5000px; /* 足夠大的值來容納內容 */
     padding-top: 20px;
     padding-bottom: 20px;
     opacity: 1;
