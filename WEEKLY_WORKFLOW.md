@@ -8,9 +8,11 @@
 
 | # | 工作項目 | 誰來做 | 耗時 |
 |---|---------|-------|------|
+| 0 | **git pull**（確保本機是最新的） | **人工** | 10 秒 |
 | 1 | 賽後填寫比賽戰報 HTML | **人工** | 15~30 分鐘 |
 | 2 | push 戰報到 GitHub | **人工** | 1 分鐘 |
 | 3 | 執行自動化腳本（更新排行榜 + Google Sheets + push） | **一行指令** | 1 分鐘 |
+| 4 | 撰寫週報戰報（了解戰況後再寫） | **AI** | 5 分鐘 |
 
 ---
 
@@ -31,6 +33,17 @@ exit_league/
 │   ├── weekly_matches.csv        ← 本週賽果備份（自動生成）
 │   └── weekly_players.csv        ← 本週選手數據備份（自動生成）
 └── WEEKLY_WORKFLOW.md            ← 本文件
+```
+
+---
+
+## Step 0：Git Pull（每次開工前必做）
+
+> ⚠️ **不管做什麼，第一步永遠是 pull**。news.html、排行榜、戰報可能已經被其他地方更新過，不先 pull 會衝突。
+
+```bash
+cd /Users/jessetsai_mba/Cursor/exit_league
+git pull origin main
 ```
 
 ---
@@ -131,8 +144,9 @@ bash scripts/weekly_update.sh 61 66
    ├── 個人勝場：personal!T2:V6
    ├── Top Lady：personal!A:N 篩 N=女，G欄排序
    └── 地獄倒霉鬼：personal!W2:Y6
-6. 更新 pages/news.html          ← 排行榜 + 本週新聞草稿
+6. 更新 pages/news.html          ← 排行榜（自動更新）
 7. git add . && git commit && git push
+   ※ 新聞戰報不在這步自動生成，留到 Step 4 由 AI 撰寫
 ```
 
 ### 常用選項
@@ -147,15 +161,31 @@ bash scripts/weekly_update.sh 61 66 --no-push
 
 ---
 
-## Step 3：確認 news.html（選填：潤稿）
+## Step 3：確認排行榜數據
 
-腳本會自動在 `news.html` 最上方插入新聞草稿，格式如下：
+腳本會自動更新 `news.html` 的排行榜表格（團隊排行、個人勝場、Top Lady、地獄倒霉鬼）。
 
-- 本週賽事結果列表
-- 當前排行榜第一名隊伍
-- 個人勝場王
+確認排行榜數字正確後，進入 Step 4。
 
-如需更豐富的新聞內容（帶梗、口語化），可以在 AI 幫你更新 news.html 之後，手動潤稿。
+---
+
+## Step 4：撰寫週報戰報（AI）
+
+> ⚠️ **不要讓腳本自動生成戰報**。自動生成的內容太制式（「各位選手與飛鏢同好們」那種），直接浪費，每次都要重寫。
+
+正確流程：
+1. 把本週排行榜數據（團隊排行、個人勝場、Top Lady、地獄倒霉鬼）貼給 AI
+2. 告訴 AI 本週有什麼特別的事（例如某隊近況好、某選手超車、選手投稿趣事等）
+3. AI 會先看 `game_result/season6/` 了解各隊近期戰績和故事線，再寫戰報
+4. AI 更新 `news.html` 的戰報區塊，並把上一週的戰報改為 collapsed
+5. push 到 GitHub
+
+### 戰報風格要求
+- **口語化、接地氣**：像朋友在聊天，不是新聞稿
+- **有梗有態度**：會吐槽、會開玩笑、幫隊伍加戲
+- **數據用故事帶出**：不要硬列數字，用對比和情緒包裝
+- **拒絕 ChatGPT 味**：不要「各位選手與飛鏢同好們」這種開場
+- 參考 5/20（G85~G90）和 5/28（G91~G96）的戰報風格
 
 ---
 
