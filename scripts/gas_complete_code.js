@@ -39,6 +39,15 @@ function doPost(e) {
       return handleWeeklyUpdate(data);
     }
     
+    // ===== 只寫 data sheet（補寫選手數據用）=====
+    if (data.writeDataOnly && data.playerStats) {
+      var ss3 = SpreadsheetApp.openById(WEEKLY_SHEET_ID);
+      writePlayerDataToSheet(ss3, data.playerStats, data.awayTeam || '', data.homeTeam || '', data.gameDate || '');
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'success', message: '已寫入 data sheet - ' + (data.awayTeam || '') + ' vs ' + (data.homeTeam || '')
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
     // ===== 單格寫入（支援指定 sheet）=====
     if (data.cell && data.value !== undefined && !data.htmlContent) {
       var ss2 = SpreadsheetApp.openById(WEEKLY_SHEET_ID);
@@ -209,8 +218,17 @@ function afterGameUpload(data) {
     }
     
     // 1b: 寫入選手數據到 data 頁籤
-    if (data.playerStats && (data.playerStats.away.length > 0 || data.playerStats.home.length > 0)) {
-      writePlayerDataToSheet(ss, data.playerStats, data.awayTeam, data.homeTeam, data.gameDate || '');
+    var playerStats = data.playerStats;
+    var awayTeam = data.awayTeam || (gameScores ? gameScores.awayTeam : '');
+    var homeTeam = data.homeTeam || (gameScores ? gameScores.homeTeam : '');
+    
+    // 如果前端沒送 playerStats，從 HTML 自動解析
+    if (!playerStats || (playerStats.away.length === 0 && playerStats.home.length === 0)) {
+      playerStats = parsePlayerStatsFromHtml(data.htmlContent);
+    }
+    
+    if (playerStats && (playerStats.away.length > 0 || playerStats.home.length > 0)) {
+      writePlayerDataToSheet(ss, playerStats, awayTeam, homeTeam, data.gameDate || '');
       Logger.log('✅ 已寫入 data 頁籤選手數據');
     }
     
@@ -246,15 +264,17 @@ function writePlayerDataToSheet(ss, playerStats, awayTeam, homeTeam, gameDate) {
   if (lastRow >= 1) { rows.push(['', '', '', '', '', '', '', '']); }
   rows.push([gameDate, '', '', '', '', '', '', '']);
   
+  var header = ['選手', '01出賽', '01勝場', 'CR出賽', 'CR勝場', '合計出賽', '合計勝場', '先攻數'];
+  
   if (playerStats.away && playerStats.away.length > 0) {
-    rows.push(['【' + awayTeam + '】選手', '01出賽', '01勝場', 'CR出賽', 'CR勝場', '合計出賽', '合計勝場', '先攻數']);
+    rows.push(header);
     playerStats.away.forEach(function(p) {
       rows.push([p.name, p.p01, p.w01, p.pCR, p.wCR, p.total, p.wins, p.fa]);
     });
   }
   
   if (playerStats.home && playerStats.home.length > 0) {
-    rows.push(['【' + homeTeam + '】選手', '01出賽', '01勝場', 'CR出賽', 'CR勝場', '合計出賽', '合計勝場', '先攻數']);
+    rows.push(header);
     playerStats.home.forEach(function(p) {
       rows.push([p.name, p.p01, p.w01, p.pCR, p.wCR, p.total, p.wins, p.fa]);
     });
@@ -263,8 +283,94 @@ function writePlayerDataToSheet(ss, playerStats, awayTeam, homeTeam, gameDate) {
   if (rows.length === 0) return;
   
   var startRow = lastRow + 1;
+  // 先把 A 欄設為文字格式，避免 "+0" 被轉成數字 0
+  sheet.getRange(startRow, 1, rows.length, 1).setNumberFormat('@');
   sheet.getRange(startRow, 1, rows.length, 8).setValues(rows);
   Logger.log('✅ data 頁籤：已追加 ' + rows.length + ' 列');
+}
+
+// =====================================================
+// 解析 HTML 選手數據
+// =====================================================
+
+function parsePlayerStatsFromHtml(htmlContent) {
+  try {
+    // 取得 match data：const gXXXMatches = [...]
+    var matchBlock = htmlContent.match(/const \w+Matches = \[([\s\S]*?)\];/);
+    if (!matchBlock) { Logger.log('⚠️ 找不到 match data'); return null; }
+    
+    var matchStr = matchBlock[1];
+    // 逐筆解析 {set:1, type:'01', away:'安安', home:'Mo', firstAttack:'home', winner:'home'}
+    var matchRegex = /\{[^}]*type:\s*'(\w+)'[^}]*away:\s*(\[[^\]]*\]|'[^']*')[^}]*home:\s*(\[[^\]]*\]|'[^']*')[^}]*firstAttack:\s*'(\w+)'[^}]*winner:\s*'(\w+)'/g;
+    var m;
+    var stats = {};
+    
+    while ((m = matchRegex.exec(matchStr)) !== null) {
+      var type = m[1]; // '01' or 'CR'
+      var awayRaw = m[2];
+      var homeRaw = m[3];
+      var firstAttack = m[4];
+      var winner = m[5];
+      
+      // 解析選手名（可能是 '名字' 或 ['名1','名2','名3']）
+      var awayPlayers = parsePlayerNames(awayRaw);
+      var homePlayers = parsePlayerNames(homeRaw);
+      
+      // 統計
+      processPlayers(stats, awayPlayers, 'away', type, firstAttack, winner);
+      processPlayers(stats, homePlayers, 'home', type, firstAttack, winner);
+    }
+    
+    // 分成 away/home 陣列
+    var awayStats = []; var homeStats = [];
+    for (var key in stats) {
+      var s = stats[key];
+      var row = { name: s.name, p01: s.p01, w01: s.w01, pCR: s.pCR, wCR: s.wCR, total: s.total, wins: s.wins, fa: s.fa };
+      if (s.side === 'away') awayStats.push(row);
+      else homeStats.push(row);
+    }
+    
+    if (awayStats.length === 0 && homeStats.length === 0) return null;
+    Logger.log('📊 解析選手: away=' + awayStats.length + ' home=' + homeStats.length);
+    return { away: awayStats, home: homeStats };
+  } catch (e) {
+    Logger.log('❌ parsePlayerStatsFromHtml 錯誤: ' + e.toString());
+    return null;
+  }
+}
+
+function parsePlayerNames(raw) {
+  raw = raw.trim();
+  if (raw.charAt(0) === '[') {
+    // 陣列格式 ['名1', '名2']
+    var names = [];
+    var nameRegex = /'([^']+)'/g;
+    var nm;
+    while ((nm = nameRegex.exec(raw)) !== null) { names.push(nm[1]); }
+    return names;
+  } else {
+    // 單人格式 '名字'
+    var single = raw.match(/'([^']+)'/);
+    return single ? [single[1]] : [];
+  }
+}
+
+function processPlayers(stats, players, side, type, firstAttack, winner) {
+  for (var i = 0; i < players.length; i++) {
+    var name = players[i];
+    var key = side + ':' + name;
+    if (!stats[key]) {
+      stats[key] = { name: name, side: side, p01: 0, w01: 0, pCR: 0, wCR: 0, total: 0, wins: 0, fa: 0 };
+    }
+    var s = stats[key];
+    if (type === '01') { s.p01++; } else { s.pCR++; }
+    s.total++;
+    if (winner === side) {
+      if (type === '01') { s.w01++; } else { s.wCR++; }
+      s.wins++;
+    }
+    if (firstAttack === side) { s.fa++; }
+  }
 }
 
 // =====================================================
