@@ -601,6 +601,13 @@ function checkWeekComplete(ss, currentGameNum) {
         '排行榜已自動更新到 yhdarts.com。\n\n完成場次：' + completedGames.join(', ') + '\n\n請告訴 AI「寫戰報」來生成本週的戰報新聞。\n\n— 難找的聯賽自動化系統'
       );
       Logger.log('📧 已寄送完成通知到 ' + NOTIFY_EMAIL);
+
+      // 自動生成戰報
+      try {
+        generateAndPublishReport(ss, weekStart, weekEnd);
+      } catch (reportErr) {
+        Logger.log('❌ 戰報生成失敗: ' + reportErr.toString());
+      }
     }
   } catch (e) {
     Logger.log('❌ checkWeekComplete 錯誤: ' + e.toString());
@@ -784,6 +791,325 @@ function deleteFileFromGitHub(filePath, commitMessage) {
     return { status: 'error', message: error.toString() };
   }
 }
+
+// =====================================================
+// 戰報自動生成系統
+// =====================================================
+
+var BATTLE_REPORT_SYSTEM_PROMPT = '你是「難找的聯賽」飛鏢聯賽的週報戰報撰寫員。你的任務是根據本週比賽數據撰寫一篇戰報。\n\n'
+  + '## 風格要求（最重要！）\n'
+  + '- 口語化、接地氣：像朋友在聊天，不是新聞稿\n'
+  + '- 有梗有態度：會吐槽、會開玩笑、幫隊伍加戲\n'
+  + '- 數據用故事帶出：不要硬列數字，用對比和情緒包裝\n'
+  + '- 比分解讀帶情緒：例如「2分？！是不是我看錯了？沒有。是 2。兩個。Deux。」\n'
+  + '- 地獄倒霉鬼段落要有同理心和幽默\n'
+  + '- 結尾可以加生活梗或時事梗\n\n'
+  + '## 絕對禁止\n'
+  + '- ❌ 不要用「各位選手與飛鏢同好們」這種制式開場\n'
+  + '- ❌ 不要用「讓我們一起來看看」「精彩絕倫」「不負眾望」這種廢話\n'
+  + '- ❌ 不要輕易的講到「白熱化」\n'
+  + '- ❌ 不要像 ChatGPT 寫作文，要像人在講話\n'
+  + '- ❌ 不要用 markdown 格式，直接輸出 HTML 內文\n'
+  + '- ❌ 不要加「※ 本新聞由 AI 協助撰寫」\n\n'
+  + '## 必要段落（依序）\n'
+  + '1. 開場白：口語化切入，可以用本週最大亮點破題\n'
+  + '2. 🔥/⚔️/🏆 本週戰況：6 場比賽逐場帶過，重點比賽多著墨（大比分差、爆冷、關鍵對決），用 1-2 句話帶過普通場次\n'
+  + '3. 📊 團隊排行：highlight 排名變動、分數追平/超車、領先差距變化\n'
+  + '4. 👑 個人勝場榜：Top 5，講超車、接近、或拉開差距的故事\n'
+  + '5. 🌹 Top Lady：女選手勝場前 5，講排名變動\n'
+  + '6. 💀 地獄倒霉鬼：先攻率最低 5 人，用同理心和幽默帶出\n'
+  + '7. 📅 下週預告：列出下週 6 場對戰組合\n'
+  + '8. 總結：一句話收尾，用 <em> 斜體包起來\n\n'
+  + '## HTML 格式規則\n'
+  + '- 用 <strong>emoji 小標題</strong> 開每個段落\n'
+  + '- 段落之間用 <br><br> 換段\n'
+  + '- 結尾總結用 <em>總結文字</em>\n'
+  + '- 不要加 <div>、<p> 或其他區塊標籤，只用 <strong>、<em>、<br>\n'
+  + '- 輸出的是 news-text 裡面的內文，不需要外層的 HTML 結構';
+
+/**
+ * 收集本週比賽數據
+ * @param {Spreadsheet} ss - 試算表物件
+ * @param {number} weekStart - 本週起始場次 (e.g. 1)
+ * @param {number} weekEnd - 本週結束場次 (e.g. 6)
+ * @returns {Object} 結構化的週數據
+ */
+function gatherWeeklyData(ss, weekStart, weekEnd) {
+  try {
+    var sheet = ss.getSheetByName('schedule');
+    var lastRow = sheet.getLastRow();
+    var allData = sheet.getRange(2, 1, lastRow - 1, 12).getValues();
+
+    // 1. 本週 6 場比賽結果
+    var weekGames = [];
+    for (var g = weekStart; g <= weekEnd; g++) {
+      var gId = 'G' + g;
+      for (var i = 0; i < allData.length; i++) {
+        if (String(allData[i][0]).trim().toUpperCase() === gId) {
+          weekGames.push({
+            gameId: gId,
+            awayTeam: String(allData[i][2] || ''),
+            awayScore: allData[i][3],
+            homeScore: allData[i][5],
+            homeTeam: String(allData[i][6] || ''),
+            winner: String(allData[i][8] || ''),
+            loser: String(allData[i][9] || ''),
+            drinkingBonus: String(allData[i][10] || '')
+          });
+          break;
+        }
+      }
+    }
+
+    // 2. 目前排行榜
+    var rankings = readRankingsFromSheets(ss);
+
+    // 3. 下週賽程預告
+    var nextWeekStart = weekEnd + 1;
+    var nextWeekEnd = weekEnd + GAMES_PER_WEEK;
+    var nextWeekGames = [];
+    for (var ng = nextWeekStart; ng <= nextWeekEnd; ng++) {
+      var nId = 'G' + ng;
+      for (var j = 0; j < allData.length; j++) {
+        if (String(allData[j][0]).trim().toUpperCase() === nId) {
+          nextWeekGames.push({
+            gameId: nId,
+            awayTeam: String(allData[j][2] || ''),
+            homeTeam: String(allData[j][6] || '')
+          });
+          break;
+        }
+      }
+    }
+
+    Logger.log('📦 gatherWeeklyData: ' + weekGames.length + ' 場比賽, 下週 ' + nextWeekGames.length + ' 場');
+    return {
+      weekStart: weekStart,
+      weekEnd: weekEnd,
+      games: weekGames,
+      rankings: rankings,
+      nextWeek: nextWeekGames
+    };
+  } catch (e) {
+    Logger.log('❌ gatherWeeklyData 錯誤: ' + e.toString());
+    throw e;
+  }
+}
+
+/**
+ * 呼叫 Gemini API 生成戰報
+ * @param {Object} weeklyData - gatherWeeklyData 回傳的結構化數據
+ * @returns {string} 生成的 HTML 戰報內文
+ */
+function generateBattleReport(weeklyData) {
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var apiKey = props.getProperty('GEMINI_API_KEY');
+    var model = props.getProperty('GEMINI_MODEL') || 'gemini-2.5-flash';
+
+    if (!apiKey) {
+      throw new Error('未設定 GEMINI_API_KEY，請在 Script Properties 中設定');
+    }
+
+    // 組裝 user prompt
+    var userPrompt = '以下是本週 G' + weeklyData.weekStart + '~G' + weeklyData.weekEnd + ' 的比賽數據：\n\n';
+
+    // 本週比賽結果
+    userPrompt += '## 本週比賽結果\n';
+    for (var i = 0; i < weeklyData.games.length; i++) {
+      var game = weeklyData.games[i];
+      userPrompt += game.gameId + ': ' + game.awayTeam + ' ' + game.awayScore + ':' + game.homeScore + ' ' + game.homeTeam;
+      userPrompt += ' → 勝：' + game.winner;
+      if (game.drinkingBonus) {
+        userPrompt += '（飲酒加成：' + game.drinkingBonus + '）';
+      }
+      userPrompt += '\n';
+    }
+
+    // 團隊排行
+    if (weeklyData.rankings && weeklyData.rankings.teams) {
+      userPrompt += '\n## 團隊排行\n';
+      for (var t = 0; t < weeklyData.rankings.teams.length; t++) {
+        var team = weeklyData.rankings.teams[t];
+        userPrompt += (t + 1) + '. ' + team[0] + ' ' + team[1] + ' 總分：' + Math.round(parseFloat(team[2]) || 0) + '\n';
+      }
+    }
+
+    // 個人勝場 Top 5
+    if (weeklyData.rankings && weeklyData.rankings.players) {
+      userPrompt += '\n## 個人勝場 Top 5\n';
+      for (var p = 0; p < weeklyData.rankings.players.length; p++) {
+        var player = weeklyData.rankings.players[p];
+        userPrompt += (p + 1) + '. ' + player.name + '（' + player.team + '）' + player.wins + ' 勝 ' + player.winRate + '\n';
+      }
+    }
+
+    // Top Lady
+    if (weeklyData.rankings && weeklyData.rankings.ladies) {
+      userPrompt += '\n## Top Lady\n';
+      for (var l = 0; l < weeklyData.rankings.ladies.length; l++) {
+        var lady = weeklyData.rankings.ladies[l];
+        userPrompt += (l + 1) + '. ' + lady.name + '（' + lady.team + '）' + lady.wins + ' 勝\n';
+      }
+    }
+
+    // 地獄倒霉鬼
+    if (weeklyData.rankings && weeklyData.rankings.unlucky) {
+      userPrompt += '\n## 地獄倒霉鬼（先攻率最低）\n';
+      for (var u = 0; u < weeklyData.rankings.unlucky.length; u++) {
+        var unlucky = weeklyData.rankings.unlucky[u];
+        userPrompt += (u + 1) + '. ' + unlucky.name + '（' + unlucky.team + '）先攻率：' + unlucky.faRate + '\n';
+      }
+    }
+
+    // 下週預告
+    if (weeklyData.nextWeek && weeklyData.nextWeek.length > 0) {
+      userPrompt += '\n## 下週賽程\n';
+      for (var n = 0; n < weeklyData.nextWeek.length; n++) {
+        var next = weeklyData.nextWeek[n];
+        userPrompt += next.gameId + ': ' + next.awayTeam + ' vs ' + next.homeTeam + '\n';
+      }
+    }
+
+    Logger.log('🤖 呼叫 Gemini API (' + model + ')...');
+    Logger.log('📝 User prompt 長度: ' + userPrompt.length);
+
+    // 呼叫 Gemini API
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + apiKey;
+    var payload = {
+      contents: [{
+        role: 'user',
+        parts: [{ text: BATTLE_REPORT_SYSTEM_PROMPT + '\n\n' + userPrompt }]
+      }],
+      generationConfig: {
+        temperature: 0.9,
+        maxOutputTokens: 4096
+      }
+    };
+
+    var response = UrlFetchApp.fetch(url, {
+      method: 'POST',
+      contentType: 'application/json',
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+
+    var responseCode = response.getResponseCode();
+    Logger.log('🤖 Gemini API 回應: ' + responseCode);
+
+    if (responseCode !== 200) {
+      throw new Error('Gemini API 錯誤: ' + responseCode + ' - ' + response.getContentText().substring(0, 300));
+    }
+
+    var result = JSON.parse(response.getContentText());
+    var generatedText = result.candidates[0].content.parts[0].text;
+
+    Logger.log('✅ 戰報生成成功，長度: ' + generatedText.length);
+    return generatedText;
+  } catch (e) {
+    Logger.log('❌ generateBattleReport 錯誤: ' + e.toString());
+    throw e;
+  }
+}
+
+/**
+ * 將戰報插入 news.html 並推送到 GitHub
+ * @param {string} reportText - 生成的戰報 HTML 內文
+ * @param {number} weekStart - 本週起始場次
+ * @param {number} weekEnd - 本週結束場次
+ */
+function insertReportToNewsHtml(reportText, weekStart, weekEnd) {
+  try {
+    var newsFile = getFileFromGitHub('pages/news.html');
+    var html = newsFile.content;
+
+    // 收合目前展開的新聞項目
+    html = html.replace('news-header expanded', 'news-header');
+    html = html.replace('news-text expanded', 'news-text collapsed');
+
+    // 今天日期 YYYY/M/D（不補零）
+    var now = new Date();
+    var dateStr = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
+
+    // 建立新聞區塊
+    var newBlock = '\n            <div class="news-item collapsible">\n'
+      + '                <div class="news-header expanded">\n'
+      + '                    <div class="news-date">' + dateStr + '</div>\n'
+      + '                    <div class="news-title">🎯 G' + weekStart + '~G' + weekEnd + ' 週報</div>\n'
+      + '                </div>\n'
+      + '                <div class="news-text expanded">\n'
+      + '                    ' + reportText + '\n'
+      + '                </div>\n'
+      + '            </div>';
+
+    // 插入到 news-section 之後
+    var insertIndex = html.indexOf('id="news-section"');
+    if (insertIndex === -1) {
+      throw new Error('找不到 id="news-section"');
+    }
+    // 找到該行結尾的 >
+    var closingBracket = html.indexOf('>', insertIndex);
+    if (closingBracket === -1) {
+      throw new Error('news-section 標籤格式異常');
+    }
+    html = html.substring(0, closingBracket + 1) + newBlock + html.substring(closingBracket + 1);
+
+    // 推送到 GitHub
+    var commitMessage = '📰 新增 G' + weekStart + '~G' + weekEnd + ' 週報戰報';
+    uploadFileToGitHub('pages/news.html', html, commitMessage);
+    Logger.log('✅ 戰報已插入 news.html 並推送到 GitHub');
+  } catch (e) {
+    Logger.log('❌ insertReportToNewsHtml 錯誤: ' + e.toString());
+    throw e;
+  }
+}
+
+/**
+ * 戰報生成與發布主流程
+ * @param {Spreadsheet} ss - 試算表物件
+ * @param {number} weekStart - 本週起始場次
+ * @param {number} weekEnd - 本週結束場次
+ */
+function generateAndPublishReport(ss, weekStart, weekEnd) {
+  try {
+    Logger.log('🚀 開始生成 G' + weekStart + '~G' + weekEnd + ' 戰報...');
+
+    // 1. 收集數據
+    var weeklyData = gatherWeeklyData(ss, weekStart, weekEnd);
+
+    // 2. 呼叫 Gemini 生成戰報
+    var reportText = generateBattleReport(weeklyData);
+
+    // 3. 插入 news.html 並推送 GitHub
+    insertReportToNewsHtml(reportText, weekStart, weekEnd);
+
+    // 4. 觸發 Vercel 部署
+    triggerVercelDeploy();
+
+    // 5. 寄送戰報預覽 email
+    try {
+      MailApp.sendEmail(NOTIFY_EMAIL,
+        '📰 G' + weekStart + '~G' + weekEnd + ' 戰報已自動生成並上線',
+        '戰報已自動發布到 yhdarts.com/pages/news.html\n\n'
+        + '--- 戰報預覽 ---\n\n'
+        + reportText.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '')
+        + '\n\n— 難找的聯賽自動化系統'
+      );
+      Logger.log('📧 戰報預覽 email 已寄出');
+    } catch (mailErr) {
+      Logger.log('⚠️ 戰報 email 寄送失敗: ' + mailErr.toString());
+    }
+
+    Logger.log('✅ G' + weekStart + '~G' + weekEnd + ' 戰報流程完成！');
+  } catch (e) {
+    Logger.log('❌ generateAndPublishReport 錯誤: ' + e.toString());
+    throw e;
+  }
+}
+
+// =====================================================
+// 工具函數
+// =====================================================
 
 function getSeasonFromGameId(gameId) {
   return 'season6';
