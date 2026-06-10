@@ -1041,12 +1041,15 @@ async function saveToGoogleSheetsWithHTML(gameData) {
         const previewGenerator = new GameResultPreviewGenerator();
         const htmlContent = previewGenerator.generateFullHTML(adminFormatData);
         
-        // 準備寫入 Google Sheets 的資料（保持空的playerStats以相容舊版Google Apps Script）
+        // 計算選手統計資料
+        const playerStats = computePlayerStats(gameData);
+        
+        // 準備寫入 Google Sheets 的資料
         const sheetsData = {
             ...gameData,
             htmlContent: htmlContent,
             htmlSheetName: `${gameCode}.html`,
-            playerStats: { away: [], home: [] }, // 空統計資料，避免錯誤
+            playerStats: playerStats,
             timestamp: formattedTime,
             gameDate: adminFormatData.gameDate // 傳遞日期給 GAS 判斷賽季
         };
@@ -1247,106 +1250,48 @@ async function saveToGoogleSheets(gameData) {
     }
 }
 
-// 生成選手統計資料
-// 統計工作表功能已關閉
-/*
-function generatePlayerStatistics(gameData) {
-    const stats = {
-        away: [],
-        home: []
-    };
+// 計算選手統計資料（給 GAS 寫入 data 頁籤用）
+function computePlayerStats(gameData) {
+    const stats = { away: [], home: [] };
     
-    // 從 player.json 獲取選手名單
-    const awayPlayers = getTeamPlayers(gameData.awayTeam);
-    const homePlayers = getTeamPlayers(gameData.homeTeam);
-    
-    // 計算客場選手統計
-    awayPlayers.forEach(playerName => {
-        const playerStats = calculatePlayerStats(gameData, playerName, 'away');
-        if (playerStats.totalGames > 0) {
-            stats.away.push(playerStats);
+    ['away', 'home'].forEach(team => {
+        // 收集該隊所有出場選手
+        const playerMap = {};
+        
+        for (let i = 1; i <= 16; i++) {
+            const key = `${team}-${i}`;
+            const players = gameData.selectedPlayers[key] || [];
+            if (!players.length) continue;
+            
+            // 判斷比賽類型：SET 6~10 是 CR，其餘是 01
+            const isCR = (i >= 6 && i <= 10);
+            const isWin = gameData.winLoseData[i] === team;
+            const isFirstAttack = gameData.firstAttackData[i] === team;
+            
+            players.forEach(name => {
+                if (!name) return;
+                if (!playerMap[name]) {
+                    playerMap[name] = { name, p01: 0, w01: 0, pCR: 0, wCR: 0, total: 0, wins: 0, fa: 0 };
+                }
+                const p = playerMap[name];
+                p.total++;
+                if (isWin) p.wins++;
+                if (isFirstAttack) p.fa++;
+                if (isCR) {
+                    p.pCR++;
+                    if (isWin) p.wCR++;
+                } else {
+                    p.p01++;
+                    if (isWin) p.w01++;
+                }
+            });
         }
-    });
-    
-    // 計算主場選手統計
-    homePlayers.forEach(playerName => {
-        const playerStats = calculatePlayerStats(gameData, playerName, 'home');
-        if (playerStats.totalGames > 0) {
-            stats.home.push(playerStats);
-        }
+        
+        stats[team] = Object.values(playerMap);
     });
     
     return stats;
 }
-
-// 計算單一選手統計
-function calculatePlayerStats(gameData, playerName, team) {
-    let o1Games = 0, o1Wins = 0, crGames = 0, crWins = 0, firstAttacks = 0;
-    
-    // 檢查每個 SET
-    for (let i = 1; i <= 16; i++) {
-        const setData = gameData.selectedPlayers[i];
-        if (!setData) continue;
-        
-        const teamPlayers = setData[team] || [];
-        const playersList = Array.isArray(teamPlayers) ? teamPlayers : [teamPlayers];
-        
-        // 檢查該選手是否參與此場比賽
-        if (playersList.includes(playerName) && playersList[0] !== '') {
-            // 判斷比賽類型
-            let gameType = '01';
-            if (i >= 6 && i <= 10) gameType = 'CR';
-            else if (i >= 11 && i <= 14) gameType = '01'; // 雙人賽
-            else if (i >= 15 && i <= 16) gameType = '01'; // 四人賽
-            
-            // 計算出賽次數
-            if (gameType === '01') {
-                o1Games++;
-                if (gameData.winLoseData[i] === team) o1Wins++;
-            } else if (gameType === 'CR') {
-                crGames++;
-                if (gameData.winLoseData[i] === team) crWins++;
-            }
-            
-            // 計算先攻次數
-            if (gameData.firstAttackData[i] === team) {
-                firstAttacks++;
-            }
-        }
-    }
-    
-    return {
-        name: playerName,
-        o1Games,
-        o1Wins,
-        crGames,
-        crWins,
-        totalGames: o1Games + crGames,
-        totalWins: o1Wins + crWins,
-        firstAttacks
-    };
-}
-
-// 從 player.json 獲取隊伍選手名單
-function getTeamPlayers(teamName) {
-    // 這裡應該從 player.json 讀取，但為了簡化，先使用硬編碼
-    // 實際實作時應該從 data/player.json 讀取
-    const teamPlayers = {
-        '逃生入口A': ['小倫', 'Ace', '華華', '小孟', '大胖', '禹辰', '喇叭'],
-        '酒空組': ['宓哥', '范姜哥', '范姜姐', '小惠', '慶文', '無名', '阿鴻', '瘦子', '虎哥', '阿堯', '小宇', '阿仁', '晨晨', '阿輔'],
-        '逃生入口C': ['Lucas', 'Eric', '傑西', '乳來', '承翰', '小東', '小歪', '阿誠', '阿隼', '少博', '阿樂', '土豆'],
-        'Jack': ['小建', '阿福', 'B哥', '阿俊', '老師', '大根毛', 'Stan', '小魚', '小虎', '發哥', 'Terry', '阿元', '小胖', '祐祐', '雯雯', '小準', '阿翰'],
-        'VIVI哈哈隊': ['阿倫', '小芬', '美美', '威廉', '小韋', '小耿', '馬克', '石頭', '阿國', 'kelvin刺'],
-        '人生揪難': ['亮亮', '小姜', '栗子', '阿肥', '邱昱', '羿珩', '阿朋', '小傅', '歪歪', '小安', '柯柯', '克林', '上銘', '軒軒', '蘇仔', '紅閎', '彎彎'],
-        '海盜揪硬': ['船長', '小8', '伊凡', '小宇', '阿琪', '小偉', '小孟', '孟女', '阿軒', '棠棠', '鎮宇', '胖胖', '君君', '旭容', '捲毛', '小齊'],
-        '來都來了': ['躲躲', '大頭', '小宇', '大瀚', '小薩', 'Louis', '宗燁', '阿翔', '阿全', 'YY', '羅賓', '阿霖', '阿嘎', '阿達', '小洋', '阿志', 'Allen', '小象', '阿霖', '阿倪', '阿賢'],
-        'VIVI嘻嘻隊': ['怪頭', '老丹', '猴子', '芝芝', '浩子', '阿淦', '蘇蘇', 'Jason', '光頭', '+0'],
-        '一鏢開天門': ['飛', '宏', 'Chi', '丹', 'Ray', '倫', '冠', '光', '潤']
-    };
-    
-    return teamPlayers[teamName] || [];
-}
-*/
 
 // 保存到本地存儲（降級方案）
 async function saveToLocalStorage(gameData) {
