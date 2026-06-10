@@ -1,6 +1,7 @@
 // =====================================================
 // Admin GAS — 完整版 Code.gs
-// 功能：比賽上傳 + GitHub push + 自動排行榜 + 6場偵測
+// 功能：比賽上傳 + GitHub push + 自動排行榜 + 6場偵測 + 戰報生成
+// 最後更新：2026/6/10 21:18
 // =====================================================
 
 var WEEKLY_SHEET_ID = '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM';
@@ -37,6 +38,15 @@ function doPost(e) {
     // ===== 週報自動化寫入 =====
     if (data.action === 'weeklyUpdate') {
       return handleWeeklyUpdate(data);
+    }
+    
+    // ===== 手動觸發戰報生成 =====
+    if (data.action === 'generateReport') {
+      var ssBR = SpreadsheetApp.openById(WEEKLY_SHEET_ID);
+      generateAndPublishReport(ssBR, data.weekStart || 103, data.weekEnd || 108);
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'success', message: '戰報已生成 G' + (data.weekStart || 103) + '~G' + (data.weekEnd || 108)
+      })).setMimeType(ContentService.MimeType.JSON);
     }
     
     // ===== 只寫 data sheet（補寫選手數據用）=====
@@ -796,36 +806,87 @@ function deleteFileFromGitHub(filePath, commitMessage) {
 // 戰報自動生成系統
 // =====================================================
 
-var BATTLE_REPORT_SYSTEM_PROMPT = '你是「難找的聯賽」飛鏢聯賽的週報戰報撰寫員。你的任務是根據本週比賽數據撰寫一篇戰報。\n\n'
+var BATTLE_REPORT_SYSTEM_PROMPT = '你是「難找的聯賽」飛鏢聯賽的週報戰報撰寫員。這是一個已經進行到第六季尾聲的飛鏢聯賽。\n\n'
   + '## 風格要求（最重要！）\n'
-  + '- 口語化、接地氣：像朋友在聊天，不是新聞稿\n'
-  + '- 有梗有態度：會吐槽、會開玩笑、幫隊伍加戲\n'
-  + '- 數據用故事帶出：不要硬列數字，用對比和情緒包裝\n'
-  + '- 比分解讀帶情緒：例如「2分？！是不是我看錯了？沒有。是 2。兩個。Deux。」\n'
-  + '- 地獄倒霉鬼段落要有同理心和幽默\n'
-  + '- 結尾可以加生活梗或時事梗\n\n'
+  + '- 口語化、接地氣：像朋友在聊天\n'
+  + '- 吐槽以隊伍為主，不要針對個人洗臉，點到為止\n'
+  + '- 數據用故事帶出：用對比和情緒包裝，不要硬列數字\n'
+  + '- 地獄倒霉鬼整段一起講，帶同理心，不要逐人嘲諷\n'
+  + '- 比分差大才值得大書特書（20分以上），10幾分差是正常比賽\n\n'
   + '## 絕對禁止\n'
-  + '- ❌ 不要用「各位選手與飛鏢同好們」這種制式開場\n'
-  + '- ❌ 不要用「讓我們一起來看看」「精彩絕倫」「不負眾望」這種廢話\n'
-  + '- ❌ 不要輕易的講到「白熱化」\n'
-  + '- ❌ 不要像 ChatGPT 寫作文，要像人在講話\n'
-  + '- ❌ 不要用 markdown 格式，直接輸出 HTML 內文\n'
-  + '- ❌ 不要加「※ 本新聞由 AI 協助撰寫」\n\n'
+  + '- ❌「各位選手與飛鏢同好們」「讓我們一起來看看」「精彩絕倫」「不負眾望」\n'
+  + '- ❌ 不要講「白熱化」\n'
+  + '- ❌ 不要像 ChatGPT 寫作文\n'
+  + '- ❌ 不要用 markdown，直接輸出 HTML\n'
+  + '- ❌ 不要加「※ 本新聞由 AI 協助撰寫」\n'
+  + '- ❌ 不要說「新面孔」「新加入」，選手都打了一整季\n'
+  + '- ❌ 不要針對個人開嘲諷，吐槽對象以隊伍為主\n'
+  + '- ❌ 不要每個人都硬塞一個段子，該簡潔就簡潔\n'
+  + '- ❌ 不要過度使用問句和驚嘆號\n\n'
+  + '## 特殊注意\n'
+  + '- 有一位選手名字叫「+0」（加號零），這是她的名字不是格式錯誤，請正確顯示\n'
+  + '- 先攻率 = 擲骰子決定誰先投，先攻率低代表運氣差，不代表實力差\n\n'
+  + '## 輸出格式\n'
+  + '第一行輸出副標題（本週三大亮點用逗號分隔），例如：軟飯硬吃 26:10 輾壓人生揪亮，+0 繼續穩坐 Top Lady，小齊猶猴再度並列 91 勝\n'
+  + '第二行輸出 ---CONTENT--- 作為分隔線\n'
+  + '第三行開始是戰報內文\n\n'
   + '## 必要段落（依序）\n'
-  + '1. 開場白：口語化切入，可以用本週最大亮點破題\n'
-  + '2. 🔥/⚔️/🏆 本週戰況：6 場比賽逐場帶過，重點比賽多著墨（大比分差、爆冷、關鍵對決），用 1-2 句話帶過普通場次\n'
-  + '3. 📊 團隊排行：highlight 排名變動、分數追平/超車、領先差距變化\n'
-  + '4. 👑 個人勝場榜：Top 5，講超車、接近、或拉開差距的故事\n'
-  + '5. 🌹 Top Lady：女選手勝場前 5，講排名變動\n'
-  + '6. 💀 地獄倒霉鬼：先攻率最低 5 人，用同理心和幽默帶出\n'
-  + '7. 📅 下週預告：列出下週 6 場對戰組合\n'
-  + '8. 總結：一句話收尾，用 <em> 斜體包起來\n\n'
-  + '## HTML 格式規則\n'
-  + '- 用 <strong>emoji 小標題</strong> 開每個段落\n'
-  + '- 段落之間用 <br><br> 換段\n'
-  + '- 結尾總結用 <em>總結文字</em>\n'
-  + '- 不要加 <div>、<p> 或其他區塊標籤，只用 <strong>、<em>、<br>\n'
-  + '- 輸出的是 news-text 裡面的內文，不需要外層的 HTML 結構';
+  + '1. 開場白：1-2句口語化切入，用本週最大亮點破題\n'
+  + '2. <strong>🔥/⚔️/🏆 本週戰況</strong>：重點比賽多著墨，普通場次 1 句帶過\n'
+  + '3. <strong>📊 團隊排行</strong>：排名變動、追平/超車、領先差距\n'
+  + '4. <strong>👑 個人勝場榜</strong>：Top 5，講勝率對比、本週斬獲幾勝、誰超車誰\n'
+  + '5. <strong>🌹 Top Lady</strong>：女選手前 5，講本週各斬獲幾勝\n'
+  + '6. <strong>💀 地獄倒霉鬼</strong>：先攻率最低 5 人，整段一起講\n'
+  + '7. <strong>📅 下週預告</strong>：列出下週對戰\n'
+  + '8. <em>總結</em>：一句話收尾\n\n'
+  + '## 進階分析要求\n'
+  + '- 個人勝場榜要帶到勝率對比，例如誰勝率高所以排第一\n'
+  + '- Top Lady 要說這週各自斬獲幾勝（從上週到這週的增量）\n'
+  + '- 可以提及個別選手的特殊表現（單週勝場極高或極低、雙打全勝、四人全勝等）\n'
+  + '## HTML 格式\n'
+  + '- <strong>emoji 小標題</strong> 開每段\n'
+  + '- <br><br> 換段（不要連續空行）\n'
+  + '- 在內文敘述中，把重要的【隊伍名稱、關鍵數據、分數、勝率】用 <strong> 包起來，這在網頁上會變成紅色主題色凸顯（例如：軟飯硬吃拿下 <strong>390分</strong>，或者 <strong>Vivi嘻嘻隊</strong> 爆冷贏球）\n'
+  + '- 結尾用 <em>斜體</em>\n'
+  + '- 只用 <strong>、<em>、<br>，不要 <div>、<p>\n\n'
+  + '## 範例一（G91~G96 週報）\n'
+  + '好，這週我就不廢話太多了，直接進主題。<br><br>'
+  + '<strong>🏆 本週六場戰況</strong><br>'
+  + 'G91：Vivi嘻嘻隊 12:24 Vivi哈哈隊——Vivi 家族內戰，哈哈隊輕鬆吃下，嘻嘻隊回去思考人生。<br>'
+  + 'G92：Tonight29十三么 12:24 酒空組——十三么輸了？對，你沒看錯，這週十三么被酒空組壓著打，12:24 不是小輸，是被打臉。酒空組這場直接把積分推到第三（337分），跟第一名哈哈隊只差 40 分。<br>'
+  + 'G93：軟飯硬吃 17:19 Tonight29大三元——軟飯這週又贏，雖然贏得不算乾脆，但贏就是贏。<br>'
+  + 'G94：人生揪亮 12:24 Tonight29大四喜——大四喜這場打得很有精神，12:24 大勝。<br>'
+  + 'G95：逃生入口 23:13 傑克黑桃——逃生入口這場 23:13 贏得漂亮。<br>'
+  + 'G96：傑克紅心 10:26 人生揪難——人生揪難這場根本在亂打，打得傑克紅心毫無還手餘地，積分衝到 314 分，跟第四名十三么只差 2 分。<br><br>'
+  + '<strong>📊 團隊排行：哈哈隊繼續坐莊，酒空組悄悄靠近</strong><br>'
+  + 'Vivi哈哈隊 377 分繼續霸榜，軟飯硬吃 340 緊追，酒空組這週贏球後以 337 分爬到第三，跟軟飯只差 3 分。<br>中段班方面，十三么（316分）、人生揪難（314分）、Vivi嘻嘻隊（289分）排在 4~6 名，一場輸贏就能換位置。<br><br>'
+  + '<strong>👑 個人勝場榜：猴猴小齊並列 83 勝，下週分勝負</strong><br>'
+  + '今週最大亮點：Tonight29十三么的猴猴和小齊都來到 83 勝，完全並列第一！小飛 75 勝穩定跟上。<br><br>'
+  + '<strong>🌹 Top Lady：Keira 36 勝封后在即</strong><br>'
+  + 'Keira 36 勝繼續領跑，+0（34勝）、貓咪（29勝）緊咬，人生揪難 joy 這週擠進前四（24勝）。<br><br>'
+  + '<strong>💀 地獄倒霉鬼：kelvin刺還是第一</strong><br>'
+  + 'VIVI哈哈隊的 kelvin刺 21.43%，這個數字已經蟬聯好幾週了，感覺骰子跟他有仇。朋朋 25% 緊隨其後，傑克黑桃的小琪和宇辰雙雙上榜，下週如果骰子能稍微眷顧一下他們，相信結果會不一樣的。<br><br>'
+  + '<em>總結：猴猴小齊並列 83 勝是最有看頭的個人榜競爭，聯賽進入後段，每場都是積分關鍵，繼續衝！</em>\n\n'
+  + '## 範例二（G97~G102 週報）\n'
+  + '這週有幾件事值得好好講一下。<br><br>'
+  + '<strong>🔥 軟飯硬吃 24:12 贏 Vivi哈哈隊——這不是爆冷，這是實力</strong><br>'
+  + '先說清楚，這場不是冷門。<br>軟飯硬吃最近四場打了三勝一負：G82 贏逃生入口 29:7、G88 贏傑克黑桃 34:2（對，34:2）、G93 小輸大三元 17:19、這週 G100 再以 24:12 贏下哈哈隊。<br>如果你到現在還把軟飯當中段班，那建議你更新一下資料庫。<br><br>'
+  + '<strong>⚔️ 其他戰況</strong><br>'
+  + 'G97：Tonight29大三元 18:18 逃生入口——本季罕見的平手局。<br>'
+  + 'G98：Tonight29大四喜 9:27 酒空組——酒空組又是大分差。<br>'
+  + 'G99：傑克紅心 14:22 Tonight29十三么——十三么正常發揮。<br>'
+  + 'G101：Vivi嘻嘻隊 29:7 人生揪亮——嘻嘻隊火力全開。<br>'
+  + 'G102：人生揪難 21:15 傑克黑桃——人生揪難穩穩拿下。<br><br>'
+  + '<strong>📊 團隊排行：哈哈隊還是第一，但第二名現在有兩隊了</strong><br>'
+  + '<strong>Vivi哈哈隊 389 分</strong>繼續領跑，但領先優勢從 37 分縮到 25 分。<br>軟飯硬吃和酒空組同積 <strong>364 分</strong>並列第二。<br><br>'
+  + '<strong>👑 個人勝場榜：猴猴 89 勝獨走</strong><br>'
+  + '上週並列的猴猴和小齊，這週猴猴拉到 <strong>89 勝</strong>，小齊 88 勝，猴猴搶到身位了。<br><br>'
+  + '<strong>🌹 Top Lady：+0 本週 +6 勝強勢超車</strong><br>'
+  + '+0 從 34 勝衝到 <strong>40 勝</strong>，把蟬聯多週的 Keira（36→39 勝）給超車了。接下來 +0 和 Keira 的后座之爭會是最大看點。<br><br>'
+  + '<strong>💀 地獄倒霉鬼：kelvin刺繼續蟬聯，小孟新上榜</strong><br>'
+  + 'kelvin刺 21.43%，骰子大概跟他簽了長約。小琪和宇辰依然雙雙在榜，小孟 32.35% 是本週新面孔，取代了朋朋。朋朋終於脫離苦海，恭喜。<br><br>'
+  + '<em>總結：這週的重點就三個字——追、超、平。軟飯追平酒空並列第二，+0 超車 Keira 拿下 Top Lady 榜首，哈哈隊領先差距被壓縮到 25 分。繼續看下去。</em>\n\n'
+  + '## 請嚴格模仿上面兩篇範例的風格、語氣、格式來撰寫新的戰報。';
 
 /**
  * 收集本週比賽數據
@@ -971,38 +1032,70 @@ function generateBattleReport(weeklyData) {
       }
     }
 
-    Logger.log('🤖 呼叫 Gemini API (' + model + ')...');
-    Logger.log('📝 User prompt 長度: ' + userPrompt.length);
-
-    // 呼叫 Gemini API
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + apiKey;
-    var payload = {
-      contents: [{
-        role: 'user',
-        parts: [{ text: BATTLE_REPORT_SYSTEM_PROMPT + '\n\n' + userPrompt }]
-      }],
-      generationConfig: {
-        temperature: 0.9,
-        maxOutputTokens: 4096
+    // 模型優先順序：先試 2.5-flash，失敗再試 2.0-flash
+    var models = (props.getProperty('GEMINI_MODEL') || 'gemini-2.5-flash') + ',gemini-2.0-flash';
+    var modelList = models.split(',').filter(function(m, i, arr) { return arr.indexOf(m) === i; }); // 去重
+    
+    var response, responseCode, lastError;
+    
+    for (var mi = 0; mi < modelList.length; mi++) {
+      var currentModel = modelList[mi].trim();
+      Logger.log('🤖 嘗試模型 ' + (mi + 1) + '/' + modelList.length + ': ' + currentModel);
+      
+      var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + currentModel + ':generateContent?key=' + apiKey;
+      var genConfig = { temperature: 0.9, maxOutputTokens: 8192 };
+      // 2.5 系列才需要關閉 thinking
+      if (currentModel.indexOf('2.5') !== -1) {
+        genConfig.thinkingConfig = { thinkingBudget: 0 };
       }
-    };
+      
+      var payload = {
+        systemInstruction: {
+          parts: [{ text: BATTLE_REPORT_SYSTEM_PROMPT }]
+        },
+        contents: [{
+          role: 'user',
+          parts: [{ text: userPrompt }]
+        }],
+        generationConfig: genConfig
+      };
 
-    var response = UrlFetchApp.fetch(url, {
-      method: 'POST',
-      contentType: 'application/json',
-      payload: JSON.stringify(payload),
-      muteHttpExceptions: true
-    });
+      response = UrlFetchApp.fetch(url, {
+        method: 'POST',
+        contentType: 'application/json',
+        payload: JSON.stringify(payload),
+        muteHttpExceptions: true
+      });
 
-    var responseCode = response.getResponseCode();
-    Logger.log('🤖 Gemini API 回應: ' + responseCode);
-
+      responseCode = response.getResponseCode();
+      Logger.log('🤖 ' + currentModel + ' 回應: ' + responseCode);
+      
+      if (responseCode === 200) {
+        Logger.log('✅ 使用模型: ' + currentModel);
+        break; // 成功，跳出迴圈
+      }
+      
+      lastError = currentModel + ' → ' + responseCode;
+      Logger.log('⚠️ ' + currentModel + ' 失敗 (' + responseCode + ')，嘗試下一個...');
+      
+      if (mi < modelList.length - 1) {
+        Utilities.sleep(2000); // 等 2 秒再試下一個
+      }
+    }
+    
     if (responseCode !== 200) {
-      throw new Error('Gemini API 錯誤: ' + responseCode + ' - ' + response.getContentText().substring(0, 300));
+      throw new Error('所有 Gemini 模型都失敗: ' + lastError + ' - ' + response.getContentText().substring(0, 300));
     }
 
     var result = JSON.parse(response.getContentText());
     var generatedText = result.candidates[0].content.parts[0].text;
+
+    // 清理 Gemini 可能包裹的 markdown code blocks
+    generatedText = generatedText.replace(/^```html\s*/i, '').replace(/\s*```$/i, '').trim();
+    // 移除開頭的 <br> 標籤
+    generatedText = generatedText.replace(/^(<br\s*\/?>\s*)+/i, '');
+    // 移除 Gemini 可能生成的 <div>、<p> 等區塊標籤
+    generatedText = generatedText.replace(/<\/?div[^>]*>/gi, '').replace(/<\/?p[^>]*>/gi, '');
 
     Logger.log('✅ 戰報生成成功，長度: ' + generatedText.length);
     return generatedText;
@@ -1031,26 +1124,36 @@ function insertReportToNewsHtml(reportText, weekStart, weekEnd) {
     var now = new Date();
     var dateStr = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
 
+    // 解析副標題和內文
+    var subtitle = '';
+    var bodyText = reportText;
+    var contentSep = reportText.indexOf('---CONTENT---');
+    if (contentSep !== -1) {
+      subtitle = reportText.substring(0, contentSep).replace(/<br\s*\/?>/gi, '').replace(/<[^>]+>/g, '').trim();
+      bodyText = reportText.substring(contentSep + '---CONTENT---'.length).replace(/^(<br\s*\/?>\s*)+/i, '').trim();
+    }
+    var titleText = '🎯 G' + weekStart + '~G' + weekEnd + ' 週報' + (subtitle ? '：' + subtitle : '');
+
     // 建立新聞區塊
     var newBlock = '\n            <div class="news-item collapsible">\n'
       + '                <div class="news-header expanded">\n'
       + '                    <div class="news-date">' + dateStr + '</div>\n'
-      + '                    <div class="news-title">🎯 G' + weekStart + '~G' + weekEnd + ' 週報</div>\n'
+      + '                    <div class="news-title">' + titleText + '</div>\n'
       + '                </div>\n'
       + '                <div class="news-text expanded">\n'
-      + '                    ' + reportText + '\n'
+      + '                    ' + bodyText + '\n'
       + '                </div>\n'
       + '            </div>';
 
-    // 插入到 news-section 之後
-    var insertIndex = html.indexOf('id="news-section"');
+    // 插入到 newsContent div 內的最前面
+    var insertIndex = html.indexOf('id="newsContent"');
     if (insertIndex === -1) {
-      throw new Error('找不到 id="news-section"');
+      throw new Error('找不到 id="newsContent"');
     }
     // 找到該行結尾的 >
     var closingBracket = html.indexOf('>', insertIndex);
     if (closingBracket === -1) {
-      throw new Error('news-section 標籤格式異常');
+      throw new Error('newsContent 標籤格式異常');
     }
     html = html.substring(0, closingBracket + 1) + newBlock + html.substring(closingBracket + 1);
 
