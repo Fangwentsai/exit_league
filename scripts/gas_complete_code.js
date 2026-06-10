@@ -6,6 +6,9 @@
 var WEEKLY_SHEET_ID = '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM';
 var NOTIFY_EMAIL = 'fangwentsai14@gmail.com';
 var GAMES_PER_WEEK = 6;
+// Vercel 設定從 Script Properties 讀取
+// 需要在 GAS「專案設定 → 指令碼屬性」設定：
+//   VERCEL_DEPLOY_HOOK, VERCEL_TOKEN, VERCEL_PROJECT_ID
 
 // =====================================================
 // doGet / doPost 主入口
@@ -80,7 +83,7 @@ function doPost(e) {
     }
     htmlSheet.setColumnWidth(1, 500);
     
-    // 2. 上傳到 GitHub
+    // 2. 上傳到 GitHub（可選，需要 Script Properties 設定 GITHUB_TOKEN）
     let githubResult = null;
     if (data.htmlContent && data.gameId) {
       try {
@@ -92,9 +95,6 @@ function doPost(e) {
         
         if (githubResult.status === 'success') {
           Logger.log('✅ GitHub 上傳成功: ' + filePath);
-          
-          // 【自動化】寫入排行榜 + 選手數據 + 偵測6場完成
-          afterGameUpload(data);
         } else {
           Logger.log('⚠️ GitHub 上傳失敗: ' + githubResult.message);
         }
@@ -102,6 +102,18 @@ function doPost(e) {
         Logger.log('❌ GitHub 上傳錯誤: ' + githubError.toString());
         githubResult = { status: 'error', message: githubError.toString() };
       }
+    }
+    
+    // 3. 【自動化】寫入排行榜 + 選手數據 + 偵測6場完成（不管 GitHub 上傳成不成功都要執行）
+    if (data.htmlContent && data.gameId) {
+      try {
+        afterGameUpload(data);
+      } catch (autoError) {
+        Logger.log('❌ afterGameUpload 錯誤: ' + autoError.toString());
+      }
+      
+      // 4. 觸發 Vercel Production 部署
+      triggerVercelDeploy();
     }
     
     result = {
@@ -121,6 +133,62 @@ function doPost(e) {
   
   return ContentService.createTextOutput(JSON.stringify(result))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// =====================================================
+// Vercel 自動部署
+// =====================================================
+
+function triggerVercelDeploy() {
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var deployHook = props.getProperty('VERCEL_DEPLOY_HOOK');
+    var vercelToken = props.getProperty('VERCEL_TOKEN');
+    var projectId = props.getProperty('VERCEL_PROJECT_ID');
+    
+    if (!deployHook || !vercelToken || !projectId) {
+      Logger.log('⚠️ Vercel 設定不完整，跳過自動部署');
+      return;
+    }
+    
+    // 1. 觸發 Deploy Hook 建立部署
+    var hookRes = UrlFetchApp.fetch(deployHook, { method: 'POST', muteHttpExceptions: true });
+    Logger.log('🚀 Deploy Hook 觸發: ' + hookRes.getResponseCode());
+    
+    // 2. 等 20 秒讓部署完成（Hobby 方案通常 7-10 秒）
+    Utilities.sleep(20000);
+    
+    // 3. 取得最新 READY 部署 ID
+    var listRes = UrlFetchApp.fetch(
+      'https://api.vercel.com/v6/deployments?projectId=' + projectId + '&limit=1&state=READY',
+      { method: 'GET', headers: { 'Authorization': 'Bearer ' + vercelToken }, muteHttpExceptions: true }
+    );
+    var deployments = JSON.parse(listRes.getContentText());
+    
+    if (deployments.deployments && deployments.deployments.length > 0) {
+      var deployId = deployments.deployments[0].uid;
+      Logger.log('📦 最新部署: ' + deployId);
+      
+      // 4. 用 Alias API 設定為 Production（Hobby 方案不支援 Promote API）
+      var aliases = ['exit-league-dev.vercel.app', 'yhdarts.com'];
+      for (var i = 0; i < aliases.length; i++) {
+        var aliasRes = UrlFetchApp.fetch(
+          'https://api.vercel.com/v2/deployments/' + deployId + '/aliases',
+          {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + vercelToken, 'Content-Type': 'application/json' },
+            payload: JSON.stringify({ alias: aliases[i] }),
+            muteHttpExceptions: true
+          }
+        );
+        Logger.log('✅ Alias ' + aliases[i] + ': ' + aliasRes.getResponseCode());
+      }
+    } else {
+      Logger.log('⚠️ 找不到 READY 狀態的部署');
+    }
+  } catch (e) {
+    Logger.log('⚠️ Vercel 部署失敗: ' + e.toString());
+  }
 }
 
 // =====================================================
@@ -224,7 +292,17 @@ function parseScoresFromHtml(htmlContent, gameCode) {
     var loser = awayScore > homeScore ? homeTeam : (homeScore > awayScore ? awayTeam : '');
     var draw = awayScore === homeScore ? 'Y' : '';
     
-    return { gId: gameCode.toUpperCase(), awayTeam: awayTeam, awayScore: awayScore, homeScore: homeScore, homeTeam: homeTeam, venue: venue, winner: winner, loser: loser, draw: draw };
+    // 解析飲酒加成
+    var drunkTeam = '';
+    var drinkMatch = htmlContent.match(/const drinkingBonus\s*=\s*\{\s*away:\s*(\d+),\s*home:\s*(\d+)\s*\}/);
+    if (drinkMatch) {
+      var awayBonus = parseInt(drinkMatch[1]);
+      var homeBonus = parseInt(drinkMatch[2]);
+      if (awayBonus > 0) drunkTeam = awayTeam;
+      if (homeBonus > 0) drunkTeam = homeTeam;
+    }
+    
+    return { gId: gameCode.toUpperCase(), awayTeam: awayTeam, awayScore: awayScore, homeScore: homeScore, homeTeam: homeTeam, venue: venue, winner: winner, loser: loser, draw: draw, drunkTeam: drunkTeam };
   } catch (e) {
     Logger.log('❌ parseScoresFromHtml 錯誤: ' + e.toString());
     return null;
@@ -256,9 +334,8 @@ function writeGameToSchedule(ss, gameData) {
   if (gameData.venue) { sheet.getRange(targetRow, 8).setValue(gameData.venue); }
   sheet.getRange(targetRow, 9).setValue(gameData.winner);
   sheet.getRange(targetRow, 10).setValue(gameData.loser);
-  
-  var maxCols = sheet.getLastColumn();
-  if (maxCols >= 12) { sheet.getRange(targetRow, 12).setValue(gameData.draw); }
+  sheet.getRange(targetRow, 11).setValue(gameData.drunkTeam || '');  // K = 酒（飲酒加成隊伍）
+  sheet.getRange(targetRow, 12).setValue(gameData.draw || '');       // L = 和局
   
   Logger.log('✅ schedule 已更新: ' + gameData.gId + ' → ' + gameData.awayTeam + ' ' + gameData.awayScore + ':' + gameData.homeScore + ' ' + gameData.homeTeam);
 }
@@ -296,10 +373,23 @@ function readRankingsFromSheets(ss) {
     var unlucky = allPlayers
       .filter(function(r) {
         var totalGames = parseInt(r[12]) || 0;
-        var faRate = String(r[8]).trim();
-        return totalGames > 0 && faRate && faRate !== 'DNP' && faRate !== '';
+        var faRate = r[8];
+        return totalGames > 0 && faRate !== '' && faRate !== null && faRate !== undefined && String(faRate).trim() !== 'DNP';
       })
-      .map(function(r) { return { team: r[0], name: r[1], faRate: r[8], faRateNum: parseFloat(String(r[8]).replace('%', '')) || 100 }; })
+      .map(function(r) {
+        var raw = r[8];
+        var faRateNum;
+        var faRateStr;
+        if (typeof raw === 'number') {
+          // 原始小數（如 0.2142...）→ 轉成百分比
+          faRateNum = raw * 100;
+          faRateStr = faRateNum.toFixed(2) + '%';
+        } else {
+          faRateNum = parseFloat(String(raw).replace('%', '')) || 100;
+          faRateStr = faRateNum.toFixed(2) + '%';
+        }
+        return { team: r[0], name: r[1], faRate: faRateStr, faRateNum: faRateNum };
+      })
       .sort(function(a, b) { return a.faRateNum - b.faRateNum; })
       .slice(0, 5);
     
@@ -334,7 +424,8 @@ function updateAndPushNewsHtml(rankings) {
   
   if (rankings.teams.length > 0) {
     var teamRows = rankings.teams.map(function(t) {
-      return '                    <tr><td>' + t[0] + '</td><td>' + t[1] + '</td><td>' + t[2] + '</td></tr>';
+      var score = Math.round(parseFloat(t[2]) || 0);
+      return '                    <tr><td>' + t[0] + '</td><td>' + t[1] + '</td><td>' + score + '</td></tr>';
     }).join('\n');
     html = html.replace(/<th>總分<\/th>\s*<\/tr>[\s\S]*?<\/table>/, '<th>總分</th>\n                    </tr>\n' + teamRows + '\n                </table>');
   }
