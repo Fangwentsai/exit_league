@@ -1116,9 +1116,9 @@ function insertReportToNewsHtml(reportText, weekStart, weekEnd) {
     var newsFile = getFileFromGitHub('pages/news.html');
     var html = newsFile.content;
 
-    // 收合目前展開的新聞項目
-    html = html.replace('news-header expanded', 'news-header');
-    html = html.replace('news-text expanded', 'news-text collapsed');
+    // 收合所有目前展開的新聞項目
+    html = html.replace(/news-header expanded/g, 'news-header');
+    html = html.replace(/news-text expanded/g, 'news-text collapsed');
 
     // 今天日期 YYYY/M/D（不補零）
     var now = new Date();
