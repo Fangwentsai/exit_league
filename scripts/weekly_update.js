@@ -203,9 +203,7 @@ fs.writeFileSync(path.join(__dirname, 'weekly_players.csv'), '\ufeff' + pCsv, 'u
 console.log('📊 CSV 備份已儲存 (weekly_matches.csv, weekly_players.csv)\n');
 
 // ===== HTTP 工具函數 =====
-function httpsPost(url, payload, redirectCount) {
-  redirectCount = redirectCount || 0;
-  if (redirectCount > 5) return Promise.reject(new Error('Too many redirects'));
+function httpsPost(url, payload) {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify(payload);
     const urlObj = new URL(url);
@@ -219,10 +217,6 @@ function httpsPost(url, payload, redirectCount) {
       }
     };
     const req = https.request(options, res => {
-      // 處理 redirect (Google Apps Script 有 302 redirect)
-      if ((res.statusCode === 302 || res.statusCode === 301) && res.headers.location) {
-        return httpsPost(res.headers.location, payload, redirectCount + 1).then(resolve).catch(reject);
-      }
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
@@ -231,6 +225,7 @@ function httpsPost(url, payload, redirectCount) {
       });
     });
     req.on('error', reject);
+    // 處理 redirect (Google Apps Script 有 302 redirect)
     req.setTimeout(30000, () => { req.destroy(); reject(new Error('Request timeout')); });
     req.write(data);
     req.end();
