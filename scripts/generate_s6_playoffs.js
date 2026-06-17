@@ -1,0 +1,522 @@
+const fs = require('fs');
+const path = require('path');
+
+// 1. 讀取並解析 CSV
+const csv = fs.readFileSync(path.join(__dirname, '../weekly_players.csv'), 'utf8');
+const lines = csv.split('\n').slice(1).filter(l => l.trim() !== '');
+
+const playerStats = {};
+
+lines.forEach(l => {
+    // 日期,遊戲編號,隊伍,選手,01出賽,01勝場,CR出賽,CR勝場,合計出賽,合計勝場,先攻數
+    const cols = l.split(',');
+    if (cols.length < 10) return;
+    const team = cols[2];
+    const player = cols[3];
+    const p01 = parseInt(cols[4]) || 0;
+    const w01 = parseInt(cols[5]) || 0;
+    const pCR = parseInt(cols[6]) || 0;
+    const wCR = parseInt(cols[7]) || 0;
+    const total = parseInt(cols[8]) || 0;
+    const wins = parseInt(cols[9]) || 0;
+    
+    const key = team + '|' + player;
+    if (!playerStats[key]) {
+        playerStats[key] = { team, player, p01:0, w01:0, pCR:0, wCR:0, total:0, wins:0 };
+    }
+    playerStats[key].p01 += p01;
+    playerStats[key].w01 += w01;
+    playerStats[key].pCR += pCR;
+    playerStats[key].wCR += wCR;
+    playerStats[key].total += total;
+    playerStats[key].wins += wins;
+});
+
+// 計算勝率做為同分的 Tiebreaker
+Object.values(playerStats).forEach(p => {
+    p.winRate = p.total > 0 ? (p.wins / p.total) : 0;
+});
+
+// 排序函數：勝場優先 -> 勝率 -> 01勝場 -> CR勝場
+const sortFn = (a, b) => {
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    if (b.winRate !== a.winRate) return b.winRate - a.winRate;
+    if (b.w01 !== a.w01) return b.w01 - a.w01;
+    return b.wCR - a.wCR;
+};
+
+const sorted = Object.values(playerStats).sort(sortFn);
+
+const teamLeaders = {};
+const remaining = [];
+
+// 找各隊第一
+sorted.forEach(p => {
+    if (!teamLeaders[p.team]) {
+        teamLeaders[p.team] = p;
+    } else {
+        remaining.push(p);
+    }
+});
+
+const leadersArr = Object.values(teamLeaders).sort(sortFn);
+const elitesArr = remaining.slice(0, 6);
+const waitlistArr = remaining.slice(6, 12);
+
+// 2. 生成 HTML
+const today = new Date();
+const dateStr = `${today.getFullYear()}/${(today.getMonth()+1).toString().padStart(2,'0')}/${today.getDate().toString().padStart(2,'0')}`;
+
+let html = `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>難找的聯賽 第六屆季後賽戰報</title>
+<style>
+  :root {
+    --bg-color: #0F0F0F;
+    --card-bg: #1A1A1A;
+    --gold: #C9A063;
+    --gold-gradient: linear-gradient(135deg, #C9A063 0%, #F0D398 50%, #C9A063 100%);
+    --text-white: #FFFFFF;
+    --text-grey: #888888;
+    --highlight: #D93025;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-white);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--bg-color);
+    padding-bottom: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  .header {
+    text-align: center;
+    padding: 35px 20px;
+    background: radial-gradient(circle at top, #2a2a2a 0%, #0f0f0f 70%);
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 32px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+
+  .header p {
+    color: #E0E0E0;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    margin: 30px 20px 15px;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #333;
+    margin-left: 10px;
+  }
+
+  .player-list {
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 10px 12px;
+    border-radius: 4px;
+    border-left: 3px solid var(--gold);
+    min-height: 50px;
+  }
+
+  .card.elite {
+    border-left-color: var(--highlight);
+    background: linear-gradient(90deg, #1A1A1A 0%, #251010 100%);
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .player-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .team-name {
+    font-size: 10px;
+    color: #AAAAAA;
+    margin-top: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stats {
+    text-align: right;
+    min-width: 35px;
+  }
+
+  .win-count {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: 'Impact', sans-serif;
+  }
+  
+  .card.elite .win-count {
+    color: #ff4d4d;
+  }
+
+  .win-label {
+    font-size: 8px;
+    color: #888888;
+    font-weight: bold;
+  }
+
+  .waitlist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .waitlist-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    padding: 10px 12px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wait-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wait-name {
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: bold;
+  }
+
+  .wait-team {
+    font-size: 10px;
+    color: #999999;
+    font-weight: 500;
+  }
+  
+  .wait-wins {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: bold;
+    font-family: 'Impact', sans-serif;
+  }
+
+  .info-section {
+    padding: 0 20px;
+    margin-top: 10px;
+  }
+
+  .info-box {
+    background-color: #161616;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .info-header {
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+  }
+
+  .info-content {
+    font-size: 12px;
+    color: #ccc;
+    line-height: 1.8;
+  }
+
+  .rule-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  
+  .rule-label {
+    color: #888;
+    min-width: 60px;
+  }
+
+  .rule-val {
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .reward-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #2a2a2a;
+  }
+
+  .reward-item:last-child {
+    border-bottom: none;
+  }
+
+  .place {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .prize {
+    font-size: 13px;
+    color: #ddd;
+  }
+
+  .prize.gold {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+    font-size: 9px;
+    color: #555;
+    letter-spacing: 1px;
+  }
+
+  .close-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    background: var(--gold);
+    color: #000;
+    transform: scale(1.1);
+  }
+
+</style>
+</head>
+<body>
+
+<button class="close-btn" onclick="closeModal()" title="關閉 (ESC)">&times;</button>
+
+<div class="container" style="margin: 0 auto;">
+  <div class="header">
+    <h1>難找的聯賽</h1>
+    <p>第六屆個人季後賽戰報</p>
+    <p style="font-size: 14px;">最後更新時間：\${dateStr}</p>
+  </div>
+
+  <!-- 第一區：隊伍王者 (Grid) -->
+  <div class="section-title">👑 Team Leader (各隊第一)</div>
+  <div class="player-list">
+`;
+
+leadersArr.forEach(p => {
+    html += `    <div class="card"><div class="card-info"><span class="player-name">${p.player}</span><span class="team-name">${p.team}</span></div><div class="stats"><div class="win-count">${p.wins}</div><div class="win-label">WINS</div></div></div>\n`;
+});
+
+html += `  </div>
+
+  <!-- 第二區：菁英組 (Grid) -->
+  <div class="section-title" style="color: #D93025;">🔥 Global Elite (勝場菁英)</div>
+  <div class="player-list">
+`;
+
+elitesArr.forEach(p => {
+    html += `    <div class="card elite"><div class="card-info"><span class="player-name">${p.player}</span><span class="team-name">${p.team}</span></div><div class="stats"><div class="win-count">${p.wins}</div><div class="win-label">WINS</div></div></div>\n`;
+});
+
+html += `  </div>
+
+  <!-- 第三區：候補 -->
+  <div class="section-title" style="font-size: 12px; color: #666;">⚔️ On the radar(晉級觀察名單)</div>
+  <div class="waitlist-grid">
+`;
+
+waitlistArr.forEach((p, idx) => {
+    html += `    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">${idx + 1}. ${p.player}</span><span class="wait-team">${p.team}</span></div><div class="wait-wins">${p.wins}W</div></div>\n`;
+});
+
+html += `  </div>
+
+  <!-- 賽事資訊區塊 -->
+  <div class="section-title">📜 Tournament Info (賽事資訊)</div>
+  <div class="info-section">
+    
+    <div class="info-box">
+      <div class="info-header">🏆 個人季後賽規則</div>
+      <div class="info-content">
+        <div class="rule-row"><span class="rule-label">日期</span><span class="rule-val">待定 (TBD)</span></div>
+        <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">冠軍店家</span></div>
+        <div class="rule-row"><span class="rule-label">資格</span><span class="rule-val">每隊勝場最高 + 排名前六</span></div>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+        <div class="rule-row"><span class="rule-label">初賽</span><span class="rule-val">501 單淘汰 (讓級/OI/MO)</span></div>
+        <div class="rule-row"><span class="rule-label">決賽</span><span class="rule-val">701 三戰二 (讓級/OI/MO)</span></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-header" style="color: #ff4d4d;">🎁 獎勵內容</div>
+      <ul class="reward-list">
+        <li class="reward-item">
+          <span class="place">季後賽冠軍</span>
+          <span class="prize gold">NT$ 2,000</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽亞軍</span>
+          <span class="prize">🍺 啤酒一手</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽季軍</span>
+          <span class="prize">🍺 啤酒三支</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽殿軍</span>
+          <span class="prize">🍺 啤酒兩支</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © 2026 難找的聯賽. All rights reserved.
+  </div>
+</div>
+
+<script>
+function closeModal() {
+    try {
+        if (window.parent && window.parent !== window) {
+            if (typeof window.parent.closeMatchModal === 'function') {
+                const parentModal = window.parent.document.querySelector('.match-modal');
+                if (parentModal) {
+                    window.parent.closeMatchModal(parentModal);
+                    return;
+                }
+            }
+            
+            const parentModal = window.parent.document.querySelector('.match-modal');
+            if (parentModal) {
+                parentModal.classList.remove('visible');
+                setTimeout(() => {
+                    if (parentModal.parentNode) {
+                        parentModal.parentNode.removeChild(parentModal);
+                    }
+                }, 300);
+                return;
+            }
+        }
+        
+        if (window.history.length > 1) {
+            window.history.back();
+        }
+    } catch (e) {
+        try {
+            window.parent.postMessage({ action: 'closeModal' }, '*');
+        } catch (e2) {}
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+document.body.addEventListener('click', function(e) {
+    const container = document.querySelector('.container');
+    const closeBtn = document.querySelector('.close-btn');
+    if (!container.contains(e.target) && e.target !== closeBtn) {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>`;
+
+fs.writeFileSync(path.join(__dirname, '../pages/s6_playoffs.html'), html, 'utf8');
+console.log('✅ 成功生成 s6_playoffs.html');

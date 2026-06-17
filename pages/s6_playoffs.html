@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>難找的聯賽 第六屆季後賽戰報</title>
+<style>
+  :root {
+    --bg-color: #0F0F0F;
+    --card-bg: #1A1A1A;
+    --gold: #C9A063;
+    --gold-gradient: linear-gradient(135deg, #C9A063 0%, #F0D398 50%, #C9A063 100%);
+    --text-white: #FFFFFF;
+    --text-grey: #888888;
+    --highlight: #D93025;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-white);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--bg-color);
+    padding-bottom: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  .header {
+    text-align: center;
+    padding: 35px 20px;
+    background: radial-gradient(circle at top, #2a2a2a 0%, #0f0f0f 70%);
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 32px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+
+  .header p {
+    color: #E0E0E0;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    margin: 30px 20px 15px;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #333;
+    margin-left: 10px;
+  }
+
+  .player-list {
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 10px 12px;
+    border-radius: 4px;
+    border-left: 3px solid var(--gold);
+    min-height: 50px;
+  }
+
+  .card.elite {
+    border-left-color: var(--highlight);
+    background: linear-gradient(90deg, #1A1A1A 0%, #251010 100%);
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .player-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .team-name {
+    font-size: 10px;
+    color: #AAAAAA;
+    margin-top: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stats {
+    text-align: right;
+    min-width: 35px;
+  }
+
+  .win-count {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: 'Impact', sans-serif;
+  }
+  
+  .card.elite .win-count {
+    color: #ff4d4d;
+  }
+
+  .win-label {
+    font-size: 8px;
+    color: #888888;
+    font-weight: bold;
+  }
+
+  .waitlist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .waitlist-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    padding: 10px 12px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wait-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wait-name {
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: bold;
+  }
+
+  .wait-team {
+    font-size: 10px;
+    color: #999999;
+    font-weight: 500;
+  }
+  
+  .wait-wins {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: bold;
+    font-family: 'Impact', sans-serif;
+  }
+
+  .info-section {
+    padding: 0 20px;
+    margin-top: 10px;
+  }
+
+  .info-box {
+    background-color: #161616;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .info-header {
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+  }
+
+  .info-content {
+    font-size: 12px;
+    color: #ccc;
+    line-height: 1.8;
+  }
+
+  .rule-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  
+  .rule-label {
+    color: #888;
+    min-width: 60px;
+  }
+
+  .rule-val {
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .reward-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #2a2a2a;
+  }
+
+  .reward-item:last-child {
+    border-bottom: none;
+  }
+
+  .place {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .prize {
+    font-size: 13px;
+    color: #ddd;
+  }
+
+  .prize.gold {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+    font-size: 9px;
+    color: #555;
+    letter-spacing: 1px;
+  }
+
+  .close-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    background: var(--gold);
+    color: #000;
+    transform: scale(1.1);
+  }
+
+</style>
+</head>
+<body>
+
+<button class="close-btn" onclick="closeModal()" title="關閉 (ESC)">&times;</button>
+
+<div class="container" style="margin: 0 auto;">
+  <div class="header">
+    <h1>難找的聯賽</h1>
+    <p>第六屆個人季後賽戰報</p>
+    <p style="font-size: 14px;">最後更新時間：${dateStr}</p>
+  </div>
+
+  <!-- 第一區：隊伍王者 (Grid) -->
+  <div class="section-title">👑 Team Leader (各隊第一)</div>
+  <div class="player-list">
+    <div class="card"><div class="card-info"><span class="player-name">猴猴</span><span class="team-name">Tonight29十三么</span></div><div class="stats"><div class="win-count">97</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">小蘇</span><span class="team-name">人生揪難</span></div><div class="stats"><div class="win-count">79</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">華華</span><span class="team-name">逃生入口</span></div><div class="stats"><div class="win-count">79</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">阿淦</span><span class="team-name">Vivi嘻嘻隊</span></div><div class="stats"><div class="win-count">67</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">嘉宸</span><span class="team-name">Tonight29大三元</span></div><div class="stats"><div class="win-count">55</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">馬克</span><span class="team-name">Vivi哈哈隊</span></div><div class="stats"><div class="win-count">53</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">樂源小宇</span><span class="team-name">軟飯硬吃</span></div><div class="stats"><div class="win-count">52</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">瘦子</span><span class="team-name">酒空組</span></div><div class="stats"><div class="win-count">50</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">Stan</span><span class="team-name">傑克黑桃</span></div><div class="stats"><div class="win-count">48</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">Faker</span><span class="team-name">Tonight29大四喜</span></div><div class="stats"><div class="win-count">40</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">阿福</span><span class="team-name">傑克紅心</span></div><div class="stats"><div class="win-count">37</div><div class="win-label">WINS</div></div></div>
+    <div class="card"><div class="card-info"><span class="player-name">阿肥</span><span class="team-name">人生揪亮</span></div><div class="stats"><div class="win-count">33</div><div class="win-label">WINS</div></div></div>
+  </div>
+
+  <!-- 第二區：菁英組 (Grid) -->
+  <div class="section-title" style="color: #D93025;">🔥 Global Elite (勝場菁英)</div>
+  <div class="player-list">
+    <div class="card elite"><div class="card-info"><span class="player-name">小齊</span><span class="team-name">Tonight29十三么</span></div><div class="stats"><div class="win-count">96</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">小飛</span><span class="team-name">Tonight29十三么</span></div><div class="stats"><div class="win-count">87</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">蘇仔</span><span class="team-name">人生揪難</span></div><div class="stats"><div class="win-count">70</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">老丹</span><span class="team-name">Vivi嘻嘻隊</span></div><div class="stats"><div class="win-count">62</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">阿倫</span><span class="team-name">Vivi嘻嘻隊</span></div><div class="stats"><div class="win-count">59</div><div class="win-label">WINS</div></div></div>
+    <div class="card elite"><div class="card-info"><span class="player-name">david</span><span class="team-name">Vivi哈哈隊</span></div><div class="stats"><div class="win-count">51</div><div class="win-label">WINS</div></div></div>
+  </div>
+
+  <!-- 第三區：候補 -->
+  <div class="section-title" style="font-size: 12px; color: #666;">⚔️ On the radar(晉級觀察名單)</div>
+  <div class="waitlist-grid">
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">1. 乳來</span><span class="wait-team">逃生入口</span></div><div class="wait-wins">50W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">2. 小耿</span><span class="wait-team">Vivi哈哈隊</span></div><div class="wait-wins">50W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">3. 小倫</span><span class="wait-team">酒空組</span></div><div class="wait-wins">49W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">4. 大頭</span><span class="wait-team">軟飯硬吃</span></div><div class="wait-wins">48W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">5. +0</span><span class="wait-team">Tonight29大三元</span></div><div class="wait-wins">47W</div></div>
+    <div class="waitlist-card"><div class="wait-info"><span class="wait-name">6. 小豬</span><span class="wait-team">酒空組</span></div><div class="wait-wins">45W</div></div>
+  </div>
+
+  <!-- 賽事資訊區塊 -->
+  <div class="section-title">📜 Tournament Info (賽事資訊)</div>
+  <div class="info-section">
+    
+    <div class="info-box">
+      <div class="info-header">🏆 個人季後賽規則</div>
+      <div class="info-content">
+        <div class="rule-row"><span class="rule-label">日期</span><span class="rule-val">待定 (TBD)</span></div>
+        <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">冠軍店家</span></div>
+        <div class="rule-row"><span class="rule-label">資格</span><span class="rule-val">每隊勝場最高 + 排名前六</span></div>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+        <div class="rule-row"><span class="rule-label">初賽</span><span class="rule-val">501 單淘汰 (讓級/OI/MO)</span></div>
+        <div class="rule-row"><span class="rule-label">決賽</span><span class="rule-val">701 三戰二 (讓級/OI/MO)</span></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-header" style="color: #ff4d4d;">🎁 獎勵內容</div>
+      <ul class="reward-list">
+        <li class="reward-item">
+          <span class="place">季後賽冠軍</span>
+          <span class="prize gold">NT$ 2,000</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽亞軍</span>
+          <span class="prize">🍺 啤酒一手</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽季軍</span>
+          <span class="prize">🍺 啤酒三支</span>
+        </li>
+        <li class="reward-item">
+          <span class="place">季後賽殿軍</span>
+          <span class="prize">🍺 啤酒兩支</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © 2026 難找的聯賽. All rights reserved.
+  </div>
+</div>
+
+<script>
+function closeModal() {
+    try {
+        if (window.parent && window.parent !== window) {
+            if (typeof window.parent.closeMatchModal === 'function') {
+                const parentModal = window.parent.document.querySelector('.match-modal');
+                if (parentModal) {
+                    window.parent.closeMatchModal(parentModal);
+                    return;
+                }
+            }
+            
+            const parentModal = window.parent.document.querySelector('.match-modal');
+            if (parentModal) {
+                parentModal.classList.remove('visible');
+                setTimeout(() => {
+                    if (parentModal.parentNode) {
+                        parentModal.parentNode.removeChild(parentModal);
+                    }
+                }, 300);
+                return;
+            }
+        }
+        
+        if (window.history.length > 1) {
+            window.history.back();
+        }
+    } catch (e) {
+        try {
+            window.parent.postMessage({ action: 'closeModal' }, '*');
+        } catch (e2) {}
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+document.body.addEventListener('click', function(e) {
+    const container = document.querySelector('.container');
+    const closeBtn = document.querySelector('.close-btn');
+    if (!container.contains(e.target) && e.target !== closeBtn) {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>
