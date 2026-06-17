@@ -118,7 +118,7 @@
   <div class="header">
     <h1>難找的聯賽</h1>
     <p>第六屆季後賽戰報</p>
-    <p style="font-size:12px; color:#bbb; margin-top:5px;">(點擊各隊第一卡片，可展開查看第 2、3 名勝場)</p>
+    <p style="font-size:12px; color:#bbb; margin-top:5px;">(點擊任一卡片，可展開全體第 2、3 名勝場)</p>
     <p style="font-size:12px;" id="update-time">讀取資料中...</p>
   </div>
 
@@ -283,11 +283,19 @@ async function loadPlayoffData() {
     }
 }
 
-function toggleLeader(card) {
-    const sub = card.nextElementSibling;
-    if (!sub) return;
-    card.classList.toggle('open');
-    sub.classList.toggle('open');
+function toggleLeader(clickedCard) {
+    // 檢查點擊的卡片是否已經展開
+    const isOpen = clickedCard.classList.contains('open');
+    const cards = document.querySelectorAll('.leader-card');
+    const subs = document.querySelectorAll('.sub-players');
+    
+    if (isOpen) {
+        cards.forEach(c => c.classList.remove('open'));
+        subs.forEach(s => s.classList.remove('open'));
+    } else {
+        cards.forEach(c => c.classList.add('open'));
+        subs.forEach(s => s.classList.add('open'));
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadPlayoffData);
