@@ -48,11 +48,13 @@
         
         <!-- 功能按鈕列 -->
         <div class="function-nav">
-            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="openAddPlayerPanel()">➕ 新增隊員</button>
-            <button class="fn-btn fn-btn-match" onclick="scrollToGameSelector()">🎯 比賽登錄</button>
+            <button class="fn-btn fn-btn-match" onclick="showSection('match')">🎯 比賽登錄</button>
+            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="showSection('player')">➕ 新增隊員</button>
         </div>
 
         <div class="admin-content">
+            <!-- 比賽登錄區塊 -->
+            <div id="matchSection" style="display: none;">
             <!-- 比賽選擇區域 -->
             <div class="game-selector" id="gameSelectorSection">
                 <h2>選擇比賽</h2>
@@ -126,35 +128,34 @@
                     <button class="preview-btn" onclick="showGamePreview()">預覽比賽</button>
                     <button class="save-btn" onclick="saveGameData()">保存比賽</button>
                 </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- 新增隊員面板 -->
-    <div class="add-player-overlay" id="addPlayerOverlay" onclick="closeAddPlayerPanel(event)">
-        <div class="add-player-panel" id="addPlayerPanel">
-            <div class="add-player-header">
-                <h2>➕ 新增隊員</h2>
-                <button class="add-player-close" onclick="closeAddPlayerPanel(null, true)">✕</button>
-            </div>
-            <div class="add-player-body">
-                <div class="form-group">
-                    <label for="teamSelect">選擇隊伍</label>
-                    <select id="teamSelect" class="add-player-select">
-                        <option value="">載入中...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="newPlayerName">新隊員姓名</label>
-                    <input type="text" id="newPlayerName" class="add-player-input" placeholder="輸入姓名..." maxlength="20">
-                </div>
-                <div class="add-player-footer">
-                    <button class="add-player-submit" id="addPlayerSubmit" onclick="submitAddPlayer()">送出</button>
-                    <button class="add-player-cancel" onclick="closeAddPlayerPanel(null, true)">取消</button>
+            <!-- 新增隊員區塊 -->
+            <div id="playerSection" style="display: none;">
+                <div class="add-player-panel" id="addPlayerPanel">
+                    <div class="add-player-header">
+                        <h2>➕ 新增隊員</h2>
+                    </div>
+                    <div class="add-player-body">
+                        <div class="form-group">
+                            <label for="teamSelect">選擇隊伍</label>
+                            <select id="teamSelect" class="add-player-select">
+                                <option value="">載入中...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPlayerName">新隊員姓名</label>
+                            <input type="text" id="newPlayerName" class="add-player-input" placeholder="輸入姓名..." maxlength="20">
+                        </div>
+                        <div class="add-player-footer">
+                            <button class="add-player-submit" id="addPlayerSubmit" onclick="submitAddPlayer()">送出</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
     <!-- 選手選擇彈窗 -->
     <div class="modal" id="playerModal">
@@ -196,39 +197,37 @@
         return day === 0 || day >= 4;
     }
 
-    /** 開啟新增隊員面板 */
-    async function openAddPlayerPanel() {
-        if (!isAddPlayerAllowed()) {
-            alert('⛔ 新增隊員功能僅在每週四 00:00 至週日 23:59 開放。\n比賽期間（週一、週二、週三）暫停開放，請於賽後再行新增。');
-            return;
-        }
-        // 載入 player.json
-        try {
-            const res = await fetch('../data/player.json?_=' + Date.now());
-            playerJsonData = await res.json();
-            // 填入隊伍選單
-            const sel = document.getElementById('teamSelect');
-            sel.innerHTML = '<option value="">請選擇隊伍...</option>';
-            Object.keys(playerJsonData).forEach(team => {
-                const opt = document.createElement('option');
-                opt.value = team;
-                opt.textContent = team + '（' + playerJsonData[team].length + ' 人）';
-                sel.appendChild(opt);
-            });
-        } catch (e) {
-            alert('❌ 無法載入選手資料，請稍後再試。');
-            return;
-        }
-        document.getElementById('newPlayerName').value = '';
-        document.getElementById('addPlayerOverlay').style.display = 'flex';
-        setTimeout(() => document.getElementById('addPlayerPanel').classList.add('open'), 10);
-    }
+    /** 切換顯示區塊 */
+    async function showSection(section) {
+        document.getElementById('matchSection').style.display = (section === 'match') ? 'block' : 'none';
+        document.getElementById('playerSection').style.display = (section === 'player') ? 'block' : 'none';
 
-    /** 關閉面板 */
-    function closeAddPlayerPanel(event, force) {
-        if (!force && event && event.target !== document.getElementById('addPlayerOverlay')) return;
-        document.getElementById('addPlayerPanel').classList.remove('open');
-        setTimeout(() => { document.getElementById('addPlayerOverlay').style.display = 'none'; }, 300);
+        if (section === 'player') {
+            if (!isAddPlayerAllowed()) {
+                alert('⛔ 新增隊員功能僅在每週四 00:00 至週日 23:59 開放。\n比賽期間（週一、週二、週三）暫停開放，請於賽後再行新增。');
+                document.getElementById('playerSection').style.display = 'none';
+                return;
+            }
+            
+            // 載入 player.json
+            try {
+                const res = await fetch('../data/player.json?_=' + Date.now());
+                playerJsonData = await res.json();
+                // 填入隊伍選單
+                const sel = document.getElementById('teamSelect');
+                sel.innerHTML = '<option value="">請選擇隊伍...</option>';
+                Object.keys(playerJsonData).forEach(team => {
+                    const opt = document.createElement('option');
+                    opt.value = team;
+                    opt.textContent = team + '（' + playerJsonData[team].length + ' 人）';
+                    sel.appendChild(opt);
+                });
+            } catch (e) {
+                alert('❌ 無法載入選手資料，請稍後再試。');
+                return;
+            }
+            document.getElementById('newPlayerName').value = '';
+        }
     }
 
     /** 送出新增隊員 */
@@ -276,7 +275,9 @@
 
             if (result.status === 'success') {
                 alert(`✅ 成功將「${name}」加入「${team}」！`);
-                closeAddPlayerPanel(null, true);
+                document.getElementById('newPlayerName').value = '';
+                // 重新整理隊伍選項
+                showSection('player');
             } else {
                 alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
                 playerJsonData[team].pop(); // rollback
@@ -288,12 +289,6 @@
             btn.textContent = '送出';
             btn.disabled = false;
         }
-    }
-
-    /** 捲動到比賽登錄區域 */
-    function scrollToGameSelector() {
-        const el = document.getElementById('gameSelectorSection');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
     /** 登入後更新按鈕狀態 */

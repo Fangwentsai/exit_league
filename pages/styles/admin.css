@@ -207,41 +207,20 @@ body {
 }
 
 /* ===== 新增隊員面板 ===== */
-.add-player-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 9000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(3px);
-}
-
 .add-player-panel {
     background: white;
     border-radius: 16px;
-    width: 90%;
-    max-width: 440px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    transform: translateY(30px) scale(0.97);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
     overflow: hidden;
-}
-
-.add-player-panel.open {
-    transform: translateY(0) scale(1);
-    opacity: 1;
+    margin-bottom: 20px;
 }
 
 .add-player-header {
     background: #27ae60;
     color: white;
     padding: 20px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .add-player-header h2 {
@@ -249,22 +228,6 @@ body {
     font-weight: 700;
     margin: 0;
 }
-
-.add-player-close {
-    background: rgba(255,255,255,0.25);
-    border: none;
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.add-player-close:hover { background: rgba(255,255,255,0.4); }
 
 .add-player-body {
     padding: 24px;
