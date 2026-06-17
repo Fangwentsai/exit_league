@@ -867,7 +867,7 @@
         </button>
 
         <!-- 季後賽 Banner 按鈕 -->
-        <button class="playoffs-banner" onclick="window.openPlayoffsModal();">
+        <button class="playoffs-banner" onclick="openNewsPlayoffsModal();">
             <div class="deco-line"></div>
             <div class="text-group">
                 <div class="sub-title">難找的聯賽</div>
@@ -1707,6 +1707,46 @@
         // 保險機制
         setTimeout(loadGoogleAnalytics, 4000);
     </script>
+    <!-- 季後賽 Modal（news.html 自己的） -->
+    <div id="newsPlayoffsModal" onclick="if(event.target===this) closeNewsPlayoffsModal()" style="
+        display:none;
+        position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;
+        background:rgba(0,0,0,0.85);
+        justify-content:center; align-items:center;
+    ">
+        <div style="position:relative; width:90%; max-width:460px; height:85vh; background:#0f0f0f; border-radius:8px; overflow:hidden;">
+            <button onclick="closeNewsPlayoffsModal()" style="
+                position:absolute; top:10px; right:10px; z-index:10;
+                width:34px; height:34px; border-radius:50%;
+                background:rgba(0,0,0,0.7); border:2px solid #C9A063;
+                color:#C9A063; font-size:20px; font-weight:bold; cursor:pointer;
+                display:flex; align-items:center; justify-content:center; line-height:1;
+            ">&times;</button>
+            <iframe id="newsPlayoffsIframe" src="" style="width:100%; height:100%; border:none;"></iframe>
+        </div>
+    </div>
+
+    <script>
+    function openNewsPlayoffsModal() {
+        var modal = document.getElementById('newsPlayoffsModal');
+        var iframe = document.getElementById('newsPlayoffsIframe');
+        // 動態載入，防止浏覽器快取
+        iframe.src = 's6_playoffs.html?v=' + Date.now();
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeNewsPlayoffsModal() {
+        var modal = document.getElementById('newsPlayoffsModal');
+        var iframe = document.getElementById('newsPlayoffsIframe');
+        modal.style.display = 'none';
+        iframe.src = ''; // 釋放資源
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeNewsPlayoffsModal();
+    });
+    </script>
+
 </body>
 
 </html>

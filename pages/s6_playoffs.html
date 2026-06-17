@@ -313,15 +313,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 80px;
+    grid-column: 1 / -1; /* 在 grid 中跨越所有欄 */
     width: 100%;
   }
   .loader {
     border: 3px solid #333;
     border-top: 3px solid var(--gold);
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     animation: spin 1s linear infinite;
   }
   @keyframes spin {

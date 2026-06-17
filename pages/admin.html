@@ -49,7 +49,7 @@
         <!-- 功能按鈕列 -->
         <div class="function-nav">
             <button class="fn-btn fn-btn-match" onclick="showSection('match')">🎯 比賽登錄</button>
-            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="showSection('player')">➕ 新增隊員</button>
+            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="alertAddPlayerClosed()">➕ 新增隊員</button>
         </div>
 
         <div class="admin-content">
@@ -189,12 +189,14 @@
 
     let playerJsonData = null; // 快取的 player.json
 
-    /** 判斷是否在開放時段 (週四至週一開放，週二與週三不開放) */
+    /** 永遠不允許新增隊員（賽季最後一個月封鎖） */
     function isAddPlayerAllowed() {
-        const now = new Date();
-        const day = now.getDay(); // 0=日,1=月,2=火,3=水,4=木,5=金,6=六
-        // 週二(2)、週三(3) 不開放，其餘開放
-        return day !== 2 && day !== 3;
+        return false;
+    }
+
+    /** 顯示新增隊員已關閉的提示 */
+    function alertAddPlayerClosed() {
+        alert('搜哩！\n比賽結束前最後一個月不可以新增隊員，\n報名功能已暫停開放。');
     }
 
     /** 切換顯示區塊 */
