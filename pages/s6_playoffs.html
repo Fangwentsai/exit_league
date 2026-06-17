@@ -23,8 +23,8 @@
   .section-title { display:flex; align-items:center; margin:30px 20px 15px; color:var(--gold); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
   .section-title::after { content:''; flex:1; height:1px; background:#333; margin-left:10px; }
 
-  /* Leader cards — 佔整行，方便展開 */
-  .leader-list { padding:0 15px; display:flex; flex-direction:column; gap:6px; }
+  /* Leader cards — 兩欄 grid */
+  .leader-list { padding:0 15px; display:grid; grid-template-columns:1fr 1fr; gap:6px; }
 
   .leader-card-wrap { border-radius:4px; overflow:hidden; }
 
@@ -177,14 +177,8 @@
 function closeModal() {
     try {
         if (window.parent && window.parent !== window) {
-            const parentModal = window.parent.document.querySelector('.match-modal, #newsPlayoffsModal');
-            if (parentModal) {
-                if (typeof window.parent.closeMatchModal === 'function') { window.parent.closeMatchModal(parentModal); return; }
-                if (typeof window.parent.closeNewsPlayoffsModal === 'function') { window.parent.closeNewsPlayoffsModal(); return; }
-                parentModal.classList.remove('visible');
-                parentModal.style.display = 'none';
-                return;
-            }
+            if (typeof window.parent.closePlayoffsModal === 'function') { window.parent.closePlayoffsModal(); return; }
+            if (typeof window.parent.closeNewsPlayoffsModal === 'function') { window.parent.closeNewsPlayoffsModal(); return; }
         }
         if (window.history.length > 1) window.history.back();
     } catch(e) {
@@ -192,10 +186,6 @@ function closeModal() {
     }
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
-document.body.addEventListener('click', e => {
-    const c = document.querySelector('.container'), btn = document.querySelector('.close-btn');
-    if (!c.contains(e.target) && e.target !== btn) closeModal();
-});
 
 // ======= 動態載入 =======
 async function loadPlayoffData() {
