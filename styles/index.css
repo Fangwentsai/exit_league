@@ -689,6 +689,8 @@ body {
 .match-modal.visible {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+    z-index: 10001;
 }
 
 .match-modal-content {
