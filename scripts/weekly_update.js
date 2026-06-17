@@ -108,7 +108,8 @@ function parseGameHtml(gameNum) {
   const totalHome = hb + hw + d.home;
   const winner = ab > hb ? awayTeam : (hb > ab ? homeTeam : '');
   const loser = ab > hb ? homeTeam : (hb > ab ? awayTeam : '');
-  const draw = ab === hb ? 'Y' : '';
+  const draw1 = ab === hb ? awayTeam : '';
+  const draw2 = ab === hb ? homeTeam : '';
 
   // 飲酒加成 Label
   const drunkParts = [];
@@ -158,7 +159,7 @@ function parseGameHtml(gameNum) {
     date: matchDate,
     awayTeam, awayScore: totalAway,
     homeScore: totalHome, homeTeam,
-    venue, winner, loser, drunk, draw,
+    venue, winner, loser, drunk, draw1, draw2,
     players: Object.entries(pStats).map(([name, s]) => ({ name, ...s }))
   };
 }
@@ -182,9 +183,9 @@ if (weeklyGames.length === 0) {
 console.log(`\n✅ 成功解析 ${weeklyGames.length} 場比賽\n`);
 
 // ===== 輸出 CSV 備份（保留原有功能）=====
-let mCsv = '遊戲編號,日期,客場,客場分數,vs,主場分數,主場,比賽地點,勝,敗,酒,和局\n';
+let mCsv = '遊戲編號,日期,客場,客場分數,vs,主場分數,主場,比賽地點,勝,敗,酒,和局,和局\n';
 weeklyGames.forEach(d => {
-  mCsv += `${d.gId},${d.date},${d.awayTeam},${d.awayScore},vs,${d.homeScore},${d.homeTeam},${d.venue},${d.winner},${d.loser},${d.drunk},${d.draw}\n`;
+  mCsv += `${d.gId},${d.date},${d.awayTeam},${d.awayScore},vs,${d.homeScore},${d.homeTeam},${d.venue},${d.winner},${d.loser},${d.drunk},${d.draw1},${d.draw2}\n`;
 });
 fs.writeFileSync(path.join(__dirname, 'weekly_matches.csv'), '\ufeff' + mCsv, 'utf8');
 
