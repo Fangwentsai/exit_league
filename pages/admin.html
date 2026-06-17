@@ -189,12 +189,12 @@
 
     let playerJsonData = null; // 快取的 player.json
 
-    /** 判斷是否在開放時段 (週四 00:00 ~ 週日 23:59) */
+    /** 判斷是否在開放時段 (週四至週一開放，週二與週三不開放) */
     function isAddPlayerAllowed() {
         const now = new Date();
         const day = now.getDay(); // 0=日,1=月,2=火,3=水,4=木,5=金,6=六
-        // 週四(4)、週五(5)、週六(6)、週日(0) 開放；週一(1)~週三(3) 比賽期間關閉
-        return day === 0 || day >= 4;
+        // 週二(2)、週三(3) 不開放，其餘開放
+        return day !== 2 && day !== 3;
     }
 
     /** 切換顯示區塊 */
@@ -204,7 +204,7 @@
 
         if (section === 'player') {
             if (!isAddPlayerAllowed()) {
-                alert('⛔ 新增隊員功能僅在每週四 00:00 至週日 23:59 開放。\n比賽期間（週一、週二、週三）暫停開放，請於賽後再行新增。');
+                alert('⛔ 新增隊員功能僅在每週四至下週一開放。\n比賽期間（週二、週三）暫停開放，請於賽後再行新增。');
                 document.getElementById('playerSection').style.display = 'none';
                 return;
             }
@@ -307,7 +307,7 @@
         if (!btn) return;
         if (!isAddPlayerAllowed()) {
             btn.classList.add('fn-btn-disabled');
-            btn.title = '僅週四至週日開放';
+            btn.title = '僅週四至週一開放';
         } else {
             btn.classList.remove('fn-btn-disabled');
             btn.title = '';
