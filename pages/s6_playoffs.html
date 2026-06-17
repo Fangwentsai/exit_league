@@ -117,8 +117,9 @@
 <div class="container" style="margin:0 auto;">
   <div class="header">
     <h1>難找的聯賽</h1>
-    <p>第六屆個人季後賽戰報</p>
-    <p style="font-size:14px;" id="update-time">讀取資料中...</p>
+    <p>第六屆季後賽戰報</p>
+    <p style="font-size:12px; color:#bbb; margin-top:5px;">(點擊各隊第一卡片，可展開查看第 2、3 名勝場)</p>
+    <p style="font-size:12px;" id="update-time">讀取資料中...</p>
   </div>
 
   <div class="section-title">👑 Team Leader (各隊第一)</div>
@@ -137,14 +138,7 @@
   </div>
 
   <!-- 說明文字 + 卡位戰 -->
-  <div id="bubble-section" style="display:none;">
-    <div class="section-title" style="font-size:12px;color:#555;">🔥 Bubble Zone (卡位戰觀察)</div>
-    <div class="note-box">
-      <p style="margin:0 0 10px;color:#bbb;">點擊 <strong>各隊第一</strong> 的卡片，可以展開查看該隊第 2、3 名的勝場數。</p>
-      <p style="margin:0 0 10px;color:#bbb;">以下是菁英名額邊緣的卡位戰（勝場差距在 5W 以內）：</p>
-      <div id="bubble-list"></div>
-    </div>
-  </div>
+
 
   <div class="section-title">📜 Tournament Info (賽事資訊)</div>
   <div class="info-section">
@@ -274,21 +268,6 @@ async function loadPlayoffData() {
             waitHtml += `<div class="waitlist-card"><div class="wait-info"><span class="wait-name">${i+1}. ${p.player}</span><span class="wait-team">${p.team}</span></div><div class="wait-wins">${p.wins}W</div></div>`;
         });
         document.getElementById('waitlist-container').innerHTML = waitHtml;
-
-        // ── Bubble Zone：菁英第6名 vs 候補前幾名 ──
-        const eliteLast = elitesArr[elitesArr.length - 1];
-        const bubblePlayers = eliteLast ? [eliteLast, ...waitlistArr.slice(0, 5)] : waitlistArr.slice(0, 6);
-        let bubbleHtml = '';
-        bubblePlayers.forEach((p, i) => {
-            const isIn = i === 0;
-            const diff = i === 0 ? '' : `(差 ${eliteLast.wins - p.wins}W)`;
-            bubbleHtml += `<div class="bubble-row">
-              <span class="${isIn ? 'bubble-in' : 'bubble-out'}">${isIn ? '✅ ' : '⏳ '}${p.player} <small style="color:#666;">${p.team}</small></span>
-              <span>${p.wins}W <span class="bubble-diff">${diff}</span></span>
-            </div>`;
-        });
-        document.getElementById('bubble-list').innerHTML = bubbleHtml;
-        document.getElementById('bubble-section').style.display = 'block';
 
         // 更新時間
         const now = new Date();
