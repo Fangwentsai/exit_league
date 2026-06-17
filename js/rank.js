@@ -145,10 +145,10 @@ if (!CONFIG[currentSeason]) {
                 })
                 // 過濾出真正的排名列，避免把賽程行混入
                 .filter(item => {
-                    if (!item.team) return false; // 必須有隊名
+                    if (!item.team || item.team.trim() === '') return false; // 必須有有效的隊名
                     
                     // 排除賽程相關的行（包含日期、比賽場次等關鍵字）
-                    const teamLower = item.team.toLowerCase();
+                    const teamLower = item.team.trim().toLowerCase();
                     const excludeKeywords = ['日期', '遊戲編號', '客場', '主場', '比賽地點', 'g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9'];
                     if (excludeKeywords.some(keyword => teamLower.includes(keyword))) {
                         return false;
