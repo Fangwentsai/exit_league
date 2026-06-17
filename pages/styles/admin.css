@@ -179,9 +179,9 @@ body {
 }
 
 .fn-btn-add {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: #27ae60;
     color: white;
-    box-shadow: 0 3px 10px rgba(46,204,113,0.3);
+    box-shadow: 0 2px 6px rgba(46,204,113,0.25);
 }
 .fn-btn-add:hover:not(.fn-btn-disabled) {
     transform: translateY(-2px);
@@ -189,9 +189,9 @@ body {
 }
 
 .fn-btn-match {
-    background: linear-gradient(135deg, #dc3545, #b02a3a);
+    background: #dc3545;
     color: white;
-    box-shadow: 0 3px 10px rgba(220,53,69,0.3);
+    box-shadow: 0 2px 6px rgba(220,53,69,0.25);
 }
 .fn-btn-match:hover {
     transform: translateY(-2px);
@@ -236,7 +236,7 @@ body {
 }
 
 .add-player-header {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: #27ae60;
     color: white;
     padding: 20px 24px;
     display: flex;
@@ -298,7 +298,7 @@ body {
 .add-player-submit {
     flex: 1;
     padding: 13px;
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: #27ae60;
     color: white;
     border: none;
     border-radius: 10px;
