@@ -217,6 +217,10 @@ function httpsPost(url, payload) {
       }
     };
     const req = https.request(options, res => {
+      // GAS 返回 302，需用 GET 取得 redirect 結果
+      if ((res.statusCode === 302 || res.statusCode === 301) && res.headers.location) {
+        return httpsGet(res.headers.location).then(resolve).catch(reject);
+      }
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
@@ -225,7 +229,6 @@ function httpsPost(url, payload) {
       });
     });
     req.on('error', reject);
-    // 處理 redirect (Google Apps Script 有 302 redirect)
     req.setTimeout(30000, () => { req.destroy(); reject(new Error('Request timeout')); });
     req.write(data);
     req.end();
