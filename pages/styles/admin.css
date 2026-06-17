@@ -157,6 +157,181 @@ body {
     margin: 0 auto;
 }
 
+/* ===== 功能按鈕列 ===== */
+.function-nav {
+    display: flex;
+    gap: 12px;
+    padding: 14px 30px;
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.fn-btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.fn-btn-add {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    box-shadow: 0 3px 10px rgba(46,204,113,0.3);
+}
+.fn-btn-add:hover:not(.fn-btn-disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(46,204,113,0.4);
+}
+
+.fn-btn-match {
+    background: linear-gradient(135deg, #dc3545, #b02a3a);
+    color: white;
+    box-shadow: 0 3px 10px rgba(220,53,69,0.3);
+}
+.fn-btn-match:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220,53,69,0.4);
+}
+
+.fn-btn-disabled {
+    background: #c0c0c0 !important;
+    color: #888 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ===== 新增隊員面板 ===== */
+.add-player-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 9000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.add-player-panel {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 440px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    transform: translateY(30px) scale(0.97);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.add-player-panel.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.add-player-header {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-player-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.add-player-close {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.add-player-close:hover { background: rgba(255,255,255,0.4); }
+
+.add-player-body {
+    padding: 24px;
+}
+
+.add-player-select,
+.add-player-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fafafa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+.add-player-select:focus,
+.add-player-input:focus {
+    outline: none;
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46,204,113,0.15);
+    background: white;
+}
+
+.add-player-footer {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.add-player-submit {
+    flex: 1;
+    padding: 13px;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.add-player-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(46,204,113,0.35);
+}
+.add-player-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.add-player-cancel {
+    flex: 1;
+    padding: 13px;
+    background: #f0f0f0;
+    color: #555;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.add-player-cancel:hover { background: #e0e0e0; }
+
+
+
 .game-selector {
     background: white;
     padding: 25px;
