@@ -164,6 +164,9 @@ if (!CONFIG[currentSeason]) {
             // 依總分排序（降序）
             rankings.sort((a, b) => b.total - a.total);
 
+            // 限制最多顯示 12 支隊伍，避免 schedule 工作表中的雜質行混入排名
+            rankings = rankings.slice(0, 12);
+
             // 清空表格
             tableBody.innerHTML = '';
 
