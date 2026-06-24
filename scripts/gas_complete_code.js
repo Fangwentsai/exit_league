@@ -1,7 +1,7 @@
 // =====================================================
 // Admin GAS — 完整版 Code.gs
-// 功能：比賽上傳 + GitHub push + 自動排行榜 + 6場偵測 + 戰報生成
-// 最後更新：2026/6/11 10:33
+// 功能：比賽上傳 + GitHub push + 自動排行榜 + 6場偵測 + 戰報生成 + data重複寫入檢測
+// 最後更新：2026/6/24 14:16
 // =====================================================
 
 var WEEKLY_SHEET_ID = '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM';
@@ -268,6 +268,93 @@ function writePlayerDataToSheet(ss, playerStats, awayTeam, homeTeam, gameDate) {
   var sheet = ss.getSheetByName('data');
   if (!sheet) { Logger.log('找不到 data 頁籤'); return; }
   
+  // === 重複檢測：用日期+選手名判斷是否已寫入過 ===
+  // 收集本次要寫入的所有選手名
+  var newPlayerNames = [];
+  if (playerStats.away) playerStats.away.forEach(function(p) { newPlayerNames.push(p.name); });
+  if (playerStats.home) playerStats.home.forEach(function(p) { newPlayerNames.push(p.name); });
+  
+  if (newPlayerNames.length > 0 && gameDate) {
+    var lastRow = sheet.getLastRow();
+    if (lastRow >= 1) {
+      var allData = sheet.getRange(1, 1, lastRow, 8).getValues();
+      
+      // 找到所有以 gameDate 開頭的資料區塊
+      // 資料結構：[空行] → [日期行] → [header] → [選手行...] → [header] → [選手行...]
+      var blocksToDelete = []; // [{startRow, endRow}]
+      
+      for (var i = 0; i < allData.length; i++) {
+        var cellValue = String(allData[i][0]).trim();
+        
+        // 比對日期行（支援多種格式）
+        if (cellValue === String(gameDate).trim()) {
+          // 找到日期行，往下掃描收集這個區塊的所有選手名
+          var blockStart = i;
+          var blockEnd = i;
+          var existingPlayers = [];
+          
+          for (var j = i + 1; j < allData.length; j++) {
+            var rowFirst = String(allData[j][0]).trim();
+            
+            // 遇到空行或下一個日期行就結束
+            if (rowFirst === '' || rowFirst.match(/^\d{4}\//) || rowFirst.match(/^\d{1,2}\//)) {
+              // 檢查是不是真的空行（整行都是空的）
+              var isEmptyRow = allData[j].every(function(cell) { return String(cell).trim() === ''; });
+              if (isEmptyRow) {
+                blockEnd = j;
+                break;
+              }
+              // 如果像日期格式，就是下一個區塊了
+              if (rowFirst.match(/^\d{4}\//) || (rowFirst.match(/^\d{1,2}\//) && !rowFirst.match(/^選手$/))) {
+                break;
+              }
+            }
+            
+            blockEnd = j;
+            
+            // 跳過 header 行
+            if (rowFirst === '選手') continue;
+            
+            // 收集選手名
+            if (rowFirst && rowFirst !== '選手') {
+              existingPlayers.push(rowFirst);
+            }
+          }
+          
+          // 比對選手名：如果有 2 個以上選手名重疊，判定為同一場比賽
+          var matchCount = 0;
+          existingPlayers.forEach(function(name) {
+            if (newPlayerNames.indexOf(name) >= 0) matchCount++;
+          });
+          
+          if (matchCount >= 2 || (existingPlayers.length > 0 && matchCount === existingPlayers.length)) {
+            // 往上找空行（屬於這個區塊的分隔行）
+            var deleteStart = blockStart;
+            if (deleteStart > 0) {
+              var prevRow = allData[deleteStart - 1];
+              var isPrevEmpty = prevRow.every(function(cell) { return String(cell).trim() === ''; });
+              if (isPrevEmpty) deleteStart = deleteStart - 1;
+            }
+            
+            blocksToDelete.push({ startRow: deleteStart + 1, endRow: blockEnd + 1 }); // 轉為 1-indexed
+            Logger.log('🔍 發現重複區塊: 行 ' + (deleteStart + 1) + ' ~ ' + (blockEnd + 1) + '，選手匹配 ' + matchCount + '/' + existingPlayers.length);
+          }
+        }
+      }
+      
+      // 從後往前刪除（避免行號偏移）
+      if (blocksToDelete.length > 0) {
+        blocksToDelete.reverse();
+        blocksToDelete.forEach(function(block) {
+          var numRows = block.endRow - block.startRow + 1;
+          sheet.deleteRows(block.startRow, numRows);
+          Logger.log('🗑️ 已刪除重複區塊: 行 ' + block.startRow + ' ~ ' + block.endRow + '（共 ' + numRows + ' 行）');
+        });
+      }
+    }
+  }
+  
+  // === 寫入新資料 ===
   var lastRow = sheet.getLastRow();
   var rows = [];
   
@@ -296,7 +383,7 @@ function writePlayerDataToSheet(ss, playerStats, awayTeam, homeTeam, gameDate) {
   // 先把 A 欄設為文字格式，避免 "+0" 被轉成數字 0
   sheet.getRange(startRow, 1, rows.length, 1).setNumberFormat('@');
   sheet.getRange(startRow, 1, rows.length, 8).setValues(rows);
-  Logger.log('✅ data 頁籤：已追加 ' + rows.length + ' 列');
+  Logger.log('✅ data 頁籤：已寫入 ' + rows.length + ' 列（含重複檢測）');
 }
 
 // =====================================================
