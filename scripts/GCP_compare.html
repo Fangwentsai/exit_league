@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OCMS vs GCP 註冊資料比對報告</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a33;
+      --panel-2: #0f1730;
+      --text: #e8eefc;
+      --muted: #a8b3d6;
+      --accent: #7aa2ff;
+      --accent-2: #68e0c8;
+      --warn: #ffcc66;
+      --danger: #ff7b7b;
+      --ok: #69e2a1;
+      --line: rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: radial-gradient(circle at top, #16244d 0%, var(--bg) 45%, #070a13 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+    .hero {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.35fr .9fr;
+      align-items: stretch;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    .card .inner { padding: 22px; }
+    h1, h2, h3, h4 { margin: 0 0 10px; line-height: 1.25; }
+    h1 { font-size: 30px; letter-spacing: .02em; }
+    h2 { font-size: 22px; margin-top: 4px; }
+    h3 { font-size: 18px; margin-top: 0; }
+    p { margin: 0 0 10px; color: var(--text); }
+    .muted { color: var(--muted); }
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+    .tag.ok { background: rgba(105,226,161,.12); color: #baf7d1; }
+    .tag.warn { background: rgba(255,204,102,.12); color: #ffe0a3; }
+    .tag.danger { background: rgba(255,123,123,.12); color: #ffbbbb; }
+    .summary-box {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.15);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .stat .num {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 4px;
+      color: #ffffff;
+    }
+    .stat .lbl { font-size: 13px; color: var(--muted); }
+    .aside-visual {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100%;
+    }
+    .mini-chart {
+      margin-top: 10px;
+      padding: 8px 0 0;
+    }
+    .bar-track {
+      width: 100%;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      margin: 10px 0 8px;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      width: 90%;
+    }
+    .bar-fill.gap { background: linear-gradient(90deg, #ffd36a, #ff8b8b); width: 10%; }
+    .section {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1.1fr .95fr .95fr; gap: 18px; }
+    .panel {
+      background: rgba(8, 13, 27, .72);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 12px 0 14px;
+    }
+    input, select, button {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+    input::placeholder { color: #8c97b8; }
+    button {
+      cursor: pointer;
+      transition: .2s ease;
+      background: linear-gradient(180deg, rgba(122,162,255,.22), rgba(122,162,255,.12));
+    }
+    button:hover { transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255,255,255,.06); }
+    .table-wrap {
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      max-height: 560px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1180px;
+      background: rgba(0,0,0,.12);
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #111a33;
+      z-index: 1;
+      font-size: 13px;
+      text-align: left;
+      color: #dce5ff;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 10px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    tbody tr:hover { background: rgba(255,255,255,.03); }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.ok { background: rgba(105,226,161,.14); color: #a8f0c5; }
+    .badge.warn { background: rgba(255,204,102,.14); color: #ffe0a3; }
+    .badge.err { background: rgba(255,123,123,.14); color: #ffc1c1; }
+    .badge.gray { background: rgba(255,255,255,.08); color: #d7def4; }
+
+    .hl {
+      background: rgba(255,204,102,.18);
+      border: 1px solid rgba(255,204,102,.35);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+      padding: 0 5px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .hl-danger {
+      background: rgba(255,123,123,.18);
+      border: 1px solid rgba(255,123,123,.35);
+      padding: 0 5px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .hl-ok {
+      background: rgba(105,226,161,.16);
+      border: 1px solid rgba(105,226,161,.28);
+      padding: 0 5px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: rgba(122,162,255,.08);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-top: 12px;
+    }
+    .callout.warn { border-left-color: var(--warn); background: rgba(255,204,102,.08); }
+    .callout.danger { border-left-color: var(--danger); background: rgba(255,123,123,.08); }
+    .callout.ok { border-left-color: var(--ok); background: rgba(105,226,161,.08); }
+
+    .small { font-size: 12px; color: var(--muted); }
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-top: 4px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(122,162,255,.15);
+    }
+    .dot.ok { background: var(--ok); box-shadow: 0 0 0 4px rgba(105,226,161,.15); }
+    .dot.warn { background: var(--warn); box-shadow: 0 0 0 4px rgba(255,204,102,.15); }
+    .dot.danger { background: var(--danger); box-shadow: 0 0 0 4px rgba(255,123,123,.15); }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    .sticky-help {
+      position: sticky;
+      bottom: 12px;
+      margin-top: 16px;
+      background: rgba(18, 26, 51, .92);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      margin-right: 6px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .explain-box {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .sample-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .sample-card strong { display: inline-block; margin-bottom: 4px; }
+    .sample-card .line { margin-top: 4px; }
+    .sample-card .line span {
+      display: inline-block;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .updated {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #cfe0ff;
+      background: rgba(122,162,255,.10);
+      border: 1px solid rgba(122,162,255,.22);
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    @media (max-width: 1080px) {
+      .hero, .grid-2, .grid-3, .summary-box { grid-template-columns: 1fr; }
+      table { min-width: 1100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="card">
+        <div class="inner">
+          <h1>OCMS vs GCP 註冊資料比對報告</h1>
+          <p class="muted">
+            這份互動報告會協助你快速看出：
+            <br>1) OCMS 完成註冊後，GCP 是否有對應事件；
+            <br>2) 哪些資料有 <span class="hl">GCP 缺漏</span>；
+            <br>3) 哪些資料可能有 <span class="hl-danger">重複送出風險</span>；
+            <br>4) 這個落差是否可以忽略。
+          </p>
+
+          <div class="tag-row">
+            <span class="tag ok">九成以上時間戳可對齊</span>
+            <span class="tag warn">少部分 GCP 缺漏</span>
+            <span class="tag danger">存在重複註冊風險</span>
+            <span class="tag">資料期間：2026-05-01 ～ 2026-05-17</span>
+          </div>
+
+          <div class="summary-box">
+            <div class="stat">
+              <div class="lbl">OCMS 註冊數</div>
+              <div class="num" id="ocmsCount">4,418</div>
+            </div>
+            <div class="stat">
+              <div class="lbl">GCP 註冊數</div>
+              <div class="num" id="gcpCount">4,678</div>
+            </div>
+            <div class="stat">
+              <div class="lbl">註冊差異</div>
+              <div class="num" id="diffCount">260</div>
+            </div>
+            <div class="stat">
+              <div class="lbl">對齊率估計</div>
+              <div class="num" id="matchRate">94.4%</div>
+            </div>
+          </div>
+
+          <div class="updated" id="updatedTime">更新時間：載入中...</div>
+
+          <div class="callout ok">
+            <strong>初步結論：</strong>
+            這份資料顯示大多數 OCMS 與 GCP 的註冊時間戳是可以對上的，整體偏向「主流程正常、少量漏送或重送」。
+          </div>
+        </div>
+      </div>
+
+      <div class="card aside-visual">
+        <div class="inner">
+          <h3>視覺化摘要</h3>
+          <p class="muted">整體註冊事件以對齊為主，未對齊事件屬少量。</p>
+
+          <div class="mini-chart">
+            <div class="small">對齊註冊事件</div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+            <div class="small">未對齊 / 異常事件</div>
+            <div class="bar-track"><div class="bar-fill gap"></div></div>
+          </div>
+
+          <div class="sticky-help">
+            <div><span class="pill">建議先看</span><span class="pill">event_id</span><span class="pill">retry log</span><span class="pill">redirect</span></div>
+            <div class="small" style="margin-top:8px;">
+              如果 GCP 是 CAPI，請特別確認：是否前後端雙送、event_id 是否一致、是否 redirect/reload 造成重複觸發。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <div class="card">
+        <div class="inner">
+          <h2>一、你這份檔案透露的事實</h2>
+          <div class="timeline">
+            <div class="step">
+              <div class="dot ok"></div>
+              <div>
+                <strong>1. 時間戳大多能對上。</strong>
+                <div class="muted">你已經觀察到九成以上的 OCMS 註冊完成時間，可以在 GCP 找到對應事件，代表主流程基本正常。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="dot warn"></div>
+              <div>
+                <strong>2. 少量 GCP 沒有對應事件。</strong>
+                <div class="muted">通常表示漏送、延遲送、格式不符、或事件被歸到別的流程節點。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="dot danger"></div>
+              <div>
+                <strong>3. 註冊重複送的問題仍存在。</strong>
+                <div class="muted">若同一個註冊流程被前端與後端各送一次，且沒有一致的 event_id，GCP 會看成兩筆獨立事件。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout warn">
+            <strong>觀察重點：</strong>
+            這種情況通常不是整體資料壞掉，而是少部分事件在邊界條件下失準。
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inner">
+          <h2>二、少量 GCP 未對上的可能原因</h2>
+          <ul>
+            <li><strong>延遲送達：</strong>OCMS 已完成，但 GCP 事件晚幾秒或更久才到。</li>
+            <li><strong>前後端不同步：</strong>OCMS 記錄的是成功提交，GCP 記錄的是成功回傳或頁面轉跳後的事件。</li>
+            <li><strong>事件被重複或錯誤映射：</strong>實際 register 被送成 login / pageview / other event。</li>
+            <li><strong>retry 或 timeout：</strong>第一次送失敗，系統重試；或者重試失敗導致缺失。</li>
+            <li><strong>去重不完全：</strong>有送 event_id，但前後端 event_id 不一致。</li>
+            <li><strong>redirect / reload：</strong>註冊完成頁被重整，導致同一事件被當成兩次。</li>
+          </ul>
+
+          <div class="callout danger">
+            <strong>最可能的核心原因：</strong>
+            <br>註冊完成事件不是只在單一節點送出，而是在多個頁面 / callback / redirect 中被觸發，但缺少一致的去重鍵。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-3">
+      <div class="panel">
+        <h3>三、為什麼註冊會重複送？</h3>
+        <ul>
+          <li>註冊頁載入時送一次，submit 成功又送一次。</li>
+          <li>Pixel 與 CAPI 都送，但沒有同一個 event_id。</li>
+          <li>註冊成功頁 redirect 後又觸發一次。</li>
+          <li>SPA 重新 mount / reload，導致同事件重送。</li>
+          <li>後端 retry / queue 重跑。</li>
+          <li>把 login、register、completeRegistration 混成同一條邏輯。</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>四、哪些情境「比較像可忽略」</h3>
+        <ul>
+          <li>若差異只占總註冊量很小比例，且不集中在特定時段/特定頁面。</li>
+          <li>若缺漏與重複大致互相抵消，且不影響投放判讀。</li>
+          <li>若 GCP 用於廣告歸因，少量漏差對趨勢判讀影響有限。</li>
+          <li>若核心報表看的是日級/週級趨勢，而非逐筆精準對帳。</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>五、哪些情況不能忽略</h3>
+        <ul>
+          <li>如果 GCP 是投放優化來源，重複會影響學習與成效判讀。</li>
+          <li>如果差異集中在某個頁面或某個版本，代表有明確 bug。</li>
+          <li>如果發生在首存或高價值事件，會嚴重影響 ROI。</li>
+          <li>如果同一會員短時間內重複 register，代表去重缺失。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <div class="card">
+        <div class="inner">
+          <h2>六、我對「這個落差可不可以忽略」的評估</h2>
+          <div id="ignoreAssessment" class="callout ok">
+            <strong>評估結果：</strong>
+            以你提供的資訊來看，這個落差大部分可以視為可接受的技術誤差，但前提是：
+            <br>1) 它不是持續擴大；
+            <br>2) 不集中在特定頁面/版本；
+            <br>3) 不會造成廣告投放判讀錯誤；
+            <br>4) 不會讓同一會員被重複記錄成多次註冊。
+          </div>
+
+          <div class="callout warn" style="margin-top:12px;">
+            <strong>我會怎麼分級：</strong>
+            <ul>
+              <li><strong>可忽略：</strong>差異小、分散、趨勢穩定。</li>
+              <li><strong>要觀察：</strong>差異固定存在，但不大，且可由延遲或流程差異解釋。</li>
+              <li><strong>要修：</strong>同一會員重複送、差異集中爆量、或明顯前後端雙送。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inner">
+          <h2>七、建議的處理方式</h2>
+          <ul>
+            <li>把 register / completeRegistration 改成只在單一成功節點送。</li>
+            <li>前後端共用同一個 event_id 做去重。</li>
+            <li>對註冊完成頁加上一次性旗標，避免 reload 重送。</li>
+            <li>檢查 redirect / callback / deep link 是否重複觸發。</li>
+            <li>將 login 與 registration 分離，不要共用同一條事件函式。</li>
+            <li>針對異常會員樣本，抽查 request_id / trace_id / payload。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <div class="inner">
+          <h2>八、互動檢視：資料摘要</h2>
+          <p class="muted">
+            下面先列出 5 組我認為有 <span class="hl-danger">重複風險</span>、<span class="hl">GCP 缺漏</span> 或 <span class="hl">狀態不一致</span> 的 external_id，
+            方便你在會議上快速看問題樣本。
+          </p>
+
+          <div class="controls">
+            <input id="search" type="text" placeholder="搜尋 Member ID..." />
+            <select id="filter">
+              <option value="all">全部</option>
+              <option value="matched">可對齊</option>
+              <option value="missing">GCP 缺漏 / error</option>
+              <option value="duplicate">疑似重複風險</option>
+            </select>
+            <button id="resetBtn" class="btn-secondary">重設</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Member ID</th>
+                  <th>Registered Time (OCMS)</th>
+                  <th>Deposit</th>
+                  <th>Registered Time (GCP)</th>
+                  <th>判定</th>
+                  <th>問題原因</th>
+                  <th>問題 highlight</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="explain-box">
+            <div class="sample-card">
+              <strong>我先挑的 5 組高風險樣本</strong>
+              <div class="line">
+                <span class="badge err">GCP 缺漏</span>
+                <span class="badge warn">疑似重複</span>
+                <span class="badge gray">時間戳可對齊但資料不完整</span>
+              </div>
+              <div class="small">
+                這 5 組是根據你提供的摘要資料所做的「排查優先級」樣本，不代表完整異常清單，但足以看出問題型態。
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            提醒：此表格是為了讓你快速看樣本規律，不是完整逐筆對帳結果。若要做最終結論，仍建議把完整檔案匯入做統計。
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const rows = [
+      {
+        id: 69700,
+        ocms: '2026-05-01 00:05:27',
+        deposit: 0,
+        gcp: 'error / missing',
+        status: 'missing',
+        reason: 'GCP 遺漏',
+        highlight: 'OCMS 已完成，但 GCP 直接是 error，疑似漏送'
+      },
+      {
+        id: 69769,
+        ocms: '2026-05-01 16:23:33',
+        deposit: 135,
+        gcp: 'error / duplicate suspected',
+        status: 'duplicate',
+        reason: '疑似雙送 / retry',
+        highlight: '同一時段出現異常，疑似重複送或重試失敗'
+      },
+      {
+        id: 69846,
+        ocms: '2026-05-02 09:22:09',
+        deposit: 0,
+        gcp: 'error / missing',
+        status: 'missing',
+        reason: 'GCP 遺漏',
+        highlight: 'OCMS 有完成紀錄，但 GCP 沒有對應完成事件'
+      },
+      {
+        id: 70459,
+        ocms: '2026-05-07 14:38:08',
+        deposit: 5415,
+        gcp: 'error / missing',
+        status: 'missing',
+        reason: 'GCP 遺漏 / 高價值樣本',
+        highlight: '高價值樣本缺漏，建議優先檢查 payload 與 retry'
+      },
+      {
+        id: 71824,
+        ocms: '2026-05-16 22:29:53',
+        deposit: 600,
+        gcp: 'error / duplicate suspected',
+        status: 'duplicate',
+        reason: '雙送 / event_id 不一致',
+        highlight: '疑似前後端雙送，且 event_id 可能不一致'
+      }
+    ];
+
+    const tbody = document.getElementById('tbody');
+    const search = document.getElementById('search');
+    const filter = document.getElementById('filter');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function badge(status) {
+      if (status === 'matched') return '<span class="badge ok">可對齊</span>';
+      if (status === 'duplicate') return '<span class="badge warn">疑似重複</span>';
+      return '<span class="badge err">GCP 缺漏 / error</span>';
+    }
+
+    function reasonBadge(reason) {
+      if (reason.includes('雙送') || reason.includes('retry') || reason.includes('event_id')) {
+        return `<span class="hl-danger">${reason}</span>`;
+      }
+      return `<span class="hl">${reason}</span>`;
+    }
+
+    function render() {
+      const kw = search.value.trim();
+      const mode = filter.value;
+
+      const filtered = rows.filter(r => {
+        const hit = !kw || String(r.id).includes(kw);
+        const modeHit = mode === 'all' || r.status === mode;
+        return hit && modeHit;
+      });
+
+      tbody.innerHTML = filtered.map(r => `
+        <tr>
+          <td><strong>${r.id}</strong></td>
+          <td>${r.ocms}</td>
+          <td>${r.deposit.toLocaleString()}</td>
+          <td>${r.gcp}</td>
+          <td>${badge(r.status)}</td>
+          <td>${reasonBadge(r.reason)}</td>
+          <td>
+            <span class="${r.status === 'duplicate' ? 'hl-danger' : 'hl'}">${r.highlight}</span>
+          </td>
+        </tr>
+      `).join('') || `
+        <tr><td colspan="7" style="padding:18px;color:#a8b3d6;">沒有符合條件的資料</td></tr>
+      `;
+    }
+
+    search.addEventListener('input', render);
+    filter.addEventListener('change', render);
+    resetBtn.addEventListener('click', () => {
+      search.value = '';
+      filter.value = 'all';
+      render();
+    });
+
+    render();
+
+    const total = 4678;
+    const ocms = 4418;
+    const matched = 4170;
+    const rate = (matched / total * 100).toFixed(1);
+
+    document.getElementById('gcpCount').textContent = total.toLocaleString();
+    document.getElementById('ocmsCount').textContent = ocms.toLocaleString();
+    document.getElementById('diffCount').textContent = (total - ocms).toLocaleString();
+    document.getElementById('matchRate').textContent = `${rate}%`;
+
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const stamp = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    document.getElementById('updatedTime').textContent = `更新時間：${stamp}`;
+  </script>
+</body>
+</html>
