@@ -201,7 +201,21 @@ weeklyGames.forEach(g => {
   });
 });
 fs.writeFileSync(path.join(__dirname, 'weekly_players.csv'), '\ufeff' + pCsv, 'utf8');
+
+// ===== 同步追加到 root weekly_players.csv（供 s6_playoffs.html 使用）=====
+const rootCsvPath = path.join(__dirname, '../weekly_players.csv');
+let rootAppend = '';
+weeklyGames.forEach(g => {
+  const year = new Date().getFullYear();
+  // 日期格式轉換：g.date 是 "6/30"，轉成 "2026/6/30"
+  const fullDate = g.date.includes('/') ? `${year}/${g.date}` : g.date;
+  g.players.forEach(s => {
+    rootAppend += `${fullDate},${g.gId},${s.team},${s.name},${s.p01},${s.w01},${s.pCR},${s.wCR},${s.total},${s.wins},${s.fa}\n`;
+  });
+});
+fs.appendFileSync(rootCsvPath, rootAppend, 'utf8');
 console.log('📊 CSV 備份已儲存 (weekly_matches.csv, weekly_players.csv)\n');
+console.log('📊 root weekly_players.csv 已追加本週數據\n');
 
 // ===== HTTP 工具函數 =====
 function httpsPost(url, payload) {
