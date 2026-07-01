@@ -810,10 +810,16 @@ body.news-page {
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+    transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.4s ease;
     background: #ffffff;
     /* 優化渲染 */
     contain: layout style;
+    /* 手機排版優化 */
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.8;
+    font-size: 15px;
+    color: #333;
 }
 
 .news-text.collapsed {
@@ -826,7 +832,7 @@ body.news-page {
 }
 
 .news-text.expanded {
-    max-height: 5000px; /* 足夠大的值來容納內容 */
+    max-height: 50000px; /* 足夠大的值，避免長報告被截斷 */
     padding-top: 20px;
     padding-bottom: 20px;
     opacity: 1;
@@ -836,7 +842,7 @@ body.news-page {
 /* 新聞內容文字樣式 */
 .news-text p {
     margin: 0 0 15px 0;
-    line-height: 1.6;
+    line-height: 1.8;
     color: #333;
 }
 
@@ -848,6 +854,16 @@ body.news-page {
 .news-text em {
     color: #666;
     font-style: italic;
+}
+
+/* 季後賽分析晉級線分隔 */
+.news-text .divider-line {
+    display: block;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin: 4px 0;
 }
 
 /* 折疊功能響應式設計 */
