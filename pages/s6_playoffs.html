@@ -221,9 +221,35 @@ async function loadPlayoffData() {
             else remaining.push(p);
         });
 
+        // ── 季後賽出席覆寫 ──
+        // Leader 替補：原 Leader 無法 → 隊內遞補
+        const leaderOverrides = {
+            '傑克紅心': '老師',      // 阿福無法 → 老師替補
+            '人生揪亮': '阿肥',      // 小魚無法 → 阿肥遞補
+            'Tonight29大三元': '+0',  // 嘉宸無法 → +0 遞補
+        };
+        for (const [team, newLeader] of Object.entries(leaderOverrides)) {
+            if (teamLeaders[team]) {
+                const oldLeader = teamLeaders[team];
+                // 找遞補選手
+                const subIdx = remaining.findIndex(p => p.team === team && p.player === newLeader);
+                if (subIdx >= 0) {
+                    const sub = remaining[subIdx];
+                    remaining.splice(subIdx, 1);
+                    remaining.push(oldLeader);  // 原 leader 退回 remaining
+                    teamLeaders[team] = sub;
+                }
+            }
+        }
+
+        // Elite 替補：乳來 pass → david 遞補
+        const eliteAbsent = ['乳來'];
+        // 重新排序 remaining，排除缺席者
+        const remainSorted = remaining.filter(p => !eliteAbsent.includes(p.player)).sort(sortFn);
+
         const leadersArr = Object.values(teamLeaders).sort(sortFn);
-        const elitesArr = remaining.slice(0, 6);
-        const waitlistArr = remaining.slice(6, 12);
+        const elitesArr = remainSorted.slice(0, 6);
+        const waitlistArr = remainSorted.slice(6, 12);
 
         // ── 渲染 Leaders（可展開）──
         let leaderHtml = '';
