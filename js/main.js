@@ -2708,6 +2708,13 @@ window.navigateLightbox = navigateLightbox;
 let carouselImages = [];
 let currentCarouselIndex = 0;
 let carouselInterval = null;
+let carouselImagePositions = {};
+
+// 取得照片的 object-position（預設 center 30%）
+function getCarouselObjectPosition(src) {
+    const fileName = (src || '').split('/').pop();
+    return `center ${carouselImagePositions[fileName] || '30%'}`;
+}
 
 // 初始化照片輪播
 function initializePhotoCarousel() {
@@ -2738,6 +2745,28 @@ function initializePhotoCarousel() {
         const j = Math.floor(Math.random() * (i + 1));
         [season6Images[i], season6Images[j]] = [season6Images[j], season6Images[i]];
     }
+
+    // 每張照片的垂直焦點（object-position Y 值）
+    // 輪播容器是寬扁的 (800x400)，直式照片會被裁掉上下，
+    // 依每張照片臉部的位置微調，避免切到頭
+    carouselImagePositions = {
+        'season6_01.webp': '30%',
+        'season6_02.webp': '30%',
+        'season6_03.webp': '45%',
+        'season6_04.webp': '40%',
+        'season6_05.webp': '30%',
+        'season6_06.webp': '40%',
+        'season6_07.webp': '40%',
+        'season6_08.webp': '40%',
+        'season6_09.webp': '35%',
+        'season6_10.webp': '30%',
+        'season6_11.webp': '50%',
+        'season6_12.webp': '25%',
+        'season6_13.webp': '10%',
+        'season6_14.webp': '10%',
+        'season6_15.webp': '30%',
+        'season6_16.webp': '30%'
+    };
 
     carouselImages = season6Images;
 
@@ -2808,6 +2837,7 @@ function loadCarouselImage(index) {
     // 等待淡出完成後更換圖片
     setTimeout(() => {
         carouselImage.src = carouselImages[index];
+        carouselImage.style.objectPosition = getCarouselObjectPosition(carouselImages[index]);
         // 淡入新圖片
         carouselImage.style.opacity = '1';
 
