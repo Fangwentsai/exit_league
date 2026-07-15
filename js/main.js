@@ -2713,34 +2713,33 @@ let carouselInterval = null;
 function initializePhotoCarousel() {
     console.log('🎠 開始初始化照片輪播...');
 
-    // Season 5 的照片列表 - 使用 WebP 格式以改善性能
-    const season5Images = [
-        '/images/award/season5/season5_01.webp',
-        '/images/award/season5/season5_02.webp',
-        '/images/award/season5/season5_03.webp',
-        '/images/award/season5/season5_04.webp',
-        '/images/award/season5/season5_05.webp',
-        '/images/award/season5/season5_06.webp',
-        '/images/award/season5/season5_07.webp',
-        '/images/award/season5/season5_08.webp',
-        '/images/award/season5/season5_09.webp',
-        '/images/award/season5/season5_10.webp',
-        '/images/award/season5/season5_11.webp',
-        '/images/award/season5/season5_12.webp',
-        '/images/award/season5/season5_13.webp',
-        '/images/award/season5/season5_14.webp',
-        '/images/award/season5/season5_15.webp',
-        '/images/award/season5/season5_16.webp',
-        '/images/award/season5/season5_17.webp'
+    // Season 6 的照片列表 - 使用 WebP 格式以改善性能
+    const season6Images = [
+        '/images/award/season6/season6_01.webp',
+        '/images/award/season6/season6_02.webp',
+        '/images/award/season6/season6_03.webp',
+        '/images/award/season6/season6_04.webp',
+        '/images/award/season6/season6_05.webp',
+        '/images/award/season6/season6_06.webp',
+        '/images/award/season6/season6_07.webp',
+        '/images/award/season6/season6_08.webp',
+        '/images/award/season6/season6_09.webp',
+        '/images/award/season6/season6_10.webp',
+        '/images/award/season6/season6_11.webp',
+        '/images/award/season6/season6_12.webp',
+        '/images/award/season6/season6_13.webp',
+        '/images/award/season6/season6_14.webp',
+        '/images/award/season6/season6_15.webp',
+        '/images/award/season6/season6_16.webp'
     ];
 
     // 隨機打亂照片順序 (Fisher-Yates shuffle)
-    for (let i = season5Images.length - 1; i > 0; i--) {
+    for (let i = season6Images.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [season5Images[i], season5Images[j]] = [season5Images[j], season5Images[i]];
+        [season6Images[i], season6Images[j]] = [season6Images[j], season6Images[i]];
     }
 
-    carouselImages = season5Images;
+    carouselImages = season6Images;
 
     // 檢查DOM元素是否存在
     const carouselImage = document.getElementById('carousel-image');

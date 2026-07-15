@@ -31,8 +31,8 @@
 
     <!-- 預載入關鍵資源以改善 LCP -->
     <!-- 預載入第一張輪播圖片（LCP 元素）- WebP 格式 -->
-    <link rel="preload" as="image" href="../images/award/season5/season5_01.webp"
-        imagesrcset="../images/award/season5/season5_01.webp 800w" imagesizes="100vw" fetchpriority="high">
+    <link rel="preload" as="image" href="../images/award/season6/season6_01.webp"
+        imagesrcset="../images/award/season6/season6_01.webp 800w" imagesizes="100vw" fetchpriority="high">
 
     <!-- DNS 預解析，加速第三方資源載入 -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -841,13 +841,13 @@
                 </div>
                 <!-- 為圖片設置明確尺寸以減少 CLS -->
                 <!-- 第一張圖片：直接設定 src，立即顯示（LCP 優化）-->
-                <img id="carousel-image" src="../images/award/season5/season5_01.webp" alt="難找的聯賽第五屆頒獎典禮照片"
+                <img id="carousel-image" src="../images/award/season6/season6_01.webp" alt="難找的聯賽第六屆頒獎典禮照片"
                     class="carousel-image" width="800" height="400" loading="eager" fetchpriority="high">
                 <!-- 第二張圖片：延遲載入 -->
                 <img id="carousel-image-next" src="" alt="賽事照片輪播" class="carousel-image" width="800" height="400"
                     loading="lazy">
                 <div class="carousel-overlay">
-                    <div class="carousel-title">難找的聯賽第五屆頒獎典禮</div>
+                    <div class="carousel-title">難找的聯賽第六屆頒獎典禮</div>
                     <div class="carousel-dots" id="carousel-dots"></div>
                 </div>
             </div>
