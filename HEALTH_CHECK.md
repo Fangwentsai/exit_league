@@ -1,6 +1,24 @@
 # yhdarts.com 網站健檢報告
 
-日期:2026-07-07
+日期:2026-07-07 | 最後更新:2026-07-29(第七屆準備作業時修掉數項)
+
+## ✅ 已修復(2026-07-29)
+
+### 第 3 項 — sitemap 缺第六季內容
+已改為由 `scripts/generate_sitemap.js` 依賽季註冊表與實際檔案自動產生。
+從 206 筆增加到 356 筆:補上第六屆 132 個賽果頁、第五屆漏掉的 15 個,當季標記也從第五屆更正為第七屆。
+**往後每次新增賽果 HTML 後要重跑 `node scripts/generate_sitemap.js`。**
+
+### 第 8 項 — 設定重複(實際比原本描述的嚴重)
+原本記錄是「改季號要改多處」,但實際後果更嚴重:`config/config.js` 與 `js/main.js` **都用 `const CONFIG` 宣告在全域**,而四個獨立賽程頁(`schedule.html`、`scheduleS4`、`scheduleS5`、`scheduleS6`)兩支都會載入。
+
+重複宣告會拋出 `Identifier 'CONFIG' has already been declared`,**導致 main.js 整份不執行**,這四頁直接開啟時賽程表是完全空白的(實測第六屆修復前只有表頭 1 列,修復後 133 列)。
+
+從側邊欄進入的 SPA 路徑正常,所以平常不易察覺 —— 但這四個網址正是 Google 收錄、使用者從搜尋結果點進來看到的頁面。
+
+**修法**:賽季設定統一由 `config/config.js` 提供,main.js 不再自行宣告。詳見 `SEASON_SETUP.md` 的「踩過的坑」章節。
+
+---
 
 ## 🔴 嚴重(建議立即處理)
 
@@ -19,7 +37,7 @@
 
 ## 🟡 中等
 
-### 3. sitemap.xml 缺第六季內容
+### ~~3. sitemap.xml 缺第六季內容~~ ✅ 已修復(見文件開頭)
 206 個 URL 中完全沒有 S6 頁面(rankS6、scheduleS6、s6_playoffs、season6 賽果),lastmod 全部停在 2025-12-09。第六季進行中卻沒被搜尋引擎索引到。
 
 ### 4. 多數頁面缺 SEO 標籤
@@ -40,7 +58,7 @@ index.html、news.html、rankS6.html 有 canonical/og,但 rank.html、schedule.h
 - 根目錄雜物:`g43_g48_stats.csv`、`item_0329.csv`、`gas_complete_updated.js`、`google-apps-script-*.js`、`weekly_*.csv`
 - 建議移到 `scripts/` 或 `data/`,一次性檔案直接刪除
 
-### 8. 設定重複
+### ~~8. 設定重複~~ ✅ 已修復(見文件開頭,實際後果比這裡描述的嚴重)
 同一組 SHEET_ID/API_KEY 在 config.js 和 main.js 各寫一份,改季號要改多處。建議統一由 config/config.js 提供。
 
 ## ✅ 做得好的地方

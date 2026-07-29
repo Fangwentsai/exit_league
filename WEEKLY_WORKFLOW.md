@@ -1,6 +1,14 @@
 # 難找的聯賽 — 每週操作手冊
 
-> 版本：2026/04 | 適用：第六屆起
+> 版本：2026/04 | 適用：第六屆
+
+> ⚠️ **本文件內的季號尚未更新到第七屆。** 以下所有 `season6` 路徑、試算表 ID
+> （`1qc08K2z...`）與 `bash scripts/weekly_update.sh` 的行為都還指向第六屆。
+> 第七屆開打前必須先完成 `SEASON_SETUP.md` 的 **Step 8（更新每週自動化）**，
+> 包含改 `scripts/weekly_update.js` 的 `season` / `sheetId` / `gameResultDir`，
+> 並重新部署 GAS Web App —— 否則腳本會把新一屆的成績寫進第六屆的試算表。
+>
+> 開新一屆的完整流程請見 **[SEASON_SETUP.md](SEASON_SETUP.md)**。
 
 ---
 
