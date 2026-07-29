@@ -246,8 +246,8 @@ async function loadMatches() {
 
         try {
             // 使用第六屆的 Google Sheet API取得數據
-            const sheetId = CONFIG.SEASON6.SHEET_ID; // Season 6的Sheet ID
-            const apiKey = CONFIG.SEASON6.API_KEY;
+            const sheetId = CONFIG[`SEASON${CURRENT_SEASON}`].SHEET_ID; // 當季的 Sheet ID
+            const apiKey = CONFIG[`SEASON${CURRENT_SEASON}`].API_KEY;
             const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!O:V?key=${apiKey}`;
 
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
@@ -543,7 +543,7 @@ function createMatchesHTML(matchDay) {
 
         // 添加onclick屬性來打開模態窗口，僅在有比分時才添加點擊事件
         const hasScores = team1Info.score && team2Info.score;
-        const clickAttr = hasScores ? `onclick="showMatchDetails('../game_result/season6/${game.game_number}.html')"` : '';
+        const clickAttr = hasScores ? `onclick="showMatchDetails('../game_result/${SEASONS[CURRENT_SEASON].resultDir}/${game.game_number}.html')"` : '';
         const cursorStyle = hasScores ? 'style="cursor: pointer;"' : '';
 
         // 使用表格布局確保對齊

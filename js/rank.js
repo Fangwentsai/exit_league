@@ -31,40 +31,22 @@ console.log('解析到的頁面 (pageIdentifier):', pageIdentifier);
 // 我們就把 pageIdentifier 賦值給它
 const fileName = pageIdentifier; 
 
-// 根據文件名 (來自 hash) 確定賽季
-let currentSeason = 'SEASON3'; // 默認為第三屆
+// 從 seasonOverride、頁面名稱或網址判斷賽季（規則統一在 config/config.js）
+let seasonNumber = resolveSeasonNumber({
+    page: fileName,
+    override: (typeof window !== 'undefined') ? window.seasonOverride : undefined,
+    path: fileName
+});
 
-if (fileName.toLowerCase().includes('s6') || fileName.toLowerCase().includes('ranks6')) {
-    currentSeason = 'SEASON6';
-} else if (fileName.toLowerCase().includes('s5') || fileName.toLowerCase().includes('ranks5')) {
-    currentSeason = 'SEASON5';
-} else if (fileName.toLowerCase().includes('s4') || fileName.toLowerCase().includes('ranks4')) {
-    currentSeason = 'SEASON4';
-} else if (fileName.toLowerCase().includes('s3') || fileName.toLowerCase().includes('ranks3')) {
-    currentSeason = 'SEASON3';
-} else if (fileName === '' && window.location.pathname === '/') {
-    // 如果 Hash 為空 (在 / 頁面)
-    // 根據你的日誌，它似乎會默認加載 rankS5，所以我們也默認為 S5
-    currentSeason = 'SEASON5';
-    console.log('Hash 為空，默認為 SEASON5');
+if (!seasonNumber && fileName === '' && window.location.pathname === '/') {
+    // 首頁且沒有 hash 時，預設顯示當季
+    seasonNumber = CURRENT_SEASON;
+    console.log('Hash 為空，預設為當季');
 }
 
-// 這裡的 console.log 會顯示正確的賽季
-console.log('自動檢測到賽季:', currentSeason);
-
-// 若頁面提供覆寫變數 seasonOverride，則以其為最高優先權
-try {
-    if (typeof window !== 'undefined' && typeof window.seasonOverride !== 'undefined') {
-        const ov = String(window.seasonOverride).toLowerCase();
-        if (ov.includes('6')) currentSeason = 'SEASON6';
-        else if (ov.includes('5')) currentSeason = 'SEASON5';
-        else if (ov.includes('4')) currentSeason = 'SEASON4';
-        else if (ov.includes('3')) currentSeason = 'SEASON3';
-        console.log('套用 seasonOverride 覆寫為:', currentSeason);
-    }
-} catch (e) {
-    console.warn('讀取 seasonOverride 失敗，使用自動偵測:', e);
-}
+const currentSeason = `SEASON${seasonNumber || 3}`; // 都判斷不出來時退回第三屆
+const seasonMeta = getSeason(seasonNumber || 3);
+console.log('檢測到賽季:', seasonMeta.label);
 
 // 從 CONFIG 對象中獲取對應賽季的配置
 if (!CONFIG[currentSeason]) {
@@ -85,14 +67,10 @@ if (!CONFIG[currentSeason]) {
     
     async function loadRankings() {
         try {
-            // 不同賽季的隊伍排名欄位位置不同：
-            // - SEASON3/SEASON4 使用 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
-            // - SEASON5/SEASON6 使用 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
-            // 為避免任何偵測誤差，除了看 currentSeason，也直接根據檔名判斷是否為 S5/S6 頁面
-            const isS5OrS6 = (currentSeason === 'SEASON5' || currentSeason === 'SEASON6') || /rankS[56]|ranks[56]|\bs[56]\b/i.test(fileName);
-            // 檢查是否有獨立的排名工作表（如 rank 或 rankings），否則使用 schedule
-            let sheetName = 'schedule';
-            const range = isS5OrS6 ? `${sheetName}!O:V` : `${sheetName}!K:Q`;
+            // 隊伍排名的欄位範圍依賽季而定，定義在 config/config.js 的 rankRange
+            const isS5OrS6 = seasonMeta.rankRange === 'O:V';
+            const sheetName = 'schedule';
+            const range = `${sheetName}!${seasonMeta.rankRange}`;
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
 
             console.log("當前賽季:", currentSeason);

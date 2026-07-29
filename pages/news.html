@@ -90,7 +90,9 @@
     </script>
 
     <!-- 延遲載入 JavaScript（添加時間戳防止快取）-->
-    <script src="../js/news.js?v=20260325l" defer></script>
+    <!-- 賽季設定必須先於 news.js 載入（defer 會依序執行）-->
+    <script src="../config/config.js?v=20260729" defer></script>
+    <script src="../js/news.js?v=20260729" defer></script>
     <script src="../js/match-preview.js?v=20260325" defer></script>
 
     <style>

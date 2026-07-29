@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-    <title>難找的聯賽 | 雙北飛鏢比賽 - 最有趣的飛鏢聯賽 (第六季進行中)</title>
+    <title>難找的聯賽 | 雙北飛鏢比賽 - 最有趣的飛鏢聯賽 (第七季報名中)</title>
     <meta name="keywords"
         content="台北飛鏢比賽,新北飛鏢比賽,台北飛鏢聯賽,新北飛鏢聯賽,雙北飛鏢,永和飛鏢,中永和飛鏢,難找的聯賽,飛鏢比賽報名,飛鏢聯賽,台灣飛鏢,飛鏢愛好者,飛鏢社群,501飛鏢,Cricket飛鏢,飛鏢排行榜,飛鏢成績,Phoenix飛鏢,Dartslive飛鏢">
     <meta name="description"
-        content="台北新北地區最受歡迎的飛鏢聯賽「難找的聯賽」！位於永和，鄰近台北市，交通便利。我們提供佛系又專業的比賽環境，無論新手或高手都能同樂。第六季火熱開打中，歡迎雙北飛鏢愛好者加入！">
+        content="台北新北地區最受歡迎的飛鏢聯賽「難找的聯賽」！位於永和，鄰近台北市，交通便利。我們提供佛系又專業的比賽環境，無論新手或高手都能同樂。第七季籌備中，歡迎雙北飛鏢愛好者加入！">
     <meta name="author" content="Jesse Tsai">
     <meta name="robots" content="index, follow">
 
@@ -18,7 +18,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yhdarts.com/">
     <meta property="og:title" content="難找的聯賽 | 雙北飛鏢比賽 - 最有趣的飛鏢聯賽">
-    <meta property="og:description" content="台北新北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市，交通便利。佛系又專業的比賽環境，新手高手都能同樂。第六季火熱開打中！">
+    <meta property="og:description" content="台北新北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市，交通便利。佛系又專業的比賽環境，新手高手都能同樂。第七季籌備中！">
     <meta property="og:image" content="https://yhdarts.com/images/banner.png">
     <meta property="og:locale" content="zh_TW">
 
@@ -26,7 +26,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://yhdarts.com/">
     <meta name="twitter:title" content="難找的聯賽 | 雙北飛鏢比賽">
-    <meta name="twitter:description" content="雙北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市。第六季火熱開打中！">
+    <meta name="twitter:description" content="雙北地區最受歡迎的飛鏢聯賽！位於永和，鄰近台北市。第七季籌備中！">
     <meta name="twitter:image" content="https://yhdarts.com/images/banner.png">
 
     <!-- 其他SEO相關 -->
@@ -222,6 +222,7 @@
             <!-- 賽程選項 -->
             <div class="sidebar-btn" data-page="schedule">每週賽程</div>
             <div class="sidebar-submenu">
+                <div class="sidebar-btn submenu-item" data-page="scheduleS7">第七屆</div>
                 <div class="sidebar-btn submenu-item" data-page="scheduleS6">第六屆</div>
                 <div class="sidebar-btn submenu-item" data-page="scheduleS5">第五屆</div>
                 <div class="sidebar-btn submenu-item" data-page="scheduleS4">第四屆</div>
@@ -231,6 +232,7 @@
             <!-- 排名選項 -->
             <div class="sidebar-btn" data-page="rank">聯賽排名</div>
             <div class="sidebar-submenu">
+                <div class="sidebar-btn submenu-item" data-page="rankS7">第七屆</div>
                 <div class="sidebar-btn submenu-item" data-page="rankS6">第六屆</div>
                 <div class="sidebar-btn submenu-item" data-page="rankS5">第五屆</div>
                 <div class="sidebar-btn submenu-item" data-page="rankS4">第四屆</div>
@@ -330,7 +332,9 @@
     </div>
 
     <!-- 添加主要JavaScript，確保頁面功能正常 - 使用 defer 延遲載入 -->
-    <script src="js/main.js?v=20260715_3" defer></script>
+    <!-- 賽季設定必須先於 main.js 載入（defer 會依序執行）-->
+    <script src="config/config.js?v=20260729" defer></script>
+    <script src="js/main.js?v=20260729" defer></script>
     <script src="js/match-preview.js?v=20260302" defer></script>
     <script src="js/shopee-carousel.js" defer></script>
 
