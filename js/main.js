@@ -2358,17 +2358,12 @@ async function initializeAwardsPage() {
 
     // 檢查DOM元素是否存在
     console.log('🔍 檢查Awards頁面DOM元素...');
-    const galleryS4 = document.getElementById('gallery-s4');
-    const galleryS3 = document.getElementById('gallery-s3');
-    const galleryS2 = document.getElementById('gallery-s2');
+    const seasons = ['s6', 's5', 's4', 's3', 's2'];
+    const foundSeasons = seasons.filter(season => document.getElementById(`gallery-${season}`));
 
-    console.log('Gallery elements found:', {
-        's4': !!galleryS4,
-        's3': !!galleryS3,
-        's2': !!galleryS2
-    });
+    console.log('Gallery elements found:', foundSeasons);
 
-    if (!galleryS4 || !galleryS3 || !galleryS2) {
+    if (foundSeasons.length === 0) {
         console.error('❌ Awards頁面DOM元素未找到');
         return;
     }
@@ -2376,25 +2371,13 @@ async function initializeAwardsPage() {
     // 載入各季度照片
     console.log('⏳ 開始載入各季度照片...');
 
-    try {
-        await loadPhotosForSeason('s4');
-        console.log('✅ s4載入完成');
-    } catch (error) {
-        console.error('❌ s4載入失敗:', error);
-    }
-
-    try {
-        await loadPhotosForSeason('s3');
-        console.log('✅ s3載入完成');
-    } catch (error) {
-        console.error('❌ s3載入失敗:', error);
-    }
-
-    try {
-        await loadPhotosForSeason('s2');
-        console.log('✅ s2載入完成');
-    } catch (error) {
-        console.error('❌ s2載入失敗:', error);
+    for (const season of foundSeasons) {
+        try {
+            await loadPhotosForSeason(season);
+            console.log(`✅ ${season}載入完成`);
+        } catch (error) {
+            console.error(`❌ ${season}載入失敗:`, error);
+        }
     }
 
     console.log('🏁 Awards頁面初始化完成！');
@@ -2479,6 +2462,8 @@ async function getPhotoFiles(season) {
 
     // 根據實際的季別資料夾和檔案名稱
     const knownFiles = {
+        's6': ['season6_01.webp', 'season6_02.webp', 'season6_03.webp', 'season6_04.webp', 'season6_05.webp', 'season6_06.webp', 'season6_07.webp', 'season6_08.webp', 'season6_09.webp', 'season6_10.webp', 'season6_11.webp', 'season6_12.webp', 'season6_13.webp', 'season6_14.webp', 'season6_15.webp', 'season6_16.webp'],
+        's5': ['season5_01.webp', 'season5_02.webp', 'season5_03.webp', 'season5_04.webp', 'season5_05.webp', 'season5_06.webp', 'season5_07.webp', 'season5_08.webp', 'season5_09.webp', 'season5_10.webp', 'season5_11.webp', 'season5_12.webp', 'season5_13.webp', 'season5_14.webp', 'season5_15.webp', 'season5_16.webp', 'season5_17.webp'],
         's4': ['IMG_9918.webp', 'IMG_9919.webp', 'IMG_9920.webp', 'IMG_9921.webp', 'IMG_9922.webp', 'IMG_9923.webp'],
         's3': ['IMG_9924.webp', 'IMG_9925.webp', 'IMG_9926.webp', 'IMG_9927.webp', 'IMG_9928.webp', 'IMG_9929.webp', 'IMG_9930.webp'],
         's2': ['IMG_9931.webp', 'IMG_9932.webp', 'IMG_9933.webp']
@@ -2662,13 +2647,15 @@ function getCurrentPageImages() {
 
     // 根據實際的季別資料夾和檔案名稱
     const knownFiles = {
+        's6': ['season6_01.webp', 'season6_02.webp', 'season6_03.webp', 'season6_04.webp', 'season6_05.webp', 'season6_06.webp', 'season6_07.webp', 'season6_08.webp', 'season6_09.webp', 'season6_10.webp', 'season6_11.webp', 'season6_12.webp', 'season6_13.webp', 'season6_14.webp', 'season6_15.webp', 'season6_16.webp'],
+        's5': ['season5_01.webp', 'season5_02.webp', 'season5_03.webp', 'season5_04.webp', 'season5_05.webp', 'season5_06.webp', 'season5_07.webp', 'season5_08.webp', 'season5_09.webp', 'season5_10.webp', 'season5_11.webp', 'season5_12.webp', 'season5_13.webp', 'season5_14.webp', 'season5_15.webp', 'season5_16.webp', 'season5_17.webp'],
         's4': ['IMG_9918.webp', 'IMG_9919.webp', 'IMG_9920.webp', 'IMG_9921.webp', 'IMG_9922.webp', 'IMG_9923.webp'],
         's3': ['IMG_9924.webp', 'IMG_9925.webp', 'IMG_9926.webp', 'IMG_9927.webp', 'IMG_9928.webp', 'IMG_9929.webp', 'IMG_9930.webp'],
         's2': ['IMG_9931.webp', 'IMG_9932.webp', 'IMG_9933.webp']
     };
 
     // 收集所有季度的圖片
-    ['s4', 's3', 's2'].forEach(season => {
+    ['s6', 's5', 's4', 's3', 's2'].forEach(season => {
         const seasonFolder = season.replace('s', 'season');
         const seasonFiles = knownFiles[season] || [];
         seasonFiles.forEach(fileName => {
