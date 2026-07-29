@@ -8,7 +8,8 @@
 //   4. index.html 側邊欄兩個子選單各加一列
 //
 // 欄位說明
-//   year      — Sheets 只填 "M/D" 時要補上的年份（null 代表該屆不補年份）
+//   startDate — 開打日 YYYY/M/D。Sheets 只填 "M/D" 時用來推算年份，
+//               null 代表該屆不補年份（試算表本身已有完整日期）
 //   rankRange — 排行榜在 schedule 工作表的欄位範圍
 //               舊制 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
 //               新制 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
@@ -19,32 +20,34 @@ const SEASONS = {
     3: {
         sheetId: '1Rjxr6rT_NfonXtYYsxpo3caYJbvI-fxc2WQh3tKBSC8',
         apiKey: DEFAULT_API_KEY,
-        label: '第三屆', year: null, rankRange: 'K:Q',
+        // 2024/11 開打、2025/2 結束，跨年；試算表已填完整日期，不需補年份
+        label: '第三屆', startDate: null, rankRange: 'K:Q',
         schedulePage: 'schedule', rankPage: 'rank', resultDir: 'season3'
     },
     4: {
         sheetId: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE',
         apiKey: DEFAULT_API_KEY,
-        label: '第四屆', year: 2025, rankRange: 'K:Q',
+        label: '第四屆', startDate: '2025/4/8', rankRange: 'K:Q',
         schedulePage: 'scheduleS4', rankPage: 'rankS4', resultDir: 'season4'
     },
     5: {
         // 這把 key 設有 referer 限制，只能從 yhdarts.com 網域呼叫
         sheetId: '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY',
         apiKey: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
-        label: '第五屆', year: 2025, rankRange: 'O:V',
+        label: '第五屆', startDate: '2025/8/20', rankRange: 'O:V',
         schedulePage: 'scheduleS5', rankPage: 'rankS5', resultDir: 'season5'
     },
     6: {
         sheetId: '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM',
         apiKey: DEFAULT_API_KEY,
-        label: '第六屆', year: 2026, rankRange: 'O:V',
+        label: '第六屆', startDate: '2026/1/27', rankRange: 'O:V',
         schedulePage: 'scheduleS6', rankPage: 'rankS6', resultDir: 'season6'
     },
     7: {
         sheetId: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
         apiKey: DEFAULT_API_KEY,
-        label: '第七屆', year: 2027, rankRange: 'O:V',
+        // 2026/9 開打、跨年到 2027 初結束
+        label: '第七屆', startDate: '2026/9/18', rankRange: 'O:V',
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7'
     }
 };
@@ -88,6 +91,25 @@ function resolveSeasonNumber({ page, override, path } = {}) {
     }
 
     return null;
+}
+
+// 推算某個月份在該屆屬於哪一年。
+// 賽季可能跨年（第三屆 2024/11→2025/2、第七屆 2026/9→2027 初），
+// 所以月份小於開打月份的一律算成下一年。
+// startDate 為 null 時回傳 null，代表該屆不補年份。
+function resolveSeasonYear(season, month) {
+    if (!season || !season.startDate) return null;
+    const [startYear, startMonth] = season.startDate.split('/').map(Number);
+    if (!startYear || !startMonth || !month) return null;
+    return month >= startMonth ? startYear : startYear + 1;
+}
+
+// 把 "M/D" 補成 "YYYY/M/D"；已含四位數年份或該屆不補年份時原樣回傳
+function withSeasonYear(season, dateStr) {
+    if (!dateStr || /^\d{4}\//.test(dateStr)) return dateStr;
+    const month = parseInt(String(dateStr).split('/')[0], 10);
+    const year = resolveSeasonYear(season, month);
+    return year ? `${year}/${dateStr}` : dateStr;
 }
 
 // 取得某屆的設定；傳入 CONFIG 物件或屆數皆可

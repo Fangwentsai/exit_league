@@ -633,8 +633,8 @@ function parseDate(dateStr) {
     let year, month, day;
 
     if (parts.length === 2) {
-        // 格式：M/D 或 MM/DD，補上當季年份
-        year = SEASONS[CURRENT_SEASON].year;
+        // 格式：M/D 或 MM/DD，補上當季年份（跨年賽季依月份判斷）
+        year = resolveSeasonYear(SEASONS[CURRENT_SEASON], parseInt(parts[0], 10));
         month = parseInt(parts[0], 10) - 1;
         day = parseInt(parts[1], 10);
     } else if (parts.length === 3) {
@@ -1452,11 +1452,8 @@ async function loadScheduleData(page) {
         // 轉換解析結果為適合表格顯示的格式
         const scheduleData = parseResults.map(match => {
             // 轉換日期格式 - 確保年份正確
-            // 依賽季補上年份；year 為 null 的賽季（第三屆）維持原樣
-            let fullDate = match.date;
-            if (seasonMeta.year && !match.date.includes(String(seasonMeta.year))) {
-                fullDate = `${seasonMeta.year}/${match.date}`;
-            }
+            // 依賽季補上年份（跨年賽季會自動判斷是開打年還是下一年）
+            const fullDate = withSeasonYear(seasonMeta, match.date);
 
             debugLog('原始 match 資料:', match);
             const result = {
