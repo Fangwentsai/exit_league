@@ -201,6 +201,20 @@
         /* 三人／四人賽需要兩排欄位，列高加大 */
         tr.tall td { height: 14mm; }
 
+        /* ========== 出賽限制分組 ==========
+           粗框圈起來的組別內同一人只能出賽一次
+           （SET1~4、SET6~9、SET11~12、SET13~14）*/
+        tr.grp-start td { border-top: 3px solid #000; }
+        tr.grp-end td { border-bottom: 3px solid #000; }
+
+        tr.grp-start td:first-child,
+        tr.grp-mid td:first-child,
+        tr.grp-end td:first-child { border-left: 3px solid #000; }
+
+        tr.grp-start td:last-child,
+        tr.grp-mid td:last-child,
+        tr.grp-end td:last-child { border-right: 3px solid #000; }
+
         /* 選手欄：單人賽整欄一格，多人賽一律兩欄兩排，
            讓每格有 25mm 左右可以寫中文名字 */
         .players {
@@ -297,7 +311,7 @@
         }
 
         .totals td {
-            height: 6.5mm;
+            height: 6mm;
             font-size: 8pt;
         }
 
@@ -308,7 +322,8 @@
             background: #ececec;
         }
 
-        .sign td { height: 9mm; }
+        /* 簽名只是示意，重要性低，版面不夠時優先縮這裡 */
+        .sign td { height: 5.5mm; }
 
         .footnote {
             margin-top: 1.5mm;
@@ -440,6 +455,7 @@
         </div>
 
         <div class="footnote">
+            <b>出賽限制：粗框內同一人只能出賽一次</b>　→　SET1~4、SET6~9、SET11~12、SET13~14 各自為一組<br>
             <b>最終得分 ＝ 比賽得分 ＋ 勝隊 +1（和局雙方皆不加）＋ 飲酒加成 +5</b><br>
             左欄為主隊、右欄為客隊　│　核對：兩隊<b>比賽得分</b>合計 30 分，<b>最終得分</b>合計 36 分（和局 35 分）
         </div>
@@ -472,8 +488,18 @@
               Array.from({ length: n }, (_, i) => `<div class="slot" data-p="P${i + 1}"></div>`).join('') +
               '</div>';
 
+        // 出賽限制分組：同一組內同一人只能出賽一次
+        const GROUPS = [[1, 4], [6, 9], [11, 12], [13, 14]];
+        const grpClass = set => {
+            const g = GROUPS.find(([a, b]) => set >= a && set <= b);
+            if (!g) return '';
+            if (set === g[0]) return 'grp-start';
+            if (set === g[1]) return 'grp-end';
+            return 'grp-mid';
+        };
+
         document.getElementById('rows').innerHTML = SETS.map(([type, n, pt], i) => `
-            <tr class="${n > 2 ? 'tall' : ''}">
+            <tr class="${n > 2 ? 'tall ' : ''}${grpClass(i + 1)}">
                 <td class="players">${slots(n)}</td>
                 <td class="markcell fa"><span class="box"></span></td>
                 <td class="markcell"><span class="box"></span></td>
