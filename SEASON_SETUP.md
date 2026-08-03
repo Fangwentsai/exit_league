@@ -77,10 +77,10 @@ const CURRENT_SEASON = 7;   // 當季：news 頁與 sitemap 優先級看這個
 
 ### Step 2：註冊新賽季
 
-編輯 `config/config.js`：
+編輯 `config/config.js`，在 `SEASONS` 加一筆（照上一屆的格式，改 `sheetId`、`label`、`startDate`、頁面名稱、`resultDir`）。
 
-1. 在 `SEASONS` 加一筆（照上一屆的格式，改 `sheetId`、`label`、`startDate`、頁面名稱、`resultDir`）
-2. 把 `CURRENT_SEASON` 改成新的屆數
+> ⚠️ **`CURRENT_SEASON` 這時候先不要改。** 新賽季的頁面可以先建好上線，
+> 但當季要等到新賽季真的開打才切換，理由見下方「切換 CURRENT_SEASON 的時機」。
 
 ### Step 3：複製兩個頁面範本
 
@@ -162,6 +162,24 @@ const CONFIG = {
 - 頒獎典禮照片：放進 `images/award/seasonN/`，並在 `js/main.js` 的 `knownFiles` 與輪播清單登記
 
 ---
+
+## 切換 CURRENT_SEASON 的時機
+
+`CURRENT_SEASON` 決定兩件事：news 頁的「上週戰況／近期比賽」抓哪一屆，以及試算表上的
+`M/D` 日期要補成哪一年。**新賽季的頁面可以提早上線，但這個值不能提早改。**
+
+太早切換會造成兩個問題（實際發生過）：
+
+1. **首頁戰況區塊變空白** — 舊賽季的日期會套用新賽季的年份規則。例如第六屆的
+   「1/28」在第七屆規則下（開打月 9、月份小於 9 算隔年）會變成 **2027/1/28**，
+   於是所有已打完的比賽都變成「未來」，「上週戰況」自然找不到東西。
+2. **賽果連結 404** — 連結會指向 `game_result/season7/`，但新賽季還沒有任何賽果檔。
+
+**正確時機**：等到新賽季的試算表已填入賽程、且第一批賽果 HTML 已經進到
+`game_result/seasonN/` 之後，再把 `CURRENT_SEASON` 改成新的屆數。
+
+在那之前，新賽季的 `scheduleSN` / `rankSN` 頁面完全不受影響——它們是靠自己頁面裡的
+`seasonOverride` 判斷賽季的，跟 `CURRENT_SEASON` 無關。
 
 ## 踩過的坑
 

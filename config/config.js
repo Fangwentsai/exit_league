@@ -52,8 +52,14 @@ const SEASONS = {
     }
 };
 
-// 當季屆數：news 頁的賽程與戰報預設抓這一屆
-const CURRENT_SEASON = 7;
+// 當季屆數：news 頁的「上週戰況／近期比賽」抓這一屆，也決定 "M/D" 日期補哪一年。
+//
+// ⚠️ 新賽季的頁面可以先建好（scheduleS7 / rankS7 靠自己的 seasonOverride 運作，
+//    不受這個值影響），但這個值要等到**新賽季試算表已填入賽程、且賽果資料夾有內容**
+//    之後才能切換，否則首頁的戰況區塊會變空白、賽果連結會指向空資料夾。
+//
+// 第七屆 2026/9/18 開打，屆時再改成 7。
+const CURRENT_SEASON = 6;
 
 // 頁面名稱 → 屆數（例如 scheduleS6 → 6、rank → 3）
 const PAGE_TO_SEASON = {};
