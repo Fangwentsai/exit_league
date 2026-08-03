@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>難找的聯賽 — 比賽分紙（可列印）</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 7mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            padding: 7mm;
+            color: #000;
+            background: #fff;
+            font-size: 9pt;
+            line-height: 1.25;
+        }
+
+        /* ========== 四角定位點：供影像辨識校正傾斜與變形用 ========== */
+        .reg-mark {
+            position: fixed;
+            width: 7mm;
+            height: 7mm;
+            background: #000;
+        }
+
+        .reg-tl { top: 4mm; left: 4mm; }
+        .reg-tr { top: 4mm; right: 4mm; }
+        .reg-bl { bottom: 4mm; left: 4mm; }
+        .reg-br { bottom: 4mm; right: 4mm; }
+
+        .sheet {
+            width: 100%;
+            max-width: 196mm;
+            margin: 0 auto;
+            padding: 0 9mm;
+        }
+
+        /* ========== 標題與填寫說明 ========== */
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1.5mm;
+            margin-bottom: 2mm;
+        }
+
+        .head h1 {
+            font-size: 13pt;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .head .hint {
+            font-size: 8pt;
+            font-weight: 700;
+            border: 1.5px solid #000;
+            padding: 1mm 2mm;
+        }
+
+        /* ========== 場次資訊 ========== */
+        .meta {
+            display: flex;
+            gap: 3mm;
+            margin-bottom: 2mm;
+        }
+
+        .meta .field {
+            display: flex;
+            align-items: flex-end;
+            gap: 1.5mm;
+            flex: 1;
+        }
+
+        .meta .label {
+            font-size: 8pt;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .meta .blank {
+            flex: 1;
+            border-bottom: 1px solid #000;
+            height: 5.5mm;
+        }
+
+        .meta .field.code .blank {
+            border: 1.5px solid #000;
+            min-width: 22mm;
+            flex: 0 0 22mm;
+        }
+
+        /* ========== 出賽人員 ========== */
+        .roster {
+            display: flex;
+            gap: 3mm;
+            margin-bottom: 2mm;
+        }
+
+        .roster-box {
+            flex: 1;
+            border: 1.2px solid #000;
+        }
+
+        .roster-box .cap {
+            font-size: 7.5pt;
+            font-weight: 700;
+            background: #000;
+            color: #fff;
+            padding: 0.6mm 1.5mm;
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .roster-grid div {
+            height: 5.5mm;
+            border-right: 1px solid #999;
+            border-bottom: 1px solid #999;
+        }
+
+        .roster-grid div:nth-child(3n) { border-right: none; }
+        .roster-grid div:nth-last-child(-n+3) { border-bottom: none; }
+
+        /* ========== 主表格 ========== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th {
+            font-size: 7.5pt;
+            background: #000;
+            color: #fff;
+            padding: 0.8mm 0;
+            font-weight: 700;
+        }
+
+        td {
+            border: 1px solid #000;
+            height: 11.2mm;
+            padding: 0;
+        }
+
+        /* 選手欄 */
+        .players {
+            padding: 0 1mm;
+        }
+
+        .slots {
+            display: flex;
+            gap: 1.5mm;
+            height: 100%;
+            align-items: flex-end;
+            padding-bottom: 1mm;
+        }
+
+        .slot {
+            flex: 1;
+            border-bottom: 1px solid #666;
+            height: 6.5mm;
+            position: relative;
+        }
+
+        .slot::after {
+            content: attr(data-p);
+            position: absolute;
+            left: 0;
+            top: -0.5mm;
+            font-size: 5.5pt;
+            color: #888;
+        }
+
+        /* SET 說明欄 */
+        .setinfo {
+            text-align: center;
+            font-size: 7.5pt;
+            line-height: 1.15;
+            padding: 0 0.5mm;
+        }
+
+        .setinfo .no {
+            font-weight: 900;
+            font-size: 9.5pt;
+        }
+
+        .setinfo .type {
+            display: block;
+            font-size: 7pt;
+        }
+
+        .setinfo .pt {
+            display: inline-block;
+            font-size: 6.5pt;
+            border: 1px solid #000;
+            padding: 0 1mm;
+            margin-top: 0.3mm;
+        }
+
+        /* ========== 塗黑框 ========== */
+        .markcell {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .box {
+            width: 6mm;
+            height: 6mm;
+            border: 1.6px solid #000;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .mark-head {
+            font-size: 6.5pt;
+            line-height: 1;
+        }
+
+        /* 先攻欄底色，跟勝方區隔 */
+        .fa { background: #ececec; }
+
+        /* ========== 底部計分 ========== */
+        .totals {
+            display: flex;
+            gap: 3mm;
+            margin-top: 2mm;
+        }
+
+        .totals table {
+            border-collapse: collapse;
+        }
+
+        .totals td {
+            height: 7mm;
+            font-size: 8pt;
+        }
+
+        .totals .lbl {
+            width: 34%;
+            padding-left: 1.5mm;
+            font-weight: 700;
+            background: #ececec;
+        }
+
+        .sign td { height: 12mm; }
+
+        .footnote {
+            margin-top: 1.5mm;
+            font-size: 7pt;
+            text-align: center;
+            color: #333;
+        }
+
+        /* 螢幕上的列印按鈕，列印時隱藏 */
+        .toolbar {
+            max-width: 196mm;
+            margin: 0 auto 4mm;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toolbar button {
+            font: inherit;
+            padding: 6px 14px;
+            border: 1.5px solid #000;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .toolbar span {
+            font-size: 8pt;
+            color: #555;
+        }
+
+        @media print {
+            .toolbar { display: none; }
+            body { padding: 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toolbar">
+        <button onclick="window.print()">列印 / 存成 PDF</button>
+        <span>建議：A4 直式、縮放 100%、關閉「頁首及頁尾」</span>
+    </div>
+
+    <div class="reg-mark reg-tl"></div>
+    <div class="reg-mark reg-tr"></div>
+    <div class="reg-mark reg-bl"></div>
+    <div class="reg-mark reg-br"></div>
+
+    <div class="sheet">
+        <div class="head">
+            <h1>難找的聯賽 · 比賽分紙</h1>
+            <div class="hint">■ 請用深色筆<u>完全塗滿</u>方框，不要只打勾或畫叉</div>
+        </div>
+
+        <div class="meta">
+            <div class="field code"><span class="label">場次</span><span class="blank"></span></div>
+            <div class="field"><span class="label">日期</span><span class="blank"></span></div>
+            <div class="field"><span class="label">主隊</span><span class="blank"></span></div>
+            <div class="field"><span class="label">客隊</span><span class="blank"></span></div>
+        </div>
+
+        <div class="roster">
+            <div class="roster-box">
+                <div class="cap">主隊出賽人員</div>
+                <div class="roster-grid">
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                </div>
+            </div>
+            <div class="roster-box">
+                <div class="cap">客隊出賽人員</div>
+                <div class="roster-grid">
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <colgroup>
+                <col style="width:26%">
+                <col style="width:8%">
+                <col style="width:8%">
+                <col style="width:16%">
+                <col style="width:8%">
+                <col style="width:8%">
+                <col style="width:26%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>主隊選手</th>
+                    <th class="fa">主先攻</th>
+                    <th>主勝</th>
+                    <th>SET</th>
+                    <th>客勝</th>
+                    <th class="fa">客先攻</th>
+                    <th>客隊選手</th>
+                </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+        </table>
+
+        <div class="totals">
+            <table style="flex:1">
+                <tr><td class="lbl">比賽得分</td><td></td></tr>
+                <tr><td class="lbl">喝酒點數</td><td></td></tr>
+                <tr><td class="lbl">最終得分</td><td></td></tr>
+                <tr class="sign"><td class="lbl">客隊簽名</td><td></td></tr>
+            </table>
+            <table style="flex:1">
+                <tr><td class="lbl">比賽得分</td><td></td></tr>
+                <tr><td class="lbl">喝酒點數</td><td></td></tr>
+                <tr><td class="lbl">最終得分</td><td></td></tr>
+                <tr class="sign"><td class="lbl">主隊簽名</td><td></td></tr>
+            </table>
+        </div>
+
+        <div class="footnote">
+            最終得分 ＝ 比賽得分 ＋ 大局勝 1 分 ＋ 飲酒加成　│　左欄為主隊、右欄為客隊，兩隊總分應合計 30 分
+        </div>
+    </div>
+
+    <script>
+        // set 編號 → [類型說明, 選手數, 該局分數]
+        const SETS = [
+            ['501 (OI/MO) 女子優先', 1, 1],
+            ['501 (DI/DO)', 1, 1],
+            ['701 (OI/MO)', 1, 1],
+            ['701 (OI/MO, 25/50)', 1, 1],
+            ['三人賽 701 骰子賽', 3, 3],
+            ['Cricket 女子優先', 1, 1],
+            ['Cricket', 1, 1],
+            ['HALF-IT', 1, 1],
+            ['HALF-IT', 1, 1],
+            ['三人賽 Cricket 骰子賽', 3, 3],
+            ['701 雙人賽', 2, 2],
+            ['701 雙人賽 FREEZE', 2, 2],
+            ['Cricket 雙人賽', 2, 2],
+            ['Team Cricket', 2, 2],
+            ['四人賽 1101', 4, 4],
+            ['四人賽 Cricket', 4, 4]
+        ];
+
+        const slots = n => n === 1
+            ? '<div class="slots"><div class="slot"></div></div>'
+            : '<div class="slots">' +
+              Array.from({ length: n }, (_, i) => `<div class="slot" data-p="P${i + 1}"></div>`).join('') +
+              '</div>';
+
+        document.getElementById('rows').innerHTML = SETS.map(([type, n, pt], i) => `
+            <tr>
+                <td class="players">${slots(n)}</td>
+                <td class="markcell fa"><span class="box"></span></td>
+                <td class="markcell"><span class="box"></span></td>
+                <td class="setinfo">
+                    <span class="no">SET${i + 1}</span>
+                    <span class="type">${type}</span>
+                    <span class="pt">${pt} 分</span>
+                </td>
+                <td class="markcell"><span class="box"></span></td>
+                <td class="markcell fa"><span class="box"></span></td>
+                <td class="players">${slots(n)}</td>
+            </tr>
+        `).join('');
+    </script>
+</body>
+
+</html>
