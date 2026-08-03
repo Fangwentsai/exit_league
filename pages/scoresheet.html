@@ -8,7 +8,7 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 7mm;
+            margin: 5mm;
         }
 
         * {
@@ -25,25 +25,28 @@
             line-height: 1.25;
         }
 
-        /* ========== 四角定位點：供影像辨識校正傾斜與變形用 ========== */
+        /* ========== 四角定位點：供影像辨識校正傾斜與變形用 ==========
+           必須用 absolute 定位在 .sheet 內，不能用 fixed —— fixed 是相對於
+           螢幕視窗，列印時會被排除在紙張外面，印不出來。 */
+        .sheet {
+            position: relative;
+            width: 100%;
+            max-width: 200mm;
+            margin: 0 auto;
+            padding: 0 9mm;
+        }
+
         .reg-mark {
-            position: fixed;
+            position: absolute;
             width: 7mm;
             height: 7mm;
             background: #000;
         }
 
-        .reg-tl { top: 4mm; left: 4mm; }
-        .reg-tr { top: 4mm; right: 4mm; }
-        .reg-bl { bottom: 4mm; left: 4mm; }
-        .reg-br { bottom: 4mm; right: 4mm; }
-
-        .sheet {
-            width: 100%;
-            max-width: 196mm;
-            margin: 0 auto;
-            padding: 0 9mm;
-        }
+        .reg-tl { top: 0; left: 0; }
+        .reg-tr { top: 0; right: 0; }
+        .reg-bl { bottom: 0; left: 0; }
+        .reg-br { bottom: 0; right: 0; }
 
         /* ========== 標題與填寫說明 ========== */
         .head {
@@ -147,31 +150,45 @@
             color: #fff;
             padding: 0.8mm 0;
             font-weight: 700;
+            line-height: 1.15;
+        }
+
+        /* 先攻／勝的表頭字數多、欄位窄，分兩行才不會擠 */
+        th small {
+            display: block;
+            font-size: 7pt;
         }
 
         td {
             border: 1px solid #000;
-            height: 11.2mm;
+            height: 10mm;
             padding: 0;
         }
 
-        /* 選手欄 */
+        /* 三人／四人賽需要兩排欄位，列高加大 */
+        tr.tall td { height: 15mm; }
+
+        /* 選手欄：單人賽整欄一格，多人賽一律兩欄兩排，
+           讓每格有 25mm 左右可以寫中文名字 */
         .players {
-            padding: 0 1mm;
+            padding: 0 1.5mm;
         }
 
         .slots {
-            display: flex;
-            gap: 1.5mm;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1mm 3mm;
             height: 100%;
-            align-items: flex-end;
-            padding-bottom: 1mm;
+            align-content: center;
+        }
+
+        .slots.multi {
+            grid-template-columns: 1fr 1fr;
         }
 
         .slot {
-            flex: 1;
-            border-bottom: 1px solid #666;
-            height: 6.5mm;
+            border-bottom: 1px solid #555;
+            height: 6mm;
             position: relative;
         }
 
@@ -179,9 +196,9 @@
             content: attr(data-p);
             position: absolute;
             left: 0;
-            top: -0.5mm;
+            bottom: 0.3mm;
             font-size: 5.5pt;
-            color: #888;
+            color: #999;
         }
 
         /* SET 說明欄 */
@@ -301,12 +318,12 @@
         <span>建議：A4 直式、縮放 100%、關閉「頁首及頁尾」</span>
     </div>
 
-    <div class="reg-mark reg-tl"></div>
-    <div class="reg-mark reg-tr"></div>
-    <div class="reg-mark reg-bl"></div>
-    <div class="reg-mark reg-br"></div>
-
     <div class="sheet">
+        <div class="reg-mark reg-tl"></div>
+        <div class="reg-mark reg-tr"></div>
+        <div class="reg-mark reg-bl"></div>
+        <div class="reg-mark reg-br"></div>
+
         <div class="head">
             <h1>難找的聯賽 · 比賽分紙</h1>
             <div class="hint">■ 請用深色筆<u>完全塗滿</u>方框，不要只打勾或畫叉</div>
@@ -342,22 +359,22 @@
 
         <table>
             <colgroup>
-                <col style="width:26%">
-                <col style="width:8%">
-                <col style="width:8%">
-                <col style="width:16%">
-                <col style="width:8%">
-                <col style="width:8%">
-                <col style="width:26%">
+                <col style="width:29.5%">
+                <col style="width:6.5%">
+                <col style="width:6.5%">
+                <col style="width:15%">
+                <col style="width:6.5%">
+                <col style="width:6.5%">
+                <col style="width:29.5%">
             </colgroup>
             <thead>
                 <tr>
                     <th>主隊選手</th>
-                    <th class="fa">主先攻</th>
-                    <th>主勝</th>
+                    <th class="fa">主<small>先攻</small></th>
+                    <th>主<small>勝</small></th>
                     <th>SET</th>
-                    <th>客勝</th>
-                    <th class="fa">客先攻</th>
+                    <th>客<small>勝</small></th>
+                    <th class="fa">客<small>先攻</small></th>
                     <th>客隊選手</th>
                 </tr>
             </thead>
@@ -407,12 +424,12 @@
 
         const slots = n => n === 1
             ? '<div class="slots"><div class="slot"></div></div>'
-            : '<div class="slots">' +
+            : '<div class="slots multi">' +
               Array.from({ length: n }, (_, i) => `<div class="slot" data-p="P${i + 1}"></div>`).join('') +
               '</div>';
 
         document.getElementById('rows').innerHTML = SETS.map(([type, n, pt], i) => `
-            <tr>
+            <tr class="${n > 2 ? 'tall' : ''}">
                 <td class="players">${slots(n)}</td>
                 <td class="markcell fa"><span class="box"></span></td>
                 <td class="markcell"><span class="box"></span></td>
