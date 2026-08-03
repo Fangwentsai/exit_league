@@ -58,10 +58,41 @@
             margin-bottom: 2mm;
         }
 
+        .head .brand {
+            display: flex;
+            align-items: center;
+            gap: 2.5mm;
+        }
+
+        /* QR 印太小會掃不到，15mm 是短網址的安全下限 */
+        .head .qr {
+            width: 15mm;
+            height: 15mm;
+            flex: 0 0 15mm;
+        }
+
+        .head .qr svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         .head h1 {
             font-size: 13pt;
             margin: 0;
             letter-spacing: 1px;
+        }
+
+        .head .url {
+            font-size: 8.5pt;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .head .url span {
+            font-weight: 400;
+            font-size: 7pt;
+            color: #444;
         }
 
         .head .hint {
@@ -69,6 +100,8 @@
             font-weight: 700;
             border: 1.5px solid #000;
             padding: 1mm 2mm;
+            text-align: center;
+            line-height: 1.35;
         }
 
         /* ========== 場次資訊 ========== */
@@ -129,7 +162,7 @@
         }
 
         .roster-grid div {
-            height: 5.5mm;
+            height: 5mm;
             border-right: 1px solid #999;
             border-bottom: 1px solid #999;
         }
@@ -161,12 +194,12 @@
 
         td {
             border: 1px solid #000;
-            height: 10mm;
+            height: 9mm;
             padding: 0;
         }
 
         /* 三人／四人賽需要兩排欄位，列高加大 */
-        tr.tall td { height: 15mm; }
+        tr.tall td { height: 14mm; }
 
         /* 選手欄：單人賽整欄一格，多人賽一律兩欄兩排，
            讓每格有 25mm 左右可以寫中文名字 */
@@ -249,6 +282,9 @@
         /* 先攻欄底色，跟勝方區隔 */
         .fa { background: #ececec; }
 
+        /* 表頭的先攻欄是淺灰底，字要改黑色才看得見（預設的白字會消失） */
+        th.fa { color: #000; }
+
         /* ========== 底部計分 ========== */
         .totals {
             display: flex;
@@ -261,7 +297,7 @@
         }
 
         .totals td {
-            height: 7mm;
+            height: 6.5mm;
             font-size: 8pt;
         }
 
@@ -272,7 +308,7 @@
             background: #ececec;
         }
 
-        .sign td { height: 12mm; }
+        .sign td { height: 9mm; }
 
         .footnote {
             margin-top: 1.5mm;
@@ -325,8 +361,15 @@
         <div class="reg-mark reg-br"></div>
 
         <div class="head">
-            <h1>難找的聯賽 · 比賽分紙</h1>
-            <div class="hint">■ 請用深色筆<u>完全塗滿</u>方框，不要只打勾或畫叉</div>
+            <div class="brand">
+                <!-- QR 內嵌為 SVG，不依賴外部檔案，離線列印也不會壞。指向 https://yhdarts.com -->
+                <div class="qr"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path d="M1 1h7v1h-7zM10 1h2v1h-2zM13 1h1v1h-1zM15 1h1v1h-1zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM13 2h3v1h-3zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h2v1h-2zM12 3h1v1h-1zM15 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h4v1h-4zM14 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h2v1h-2zM14 5h1v1h-1zM17 5h1v1h-1zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM10 6h1v1h-1zM12 6h2v1h-2zM15 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h2v1h-2zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h1v1h-1zM11 9h3v1h-3zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h1v1h-1zM6 10h1v1h-1zM11 10h2v1h-2zM14 10h4v1h-4zM20 10h5v1h-5zM2 11h1v1h-1zM7 11h1v1h-1zM12 11h1v1h-1zM14 11h4v1h-4zM20 11h1v1h-1zM22 11h1v1h-1zM24 11h2v1h-2zM3 12h2v1h-2zM6 12h1v1h-1zM8 12h2v1h-2zM13 12h2v1h-2zM16 12h1v1h-1zM19 12h1v1h-1zM21 12h2v1h-2zM25 12h1v1h-1zM4 13h4v1h-4zM10 13h2v1h-2zM13 13h2v1h-2zM16 13h1v1h-1zM19 13h1v1h-1zM25 13h1v1h-1zM1 14h1v1h-1zM4 14h1v1h-1zM8 14h1v1h-1zM11 14h1v1h-1zM16 14h2v1h-2zM20 14h1v1h-1zM24 14h1v1h-1zM1 15h1v1h-1zM4 15h2v1h-2zM7 15h1v1h-1zM9 15h1v1h-1zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h5v1h-5zM24 15h2v1h-2zM1 16h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM9 16h1v1h-1zM12 16h1v1h-1zM19 16h2v1h-2zM22 16h2v1h-2zM25 16h1v1h-1zM1 17h1v1h-1zM5 17h1v1h-1zM7 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h1v1h-1zM9 18h1v1h-1zM11 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM10 20h1v1h-1zM13 20h2v1h-2zM16 20h2v1h-2zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h1v1h-1zM25 21h1v1h-1zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM11 22h1v1h-1zM15 22h1v1h-1zM18 22h2v1h-2zM24 22h2v1h-2zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM22 23h2v1h-2zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM19 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h2v1h-2zM17 25h1v1h-1zM19 25h1v1h-1zM22 25h1v1h-1zM25 25h1v1h-1z" fill="#000"/></svg></div>
+                <div>
+                    <h1>難找的聯賽 · 比賽分紙</h1>
+                    <div class="url">yhdarts.com　<span>掃描 QR 看賽程和排名（重點是趕快填表）</span></div>
+                </div>
+            </div>
+            <div class="hint">■ 請用深色筆<u>完全塗滿</u>方框<br>不要只打勾或畫叉</div>
         </div>
 
         <div class="meta">
@@ -397,7 +440,8 @@
         </div>
 
         <div class="footnote">
-            最終得分 ＝ 比賽得分 ＋ 大局勝 1 分 ＋ 飲酒加成　│　左欄為主隊、右欄為客隊，兩隊總分應合計 30 分
+            <b>最終得分 ＝ 比賽得分 ＋ 勝隊 +1（和局雙方皆不加）＋ 飲酒加成 +5</b><br>
+            左欄為主隊、右欄為客隊　│　核對：兩隊<b>比賽得分</b>合計 30 分，<b>最終得分</b>合計 36 分（和局 35 分）
         </div>
     </div>
 
