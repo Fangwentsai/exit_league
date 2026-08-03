@@ -175,6 +175,11 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            /* <table> 若不建立自己明確的堆疊層級，瀏覽器會把儲存格背景畫在
+               比後方定位元素更高的層，.grp-box 加再高的 z-index 也蓋不過去。
+               這裡給它一個層級，讓 .grp-box 的 z-index 才真正比得過它。 */
+            position: relative;
+            z-index: 0;
         }
 
         th {
@@ -203,17 +208,23 @@
 
         /* ========== 出賽限制分組 ==========
            粗框圈起來的組別內同一人只能出賽一次
-           （SET1~4、SET6~9、SET11~12、SET13~14）*/
-        tr.grp-start td { border-top: 3px solid #000; }
-        tr.grp-end td { border-bottom: 3px solid #000; }
+           （SET1~4、SET6~9、SET11~12、SET13~14）
 
-        tr.grp-start td:first-child,
-        tr.grp-mid td:first-child,
-        tr.grp-end td:first-child { border-left: 3px solid #000; }
+           改用獨立疊加的外框層（.grp-box），不去動 td 的 border/box-shadow：
+           兩者混用會在轉角處對不齊（一個吃版面、一個不吃），且 border 若用在
+           左右邊會佔掉儲存格內部寬度，讓組內列的選手欄比組外列窄。疊加層完全
+           不參與表格版面計算，寬度永遠一致，也沒有轉角接縫問題。 */
+        .tablewrap { position: relative; }
 
-        tr.grp-start td:last-child,
-        tr.grp-mid td:last-child,
-        tr.grp-end td:last-child { border-right: 3px solid #000; }
+        .grp-box {
+            position: absolute;
+            border: 1.2px solid #000;
+            pointer-events: none;
+            box-sizing: border-box;
+            /* <table> 儲存格背景會自成一層蓋過後面加入的定位元素，
+               即使 DOM 順序在表格之後也一樣，需要明確 z-index 才能疊上去 */
+            z-index: 5;
+        }
 
         /* 選手欄：單人賽整欄一格，多人賽一律兩欄兩排，
            讓每格有 25mm 左右可以寫中文名字 */
@@ -415,29 +426,31 @@
             </div>
         </div>
 
-        <table>
-            <colgroup>
-                <col style="width:29.5%">
-                <col style="width:6.5%">
-                <col style="width:6.5%">
-                <col style="width:15%">
-                <col style="width:6.5%">
-                <col style="width:6.5%">
-                <col style="width:29.5%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>主隊選手</th>
-                    <th class="fa">主<small>先攻</small></th>
-                    <th>主<small>勝</small></th>
-                    <th>SET</th>
-                    <th>客<small>勝</small></th>
-                    <th class="fa">客<small>先攻</small></th>
-                    <th>客隊選手</th>
-                </tr>
-            </thead>
-            <tbody id="rows"></tbody>
-        </table>
+        <div class="tablewrap">
+            <table>
+                <colgroup>
+                    <col style="width:29.5%">
+                    <col style="width:6.5%">
+                    <col style="width:6.5%">
+                    <col style="width:15%">
+                    <col style="width:6.5%">
+                    <col style="width:6.5%">
+                    <col style="width:29.5%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>主隊選手</th>
+                        <th class="fa">主<small>先攻</small></th>
+                        <th>主<small>勝</small></th>
+                        <th>SET</th>
+                        <th>客<small>勝</small></th>
+                        <th class="fa">客<small>先攻</small></th>
+                        <th>客隊選手</th>
+                    </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
 
         <div class="totals">
             <table style="flex:1">
@@ -513,6 +526,29 @@
                 <td class="players">${slots(n)}</td>
             </tr>
         `).join('');
+
+        // 在表格上疊加分組外框：量測起訖列的實際位置後定位，
+        // 不碰任何 td 的 border，欄寬與轉角接縫問題都不會發生。
+        (function drawGroupBoxes() {
+            const wrap = document.querySelector('.tablewrap');
+            const rows = document.querySelectorAll('#rows tr');
+            const wrapTop = wrap.getBoundingClientRect().top;
+
+            GROUPS.forEach(([startSet, endSet]) => {
+                const startRow = rows[startSet - 1];
+                const endRow = rows[endSet - 1];
+                const startRect = startRow.getBoundingClientRect();
+                const endRect = endRow.getBoundingClientRect();
+
+                const box = document.createElement('div');
+                box.className = 'grp-box';
+                box.style.left = '0';
+                box.style.width = '100%';
+                box.style.top = (startRect.top - wrapTop) + 'px';
+                box.style.height = (endRect.bottom - startRect.top) + 'px';
+                wrap.appendChild(box);
+            });
+        })();
     </script>
 </body>
 
