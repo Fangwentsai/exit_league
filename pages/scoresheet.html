@@ -13,6 +13,10 @@
 
         * {
             box-sizing: border-box;
+            /* 瀏覽器預設不列印背景色（省墨），會讓所有黑底條、灰底欄整片消失。
+               強制保留，否則印出來的分紙跟螢幕上完全不一樣。 */
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
         }
 
         body {
@@ -29,7 +33,11 @@
            必須用 absolute 定位在 .sheet 內，不能用 fixed —— fixed 是相對於
            螢幕視窗，列印時會被排除在紙張外面，印不出來。
 
-           實心黑方塊，辨識時取其重心當基準點。 */
+           實心黑方塊，辨識時取其重心當基準點。
+
+           方塊本身用 border 疊滿而不是 background：背景色在列印時預設會被
+           瀏覽器丟掉（見上方 print-color-adjust），但邊框一定會印。定位點是
+           辨識的基準，不能有任何機會消失。 */
         .sheet {
             position: relative;
             width: 100%;
@@ -42,6 +50,8 @@
             position: absolute;
             width: 7mm;
             height: 7mm;
+            /* box-sizing: border-box + 3.5mm 四邊框 = 整個 7mm 方塊填滿黑色 */
+            border: 3.5mm solid #000;
             background: #000;
         }
 
@@ -402,7 +412,7 @@
                     <div class="url">yhdarts.com　<span>掃描 QR 看賽程和排名（重點是趕快填表）</span></div>
                 </div>
             </div>
-            <div class="hint">■ 請用深色筆<u>塗滿</u>方框，不要打勾或畫叉<br>■ 請寫報名時的隊員名，字跡請盡量工整</div>
+            <div class="hint">■ 請用深色筆<u>塗滿</u>方框，不要打勾或畫叉<br>■ 請寫報名時的隊員名，字跡請盡量工整<br>■ <u>粗框內同一人限出賽一次</u>：SET1~4、6~9、11~12、13~14</div>
         </div>
 
         <div class="meta">
@@ -475,7 +485,6 @@
         </div>
 
         <div class="footnote">
-            <b>出賽限制：粗框內同一人只能出賽一次</b>　→　SET1~4、SET6~9、SET11~12、SET13~14 各自為一組<br>
             <b>最終得分 ＝ 比賽得分 ＋ 勝隊 +1（和局雙方皆不加）＋ 飲酒加成 +5</b><br>
             左欄為主隊、右欄為客隊　│　核對：兩隊<b>比賽得分</b>合計 30 分，<b>最終得分</b>合計 36 分（和局 35 分）
         </div>
