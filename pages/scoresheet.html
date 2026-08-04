@@ -27,7 +27,11 @@
 
         /* ========== 四角定位點：供影像辨識校正傾斜與變形用 ==========
            必須用 absolute 定位在 .sheet 內，不能用 fixed —— fixed 是相對於
-           螢幕視窗，列印時會被排除在紙張外面，印不出來。 */
+           螢幕視窗，列印時會被排除在紙張外面，印不出來。
+
+           比照上面「出賽人員」框線的做法：空心框線，不是實心塗黑。
+           實心黑方塊萬一在照片裡跟旁邊的黑底表頭連在一起，會分不出邊界；
+           空心框線形狀跟大片色塊明顯不同，辨識時比較不會混淆。 */
         .sheet {
             position: relative;
             width: 100%;
@@ -40,7 +44,8 @@
             position: absolute;
             width: 7mm;
             height: 7mm;
-            background: #000;
+            border: 1.5px solid #000;
+            background: #fff;
         }
 
         .reg-tl { top: 0; left: 0; }
@@ -395,7 +400,7 @@
                     <div class="url">yhdarts.com　<span>掃描 QR 看賽程和排名（重點是趕快填表）</span></div>
                 </div>
             </div>
-            <div class="hint">■ 請用深色筆<u>完全塗滿</u>方框<br>不要只打勾或畫叉</div>
+            <div class="hint">■ 請用深色筆<u>塗滿</u>方框<br>不要打勾或畫叉<br>■ 請寫報名時的名字<br>字跡請盡量工整</div>
         </div>
 
         <div class="meta">
