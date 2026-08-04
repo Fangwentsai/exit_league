@@ -29,9 +29,7 @@
            必須用 absolute 定位在 .sheet 內，不能用 fixed —— fixed 是相對於
            螢幕視窗，列印時會被排除在紙張外面，印不出來。
 
-           比照上面「出賽人員」框線的做法：空心框線，不是實心塗黑。
-           實心黑方塊萬一在照片裡跟旁邊的黑底表頭連在一起，會分不出邊界；
-           空心框線形狀跟大片色塊明顯不同，辨識時比較不會混淆。 */
+           實心黑方塊，辨識時取其重心當基準點。 */
         .sheet {
             position: relative;
             width: 100%;
@@ -44,8 +42,7 @@
             position: absolute;
             width: 7mm;
             height: 7mm;
-            border: 1.5px solid #000;
-            background: #fff;
+            background: #000;
         }
 
         .reg-tl { top: 0; left: 0; }
@@ -107,6 +104,8 @@
             padding: 1mm 2mm;
             text-align: center;
             line-height: 1.35;
+            /* 每一點各佔一行，不讓瀏覽器在句子中間亂斷 */
+            white-space: nowrap;
         }
 
         /* ========== 場次資訊 ========== */
@@ -194,6 +193,9 @@
             padding: 0.8mm 0;
             font-weight: 700;
             line-height: 1.15;
+            /* td 有 1px 邊框、th 沒有的話，表頭會比下方欄位窄一圈，
+               看起來像凹進去。補上同樣的邊框讓左右邊緣切齊。 */
+            border: 1px solid #000;
         }
 
         /* 先攻／勝的表頭字數多、欄位窄，分兩行才不會擠 */
@@ -400,7 +402,7 @@
                     <div class="url">yhdarts.com　<span>掃描 QR 看賽程和排名（重點是趕快填表）</span></div>
                 </div>
             </div>
-            <div class="hint">■ 請用深色筆<u>塗滿</u>方框<br>不要打勾或畫叉<br>■ 請寫報名時的名字<br>字跡請盡量工整</div>
+            <div class="hint">■ 請用深色筆<u>塗滿</u>方框，不要打勾或畫叉<br>■ 請寫報名時的隊員名，字跡請盡量工整</div>
         </div>
 
         <div class="meta">
