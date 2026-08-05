@@ -89,7 +89,8 @@ module.exports = async (req, res) => {
             awayRoster,
         });
 
-        const withRosterMatch = applyRosterMatching(geminiResult, homeRoster, awayRoster);
+        const withSides = mapSidesToTeams(geminiResult);
+        const withRosterMatch = applyRosterMatching(withSides, homeRoster, awayRoster);
         const withCrossCheck = applyCrossCheck(withRosterMatch);
         withCrossCheck.deskew = { applied: deskew.applied, reason: deskew.reason || null };
 
@@ -175,14 +176,14 @@ function buildPrompt({ gameCode, homeTeam, awayTeam, homeRoster, awayRoster }) {
     return `你是一個飛鏢比賽分紙的辨識助手。這張分紙的版面結構固定如下：
 
 - 頁首：場次、日期、主隊「${homeTeam}」、客隊「${awayTeam}」
-- 主表格 16 列（SET1~SET16），每列從左到右依序是：
-  1. 主隊選手（一或多個手寫姓名，依局別人數而定）
-  2. 「主先攻」塗黑方框
-  3. 「主勝」塗黑方框
-  4. SET 編號與局別說明
-  5. 「客勝」塗黑方框
-  6. 「客先攻」塗黑方框
-  7. 客隊選手（一或多個手寫姓名）
+- 主表格 16 列（SET1~SET16），每列從左到右依序是 7 個區塊：
+  1. 最左：主隊選手（一或多個手寫姓名，依局別人數而定）
+  2. 「先攻」塗黑方框（左側）
+  3. 「勝」塗黑方框（左側，緊鄰 SET 標籤）
+  4. 正中：SET 編號與局別說明
+  5. 「勝」塗黑方框（右側，緊鄰 SET 標籤）
+  6. 「先攻」塗黑方框（右側）
+  7. 最右：客隊選手（一或多個手寫姓名）
 
 各局人數：
 ${setList}
@@ -193,14 +194,15 @@ ${setList}
 2. **客隊選手只能是以下名單中的人**：
    ${awayRoster.join('、')}
 3. 塗黑方框的填法可能是「螺旋塗鴉」而不是整格塗滿，只要框內有明顯筆跡（無論形狀）都算「已勾選」。
-4. 「主先攻」與「主勝」是兩個獨立的框，可能同時被塗黑（代表同一隊既先攻又獲勝），這是正常情況，不是重複勾選的錯誤。
-5. 若某個欄位字跡潦草、模糊到你沒有把握，請誠實給出低信心分數（甚至 0），**不要用猜測填一個看起來合理但沒有根據的答案**。姓名讀不出來就回傳 null，先攻/勝負讀不出來就回傳 "unclear"。
+4. 同一列的兩個左側框（緊鄰 SET 標籤左邊）可能同時被塗黑，兩個右側框（緊鄰 SET 標籤右邊）也可能同時被塗黑，這是正常情況（代表同一隊既先攻又獲勝），不是重複勾選的錯誤。
+5. 若某個欄位字跡潦草、模糊到你沒有把握，請誠實給出低信心分數（甚至 0），**不要用猜測填一個看起來合理但沒有根據的答案**。姓名讀不出來就回傳 null，塗黑框讀不出來就回傳 "unclear"。
 6. 場次代號（gamecode）如果照片上有寫，讀出來放進 gameCode 欄位；這場的實際場次是「${gameCode || '未提供'}」，僅供你交叉核對，不代表照片上一定寫得一致。
 7. **出賽限制（同組內同一人不能出賽超過一次）**：以下每組 SET 屬於同一組，同一位選手在同一組內只會出現一次——如果你辨識出同一人在同一組出現兩次以上，代表你至少有一次認錯人，回去重新檢查那幾局的筆跡，不要直接回傳矛盾的結果：
    - SET1、SET4 為一組
    - SET6、SET9 為一組
    - SET11、SET12 為一組
    - SET13、SET14 為一組
+8. **firstAttack 與 winner 只回答「塗黑的框在 SET 標籤的左邊還右邊」（left/right），不要自己換算成主隊或客隊**——每一列從左到右固定是「主隊選手、先攻框、勝框、SET 標籤、勝框、先攻框、客隊選手」，哪一側是主隊、哪一側是客隊已經是固定的版面規則，由我們自己的程式判斷，你只需要誠實回答視覺上看到塗黑框在哪一側，不要做語意翻譯。
 
 信心分數（0~100）不是憑印象打的整體感覺分，是針對「這個具體欄位」的判讀依據給分，請照下面的判斷基準：
 - 90~100：筆跡清楚、無歧義，換一個人來看也只會有一種讀法
@@ -241,8 +243,14 @@ function buildResponseSchema() {
                         set: { type: 'INTEGER' },
                         homePlayers: { type: 'ARRAY', items: playerField },
                         awayPlayers: { type: 'ARRAY', items: playerField },
-                        firstAttack: choiceField(['home', 'away', 'unclear']),
-                        winner: choiceField(['home', 'away', 'unclear']),
+                        // 故意要求「左邊還右邊」而不是直接要求「主隊還客隊」——
+                        // 實測發現直接要求 home/away 時，模型會穩定地把兩側搞反
+                        // （100% 精確反過來，不是隨機亂猜），懷疑是「主隊」「客隊」
+                        // 這種語意標籤在模型內部對應到左右哪一側時發生系統性錯位。
+                        // 改成只回答視覺上「哪一側」，把「左側=主隊、右側=客隊」
+                        // 這個固定版面規則交給我們自己的程式碼做，不靠模型翻譯語意。
+                        firstAttack: choiceField(['left', 'right', 'unclear']),
+                        winner: choiceField(['left', 'right', 'unclear']),
                     },
                     required: ['set', 'homePlayers', 'awayPlayers', 'firstAttack', 'winner'],
                 },
@@ -251,6 +259,29 @@ function buildResponseSchema() {
         },
         required: ['sets', 'drinkingBonus'],
     };
+}
+
+// ===== 後處理 0：左右側轉換成主客隊 =====
+// Gemini 只負責回答視覺上的「左邊還右邊」（見 buildPrompt 規則 8 的說明），
+// 「左側=主隊、右側=客隊」這個固定版面規則由這裡的程式碼決定，不假手模型
+// 做語意翻譯——這是實測發現直接要求模型輸出 home/away 時會穩定讀反
+// （100% 精確反過來）之後的修正，SCORESHEET_OCR.md 發現 10/11 有記錄。
+
+const SIDE_TO_TEAM = { left: 'home', right: 'away', unclear: 'unclear' };
+
+function mapSidesToTeams(result) {
+    const sets = (result.sets || []).map(s => ({
+        ...s,
+        firstAttack: mapSideField(s.firstAttack),
+        winner: mapSideField(s.winner),
+    }));
+    return { ...result, sets };
+}
+
+function mapSideField(field) {
+    if (!field) return field;
+    const mapped = SIDE_TO_TEAM[field.value];
+    return { ...field, value: mapped === undefined ? field.value : mapped };
 }
 
 // ===== 後處理 1：名單模糊比對 =====
