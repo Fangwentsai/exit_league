@@ -94,14 +94,19 @@ function regionStd(integral, integralSq, width, height, x1, y1, x2, y2) {
 // 不是單點取樣——分紙表頭列中間常有白色空隙，單點取樣容易剛好取樣到那個
 // 空隙而誤判成「這裡已經亮了」）。回傳暗色延伸的距離，越大代表越像一條線
 // 而不是一個獨立的小方塊。
-function darkRunLength(integral, width, height, cx, cy, dx, dy, thickness, maxDist, step) {
+//
+// brightThreshold 必須由呼叫端依當地亮度算出來，不能寫死一個固定值：
+// 實測照片的上下亮度差很大（同一張照片上方紙面量到 224、左下角只有 110~143，
+// 桌燈打光不均），寫死 150 會讓偏暗那一角的紙面被當成「暗色」，
+// 於是每個方向都走到上限、真正的定位點反而被判定成一條線而漏掉。
+function darkRunLength(integral, width, height, cx, cy, dx, dy, thickness, maxDist, step, brightThreshold) {
     let dist = 0;
     while (dist < maxDist) {
         const nx = cx + dx * dist, ny = cy + dy * dist;
         const m = dx !== 0
             ? regionMean(integral, width, height, nx - step / 2, ny - thickness / 2, nx + step / 2, ny + thickness / 2)
             : regionMean(integral, width, height, nx - thickness / 2, ny - step / 2, nx + thickness / 2, ny + step / 2);
-        if (m > 150) break; // 遇到亮色，暗色延伸到此為止
+        if (m > brightThreshold) break; // 遇到亮色，暗色延伸到此為止
         dist += step;
     }
     return dist;
@@ -122,77 +127,94 @@ function contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter
     // 用 outerMean - centerMean 當對比分數：中心夠暗、外圍夠亮，分數才會高
     const contrast = outerMean - centerMean;
 
+    // 定位點印在紙面內側，四周都留有白邊（版面上方塊約 7mm、外緣留白也約 7mm），
+    // 所以往上下左右任一方向走，暗色都應該在很短的距離內就碰到白紙而中止。
+    //
+    // 這個「四個方向都要中止」必須全部成立，不能放寬成「相對的兩個方向都暗才排除」——
+    // 實測踩過這個坑：紙張本身的外角落（例如照片裡紙的左上角）往外兩個方向是深色桌面、
+    // 往內兩個方向是亮紙，放寬版的條件會讓它整個矇混過關，四個角有三個抓到桌面而不是
+    // 定位點，硬拉出來的校正結果自然是歪的。
     const thickness = half * 1.2, step = Math.max(2, half * 0.4), maxDist = half * 6;
-    const runLeft = darkRunLength(integral, width, height, cx, cy, -1, 0, thickness, maxDist, step);
-    const runRight = darkRunLength(integral, width, height, cx, cy, 1, 0, thickness, maxDist, step);
-    const runUp = darkRunLength(integral, width, height, cx, cy, 0, -1, thickness, maxDist, step);
-    const runDown = darkRunLength(integral, width, height, cx, cy, 0, 1, thickness, maxDist, step);
-    // 角落的定位點本來就會有一側（靠紙張外緣、朝桌子的方向）暗色延伸很遠，
-    // 這是正常的，不能當「不是方塊」的證據。真正該排除的是「兩個相對方向
-    // 同時都延伸很遠」——那才是貫穿紙面的一條線（例如表頭黑條），
-    // 方塊只會有單側連到外部暗色，不會兩側同時連通。
-    const bothDarkHoriz = runLeft >= maxDist && runRight >= maxDist;
-    const bothDarkVert = runUp >= maxDist && runDown >= maxDist;
+    // 亮暗分界取中心與外圍之間偏外圍的位置，隨當地光線自動調整
+    const brightThreshold = centerMean + (outerMean - centerMean) * 0.6;
+    const runLeft = darkRunLength(integral, width, height, cx, cy, -1, 0, thickness, maxDist, step, brightThreshold);
+    const runRight = darkRunLength(integral, width, height, cx, cy, 1, 0, thickness, maxDist, step, brightThreshold);
+    const runUp = darkRunLength(integral, width, height, cx, cy, 0, -1, thickness, maxDist, step, brightThreshold);
+    const runDown = darkRunLength(integral, width, height, cx, cy, 0, 1, thickness, maxDist, step, brightThreshold);
+    const surroundedByPaper = runLeft < maxDist && runRight < maxDist && runUp < maxDist && runDown < maxDist;
 
-    // 定位點是印刷實心方塊，中心區域標準差很低；表頭儲存格黑底上壓著白字，
-    // 標準差高很多。這是跟形狀無關、獨立的一個判別依據。
-    const centerStd = regionStd(integral, integralSq, width, height, cx - half, cy - half, cx + half, cy + half);
-
-    const isCompact = !bothDarkHoriz && !bothDarkVert && centerStd < 35;
+    // 曾經想用「中心區域標準差低」（實心印刷 vs 表頭黑底白字）當額外判別依據，
+    // 實測後拿掉：真實照片裡定位點的標準差量到 44~63（對焦模糊、JPEG 壓縮讓
+    // 邊緣過渡糊掉，小視窗裡邊緣佔比又高），跟表頭儲存格根本分不開，
+    // 設任何門檻都會先擋掉真正的定位點。改由四點的幾何比例來排除誤判
+    // （見 detectFourCorners / scoreQuad），那是強度高得多的判別依據。
+    const isCompact = surroundedByPaper;
 
     return { contrast, centerMean, isCompact };
 }
 
-// 在指定的搜尋範圍內，用「中心暗、外圍亮」對比分數找出最像定位點的位置。
-// 先用粗網格掃過整個搜尋範圍定出大概位置，再用細網格在那附近精修座標——
-// 粗網格步距約 markSize/4（十幾個像素），直接拿粗網格結果去解 homography，
-// 誤差會被放大到輸出畫布上，四個角沒對齊，邊緣就會留下沒切乾淨的桌面。
-function findMarkByContrast(integral, integralSq, width, height, sx1, sy1, sx2, sy2, markSize) {
+// 在指定的搜尋範圍內，收集所有像定位點的候選位置（不是只取最高分那一個）。
+//
+// 只取單一最高分的做法實測不可靠：定位點在真實照片裡是「中灰色」而不是純黑
+// （量到約 111~142，不是想像中的接近 0），邊緣又因為對焦與壓縮而糊掉，
+// 用嚴格的亮度／標準差門檻去挑，會把真正的定位點擋掉、反而放行表格的黑色
+// 表頭儲存格。這裡改成放寬門檻、保留多個候選，正確答案由呼叫端用四點之間
+// 已知的幾何比例挑出來（見 detectFourCorners）。
+function collectMarkCandidates(integral, integralSq, width, height, sx1, sy1, sx2, sy2, markSize) {
     const half = markSize / 2;
     const ringOuter = markSize * 1.8; // 外圍取樣範圍：中心方塊的 1.8 倍
-    let best = null;
+    const found = [];
 
-    const coarseStep = Math.max(1, Math.round(markSize / 4));
-    for (let cy = sy1 + half; cy < sy2 - half; cy += coarseStep) {
-        for (let cx = sx1 + half; cx < sx2 - half; cx += coarseStep) {
+    const step = Math.max(2, Math.round(markSize / 5));
+    for (let cy = Math.max(half, sy1); cy < Math.min(height - half, sy2); cy += step) {
+        for (let cx = Math.max(half, sx1); cx < Math.min(width - half, sx2); cx += step) {
             const { contrast, centerMean, isCompact } = contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter);
-            if (centerMean < 110 && contrast > 25 && isCompact) {
-                if (!best || contrast > best.contrast) {
-                    best = { x: cx, y: cy, contrast, centerMean };
-                }
+            if (centerMean < 170 && contrast > 30 && isCompact) {
+                found.push({ x: cx, y: cy, contrast, centerMean, markSize });
             }
         }
     }
-    if (!best) return null;
+    return found;
+}
 
-    // 精修：在粗網格結果附近 ±coarseStep 範圍內用 1px 步距重新找峰值
-    const refineStep = 1;
-    let refined = best;
-    for (let cy = best.y - coarseStep; cy <= best.y + coarseStep; cy += refineStep) {
-        for (let cx = best.x - coarseStep; cx <= best.x + coarseStep; cx += refineStep) {
-            if (cx - half < sx1 || cx + half > sx2 || cy - half < sy1 || cy + half > sy2) continue;
-            const { contrast, centerMean, isCompact } = contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter);
-            if (isCompact && contrast > refined.contrast) {
-                refined = { x: cx, y: cy, contrast, centerMean };
-            }
-        }
-    }
-    return refined;
+// 分紙版面上四個定位點中心所形成的矩形，高寬比是固定的（量自 pages/scoresheet.html
+// 實際渲染結果：寬 729.45、高 1023.62）。照片再怎麼歪，這個比例都是已知的先驗知識，
+// 拿來從一堆候選裡挑出唯一正確的四點組合，比單靠每個點自己的亮度特徵可靠得多。
+const SHEET_MARK_ASPECT = 1023.62 / 729.45; // ≈ 1.403
+
+function scoreQuad(tl, tr, bl, br) {
+    // 位置關係必須合理：左邊的點要真的在左邊、上面的點要真的在上面
+    if (!(tl.x < tr.x && bl.x < br.x && tl.y < bl.y && tr.y < br.y)) return null;
+
+    const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+    const top = dist(tl, tr), bottom = dist(bl, br);
+    const left = dist(tl, bl), right = dist(tr, br);
+    if (top < 1 || left < 1) return null;
+
+    // 平面矩形在透視下對邊會不等長，但不會差太多；差太多代表選到不相干的點
+    if (Math.min(top, bottom) / Math.max(top, bottom) < 0.65) return null;
+    if (Math.min(left, right) / Math.max(left, right) < 0.65) return null;
+
+    const w = (top + bottom) / 2, h = (left + right) / 2;
+    const aspectErr = Math.abs(h / w - SHEET_MARK_ASPECT) / SHEET_MARK_ASPECT;
+    if (aspectErr > 0.3) return null; // 比例差三成以上，不可能是同一張分紙的四角
+
+    const area = w * h;
+    const contrastSum = tl.contrast + tr.contrast + bl.contrast + br.contrast;
+    // 面積越大越好（定位點在版面最外緣，正確組合會framing 出最大的四邊形）、
+    // 對比越高越好、比例誤差越小越好
+    return area * (1 + contrastSum / 400) / (1 + aspectErr * 5);
 }
 
 function detectFourCorners(gray, width, height) {
-    // 定位點實際大小未知（照片框得緊或鬆都有可能），嘗試幾種相對畫面寬度的尺寸，
-    // 取每個角落裡對比分數最高的結果
-    const markSizeCandidates = [width * 0.025, width * 0.04, width * 0.06];
+    // 定位點在畫面上的實際大小取決於拍照時框得多緊，多試幾種尺寸；
+    // 尺寸抓得比實際小太多時，連外圍取樣框都還落在方塊內部，對比度會算不出來
+    const markSizeCandidates = [width * 0.018, width * 0.025, width * 0.035, width * 0.05];
 
-    // 四個角落的搜尋範圍：只搜尋畫面四角外圍 32% 的區域，不要往中間伸太深。
-    // 定位點本來就印在版面最外側（實測約在畫面 11~21% 深度處），伸進中間深處
-    // 反而容易撞到主表格的黑色表頭列——表頭列是分段的黑色儲存格，跟定位點
-    // 一樣是「小面積深色」，光靠形狀很難跟定位點分開，不如直接把搜尋範圍
-    // 限制在表頭列不會出現的外圍地帶。代價是：如果照片把紙張裁得極緊、
-    // 定位點被推到畫面很深的地方，可能會偵測失敗——但那種情況本來就該
-    // 要求使用者重拍，四角定位點的上傳提示已經有這個要求。
-    const M = 0.32;
+    // 四個角落的搜尋範圍：只搜尋畫面四角外圍 38% 的區域，不要往中間伸太深，
+    // 免得撞進主表格的黑色表頭列。代價是照片若把紙張裁得極緊可能偵測失敗，
+    // 但那種情況本來就該請使用者重拍（上傳提示已要求四角定位點入鏡）。
+    const M = 0.38;
     const windows = {
         tl: [0, 0, width * M, height * M],
         tr: [width * (1 - M), 0, width, height * M],
@@ -202,17 +224,43 @@ function detectFourCorners(gray, width, height) {
 
     const integral = buildIntegral(gray, width, height);
     const integralSq = buildIntegralSq(gray, width, height);
-    const corners = {};
+
+    const perCorner = {};
     for (const [key, [x1, y1, x2, y2]] of Object.entries(windows)) {
-        let best = null;
+        let all = [];
         for (const markSize of markSizeCandidates) {
-            const found = findMarkByContrast(integral, integralSq, width, height, x1, y1, x2, y2, markSize);
-            if (found && (!best || found.contrast > best.contrast)) best = found;
+            all = all.concat(collectMarkCandidates(integral, integralSq, width, height, x1, y1, x2, y2, markSize));
         }
-        if (!best) return null; // 四個角有任何一個找不到，整體判定失敗
-        corners[key] = best;
+        all.sort((a, b) => b.contrast - a.contrast);
+
+        // 同一個定位點會被不同尺寸、鄰近位置重複找到，只保留彼此距離夠遠的代表
+        const picked = [];
+        for (const c of all) {
+            if (picked.some(p => Math.hypot(p.x - c.x, p.y - c.y) < markSizeCandidates[1])) continue;
+            picked.push(c);
+            if (picked.length >= 6) break;
+        }
+        if (picked.length === 0) return null; // 這個角完全沒有候選，放棄校正
+        perCorner[key] = picked;
     }
-    return corners;
+
+    // 從四個角各自的候選中，挑出最符合分紙已知幾何比例的組合
+    let best = null;
+    for (const tl of perCorner.tl) {
+        for (const tr of perCorner.tr) {
+            for (const bl of perCorner.bl) {
+                for (const br of perCorner.br) {
+                    const score = scoreQuad(tl, tr, bl, br);
+                    if (score !== null && (!best || score > best.score)) {
+                        best = { score, tl, tr, bl, br };
+                    }
+                }
+            }
+        }
+    }
+    if (!best) return null; // 沒有任何組合說得通，寧可不校正也不要硬拉出歪的結果
+
+    return { tl: best.tl, tr: best.tr, bl: best.bl, br: best.br };
 }
 
 // ========== 四點透視變換（homography）==========
@@ -356,5 +404,5 @@ async function deskewScoresheet(inputBuffer) {
 
 module.exports = {
     deskewScoresheet, OUT_WIDTH, OUT_HEIGHT,
-    _internal: { detectFourCorners, findMarkByContrast, buildIntegral, buildIntegralSq, regionStd },
+    _internal: { detectFourCorners, collectMarkCandidates, buildIntegral, buildIntegralSq, regionStd },
 };
