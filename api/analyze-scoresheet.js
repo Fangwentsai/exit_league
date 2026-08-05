@@ -12,7 +12,12 @@
  *     不依賴模型自報的總分（自報總分符合不代表每局都對）
  *   - 目前帳號的免費額度只開通 gemini-2.5-flash（已實測確認，
  *     2.5-pro / 2.0-flash 回傳 429 額度 0），故寫死使用該模型
+ *   - 送給 Gemini 之前先用四角定位點把照片透視校正成正的矩形（deskew.js），
+ *     讓模型不用自己在歪斜的照片裡判斷左右空間關係——這是 SCORESHEET_OCR.md
+ *     發現①（先攻/勝負讀反）的源頭修正，不是事後修補
  */
+
+const { deskewScoresheet } = require('./_lib/deskew');
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_API_HOST = 'https://generativelanguage.googleapis.com';
@@ -67,10 +72,16 @@ module.exports = async (req, res) => {
 
         const { data: imageData, mimeType: resolvedMimeType } = parseImage(image, mimeType);
 
+        // 校正失敗（例如定位點被手指擋住、照片裁太緊）就照原圖送出，
+        // 不要因為校正這一步失敗就整個辨識請求失敗
+        const deskew = await deskewScoresheet(Buffer.from(imageData, 'base64'));
+        const finalImageData = deskew.applied ? deskew.buffer.toString('base64') : imageData;
+        const finalMimeType = deskew.applied ? 'image/jpeg' : resolvedMimeType;
+
         const geminiResult = await callGemini({
             apiKey,
-            imageData,
-            mimeType: resolvedMimeType,
+            imageData: finalImageData,
+            mimeType: finalMimeType,
             gameCode,
             homeTeam,
             awayTeam,
@@ -80,6 +91,7 @@ module.exports = async (req, res) => {
 
         const withRosterMatch = applyRosterMatching(geminiResult, homeRoster, awayRoster);
         const withCrossCheck = applyCrossCheck(withRosterMatch);
+        withCrossCheck.deskew = { applied: deskew.applied, reason: deskew.reason || null };
 
         return res.status(200).json(withCrossCheck);
     } catch (err) {
@@ -184,8 +196,18 @@ ${setList}
 4. 「主先攻」與「主勝」是兩個獨立的框，可能同時被塗黑（代表同一隊既先攻又獲勝），這是正常情況，不是重複勾選的錯誤。
 5. 若某個欄位字跡潦草、模糊到你沒有把握，請誠實給出低信心分數（甚至 0），**不要用猜測填一個看起來合理但沒有根據的答案**。姓名讀不出來就回傳 null，先攻/勝負讀不出來就回傳 "unclear"。
 6. 場次代號（gamecode）如果照片上有寫，讀出來放進 gameCode 欄位；這場的實際場次是「${gameCode || '未提供'}」，僅供你交叉核對，不代表照片上一定寫得一致。
+7. **出賽限制（同組內同一人不能出賽超過一次）**：以下每組 SET 屬於同一組，同一位選手在同一組內只會出現一次——如果你辨識出同一人在同一組出現兩次以上，代表你至少有一次認錯人，回去重新檢查那幾局的筆跡，不要直接回傳矛盾的結果：
+   - SET1、SET4 為一組
+   - SET6、SET9 為一組
+   - SET11、SET12 為一組
+   - SET13、SET14 為一組
 
-請針對每個欄位輸出 0~100 的信心分數（100 表示非常確定）。`;
+信心分數（0~100）不是憑印象打的整體感覺分，是針對「這個具體欄位」的判讀依據給分，請照下面的判斷基準：
+- 90~100：筆跡清楚、無歧義，換一個人來看也只會有一種讀法
+- 60~89：筆跡看得出來，但有一點模糊、可能跟名單裡另一個名字接近，或塗黑框邊緣沒塗滿、判斷需要一點推論
+- 30~59：筆跡潦草、被遮擋一部分，或塗黑框介於「像有塗」跟「像沒塗」之間，你其實是用猜的
+- 0~29：幾乎看不出來、被遮擋、或完全空白
+**同一張照片裡不應該所有欄位都給 90 以上**——如果你發現自己對每一格都很有把握，先停下來重新檢查有沒有欄位其實只是「大概猜的」但被你直覺打了高分。`;
 }
 
 function buildResponseSchema() {
