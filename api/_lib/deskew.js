@@ -60,20 +60,94 @@ function regionMean(integral, width, height, x1, y1, x2, y2) {
     return area > 0 ? sum / area : 255;
 }
 
-// 對某個中心點算「中心暗、外圍亮」的對比分數
-function contrastAt(integral, width, height, cx, cy, half, ringOuter) {
+// 平方值的積分圖，跟 regionMean 搭配可以算出區域內像素值的標準差
+function buildIntegralSq(gray, width, height) {
+    const integral = new Float64Array((width + 1) * (height + 1));
+    for (let y = 0; y < height; y++) {
+        let rowSum = 0;
+        for (let x = 0; x < width; x++) {
+            const v = gray[y * width + x];
+            rowSum += v * v;
+            integral[(y + 1) * (width + 1) + (x + 1)] = integral[y * (width + 1) + (x + 1)] + rowSum;
+        }
+    }
+    return integral;
+}
+
+// 定位點是印刷實心黑方塊，內部像素值幾乎不變（標準差很低）；
+// 表格黑色表頭列裡壓著白色文字（「主先攻」之類），黑底白字讓內部像素值
+// 變化很大（標準差高很多）。這是分辨兩者最直接的特徵，比單靠形狀可靠。
+function regionStd(integral, integralSq, width, height, x1, y1, x2, y2) {
+    x1 = Math.max(0, Math.floor(x1)); y1 = Math.max(0, Math.floor(y1));
+    x2 = Math.min(width, Math.ceil(x2)); y2 = Math.min(height, Math.ceil(y2));
+    const w1 = width + 1;
+    const area = (x2 - x1) * (y2 - y1);
+    if (area <= 0) return 0;
+    const sum = integral[y2 * w1 + x2] - integral[y1 * w1 + x2] - integral[y2 * w1 + x1] + integral[y1 * w1 + x1];
+    const sumSq = integralSq[y2 * w1 + x2] - integralSq[y1 * w1 + x2] - integralSq[y2 * w1 + x1] + integralSq[y1 * w1 + x1];
+    const mean = sum / area;
+    const variance = Math.max(0, sumSq / area - mean * mean);
+    return Math.sqrt(variance);
+}
+
+// 從中心點沿一個方向逐步走，量暗色一路延伸多遠（用小步進的窄條 regionMean，
+// 不是單點取樣——分紙表頭列中間常有白色空隙，單點取樣容易剛好取樣到那個
+// 空隙而誤判成「這裡已經亮了」）。回傳暗色延伸的距離，越大代表越像一條線
+// 而不是一個獨立的小方塊。
+function darkRunLength(integral, width, height, cx, cy, dx, dy, thickness, maxDist, step) {
+    let dist = 0;
+    while (dist < maxDist) {
+        const nx = cx + dx * dist, ny = cy + dy * dist;
+        const m = dx !== 0
+            ? regionMean(integral, width, height, nx - step / 2, ny - thickness / 2, nx + step / 2, ny + thickness / 2)
+            : regionMean(integral, width, height, nx - thickness / 2, ny - step / 2, nx + thickness / 2, ny + step / 2);
+        if (m > 150) break; // 遇到亮色，暗色延伸到此為止
+        dist += step;
+    }
+    return dist;
+}
+
+// 對某個中心點算「中心暗、外圍亮」的對比分數。
+//
+// 光是「中心暗、外圍亮」還不夠——分紙表格的黑色表頭列是一條橫貫整列的
+// 粗黑線，當搜尋窗的高度剛好接近那條線的粗細時，垂直方向一樣會量到
+// 「中心暗、上下亮」，跟真正的定位點方塊沒兩樣（實測過，真的會誤判）。
+// 差別在：定位點方塊往任一水平方向延伸的暗色範圍很短（方塊邊長左右就沒了），
+// 表頭黑線往左右延伸的暗色範圍遠遠超過方塊本身大小。用「暗色實際延伸多遠」
+// 而不是單點取樣，才不會被表頭列中間偶然出現的白色空隙騙過。
+function contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter) {
     const centerMean = regionMean(integral, width, height, cx - half, cy - half, cx + half, cy + half);
     const outerMean = regionMean(integral, width, height, cx - ringOuter / 2, cy - ringOuter / 2, cx + ringOuter / 2, cy + ringOuter / 2);
     // outerMean 是「外圍+中心」混合的平均，中心暗會把它往下拉，
     // 用 outerMean - centerMean 當對比分數：中心夠暗、外圍夠亮，分數才會高
-    return { contrast: outerMean - centerMean, centerMean };
+    const contrast = outerMean - centerMean;
+
+    const thickness = half * 1.2, step = Math.max(2, half * 0.4), maxDist = half * 6;
+    const runLeft = darkRunLength(integral, width, height, cx, cy, -1, 0, thickness, maxDist, step);
+    const runRight = darkRunLength(integral, width, height, cx, cy, 1, 0, thickness, maxDist, step);
+    const runUp = darkRunLength(integral, width, height, cx, cy, 0, -1, thickness, maxDist, step);
+    const runDown = darkRunLength(integral, width, height, cx, cy, 0, 1, thickness, maxDist, step);
+    // 角落的定位點本來就會有一側（靠紙張外緣、朝桌子的方向）暗色延伸很遠，
+    // 這是正常的，不能當「不是方塊」的證據。真正該排除的是「兩個相對方向
+    // 同時都延伸很遠」——那才是貫穿紙面的一條線（例如表頭黑條），
+    // 方塊只會有單側連到外部暗色，不會兩側同時連通。
+    const bothDarkHoriz = runLeft >= maxDist && runRight >= maxDist;
+    const bothDarkVert = runUp >= maxDist && runDown >= maxDist;
+
+    // 定位點是印刷實心方塊，中心區域標準差很低；表頭儲存格黑底上壓著白字，
+    // 標準差高很多。這是跟形狀無關、獨立的一個判別依據。
+    const centerStd = regionStd(integral, integralSq, width, height, cx - half, cy - half, cx + half, cy + half);
+
+    const isCompact = !bothDarkHoriz && !bothDarkVert && centerStd < 35;
+
+    return { contrast, centerMean, isCompact };
 }
 
 // 在指定的搜尋範圍內，用「中心暗、外圍亮」對比分數找出最像定位點的位置。
 // 先用粗網格掃過整個搜尋範圍定出大概位置，再用細網格在那附近精修座標——
 // 粗網格步距約 markSize/4（十幾個像素），直接拿粗網格結果去解 homography，
 // 誤差會被放大到輸出畫布上，四個角沒對齊，邊緣就會留下沒切乾淨的桌面。
-function findMarkByContrast(integral, width, height, sx1, sy1, sx2, sy2, markSize) {
+function findMarkByContrast(integral, integralSq, width, height, sx1, sy1, sx2, sy2, markSize) {
     const half = markSize / 2;
     const ringOuter = markSize * 1.8; // 外圍取樣範圍：中心方塊的 1.8 倍
     let best = null;
@@ -81,8 +155,8 @@ function findMarkByContrast(integral, width, height, sx1, sy1, sx2, sy2, markSiz
     const coarseStep = Math.max(1, Math.round(markSize / 4));
     for (let cy = sy1 + half; cy < sy2 - half; cy += coarseStep) {
         for (let cx = sx1 + half; cx < sx2 - half; cx += coarseStep) {
-            const { contrast, centerMean } = contrastAt(integral, width, height, cx, cy, half, ringOuter);
-            if (centerMean < 110 && contrast > 25) {
+            const { contrast, centerMean, isCompact } = contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter);
+            if (centerMean < 110 && contrast > 25 && isCompact) {
                 if (!best || contrast > best.contrast) {
                     best = { x: cx, y: cy, contrast, centerMean };
                 }
@@ -97,8 +171,8 @@ function findMarkByContrast(integral, width, height, sx1, sy1, sx2, sy2, markSiz
     for (let cy = best.y - coarseStep; cy <= best.y + coarseStep; cy += refineStep) {
         for (let cx = best.x - coarseStep; cx <= best.x + coarseStep; cx += refineStep) {
             if (cx - half < sx1 || cx + half > sx2 || cy - half < sy1 || cy + half > sy2) continue;
-            const { contrast, centerMean } = contrastAt(integral, width, height, cx, cy, half, ringOuter);
-            if (contrast > refined.contrast) {
+            const { contrast, centerMean, isCompact } = contrastAt(integral, integralSq, width, height, cx, cy, half, ringOuter);
+            if (isCompact && contrast > refined.contrast) {
                 refined = { x: cx, y: cy, contrast, centerMean };
             }
         }
@@ -111,21 +185,28 @@ function detectFourCorners(gray, width, height) {
     // 取每個角落裡對比分數最高的結果
     const markSizeCandidates = [width * 0.025, width * 0.04, width * 0.06];
 
-    // 四個角落的搜尋範圍：畫面四個象限，各自再往中間留一點餘裕，
-    // 避免搜尋範圍切到紙張以外太多背景（但仍要夠大，涵蓋拍歪時位移的可能）
+    // 四個角落的搜尋範圍：只搜尋畫面四角外圍 32% 的區域，不要往中間伸太深。
+    // 定位點本來就印在版面最外側（實測約在畫面 11~21% 深度處），伸進中間深處
+    // 反而容易撞到主表格的黑色表頭列——表頭列是分段的黑色儲存格，跟定位點
+    // 一樣是「小面積深色」，光靠形狀很難跟定位點分開，不如直接把搜尋範圍
+    // 限制在表頭列不會出現的外圍地帶。代價是：如果照片把紙張裁得極緊、
+    // 定位點被推到畫面很深的地方，可能會偵測失敗——但那種情況本來就該
+    // 要求使用者重拍，四角定位點的上傳提示已經有這個要求。
+    const M = 0.32;
     const windows = {
-        tl: [0, 0, width * 0.55, height * 0.55],
-        tr: [width * 0.45, 0, width, height * 0.55],
-        bl: [0, height * 0.45, width * 0.55, height],
-        br: [width * 0.45, height * 0.45, width, height],
+        tl: [0, 0, width * M, height * M],
+        tr: [width * (1 - M), 0, width, height * M],
+        bl: [0, height * (1 - M), width * M, height],
+        br: [width * (1 - M), height * (1 - M), width, height],
     };
 
     const integral = buildIntegral(gray, width, height);
+    const integralSq = buildIntegralSq(gray, width, height);
     const corners = {};
     for (const [key, [x1, y1, x2, y2]] of Object.entries(windows)) {
         let best = null;
         for (const markSize of markSizeCandidates) {
-            const found = findMarkByContrast(integral, width, height, x1, y1, x2, y2, markSize);
+            const found = findMarkByContrast(integral, integralSq, width, height, x1, y1, x2, y2, markSize);
             if (found && (!best || found.contrast > best.contrast)) best = found;
         }
         if (!best) return null; // 四個角有任何一個找不到，整體判定失敗
@@ -275,5 +356,5 @@ async function deskewScoresheet(inputBuffer) {
 
 module.exports = {
     deskewScoresheet, OUT_WIDTH, OUT_HEIGHT,
-    _internal: { detectFourCorners, findMarkByContrast, buildIntegral },
+    _internal: { detectFourCorners, findMarkByContrast, buildIntegral, buildIntegralSq, regionStd },
 };
