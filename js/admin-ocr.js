@@ -2,12 +2,12 @@
  * Admin：拍照辨識分紙
  *
  * 流程：選好場次 → 拍照（含即時定位點偵測）→ 送 /api/analyze-scoresheet
- *      → 顯示逐局辨識結果 → 使用者確認後才套用到表單
+ *      → 直接寫進 16 局表單，並在欄位上標色
  *
- * 為什麼不自動套用：辨識品質目前是兩種等級（見 SCORESHEET_OCR.md）——
+ * 辨識品質目前是兩種等級（見 SCORESHEET_OCR.md），所以標色而不是一律照填：
  *   先攻／勝負走影像處理，93.8%／87.5%，判不出來會誠實回 unclear，可以信任；
  *   姓名走 Gemini，信心分數不論對錯都落在 90~95，還沒有鑑別力。
- * 所以套用時只填「有把握」的欄位，其餘留空讓人工補，並且整批要使用者按下確認。
+ * 沒把握的填了但標黃底、讀不出來的留空標紅底，兩者都要人工過目。
  */
 (function () {
     'use strict';
@@ -56,7 +56,6 @@
         if (!shot) return;
 
         setStatus('辨識中…（約需 5~15 秒）', 'busy');
-        el('ocrResult').innerHTML = '';
 
         try {
             const resp = await fetch('/api/analyze-scoresheet', {
@@ -76,115 +75,102 @@
                 setStatus('辨識失敗：' + (data.error || resp.status), 'bad');
                 return;
             }
-            lastResult = data;
-            renderResult(data);
+            applyResult(data);
         } catch (err) {
             setStatus('連線失敗：' + err.message, 'bad');
         }
     }
 
-    function renderResult(data) {
-        const sets = data.sets || [];
-        const cc = data.crossCheck || {};
-
-        // 先讓使用者知道整體狀況，再看逐局細節
-        const notes = [];
-        if (data.deskew && !data.deskew.applied) {
-            notes.push('⚠️ 四角定位點沒抓到，這張沒有做透視校正，先攻／勝負的可信度會明顯下降，建議重拍');
-        }
-        if (data.checkboxSource === 'gemini') {
-            notes.push('⚠️ 塗黑框改由語言模型判讀（因為沒有校正成功），準確率大約只有五成');
-        }
-        if (!cc.sumValid) {
-            notes.push(`⚠️ 逐局勝負推算出的比賽得分是 ${cc.computedHomePoints}:${cc.computedAwayPoints}，兩隊合計不等於 30 分，代表至少有一局讀錯或讀不出來`);
-        }
-        if ((cc.repeatViolations || []).length) {
-            const v = cc.repeatViolations.map(r => `${r.name}（SET${r.sets.join('、')}）`).join('、');
-            notes.push(`⚠️ 同組重複出賽：${v}，違反出賽限制，代表有認錯人`);
-        }
-        if ((cc.unclearSets || []).length) {
-            notes.push(`ℹ️ SET${cc.unclearSets.join('、')} 的勝負判讀不出來，需要手動選`);
-        }
-
-        const rows = sets.map(s => {
-            const fa = s.firstAttack || {}, w = s.winner || {};
-            const names = (arr) => (arr || []).map(p => {
-                const cls = p.name === null ? 'ocr-miss'
-                    : (p.strikethrough || p.notInRoster || p.confidence < NAME_CONFIDENCE_MIN) ? 'ocr-low' : 'ocr-hi';
-                const mark = p.strikethrough ? '✎' : '';
-                return `<span class="${cls}">${p.name === null ? '？' : p.name}${mark}</span>`;
-            }).join(' ');
-            const side = (f) => {
-                if (!f || f.value === 'unclear') return '<span class="ocr-miss">？</span>';
-                const cls = f.confidence >= 60 ? 'ocr-hi' : 'ocr-low';
-                return `<span class="${cls}">${f.value === 'home' ? '主' : '客'}</span>`;
-            };
-            return `<tr><td>${s.set}</td><td>${names(s.homePlayers)}</td>` +
-                `<td>${side(fa)}</td><td>${side(w)}</td>` +
-                `<td>${names(s.awayPlayers)}</td></tr>`;
-        }).join('');
-
-        setStatus('辨識完成，請先核對再套用', 'ok');
-        el('ocrResult').innerHTML =
-            (notes.length ? `<div class="ocr-notes">${notes.map(n => `<div>${n}</div>`).join('')}</div>` : '') +
-            `<table class="ocr-table"><thead><tr><th>SET</th><th>主隊</th><th>先攻</th><th>勝</th><th>客隊</th></tr></thead>` +
-            `<tbody>${rows}</tbody></table>` +
-            `<div class="ocr-legend"><span class="ocr-hi">綠</span>=可信　<span class="ocr-low">黃</span>=需確認（含塗改 ✎）　<span class="ocr-miss">？</span>=讀不出來，會留空</div>` +
-            `<button class="ocr-apply" id="ocrApplyBtn">套用到表單（只填有把握的欄位）</button>`;
-
-        el('ocrApplyBtn').onclick = applyToForm;
+    // 直接寫進表單，並在欄位上標色：
+    //   黃底 = 讀到了但沒把握，請人工確認
+    //   紅底 = 讀不出來，欄位留空，必須人工選
+    // 使用者點過該欄位（不論是否真的改值）就視為已確認，標色消除。
+    function mark(elem, level) {
+        if (!elem) return;
+        elem.classList.remove('ocr-warn', 'ocr-miss');
+        if (level) elem.classList.add(level === 'warn' ? 'ocr-warn' : 'ocr-miss');
     }
 
-    function applyToForm() {
-        if (!lastResult) return;
-        const filled = { name: 0, fa: 0, win: 0 };
-        const skipped = [];
+    function playerCell(team, setNum) {
+        return document.querySelector(`.team-button[data-set="${setNum}"][data-team="${team}"]`);
+    }
 
-        for (const s of lastResult.sets || []) {
+    function applyResult(data) {
+        lastResult = data;
+        const sets = data.sets || [];
+        let warn = 0, miss = 0;
+
+        for (const s of sets) {
             const i = s.set;
 
             for (const [team, arr] of [['home', s.homePlayers], ['away', s.awayPlayers]]) {
-                const good = (arr || [])
-                    .filter(p => p.name && !p.strikethrough && !p.notInRoster && p.confidence >= NAME_CONFIDENCE_MIN)
-                    .map(p => p.name);
-                // 只有整局的人都讀到才填——多人局填一半反而更難檢查
-                if (good.length === (arr || []).length && good.length > 0) {
-                    selectedPlayers[`${team}-${i}`] = good;
-                    filled.name += good.length;
+                const list = arr || [];
+                const readable = list.filter(p => p.name);
+                const shaky = list.some(p => !p.name || p.strikethrough || p.notInRoster || p.confidence < NAME_CONFIDENCE_MIN);
+
+                if (readable.length === list.length && list.length > 0) {
+                    selectedPlayers[`${team}-${i}`] = readable.map(p => p.name);
+                    mark(playerCell(team, i), shaky ? 'warn' : null);
+                    if (shaky) warn++;
                 } else {
-                    skipped.push(`SET${i} ${team === 'home' ? '主' : '客'}隊選手`);
+                    // 有人讀不出來就整局留空——多人局只填一半，比空著更難檢查
+                    delete selectedPlayers[`${team}-${i}`];
+                    mark(playerCell(team, i), 'miss');
+                    miss++;
                 }
             }
 
-            if (s.firstAttack && s.firstAttack.value !== 'unclear') {
-                firstAttackData[i] = s.firstAttack.value;
-                filled.fa++;
-            } else {
-                skipped.push(`SET${i} 先攻`);
-            }
-
-            if (s.winner && s.winner.value !== 'unclear') {
-                winLoseData[i] = s.winner.value;
-                filled.win++;
-            } else {
-                skipped.push(`SET${i} 勝負`);
+            for (const [field, store, id] of [
+                ['firstAttack', firstAttackData, `attack-set${i}`],
+                ['winner', winLoseData, `win-set${i}`],
+            ]) {
+                const f = s[field];
+                if (f && f.value !== 'unclear') {
+                    store[i] = f.value;
+                    // 影像判讀的信心來自兩格墨水覆蓋率的差距，差距小代表兩格看起來接近
+                    const shaky = f.confidence < 60;
+                    mark(el(id), shaky ? 'warn' : null);
+                    if (shaky) warn++;
+                } else {
+                    delete store[i];
+                    mark(el(id), 'miss');
+                    miss++;
+                }
             }
         }
 
-        if (lastResult.drinkingBonus && ['home', 'away'].includes(lastResult.drinkingBonus.value)) {
-            bonusTeam = lastResult.drinkingBonus.value;
+        if (data.drinkingBonus && ['home', 'away'].includes(data.drinkingBonus.value)) {
+            bonusTeam = data.drinkingBonus.value;
         }
 
         updateAllDisplays();
         markAsChanged();
 
-        alert(
-            `已填入：選手 ${filled.name} 人次、先攻 ${filled.fa}/16、勝負 ${filled.win}/16\n\n` +
-            (skipped.length
-                ? `以下欄位辨識不夠有把握，留空給你手動填（共 ${skipped.length} 項）：\n` + skipped.slice(0, 12).join('\n') + (skipped.length > 12 ? `\n…等 ${skipped.length} 項` : '')
-                : '全部欄位都已填入，仍請核對一次再送出。')
+        // 客觀驗算的結果比模型自報的信心可靠，優先講
+        const cc = data.crossCheck || {};
+        const alerts = [];
+        if (data.deskew && !data.deskew.applied) {
+            alerts.push('四角定位點沒抓到，這張沒做透視校正，先攻／勝負可信度會明顯下降，建議重拍');
+        }
+        if (!cc.sumValid) {
+            alerts.push(`逐局勝負推算的比賽得分是 ${cc.computedHomePoints}:${cc.computedAwayPoints}，合計不等於 30 分，至少有一局讀錯或讀不出來`);
+        }
+        if ((cc.repeatViolations || []).length) {
+            alerts.push('同組重複出賽：' + cc.repeatViolations.map(r => `${r.name}（SET${r.sets.join('、')}）`).join('、'));
+        }
+
+        const summary = `已填入表單。<b>黃底 ${warn} 項</b>請確認、<b>紅底 ${miss} 項</b>需自行選擇。點過該欄位即視為已確認。`;
+        setStatus(
+            summary + (alerts.length ? '<div class="ocr-notes">' + alerts.map(a => `<div>⚠️ ${a}</div>`).join('') + '</div>' : ''),
+            miss || alerts.length ? 'bad' : 'ok'
         );
     }
+
+    // 點過就當作已確認，把標色拿掉
+    document.addEventListener('click', (e) => {
+        const t = e.target.closest && e.target.closest('.ocr-warn, .ocr-miss');
+        if (t) t.classList.remove('ocr-warn', 'ocr-miss');
+    }, true);
 
     window.startScoresheetCapture = startCapture;
 })();

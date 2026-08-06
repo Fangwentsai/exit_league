@@ -1096,7 +1096,7 @@ body {
 .ocr-status.ocr-bad { color: #b42318; font-weight: 600; }
 
 .ocr-notes {
-    margin-top: 10px;
+    margin-top: 8px;
     background: #fff8e6;
     border: 1px solid #f2d99b;
     border-radius: 6px;
@@ -1104,41 +1104,23 @@ body {
     font-size: 12.5px;
     line-height: 1.65;
     color: #6b4e00;
+    font-weight: 400;
 }
 
-.ocr-table {
-    width: 100%;
-    margin-top: 10px;
-    border-collapse: collapse;
-    font-size: 12.5px;
+/* 辨識結果直接寫進 16 局表單，用底色標出還需要人看的欄位。
+   黃底＝有填但沒把握，紅底＝讀不出來留空。點過該欄位就視為確認、標色消除。
+   用 !important 是因為 .team-button / .control-button 本身有狀態樣式（已選/未選），
+   標色必須壓過那些狀態才看得見。 */
+.team-button.ocr-warn,
+.control-button.ocr-warn {
+    background: #fff3cd !important;
+    border-color: #e0a800 !important;
+    box-shadow: inset 0 0 0 2px #e0a800;
 }
 
-.ocr-table th,
-.ocr-table td {
-    border: 1px solid #e2e5ea;
-    padding: 4px 6px;
-    text-align: center;
-}
-
-.ocr-table th { background: #f5f7fa; font-weight: 600; }
-
-/* 綠＝可信、黃＝需人工確認、紅＝讀不出來會留空 */
-.ocr-hi { color: #1b6e3c; }
-.ocr-low { color: #8a6d00; background: #fff5d6; padding: 0 3px; border-radius: 3px; }
-.ocr-miss { color: #b42318; font-weight: 700; }
-
-.ocr-legend { margin-top: 6px; font-size: 11.5px; color: #888; }
-
-.ocr-apply {
-    width: 100%;
-    margin-top: 10px;
-    font: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 12px;
-    border: 1px solid #1b6e3c;
-    border-radius: 8px;
-    background: #1b6e3c;
-    color: #fff;
-    cursor: pointer;
+.team-button.ocr-miss,
+.control-button.ocr-miss {
+    background: #fde8e6 !important;
+    border-color: #d92d20 !important;
+    box-shadow: inset 0 0 0 2px #d92d20;
 }
