@@ -18,6 +18,7 @@
  */
 
 const { deskewScoresheet } = require('./_lib/deskew');
+const { readCheckboxes } = require('./_lib/checkbox-reader');
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_API_HOST = 'https://generativelanguage.googleapis.com';
@@ -90,9 +91,16 @@ module.exports = async (req, res) => {
         });
 
         const withSides = mapSidesToTeams(geminiResult);
-        const withRosterMatch = applyRosterMatching(withSides, homeRoster, awayRoster);
+
+        // 塗黑框改用影像處理判讀，蓋掉模型給的先攻／勝負（見 overrideWithPixelReading）。
+        // 需要校正成功才有固定座標可量，校正失敗就只能沿用模型的答案。
+        const pixelRead = deskew.applied ? await readCheckboxes(deskew.buffer) : { applied: false, reason: 'deskew-skipped' };
+        const withPixelBoxes = overrideWithPixelReading(withSides, pixelRead);
+
+        const withRosterMatch = applyRosterMatching(withPixelBoxes, homeRoster, awayRoster);
         const withCrossCheck = applyCrossCheck(withRosterMatch);
         withCrossCheck.deskew = { applied: deskew.applied, reason: deskew.reason || null };
+        withCrossCheck.checkboxSource = pixelRead.applied ? 'pixel' : 'gemini';
 
         return res.status(200).json(withCrossCheck);
     } catch (err) {
@@ -203,6 +211,10 @@ ${setList}
    - SET11、SET12 為一組
    - SET13、SET14 為一組
 8. **firstAttack 與 winner 只回答「塗黑的框在 SET 標籤的左邊還右邊」（left/right），不要自己換算成主隊或客隊**——每一列從左到右固定是「主隊選手、先攻框、勝框、SET 標籤、勝框、先攻框、客隊選手」，哪一側是主隊、哪一側是客隊已經是固定的版面規則，由我們自己的程式判斷，你只需要誠實回答視覺上看到塗黑框在哪一側，不要做語意翻譯。
+9. **塗改（劃掉重寫）的姓名**：記錄員有時會把寫錯的名字劃掉，在旁邊補寫正確的名字。這種格子請照以下方式處理：
+   - **被劃掉的名字一律不是答案**，要讀的是補寫上去的那一個
+   - 只要這一格出現任何劃掉的痕跡（刪除線、塗掉、蓋掉），就把該格的 strikethrough 設為 true，不管你對補寫的名字有多確定
+   - 如果劃掉之後補寫的字看不清楚、或根本分不出哪個才是最終答案，name 回傳 null
 
 信心分數（0~100）不是憑印象打的整體感覺分，是針對「這個具體欄位」的判讀依據給分，請照下面的判斷基準：
 - 90~100：筆跡清楚、無歧義，換一個人來看也只會有一種讀法
@@ -218,8 +230,11 @@ function buildResponseSchema() {
         properties: {
             name: { type: 'STRING', nullable: true },
             confidence: { type: 'INTEGER' },
+            // 這一格有沒有被劃掉重寫的痕跡。實測發現塗改格是姓名誤判的主要來源：
+            // 模型可能讀到被劃掉的舊名字卻給出高信心（見 SCORESHEET_OCR.md 發現 13）
+            strikethrough: { type: 'BOOLEAN' },
         },
-        required: ['name', 'confidence'],
+        required: ['name', 'confidence', 'strikethrough'],
     };
 
     const choiceField = (enumValues) => ({
@@ -284,9 +299,37 @@ function mapSideField(field) {
     return { ...field, value: mapped === undefined ? field.value : mapped };
 }
 
+// ===== 後處理 0.5：塗黑框改用影像判讀的結果 =====
+// 先攻／勝負是純視覺量測（哪一格有墨跡），不需要語意理解，交給模型反而不穩：
+// 同一張照片多次重跑，正確率在 25%~75% 之間跳，最差一次 16 局全部回同一個值，
+// 而且信心分數不論對錯都固定在 90~95。改量墨水覆蓋率後同一張照片得到
+// 先攻 93.8%、勝負 87.5%，且三個錯誤全部落在 unclear／信心 0，
+// 沒有任何「高信心答錯」。詳見 SCORESHEET_OCR.md 發現 14。
+
+function overrideWithPixelReading(result, pixelRead) {
+    if (!pixelRead.applied) return result;
+
+    const bySet = new Map(pixelRead.sets.map(s => [s.set, s]));
+    const sets = (result.sets || []).map(s => {
+        const px = bySet.get(s.set);
+        if (!px) return s;
+        return { ...s, firstAttack: px.firstAttack, winner: px.winner };
+    });
+    return { ...result, sets };
+}
+
 // ===== 後處理 1：名單模糊比對 =====
 // 模型有時仍會回傳名單外的名字（尤其是低信心的情況），這裡再比對一次，
 // 不完全信任模型自己「保證只選名單內」的承諾。
+
+// 塗改格的信心懲罰。分紙上把寫錯的名字劃掉、旁邊補寫，是姓名誤判的主要來源：
+// 實測有格子讀到「被劃掉的舊名字」卻給了 90 分信心（見 SCORESHEET_OCR.md 發現 13）。
+// 這種格子不論模型自己多有把握，都不該自動填入——扣 50 分讓它必定跌出
+// 「高信心自動填入」的範圍，強制走人工確認。
+//
+// 正規做法是請記錄員用修正液把寫錯的字清乾淨再重寫（劃掉重寫本來就不是
+// 給機器判讀的寫法，就像考卷劃記不能打叉重選），這點會另外向各隊說明。
+const STRIKETHROUGH_PENALTY = 50;
 
 function applyRosterMatching(result, homeRoster, awayRoster) {
     const sets = (result.sets || []).map(s => ({
@@ -299,18 +342,30 @@ function applyRosterMatching(result, homeRoster, awayRoster) {
 
 function matchAgainstRoster(player, roster) {
     if (!player || !player.name) {
-        return { name: null, confidence: 0 };
+        return { name: null, confidence: 0, strikethrough: !!(player && player.strikethrough) };
     }
+
+    const matched = matchName(player, roster);
+    if (!player.strikethrough) return matched;
+
+    return {
+        ...matched,
+        confidence: Math.max(0, matched.confidence - STRIKETHROUGH_PENALTY),
+        strikethrough: true,
+    };
+}
+
+function matchName(player, roster) {
     if (roster.includes(player.name)) {
         return player; // 完全對上，信心分數維持模型給的值
     }
     const best = closestMatch(player.name, roster);
     if (best && best.distance <= 1) {
         // 差一個字以內，很可能是同一人，但信心要打折
-        return { name: best.name, confidence: Math.max(0, Math.min(player.confidence, 100) - 20) };
+        return { ...player, name: best.name, confidence: Math.max(0, Math.min(player.confidence, 100) - 20) };
     }
     // 名單裡完全找不到接近的人，強制降到需要人工確認
-    return { name: player.name, confidence: Math.min(player.confidence, 30), notInRoster: true };
+    return { ...player, name: player.name, confidence: Math.min(player.confidence, 30), notInRoster: true };
 }
 
 function closestMatch(name, roster) {
