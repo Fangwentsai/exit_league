@@ -359,6 +359,15 @@ function matchName(player, roster) {
     if (roster.includes(player.name)) {
         return player; // 完全對上，信心分數維持模型給的值
     }
+
+    // 大小寫不同不算讀錯——名單裡存的是「lucy」「Joy」，分紙上寫的是「Lucy」「joy」，
+    // 指的是同一個人。若交給下面的編輯距離處理，會被當成差一個字而白白扣 20 分信心，
+    // 讓沒讀錯的欄位掉到自動填入門檻以下、被標成需人工確認。
+    const caseInsensitive = roster.find(r => r.toLowerCase() === player.name.toLowerCase());
+    if (caseInsensitive) {
+        return { ...player, name: caseInsensitive };
+    }
+
     const best = closestMatch(player.name, roster);
     if (best && best.distance <= 1) {
         // 差一個字以內，很可能是同一人，但信心要打折
