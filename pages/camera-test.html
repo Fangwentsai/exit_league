@@ -3,465 +3,65 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>分紙拍照測試 — 即時定位點偵測</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>分紙拍照測試</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html, body { height: 100%; }
-
         body {
-            /* dvh 會扣掉 Safari 的網址列，用 vh 的話下方按鈕會被網址列蓋住 */
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            margin: 0;
+            padding: 20px;
             font-family: "Noto Sans TC", "PingFang TC", -apple-system, sans-serif;
             background: #111;
             color: #eee;
             font-size: 14px;
+            line-height: 1.7;
         }
 
-        /* 影像區吃掉剩餘空間，但不會把下方控制列擠出畫面 */
-        .stage {
-            flex: 1 1 auto;
-            min-height: 0;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            overflow: hidden;
-        }
-
-        video {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-
-        /* 疊圖層的位置由 JS 對齊到 video 實際渲染出來的方框 */
-        canvas.overlay {
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .panel {
-            flex: 0 0 auto;
-            max-height: 46dvh;
-            overflow-y: auto;
-            padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
-            background: #111;
-            border-top: 1px solid #2a2a2a;
-        }
-
-        .row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
-        }
+        h1 { font-size: 17px; margin: 0 0 12px; }
 
         button {
             font: inherit;
-            flex: 1 1 auto;
-            padding: 11px 8px;
-            border: 1px solid #555;
-            background: #222;
-            color: #eee;
-            border-radius: 6px;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #1769d6;
+            background: #1769d6;
+            color: #fff;
+            border-radius: 8px;
             cursor: pointer;
+            margin-bottom: 14px;
         }
 
-        button.primary { background: #1769d6; border-color: #1769d6; }
-        button:disabled { opacity: 0.4; }
-
-        .stats {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 8px 10px;
-            font-family: ui-monospace, Menlo, monospace;
-            font-size: 11.5px;
-            line-height: 1.65;
-            white-space: pre-wrap;
-        }
-
-        .verdict {
-            font-size: 15px;
-            font-weight: 700;
-            padding: 9px;
-            border-radius: 6px;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .ok { background: #14532d; color: #86efac; }
-        .bad { background: #4c1d1d; color: #fca5a5; }
-
-        .hint { font-size: 11.5px; color: #888; line-height: 1.6; margin-top: 8px; }
-        #shot { max-width: 100%; margin-top: 8px; border: 1px solid #333; }
+        .note { font-size: 12.5px; color: #888; }
+        #result { margin-top: 14px; }
+        #result img { max-width: 100%; border: 1px solid #333; border-radius: 6px; }
+        .meta { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #9aa; }
     </style>
 </head>
 
 <body>
-    <div class="stage">
-        <video id="video" playsinline muted autoplay></video>
-        <canvas id="overlay" class="overlay"></canvas>
+    <h1>分紙拍照測試</h1>
+
+    <button id="open">開啟相機</button>
+
+    <div class="note">
+        這頁只是拿來單獨測拍照流程用的。畫面上會顯示偵測耗時與各角候選數，
+        正式的 admin 上傳流程不會顯示這些數字。
     </div>
 
-    <div class="panel">
-        <div id="verdict" class="verdict bad">尚未啟動</div>
+    <div id="result"></div>
 
-        <div class="row">
-            <button id="start" class="primary">啟動相機</button>
-            <button id="torch" disabled>閃光燈</button>
-            <button id="capture" disabled>拍照</button>
-        </div>
-
-        <div id="stats" class="stats">等待啟動…</div>
-
-        <div class="hint">
-            把分紙<b>攤平壓好</b>，四個角的黑方塊對進綠色框內即可，不必貼齊畫面邊緣。
-        </div>
-
-        <img id="shot" alt="">
-    </div>
-
+    <script src="../js/scoresheet-camera.js"></script>
     <script>
-        // ===== 定位點偵測（瀏覽器版）=====
-        //
-        // 演算法與門檻刻意與 api/_lib/deskew.js 保持一致，只是降低解析度做即時預覽。
-        // 預覽只需要判斷「四個角有沒有抓到」，不需要最終校正那種 2~4px 的精度。
-        //
-        // ⚠️ 這是為了實測而複製的一份，尚未與伺服器端共用同一份程式碼。
-        // 若決定正式採用，應該抽成共用模組，避免兩邊門檻各自演化而失準。
-
-        const SHEET_MARK_ASPECT = 1.403; // 四個定位點中心構成的矩形，高/寬
-
-        function buildIntegrals(gray, W, H) {
-            const S = new Float64Array((W + 1) * (H + 1));
-            for (let y = 0; y < H; y++) {
-                let rowSum = 0;
-                for (let x = 0; x < W; x++) {
-                    rowSum += gray[y * W + x];
-                    S[(y + 1) * (W + 1) + (x + 1)] = S[y * (W + 1) + (x + 1)] + rowSum;
-                }
-            }
-            return S;
-        }
-
-        function regionMean(S, W, H, x1, y1, x2, y2) {
-            x1 = Math.max(0, Math.floor(x1)); y1 = Math.max(0, Math.floor(y1));
-            x2 = Math.min(W, Math.ceil(x2)); y2 = Math.min(H, Math.ceil(y2));
-            const w1 = W + 1;
-            const area = (x2 - x1) * (y2 - y1);
-            if (area <= 0) return 255;
-            return (S[y2 * w1 + x2] - S[y1 * w1 + x2] - S[y2 * w1 + x1] + S[y1 * w1 + x1]) / area;
-        }
-
-        function darkRun(S, W, H, cx, cy, dx, dy, thickness, maxDist, step, bright) {
-            let d = 0;
-            while (d < maxDist) {
-                const nx = cx + dx * d, ny = cy + dy * d;
-                const m = dx !== 0
-                    ? regionMean(S, W, H, nx - step / 2, ny - thickness / 2, nx + step / 2, ny + thickness / 2)
-                    : regionMean(S, W, H, nx - thickness / 2, ny - step / 2, nx + thickness / 2, ny + step / 2);
-                if (m > bright) break;
-                d += step;
-            }
-            return d;
-        }
-
-        function markScore(S, W, H, cx, cy, half, ringOuter) {
-            const centerMean = regionMean(S, W, H, cx - half, cy - half, cx + half, cy + half);
-            if (centerMean > 170) return null;
-            const outerMean = regionMean(S, W, H, cx - ringOuter / 2, cy - ringOuter / 2, cx + ringOuter / 2, cy + ringOuter / 2);
-            const contrast = outerMean - centerMean;
-            if (contrast < 30) return null;
-
-            // 亮暗分界依當地亮度算，不能寫死——同一張照片不同角落的紙面亮度差很多
-            const bright = centerMean + contrast * 0.6;
-            const thickness = half * 1.2, step = Math.max(2, half * 0.4), maxDist = half * 6;
-            // 定位點四周都留白，往四個方向走都該很快碰到亮色；
-            // 紙張的外角落只有兩個方向是亮的，用這點把它排除
-            if (darkRun(S, W, H, cx, cy, -1, 0, thickness, maxDist, step, bright) >= maxDist) return null;
-            if (darkRun(S, W, H, cx, cy, 1, 0, thickness, maxDist, step, bright) >= maxDist) return null;
-            if (darkRun(S, W, H, cx, cy, 0, -1, thickness, maxDist, step, bright) >= maxDist) return null;
-            if (darkRun(S, W, H, cx, cy, 0, 1, thickness, maxDist, step, bright) >= maxDist) return null;
-
-            return { x: cx, y: cy, contrast };
-        }
-
-        function collect(S, W, H, x1, y1, x2, y2, markSize, out) {
-            const half = markSize / 2, ringOuter = markSize * 1.8;
-            const step = Math.max(2, Math.round(markSize / 4));
-            for (let cy = Math.max(half, y1); cy < Math.min(H - half, y2); cy += step) {
-                for (let cx = Math.max(half, x1); cx < Math.min(W - half, x2); cx += step) {
-                    const r = markScore(S, W, H, cx, cy, half, ringOuter);
-                    if (r) out.push(r);
-                }
-            }
-        }
-
-        /**
-         * 給四個候選點評分。anchors 是導引框四角在偵測座標系的位置。
-         *
-         * 為什麼用導引框而不是「用已知三點推第四點」：拍歪的紙是梯形不是平行四邊形，
-         * 用 bl = tl + br - tr 推算，實測誤差達畫面寬度的 19%（上下邊長差 25% 造成），
-         * 遠大於定位點本身的大小，推出來的位置沒有參考價值。
-         * 既然畫面上已經要求使用者把定位點對進框裡，框的位置就是更可靠的先驗——
-         * 但只當作「偏好」而非硬性條件，使用者沒對準時仍然抓得到。
-         */
-        function scoreQuad(tl, tr, bl, br, anchors) {
-            if (!(tl.x < tr.x && bl.x < br.x && tl.y < bl.y && tr.y < br.y)) return null;
-            const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
-            const top = d(tl, tr), bot = d(bl, br), left = d(tl, bl), right = d(tr, br);
-            if (top < 1 || left < 1) return null;
-            if (Math.min(top, bot) / Math.max(top, bot) < 0.65) return null;
-            if (Math.min(left, right) / Math.max(left, right) < 0.65) return null;
-
-            const w = (top + bot) / 2, h = (left + right) / 2;
-            const aspectErr = Math.abs(h / w - SHEET_MARK_ASPECT) / SHEET_MARK_ASPECT;
-            if (aspectErr > 0.3) return null;
-
-            let score = w * h * (1 + (tl.contrast + tr.contrast + bl.contrast + br.contrast) / 400) / (1 + aspectErr * 5);
-
-            if (anchors) {
-                const diag = Math.hypot(anchors.br.x - anchors.tl.x, anchors.br.y - anchors.tl.y) || 1;
-                const off = (d(tl, anchors.tl) + d(tr, anchors.tr) + d(bl, anchors.bl) + d(br, anchors.br)) / (4 * diag);
-                score /= (1 + off * 2.5); // 離導引框越遠越不優先，但不是硬性排除
-            }
-            return score;
-        }
-
-        function detectMarks(gray, W, H, anchors) {
-            const S = buildIntegrals(gray, W, H);
-            const sizes = [W * 0.018, W * 0.025, W * 0.035, W * 0.05];
-            const M = 0.38;
-            const wins = {
-                tl: [0, 0, W * M, H * M],
-                tr: [W * (1 - M), 0, W, H * M],
-                bl: [0, H * (1 - M), W * M, H],
-                br: [W * (1 - M), H * (1 - M), W, H],
-            };
-            const per = {};
-            for (const k in wins) {
-                const [a, b, c, dd] = wins[k];
-                const all = [];
-                for (const ms of sizes) collect(S, W, H, a, b, c, dd, ms, all);
-                all.sort((p, q) => q.contrast - p.contrast);
-                const picked = [];
-                for (const cand of all) {
-                    if (picked.some(p => Math.hypot(p.x - cand.x, p.y - cand.y) < sizes[1])) continue;
-                    picked.push(cand);
-                    if (picked.length >= 6) break; // 多留幾個候選，交給 scoreQuad 挑
-                }
-                per[k] = picked;
-            }
-            let best = null;
-            for (const tl of per.tl) for (const tr of per.tr) for (const bl of per.bl) for (const br of per.br) {
-                const s = scoreQuad(tl, tr, bl, br, anchors);
-                if (s !== null && (!best || s > best.score)) best = { score: s, tl, tr, bl, br };
-            }
-            return { corners: best, counts: { tl: per.tl.length, tr: per.tr.length, bl: per.bl.length, br: per.br.length } };
-        }
-
-        // ===== 相機與畫面處理 =====
-
-        const video = document.getElementById('video');
-        const overlay = document.getElementById('overlay');
-        const octx = overlay.getContext('2d');
-        const stage = document.querySelector('.stage');
-        const statsEl = document.getElementById('stats');
-        const verdictEl = document.getElementById('verdict');
-        const torchBtn = document.getElementById('torch');
-        const captureBtn = document.getElementById('capture');
-
-        const PROC_WIDTH = 400;   // 偵測用的縮小解析度（實測 400 寬誤差 5px、2.4ms）
-        const GUIDE_MARGIN = 0.10; // 導引框離畫面邊緣的比例
-
-        const work = document.createElement('canvas');
-        const wctx = work.getContext('2d', { willReadFrequently: true });
-
-        let stream = null, track = null, torchOn = false, running = false;
-        let lastDetect = 0, lastResult = null;
-        let timings = { read: 0, detect: 0, fps: 0 };
-        let frameCount = 0, fpsMark = performance.now();
-
-        // 導引框：畫面中央、比例與分紙定位點相同的最大矩形
-        function guideRect(vw, vh) {
-            const availW = vw * (1 - GUIDE_MARGIN * 2), availH = vh * (1 - GUIDE_MARGIN * 2);
-            let gw = availW, gh = gw * SHEET_MARK_ASPECT;
-            if (gh > availH) { gh = availH; gw = gh / SHEET_MARK_ASPECT; }
-            return { x: (vw - gw) / 2, y: (vh - gh) / 2, w: gw, h: gh };
-        }
-
-        document.getElementById('start').onclick = async () => {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: { ideal: 'environment' },
-                        width: { ideal: 1920 }, height: { ideal: 1080 },
-                    },
-                    audio: false,
-                });
-            } catch (err) {
-                verdictEl.className = 'verdict bad';
-                verdictEl.textContent = '無法開啟相機：' + err.name;
-                statsEl.textContent = String(err);
+        document.getElementById('open').onclick = async () => {
+            const shot = await ScoresheetCamera.open({ showStats: true });
+            const box = document.getElementById('result');
+            if (!shot) {
+                box.innerHTML = '<div class="note">已取消</div>';
                 return;
             }
-            video.srcObject = stream;
-            await video.play();
-            track = stream.getVideoTracks()[0];
-
-            const caps = track.getCapabilities ? track.getCapabilities() : null;
-            const torchSupported = !!(caps && caps.torch);
-            torchBtn.disabled = !torchSupported;
-            torchBtn.textContent = torchSupported ? '開啟閃光燈' : '不支援閃光燈';
-
-            captureBtn.disabled = false;
-            running = true;
-            requestAnimationFrame(loop);
+            box.innerHTML =
+                `<div class="meta">${shot.width} x ${shot.height}，約 ${Math.round(shot.dataUrl.length / 1024)} KB</div>` +
+                `<img src="${shot.dataUrl}" alt="">`;
         };
-
-        torchBtn.onclick = async () => {
-            torchOn = !torchOn;
-            try {
-                await track.applyConstraints({ advanced: [{ torch: torchOn }] });
-                torchBtn.textContent = torchOn ? '關閉閃光燈' : '開啟閃光燈';
-            } catch (err) {
-                torchBtn.textContent = '閃光燈失敗:' + err.name;
-                torchBtn.disabled = true;
-            }
-        };
-
-        captureBtn.onclick = () => {
-            const c = document.createElement('canvas');
-            c.width = video.videoWidth;
-            c.height = video.videoHeight;
-            c.getContext('2d').drawImage(video, 0, 0);
-            document.getElementById('shot').src = c.toDataURL('image/jpeg', 0.92);
-        };
-
-        function loop() {
-            if (!running) return;
-            frameCount++;
-            const now = performance.now();
-            if (now - fpsMark > 1000) {
-                timings.fps = frameCount * 1000 / (now - fpsMark);
-                frameCount = 0;
-                fpsMark = now;
-            }
-            // 每 120ms 才偵測一次——偵測不需要跟著螢幕更新率跑
-            if (now - lastDetect > 120 && video.videoWidth) {
-                lastDetect = now;
-                runDetection();
-            }
-            requestAnimationFrame(loop);
-        }
-
-        function runDetection() {
-            const vw = video.videoWidth, vh = video.videoHeight;
-            const W = PROC_WIDTH, H = Math.round(PROC_WIDTH * vh / vw);
-            work.width = W; work.height = H;
-
-            const t0 = performance.now();
-            wctx.drawImage(video, 0, 0, W, H);
-            const img = wctx.getImageData(0, 0, W, H);
-            const t1 = performance.now();
-
-            const gray = new Uint8Array(W * H);
-            const d = img.data;
-            for (let i = 0, p = 0; i < gray.length; i++, p += 4) {
-                gray[i] = (d[p] * 299 + d[p + 1] * 587 + d[p + 2] * 114) / 1000;
-            }
-
-            // 導引框換算到偵測座標系，當作候選點的位置先驗
-            const g = guideRect(W, H);
-            const anchors = {
-                tl: { x: g.x, y: g.y }, tr: { x: g.x + g.w, y: g.y },
-                bl: { x: g.x, y: g.y + g.h }, br: { x: g.x + g.w, y: g.y + g.h },
-            };
-
-            const res = detectMarks(gray, W, H, anchors);
-            const t2 = performance.now();
-
-            timings.read = t1 - t0;
-            timings.detect = t2 - t1;
-            lastResult = { res, W, H, vw, vh };
-            draw();
-        }
-
-        function draw() {
-            if (!lastResult) return;
-            const { res, W, H, vw, vh } = lastResult;
-
-            // 把疊圖層對齊到 video 實際渲染出來的方框（影像會被等比縮放並置中）
-            const vr = video.getBoundingClientRect(), sr = stage.getBoundingClientRect();
-            overlay.style.left = (vr.left - sr.left) + 'px';
-            overlay.style.top = (vr.top - sr.top) + 'px';
-            overlay.style.width = vr.width + 'px';
-            overlay.style.height = vr.height + 'px';
-            overlay.width = vw; overlay.height = vh;
-            octx.clearRect(0, 0, vw, vh);
-
-            const sx = vw / W, sy = vh / H;
-            const found = !!res.corners;
-
-            // 導引框：與分紙定位點同比例的矩形，四角加粗
-            const g = guideRect(vw, vh);
-            const lw = Math.max(3, vw * 0.005);
-            octx.strokeStyle = found ? 'rgba(80,220,120,0.55)' : 'rgba(255,255,255,0.4)';
-            octx.lineWidth = lw;
-            octx.setLineDash([vw * 0.02, vw * 0.02]);
-            octx.strokeRect(g.x, g.y, g.w, g.h);
-            octx.setLineDash([]);
-
-            const arm = Math.min(g.w, g.h) * 0.12;
-            octx.lineWidth = lw * 1.8;
-            for (const [cx, cy, dx, dy] of [
-                [g.x, g.y, 1, 1], [g.x + g.w, g.y, -1, 1],
-                [g.x, g.y + g.h, 1, -1], [g.x + g.w, g.y + g.h, -1, -1],
-            ]) {
-                octx.beginPath();
-                octx.moveTo(cx + dx * arm, cy);
-                octx.lineTo(cx, cy);
-                octx.lineTo(cx, cy + dy * arm);
-                octx.stroke();
-            }
-
-            if (found) {
-                const c = res.corners;
-                octx.strokeStyle = 'rgba(80,220,120,1)';
-                octx.lineWidth = lw;
-                octx.beginPath();
-                octx.moveTo(c.tl.x * sx, c.tl.y * sy);
-                octx.lineTo(c.tr.x * sx, c.tr.y * sy);
-                octx.lineTo(c.br.x * sx, c.br.y * sy);
-                octx.lineTo(c.bl.x * sx, c.bl.y * sy);
-                octx.closePath();
-                octx.stroke();
-                octx.fillStyle = 'rgba(80,220,120,0.95)';
-                for (const k of ['tl', 'tr', 'bl', 'br']) {
-                    octx.beginPath();
-                    octx.arc(c[k].x * sx, c[k].y * sy, vw * 0.011, 0, Math.PI * 2);
-                    octx.fill();
-                }
-            }
-
-            verdictEl.className = 'verdict ' + (found ? 'ok' : 'bad');
-            verdictEl.textContent = found ? '✓ 四個定位點都抓到了' : '✗ 尚未抓到四個定位點';
-
-            const cc = res.counts;
-            statsEl.textContent =
-                `相機 ${vw}x${vh}   偵測 ${W}x${H}   ${timings.fps.toFixed(0)} fps\n` +
-                `讀取畫面 ${timings.read.toFixed(1)} ms  (getImageData)\n` +
-                `偵測演算 ${timings.detect.toFixed(1)} ms\n` +
-                `每次合計 ${(timings.read + timings.detect).toFixed(1)} ms\n` +
-                `候選數   tl=${cc.tl} tr=${cc.tr} bl=${cc.bl} br=${cc.br}`;
-        }
     </script>
 </body>
 
