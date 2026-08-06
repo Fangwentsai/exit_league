@@ -281,9 +281,67 @@ function handleGameSelection(e) {
 
 
 
+const WARMUP_GAME_ID = 'warmup-test';
+
+/**
+ * 熱身賽測試：兩隊由使用者自己選，不是從賽程表來的。
+ * 正式場次的隊伍藏在選項文字裡（"G51 (7/1) - 客隊 vs 主隊"），熱身賽沒有這段
+ * 文字可以解析，所以在 loadGameDetails 進入解析之前就分流到這裡。
+ */
+function setupWarmupPicker() {
+    const picker = document.getElementById('warmupPicker');
+    const homeSel = document.getElementById('warmupHome');
+    const awaySel = document.getElementById('warmupAway');
+    if (!picker || !homeSel || !awaySel) return;
+
+    picker.style.display = 'block';
+
+    // 只在第一次填入隊伍清單，避免每次切換都把使用者選的隊伍重置掉
+    if (!homeSel.options.length) {
+        const teams = Object.keys(playersData || {});
+        if (!teams.length) {
+            alert('選手名單尚未載入完成，請稍候再選熱身賽測試');
+            return;
+        }
+        for (const [sel, defaultIndex] of [[homeSel, 0], [awaySel, Math.min(1, teams.length - 1)]]) {
+            sel.innerHTML = teams.map((t, i) =>
+                `<option value="${t}"${i === defaultIndex ? ' selected' : ''}>${t}</option>`).join('');
+            sel.addEventListener('change', applyWarmupTeams);
+        }
+    }
+    applyWarmupTeams();
+}
+
+function applyWarmupTeams() {
+    const home = document.getElementById('warmupHome').value;
+    const away = document.getElementById('warmupAway').value;
+    if (home === away) {
+        alert('主客隊不能是同一隊');
+        return;
+    }
+
+    currentGame = { id: WARMUP_GAME_ID, date: '測試', home, away };
+
+    selectedPlayers = {};
+    firstAttackData = {};
+    winLoseData = {};
+    bonusTeam = null;
+    hasUnsavedChanges = false;
+
+    showGameDetails();
+    generateGameRows();
+    updateScoreCalculation();
+}
+
 function loadGameDetails(gameId) {
     console.log('🎯 [DEBUG] loadGameDetails 被調用:', gameId);
-    
+
+    if (gameId === WARMUP_GAME_ID) {
+        setupWarmupPicker();
+        return;
+    }
+    document.getElementById('warmupPicker').style.display = 'none';
+
     // 從下拉選單中獲取比賽資料
     const select = document.getElementById('gameSelect');
     if (!select) {
@@ -966,7 +1024,14 @@ async function saveGameData() {
         await showCustomAlert('請先選擇比賽！', 'warning');
         return;
     }
-    
+
+    // 熱身賽只是給隊長試用拍照辨識的假場次，Google Sheets 裡沒有這一列，
+    // 真的送出會寫進不存在的位置或污染正式賽果，這裡直接擋下
+    if (currentGame.id === WARMUP_GAME_ID) {
+        await showCustomAlert('這是熱身賽測試場次，只能用來試拍照辨識，不會送出成績。', 'warning');
+        return;
+    }
+
     // 檢查資料完整性
     const missingData = validateGameData();
     if (missingData.length > 0) {

@@ -76,12 +76,33 @@ async function loadGames() {
             });
         }
 
+        appendWarmupTestOption(select);
+
         document.getElementById('loadingGames').style.display = 'none';
         
     } catch (error) {
         console.error('載入比賽資料失敗:', error);
         document.getElementById('loadingGames').textContent = '載入失敗，請重新整理頁面';
     }
+}
+
+/**
+ * 熱身賽測試場次
+ *
+ * 拍照辨識要能給隊長試用，不能等到真的有比賽才驗證得到。這個場次固定掛在
+ * 選單最後，兩隊由使用者自己用下拉選單挑（熱身賽的組合不固定），
+ * 名單一樣取自 data/player.json，走跟正式場次完全相同的比對路徑。
+ *
+ * 它不存在於 Google Sheets，saveGameData() 會擋下送出（見 admin-main.js），
+ * 純粹用來走完「拍照 → 辨識 → 填表」這段流程。
+ */
+const WARMUP_TEST_GAME_ID = 'warmup-test';
+
+function appendWarmupTestOption(select) {
+    const option = document.createElement('option');
+    option.value = WARMUP_TEST_GAME_ID;
+    option.textContent = '🔧 熱身賽測試（自選隊伍，不會送出成績）';
+    select.appendChild(option);
 }
 
 /**

@@ -64,8 +64,21 @@
                     </select>
                 </div>
                 <div class="loading" id="loadingGames">載入比賽資料中...</div>
+
+                <!-- 熱身賽測試才需要選隊伍：正式場次的兩隊由賽程表決定 -->
+                <div class="warmup-picker" id="warmupPicker" style="display: none;">
+                    <div class="warmup-note">熱身賽測試：自行選擇對戰的兩隊，填完不會送出成績</div>
+                    <div class="warmup-selects">
+                        <label>主隊
+                            <select id="warmupHome"></select>
+                        </label>
+                        <label>客隊
+                            <select id="warmupAway"></select>
+                        </label>
+                    </div>
+                </div>
             </div>
-            
+
             <!-- 比賽詳情區域 -->
             <div class="game-details" id="gameDetails">
                 <!-- 拍照辨識分紙：選好場次後才有意義，所以放在 gameDetails 內 -->
