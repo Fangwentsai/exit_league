@@ -368,24 +368,30 @@ function matchName(player, roster) {
         return { ...player, name: caseInsensitive };
     }
 
-    const best = closestMatch(player.name, roster);
+    // 差一個字時，關鍵不是「差多少」而是「有沒有第二個一樣近的人」。
+    // 實測名單裡 164 人有 55 組彼此只差一個字（中文綽號「小X」「阿X」太常見，
+    // 例如有點傻的小飛／小齊／小安三人互為距離 1）。這種情況硬猜等於擲骰子，
+    // 必須重扣讓它落到人工確認；反之若只有一個人這麼近（例如分紙寫「Andy」、
+    // 名單登記「Andi」，隊上沒有第二個相近的名字），那就是單純的拼寫出入，
+    // 幾乎沒有認錯的空間，不該白白扣到需要人工複查。
+    const ranked = rankByDistance(player.name, roster);
+    const best = ranked[0], runnerUp = ranked[1];
     if (best && best.distance <= 1) {
-        // 差一個字以內，很可能是同一人，但信心要打折
-        return { ...player, name: best.name, confidence: Math.max(0, Math.min(player.confidence, 100) - 20) };
+        const ambiguous = runnerUp && runnerUp.distance === best.distance;
+        const penalty = ambiguous ? 30 : 5;
+        return { ...player, name: best.name, confidence: Math.max(0, Math.min(player.confidence, 100) - penalty) };
     }
     // 名單裡完全找不到接近的人，強制降到需要人工確認
     return { ...player, name: player.name, confidence: Math.min(player.confidence, 30), notInRoster: true };
 }
 
-function closestMatch(name, roster) {
-    let best = null;
-    for (const candidate of roster) {
-        const distance = levenshtein(name, candidate);
-        if (!best || distance < best.distance) {
-            best = { name: candidate, distance };
-        }
-    }
-    return best;
+// 回傳整份名單依相近程度排序的結果，而不是只有最接近的那一個——
+// 判斷可不可信要看「最近的跟第二近的差多少」，只拿到冠軍看不出有沒有並列。
+// 比對時忽略大小寫，否則 Lucy/lucy 這種差異會佔掉唯一的一格距離額度。
+function rankByDistance(name, roster) {
+    return roster
+        .map(candidate => ({ name: candidate, distance: levenshtein(name.toLowerCase(), candidate.toLowerCase()) }))
+        .sort((a, b) => a.distance - b.distance);
 }
 
 function levenshtein(a, b) {
