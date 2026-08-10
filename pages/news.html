@@ -220,6 +220,35 @@
             border: none;
         }
 
+
+        /* 分組排行切換：第七屆起兩組並行，一次只顯示一組 */
+        .league-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .league-tab {
+            flex: 1;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 9px 6px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .league-tab.active {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+
+        .ranking-table[hidden] { display: none; }
+
         /* 季後賽區塊樣式 */
         .playoffs-section {
             background-color: #fff;
@@ -868,10 +897,13 @@
             <div class="icon-trophy">🏆</div>
         </button>
 
-        <!-- 季後賽 Banner -->
+        <!-- 季後賽 Banner：第六屆已結束，第七屆季後賽開始前先隱藏。
+             要重新開啟時把註解拿掉，並換成當屆的圖片。 -->
+        <!--
         <div onclick="window.openPlayoffsModal()" style="cursor:pointer; margin-bottom: 15px;">
             <img src="images/playoffs_s6.png" alt="第六屆季後賽預測" style="width:100%; border-radius:4px; display:block;">
         </div>
+        -->
 
         <!-- 上週戰況區塊 (可折疊) -->
         <div class="matches-section">
@@ -905,24 +937,29 @@
         <div class="rankings">
             <div class="ranking-section">
                 <h2 class="section-title">團隊總分排行👑</h2>
-                <table class="ranking-table">
-                    <tr>
-                        <th>排名</th>
-                        <th>隊名</th>
-                        <th>總分</th>
-                    </tr>
-                    <tr><td>1</td><td>Vivi哈哈隊</td><td>524</td></tr>
-                    <tr><td>2</td><td>軟飯硬吃</td><td>505</td></tr>
-                    <tr><td>3</td><td>酒空組</td><td>494</td></tr>
-                    <tr><td>4</td><td>人生揪難</td><td>462</td></tr>
-                    <tr><td>5</td><td>Vivi嘻嘻隊</td><td>442</td></tr>
-                    <tr><td>6</td><td>Tonight29十三么</td><td>440</td></tr>
-                    <tr><td>7</td><td>逃生入口</td><td>399</td></tr>
-                    <tr><td>8</td><td>人生揪亮</td><td>355</td></tr>
-                    <tr><td>9</td><td>Tonight29大三元</td><td>338</td></tr>
-                    <tr><td>10</td><td>傑克黑桃</td><td>338</td></tr>
-                    <tr><td>11</td><td>Tonight29大四喜</td><td>324</td></tr>
-                    <tr><td>12</td><td>傑克紅心</td><td>298</td></tr>
+                <!-- 第七屆分兩組進行，各自排名。按鈕切換要看哪一組。
+                     隊名與分數等第七屆開打後由賽果更新。 -->
+                <div class="league-tabs">
+                    <button class="league-tab active" data-league="Team1">Team 1</button>
+                    <button class="league-tab" data-league="Team2">Team 2</button>
+                </div>
+                <table class="ranking-table" data-league="Team1">
+                    <tr><th>排名</th><th>隊名</th><th>總分</th></tr>
+                    <tr><td>1</td><td>酒空組</td><td>-</td></tr>
+                    <tr><td>2</td><td>軟飯揪團中</td><td>-</td></tr>
+                    <tr><td>3</td><td>人生揪難亮</td><td>-</td></tr>
+                    <tr><td>4</td><td>傑克紅心</td><td>-</td></tr>
+                    <tr><td>5</td><td>Tonight29發財隊</td><td>-</td></tr>
+                    <tr><td>6</td><td>匪類里民一直喝</td><td>-</td></tr>
+                </table>
+                <table class="ranking-table" data-league="Team2" hidden>
+                    <tr><th>排名</th><th>隊名</th><th>總分</th></tr>
+                    <tr><td>1</td><td>逃生Zoo口</td><td>-</td></tr>
+                    <tr><td>2</td><td>有點傻</td><td>-</td></tr>
+                    <tr><td>3</td><td>嘻嘻隊</td><td>-</td></tr>
+                    <tr><td>4</td><td>哈哈隊</td><td>-</td></tr>
+                    <tr><td>5</td><td>傑克黑桃</td><td>-</td></tr>
+                    <tr><td>6</td><td>Tonight29恭喜隊</td><td>-</td></tr>
                 </table>
             </div>
 
@@ -2242,6 +2279,21 @@
     });
     </script>
 
+
+    <script>
+        // 分組排行切換：兩張表預先放在頁面上，按鈕只負責顯示哪一張
+        document.addEventListener('click', function (e) {
+            const tab = e.target.closest('.league-tab');
+            if (!tab) return;
+            const wrap = tab.closest('.ranking-section');
+            wrap.querySelectorAll('.league-tab').forEach(function (t) {
+                t.classList.toggle('active', t === tab);
+            });
+            wrap.querySelectorAll('.ranking-table[data-league]').forEach(function (tb) {
+                tb.hidden = tb.dataset.league !== tab.dataset.league;
+            });
+        });
+    </script>
 </body>
 
 </html>
