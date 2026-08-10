@@ -908,6 +908,7 @@
         <!-- 上週戰況區塊 (可折疊) -->
         <div class="matches-section">
             <h2 class="section-title">上週戰況</h2>
+            <div class="league-tabs" data-target="lastWeekMatchesContent"></div>
             <div class="matches-item collapsible">
                 <div class="matches-header">
                     <div class="matches-date" id="lastWeekDate">載入中...</div>
@@ -922,6 +923,7 @@
         <!-- 近期比賽區塊 (可折疊) - 預設展開 -->
         <div class="matches-section">
             <h2 class="section-title">近期比賽</h2>
+            <div class="league-tabs" data-target="upcomingMatchesContent"></div>
             <div class="matches-item collapsible">
                 <div class="matches-header">
                     <div class="matches-date" id="upcomingDate">載入中...</div>
@@ -2293,6 +2295,83 @@
                 tb.hidden = tb.dataset.league !== tab.dataset.league;
             });
         });
+    </script>
+
+    <script>
+        /**
+         * 上週戰況／近期比賽也依分組過濾。
+         *
+         * 這兩區的內容由 main.js 動態塞入，HTML 結構可能隨改版變動，
+         * 所以不依賴特定選擇器——直接看每個子元素的文字裡有沒有出現該組的隊名。
+         * 隊名來自 config/config.js 的 SEASONS[7].groups。
+         */
+        (function () {
+            const ORDER = ['Team1', 'Team2'];
+            const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
+            const picked = {};
+
+            function groups() {
+                try { return (SEASONS && SEASONS[7] && SEASONS[7].groups) || {}; } catch (e) { return {}; }
+            }
+
+            function filter(host) {
+                const g = groups();
+                const box = document.getElementById(host.dataset.target);
+                if (!box || !Object.keys(g).length) return;
+                const teams = g[picked[host.dataset.target] || ORDER[0]] || [];
+                let shown = 0;
+                [...box.children].forEach(el => {
+                    if (el.classList.contains('loading-indicator')) return;
+                    const txt = el.textContent || '';
+                    const hit = teams.some(t => txt.indexOf(t) >= 0);
+                    el.hidden = !hit;
+                    if (hit) shown++;
+                });
+                // 該組沒有比賽時給個說明，不要留一片空白
+                let note = box.querySelector('.league-empty');
+                if (!note) {
+                    note = document.createElement('div');
+                    note.className = 'league-empty loading-indicator';
+                    box.appendChild(note);
+                }
+                note.hidden = shown > 0;
+                note.textContent = '這一組本週沒有比賽';
+            }
+
+            function build(host) {
+                const g = groups();
+                if (host.children.length || !Object.keys(g).length) return;
+                picked[host.dataset.target] = ORDER[0];
+                host.innerHTML = ORDER.filter(k => g[k]).map((k, i) =>
+                    `<button class="league-tab${i ? '' : ' active'}" data-league="${k}">${LABEL[k]}</button>`).join('');
+                host.addEventListener('click', e => {
+                    const tab = e.target.closest('.league-tab');
+                    if (!tab) return;
+                    picked[host.dataset.target] = tab.dataset.league;
+                    host.querySelectorAll('.league-tab').forEach(t => t.classList.toggle('active', t === tab));
+                    filter(host);
+                });
+            }
+
+            function watch(tries) {
+                tries = tries || 0;
+                const hosts = [...document.querySelectorAll('.league-tabs[data-target]')];
+                // config.js 是 defer 載入，這段內嵌腳本可能比它先跑；
+                // 拿不到分組就重試，不要一次失敗就永久沒有頁籤
+                if (!hosts.length || !Object.keys(groups()).length) {
+                    if (tries < 40) setTimeout(() => watch(tries + 1), 250);
+                    return;
+                }
+                hosts.forEach(host => {
+                    build(host);
+                    const box = document.getElementById(host.dataset.target);
+                    if (box) new MutationObserver(() => filter(host)).observe(box, { childList: true });
+                    filter(host);
+                });
+            }
+            document.addEventListener('DOMContentLoaded', () => watch());
+            if (document.readyState !== 'loading') watch();
+        })();
     </script>
 </body>
 
