@@ -38,10 +38,23 @@
         const seasonOverride = 's7';
         console.log('設置 seasonOverride =', seasonOverride);
     </script>
+    <style>
+        /* 分組切換：沿用全站主色 #dc3545 */
+        .league-tabs { display: flex; gap: 8px; margin: 0 0 12px; }
+        .league-tab {
+            flex: 1; font: inherit; font-size: 15px; font-weight: 700; padding: 11px 8px;
+            border: 2px solid #555; border-radius: 8px; background: #fff; color: #333; cursor: pointer;
+        }
+        .league-tab.active { background: #dc3545; border-color: #dc3545; color: #fff; }
+    </style>
 </head>
 <body>
     <div class="container">
         <h2 class="rank-title">隊伍排名</h2>
+        <!-- 第七屆分兩組，各自排名。試算表 O:V 仍是 12 隊一份，
+             組別由 config/config.js 的 SEASONS[7].groups 反查，不在試算表另開欄位——
+             隊伍屬於哪組是固定的，多一欄只會多一個會不同步又不報錯的地方。 -->
+        <div class="league-tabs" id="rankLeagueTabs"></div>
         <div class="rank-table-container">
             <table class="rank-table" id="rankTable">
                 <thead>
@@ -139,6 +152,66 @@
     
     // 保險機制：4 秒後自動載入
     setTimeout(loadGoogleScripts, 4000);
+    </script>
+
+    <script>
+        /**
+         * 隊伍排名依分組顯示。
+         *
+         * rank.js 會把 12 隊一次填進 #rankTableBody（試算表 O:V 就是一份總表），
+         * 這裡只負責隱藏不屬於當前組別的列，並把「排名」欄重新編號——
+         * 否則 Team1 會顯示 1、3、4、7… 這種跳號，看起來像資料壞掉。
+         */
+        (function () {
+            const ORDER = ['Team1', 'Team2'];
+            const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
+            let current = ORDER[0];
+
+            function groups() {
+                try { return (SEASONS && SEASONS[7] && SEASONS[7].groups) || {}; } catch (e) { return {}; }
+            }
+
+            function render() {
+                const g = groups();
+                const body = document.getElementById('rankTableBody');
+                if (!body || !Object.keys(g).length) return;
+                const teams = g[current] || [];
+                let seq = 0;
+                body.querySelectorAll('tr').forEach(tr => {
+                    const cells = tr.querySelectorAll('td');
+                    if (cells.length < 2) return;
+                    const name = cells[1].textContent.trim();
+                    const show = teams.includes(name);
+                    tr.hidden = !show;
+                    if (show) cells[0].textContent = ++seq;   // 組內重新編號
+                });
+            }
+
+            function buildTabs() {
+                const g = groups();
+                const host = document.getElementById('rankLeagueTabs');
+                if (!host || host.children.length || !Object.keys(g).length) return;
+                host.innerHTML = ORDER.filter(k => g[k]).map(k =>
+                    `<button class="league-tab${k === current ? ' active' : ''}" data-league="${k}">${LABEL[k]}</button>`).join('');
+                host.addEventListener('click', e => {
+                    const tab = e.target.closest('.league-tab');
+                    if (!tab) return;
+                    current = tab.dataset.league;
+                    host.querySelectorAll('.league-tab').forEach(t => t.classList.toggle('active', t === tab));
+                    render();
+                });
+            }
+
+            function watch() {
+                const body = document.getElementById('rankTableBody');
+                if (!body) return setTimeout(watch, 300);
+                buildTabs();
+                new MutationObserver(render).observe(body, { childList: true });
+                render();
+            }
+            document.addEventListener('DOMContentLoaded', watch);
+            if (document.readyState !== 'loading') watch();
+        })();
     </script>
 </body>
 </html>
