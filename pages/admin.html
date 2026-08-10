@@ -49,7 +49,7 @@
         <!-- 功能按鈕列 -->
         <div class="function-nav">
             <button class="fn-btn fn-btn-match" onclick="showSection('match')">🎯 比賽登錄</button>
-            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="alertAddPlayerClosed()">➕ 新增隊員</button>
+            <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="showSection('player')">➕ 新增隊員</button>
         </div>
 
         <div class="admin-content">
@@ -213,9 +213,15 @@
 
     let playerJsonData = null; // 快取的 player.json
 
-    /** 永遠不允許新增隊員（賽季最後一個月封鎖） */
+    /**
+     * 比賽日當天與隔天不開放新增隊員。
+     * 聯賽固定週二比賽（第六屆 122 場、第七屆全部），賽前臨時加人會讓
+     * 當晚的出賽名單跟已經印出去的分紙對不上，賽後隔天則還在對帳。
+     * 週四~下週一開放。
+     */
     function isAddPlayerAllowed() {
-        return false;
+        const day = new Date().getDay(); // 0=日 1=一 2=二 3=三
+        return day !== 2 && day !== 3;
     }
 
     /** 顯示新增隊員已關閉的提示 */
