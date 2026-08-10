@@ -14,7 +14,7 @@ const SEASONS = {
         sheetId: '1APUuzy...',        // Google 試算表 ID
         apiKey: DEFAULT_API_KEY,
         label: '第七屆',
-        startDate: '2026/9/18',        // 開打日，用來推算 "M/D" 屬於哪一年
+        startDate: '2026/8/18',        // 開打日，用來推算 "M/D" 屬於哪一年
         rankRange: 'O:V',              // 排行榜欄位範圍
         schedulePage: 'scheduleS7',    // 對應 pages/scheduleS7.html
         rankPage: 'rankS7',            // 對應 pages/rankS7.html
@@ -36,7 +36,7 @@ const CURRENT_SEASON = 7;   // 當季：news 頁與 sitemap 優先級看這個
 
 ### 跨年賽季怎麼處理
 
-試算表的日期欄通常只填「9/18」這種格式，網站要自己補年份。但賽季可能跨年：
+試算表的日期欄通常只填「8/18」這種格式，網站要自己補年份。但賽季可能跨年：
 
 | 屆數 | 實際期間 | 是否跨年 |
 |------|---------|---------|
@@ -51,7 +51,7 @@ const CURRENT_SEASON = 7;   // 當季：news 頁與 sitemap 優先級看這個
 以第七屆（開打月份 9）為例：
 
 ```
-9/18   → 2026/9/18     (9 ≥ 9，開打年)
+8/18   → 2026/8/18     (8 ≥ 8，開打年)
 12/30  → 2026/12/30    (12 ≥ 9，開打年)
 1/6    → 2027/1/6      (1 < 9，隔年)
 2/24   → 2027/2/24     (2 < 9，隔年)

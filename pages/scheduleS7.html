@@ -34,7 +34,7 @@
         }
     </script>
 
-    <link rel="stylesheet" href="../styles/schedule.css">
+    <link rel="stylesheet" href="../styles/schedule.css?v=s7-groups">
 
     <!-- 移除有問題的廣告脚本，使用簡化版 -->
     <script>
@@ -97,6 +97,7 @@
             <tbody></tbody>
         </table>
 
+        <div class="group-tabs" id="groupTabs"></div>
         <div id="groupSections"></div>
     </div>
 
@@ -131,6 +132,7 @@
                 return c.length ? c[c.length - 1].textContent.trim() : null;
             }
 
+            const state = new WeakMap();   // 每個分組區塊各自的已選隊伍
             let built = false;
             function build() {
                 if (built) return true;
@@ -139,13 +141,17 @@
                 const host = document.getElementById('groupSections');
                 if (!host) return false;
 
-                host.innerHTML = ORDER.filter(k => g[k]).map(k => `
-                    <section class="group-block" data-group="${k}">
-                        <h2 class="group-title">${LABEL[k] || k}</h2>
+                host.innerHTML = ORDER.filter(k => g[k]).map((k, idx) => `
+                    <section class="group-block" data-group="${k}"${idx ? ' hidden' : ''}>
                         <div class="search-section">
                             <div class="search-title">快速篩選隊伍(可複選)</div>
                             <div class="team-filters">
-                                ${g[k].map(t => `<button class="gbtn" data-team="${t}">${t}</button>`).join('')}
+                                <div class="filter-row">
+                                    ${g[k].slice(0, 3).map(t => `<button class="team-btn" data-team="${t}">${t}</button>`).join('')}
+                                </div>
+                                <div class="filter-row">
+                                    ${g[k].slice(3).map(t => `<button class="team-btn" data-team="${t}">${t}</button>`).join('')}
+                                </div>
                             </div>
                         </div>
                         <div class="content-wrapper">
@@ -157,11 +163,35 @@
                         </div>
                     </section>`).join('');
 
-                host.querySelectorAll('.gbtn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        btn.classList.toggle('active');
-                        applyFilter(btn.closest('.group-block'));
+                // 上方頁籤：一次只顯示一組，60 場全部攤開在手機上太長
+                const tabs = document.getElementById('groupTabs');
+                tabs.innerHTML = ORDER.filter(k => g[k]).map((k, idx) =>
+                    `<button class="group-tab${idx ? '' : ' active'}" data-group="${k}">${LABEL[k] || k}</button>`).join('');
+                tabs.querySelectorAll('.group-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        tabs.querySelectorAll('.group-tab').forEach(t => t.classList.toggle('active', t === tab));
+                        host.querySelectorAll('.group-block').forEach(b => {
+                            b.hidden = b.dataset.group !== tab.dataset.group;
+                        });
                     });
+                });
+
+                // 用事件委派而不是逐顆綁定：js/filter.js 會把 .team-btn 整顆
+                // cloneNode + replaceChild 換掉，逐顆綁的事件會被一起清掉。
+                // 選取狀態也由這裡自己記，不從 class 讀——filter.js 同樣會切換
+                // .selected，兩邊各切一次會互相抵銷。
+                host.addEventListener('click', e => {
+                    const btn = e.target.closest('.team-btn');
+                    if (!btn || !host.contains(btn)) return;
+                    const block = btn.closest('.group-block');
+                    if (!block) return;
+                    const picked = state.get(block) || new Set();
+                    const team = btn.dataset.team;
+                    picked.has(team) ? picked.delete(team) : picked.add(team);
+                    state.set(block, picked);
+                    block.querySelectorAll('.team-btn').forEach(b =>
+                        b.classList.toggle('selected', picked.has(b.dataset.team)));
+                    applyFilter(block);
                 });
                 built = true;
                 return true;
@@ -186,7 +216,7 @@
 
             function applyFilter(block) {
                 if (!block) return;
-                const picked = [...block.querySelectorAll('.gbtn.active')].map(b => b.dataset.team);
+                const picked = [...(state.get(block) || [])];
                 let shown = 0;
                 block.querySelectorAll('tbody tr').forEach(tr => {
                     const cells = [...tr.querySelectorAll('td.team-cell')].map(c => c.textContent.trim());
