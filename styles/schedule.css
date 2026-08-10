@@ -1156,3 +1156,54 @@ tr.clickable-match:active {
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     border-bottom: 2px solid #c82333;
 }
+/* ===== 分組區塊（第七屆起兩組並行）=====
+   目標是手機好操作：兩組上下堆疊、各自有標題與篩選器，
+   篩選只作用在自己那一組，不必在一長串隊伍裡找。 */
+.group-block {
+    margin-bottom: 28px;
+}
+
+.group-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #1f2937;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+/* 篩選鈕在手機上要夠大好按，所以用可換行的彈性排列而非固定欄數 */
+.group-block .team-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.group-block .gbtn {
+    font: inherit;
+    font-size: 13px;
+    padding: 9px 12px;
+    min-height: 40px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    background: #fff;
+    color: #334155;
+    cursor: pointer;
+    flex: 1 1 auto;
+}
+
+.group-block .gbtn.active {
+    background: #1769d6;
+    border-color: #1769d6;
+    color: #fff;
+    font-weight: 600;
+}
+
+.group-empty {
+    padding: 16px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}

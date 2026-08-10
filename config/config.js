@@ -46,8 +46,8 @@ const SEASONS = {
     7: {
         sheetId: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
         apiKey: DEFAULT_API_KEY,
-        // 2026/9 開打、跨年到 2027 初結束
-        label: '第七屆', startDate: '2026/9/18', rankRange: 'O:V',
+        // 2026/8/18 開打（週二賽制），10/27 結束
+        label: '第七屆', startDate: '2026/8/18', rankRange: 'O:V',
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。
@@ -65,7 +65,7 @@ const SEASONS = {
 //    不受這個值影響），但這個值要等到**新賽季試算表已填入賽程、且賽果資料夾有內容**
 //    之後才能切換，否則首頁的戰況區塊會變空白、賽果連結會指向空資料夾。
 //
-// 第七屆 2026/9/18 開打，屆時再改成 7。
+// 第七屆 2026/8/18 開打，屆時再改成 7。
 const CURRENT_SEASON = 6;
 
 // 頁面名稱 → 屆數（例如 scheduleS6 → 6、rank → 3）
@@ -107,7 +107,7 @@ function resolveSeasonNumber({ page, override, path } = {}) {
 }
 
 // 推算某個月份在該屆屬於哪一年。
-// 賽季可能跨年（第三屆 2024/11→2025/2、第七屆 2026/9→2027 初），
+// 賽季可能跨年（第三屆 2024/11→2025/2），
 // 所以月份小於開打月份的一律算成下一年。
 // startDate 為 null 時回傳 null，代表該屆不補年份。
 function resolveSeasonYear(season, month) {

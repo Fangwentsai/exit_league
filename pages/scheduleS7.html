@@ -87,54 +87,127 @@
             <div class="loading-progress"></div>
         </div>
 
-        <!-- 搜尋區域 -->
-        <div class="search-section">
-            <div class="search-title">快速篩選隊伍(可複選)</div>
-            <!-- 第七屆 12 隊。隊名必須與 Google Sheets schedule 工作表中的寫法完全一致，
-                 否則篩選會失效。分聯盟後這裡可能要改成依聯盟分組顯示。 -->
-            <div class="team-filters">
-                <div class="filter-row">
-                    <button class="team-btn" data-team="逃生Zoo口">逃生Zoo口</button>
-                    <button class="team-btn" data-team="酒空組">酒空組</button>
-                    <button class="team-btn" data-team="人生揪難亮">人生揪難亮</button>
-                    <button class="team-btn" data-team="有點傻">有點傻</button>
-                </div>
-                <div class="filter-row">
-                    <button class="team-btn" data-team="軟飯揪團中">軟飯揪團中</button>
-                    <button class="team-btn" data-team="匪類里民一直喝">匪類里民一直喝</button>
-                    <button class="team-btn" data-team="嘻嘻隊">嘻嘻隊</button>
-                    <button class="team-btn" data-team="哈哈隊">哈哈隊</button>
-                </div>
-                <div class="filter-row">
-                    <button class="team-btn" data-team="傑克黑桃">傑克黑桃</button>
-                    <button class="team-btn" data-team="傑克紅心">傑克紅心</button>
-                    <button class="team-btn" data-team="Tonight29發財隊">Tonight29發財隊</button>
-                    <button class="team-btn" data-team="Tonight29恭喜隊">Tonight29恭喜隊</button>
-                </div>
-            </div>
-        </div>
-
         <!-- 提示文字 -->
         <div class="schedule-hint">提醒：點擊日期/場次可以查看先前比賽紀錄喔</div>
 
-        <!-- 使用包裝器确保表格可滚动 -->
-        <div class="content-wrapper">
-            <!-- 賽程表格 - 使用固定寬度的表格布局 -->
-            <table class="schedule-table" id="leagueTable">
-                <thead>
-                    <tr>
-                        <th>日期</th>
-                        <th>客隊</th>
-                        <th>比分</th>
-                        <th>主隊</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 比賽資料將由 JavaScript 動態載入 -->
-                </tbody>
-            </table>
-        </div>
+        <!-- main.js 只認得第一個 .schedule-table，資料統一由它填進這張隱藏的來源表，
+             再由下方腳本搬進各分組表格。這樣 main.js 綁好的日期／列點擊事件會跟著搬過去，
+             不需要重綁，也不必改動服務所有賽季的 main.js。 -->
+        <table class="schedule-table" id="sourceTable" hidden>
+            <tbody></tbody>
+        </table>
+
+        <div id="groupSections"></div>
     </div>
+
+    <!-- 賽程依分組拆成兩個獨立區塊，各自有標題、篩選器與表格 -->
+    <script>
+        /**
+         * 每組一個區塊：標題 → 該組 6 隊的篩選鈕 → 只含該組比賽的表格。
+         *
+         * 為什麼保留一張隱藏的來源表：js/main.js 服務所有賽季，只認得第一個
+         * .schedule-table，資料一律填進去。與其改動它（會牽動其他賽季），
+         * 不如讓它照常填，這裡再把資料列「搬」進各組表格——用搬的不用複製，
+         * main.js 綁在列上的日期／詳情點擊事件才會跟著過去，不需要重綁。
+         *
+         * 分組來源是 config/config.js 的 SEASONS[7].groups，不是試算表欄位：
+         * 隊伍屬於哪一組是固定的，從隊名反查即可，多開一欄反而有不同步的風險。
+         */
+        (function () {
+            const ORDER = ['Team1', 'Team2'];
+            const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
+
+            // config.js 用 const 宣告 SEASONS，在瀏覽器裡不會掛到 window 上
+            function groups() {
+                try { return (SEASONS && SEASONS[7] && SEASONS[7].groups) || {}; } catch (e) { return {}; }
+            }
+            function groupOf(team) {
+                for (const [g, ts] of Object.entries(groups())) if (ts.includes(team)) return g;
+                return null;
+            }
+            // 一列的欄位順序是 日期／客隊／比分／主隊
+            function homeTeamOf(tr) {
+                const c = tr.querySelectorAll('td.team-cell');
+                return c.length ? c[c.length - 1].textContent.trim() : null;
+            }
+
+            let built = false;
+            function build() {
+                if (built) return true;
+                const g = groups();
+                if (!Object.keys(g).length) return false;
+                const host = document.getElementById('groupSections');
+                if (!host) return false;
+
+                host.innerHTML = ORDER.filter(k => g[k]).map(k => `
+                    <section class="group-block" data-group="${k}">
+                        <h2 class="group-title">${LABEL[k] || k}</h2>
+                        <div class="search-section">
+                            <div class="search-title">快速篩選隊伍(可複選)</div>
+                            <div class="team-filters">
+                                ${g[k].map(t => `<button class="gbtn" data-team="${t}">${t}</button>`).join('')}
+                            </div>
+                        </div>
+                        <div class="content-wrapper">
+                            <table class="schedule-table group-table">
+                                <thead><tr><th>日期</th><th>客隊</th><th>比分</th><th>主隊</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                            <div class="group-empty" hidden>沒有符合的比賽</div>
+                        </div>
+                    </section>`).join('');
+
+                host.querySelectorAll('.gbtn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        btn.classList.toggle('active');
+                        applyFilter(btn.closest('.group-block'));
+                    });
+                });
+                built = true;
+                return true;
+            }
+
+            function distribute() {
+                const src = document.querySelector('#sourceTable tbody');
+                if (!src) return;
+                const rows = [...src.querySelectorAll('tr')];
+                if (!rows.length || !rows.some(r => r.querySelector('td.team-cell'))) return;
+                if (!build()) return;
+
+                for (const tr of rows) {
+                    const grp = groupOf(homeTeamOf(tr));
+                    // 查不到分組就留在來源表，不要硬塞到某一組造成誤導
+                    if (!grp) continue;
+                    const body = document.querySelector(`.group-block[data-group="${grp}"] tbody`);
+                    if (body) body.appendChild(tr);
+                }
+                document.querySelectorAll('.group-block').forEach(applyFilter);
+            }
+
+            function applyFilter(block) {
+                if (!block) return;
+                const picked = [...block.querySelectorAll('.gbtn.active')].map(b => b.dataset.team);
+                let shown = 0;
+                block.querySelectorAll('tbody tr').forEach(tr => {
+                    const cells = [...tr.querySelectorAll('td.team-cell')].map(c => c.textContent.trim());
+                    const hit = !picked.length || cells.some(c => picked.includes(c));
+                    tr.style.display = hit ? '' : 'none';
+                    if (hit) shown++;
+                });
+                const empty = block.querySelector('.group-empty');
+                if (empty) empty.hidden = shown > 0;
+            }
+
+            function watch() {
+                const src = document.querySelector('#sourceTable tbody');
+                if (!src) return setTimeout(watch, 300);
+                new MutationObserver(distribute).observe(src, { childList: true });
+                distribute();
+            }
+            document.addEventListener('DOMContentLoaded', watch);
+            if (document.readyState !== 'loading') watch();
+        })();
+    </script>
 
     <!-- 引入配置和主腳本 -->
     <script src="../config/config.js"></script>
