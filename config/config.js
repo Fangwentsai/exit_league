@@ -66,7 +66,7 @@ const SEASONS = {
 //    之後才能切換，否則首頁的戰況區塊會變空白、賽果連結會指向空資料夾。
 //
 // 第七屆 2026/8/18 開打，屆時再改成 7。
-const CURRENT_SEASON = 6;
+const CURRENT_SEASON = 7;
 
 // 頁面名稱 → 屆數（例如 scheduleS6 → 6、rank → 3）
 const PAGE_TO_SEASON = {};
