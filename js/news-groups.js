@@ -17,9 +17,9 @@
 (function () {
     'use strict';
 
-    const ORDER = ['Team1', 'Team2'];
-    const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
-    const BADGE = { Team1: 'T1', Team2: 'T2' };
+    const ORDER = ['掉鏢組', '靶外組'];
+    // 個人榜的標籤要短，跟隊名擠在同一格
+    const BADGE = { 掉鏢組: '掉鏢', 靶外組: '靶外' };
     const picked = {};   // 各賽況區塊目前選的組別
 
     function groups() {
@@ -59,7 +59,7 @@
             if (host.children.length) return;
             picked[host.dataset.target] = picked[host.dataset.target] || ORDER[0];
             host.innerHTML = ORDER.filter(k => g[k]).map(k =>
-                `<button class="league-tab${k === picked[host.dataset.target] ? ' active' : ''}" data-league="${k}">${LABEL[k]}</button>`
+                `<button class="league-tab${k === picked[host.dataset.target] ? ' active' : ''}" data-league="${k}">${k}</button>`
             ).join('');
             filterMatches(host);
         });

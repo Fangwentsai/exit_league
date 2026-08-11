@@ -160,11 +160,10 @@
          *
          * rank.js 會把 12 隊一次填進 #rankTableBody（試算表 O:V 就是一份總表），
          * 這裡只負責隱藏不屬於當前組別的列，並把「排名」欄重新編號——
-         * 否則 Team1 會顯示 1、3、4、7… 這種跳號，看起來像資料壞掉。
+         * 否則 掉鏢組 會顯示 1、3、4、7… 這種跳號，看起來像資料壞掉。
          */
         (function () {
-            const ORDER = ['Team1', 'Team2'];
-            const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
+            const ORDER = ['掉鏢組', '靶外組'];
             let current = ORDER[0];
 
             function groups() {
@@ -192,7 +191,7 @@
                 const host = document.getElementById('rankLeagueTabs');
                 if (!host || host.children.length || !Object.keys(g).length) return;
                 host.innerHTML = ORDER.filter(k => g[k]).map(k =>
-                    `<button class="league-tab${k === current ? ' active' : ''}" data-league="${k}">${LABEL[k]}</button>`).join('');
+                    `<button class="league-tab${k === current ? ' active' : ''}" data-league="${k}">${k}</button>`).join('');
                 host.addEventListener('click', e => {
                     const tab = e.target.closest('.league-tab');
                     if (!tab) return;

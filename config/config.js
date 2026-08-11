@@ -51,10 +51,9 @@ const SEASONS = {
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。
-        // ⚠️ 組名 Team1 / Team2 是抽籤當下的暫名，正式名稱未定。
         groups: {
-            Team1: ['酒空組', '軟飯揪團中', '人生揪難亮', '傑克紅心', 'Tonight29發財隊', '匪類里民一直喝'],
-            Team2: ['逃生Zoo口', '有點傻', '嘻嘻隊', '哈哈隊', '傑克黑桃', 'Tonight29恭喜隊']
+            掉鏢組: ['酒空組', '軟飯揪團中', '人生揪難亮', '傑克紅心', 'Tonight29發財隊', '匪類里民一直喝'],
+            靶外組: ['逃生Zoo口', '有點傻', '嘻嘻隊', '哈哈隊', '傑克黑桃', 'Tonight29恭喜隊']
         }
     }
 };

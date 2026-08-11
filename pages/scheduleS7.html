@@ -115,9 +115,7 @@
          * 隊伍屬於哪一組是固定的，從隊名反查即可，多開一欄反而有不同步的風險。
          */
         (function () {
-            const ORDER = ['Team1', 'Team2'];
-            const LABEL = { Team1: 'Team 1', Team2: 'Team 2' };
-
+            const ORDER = ['掉鏢組', '靶外組'];
             // config.js 用 const 宣告 SEASONS，在瀏覽器裡不會掛到 window 上
             function groups() {
                 try { return (SEASONS && SEASONS[7] && SEASONS[7].groups) || {}; } catch (e) { return {}; }
@@ -166,7 +164,7 @@
                 // 上方頁籤：一次只顯示一組，60 場全部攤開在手機上太長
                 const tabs = document.getElementById('groupTabs');
                 tabs.innerHTML = ORDER.filter(k => g[k]).map((k, idx) =>
-                    `<button class="group-tab${idx ? '' : ' active'}" data-group="${k}">${LABEL[k] || k}</button>`).join('');
+                    `<button class="group-tab${idx ? '' : ' active'}" data-group="${k}">${k}</button>`).join('');
                 tabs.querySelectorAll('.group-tab').forEach(tab => {
                     tab.addEventListener('click', () => {
                         tabs.querySelectorAll('.group-tab').forEach(t => t.classList.toggle('active', t === tab));
