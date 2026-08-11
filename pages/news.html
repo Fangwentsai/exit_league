@@ -249,6 +249,20 @@
 
         .ranking-table[hidden] { display: none; }
 
+        /* 個人榜不分組，但標出該隊屬於哪一組，方便對照 */
+        .league-badge {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 1px 6px;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.6;
+            border-radius: 999px;
+            background: #f0f0f0;
+            color: #555;
+            vertical-align: middle;
+        }
+
         /* 季後賽區塊樣式 */
         .playoffs-section {
             background-color: #fff;
@@ -2371,6 +2385,49 @@
             }
             document.addEventListener('DOMContentLoaded', () => watch());
             if (document.readyState !== 'loading') watch();
+        })();
+    </script>
+
+    <script>
+        /**
+         * 個人榜（個人勝場／Top Lady／地獄倒霉鬼）不分組顯示——兩組每隊都打 10 場，
+         * 出賽機會相同，合併排名本來就公平，分開只會讓每張榜少一半人。
+         * 但標上所屬組別方便對照。
+         *
+         * 隊伍總分那兩張表有 data-league，是分組切換用的，這裡要跳過。
+         * 隊名對不上分組時就不加標籤——寧可沒有，也不要標錯。
+         */
+        (function () {
+            const LABEL = { Team1: 'T1', Team2: 'T2' };
+
+            function groupOf(name) {
+                let g = {};
+                try { g = (SEASONS && SEASONS[7] && SEASONS[7].groups) || {}; } catch (e) { return null; }
+                for (const [k, teams] of Object.entries(g)) if (teams.includes(name)) return k;
+                return null;
+            }
+
+            function tag(tries) {
+                tries = tries || 0;
+                let ready = false;
+                try { ready = !!(SEASONS && SEASONS[7] && SEASONS[7].groups); } catch (e) {}
+                if (!ready) { if (tries < 40) setTimeout(() => tag(tries + 1), 250); return; }
+
+                document.querySelectorAll('.ranking-table:not([data-league])').forEach(table => {
+                    table.querySelectorAll('tr').forEach(tr => {
+                        const cell = tr.querySelector('td');
+                        if (!cell || cell.querySelector('.league-badge')) return;
+                        const g = groupOf(cell.textContent.trim());
+                        if (!g) return;
+                        const b = document.createElement('span');
+                        b.className = 'league-badge';
+                        b.textContent = LABEL[g] || g;
+                        cell.appendChild(b);
+                    });
+                });
+            }
+            document.addEventListener('DOMContentLoaded', () => tag());
+            if (document.readyState !== 'loading') tag();
         })();
     </script>
 </body>
