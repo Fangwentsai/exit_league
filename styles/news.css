@@ -919,3 +919,57 @@ body.news-page {
     }
 }
 
+
+/* ===== 第七屆：分組標示與可折疊標題 ===== */
+
+/* 紅色標題列本身就是開關，不再另外放一條灰色副標題列 */
+.section-title.matches-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.section-title.matches-toggle .matches-date {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.section-title.matches-toggle .expand-icon {
+    font-size: 18px;
+    line-height: 1;
+    color: #fff;          /* 白色加號，跟紅底標題融為一體 */
+    transition: transform 0.2s ease;
+}
+
+.section-title.matches-toggle.expanded .expand-icon {
+    transform: rotate(45deg);   /* ＋ 轉成 ×，表示可收合 */
+}
+
+/* 卡片壓扁一點，一頁看得到更多場次 */
+.matches-content .match-item {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+}
+
+/* 分組標示：靶外組底色深一階，一眼看得出兩組 */
+.match-item .match-group {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #b02a37;
+    margin-bottom: 2px;
+}
+
+.match-item[data-group="靶外組"] {
+    background-color: #ececec;
+}
+
+.match-item[data-group="靶外組"] .match-group {
+    color: #8a6d00;
+}

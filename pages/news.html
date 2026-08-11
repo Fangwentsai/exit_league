@@ -920,13 +920,13 @@
 
         <!-- 上週戰況區塊 (可折疊) -->
         <div class="matches-section">
-            <h2 class="section-title">上週戰況</h2>
-            <div class="league-tabs" data-target="lastWeekMatchesContent"></div>
-            <div class="matches-item collapsible">
-                <div class="matches-header">
-                    <div class="matches-date" id="lastWeekDate">載入中...</div>
-                    <span class="expand-icon">➕</span>
-                </div>
+            <!-- 標題列本身就是展開／收合的開關，不再另外放一條灰色副標題列 -->
+            <h2 class="section-title matches-toggle" data-target="lastWeekMatchesContent">
+                <span>上週戰況</span>
+                <span class="matches-date" id="lastWeekDate">載入中...</span>
+                <span class="expand-icon">＋</span>
+            </h2>
+            <div class="matches-item">
                 <div class="matches-content collapsed" id="lastWeekMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
                 </div>
@@ -935,13 +935,13 @@
 
         <!-- 近期比賽區塊 (可折疊) - 預設展開 -->
         <div class="matches-section">
-            <h2 class="section-title">近期比賽</h2>
-            <div class="league-tabs" data-target="upcomingMatchesContent"></div>
-            <div class="matches-item collapsible">
-                <div class="matches-header">
-                    <div class="matches-date" id="upcomingDate">載入中...</div>
-                    <span class="expand-icon">➕</span>
-                </div>
+            <!-- 標題列本身就是展開／收合的開關，不再另外放一條灰色副標題列 -->
+            <h2 class="section-title matches-toggle" data-target="upcomingMatchesContent">
+                <span>近期比賽</span>
+                <span class="matches-date" id="upcomingDate">載入中...</span>
+                <span class="expand-icon">＋</span>
+            </h2>
+            <div class="matches-item">
                 <div class="matches-content collapsed" id="upcomingMatchesContent">
                     <div class="loading-indicator">數據加載中，請稍候...</div>
                 </div>

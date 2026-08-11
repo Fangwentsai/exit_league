@@ -11,7 +11,7 @@
  *
  * 包含三件事：
  *   1. 團隊總分排行：兩組切換
- *   2. 上週戰況／近期比賽：依組過濾
+ *   2. 上週戰況／近期比賽：在卡片上標出組別
  *   3. 個人榜：標上所屬組別（不分組，只標註）
  */
 (function () {
@@ -20,7 +20,6 @@
     const ORDER = ['掉鏢組', '靶外組'];
     // 個人榜的標籤要短，跟隊名擠在同一格
     const BADGE = { 掉鏢組: '掉鏢', 靶外組: '靶外' };
-    const picked = {};   // 各賽況區塊目前選的組別
 
     function groups() {
         try {
@@ -48,44 +47,28 @@
         });
     }
 
-    // ===== 2. 上週戰況／近期比賽：依組過濾 =====
-    // 內容由 news.js 動態塞入，HTML 結構可能改版，所以比對文字裡有沒有該組隊名，
-    // 不依賴特定選擇器
+    // ===== 2. 上週戰況／近期比賽：在卡片上標出組別 =====
+    // 不做頁籤過濾——一週只有 6 場，兩組並列看得完，切換反而多一道手續。
+    // 靶外組的卡片底色深一階（見 styles/news.css），一眼就能分辨。
+    // 隊名對不上分組時不標，寧可沒有也不要標錯。
 
-    function buildMatchTabs() {
-        const g = groups();
-        if (!Object.keys(g).length) return;
-        document.querySelectorAll('.league-tabs[data-target]').forEach(host => {
-            if (host.children.length) return;
-            picked[host.dataset.target] = picked[host.dataset.target] || ORDER[0];
-            host.innerHTML = ORDER.filter(k => g[k]).map(k =>
-                `<button class="league-tab${k === picked[host.dataset.target] ? ' active' : ''}" data-league="${k}">${k}</button>`
-            ).join('');
-            filterMatches(host);
+    function tagMatchCards() {
+        if (!Object.keys(groups()).length) return;
+        document.querySelectorAll('.matches-content .match-item').forEach(card => {
+            if (card.dataset.group) return;
+            const names = card.querySelectorAll('.team-name');
+            let g = null;
+            for (const n of names) {
+                g = groupOf(n.textContent.trim());
+                if (g) break;
+            }
+            if (!g) return;
+            card.dataset.group = g;
+            const label = document.createElement('span');
+            label.className = 'match-group';
+            label.textContent = g;
+            card.insertBefore(label, card.firstChild);
         });
-    }
-
-    function filterMatches(host) {
-        const g = groups();
-        const box = document.getElementById(host.dataset.target);
-        if (!box || !Object.keys(g).length) return;
-        const teams = g[picked[host.dataset.target] || ORDER[0]] || [];
-        let shown = 0;
-        Array.prototype.forEach.call(box.children, el => {
-            if (el.classList.contains('loading-indicator')) return;
-            const hit = teams.some(t => (el.textContent || '').indexOf(t) >= 0);
-            el.hidden = !hit;
-            if (hit) shown++;
-        });
-        // 該組當週沒比賽時給說明，不要留一片空白
-        let note = box.querySelector('.league-empty');
-        if (!note) {
-            note = document.createElement('div');
-            note.className = 'league-empty loading-indicator';
-            box.appendChild(note);
-        }
-        note.hidden = shown > 0;
-        note.textContent = '這一組本週沒有比賽';
     }
 
     // ===== 3. 個人榜：標上所屬組別 =====
@@ -111,22 +94,24 @@
     // ===== 綁定 =====
 
     document.addEventListener('click', e => {
-        const tab = e.target.closest && e.target.closest('.league-tab');
-        if (!tab) return;
-        const host = tab.closest('.league-tabs[data-target]');
-        if (host) {
-            picked[host.dataset.target] = tab.dataset.league;
-            host.querySelectorAll('.league-tab').forEach(t => t.classList.toggle('active', t === tab));
-            filterMatches(host);
-        } else {
-            switchStandings(tab);
+        if (!e.target.closest) return;
+
+        const tab = e.target.closest('.league-tab');
+        if (tab) return switchStandings(tab);
+
+        // 紅色標題列即開關
+        const toggle = e.target.closest('.matches-toggle');
+        if (toggle) {
+            const box = document.getElementById(toggle.dataset.target);
+            if (!box) return;
+            const open = box.classList.toggle('collapsed');
+            toggle.classList.toggle('expanded', !open);
         }
     });
 
     function refresh() {
-        buildMatchTabs();
+        tagMatchCards();
         tagPersonal();
-        document.querySelectorAll('.league-tabs[data-target]').forEach(filterMatches);
     }
 
     function start() {
