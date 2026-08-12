@@ -846,42 +846,42 @@ function generateMatchesHTML(matches) {
                 color: #888;
             }
 
-            /* 手機版 (600px 以下) 超緊湊配置：一頁裝滿 6 場賽事 */
+            /* 手機版 (600px 以下) 配置：六場賽程剛好填滿第一頁面 */
             @media screen and (max-width: 600px) {
                 .match {
-                    margin-bottom: 4px;
-                    padding: 5px 8px;
-                    border-radius: 6px;
+                    margin-bottom: 6px;
+                    padding: 7px 10px;
+                    border-radius: 7px;
                 }
 
                 .match-header {
-                    margin-bottom: 2px;
-                    font-size: 11px;
+                    margin-bottom: 3px;
+                    font-size: 12px;
                 }
 
                 .match-code {
-                    font-size: 11.5px;
-                }
-
-                .match-venue {
-                    font-size: 10.5px;
-                }
-
-                .team-name {
                     font-size: 12.5px;
                 }
 
+                .match-venue {
+                    font-size: 11.5px;
+                }
+
+                .team-name {
+                    font-size: 13.5px;
+                }
+
                 .score {
-                    font-size: 15px;
+                    font-size: 16.5px;
                 }
 
                 .mp-tag {
-                    font-size: 9.5px;
-                    margin-bottom: 0;
+                    font-size: 10.5px;
+                    margin-bottom: 1px;
                 }
 
                 .vs-label {
-                    font-size: 10.5px;
+                    font-size: 11.5px;
                 }
             }
             
