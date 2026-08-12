@@ -228,14 +228,23 @@
     let playerJsonData = null; // 快取的 player.json
 
     /**
-     * 新增隊員功能開放狀態（已依管理者需求全時開放）。
+     * 比賽日當天與隔天不開放新增隊員。
+     * 聯賽固定週二比賽，賽前臨時加人會讓當晚出賽名單與實體計分紙對不上，賽後隔天尚在對帳。
+     * 開放時間：每週四至下週一。
      */
     function isAddPlayerAllowed() {
-        return true;
+        const day = new Date().getDay(); // 0=日 1=一 2=二 3=三
+        return day !== 2 && day !== 3;
     }
 
     /** 切換顯示區塊 */
     async function showSection(section) {
+        if (section === 'player' && !isAddPlayerAllowed()) {
+            alert('⛔ 新增隊員功能僅在每週四至下週一開放。\n比賽期間（週二、週三）暫停開放，請於賽後再行新增。');
+            showSection('match');
+            return;
+        }
+
         document.getElementById('matchSection').style.display = (section === 'match') ? 'block' : 'none';
         document.getElementById('playerSection').style.display = (section === 'player') ? 'block' : 'none';
 
@@ -408,8 +417,13 @@
     function updateAddPlayerBtn() {
         const btn = document.getElementById('btnAddPlayer');
         if (!btn) return;
-        btn.classList.remove('fn-btn-disabled');
-        btn.title = '新增隊員 (開放中)';
+        if (!isAddPlayerAllowed()) {
+            btn.classList.add('fn-btn-disabled');
+            btn.title = '⛔ 比賽期間（週二、週三）暫停開放';
+        } else {
+            btn.classList.remove('fn-btn-disabled');
+            btn.title = '新增隊員 (開放中)';
+        }
     }
     updateAddPlayerBtn(); // 初始執行
     </script>
