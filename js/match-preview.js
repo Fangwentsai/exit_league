@@ -10,9 +10,22 @@
     let _fetchingStats = false;
 
     // ========== Config ==========
-    const SHEET_ID = '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM';
-    const API_KEY = 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4';
     const PERSONAL_RANGE = 'personal!A:N';
+
+    function seasonSheet() {
+        try {
+            const seasonNum = (typeof resolveSeasonNumber === 'function')
+                ? resolveSeasonNumber({})
+                : (typeof CURRENT_SEASON !== 'undefined' ? CURRENT_SEASON : 7);
+            const s = (typeof SEASONS !== 'undefined' && SEASONS[seasonNum]) ? SEASONS[seasonNum] : null;
+            if (s && s.sheetId) return { id: s.sheetId, key: s.apiKey || 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4', label: s.label || '第七屆' };
+        } catch (e) { /* fallback */ }
+        return {
+            id: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
+            key: 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4',
+            label: '第七屆'
+        };
+    }
 
     // ========== 建立 Modal DOM ==========
     function ensureModalDom() {
@@ -65,7 +78,8 @@
         }
         _fetchingStats = true;
         try {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PERSONAL_RANGE}?key=${API_KEY}`;
+            const sheet = seasonSheet();
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheet.id}/values/${PERSONAL_RANGE}?key=${sheet.key}`;
             console.log('📊 正在撈取 personal 工作表...');
             const resp = await fetch(url);
             if (!resp.ok) throw new Error(`API 錯誤: ${resp.status}`);
@@ -194,6 +208,7 @@
 
         const team1Players = players[team1] || [];
         const team2Players = players[team2] || [];
+        const sheet = seasonSheet();
 
         card.innerHTML = `
             <div class="mp-header">
@@ -209,7 +224,7 @@
                 ${renderTeamTable(team2, team2Players, statsMap, 'home')}
             </div>
             <div class="mp-footer">
-                📊 個人戰績來自第六季 Google Sheets，即時更新
+                📊 個人戰績來自${sheet.label} Google Sheets，即時更新
             </div>`;
     };
 
