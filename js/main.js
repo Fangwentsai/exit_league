@@ -1388,6 +1388,115 @@ function updateTeamRankings(data, isS5OrS6 = false) {
     // =================================
 }
 
+// 分組賽程自動分配與頁籤建置 (適用於 S7 及未來分組賽季)
+function distributeScheduleGroups(seasonNum) {
+    try {
+        const season = getSeason(seasonNum);
+        if (!season || !season.groups) return;
+
+        const groups = season.groups;
+        const ORDER = Object.keys(groups);
+
+        function groupOf(team) {
+            if (!team) return null;
+            for (const [g, ts] of Object.entries(groups)) {
+                if (ts.includes(team)) return g;
+            }
+            return null;
+        }
+
+        function homeTeamOf(tr) {
+            const c = tr.querySelectorAll('td.team-cell');
+            return c.length ? c[c.length - 1].textContent.trim() : null;
+        }
+
+        const host = document.getElementById('groupSections');
+        const tabs = document.getElementById('groupTabs');
+        const sourceTbody = document.querySelector('#sourceTable tbody') || document.querySelector('.schedule-table tbody');
+
+        if (!host || !tabs || !sourceTbody) return;
+
+        console.log('📡 [distributeScheduleGroups] 開始初始化分組區塊與頁籤...');
+
+        // 建立分組區塊與頁籤 (若尚未建立)
+        if (!host.querySelector('.group-block')) {
+            host.innerHTML = ORDER.map((k, idx) => `
+                <section class="group-block" data-group="${k}"${idx ? ' hidden' : ''}>
+                    <div class="search-section">
+                        <div class="search-title">快速篩選隊伍(可複選)</div>
+                        <div class="team-filters">
+                            <div class="filter-row">
+                                ${groups[k].slice(0, 3).map(t => `<button class="team-btn" data-team="${t}">${t}</button>`).join('')}
+                            </div>
+                            <div class="filter-row">
+                                ${groups[k].slice(3).map(t => `<button class="team-btn" data-team="${t}">${t}</button>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <table class="schedule-table group-table">
+                            <thead><tr><th>日期</th><th>客隊</th><th>比分</th><th>主隊</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="group-empty" hidden>沒有符合的比賽</div>
+                    </div>
+                </section>`).join('');
+
+            tabs.innerHTML = ORDER.map((k, idx) =>
+                `<button class="group-tab${idx ? '' : ' active'}" data-group="${k}">${k}</button>`).join('');
+
+            tabs.querySelectorAll('.group-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.querySelectorAll('.group-tab').forEach(t => t.classList.toggle('active', t === tab));
+                    host.querySelectorAll('.group-block').forEach(b => {
+                        b.hidden = b.dataset.group !== tab.dataset.group;
+                    });
+                });
+            });
+
+            const state = new WeakMap();
+            host.addEventListener('click', e => {
+                const btn = e.target.closest('.team-btn');
+                if (!btn || !host.contains(btn)) return;
+                const block = btn.closest('.group-block');
+                if (!block) return;
+                let picked = state.get(block);
+                if (!picked) { picked = new Set(); state.set(block, picked); }
+                const team = btn.dataset.team;
+                picked.has(team) ? picked.delete(team) : picked.add(team);
+                block.querySelectorAll('.team-btn').forEach(b =>
+                    b.classList.toggle('selected', picked.has(b.dataset.team)));
+
+                const pickedArr = Array.from(picked);
+                let shown = 0;
+                block.querySelectorAll('tbody tr').forEach(tr => {
+                    const cells = Array.from(tr.querySelectorAll('td.team-cell')).map(c => c.textContent.trim());
+                    const hit = !pickedArr.length || cells.some(c => pickedArr.includes(c));
+                    tr.style.display = hit ? '' : 'none';
+                    if (hit) shown++;
+                });
+                const empty = block.querySelector('.group-empty');
+                if (empty) empty.hidden = shown > 0;
+            });
+        }
+
+        // 分配 60 場比賽至各自組別表格
+        const rows = Array.from(sourceTbody.querySelectorAll('tr'));
+        console.log(`📡 [distributeScheduleGroups] 來源共 ${rows.length} 列，開始分配至 ${ORDER.join(', ')}`);
+
+        for (const tr of rows) {
+            const homeTeam = homeTeamOf(tr);
+            const grp = groupOf(homeTeam);
+            if (!grp) continue;
+            const targetBody = host.querySelector(`.group-block[data-group="${grp}"] tbody`);
+            if (targetBody) targetBody.appendChild(tr);
+        }
+        console.log(`✅ [distributeScheduleGroups] 第 ${seasonNum} 屆賽程分組分配完成！`);
+    } catch (err) {
+        console.error('❌ [distributeScheduleGroups] 失敗:', err);
+    }
+}
+
 // 載入賽程數據
 async function loadScheduleData(page) {
     console.log('=== 開始載入賽程數據 ===', page);
@@ -1539,6 +1648,9 @@ async function loadScheduleData(page) {
         if (tableBody) {
             tableBody.innerHTML = tableContent;
             debugLog('表格內容已更新');
+
+            // 若為分組賽季 (如 S7)，在 main.js 中自動建置頁籤並分配賽程列
+            distributeScheduleGroups(seasonNum);
 
             // 添加日期單元格的點擊事件
             document.querySelectorAll('.clickable-date').forEach(dateElement => {
