@@ -51,20 +51,12 @@ body {
     margin-bottom: 20px;
     color: #333;
     position: relative;
-    padding-left: 15px;
+    padding-left: 0;
     font-weight: bold;
 }
 
 .search-title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 18px;
-    background-color: #fa363a;
-    border-radius: 2px;
+    display: none;
 }
 
 .team-filters {
@@ -544,11 +536,7 @@ tr:has(.highlight-team) {
     }
     
     .search-title::before {
-        left: 50%;
-        transform: translateX(-50%);
-        top: -8px;
-        width: 30px;
-        height: 3px;
+        display: none;
     }
 
     .schedule-table th {
