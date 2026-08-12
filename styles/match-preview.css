@@ -42,22 +42,22 @@
 .mp-header {
     background: #dc3545;
     color: #fff;
-    padding: 16px 20px;
+    padding: 10px 12px;
     position: relative;
     box-sizing: border-box;
 }
 
 .mp-header .mp-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border: none;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -67,13 +67,13 @@
 }
 
 .mp-header .mp-close:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .mp-vs-row {
     position: relative;
     width: 100%;
-    min-height: 48px;
+    min-height: 44px;
     box-sizing: border-box;
 }
 
@@ -83,38 +83,29 @@
     bottom: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     box-sizing: border-box;
 }
 
 .mp-team-box.team1 {
-    left: 12px;
-    right: calc(50% + 36px);
-    justify-content: flex-end;
-    text-align: right;
-    padding-right: 8px;
+    left: 6px;
+    right: calc(50% + 32px);
+    padding: 0 4px;
 }
 
 .mp-team-box.team2 {
-    left: calc(50% + 36px);
-    right: 42px;
-    justify-content: flex-start;
-    text-align: left;
-    padding-left: 8px;
-}
-
-.mp-team-box.team1 .mp-team-title {
-    text-align: right;
-}
-
-.mp-team-box.team2 .mp-team-title {
-    text-align: left;
+    left: calc(50% + 32px);
+    right: 6px;
+    padding: 0 4px;
 }
 
 .mp-team-title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.2;
     word-break: break-word;
+    text-align: center;
     margin: 0;
 }
 
@@ -303,19 +294,15 @@
     }
 
     .mp-team-box.team1 {
-        left: 8px;
-        right: calc(50% + 30px);
-        justify-content: flex-end;
-        text-align: right;
-        padding-right: 6px;
+        left: 4px;
+        right: calc(50% + 28px);
+        padding: 0 2px;
     }
 
     .mp-team-box.team2 {
-        left: calc(50% + 30px);
-        right: 36px;
-        justify-content: flex-start;
-        text-align: left;
-        padding-left: 6px;
+        left: calc(50% + 28px);
+        right: 4px;
+        padding: 0 2px;
     }
 
     .mp-vs-center {
