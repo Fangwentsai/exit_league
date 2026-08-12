@@ -334,7 +334,7 @@
                     const addedTeams = new Set();
                     for (const [gName, tList] of Object.entries(curSeasonObj.groups)) {
                         const groupEl = document.createElement('optgroup');
-                        groupEl.label = `🎯 ${gName}`;
+                        groupEl.label = `--- ${gName} ---`;
 
                         tList.forEach(team => {
                             if (playerJsonData[team]) {
@@ -355,7 +355,7 @@
                     const remainingTeams = Object.keys(playerJsonData).filter(t => !addedTeams.has(t));
                     if (remainingTeams.length > 0) {
                         const otherGroup = document.createElement('optgroup');
-                        otherGroup.label = '其他隊伍';
+                        otherGroup.label = '--- 其他隊伍 ---';
                         remainingTeams.forEach(team => {
                             const opt = document.createElement('option');
                             opt.value = team;
