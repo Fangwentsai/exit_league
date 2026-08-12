@@ -833,17 +833,19 @@ function generateMatchesHTML(matches) {
             }
 
             .mp-tag {
-                font-size: 11px;
+                font-size: 15px;
                 color: #dc3545;
                 font-weight: 700;
                 letter-spacing: 0.5px;
-                margin-bottom: 2px;
+                margin-bottom: 1px;
+                line-height: 1.1;
             }
 
             .vs-label {
-                font-size: 12px;
+                font-size: 12.5px;
                 font-weight: 700;
                 color: #888;
+                line-height: 1;
             }
 
             /* 手機版 (600px 以下) 配置：六場賽程剛好填滿第一頁面 */
@@ -876,12 +878,12 @@ function generateMatchesHTML(matches) {
                 }
 
                 .mp-tag {
-                    font-size: 10.5px;
-                    margin-bottom: 1px;
+                    font-size: 13.5px;
+                    margin-bottom: 0;
                 }
 
                 .vs-label {
-                    font-size: 11.5px;
+                    font-size: 11px;
                 }
             }
             
