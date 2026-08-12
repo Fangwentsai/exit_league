@@ -419,8 +419,12 @@
         rosterPanel.style.display = 'block';
     }
 
+    let isSubmittingAddPlayer = false;
+
     /** 送出新增隊員 */
     async function submitAddPlayer() {
+        if (isSubmittingAddPlayer) return;
+
         const team = document.getElementById('teamSelect').value;
         const name = document.getElementById('newPlayerName').value.trim();
 
@@ -436,19 +440,17 @@
             return;
         }
 
+        isSubmittingAddPlayer = true;
+        const btn = document.getElementById('addPlayerSubmit');
+        btn.textContent = '送出中...';
+        btn.disabled = true;
+
         // 更新本地資料
         playerJsonData[team].push(name);
         const newJson = JSON.stringify(playerJsonData, null, 2);
 
         // 透過 GAS 寫回 GitHub
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbwJ3xPlfON7pkmeVKzpQImQhnlzpMz6Fn4Z1E7PwXVBZBvlncA7VCQ3tITyq9x8puAu/exec';
-        const btn = document.getElementById('addPlayerSubmit');
-        btn.textContent = '送出中...';
-        btn.disabled = true;
-
-        // 1. 同時在前端直接觸發 Vercel Deploy Hook (no-cors)，確保 100% 自動發佈至 Production
-        const VERCEL_HOOK_URL = 'https://api.vercel.com/v1/integrations/deploy/prj_llME3UGDmsL3mdPFMhtpNPi1JmM0/CJN21VcKDS';
-        fetch(VERCEL_HOOK_URL, { method: 'POST', mode: 'no-cors' }).catch(() => {});
 
         try {
             const res = await fetch(GAS_URL, {
@@ -510,6 +512,7 @@
         } finally {
             btn.textContent = '送出';
             btn.disabled = false;
+            isSubmittingAddPlayer = false;
         }
     }
 
