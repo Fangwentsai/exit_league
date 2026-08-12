@@ -712,7 +712,7 @@ function generateMatchesHTML(matches) {
                 <div class="match ${clickableClass}" ${dataAttr}>
                     <div class="match-header">
                         <span class="match-code">${match.gameCode}</span>
-                        <span class="match-venue">${match.venue || ''}</span>
+                        <span class="match-venue">${match.venue ? `@${match.venue}` : ''}</span>
                     </div>
                     <div class="match-teams">
                         <div class="team team1">
@@ -739,10 +739,10 @@ function generateMatchesHTML(matches) {
         style.textContent = `
             .match {
                 background-color: #f8f9fa;
-                border-radius: 6px;
-                margin-bottom: 5px;
-                padding: 6px 10px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                border-radius: 8px;
+                margin-bottom: 10px;
+                padding: 10px 14px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.06);
                 border: 1px solid #eaeaea;
             }
             
@@ -754,29 +754,29 @@ function generateMatchesHTML(matches) {
             .clickable-match:hover {
                 background-color: #f1f3f5;
                 transform: translateY(-1px);
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             }
             
             .match-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 2px;
-                font-size: 11.5px;
-                color: #777;
+                margin-bottom: 4px;
+                font-size: 13px;
+                color: #666;
                 line-height: 1.2;
             }
             
             .match-code {
                 font-weight: bold;
                 color: #333;
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .match-venue {
                 font-style: italic;
                 color: #777;
-                font-size: 11px;
+                font-size: 12px;
             }
             
             .match-teams {
@@ -790,7 +790,7 @@ function generateMatchesHTML(matches) {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                width: 43%;
+                width: 42%;
             }
             
             .team1 {
@@ -805,7 +805,7 @@ function generateMatchesHTML(matches) {
             
             .team-name {
                 font-weight: bold;
-                font-size: 13px;
+                font-size: 15px;
                 margin-bottom: 0;
                 white-space: nowrap;
                 overflow: hidden;
@@ -816,7 +816,7 @@ function generateMatchesHTML(matches) {
             }
             
             .score {
-                font-size: 16px;
+                font-size: 18px;
                 font-weight: bold;
                 color: #dc3545;
                 line-height: 1;
@@ -833,17 +833,56 @@ function generateMatchesHTML(matches) {
             }
 
             .mp-tag {
-                font-size: 10px;
+                font-size: 11px;
                 color: #dc3545;
                 font-weight: 700;
                 letter-spacing: 0.5px;
-                margin-bottom: 1px;
+                margin-bottom: 2px;
             }
 
             .vs-label {
-                font-size: 11px;
+                font-size: 12px;
                 font-weight: 700;
                 color: #888;
+            }
+
+            /* 手機版 (600px 以下) 超緊湊配置：一頁裝滿 6 場賽事 */
+            @media screen and (max-width: 600px) {
+                .match {
+                    margin-bottom: 4px;
+                    padding: 5px 8px;
+                    border-radius: 6px;
+                }
+
+                .match-header {
+                    margin-bottom: 2px;
+                    font-size: 11px;
+                }
+
+                .match-code {
+                    font-size: 11.5px;
+                }
+
+                .match-venue {
+                    font-size: 10.5px;
+                }
+
+                .team-name {
+                    font-size: 12.5px;
+                }
+
+                .score {
+                    font-size: 15px;
+                }
+
+                .mp-tag {
+                    font-size: 9.5px;
+                    margin-bottom: 0;
+                }
+
+                .vs-label {
+                    font-size: 10.5px;
+                }
             }
             
             .match-date {
