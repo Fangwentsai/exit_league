@@ -6,8 +6,15 @@
 // Google Sheets API 配置
 const SHEETS_CONFIG = {
     CLIENT_ID: '945502427007-dq3ldlv77r1u0h6me3s6jj948dajk6gm.apps.googleusercontent.com',
-    API_KEY: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
-    SCHEDULE_SHEET_ID: '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM', // 讀取比賽場次 (第六屆)
+    // 讀取比賽場次：跟著 config.js 的當季走，不要寫死屆數
+    get API_KEY() {
+        try { return SEASONS[CURRENT_SEASON].apiKey; }
+        catch (e) { return 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4'; }
+    },
+    get SCHEDULE_SHEET_ID() {
+        try { return SEASONS[CURRENT_SEASON].sheetId; }
+        catch (e) { return null; }
+    },
     RESULT_SHEET_ID: '1V2hj-9R-C2GWYu6Wo-por-gNvm56vGFPjx4ELcx3XtE'    // 寫入比賽結果
 };
 
