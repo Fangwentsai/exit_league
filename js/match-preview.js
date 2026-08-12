@@ -185,9 +185,9 @@
             <div class="mp-header">
                 <button class="mp-close" onclick="closeMatchPreview()">✕</button>
                 <div class="mp-vs-row">
-                    <span class="mp-team-title">${team1}</span>
+                    <span class="mp-team-title team1">${team1}</span>
                     <div class="mp-vs-center"><span class="mp-preview-label">PREVIEW</span><span class="mp-vs-badge">VS</span></div>
-                    <span class="mp-team-title">${team2}</span>
+                    <span class="mp-team-title team2">${team2}</span>
                 </div>
                 <div class="mp-loading-hint">正在載入個人戰績...</div>
             </div>
@@ -214,9 +214,9 @@
             <div class="mp-header">
                 <button class="mp-close" onclick="closeMatchPreview()">✕</button>
                 <div class="mp-vs-row">
-                    <span class="mp-team-title">${team1}</span>
+                    <span class="mp-team-title team1">${team1}</span>
                     <div class="mp-vs-center"><span class="mp-preview-label">PREVIEW</span><span class="mp-vs-badge">VS</span></div>
-                    <span class="mp-team-title">${team2}</span>
+                    <span class="mp-team-title team2">${team2}</span>
                 </div>
             </div>
             <div class="mp-body">
