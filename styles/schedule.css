@@ -232,8 +232,8 @@ body {
     background-color: #dc3545;
     color: white;
     font-weight: bold;
-    font-size: 1.05em;
-    padding: 14px 10px;
+    font-size: 0.95em;
+    padding: 6px 10px;
 }
 
 /* 表格雙數行背景色 */
@@ -1151,8 +1151,8 @@ tr.clickable-match:active {
     background-color: #dc3545;
     color: white;
     font-weight: bold;
-    font-size: 1.05em;
-    padding: 14px 6px;
+    font-size: 0.95em;
+    padding: 6px 6px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     border-bottom: 2px solid #c82333;
 }
@@ -1185,10 +1185,10 @@ tr.clickable-match:active {
 }
 
 .group-tab.active {
-    background-color: #e35d6a;
-    border-color: #e35d6a;
+    background-color: #dc3545;
+    border-color: #dc3545;
     color: #fff;
-    box-shadow: 0 2px 4px rgba(227, 93, 106, 0.3);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
 }
 
 .group-block[hidden] { display: none; }
