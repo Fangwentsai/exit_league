@@ -1423,7 +1423,7 @@ function distributeScheduleGroups(seasonNum) {
             host.innerHTML = ORDER.map((k, idx) => `
                 <section class="group-block" data-group="${k}"${idx ? ' hidden' : ''}>
                     <div class="search-section">
-                        <div class="search-title">快速篩選隊伍(可複選)</div>
+                        <div class="search-title">篩選隊伍</div>
                         <div class="team-filters">
                             <div class="filter-row">
                                 ${groups[k].slice(0, 3).map(t => `<button class="team-btn" data-team="${t}">${t}</button>`).join('')}
