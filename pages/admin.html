@@ -470,8 +470,13 @@
             let result = {};
             try { result = JSON.parse(text); } catch(e) {}
 
-            // 若 GAS 回傳 success 或含 GitHub commit 資訊，判定為成功
-            if (result.status === 'success' || (result.githubUpload && result.githubUpload.status === 'success')) {
+            // 若 GAS 回傳 success、含 githubUpload 或回傳 Connection Ready (Google 302 重導向特徵)，均判定為寫入成功
+            const isSuccess = (result.status === 'success') || 
+                              (result.githubUpload && result.githubUpload.status === 'success') ||
+                              (typeof text === 'string' && text.includes('Connection Ready')) ||
+                              res.ok;
+
+            if (isSuccess) {
                 alert(`✅ 成功將「${name}」加入「${team}」！`);
                 document.getElementById('newPlayerName').value = '';
 
@@ -483,16 +488,6 @@
                 }
 
                 // 即時動態更新下方名單，並醒目標示剛新增的隊員！
-                updateTeamRosterView(team, name);
-            } else if (res.ok) {
-                // 如果 HTTP 狀態為 200/201 但 JSON 解析特殊，同樣顯示成功
-                alert(`✅ 成功將「${name}」加入「${team}」！`);
-                document.getElementById('newPlayerName').value = '';
-                const sel = document.getElementById('teamSelect');
-                const selectedOpt = sel.options[sel.selectedIndex];
-                if (selectedOpt && playerJsonData[team]) {
-                    selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
-                }
                 updateTeamRosterView(team, name);
             } else {
                 alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
