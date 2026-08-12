@@ -719,7 +719,7 @@ function generateMatchesHTML(matches) {
                             <div class="team-name">${match.team1}</div>
                             <div class="score">${match.score1 || ''}</div>
                         </div>
-                        <div class="vs">${showPreview ? '<div style="font-size:14px;color:#dc3545;font-weight:700;letter-spacing:1px;">Preview</div>' : ''}vs</div>
+                        <div class="vs">${showPreview ? '<span class="mp-tag">Preview</span>' : ''}<span class="vs-label">vs</span></div>
                         <div class="team team2">
                             <div class="team-name">${match.team2}</div>
                             <div class="score">${match.score2 || ''}</div>
@@ -738,90 +738,112 @@ function generateMatchesHTML(matches) {
         style.id = 'match-style';
         style.textContent = `
             .match {
-                background-color: #f5f5f5;
-                border-radius: 8px;
-                margin-bottom: 10px;
-                padding: 10px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-color: #f8f9fa;
+                border-radius: 6px;
+                margin-bottom: 5px;
+                padding: 6px 10px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                border: 1px solid #eaeaea;
             }
             
             .clickable-match {
                 cursor: pointer;
-                transition: all 0.2s ease;
+                transition: all 0.15s ease;
             }
             
             .clickable-match:hover {
-                background-color: #e9e9e9;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+                background-color: #f1f3f5;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
             
             .match-header {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 5px;
-                font-size: 14px;
-                color: #666;
+                align-items: center;
+                margin-bottom: 2px;
+                font-size: 11.5px;
+                color: #777;
+                line-height: 1.2;
             }
             
             .match-code {
                 font-weight: bold;
                 color: #333;
+                font-size: 12px;
             }
             
             .match-venue {
                 font-style: italic;
+                color: #777;
+                font-size: 11px;
             }
             
             .match-teams {
                 display: flex;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: space-between;
-                padding: 0 5px;
+                padding: 0;
             }
             
             .team {
                 display: flex;
-                flex-direction: column;
-                width: 42%;
+                flex-direction: row;
+                align-items: center;
+                width: 43%;
             }
             
             .team1 {
-                align-items: flex-start;
+                justify-content: flex-start;
                 text-align: left;
             }
             
             .team2 {
-                align-items: flex-end;
+                justify-content: flex-end;
                 text-align: right;
             }
             
             .team-name {
                 font-weight: bold;
-                font-size: clamp(11.5px, 3.5vw, 16px);
-                margin-bottom: 2px;
+                font-size: 13px;
+                margin-bottom: 0;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 100%;
                 letter-spacing: -0.2px;
+                color: #212529;
             }
             
             .score {
-                font-size: 22px;
+                font-size: 16px;
                 font-weight: bold;
-                color: #c00;
+                color: #dc3545;
                 line-height: 1;
             }
             
             .vs {
-                align-self: center;
-                font-weight: bold;
-                color: #666;
-                padding: 0 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 0 4px;
                 flex-shrink: 0;
-                font-size: 14px;
-                margin-top: 8px;
+                line-height: 1;
+            }
+
+            .mp-tag {
+                font-size: 10px;
+                color: #dc3545;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                margin-bottom: 1px;
+            }
+
+            .vs-label {
+                font-size: 11px;
+                font-weight: 700;
+                color: #888;
             }
             
             .match-date {
