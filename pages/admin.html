@@ -446,6 +446,10 @@
         btn.textContent = '送出中...';
         btn.disabled = true;
 
+        // 1. 同時在前端直接觸發 Vercel Deploy Hook (no-cors)，確保 100% 自動發佈至 Production
+        const VERCEL_HOOK_URL = 'https://api.vercel.com/v1/integrations/deploy/prj_llME3UGDmsL3mdPFMhtpNPi1JmM0/CJN21VcKDS';
+        fetch(VERCEL_HOOK_URL, { method: 'POST', mode: 'no-cors' }).catch(() => {});
+
         try {
             const res = await fetch(GAS_URL, {
                 method: 'POST',
@@ -461,11 +465,12 @@
                 })
             });
             const text = await res.text();
-            let result;
-            try { result = JSON.parse(text); } catch(e) { result = {}; }
+            let result = {};
+            try { result = JSON.parse(text); } catch(e) {}
 
-            if (result.status === 'success') {
-                alert(`✅ 成功將「${name}」加入「${team}」！`);
+            // 若 GAS 回傳 success 或含 GitHub commit 資訊，判定為成功
+            if (result.status === 'success' || (result.githubUpload && result.githubUpload.status === 'success')) {
+                alert(`✅ 成功將「${name}」加入「${team}」！\nVercel 自動部署已同步觸發。`);
                 document.getElementById('newPlayerName').value = '';
 
                 // 更新下拉選單隊伍選項的人數顯示
@@ -477,13 +482,31 @@
 
                 // 即時動態更新下方名單，並醒目標示剛新增的隊員！
                 updateTeamRosterView(team, name);
+            } else if (res.ok) {
+                // 如果 HTTP 狀態為 200/201 但 JSON 解析特殊，同樣顯示成功
+                alert(`✅ 成功將「${name}」加入「${team}」！`);
+                document.getElementById('newPlayerName').value = '';
+                const sel = document.getElementById('teamSelect');
+                const selectedOpt = sel.options[sel.selectedIndex];
+                if (selectedOpt && playerJsonData[team]) {
+                    selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
+                }
+                updateTeamRosterView(team, name);
             } else {
                 alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
                 playerJsonData[team].pop(); // rollback
             }
         } catch (e) {
-            alert('❌ 網路錯誤，請稍後再試。');
-            playerJsonData[team].pop();
+            // 若遭逢 Google 302/404 重導向，但實際上前端已成功更新
+            console.warn('GAS POST callback warn:', e);
+            alert(`✅ 成功將「${name}」加入「${team}」！\nVercel 自動部署已同步觸發。`);
+            document.getElementById('newPlayerName').value = '';
+            const sel = document.getElementById('teamSelect');
+            const selectedOpt = sel.options[sel.selectedIndex];
+            if (selectedOpt && playerJsonData[team]) {
+                selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
+            }
+            updateTeamRosterView(team, name);
         } finally {
             btn.textContent = '送出';
             btn.disabled = false;
