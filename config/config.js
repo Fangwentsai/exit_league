@@ -40,14 +40,14 @@ const SEASONS = {
     6: {
         sheetId: '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM',
         apiKey: DEFAULT_API_KEY,
-        label: '第六屆', startDate: '2026/1/27', rankRange: 'O:V',
+        label: '第六屆', startDate: '2026/1/27', endDate: '2026/6/2', rankRange: 'O:V',
         schedulePage: 'scheduleS6', rankPage: 'rankS6', resultDir: 'season6'
     },
     7: {
         sheetId: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
         apiKey: DEFAULT_API_KEY,
         // 2026/8/18 開打（週二賽制），10/27 結束
-        label: '第七屆', startDate: '2026/8/18', rankRange: 'O:V',
+        label: '第七屆', startDate: '2026/8/18', endDate: '2026/10/27', rankRange: 'O:V',
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。

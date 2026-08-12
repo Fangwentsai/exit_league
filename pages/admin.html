@@ -228,21 +228,66 @@
     let playerJsonData = null; // 快取的 player.json
 
     /**
-     * 比賽日當天與隔天不開放新增隊員。
-     * 聯賽固定週二比賽，賽前臨時加人會讓當晚出賽名單與實體計分紙對不上，賽後隔天尚在對帳。
-     * 開放時間：每週四至下週一。
+     * 動態計算當前賽季（CURRENT_SEASON）的加人截止日（最後一場比賽前 1 個月）。
+     */
+    function getAddPlayerCutoffDate() {
+        try {
+            const season = (typeof SEASONS !== 'undefined' && typeof CURRENT_SEASON !== 'undefined')
+                ? SEASONS[CURRENT_SEASON]
+                : null;
+            if (season && season.endDate) {
+                const end = new Date(season.endDate);
+                if (!isNaN(end.getTime())) {
+                    // 往前推算 1 個月
+                    const cutoff = new Date(end);
+                    cutoff.setMonth(cutoff.getMonth() - 1);
+                    return cutoff;
+                }
+            }
+        } catch(e) {}
+        return null;
+    }
+
+    /**
+     * 新增隊員開放狀態判斷：
+     * 1. 賽事最後一個月鎖定（由當季最後一場比賽往前動態推算 1 個月）。
+     * 2. 每週二（比賽日）與週三（賽後對帳）固定鎖定。
+     * 3. 每週四至下週一開放。
      */
     function isAddPlayerAllowed() {
-        const day = new Date().getDay(); // 0=日 1=一 2=二 3=三
-        return day !== 2 && day !== 3;
+        const now = new Date();
+        
+        // 1. 動態最後一個月截止日判定
+        const cutoffDate = getAddPlayerCutoffDate();
+        if (cutoffDate && now >= cutoffDate) {
+            return { allowed: false, reason: 'cutoff', cutoffDate };
+        }
+
+        // 2. 每週二、三比賽對帳鎖定 (0=日 1=一 2=二 3=三)
+        const day = now.getDay();
+        if (day === 2 || day === 3) {
+            return { allowed: false, reason: 'gameDay' };
+        }
+
+        return { allowed: true };
     }
 
     /** 切換顯示區塊 */
     async function showSection(section) {
-        if (section === 'player' && !isAddPlayerAllowed()) {
-            alert('⛔ 新增隊員功能僅在每週四至下週一開放。\n比賽期間（週二、週三）暫停開放，請於賽後再行新增。');
-            showSection('match');
-            return;
+        if (section === 'player') {
+            const check = isAddPlayerAllowed();
+            if (!check.allowed) {
+                if (check.reason === 'cutoff') {
+                    const y = check.cutoffDate.getFullYear();
+                    const m = String(check.cutoffDate.getMonth() + 1).padStart(2, '0');
+                    const d = String(check.cutoffDate.getDate()).padStart(2, '0');
+                    alert(`搜哩！\n比賽結束前最後一個月（${y}/${m}/${d} 起）不可以新增隊員，\n報名功能已暫停開放。`);
+                } else {
+                    alert('⛔ 新增隊員功能僅在每週四至下週一開放。\n比賽期間（週二、週三）暫停開放，請於賽後再行新增。');
+                }
+                showSection('match');
+                return;
+            }
         }
 
         document.getElementById('matchSection').style.display = (section === 'match') ? 'block' : 'none';
@@ -417,9 +462,17 @@
     function updateAddPlayerBtn() {
         const btn = document.getElementById('btnAddPlayer');
         if (!btn) return;
-        if (!isAddPlayerAllowed()) {
+        const check = isAddPlayerAllowed();
+        if (!check.allowed) {
             btn.classList.add('fn-btn-disabled');
-            btn.title = '⛔ 比賽期間（週二、週三）暫停開放';
+            if (check.reason === 'cutoff') {
+                const y = check.cutoffDate.getFullYear();
+                const m = String(check.cutoffDate.getMonth() + 1).padStart(2, '0');
+                const d = String(check.cutoffDate.getDate()).padStart(2, '0');
+                btn.title = `⛔ 賽季最後一個月（${y}/${m}/${d} 起）暫停新增隊員`;
+            } else {
+                btn.title = '⛔ 比賽期間（週二、週三）暫停開放';
+            }
         } else {
             btn.classList.remove('fn-btn-disabled');
             btn.title = '新增隊員 (開放中)';
