@@ -1161,18 +1161,18 @@ tr.clickable-match:active {
    配色沿用全站既有的 #dc3545 主色與 .team-btn 樣式，不另立一套。 */
 .group-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
+    gap: 6px;
+    margin-bottom: 8px;
 }
 
 .group-tab {
     flex: 1;
     font: inherit;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
-    padding: 12px 8px;
-    border: 2px solid #555;
-    border-radius: 8px;
+    padding: 5px 6px;
+    border: 1px solid #555;
+    border-radius: 6px;
     background-color: #fff;
     color: #333;
     cursor: pointer;
@@ -1185,10 +1185,10 @@ tr.clickable-match:active {
 }
 
 .group-tab.active {
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background-color: #e35d6a;
+    border-color: #e35d6a;
     color: #fff;
-    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+    box-shadow: 0 2px 4px rgba(227, 93, 106, 0.3);
 }
 
 .group-block[hidden] { display: none; }
