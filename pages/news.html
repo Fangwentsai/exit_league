@@ -866,9 +866,9 @@
 
         <!-- 手機版快速導航按鈕 -->
         <div class="mobile-quick-nav">
-            <a href="javascript:void(0)" onclick="window.loadContent('scheduleS7')"><span
+            <a href="javascript:void(0)" onclick="window.loadContent(SEASONS[CURRENT_SEASON].schedulePage)"><span
                     class="nav-arrow">▸</span>賽程</a>
-            <a href="javascript:void(0)" onclick="window.loadContent('rankS7')"><span class="nav-arrow">▸</span>排名</a>
+            <a href="javascript:void(0)" onclick="window.loadContent(SEASONS[CURRENT_SEASON].rankPage)"><span class="nav-arrow">▸</span>排名</a>
             <a href="javascript:void(0)"
                 onclick="const ns = document.getElementById('news-section'); if(ns) { window.scrollTo({top: ns.getBoundingClientRect().top + window.pageYOffset - 65, behavior: 'smooth'}); }"><span
                     class="nav-arrow">▸</span>戰報</a>
