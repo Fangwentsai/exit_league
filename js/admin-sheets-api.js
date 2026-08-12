@@ -21,19 +21,25 @@ const SHEETS_CONFIG = {
 // Google Apps Script URL (用於保存資料)
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ3xPlfON7pkmeVKzpQImQhnlzpMz6Fn4Z1E7PwXVBZBvlncA7VCQ3tITyq9x8puAu/exec';
 
+/** 開啟除錯日誌（發布模式下關閉以維持控制台乾淨） */
+const ENABLE_SHEETS_DEBUG_LOGS = false;
+function debugLog(...args) {
+    if (ENABLE_SHEETS_DEBUG_LOGS) console.log(...args);
+}
+
 /**
  * 動態載入比賽資料
  * 從 Google Sheets 載入前後三天的比賽資料
  */
 async function loadGames() {
     try {
-        console.log('🚀 開始載入比賽資料...');
+        debugLog('🚀 開始載入比賽資料...');
         document.getElementById('loadingGames').style.display = 'block';
         document.getElementById('loadingGames').textContent = '載入比賽資料中...';
         
         // 獲取相關的日期範圍（前3天到後3天）
         const today = new Date();
-        console.log('📅 當前日期:', today.toLocaleDateString());
+        debugLog('📅 當前日期:', today.toLocaleDateString());
         const targetDates = [];
         
         for (let i = -3; i <= 3; i++) {
@@ -44,29 +50,29 @@ async function loadGames() {
             targetDates.push(formattedDate);
         }
         
-        console.log('🗓️ 搜尋日期範圍:', targetDates);
-        console.log('🔧 使用的API配置:', {
+        debugLog('🗓️ 搜尋日期範圍:', targetDates);
+        debugLog('🔧 使用的API配置:', {
             API_KEY: SHEETS_CONFIG.API_KEY,
             SHEET_ID: SHEETS_CONFIG.SCHEDULE_SHEET_ID
         });
         
         // 從 Google Sheets 載入比賽資料
-        console.log('📡 開始呼叫Google Sheets API...');
+        debugLog('📡 開始呼叫Google Sheets API...');
         const games = await loadGamesFromSheet(targetDates);
-        console.log(`📊 API回傳 ${games.length} 場比賽:`, games);
+        debugLog(`📊 API回傳 ${games.length} 場比賽:`, games);
         
         const select = document.getElementById('gameSelect');
         select.innerHTML = '<option value="">請選擇比賽...</option>';
         
         if (games.length === 0) {
-            console.log('⚠️ 沒有找到比賽，使用備用資料或檢查API');
+            debugLog('⚠️ 沒有找到比賽，使用備用資料或檢查API');
             const option = document.createElement('option');
             option.value = '';
             option.textContent = '目前沒有可用的比賽';
             option.disabled = true;
             select.appendChild(option);
         } else {
-            console.log(`✅ 成功載入 ${games.length} 場比賽`);
+            debugLog(`✅ 成功載入 ${games.length} 場比賽`);
             // 按 gamecode 數字排序（g41, g42, g43, g44...）
             games.sort((a, b) => {
                 // 提取數字部分進行比較
@@ -125,7 +131,7 @@ function formatDate(date) {
  */
 async function loadGamesFromSheet(targetDates) {
     try {
-        console.log('🔍 開始從 Google Sheets 載入比賽資料...');
+        debugLog('🔍 開始從 Google Sheets 載入比賽資料...');
         
         // 嘗試多種可能的工作表名稱（根據API測試結果更新）
         const possibleSheetNames = [
@@ -139,7 +145,7 @@ async function loadGamesFromSheet(targetDates) {
         // 逐一嘗試不同的工作表名稱
         for (const sheetName of possibleSheetNames) {
             try {
-                console.log(`🔄 嘗試工作表: ${sheetName}`);
+                debugLog(`🔄 嘗試工作表: ${sheetName}`);
                 
                 const range = `${sheetName}!A:H`;
                 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_CONFIG.SCHEDULE_SHEET_ID}/values/${range}?key=${SHEETS_CONFIG.API_KEY}`;
@@ -150,36 +156,36 @@ async function loadGamesFromSheet(targetDates) {
                     const data = await response.json();
                     
                     if (data.values && data.values.length > 0) {
-                        console.log(`✅ 成功讀取工作表: ${sheetName}`);
+                        debugLog(`✅ 成功讀取工作表: ${sheetName}`);
                         games = parseGamesData(data.values, targetDates);
                         successfulSheet = sheetName;
                         break;
                     }
                 } else if (response.status === 400) {
                     // 工作表不存在，繼續嘗試下一個
-                    console.log(`❌ 工作表不存在: ${sheetName}`);
+                    debugLog(`❌ 工作表不存在: ${sheetName}`);
                     continue;
                 } else {
                     console.error(`❌ API 錯誤 (${sheetName}):`, response.status, response.statusText);
                 }
                 
             } catch (error) {
-                console.log(`❌ 讀取工作表失敗 (${sheetName}):`, error.message);
+                debugLog(`❌ 讀取工作表失敗 (${sheetName}):`, error.message);
                 continue;
             }
         }
         
         if (games.length > 0) {
-            console.log(`✅ 成功從工作表 "${successfulSheet}" 載入 ${games.length} 場比賽`);
+            debugLog(`✅ 成功從工作表 "${successfulSheet}" 載入 ${games.length} 場比賽`);
             return games;
         } else {
-            console.log('⚠️ 所有工作表都無法讀取，使用備用資料');
+            debugLog('⚠️ 所有工作表都無法讀取，使用備用資料');
             return getStaticGames(targetDates);
         }
         
     } catch (error) {
         console.error('❌ 從 Google Sheets 載入比賽資料失敗:', error);
-        console.log('🔄 使用備用靜態資料');
+        debugLog('🔄 使用備用靜態資料');
         return getStaticGames(targetDates);
     }
 }
@@ -192,8 +198,8 @@ function parseGamesData(values, targetDates) {
     // targetDates 現在已經是字串陣列格式 ["8/26", "8/27", ...]
     const targetDateStrings = targetDates;
     
-    console.log('🎯 目標日期:', targetDateStrings);
-    console.log('📊 Google Sheets 原始資料 (前10行):', values.slice(0, 10));
+    debugLog('🎯 目標日期:', targetDateStrings);
+    debugLog('📊 Google Sheets 原始資料 (前10行):', values.slice(0, 10));
     
     // 從第二行開始（跳過標題行）
     for (let i = 1; i < values.length; i++) {
@@ -206,14 +212,6 @@ function parseGamesData(values, targetDates) {
             const awayTeam = row[2] ? row[2].trim() : '';               // C欄：客場隊伍
             const homeTeam = row[6] ? row[6].trim() : '';               // G欄：主場隊伍
             
-            console.log(`📝 處理第${i}行:`, { 
-                gameId, 
-                gameDate, 
-                awayTeam, 
-                homeTeam,
-                '完整行數據': row
-            });
-            
             // 檢查必要欄位是否存在且日期在目標範圍內
             if (gameDate && gameId && awayTeam && homeTeam) {
                 // 檢查日期是否在目標範圍內（支援多種日期格式）
@@ -225,13 +223,13 @@ function parseGamesData(values, targetDates) {
                         away: awayTeam,
                         home: homeTeam
                     });
-                    console.log(`✅ 加入比賽: ${gameId} - ${awayTeam} vs ${homeTeam} (${gameDate})`);
+                    debugLog(`✅ 加入比賽: ${gameId} - ${awayTeam} vs ${homeTeam} (${gameDate})`);
                 }
             }
         }
     }
     
-    console.log('📋 從 Google Sheets 解析的比賽:', games);
+    debugLog('📋 從 Google Sheets 解析的比賽:', games);
     return games;
 }
 
@@ -240,11 +238,8 @@ function parseGamesData(values, targetDates) {
  * 支援多種日期格式：M/D, MM/DD, YYYY/M/D 等
  */
 function isDateInRange(gameDate, targetDateStrings) {
-    console.log(`🔍 檢查日期 "${gameDate}" 是否在範圍內:`, targetDateStrings);
-    
     // 直接比對
     if (targetDateStrings.includes(gameDate)) {
-        console.log(`✅ 直接匹配: ${gameDate}`);
         return true;
     }
     
@@ -252,13 +247,8 @@ function isDateInRange(gameDate, targetDateStrings) {
     try {
         const parsedDate = parseGameDate(gameDate);
         const formattedDate = formatDate(parsedDate);
-        console.log(`🔄 格式化後的日期: ${gameDate} -> ${formattedDate}`);
-        
-        const isInRange = targetDateStrings.includes(formattedDate);
-        console.log(`${isInRange ? '✅' : '❌'} 比對結果: ${formattedDate} in [${targetDateStrings.join(', ')}] = ${isInRange}`);
-        return isInRange;
+        return targetDateStrings.includes(formattedDate);
     } catch (error) {
-        console.log(`⚠️ 無法解析日期: ${gameDate}`, error);
         return false;
     }
 }
