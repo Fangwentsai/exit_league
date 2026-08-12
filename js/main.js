@@ -1746,10 +1746,8 @@ function closeMatchModal(modal) {
 // 以下是原main.js中的筛选函数，為避免與filter.js衝突，將它们重命名
 // 注意：這些函數通常不會被使用，而是由filter.js中的函數替代
 function _setupScheduleFilters() {
-    debugLog('使用main.js中的備用篩選功能(_setupScheduleFilters)');
     const teamButtons = document.querySelectorAll('.team-btn');
     if (teamButtons.length === 0) {
-        debugLog('警告: 未找到任何篩選按鈕，請確認頁面加載正確');
         return;
     }
 
@@ -2553,7 +2551,8 @@ function getCurrentPageImages() {
 
 // 鍵盤導航支援
 function handleLightboxKeyboard(event) {
-    if (document.getElementById('lightbox').style.display === 'block') {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox && lightbox.style.display === 'block') {
         switch (event.key) {
             case 'Escape':
                 closeLightbox();
