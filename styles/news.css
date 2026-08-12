@@ -973,3 +973,23 @@ body.news-page {
 .match-item[data-group="靶外組"] .match-group {
     color: #8a6d00;
 }
+
+/* 分組頁籤：比上方的排行標題矮一點，紅色降一階飽和度 */
+.league-tabs { gap: 6px; margin-bottom: 8px; }
+
+.league-tab {
+    padding: 5px 6px;
+    font-size: 13px;
+    border-width: 1px;
+}
+
+.league-tab.active {
+    background: #e35d6a;
+    border-color: #e35d6a;
+}
+
+.ranking-table .group-cell {
+    font-size: 12px;
+    color: #8a6d00;
+    white-space: nowrap;
+}
