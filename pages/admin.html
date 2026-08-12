@@ -48,7 +48,7 @@
         
         <!-- 功能按鈕列 -->
         <div class="function-nav">
-            <button class="fn-btn fn-btn-match" onclick="showSection('match')">🎯 比賽登錄</button>
+            <button class="fn-btn fn-btn-match active" id="btnMatchSection" onclick="showSection('match')">🎯 比賽登錄</button>
             <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="showSection('player')">➕ 新增隊員</button>
         </div>
 
@@ -224,6 +224,13 @@
     async function showSection(section) {
         document.getElementById('matchSection').style.display = (section === 'match') ? 'block' : 'none';
         document.getElementById('playerSection').style.display = (section === 'player') ? 'block' : 'none';
+
+        const btnMatch = document.getElementById('btnMatchSection');
+        const btnAdd = document.getElementById('btnAddPlayer');
+        if (btnMatch && btnAdd) {
+            btnMatch.classList.toggle('active', section === 'match');
+            btnAdd.classList.toggle('active', section === 'player');
+        }
 
         if (section === 'player') {
             // 載入當前賽季 (CURRENT_SEASON) 的選手名單 (data/player.json)

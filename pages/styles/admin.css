@@ -157,99 +157,122 @@ body {
     margin: 0 auto;
 }
 
-/* ===== 功能按鈕列 ===== */
+/* ===== 功能按鈕列 (Modern Segmented Tab Bar) ===== */
 .function-nav {
     display: flex;
-    gap: 12px;
-    padding: 14px 30px;
-    background: #fff;
-    border-bottom: 1px solid #e8e8e8;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    gap: 8px;
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .fn-btn {
-    padding: 10px 22px;
-    border: none;
+    flex: 1;
+    max-width: 180px;
+    padding: 9px 16px;
+    border: 1px solid #ced4da;
     border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+    background: #ffffff;
+    color: #495057;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
-.fn-btn-add {
-    background: #27ae60;
-    color: white;
-    box-shadow: 0 2px 6px rgba(46,204,113,0.25);
-}
-.fn-btn-add:hover:not(.fn-btn-disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(46,204,113,0.4);
+.fn-btn:hover:not(.active) {
+    background: #e9ecef;
+    color: #212529;
+    border-color: #adb5bd;
 }
 
-.fn-btn-match {
-    background: #dc3545;
-    color: white;
-    box-shadow: 0 2px 6px rgba(220,53,69,0.25);
-}
-.fn-btn-match:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(220,53,69,0.4);
+.fn-btn.active {
+    background: #dc3545 !important;
+    color: #ffffff !important;
+    border-color: #dc3545 !important;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.25) !important;
 }
 
 .fn-btn-disabled {
-    background: #c0c0c0 !important;
-    color: #888 !important;
+    background: #e9ecef !important;
+    color: #adb5bd !important;
+    border-color: #dee2e6 !important;
     cursor: not-allowed !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
-/* ===== 新增隊員面板 ===== */
+/* ===== 新增隊員面板 (Premium Card & Form Design) ===== */
 .add-player-panel {
-    background: white;
-    border-radius: 16px;
+    background: #ffffff;
+    border-radius: 12px;
     width: 100%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border: 1px solid #e0e0e0;
+    max-width: 500px;
+    margin: 10px auto 20px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e9ecef;
     overflow: hidden;
-    margin-bottom: 20px;
 }
 
 .add-player-header {
-    background: #27ae60;
-    color: white;
-    padding: 20px 24px;
+    background: #ffffff;
+    color: #212529;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .add-player-header h2 {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
     margin: 0;
+    color: #212529;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .add-player-body {
-    padding: 24px;
+    padding: 20px 24px 24px;
+}
+
+.add-player-body .form-group {
+    margin-bottom: 16px;
+}
+
+.add-player-body label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 6px;
+    display: block;
 }
 
 .add-player-select,
 .add-player-input {
     width: 100%;
-    padding: 13px 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    background: #fafafa;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    padding: 11px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 14.5px;
+    background: #ffffff;
+    color: #212529;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     font-family: inherit;
 }
+
 .add-player-select:focus,
 .add-player-input:focus {
     outline: none;
-    border-color: #2ecc71;
-    box-shadow: 0 0 0 3px rgba(46,204,113,0.15);
-    background: white;
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+    background: #ffffff;
 }
 
 .add-player-footer {
@@ -259,24 +282,31 @@ body {
 }
 
 .add-player-submit {
-    flex: 1;
-    padding: 13px;
-    background: #27ae60;
+    width: 100%;
+    padding: 12px;
+    background: #dc3545;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
 }
+
 .add-player-submit:hover:not(:disabled) {
+    background: #bb2d3b;
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(46,204,113,0.35);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
+
 .add-player-submit:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 .add-player-cancel {
