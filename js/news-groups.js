@@ -96,6 +96,22 @@
     document.addEventListener('click', e => {
         if (!e.target.closest) return;
 
+        // 賽事動態頁籤切換 (近期比賽 / 上週戰況)
+        const navTab = e.target.closest('.match-nav-tab');
+        if (navTab) {
+            const container = navTab.closest('.match-tab-container');
+            if (container) {
+                container.querySelectorAll('.match-nav-tab').forEach(t => t.classList.toggle('active', t === navTab));
+                const targetId = navTab.dataset.target;
+                container.querySelectorAll('.match-pane').forEach(pane => {
+                    const isTarget = pane.id === targetId;
+                    pane.hidden = !isTarget;
+                    pane.classList.toggle('active', isTarget);
+                });
+            }
+            return;
+        }
+
         const tab = e.target.closest('.league-tab');
         if (tab) return switchStandings(tab);
 
