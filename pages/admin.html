@@ -320,7 +320,7 @@
                 const res = await fetch('../data/player.json?_=' + Date.now());
                 playerJsonData = await res.json();
                 
-                // 填入當前賽季隊伍選單
+                // 填入當前賽季隊伍選單 (以 optgroup 主分類區分組別)
                 const sel = document.getElementById('teamSelect');
                 const curSelected = sel.value;
                 sel.innerHTML = '<option value="">請選擇隊伍...</option>';
@@ -330,21 +330,48 @@
                     ? SEASONS[CURRENT_SEASON]
                     : null;
 
-                Object.keys(playerJsonData).forEach(team => {
-                    const opt = document.createElement('option');
-                    opt.value = team;
-                    let groupBadge = '';
-                    if (curSeasonObj && curSeasonObj.groups) {
-                        for (const [gName, tList] of Object.entries(curSeasonObj.groups)) {
-                            if (tList.includes(team)) {
-                                groupBadge = ` [${gName}]`;
-                                break;
+                if (curSeasonObj && curSeasonObj.groups) {
+                    const addedTeams = new Set();
+                    for (const [gName, tList] of Object.entries(curSeasonObj.groups)) {
+                        const groupEl = document.createElement('optgroup');
+                        groupEl.label = `🎯 ${gName}`;
+
+                        tList.forEach(team => {
+                            if (playerJsonData[team]) {
+                                const opt = document.createElement('option');
+                                opt.value = team;
+                                opt.textContent = `${team}（${playerJsonData[team].length} 人）`;
+                                groupEl.appendChild(opt);
+                                addedTeams.add(team);
                             }
+                        });
+
+                        if (groupEl.children.length > 0) {
+                            sel.appendChild(groupEl);
                         }
                     }
-                    opt.textContent = `${team}${groupBadge}（${playerJsonData[team].length} 人）`;
-                    sel.appendChild(opt);
-                });
+
+                    // 處理未在 groups 定義的其他隊伍
+                    const remainingTeams = Object.keys(playerJsonData).filter(t => !addedTeams.has(t));
+                    if (remainingTeams.length > 0) {
+                        const otherGroup = document.createElement('optgroup');
+                        otherGroup.label = '其他隊伍';
+                        remainingTeams.forEach(team => {
+                            const opt = document.createElement('option');
+                            opt.value = team;
+                            opt.textContent = `${team}（${playerJsonData[team].length} 人）`;
+                            otherGroup.appendChild(opt);
+                        });
+                        sel.appendChild(otherGroup);
+                    }
+                } else {
+                    Object.keys(playerJsonData).forEach(team => {
+                        const opt = document.createElement('option');
+                        opt.value = team;
+                        opt.textContent = `${team}（${playerJsonData[team].length} 人）`;
+                        sel.appendChild(opt);
+                    });
+                }
 
                 if (curSelected && playerJsonData[curSelected]) {
                     sel.value = curSelected;
@@ -443,9 +470,7 @@
                 const sel = document.getElementById('teamSelect');
                 const selectedOpt = sel.options[sel.selectedIndex];
                 if (selectedOpt && playerJsonData[team]) {
-                    const groupBadge = selectedOpt.textContent.match(/\[.*?\]/)?.[0] || '';
-                    const badgeText = groupBadge ? ` ${groupBadge}` : '';
-                    selectedOpt.textContent = `${team}${badgeText}（${playerJsonData[team].length} 人）`;
+                    selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
                 }
 
                 // 即時動態更新下方名單，並醒目標示剛新增的隊員！
