@@ -830,6 +830,7 @@ function generateMatchesHTML(matches) {
                 padding: 0 4px;
                 flex-shrink: 0;
                 line-height: 1;
+                margin-top: -3px;
             }
 
             .mp-tag {
@@ -875,6 +876,10 @@ function generateMatchesHTML(matches) {
 
                 .score {
                     font-size: 16.5px;
+                }
+
+                .vs {
+                    margin-top: -5px;
                 }
 
                 .mp-tag {
