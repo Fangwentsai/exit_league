@@ -162,7 +162,7 @@
                     <div class="add-player-body">
                         <div class="form-group">
                             <label for="teamSelect">選擇隊伍</label>
-                            <select id="teamSelect" class="add-player-select">
+                            <select id="teamSelect" class="add-player-select" onchange="onTeamSelectChange()">
                                 <option value="">載入中...</option>
                             </select>
                         </div>
@@ -172,6 +172,19 @@
                         </div>
                         <div class="add-player-footer">
                             <button class="add-player-submit" id="addPlayerSubmit" onclick="submitAddPlayer()">送出</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 隊伍現有名單顯示區塊 (動態更新) -->
+                <div class="team-roster-panel" id="teamRosterPanel" style="display: none;">
+                    <div class="team-roster-header">
+                        <h3 id="rosterTitle">📋 隊伍現有名單</h3>
+                        <span class="roster-count" id="rosterCount">0 人</span>
+                    </div>
+                    <div class="team-roster-body">
+                        <div class="roster-tags" id="rosterTags">
+                            <!-- 隊員標籤將動態渲染 -->
                         </div>
                     </div>
                 </div>
@@ -197,6 +210,7 @@
 
 
     <!-- 引入外部 JavaScript 模組 -->
+    <script src="../config/config.js?v=20260812_13"></script>
     <script src="../js/admin-sheets-api.js"></script>
     <script src="../js/admin-ui.js"></script>
     <script src="../js/preview_generator.js"></script>
@@ -240,6 +254,7 @@
                 
                 // 填入當前賽季隊伍選單
                 const sel = document.getElementById('teamSelect');
+                const curSelected = sel.value;
                 sel.innerHTML = '<option value="">請選擇隊伍...</option>';
 
                 // 取得當前賽季資訊（如分組訊息）
@@ -262,12 +277,51 @@
                     opt.textContent = `${team}${groupBadge}（${playerJsonData[team].length} 人）`;
                     sel.appendChild(opt);
                 });
+
+                if (curSelected && playerJsonData[curSelected]) {
+                    sel.value = curSelected;
+                    updateTeamRosterView(curSelected);
+                } else {
+                    updateTeamRosterView(sel.value);
+                }
             } catch (e) {
                 alert('❌ 無法載入選手資料，請稍後再試。');
                 return;
             }
             document.getElementById('newPlayerName').value = '';
         }
+    }
+
+    /** 當選擇隊伍改變時，動態更新名單列表 */
+    function onTeamSelectChange() {
+        const team = document.getElementById('teamSelect').value;
+        updateTeamRosterView(team);
+    }
+
+    /** 渲染隊伍現有名單列表 */
+    function updateTeamRosterView(teamName, highlightName = null) {
+        const rosterPanel = document.getElementById('teamRosterPanel');
+        const rosterTitle = document.getElementById('rosterTitle');
+        const rosterCount = document.getElementById('rosterCount');
+        const rosterTags = document.getElementById('rosterTags');
+
+        if (!rosterPanel || !teamName || !playerJsonData || !playerJsonData[teamName]) {
+            if (rosterPanel) rosterPanel.style.display = 'none';
+            return;
+        }
+
+        const members = playerJsonData[teamName] || [];
+        rosterTitle.innerHTML = `📋 <strong>${teamName}</strong> 現有名單`;
+        rosterCount.textContent = `${members.length} 人`;
+
+        rosterTags.innerHTML = members.map(m => {
+            const isNew = m === highlightName;
+            const newClass = isNew ? 'roster-tag newly-added' : 'roster-tag';
+            const icon = isNew ? '✨ ' : '';
+            return `<span class="${newClass}">${icon}${m}</span>`;
+        }).join('');
+
+        rosterPanel.style.display = 'block';
     }
 
     /** 送出新增隊員 */
@@ -316,8 +370,18 @@
             if (result.status === 'success') {
                 alert(`✅ 成功將「${name}」加入「${team}」！`);
                 document.getElementById('newPlayerName').value = '';
-                // 重新整理隊伍選項
-                showSection('player');
+
+                // 更新下拉選單隊伍選項的人數顯示
+                const sel = document.getElementById('teamSelect');
+                const selectedOpt = sel.options[sel.selectedIndex];
+                if (selectedOpt && playerJsonData[team]) {
+                    const groupBadge = selectedOpt.textContent.match(/\[.*?\]/)?.[0] || '';
+                    const badgeText = groupBadge ? ` ${groupBadge}` : '';
+                    selectedOpt.textContent = `${team}${badgeText}（${playerJsonData[team].length} 人）`;
+                }
+
+                // 即時動態更新下方名單，並醒目標示剛新增的隊員！
+                updateTeamRosterView(team, name);
             } else {
                 alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
                 playerJsonData[team].pop(); // rollback
