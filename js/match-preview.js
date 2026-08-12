@@ -220,8 +220,8 @@
                 </div>
             </div>
             <div class="mp-body">
-                ${renderTeamTable(team1, team1Players, statsMap, 'away')}
-                ${renderTeamTable(team2, team2Players, statsMap, 'home')}
+                ${renderTeamTable(team1, team1Players, statsMap, 'home')}
+                ${renderTeamTable(team2, team2Players, statsMap, 'away')}
             </div>
             <div class="mp-footer">
                 📊 個人戰績來自${sheet.label} Google Sheets，即時更新
