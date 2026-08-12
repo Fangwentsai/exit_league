@@ -250,26 +250,40 @@
 
     /**
      * 新增隊員開放狀態判斷：
-     * 1. 賽事最後一個月鎖定（由當季最後一場比賽往前動態推算 1 個月）。
-     * 2. 每週二（比賽日）與週三（賽後對帳）固定鎖定。
-     * 3. 每週四至下週一開放。
+     * 1. 賽前籌備期（now < startDate）：全時開放新增隊員（開打前的賽前報名期）。
+     * 2. 賽事最後一個月鎖定（now >= cutoffDate）：由當季最後一場比賽往前動態推算 1 個月鎖定。
+     * 3. 賽程進行期間（startDate <= now < cutoffDate）：每週二（比賽日）、週三（對帳日）暫停，週四至下週一開放。
      */
     function isAddPlayerAllowed() {
         const now = new Date();
-        
-        // 1. 動態最後一個月截止日判定
-        const cutoffDate = getAddPlayerCutoffDate();
-        if (cutoffDate && now >= cutoffDate) {
-            return { allowed: false, reason: 'cutoff', cutoffDate };
+        const season = (typeof SEASONS !== 'undefined' && typeof CURRENT_SEASON !== 'undefined')
+            ? SEASONS[CURRENT_SEASON]
+            : null;
+
+        if (season) {
+            // 1. 開打前籌備期判定：未到開打日 (startDate) 前，全時開放報名
+            if (season.startDate) {
+                const start = new Date(season.startDate);
+                start.setHours(0, 0, 0, 0); // 設為開打日 00:00
+                if (now < start) {
+                    return { allowed: true, phase: 'preSeason' };
+                }
+            }
+
+            // 2. 動態最後一個月截止日判定
+            const cutoffDate = getAddPlayerCutoffDate();
+            if (cutoffDate && now >= cutoffDate) {
+                return { allowed: false, reason: 'cutoff', cutoffDate };
+            }
         }
 
-        // 2. 每週二、三比賽對帳鎖定 (0=日 1=一 2=二 3=三)
+        // 3. 賽程進行期間：每週二、三比賽對帳鎖定 (0=日 1=一 2=二 3=三)
         const day = now.getDay();
         if (day === 2 || day === 3) {
             return { allowed: false, reason: 'gameDay' };
         }
 
-        return { allowed: true };
+        return { allowed: true, phase: 'inSeason' };
     }
 
     /** 切換顯示區塊 */
