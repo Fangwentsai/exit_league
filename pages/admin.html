@@ -470,7 +470,7 @@
 
             // 若 GAS 回傳 success 或含 GitHub commit 資訊，判定為成功
             if (result.status === 'success' || (result.githubUpload && result.githubUpload.status === 'success')) {
-                alert(`✅ 成功將「${name}」加入「${team}」！\nVercel 自動部署已同步觸發。`);
+                alert(`✅ 成功將「${name}」加入「${team}」！`);
                 document.getElementById('newPlayerName').value = '';
 
                 // 更新下拉選單隊伍選項的人數顯示
@@ -499,7 +499,7 @@
         } catch (e) {
             // 若遭逢 Google 302/404 重導向，但實際上前端已成功更新
             console.warn('GAS POST callback warn:', e);
-            alert(`✅ 成功將「${name}」加入「${team}」！\nVercel 自動部署已同步觸發。`);
+            alert(`✅ 成功將「${name}」加入「${team}」！`);
             document.getElementById('newPlayerName').value = '';
             const sel = document.getElementById('teamSelect');
             const selectedOpt = sel.options[sel.selectedIndex];
