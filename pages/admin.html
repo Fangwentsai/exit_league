@@ -455,7 +455,9 @@
                     action: 'uploadToGitHub',
                     filePath: 'data/player.json',
                     content: newJson,
-                    commitMessage: `➕ 新增選手 ${name} 至 ${team}`
+                    commitMessage: `➕ 新增選手 ${name} 至 ${team}`,
+                    teamName: team,
+                    playerName: name
                 })
             });
             const text = await res.text();
@@ -475,9 +477,6 @@
 
                 // 即時動態更新下方名單，並醒目標示剛新增的隊員！
                 updateTeamRosterView(team, name);
-
-                // 自動觸發 Vercel Production 部署（fire-and-forget）
-                fetch('https://api.vercel.com/v1/integrations/deploy/prj_llME3UGDmsL3mdPFMhtpNPi1JmM0/CJN21VcKDS', { method: 'POST' }).catch(() => {});
             } else {
                 alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
                 playerJsonData[team].pop(); // rollback
