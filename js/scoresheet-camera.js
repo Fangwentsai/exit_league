@@ -167,24 +167,56 @@
 
     const CSS = `
 .sc-root{position:fixed;inset:0;z-index:99999;background:#000;display:flex;flex-direction:column;
-  font-family:"Noto Sans TC","PingFang TC",-apple-system,sans-serif;color:#eee;height:100dvh}
-.sc-stage{flex:1 1 auto;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
-.sc-stage video,.sc-stage img{max-width:100%;max-height:100%;display:block}
+  font-family:"Noto Sans TC","PingFang TC",-apple-system,sans-serif;color:#eee;height:100dvh;width:100vw;overflow:hidden}
+.sc-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+.sc-stage video,.sc-stage img{width:100%;height:100%;object-fit:cover;display:block}
 .sc-overlay{position:absolute;pointer-events:none}
-.sc-tip{position:absolute;top:0;left:0;right:0;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
-  background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,0));font-size:12.5px;line-height:1.55;text-align:center;pointer-events:none}
-.sc-bar{flex:0 0 auto;padding:8px 12px calc(10px + env(safe-area-inset-bottom));background:#111;border-top:1px solid #2a2a2a}
-.sc-status{font-size:14px;font-weight:700;padding:9px;border-radius:8px;text-align:center;margin-bottom:8px}
-.sc-ok{background:#14532d;color:#86efac}
-.sc-bad{background:#4c1d1d;color:#fca5a5}
-.sc-btns{display:flex;gap:8px;align-items:center}
-.sc-btn{font:inherit;font-size:14px;padding:13px 10px;border:1px solid #555;background:#222;color:#eee;
-  border-radius:8px;cursor:pointer;flex:1 1 0;min-height:48px}
-.sc-btn:disabled{opacity:.4}
-.sc-shutter{flex:1.6 1 0;background:#1769d6;border-color:#1769d6;font-weight:700}
-.sc-torch-on{background:#b45309;border-color:#b45309}
-.sc-stats{margin-top:8px;background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:8px 10px;
-  font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;white-space:pre-wrap}
+.sc-close-btn{position:absolute;top:calc(12px + env(safe-area-inset-top));right:16px;width:38px;height:38px;border-radius:50%;
+  background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);
+  color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:25;
+  transition:transform 0.15s ease,background 0.15s ease}
+.sc-close-btn:active{transform:scale(0.9);background:rgba(0,0,0,0.8)}
+.sc-tip{position:absolute;top:0;left:0;right:0;padding:calc(12px + env(safe-area-inset-top)) 60px 14px 16px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.85),rgba(0,0,0,0));font-size:12px;line-height:1.5;text-align:center;
+  pointer-events:none;z-index:10;color:rgba(255,255,255,0.95)}
+.sc-status{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  z-index:15;font-size:13.5px;font-weight:700;padding:8px 20px;border-radius:20px;text-align:center;white-space:nowrap;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(0,0,0,0.4);pointer-events:none;
+  transition:all 0.25s ease}
+.sc-ok{background:rgba(20,83,45,0.9);color:#86efac;border:1px solid rgba(134,239,172,0.35)}
+.sc-bad{background:rgba(76,29,29,0.9);color:#fca5a5;border:1px solid rgba(252,165,165,0.35)}
+
+.sc-controls-overlay{position:absolute;bottom:0;left:0;right:0;padding:12px 28px calc(24px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,rgba(0,0,0,0.85),rgba(0,0,0,0));z-index:15;display:flex;justify-content:center;
+  align-items:center;pointer-events:none}
+.sc-controls-row{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:320px;pointer-events:auto}
+.sc-side-spacer{width:48px;height:48px}
+
+.sc-shutter-btn{width:72px;height:72px;border-radius:50%;border:4px solid #fff;background:transparent;padding:3px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.15s ease;
+  box-shadow:0 4px 14px rgba(0,0,0,0.35);-webkit-tap-highlight-color:transparent}
+.sc-shutter-inner{width:100%;height:100%;border-radius:50%;background:#fff;display:block;transition:transform 0.15s ease,background 0.15s ease}
+.sc-shutter-btn:disabled{opacity:0.45;cursor:not-allowed}
+.sc-shutter-btn:not(:disabled):active{transform:scale(0.93)}
+.sc-shutter-btn:not(:disabled):active .sc-shutter-inner{transform:scale(0.88);background:#e2e8f0}
+
+.sc-torch-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.4);background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:20px;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;transition:all 0.2s ease;-webkit-tap-highlight-color:transparent}
+.sc-torch-btn:disabled{opacity:0.3;cursor:not-allowed}
+.sc-torch-btn.sc-torch-on{background:#eab308;color:#000;border-color:#eab308;box-shadow:0 0 14px rgba(234,179,8,0.65)}
+.sc-torch-btn:not(:disabled):active{transform:scale(0.9)}
+
+.sc-preview-btns{display:flex;gap:16px;width:100%;max-width:320px;pointer-events:auto}
+.sc-action-btn{flex:1;height:48px;font:inherit;font-size:15px;font-weight:600;border-radius:24px;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform 0.15s ease,background 0.15s ease}
+.sc-action-retake{background:rgba(255,255,255,0.22);color:#fff;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.sc-action-retake:active{background:rgba(255,255,255,0.38);transform:scale(0.96)}
+.sc-action-use{background:#2563eb;color:#fff;box-shadow:0 4px 14px rgba(37,99,235,0.45)}
+.sc-action-use:active{background:#1d4ed8;transform:scale(0.96)}
+.sc-stats{position:absolute;bottom:140px;left:10px;right:10px;background:rgba(0,0,0,0.8);border:1px solid #333;
+  border-radius:6px;padding:8px 10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.5;
+  white-space:pre-wrap;pointer-events:none;z-index:20}
 `;
 
     let cssInjected = false;
@@ -213,14 +245,17 @@
   <video playsinline muted autoplay></video>
   <img hidden alt="">
   <canvas class="sc-overlay"></canvas>
+  <button class="sc-close-btn" data-act="cancel" title="關閉">✕</button>
   <div class="sc-tip">把分紙<b>攤平壓好</b>，四個角的黑方塊對進綠色框內<br>光線不足時可開啟閃光燈，但紙面若出現反光白斑請關掉</div>
-</div>
-<div class="sc-bar">
   <div class="sc-status sc-bad">啟動相機中…</div>
-  <div class="sc-btns">
-    <button class="sc-btn" data-act="cancel">取消</button>
-    <button class="sc-btn" data-act="torch" disabled>閃光燈</button>
-    <button class="sc-btn sc-shutter" data-act="shoot" disabled>拍照</button>
+  <div class="sc-controls-overlay">
+    <div class="sc-controls-row" id="scControlsRow">
+      <div class="sc-side-spacer"></div>
+      <button class="sc-shutter-btn" data-act="shoot" disabled title="拍照">
+        <span class="sc-shutter-inner"></span>
+      </button>
+      <button class="sc-torch-btn" data-act="torch" disabled title="閃光燈">⚡</button>
+    </div>
   </div>
 </div>`;
             document.body.appendChild(root);
@@ -232,20 +267,20 @@
             const octx = overlay.getContext('2d');
             const tip = root.querySelector('.sc-tip');
             const statusEl = root.querySelector('.sc-status');
-            const btns = root.querySelector('.sc-btns');
+            const controlsRow = root.querySelector('#scControlsRow');
             const btn = (a) => root.querySelector(`[data-act="${a}"]`);
 
             let statsEl = null;
             if (options.showStats) {
                 statsEl = document.createElement('div');
                 statsEl.className = 'sc-stats';
-                root.querySelector('.sc-bar').appendChild(statsEl);
+                stage.appendChild(statsEl);
             }
 
             const work = document.createElement('canvas');
             const wctx = work.getContext('2d', { willReadFrequently: true });
 
-            let stream = null, track = null, torchOn = false;
+            let stream = null, track = null, torchOn = false, torchOk = false;
             let running = false, lastDetect = 0, lastResult = null, capturing = false;
             let timings = { read: 0, detect: 0, fps: 0 };
             let frameCount = 0, fpsMark = performance.now();
@@ -281,17 +316,18 @@
                 track = stream.getVideoTracks()[0];
 
                 const caps = track.getCapabilities ? track.getCapabilities() : null;
-                const torchOk = !!(caps && caps.torch);
-                btn('torch').disabled = !torchOk;
-                btn('torch').textContent = torchOk ? '閃光燈' : '無閃光燈';
-                btn('shoot').disabled = false;
+                torchOk = !!(caps && caps.torch);
+                if (btn('torch')) btn('torch').disabled = !torchOk;
+                if (btn('shoot')) btn('shoot').disabled = false;
 
                 running = true;
                 requestAnimationFrame(loop);
             })();
 
-            btns.onclick = async (e) => {
-                const act = e.target.getAttribute && e.target.getAttribute('data-act');
+            root.onclick = async (e) => {
+                const target = e.target.closest ? e.target.closest('[data-act]') : null;
+                if (!target) return;
+                const act = target.getAttribute('data-act');
                 if (!act) return;
 
                 if (act === 'cancel') return finish(null);
@@ -300,11 +336,9 @@
                     torchOn = !torchOn;
                     try {
                         await track.applyConstraints({ advanced: [{ torch: torchOn }] });
-                        btn('torch').classList.toggle('sc-torch-on', torchOn);
-                        btn('torch').textContent = torchOn ? '關閉閃光燈' : '閃光燈';
+                        if (btn('torch')) btn('torch').classList.toggle('sc-torch-on', torchOn);
                     } catch (err) {
-                        btn('torch').textContent = '閃光燈失敗';
-                        btn('torch').disabled = true;
+                        if (btn('torch')) btn('torch').disabled = true;
                     }
                     return;
                 }
@@ -314,8 +348,7 @@
                 if (act === 'use') return finish(capturing);
             };
 
-            // 拍下目前畫面後停在預覽狀態，讓使用者決定重拍或採用——
-            // 而不是把縮圖堆在頁面下方（原本的做法在手機上會被推到看不見的地方）
+            // 拍下目前畫面後停在預覽狀態，讓使用者決定重拍或採用
             function capture() {
                 const c = document.createElement('canvas');
                 c.width = video.videoWidth;
@@ -336,9 +369,11 @@
 
                 statusEl.className = 'sc-status sc-ok';
                 statusEl.textContent = '這張可以嗎？';
-                btns.innerHTML =
-                    '<button class="sc-btn" data-act="retake">重拍</button>' +
-                    '<button class="sc-btn sc-shutter" data-act="use">使用這張</button>';
+                controlsRow.innerHTML =
+                    '<div class="sc-preview-btns">' +
+                    '  <button class="sc-action-btn sc-action-retake" data-act="retake">重拍</button>' +
+                    '  <button class="sc-action-btn sc-action-use" data-act="use">使用這張</button>' +
+                    '</div>';
             }
 
             function retake() {
@@ -347,11 +382,10 @@
                 video.hidden = false;
                 overlay.style.display = '';
                 tip.style.display = '';
-                btns.innerHTML =
-                    '<button class="sc-btn" data-act="cancel">取消</button>' +
-                    '<button class="sc-btn" data-act="torch">' + (torchOn ? '關閉閃光燈' : '閃光燈') + '</button>' +
-                    '<button class="sc-btn sc-shutter" data-act="shoot">拍照</button>';
-                if (torchOn) btn('torch').classList.add('sc-torch-on');
+                controlsRow.innerHTML =
+                    '<div class="sc-side-spacer"></div>' +
+                    '<button class="sc-shutter-btn" data-act="shoot" title="拍照"><span class="sc-shutter-inner"></span></button>' +
+                    '<button class="sc-torch-btn' + (torchOn ? ' sc-torch-on' : '') + '" data-act="torch"' + (torchOk ? '' : ' disabled') + ' title="閃光燈">⚡</button>';
                 running = true;
                 lastDetect = 0;
                 requestAnimationFrame(loop);
