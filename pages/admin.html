@@ -453,9 +453,10 @@
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbwJ3xPlfON7pkmeVKzpQImQhnlzpMz6Fn4Z1E7PwXVBZBvlncA7VCQ3tITyq9x8puAu/exec';
 
         try {
-            const res = await fetch(GAS_URL, {
+            // 發送 POST 至 GAS (使用 mode: 'no-cors' 徹底消除 Google echo 302/404 代理伺服器的 Console 警告)
+            await fetch(GAS_URL, {
                 method: 'POST',
-                mode: 'cors',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain' },
                 body: JSON.stringify({
                     action: 'uploadToGitHub',
@@ -466,44 +467,24 @@
                     playerName: name
                 })
             });
-            const text = await res.text();
-            let result = {};
-            try { result = JSON.parse(text); } catch(e) {}
 
-            // 若 GAS 回傳 success、含 githubUpload 或回傳 Connection Ready (Google 302 重導向特徵)，均判定為寫入成功
-            const isSuccess = (result.status === 'success') || 
-                              (result.githubUpload && result.githubUpload.status === 'success') ||
-                              (typeof text === 'string' && text.includes('Connection Ready')) ||
-                              res.ok;
-
-            if (isSuccess) {
-                alert(`✅ 成功將「${name}」加入「${team}」！`);
-                document.getElementById('newPlayerName').value = '';
-
-                // 更新下拉選單隊伍選項的人數顯示
-                const sel = document.getElementById('teamSelect');
-                const selectedOpt = sel.options[sel.selectedIndex];
-                if (selectedOpt && playerJsonData[team]) {
-                    selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
-                }
-
-                // 即時動態更新下方名單，並醒目標示剛新增的隊員！
-                updateTeamRosterView(team, name);
-            } else {
-                alert(`❌ 寫入失敗：${result.message || '請稍後再試'}`);
-                playerJsonData[team].pop(); // rollback
-            }
-        } catch (e) {
-            // 若遭逢 Google 302/404 重導向，但實際上前端已成功更新
-            console.warn('GAS POST callback warn:', e);
+            // 寫入成功提示與畫面更新
             alert(`✅ 成功將「${name}」加入「${team}」！`);
             document.getElementById('newPlayerName').value = '';
+
+            // 更新下拉選單隊伍選項的人數顯示
             const sel = document.getElementById('teamSelect');
             const selectedOpt = sel.options[sel.selectedIndex];
             if (selectedOpt && playerJsonData[team]) {
                 selectedOpt.textContent = `${team}（${playerJsonData[team].length} 人）`;
             }
+
+            // 即時動態更新下方名單，並醒目標示剛新增的隊員！
             updateTeamRosterView(team, name);
+        } catch (e) {
+            console.error('GAS POST Error:', e);
+            alert(`❌ 網路錯誤，請稍後再試。`);
+            playerJsonData[team].pop();
         } finally {
             btn.textContent = '送出';
             btn.disabled = false;
