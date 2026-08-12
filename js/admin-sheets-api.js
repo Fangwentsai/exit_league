@@ -19,7 +19,7 @@ const SHEETS_CONFIG = {
 };
 
 // Google Apps Script URL (用於保存資料)
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw96zr198osWO2HIeFbKMaHaM3-WqkHcDJ1F_OmTJdulf3Euv2E9K7LrdRpMORMr5lW/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ3xPlfON7pkmeVKzpQImQhnlzpMz6Fn4Z1E7PwXVBZBvlncA7VCQ3tITyq9x8puAu/exec';
 
 /**
  * 動態載入比賽資料
