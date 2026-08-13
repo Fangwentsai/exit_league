@@ -22,6 +22,28 @@ var TEAM_GROUPS = {
 function groupLabelOf(team) {
   return TEAM_GROUPS[team] || '-';
 }
+
+// 團隊總分排行分成兩張表，需要完整組名（表格用 data-league="掉鏢組" 對應）
+var GROUP_NAMES = ['掉鏢組', '靶外組'];
+function fullGroupOf(team) {
+  var short = TEAM_GROUPS[team];
+  if (!short) return null;
+  for (var i = 0; i < GROUP_NAMES.length; i++) {
+    if (GROUP_NAMES[i].indexOf(short) === 0) return GROUP_NAMES[i];
+  }
+  return null;
+}
+
+// 組內重新編名次（試算表給的是 1~12 的全體名次）。同分同名次、下一名跳號。
+function rankWithinGroup(list) {
+  var sorted = list.slice().sort(function(a, b) { return Number(b[2]) - Number(a[2]); });
+  var lastScore = null, lastRank = 0;
+  return sorted.map(function(t, i) {
+    var score = Number(t[2]);
+    if (score !== lastScore) { lastRank = i + 1; lastScore = score; }
+    return { rank: lastRank, team: t[1], score: Math.round(score) };
+  });
+}
 // Vercel 設定從 Script Properties 讀取
 // 需要在 GAS「專案設定 → 指令碼屬性」設定：
 //   VERCEL_DEPLOY_HOOK, VERCEL_TOKEN, VERCEL_PROJECT_ID
@@ -640,12 +662,27 @@ function updateAndPushNewsHtml(rankings) {
   var newsFile = getFileFromGitHub('pages/news.html');
   var html = newsFile.content;
   
+  // 團隊總分：分組後 news.html 有兩張表（data-league），而試算表讀回來的是
+  // 12 隊的合併排行。原本一條非貪婪正則只換得到第一張，第二組會永遠停在「-」。
   if (rankings.teams.length > 0) {
-    var teamRows = rankings.teams.map(function(t) {
-      var score = Math.round(parseFloat(t[2]) || 0);
-      return '                    <tr><td>' + t[0] + '</td><td>' + t[1] + '</td><td>' + score + '</td></tr>';
-    }).join('\n');
-    html = html.replace(/<th>總分<\/th>\s*<\/tr>[\s\S]*?<\/table>/, '<th>總分</th>\n                    </tr>\n' + teamRows + '\n                </table>');
+    GROUP_NAMES.forEach(function(g) {
+      var list = rankings.teams.filter(function(t) { return fullGroupOf(t[1]) === g; });
+      if (!list.length) return;
+      var rows = rankWithinGroup(list).map(function(t) {
+        return '                    <tr><td>' + t.rank + '</td><td>' + t.team + '</td><td>' + t.score + '</td></tr>';
+      }).join('\n');
+      // 只換列，保留 <table> 那一行（第二張帶著 hidden，換掉就跑版）
+      var re = new RegExp('(<table class="ranking-table" data-league="' + g + '"[^>]*>\\s*<tr><th>排名</th><th>隊名</th><th>總分</th></tr>)[\\s\\S]*?</table>');
+      if (re.test(html)) {
+        html = html.replace(re, '$1\n' + rows + '\n                </table>');
+      } else {
+        Logger.log('⚠️ news.html 找不到 ' + g + ' 的表格，略過');
+      }
+    });
+    var unmatched = rankings.teams.filter(function(t) { return !fullGroupOf(t[1]); });
+    if (unmatched.length) {
+      Logger.log('⚠️ 不屬於任何一組、未寫入的隊伍：' + unmatched.map(function(t) { return t[1]; }).join('、'));
+    }
   }
   
   // 個人榜三張表都是四欄（組別／隊名／姓名／數值），欄數要跟 news.html 的

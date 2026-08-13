@@ -420,6 +420,20 @@ function groupLabelOf(team, groups) {
   return '-';
 }
 
+// 組內重新編名次。試算表給的是 1~12 的全體名次，濾出一組之後要重編成 1~6。
+//
+// 同分同名次、下一名跳號（1,2,2,4）——直接用陣列位置當名次會把並列拆開，
+// 而聯賽是看總分決定名次的，同分就是並列。
+function rankWithinGroup(list) {
+  const sorted = [...list].sort((a, b) => Number(b.score) - Number(a.score));
+  let lastScore = null, lastRank = 0;
+  return sorted.map((t, i) => {
+    const score = Number(t.score);
+    if (score !== lastScore) { lastRank = i + 1; lastScore = score; }
+    return { ...t, rank: lastRank };
+  });
+}
+
 // ===== 4. 更新 news.html 排行榜 =====
 function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers) {
   console.log('\n📝 更新 news.html 排行榜...\n');
@@ -435,16 +449,56 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
   const grp = (team) => groupLabelOf(team, groups);
 
   // === 更新團隊總分排行表 ===
+  //
+  // 分組之後 news.html 有兩張團隊表（data-league="掉鏢組" / "靶外組"），
+  // 但 schedule!X2:Z13 讀回來的是 12 隊的合併排行。原本的寫法用一條
+  // 「<th>總分</th> … </table>」的非貪婪正則，只吃得到第一張表，
+  // 第二組會永遠停在佔位的「-」，而且第一張表還會被塞進另一組的隊伍。
+  //
+  // 分組名單就在 config.js，濾一下就能拆開；名次要組內重編，
+  // 因為試算表給的是 1~12 的全體名次。
   if (teamRankings.length > 0) {
-    const teamRows = teamRankings.map(t =>
-      `                    <tr><td>${t.rank}</td><td>${t.team}</td><td>${t.score}</td></tr>`
-    ).join('\n');
+    const groupNames = Object.keys(groups);
 
-    html = html.replace(
-      /<th>總分<\/th>\s*<\/tr>[\s\S]*?<\/table>/,
-      `<th>總分</th>\n                    </tr>\n${teamRows}\n                </table>`
-    );
-    console.log(`  ✅ 團隊排行：更新 ${teamRankings.length} 隊`);
+    if (!groupNames.length) {
+      // 沒有分組設定（第六屆以前只有一張表），沿用原本的單表寫法
+      const teamRows = teamRankings.map(t =>
+        `                    <tr><td>${t.rank}</td><td>${t.team}</td><td>${t.score}</td></tr>`
+      ).join('\n');
+      html = html.replace(
+        /<th>總分<\/th>\s*<\/tr>[\s\S]*?<\/table>/,
+        `<th>總分</th>\n                    </tr>\n${teamRows}\n                </table>`
+      );
+      console.log(`  ✅ 團隊排行：更新 ${teamRankings.length} 隊`);
+    } else {
+      for (const g of groupNames) {
+        const list = teamRankings.filter(t => groups[g].indexOf(t.team) >= 0);
+        if (!list.length) {
+          console.warn(`  ⚠️ ${g}：排行榜裡找不到這組的隊伍，表格保持原樣`);
+          continue;
+        }
+        const rows = rankWithinGroup(list).map(t =>
+          `                    <tr><td>${t.rank}</td><td>${t.team}</td><td>${t.score}</td></tr>`
+        ).join('\n');
+
+        // 只換掉列，保留 <table> 開頭那一行（第二張表帶著 hidden，換掉就跑版了）
+        const re = new RegExp(
+          `(<table class="ranking-table" data-league="${g}"[^>]*>\\s*<tr><th>排名</th><th>隊名</th><th>總分</th></tr>)[\\s\\S]*?</table>`
+        );
+        if (!re.test(html)) {
+          console.warn(`  ⚠️ ${g}：news.html 裡找不到對應的表格，略過`);
+          continue;
+        }
+        html = html.replace(re, `$1\n${rows}\n                </table>`);
+        console.log(`  ✅ 團隊排行 ${g}：更新 ${list.length} 隊`);
+      }
+
+      const unmatched = teamRankings.filter(t => !groupNames.some(g => groups[g].indexOf(t.team) >= 0));
+      if (unmatched.length) {
+        // 隊名跟 config.js 對不上就會整隊消失，這種錯不能安靜地過去
+        console.warn(`  ⚠️ 這些隊伍不屬於任何一組，沒有寫進表格：${unmatched.map(t => t.team).join('、')}`);
+      }
+    }
   }
 
   // === 更新個人勝場排行 ===
