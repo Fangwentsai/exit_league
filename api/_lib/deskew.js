@@ -182,6 +182,36 @@ function collectMarkCandidates(integral, integralSq, width, height, sx1, sy1, sx
 // 拿來從一堆候選裡挑出唯一正確的四點組合，比單靠每個點自己的亮度特徵可靠得多。
 const SHEET_MARK_ASPECT = 1023.62 / 729.45; // ≈ 1.403
 
+// 四個夾角容許偏離 90 度多少（度）。
+//
+// 對邊比例與長寬比都對、四個角卻不是直角，是「其中一個點抓到不相干的東西」
+// 最明顯的徵兆——實測過一張把筆電螢幕拍進畫面的照片，左上角抓到螢幕邊框，
+// 拉出來的四邊形對邊比 0.96/0.76、長寬比誤差只有 1%，三個既有檢查全部放行，
+// 但四個夾角是 59°/126°/99°/77°，最大偏差 36°。
+//
+// 門檻取 25°：用相機模型模擬「紙張繞兩軸各傾斜 25 度以內」的真實透視，
+// 最大夾角偏差是 21°，25° 兩邊都留得下餘裕。傾斜再大的照片本來就不該收——
+// 那種角度連校正後的字都糊掉了。
+const MAX_ANGLE_DEV_DEG = 25;
+
+// 回傳四個夾角中偏離 90 度最多的那個偏差量（度）
+function maxCornerAngleDev(tl, tr, bl, br) {
+    const angle = (p, a, b) => {
+        const v1x = a.x - p.x, v1y = a.y - p.y;
+        const v2x = b.x - p.x, v2y = b.y - p.y;
+        const n = Math.hypot(v1x, v1y) * Math.hypot(v2x, v2y);
+        if (n === 0) return 0;
+        const cos = Math.max(-1, Math.min(1, (v1x * v2x + v1y * v2y) / n));
+        return Math.acos(cos) * 180 / Math.PI;
+    };
+    return Math.max(
+        Math.abs(angle(tl, tr, bl) - 90),
+        Math.abs(angle(tr, tl, br) - 90),
+        Math.abs(angle(bl, br, tl) - 90),
+        Math.abs(angle(br, bl, tr) - 90),
+    );
+}
+
 function scoreQuad(tl, tr, bl, br) {
     // 位置關係必須合理：左邊的點要真的在左邊、上面的點要真的在上面
     if (!(tl.x < tr.x && bl.x < br.x && tl.y < bl.y && tr.y < br.y)) return null;
@@ -198,6 +228,9 @@ function scoreQuad(tl, tr, bl, br) {
     const w = (top + bottom) / 2, h = (left + right) / 2;
     const aspectErr = Math.abs(h / w - SHEET_MARK_ASPECT) / SHEET_MARK_ASPECT;
     if (aspectErr > 0.3) return null; // 比例差三成以上，不可能是同一張分紙的四角
+
+    // 矩形在透視下四個角仍然接近直角，歪掉代表有一個點根本不在紙上
+    if (maxCornerAngleDev(tl, tr, bl, br) > MAX_ANGLE_DEV_DEG) return null;
 
     const area = w * h;
     const contrastSum = tl.contrast + tr.contrast + bl.contrast + br.contrast;
@@ -404,5 +437,5 @@ async function deskewScoresheet(inputBuffer) {
 
 module.exports = {
     deskewScoresheet, OUT_WIDTH, OUT_HEIGHT,
-    _internal: { detectFourCorners, collectMarkCandidates, buildIntegral, buildIntegralSq, regionStd },
+    _internal: { detectFourCorners, collectMarkCandidates, buildIntegral, buildIntegralSq, regionStd, maxCornerAngleDev, scoreQuad, MAX_ANGLE_DEV_DEG },
 };

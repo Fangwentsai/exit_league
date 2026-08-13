@@ -29,6 +29,11 @@
     const GUIDE_MARGIN = 0.10;       // 導引框離畫面邊緣的比例
     const DETECT_INTERVAL = 120;     // 偵測間隔（ms）
 
+    // 四個夾角容許偏離 90 度多少（度）。理由與數字的來源見 api/_lib/deskew.js
+    // 的 MAX_ANGLE_DEV_DEG：對邊比例與長寬比都對、夾角卻歪掉，代表某個角
+    // 抓到的不是紙上的定位點，而是畫面裡顏色相近的東西。
+    const MAX_ANGLE_DEV_DEG = 25;
+
     function buildIntegrals(gray, W, H) {
         const S = new Float64Array((W + 1) * (H + 1));
         for (let y = 0; y < H; y++) {
@@ -103,7 +108,41 @@
      * 遠大於定位點本身的大小。既然畫面上已經要求使用者把定位點對進框裡，
      * 框的位置就是更可靠的先驗——但只當作偏好而非硬性條件。
      */
-    function scoreQuad(tl, tr, bl, br, anchors) {
+    /**
+     * 算四個夾角各自偏離 90 度多少。回傳 { max, corner }，corner 是偏最多的那個角。
+     *
+     * 為什麼需要這個檢查：對邊比例、長寬比都通過，四個角卻不是直角，
+     * 代表某個角抓到的根本不是紙上的定位點。實測踩過：畫面上方入鏡了一台
+     * 深色的筆電螢幕，左上角就被螢幕邊框騙走，拉出來的四邊形對邊比 0.96/0.76、
+     * 長寬比誤差 1%，三個既有檢查全部放行，但夾角是 59°/126°/99°/77°。
+     * 這種情況下該做的不是重拍，是把畫面裡顏色相近的東西移開——
+     * 所以偵測到之後要能明確告訴使用者是哪一角出問題。
+     */
+    function angleDev(tl, tr, bl, br) {
+        const ang = (p, a, b) => {
+            const v1x = a.x - p.x, v1y = a.y - p.y;
+            const v2x = b.x - p.x, v2y = b.y - p.y;
+            const n = Math.hypot(v1x, v1y) * Math.hypot(v2x, v2y);
+            if (n === 0) return 90;
+            const cos = Math.max(-1, Math.min(1, (v1x * v2x + v1y * v2y) / n));
+            return Math.acos(cos) * 180 / Math.PI;
+        };
+        const devs = [
+            ['tl', Math.abs(ang(tl, tr, bl) - 90)],
+            ['tr', Math.abs(ang(tr, tl, br) - 90)],
+            ['bl', Math.abs(ang(bl, br, tl) - 90)],
+            ['br', Math.abs(ang(br, bl, tr) - 90)],
+        ];
+        let worst = devs[0];
+        for (const dv of devs) if (dv[1] > worst[1]) worst = dv;
+        return { max: worst[1], corner: worst[0] };
+    }
+
+    /**
+     * @param {object} [skewOut] 選填。只差夾角這關就通過的組合會記在這裡，
+     *        讓介面能分辨「什麼都沒找到」與「找到了但被相近顏色的東西干擾」。
+     */
+    function scoreQuad(tl, tr, bl, br, anchors, skewOut) {
         if (!(tl.x < tr.x && bl.x < br.x && tl.y < bl.y && tr.y < br.y)) return null;
         const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
         const top = d(tl, tr), bot = d(bl, br), left = d(tl, bl), right = d(tr, br);
@@ -114,6 +153,20 @@
         const w = (top + bot) / 2, h = (left + right) / 2;
         const aspectErr = Math.abs(h / w - SHEET_MARK_ASPECT) / SHEET_MARK_ASPECT;
         if (aspectErr > 0.3) return null;
+
+        const dev = angleDev(tl, tr, bl, br);
+        if (dev.max > MAX_ANGLE_DEV_DEG) {
+            // 記下面積最大的那個——面積最大代表最接近「整張紙」，
+            // 它歪掉的那一角就是最可能被干擾的位置
+            if (skewOut && (!skewOut.hit || w * h > skewOut.area)) {
+                skewOut.hit = true;
+                skewOut.area = w * h;
+                skewOut.corner = dev.corner;
+                skewOut.dev = dev.max;
+                skewOut.quad = { tl, tr, bl, br };
+            }
+            return null;
+        }
 
         let score = w * h * (1 + (tl.contrast + tr.contrast + bl.contrast + br.contrast) / 400) / (1 + aspectErr * 5);
         if (anchors) {
@@ -149,12 +202,19 @@
             per[k] = picked;
         }
         let best = null;
+        const skew = {};
         for (const tl of per.tl) for (const tr of per.tr) for (const bl of per.bl) for (const br of per.br) {
-            const s = scoreQuad(tl, tr, bl, br, anchors);
+            const s = scoreQuad(tl, tr, bl, br, anchors, skew);
             if (s !== null && (!best || s > best.score)) best = { score: s, tl, tr, bl, br };
         }
-        return { corners: best, counts: { tl: per.tl.length, tr: per.tr.length, bl: per.bl.length, br: per.br.length } };
+        return {
+            corners: best,
+            skew: (!best && skew.hit) ? skew : null,
+            counts: { tl: per.tl.length, tr: per.tr.length, bl: per.bl.length, br: per.br.length },
+        };
     }
+
+    const CORNER_LABEL = { tl: '左上角', tr: '右上角', bl: '左下角', br: '右下角' };
 
     function guideRect(vw, vh) {
         const availW = vw * (1 - GUIDE_MARGIN * 2), availH = vh * (1 - GUIDE_MARGIN * 2);
@@ -170,15 +230,31 @@
   font-family:"Noto Sans TC","PingFang TC",-apple-system,sans-serif;color:#eee;height:100dvh;width:100vw;overflow:hidden}
 .sc-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
 .sc-stage video,.sc-stage img{width:100%;height:100%;object-fit:cover;display:block}
+/* 這條不能省：上面的 display:block 是 class 選擇器，優先權高過瀏覽器內建的
+   [hidden]{display:none}，所以 video.hidden = true 其實不會把它藏起來。
+   .sc-stage 又是 flex 容器，藏不掉的那個就跟另一個並排成左右各半——
+   實機上看到的就是「拍完照後預覽跑版，左邊還在放即時影像」。*/
+.sc-stage video[hidden],.sc-stage img[hidden]{display:none}
 .sc-overlay{position:absolute;pointer-events:none}
 .sc-close-btn{position:absolute;top:calc(12px + env(safe-area-inset-top));right:16px;width:38px;height:38px;border-radius:50%;
   background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);
   color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:25;
   transition:transform 0.15s ease,background 0.15s ease}
 .sc-close-btn:active{transform:scale(0.9);background:rgba(0,0,0,0.8)}
-.sc-tip{position:absolute;top:0;left:0;right:0;padding:calc(12px + env(safe-area-inset-top)) 60px 14px 16px;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.85),rgba(0,0,0,0));font-size:12px;line-height:1.5;text-align:center;
-  pointer-events:none;z-index:10;color:rgba(255,255,255,0.95)}
+/* 說明文字置中在「畫面頂端」與「辨識框上緣」之間的那條帶狀空間裡。
+   高度由 layoutTip() 依實際的導引框位置設定（隨機型與相機比例而變），
+   這裡的 top padding 是留給右上角關閉鈕的位置，避免帶狀空間很淺時撞在一起。*/
+.sc-tip{position:absolute;top:0;left:0;right:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;
+  padding:calc(46px + env(safe-area-inset-top)) 20px 10px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.85),rgba(0,0,0,0));font-size:15px;line-height:1.6;text-align:center;
+  pointer-events:none;z-index:10;color:rgba(255,255,255,0.95);text-shadow:0 1px 3px rgba(0,0,0,0.8)}
+/* 文字一定要包在這層裡：flex 容器會把裸文字節點與 <b> 各自變成一個 flex item，
+   排成一列而不是正常換行（實測「把分紙攤平壓好」會被拆成三塊散開）。
+
+   nowrap + 依畫面寬度縮放字級，讓說明固定就是 <br> 分出來的兩行。
+   中文字寬正好是 1em，所以「最長那行的字數」直接決定字級上限：
+   兩行各 17、18 字，除數取 18；小螢幕自動縮，大螢幕封頂在 16px。*/
+.sc-tip-inner{white-space:nowrap;font-size:min(16px, calc((100vw - 44px) / 18))}
 .sc-status{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
   z-index:15;font-size:13.5px;font-weight:700;padding:8px 20px;border-radius:20px;text-align:center;white-space:nowrap;
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(0,0,0,0.4);pointer-events:none;
@@ -246,7 +322,7 @@
   <img hidden alt="">
   <canvas class="sc-overlay"></canvas>
   <button class="sc-close-btn" data-act="cancel" title="關閉">✕</button>
-  <div class="sc-tip">把分紙<b>攤平壓好</b>，四個角的黑方塊對進綠色框內<br>光線不足時可開啟閃光燈，但紙面若出現反光白斑請關掉</div>
+  <div class="sc-tip"><div class="sc-tip-inner">把分紙<b>攤平壓好</b>，四角黑方塊對進綠框<br>光線不足可開閃光燈，紙面反光就關掉</div></div>
   <div class="sc-status sc-bad">啟動相機中…</div>
   <div class="sc-controls-overlay">
     <div class="sc-controls-row" id="scControlsRow">
@@ -266,6 +342,7 @@
             const overlay = root.querySelector('.sc-overlay');
             const octx = overlay.getContext('2d');
             const tip = root.querySelector('.sc-tip');
+            const tipText = root.querySelector('.sc-tip-inner');
             const statusEl = root.querySelector('.sc-status');
             const controlsRow = root.querySelector('#scControlsRow');
             const btn = (a) => root.querySelector(`[data-act="${a}"]`);
@@ -308,7 +385,9 @@
                 } catch (err) {
                     statusEl.className = 'sc-status sc-bad';
                     statusEl.textContent = '無法開啟相機：' + err.name;
-                    tip.innerHTML = '請確認已允許相機權限。<br>若是從 LINE 或其他 App 內開啟，請改用 Safari 或 Chrome。';
+                    // 錯誤說明比兩行提示長得多，這裡要放行自動換行
+                    tipText.style.whiteSpace = 'normal';
+                    tipText.innerHTML = '請確認已允許相機權限。<br>若是從 LINE 或其他 App 內開啟，請改用 Safari 或 Chrome。';
                     return;
                 }
                 video.srcObject = stream;
@@ -436,6 +515,14 @@
                 draw();
             }
 
+            // 把說明文字的容器撐到「辨識框上緣」，內容再垂直置中。
+            // 用 flex 置中而不是寫死 top，因為這段空間的高度取決於相機畫面
+            // 被 object-fit:cover 裁切後的實際位置，各機型不一樣。
+            function layoutTip(g, videoRect, stageRect, vh) {
+                const guideTopCss = (videoRect.top - stageRect.top) + g.y * (videoRect.height / vh);
+                tip.style.height = Math.max(72, guideTopCss) + 'px';
+            }
+
             function draw() {
                 if (!lastResult) return;
                 const { res, W, H, vw, vh } = lastResult;
@@ -453,6 +540,7 @@
                 const found = !!res.corners;
 
                 const g = guideRect(vw, vh);
+                layoutTip(g, vr, sr, vh);
                 const lw = Math.max(3, vw * 0.005);
                 octx.strokeStyle = found ? 'rgba(80,220,120,0.55)' : 'rgba(255,255,255,0.4)';
                 octx.lineWidth = lw;
@@ -470,6 +558,29 @@
                     octx.moveTo(cx + dx * arm, cy);
                     octx.lineTo(cx, cy);
                     octx.lineTo(cx, cy + dy * arm);
+                    octx.stroke();
+                }
+
+                // 被干擾時把「歪掉的那個四邊形」畫成紅色，使用者才看得出來
+                // 是畫面裡的哪個東西把角拉走了，而不是只被告知「失敗」
+                if (!found && res.skew) {
+                    const q = res.skew.quad;
+                    octx.strokeStyle = 'rgba(248,113,113,0.9)';
+                    octx.lineWidth = lw;
+                    octx.setLineDash([vw * 0.015, vw * 0.015]);
+                    octx.beginPath();
+                    octx.moveTo(q.tl.x * sx, q.tl.y * sy);
+                    octx.lineTo(q.tr.x * sx, q.tr.y * sy);
+                    octx.lineTo(q.br.x * sx, q.br.y * sy);
+                    octx.lineTo(q.bl.x * sx, q.bl.y * sy);
+                    octx.closePath();
+                    octx.stroke();
+                    octx.setLineDash([]);
+                    const bad = q[res.skew.corner];
+                    octx.strokeStyle = 'rgba(248,113,113,1)';
+                    octx.lineWidth = lw * 1.5;
+                    octx.beginPath();
+                    octx.arc(bad.x * sx, bad.y * sy, vw * 0.03, 0, Math.PI * 2);
                     octx.stroke();
                 }
 
@@ -493,7 +604,13 @@
                 }
 
                 statusEl.className = 'sc-status ' + (found ? 'sc-ok' : 'sc-bad');
-                statusEl.textContent = found ? '✓ 四個定位點都抓到了，可以拍' : '✗ 尚未抓到四個定位點';
+                if (found) {
+                    statusEl.textContent = '✓ 四個定位點都抓到了，可以拍';
+                } else if (res.skew) {
+                    statusEl.textContent = '✗ ' + CORNER_LABEL[res.skew.corner] + '抓到別的東西，請移開深色物品';
+                } else {
+                    statusEl.textContent = '✗ 尚未抓到四個定位點';
+                }
 
                 if (statsEl) {
                     const cc = res.counts;
