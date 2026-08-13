@@ -302,10 +302,9 @@ body {
 
 /* iPhone SE/小螢幕設備(375px) */
 @media screen and (max-width: 375px) {
-    .ranking-table td, .ranking-table th {
-        font-size: 13px;
-        padding: 6px 2px;
-    }
+    /* 排行榜表格的窄screen尺寸移到檔案後段的「排行榜表格」區塊統一管理——
+       原本寫在這裡的 font-size/padding 是無效的：底下 .ranking-table th,td
+       的基準規則出現在更後面、選擇器權重又相同，永遠會蓋過這裡。 */
     .match-item {
         padding: 5px 5px;
     }
@@ -442,8 +441,79 @@ body {
     font-weight: bold;
 }
 
-/* 當螢幕寬度大於 400px 時切換為雙欄 */
-@media screen and (min-width: 480px) {
+/* ===== 排行榜表格的欄寬 =====
+ *
+ * 欄寬不能讓瀏覽器均分。四欄裡只有隊名是長的：
+ *
+ *   組別    掉鏢組／靶外組            3 個全形字
+ *   隊名    Tonight29恭喜隊          12 字（9 半形 + 3 全形）
+ *   姓名    Lucas／kelvin刺           最多 4 全形或 6 半形
+ *   勝場數  112　先攻機率 21.43%      3 位數或 6 個半形字
+ *
+ * 均分時每欄各拿 25%，隊名要 117px 卻只分到約 65px，其他三欄則多出一倍空間。
+ * 這些格子又都是 white-space:nowrap，擠不下不會換行而是把整個表格撐寬——
+ * 實測 320px 的手機上表格寬 267px、容器只有 260px，右邊直接被切掉。
+ *
+ * 改用 table-layout:fixed 並指定百分比，把空間讓給隊名。隊名欄額外允許斷行，
+ * 是最後一道保險：日後出現比 Tonight29恭喜隊 更長的隊名時會折成兩行，
+ * 而不是又把表格撐爆。
+ */
+.ranking-table {
+    table-layout: fixed;
+}
+
+/* 個人榜（組別／隊名／姓名／勝場數或先攻機率） */
+.ranking-table:not([data-league]) th:nth-child(1),
+.ranking-table:not([data-league]) td:nth-child(1) { width: 16%; }
+.ranking-table:not([data-league]) th:nth-child(2),
+.ranking-table:not([data-league]) td:nth-child(2) { width: 42%; }
+.ranking-table:not([data-league]) th:nth-child(3),
+.ranking-table:not([data-league]) td:nth-child(3) { width: 22%; }
+.ranking-table:not([data-league]) th:nth-child(4),
+.ranking-table:not([data-league]) td:nth-child(4) { width: 20%; }
+
+/* 團隊總分排行（排名／隊名／總分） */
+.ranking-table[data-league] th:nth-child(1),
+.ranking-table[data-league] td:nth-child(1) { width: 20%; }
+.ranking-table[data-league] th:nth-child(2),
+.ranking-table[data-league] td:nth-child(2) { width: 55%; }
+.ranking-table[data-league] th:nth-child(3),
+.ranking-table[data-league] td:nth-child(3) { width: 25%; }
+
+/* 隊名欄：唯一允許折行的一欄。break-word 只在單詞本身塞不下時才斷，
+   中文照常逐字折，Tonight29 這種英數不會被硬拆在中間。 */
+.ranking-table td:nth-child(2) {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* 表頭字比內容小，但「先攻機率」四個字仍可能比欄寬長，允許折成兩行 */
+.ranking-table th {
+    white-space: normal;
+}
+
+/* 窄螢幕：字級與左右內距一起縮，讓最長的隊名維持單行。
+   實測 320px 容器 260px 時，隊名欄 42% ≈ 109px，
+   而 Tonight29恭喜隊 在 13px 下約需 105px。 */
+@media screen and (max-width: 375px) {
+    .ranking-table th,
+    .ranking-table td {
+        font-size: 13px;
+        padding: 6px 2px;
+    }
+    .ranking-table th {
+        font-size: 11px;
+    }
+}
+
+/* 三個排行榜並排。
+ *
+ * 門檻從 480px 提高到 900px：.rankings 底下是三個 ranking-section，並排後
+ * 每欄只有內容區的三分之一。480px 的螢幕分下來一欄僅 138px，四欄表格連
+ * 「掉鏢」兩個字都放不下，實測整排格子都溢出。900px 以下維持單欄、
+ * 用整個內容寬度放表格，讀起來也比擠成三欄清楚。
+ */
+@media screen and (min-width: 900px) {
     .rankings {
         display: flex;
         justify-content: space-between;
@@ -453,6 +523,17 @@ body {
     .ranking-section {
         flex: 1;
         margin-bottom: 0;
+    }
+
+    /* 並排後每欄約 265px，和 320px 手機上的可用寬度差不多，
+       所以字級跟著縮到與窄螢幕相同，最長的隊名才留得住單行 */
+    .ranking-table th,
+    .ranking-table td {
+        font-size: 13px;
+        padding: 6px 2px;
+    }
+    .ranking-table th {
+        font-size: 11px;
     }
 }
 
