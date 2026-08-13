@@ -34,14 +34,18 @@ function fullGroupOf(team) {
   return null;
 }
 
-// 組內重新編名次（試算表給的是 1~12 的全體名次）。同分同名次、下一名跳號。
+// 組內重新編名次（試算表給的是 1~12 的全體名次）。
+//
+// 以試算表自己的名次（X 欄）為準，不拿總分重算：總分公式帶了極小的權重讓
+// 勝場優先於飲酒加成（Q+U+T*1.00000001），實際值是 503.0000038 這種數字，
+// 用它比大小容易受浮點誤差影響，而顯示時又要 round 成整數。名次欄已經
+// 把那個順序算好了，照抄就好。名次相同才算並列，下一名跳號。
 function rankWithinGroup(list) {
-  var sorted = list.slice().sort(function(a, b) { return Number(b[2]) - Number(a[2]); });
-  var lastScore = null, lastRank = 0;
+  var sorted = list.slice().sort(function(a, b) { return Number(a[0]) - Number(b[0]); });
+  var lastSheetRank = null, lastRank = 0;
   return sorted.map(function(t, i) {
-    var score = Number(t[2]);
-    if (score !== lastScore) { lastRank = i + 1; lastScore = score; }
-    return { rank: lastRank, team: t[1], score: Math.round(score) };
+    if (Number(t[0]) !== lastSheetRank) { lastRank = i + 1; lastSheetRank = Number(t[0]); }
+    return { rank: lastRank, team: t[1], score: Math.round(Number(t[2]) || 0) };
   });
 }
 // Vercel 設定從 Script Properties 讀取
@@ -602,11 +606,14 @@ function readRankingsFromSheets(ss) {
       })
       .slice(0, 5);
     
-    // Top Lady：N欄=女，G欄降序
+    // Top Lady：N欄=女，G欄降序，同分按H欄勝率降序（與個人勝場同一套並列規則）
     var topLadies = allPlayers
       .filter(function(r) { return String(r[13]).trim() === '女'; })
-      .map(function(r) { return { team: r[0], name: r[1], wins: parseInt(r[6]) || 0 }; })
-      .sort(function(a, b) { return b.wins - a.wins; })
+      .map(function(r) { return { team: r[0], name: r[1], wins: parseInt(r[6]) || 0, winRate: r[7] || '0%' }; })
+      .sort(function(a, b) {
+        if (b.wins !== a.wins) return b.wins - a.wins;
+        return (parseFloat(String(b.winRate).replace('%', '')) || 0) - (parseFloat(String(a.winRate).replace('%', '')) || 0);
+      })
       .slice(0, 5);
     
     // 地獄倒霉鬼：M>0排除DNP，I欄先攻率升序

@@ -366,10 +366,13 @@ async function fetchRankingsAndUpdateNews() {
     const allPersonalData = await httpsGet(allPersonalUrl);
     const allPlayers = (allPersonalData.values || []).filter(r => r[0] && r[1]);
 
+    // 同勝場時比總勝率（H欄）——個人榜的並列規則是勝率決勝負。
+    // 只用勝場排序的話，同分者的先後其實是試算表的列順序決定的，等於隨機。
+    const winRate = (v) => parseFloat(String(v || '').replace('%', '')) || 0;
     topLadies = allPlayers
       .filter(r => (r[13] || '').trim() === '女')   // N欄(index 13) = '女'
-      .map(r => ({ team: r[0], name: r[1], totalWins: parseInt(r[6]) || 0 }))  // G欄(index 6)
-      .sort((a, b) => b.totalWins - a.totalWins)
+      .map(r => ({ team: r[0], name: r[1], totalWins: parseInt(r[6]) || 0, rate: winRate(r[7]) }))  // G欄勝場, H欄勝率
+      .sort((a, b) => (b.totalWins - a.totalWins) || (b.rate - a.rate))
       .slice(0, 5);
     console.log(`  ✅ Top Lady：Top ${topLadies.length}（personal N=女 + G欄排序）`);
 
@@ -422,14 +425,19 @@ function groupLabelOf(team, groups) {
 
 // 組內重新編名次。試算表給的是 1~12 的全體名次，濾出一組之後要重編成 1~6。
 //
-// 同分同名次、下一名跳號（1,2,2,4）——直接用陣列位置當名次會把並列拆開，
-// 而聯賽是看總分決定名次的，同分就是並列。
+// 排序與並列都以試算表自己的名次（X 欄）為準，不要拿總分重算。原因是總分
+// 的公式帶了一個極小的權重讓勝場優先於飲酒加成（Q+U+T*1.00000001），
+// 實際值長這樣：503.0000038、480.0000041。而 Sheets API 預設回傳
+// FORMATTED_VALUE，拿到的是四捨五入後的 "503"、"480"——拿它比大小，
+// 那個刻意排開的順序就又被併回去，兩隊會變成並列。
+//
+// 名次相同才算並列（下一名跳號：1,2,2,4）。要不要並列由試算表的公式決定，
+// 這裡只負責把 1~12 重編成組內的 1~6。
 function rankWithinGroup(list) {
-  const sorted = [...list].sort((a, b) => Number(b.score) - Number(a.score));
-  let lastScore = null, lastRank = 0;
+  const sorted = [...list].sort((a, b) => Number(a.rank) - Number(b.rank));
+  let lastSheetRank = null, lastRank = 0;
   return sorted.map((t, i) => {
-    const score = Number(t.score);
-    if (score !== lastScore) { lastRank = i + 1; lastScore = score; }
+    if (Number(t.rank) !== lastSheetRank) { lastRank = i + 1; lastSheetRank = Number(t.rank); }
     return { ...t, rank: lastRank };
   });
 }
