@@ -445,7 +445,7 @@ body {
  *
  * 欄寬不能讓瀏覽器均分。四欄裡只有隊名是長的：
  *
- *   組別    掉鏢組／靶外組            3 個全形字
+ *   組別    掉鏢／靶外                2 個全形字（腳本寫入時已截短，見下）
  *   隊名    Tonight29恭喜隊          12 字（9 半形 + 3 全形）
  *   姓名    Lucas／kelvin刺           最多 4 全形或 6 半形
  *   勝場數  112　先攻機率 21.43%      3 位數或 6 個半形字
@@ -462,15 +462,25 @@ body {
     table-layout: fixed;
 }
 
-/* 個人榜（組別／隊名／姓名／勝場數或先攻機率） */
+/* 個人榜（組別／隊名／姓名／勝場數或先攻機率）
+ *
+ * 這組百分比是量出來的，不是估的。以最窄的 320px 手機（表格 256px、
+ * 每格左右內距各 2px）為基準，四欄最長內容分別需要 26 / 103 / 46 / 44px，
+ * 下面的配比讓每欄都剩下 4~6px 餘裕——餘裕要平均分配，才不會有哪一欄
+ * 先被換了字型或多一個字就爆掉。
+ *
+ * 組別欄裡的「掉鏢」是腳本寫入時就截好的兩字版（見 scripts/weekly_update.js
+ * 的 groupLabelOf）。若改回寫完整組名「掉鏢組」，這裡要加到 18%，
+ * 而且 320px 上只剩 3px 餘裕。
+ */
 .ranking-table:not([data-league]) th:nth-child(1),
-.ranking-table:not([data-league]) td:nth-child(1) { width: 16%; }
+.ranking-table:not([data-league]) td:nth-child(1) { width: 14%; }
 .ranking-table:not([data-league]) th:nth-child(2),
-.ranking-table:not([data-league]) td:nth-child(2) { width: 42%; }
+.ranking-table:not([data-league]) td:nth-child(2) { width: 44%; }
 .ranking-table:not([data-league]) th:nth-child(3),
-.ranking-table:not([data-league]) td:nth-child(3) { width: 22%; }
+.ranking-table:not([data-league]) td:nth-child(3) { width: 21%; }
 .ranking-table:not([data-league]) th:nth-child(4),
-.ranking-table:not([data-league]) td:nth-child(4) { width: 20%; }
+.ranking-table:not([data-league]) td:nth-child(4) { width: 21%; }
 
 /* 團隊總分排行（排名／隊名／總分） */
 .ranking-table[data-league] th:nth-child(1),

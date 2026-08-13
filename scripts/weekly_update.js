@@ -392,6 +392,34 @@ async function fetchRankingsAndUpdateNews() {
 }
 
 
+// ===== 分組（第七屆起兩組並行）=====
+//
+// news.html 的個人榜有「組別」欄，值要在寫入時一起帶上——頁面本身沒有辦法
+// 從隊名反推組別（那份對照表在 config/config.js，是給瀏覽器用的）。
+//
+// 不在這裡另抄一份隊名清單：抄了總有一天會跟 config.js 對不上，
+// 而隊名只要差一個字，整欄就變成「-」。config.js 是純腳本沒有 module.exports，
+// 用 Function 取出裡面的 SEASONS 即可。
+function loadGroups(season) {
+  try {
+    const src = fs.readFileSync(path.join(__dirname, '../config/config.js'), 'utf8');
+    const SEASONS = new Function(src + '\nreturn SEASONS;')();
+    return (SEASONS[season] && SEASONS[season].groups) || {};
+  } catch (err) {
+    console.warn(`  ⚠️ 讀取分組設定失敗（${err.message}），組別欄會留白`);
+    return {};
+  }
+}
+
+// 個人榜的組別欄只有表格的 14%，320px 手機上約 32px，放不下三個全形字，
+// 所以取前兩字（掉鏢組 → 掉鏢）。完整組名用在團隊榜與賽事卡片，那裡空間夠。
+function groupLabelOf(team, groups) {
+  for (const name in groups) {
+    if (groups[name].indexOf(team) >= 0) return name.slice(0, 2);
+  }
+  return '-';
+}
+
 // ===== 4. 更新 news.html 排行榜 =====
 function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers) {
   console.log('\n📝 更新 news.html 排行榜...\n');
@@ -402,6 +430,9 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
   }
 
   let html = fs.readFileSync(CONFIG.newsHtmlPath, 'utf8');
+
+  const groups = loadGroups(CONFIG.season);
+  const grp = (team) => groupLabelOf(team, groups);
 
   // === 更新團隊總分排行表 ===
   if (teamRankings.length > 0) {
@@ -418,8 +449,10 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
 
   // === 更新個人勝場排行 ===
   if (playerRankings.length > 0) {
+    // 四欄：組別／隊名／姓名／勝場數。欄數必須跟 news.html 的表頭一致，
+    // 少一格整列會往左偏，最後一欄變空白。
     const playerRows = playerRankings.map(p =>
-      `                    <tr><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
+      `                    <tr><td>${grp(p.team)}</td><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
     ).join('\n');
 
     html = html.replace(
@@ -432,12 +465,14 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
   // === 更新 Top Lady ===
   if (topLadies.length > 0) {
     const ladyRows = topLadies.map(p =>
-      `                    <tr><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
+      `                    <tr><td>${grp(p.team)}</td><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
     ).join('\n');
 
+    // 這一段連表頭一起換掉，所以表頭也要是四欄——原本寫的是三欄，
+    // 換完之後 Top Lady 會少一個「組別」欄，跟上下兩張表對不齊。
     html = html.replace(
       /<h3 class="section-title">Top Lady 🌹<\/h3>\s*<table class="ranking-table">[\s\S]*?<\/table>/,
-      `<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n${ladyRows}\n                </table>`
+      `<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>組別</th>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n${ladyRows}\n                </table>`
     );
     console.log(`  ✅ Top Lady：更新 Top ${topLadies.length}`);
   }
@@ -445,7 +480,7 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
   // === 更新地獄倒霉鬼 ===
   if (unluckyPlayers.length > 0) {
     const unluckyRows = unluckyPlayers.map(p =>
-      `                    <tr><td>${p.team}</td><td>${p.name}</td><td>${p.faRate}</td></tr>`
+      `                    <tr><td>${grp(p.team)}</td><td>${p.team}</td><td>${p.name}</td><td>${p.faRate}</td></tr>`
     ).join('\n');
 
     html = html.replace(

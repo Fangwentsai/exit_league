@@ -9,6 +9,21 @@ var WEEKLY_SHEET_ID = '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM';
 var NOTIFY_EMAIL = 'fangwentsai14@gmail.com';
 var GAMES_PER_WEEK = 6;
 
+// 第七屆起兩組並行，news.html 的個人榜有「組別」欄，寫入排行榜時要一起帶上。
+// ⚠️ 這份名單必須與 config/config.js 的 SEASONS[7].groups 一致——GAS 跑在
+// Google 端讀不到 repo 的設定檔，只能各留一份。改隊名時兩邊都要改。
+// 值是截短成兩字的顯示用標籤（組別欄只有表格的 14%，放不下三個全形字）。
+var TEAM_GROUPS = {
+  '酒空組': '掉鏢', '軟飯揪團中': '掉鏢', '人生揪難亮': '掉鏢',
+  '傑克紅心': '掉鏢', 'Tonight29發財隊': '掉鏢', '匪類里民一直喝': '掉鏢',
+  '逃生Zoo口': '靶外', '有點傻': '靶外', '嘻嘻隊': '靶外',
+  '哈哈隊': '靶外', '傑克黑桃': '靶外', 'Tonight29恭喜隊': '靶外'
+};
+
+function groupLabelOf(team) {
+  return TEAM_GROUPS[team] || '-';
+}
+
 /**
  * 主控：比賽上傳後的自動化流程
  * 在 doPost 上傳 GitHub 成功後呼叫此函數
@@ -314,7 +329,7 @@ function updateAndPushNewsHtml(rankings) {
   // 3. 替換個人勝場表
   if (rankings.players.length > 0) {
     var playerRows = rankings.players.map(function(p) {
-      return '                    <tr><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
+      return '                    <tr><td>' + groupLabelOf(p.team) + '</td><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
     }).join('\n');
     html = html.replace(
       /<th>勝場數<\/th>\s*<\/tr>\s*<tr>\s*<td>[\s\S]*?<\/table>/,
@@ -325,18 +340,18 @@ function updateAndPushNewsHtml(rankings) {
   // 4. 替換 Top Lady 表
   if (rankings.ladies.length > 0) {
     var ladyRows = rankings.ladies.map(function(p) {
-      return '                    <tr><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
+      return '                    <tr><td>' + groupLabelOf(p.team) + '</td><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
     }).join('\n');
     html = html.replace(
       /<h3 class="section-title">Top Lady 🌹<\/h3>\s*<table class="ranking-table">[\s\S]*?<\/table>/,
-      '<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n' + ladyRows + '\n                </table>'
+      '<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>組別</th>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n' + ladyRows + '\n                </table>'
     );
   }
   
   // 5. 替換地獄倒霉鬼表
   if (rankings.unlucky.length > 0) {
     var unluckyRows = rankings.unlucky.map(function(p) {
-      return '                    <tr><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.faRate + '</td></tr>';
+      return '                    <tr><td>' + groupLabelOf(p.team) + '</td><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.faRate + '</td></tr>';
     }).join('\n');
     html = html.replace(
       /<th>先攻機率<\/th>\s*<\/tr>[\s\S]*?<\/table>/,
