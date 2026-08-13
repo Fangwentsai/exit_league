@@ -108,10 +108,17 @@ async function loadGames() {
  *
  * 它不存在於 Google Sheets，saveGameData() 會擋下送出（見 admin-main.js），
  * 純粹用來走完「拍照 → 辨識 → 填表」這段流程。
+ *
+ * ⚠️ 目前關閉中。拍照辨識已經可以在正式場次上直接使用（選好比賽後
+ * gameDetails 才顯示，OCR 面板就在裡面），這個自選隊伍的測試場次先收起來，
+ * 避免隊長誤選到不會送出成績的假場次。要重新開放把下面的旗標改成 true 即可，
+ * 相關的隊伍選擇器與送出攔截都還留著。
  */
+const WARMUP_TEST_ENABLED = false;
 const WARMUP_TEST_GAME_ID = 'warmup-test';
 
 function appendWarmupTestOption(select) {
+    if (!WARMUP_TEST_ENABLED) return;
     const option = document.createElement('option');
     option.value = WARMUP_TEST_GAME_ID;
     option.textContent = '🔧 熱身賽測試（自選隊伍，不會送出成績）';
