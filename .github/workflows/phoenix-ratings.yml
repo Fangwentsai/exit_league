@@ -1,0 +1,77 @@
+# 每天自動更新 PhoenixDarts 等級／Rating
+#
+# 為什麼跑在 GitHub Actions 而不是本機 cron：這件事要在沒人開電腦的時候也會發生，
+# 而且結果要 commit 回 repo。Actions 本身就有 repo 的寫入權限，不必另外保管金鑰。
+#
+# scripts/phoenix_fetch.js 只用 Node 內建模組（https / fs / path / querystring），
+# 所以不需要 npm install，跑起來大約 30 秒。
+name: 更新 PhoenixDarts Rating
+
+on:
+  schedule:
+    # GitHub 的 cron 一律是 UTC，台北是 UTC+8，所以 00:00 UTC = 早上 08:00。
+    # 注意 Actions 的排程在尖峰時段可能延遲數分鐘到數十分鐘，不保證準點。
+    - cron: '0 0 * * *'
+  workflow_dispatch:          # 也可以在 Actions 頁面手動按一次
+
+# 前一次還沒跑完就不要再開一個，避免兩個 job 同時 commit 打架
+concurrency:
+  group: phoenix-ratings
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write         # 要 push 回 main
+    env:
+      TZ: Asia/Taipei         # log 的時間顯示成台北時間，對時比較好看
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 抓取 Rating
+        run: node scripts/phoenix_fetch.js
+
+      - name: 有變動才 commit 並 push
+        run: |
+          set -euo pipefail
+
+          git config user.name  'yhdarts-bot'
+          git config user.email 'actions@github.com'
+
+          # updatedAt 每次都會變，所以不能只看檔案有沒有動；
+          # 要比對「除了 updatedAt 以外的內容」有沒有真的變化，
+          # 否則每天都會產生一個沒有意義的 commit。
+          if git diff --quiet -- data/phoenix_ratings.json; then
+            echo "沒有任何變動，跳過"
+            exit 0
+          fi
+
+          before=$(git show HEAD:data/phoenix_ratings.json | node -e \
+            'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);delete j.updatedAt;console.log(JSON.stringify(j))})')
+          after=$(node -e \
+            'const j=require("./data/phoenix_ratings.json");delete j.updatedAt;console.log(JSON.stringify(j))')
+
+          if [ "$before" = "$after" ]; then
+            echo "只有 updatedAt 改變，實際數據沒動，跳過"
+            git checkout -- data/phoenix_ratings.json
+            exit 0
+          fi
+
+          git add data/phoenix_ratings.json
+          git commit -m "📊 自動更新 PhoenixDarts Rating ($(date '+%Y/%m/%d'))"
+
+          # 隊長在後台綁定卡片時，GAS 也會 push 到同一個 branch，
+          # 所以推之前先 rebase；偶爾撞到就重試幾次。
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main && git push origin main && exit 0
+            echo "第 $i 次 push 失敗，等 10 秒重試"
+            sleep 10
+          done
+          echo "::error::push 連續失敗三次"
+          exit 1
