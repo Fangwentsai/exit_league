@@ -78,8 +78,12 @@
         // 沒有等級的人補一個等寬空位，否則同一欄的姓名會左右參差
         if (!r || !r.level) return '<span class="mp-lv-blank"></span>';
         const base = window.location.pathname.includes('/pages/') ? '../' : '';
-        // title 帶上卡片名稱與 rating，滑過去才知道這個等級是誰、怎麼來的
-        return `<img class="mp-lv" src="${base}images/rating30/${r.level}.webp" alt="Lv${r.level}" title="${r.card}　rating ${r.webrate}　PPD ${r.ppd}　MPR ${r.mpr}" loading="lazy">`;
+        // title 帶上卡片名稱與 rating，滑過去才知道這個等級是誰、怎麼來的。
+        // 有些人的 PhoenixDarts 個人檔案不公開，抓不到 PPD／MPR（見
+        // scripts/phoenix_fetch.js 的 profileHidden），那就不要顯示那兩項——
+        // 印成 0 會被誤讀成「這個人 PPD 是 0」。
+        const detail = (r.ppd && r.mpr) ? `　PPD ${r.ppd}　MPR ${r.mpr}` : '';
+        return `<img class="mp-lv" src="${base}images/rating30/${r.level}.webp" alt="Lv${r.level}" title="${r.card}　rating ${r.webrate}${detail}" loading="lazy">`;
     }
 
     // ========== 撈取 player.json ==========

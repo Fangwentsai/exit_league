@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T14:29:38.611Z",
+  "updatedAt": "2026-08-17T14:33:52.077Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -109,8 +109,9 @@
         "webrate": "6.63",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       }
     },
     "逃生Zoo口": {
@@ -370,8 +371,9 @@
         "webrate": "7.04",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "大毛": {
         "card": "大陰毛癢",
@@ -403,8 +405,9 @@
         "webrate": "5.62",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "宇辰": {
         "card": "老是掉東西",
@@ -414,8 +417,9 @@
         "webrate": "6.83",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "小劉": {
         "card": "Jack氵交劉在裡面",
@@ -425,8 +429,9 @@
         "webrate": "8.79",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "阿俊": {
         "card": "Jack-水箭龜頭",
@@ -436,8 +441,9 @@
         "webrate": "9.48",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "Kevin": {
         "card": "kevin",
@@ -469,8 +475,9 @@
         "webrate": "5.18",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       }
     },
     "傑克黑桃": {
@@ -504,8 +511,9 @@
         "webrate": "7.34",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "小郭": {
         "card": "E6孤獨傲鷹",
@@ -548,8 +556,9 @@
         "webrate": "12.06",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "Ray": {
         "card": "地獄專員-阿瑞",
@@ -570,8 +579,9 @@
         "webrate": "7.78",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "青楓": {
         "card": "青楓",
@@ -592,8 +602,9 @@
         "webrate": "7.50",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       },
       "霖霖": {
         "card": "0800",
@@ -603,8 +614,9 @@
         "webrate": "5.33",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "0",
-        "mpr": "0"
+        "ppd": null,
+        "mpr": null,
+        "profileHidden": true
       }
     }
   }

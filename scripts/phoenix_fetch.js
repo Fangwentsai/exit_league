@@ -94,7 +94,7 @@ async function main() {
     }
 
     const out = { updatedAt: new Date().toISOString(), teams: {} };
-    let ok = 0, failed = 0, renamed = 0;
+    let ok = 0, failed = 0, renamed = 0, hidden = 0;
 
     for (const team of teams) {
         console.log(`\n🔍 ${team}`);
@@ -117,6 +117,11 @@ async function main() {
 
             if (!info) info = {};
 
+            // 有一部分會員的個人檔案完全不回傳資料（name 也是空字串，實測同一個
+            // cSeq 連查三次都一樣，不是速率限制），推測是對方的隱私設定。
+            // 這種情況 webrate 用索引補，但 PPD／MPR 索引裡沒有，只能標成無資料——
+            // 寫 0 會在畫面上看起來像「這個人 PPD 是 0」。
+            const profileHidden = !(info.name && String(info.name).trim());
             const idxPlayer = playerIndexMap.get(String(entry.cSeq));
             const cardName = (info.name && info.name.trim()) || (idxPlayer && idxPlayer.card) || entry.card;
             const webrate = (parseFloat(info.webrate) > 0 ? String(info.webrate) : null) || (idxPlayer && idxPlayer.webrate ? String(idxPlayer.webrate) : '0');
@@ -131,21 +136,25 @@ async function main() {
                 webrate: webrate,
                 level: lv,
                 icon: lv ? `${RATING_ICON_DIR}/${lv}.webp` : null,
-                ppd: info.ppd_tapd || '-',
-                mpr: info.mpr_tapd || '-',
+                ppd: profileHidden ? null : (info.ppd_tapd || null),
+                mpr: profileHidden ? null : (info.mpr_tapd || null),
+                profileHidden: profileHidden || undefined,
             };
             ok++;
 
-            const note = cardName.trim() !== String(entry.card).trim()
+            let note = cardName.trim() !== String(entry.card).trim()
                 ? `　（已改名，綁定時是「${entry.card}」）` : '';
             if (note) renamed++;
-            console.log(`   ✅ ${player.padEnd(6)} ${cardName.padEnd(20)} Lv${String(lv || '?').padStart(2)}  rate ${webrate}  PPD ${info.ppd_tapd || '-'}  MPR ${info.mpr_tapd || '-'}${note}`);
+            if (profileHidden) { note += '　（個人檔案不公開，Rating 取自索引）'; hidden++; }
+            const ppdTxt = profileHidden ? '-' : (info.ppd_tapd || '-');
+            const mprTxt = profileHidden ? '-' : (info.mpr_tapd || '-');
+            console.log(`   ✅ ${player.padEnd(6)} ${cardName.padEnd(20)} Lv${String(lv || '?').padStart(2)}  rate ${webrate}  PPD ${ppdTxt}  MPR ${mprTxt}${note}`);
         }
     }
 
     fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + '\n');
     console.log(`\n📄 已寫入 ${path.relative(process.cwd(), OUT_PATH)}`);
-    console.log(`   成功 ${ok}　失敗 ${failed}${renamed ? `　改過名 ${renamed}` : ''}`);
+    console.log(`   成功 ${ok}　失敗 ${failed}${renamed ? `　改過名 ${renamed}` : ''}${hidden ? `　檔案不公開 ${hidden}` : ''}`);
 }
 
 main().catch(err => {
