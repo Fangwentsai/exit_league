@@ -33,6 +33,7 @@ const RATING_ICON_DIR = 'images/rating30';
 
 const CARDS_PATH = path.join(__dirname, '../data/phoenix_cards.json');
 const OUT_PATH = path.join(__dirname, '../data/phoenix_ratings.json');
+const PLAYERS_INDEX_PATH = path.join(__dirname, '../data/phoenix_players.json');
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
@@ -70,7 +71,7 @@ async function fetchProfile(cSeq) {
 // 等級是 webrate 無條件捨去（6.01~6.99 都算 6）
 function levelOf(webrate) {
     const n = parseFloat(webrate);
-    if (!isFinite(n)) return null;
+    if (!isFinite(n) || n <= 0) return null;
     return Math.max(1, Math.min(30, Math.floor(n)));
 }
 
@@ -82,6 +83,14 @@ async function main() {
     if (!teams.length) {
         console.error(onlyTeam ? `❌ phoenix_cards.json 裡沒有「${onlyTeam}」` : '❌ 還沒有任何綁定資料');
         process.exit(1);
+    }
+
+    let playerIndexMap = new Map();
+    if (fs.existsSync(PLAYERS_INDEX_PATH)) {
+        try {
+            const idxJson = JSON.parse(fs.readFileSync(PLAYERS_INDEX_PATH, 'utf8'));
+            (idxJson.players || []).forEach(p => playerIndexMap.set(String(p.cSeq), p));
+        } catch(e) {}
     }
 
     const out = { updatedAt: new Date().toISOString(), teams: {} };
@@ -98,43 +107,39 @@ async function main() {
                 continue;
             }
 
-            let info;
+            let info = null;
             try {
                 info = await fetchProfile(entry.cSeq);
             } catch (err) {
-                console.warn(`   ⚠️ ${player}：查詢失敗（${err.message}）`);
-                failed++;
-                await sleep(DELAY_MS);
-                continue;
+                console.warn(`   ⚠️ ${player}：連線查詢失敗，改嘗試讀取本地索引（${err.message}）`);
             }
             await sleep(DELAY_MS);
 
-            if (!info) {
-                console.warn(`   ⚠️ ${player}：查無此帳號（cSeq ${entry.cSeq}），可能已被刪除`);
-                failed++;
-                continue;
-            }
+            if (!info) info = {};
 
-            const lv = levelOf(info.webrate);
+            const idxPlayer = playerIndexMap.get(String(entry.cSeq));
+            const cardName = (info.name && info.name.trim()) || (idxPlayer && idxPlayer.card) || entry.card;
+            const webrate = (parseFloat(info.webrate) > 0 ? String(info.webrate) : null) || (idxPlayer && idxPlayer.webrate ? String(idxPlayer.webrate) : '0');
+            const lv = levelOf(webrate) || (idxPlayer ? idxPlayer.level : null);
+            const shopName = info.shopname || (idxPlayer ? idxPlayer.shop : '') || '';
+
             out.teams[team][player] = {
-                card: info.name,                 // 以現在的名字為準，不是綁定當時的
+                card: cardName,
                 cardAtBind: entry.card,
                 cSeq: entry.cSeq,
-                homeShop: info.shopname,
-                webrate: info.webrate,
+                homeShop: shopName,
+                webrate: webrate,
                 level: lv,
                 icon: lv ? `${RATING_ICON_DIR}/${lv}.webp` : null,
-                ppd: info.ppd_tapd,
-                mpr: info.mpr_tapd,
+                ppd: info.ppd_tapd || '-',
+                mpr: info.mpr_tapd || '-',
             };
             ok++;
 
-            // 比對要 trim：有人的卡片名稱前後帶空白（例如「 Molly 」），
-            // 綁定時存的是修剪過的版本，直接比會每次都誤報改名
-            const note = String(info.name).trim() !== String(entry.card).trim()
+            const note = cardName.trim() !== String(entry.card).trim()
                 ? `　（已改名，綁定時是「${entry.card}」）` : '';
             if (note) renamed++;
-            console.log(`   ✅ ${player.padEnd(6)} ${info.name.padEnd(20)} Lv${String(lv).padStart(2)}  rate ${info.webrate}  PPD ${info.ppd_tapd}  MPR ${info.mpr_tapd}${note}`);
+            console.log(`   ✅ ${player.padEnd(6)} ${cardName.padEnd(20)} Lv${String(lv || '?').padStart(2)}  rate ${webrate}  PPD ${info.ppd_tapd || '-'}  MPR ${info.mpr_tapd || '-'}${note}`);
         }
     }
 
