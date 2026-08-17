@@ -1,0 +1,19 @@
+{
+  "note": "聯賽選手 ←→ PhoenixDarts 卡片對照表。由後台「綁定卡片」頁面寫入（js/admin-bind-card.js）。cSeq 是 PhoenixDarts 的會員編號，是唯一穩定的識別碼——卡片名稱可以被本人改掉，所以更新 Rating 一律用 cSeq 查（見 scripts/phoenix_fetch.js），card 只是綁定當下的名稱，留著給人看。沒綁定的隊員不會出現在這裡。為什麼不寫進 data/player.json：那份檔案的值是純字串陣列，admin 的名單面板、加人流程與 OCR 名字比對都直接當字串用，改成物件會壞掉四支檔案。",
+  "teams": {
+    "酒空組": {
+      "Sandy": {
+        "card": "SANDY",
+        "cSeq": "2449529",
+        "boundAt": "2026-08-17"
+      }
+    },
+    "逃生Zoo口": {
+      "Lucas": {
+        "card": "逃生入口 LUCAS",
+        "cSeq": "2448246",
+        "boundAt": "2026-08-17"
+      }
+    }
+  }
+}
