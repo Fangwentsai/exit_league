@@ -54,6 +54,34 @@
         document.head.appendChild(link);
     }
 
+    // ========== PhoenixDarts 等級 ==========
+    //
+    // 由 scripts/phoenix_fetch.js 定期抓下來寫成 data/phoenix_ratings.json，
+    // 前端只讀那份靜態檔——瀏覽器直接打 phoenixdarts.com 會被 CORS 擋。
+    // 檔案不存在或某人還沒對照卡片名稱時就不顯示圖示，不影響原本的名單。
+    let _ratingsCache = null;
+
+    async function fetchRatings() {
+        if (_ratingsCache) return _ratingsCache;
+        const base = window.location.pathname.includes('/pages/') ? '../' : '';
+        try {
+            const resp = await fetch(base + 'data/phoenix_ratings.json');
+            _ratingsCache = resp.ok ? await resp.json() : { teams: {} };
+        } catch (err) {
+            _ratingsCache = { teams: {} };   // 沒抓過就當作沒有，不要讓預覽整個掛掉
+        }
+        return _ratingsCache;
+    }
+
+    function levelIcon(ratings, teamName, playerName) {
+        const r = ratings && ratings.teams && ratings.teams[teamName] && ratings.teams[teamName][playerName];
+        // 沒有等級的人補一個等寬空位，否則同一欄的姓名會左右參差
+        if (!r || !r.level) return '<span class="mp-lv-blank"></span>';
+        const base = window.location.pathname.includes('/pages/') ? '../' : '';
+        // title 帶上卡片名稱與 rating，滑過去才知道這個等級是誰、怎麼來的
+        return `<img class="mp-lv" src="${base}images/rating30/${r.level}.webp" alt="Lv${r.level}" title="${r.card}　rating ${r.webrate}　PPD ${r.ppd}　MPR ${r.mpr}" loading="lazy">`;
+    }
+
     // ========== 撈取 player.json ==========
     async function fetchPlayerJson() {
         if (_playerJsonCache) return _playerJsonCache;
@@ -123,7 +151,7 @@
     }
 
     // ========== 生成隊伍表格 ==========
-    function renderTeamTable(teamName, playerList, statsMap, cssClass) {
+    function renderTeamTable(teamName, playerList, statsMap, cssClass, ratings) {
         // 按總勝場數降序排列
         const sorted = [...playerList].sort((a, b) => {
             const sa = statsMap[`${teamName}_${a}`.toLowerCase()];
@@ -144,7 +172,7 @@
                 const rate = parseFloat((s.totalWinRate || '0').replace('%', ''));
                 const rateColor = rate >= 60 ? '#28a745' : rate >= 40 ? '#333' : '#999';
                 rows += `<tr>
-                    <td class="mp-td-name">${s.name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${s.name}</td>
                     <td>${s.totalWins}/${s.totalGames}</td>
                     <td style="color:${rateColor};font-weight:600">${s.totalWinRate}</td>
                     <td>${s.winRate01}</td>
@@ -152,7 +180,7 @@
                 </tr>`;
             } else {
                 rows += `<tr class="mp-tr-inactive">
-                    <td class="mp-td-name">${name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${name}</td>
                     <td>-</td><td>-</td><td>-</td><td>-</td>
                 </tr>`;
             }
@@ -201,9 +229,10 @@
         overlay.classList.add('visible');
         document.body.style.overflow = 'hidden';
 
-        const [players, statsMap] = await Promise.all([
+        const [players, statsMap, ratings] = await Promise.all([
             fetchPlayerJson(),
-            fetchPersonalStats()
+            fetchPersonalStats(),
+            fetchRatings()
         ]);
 
         const team1Players = players[team1] || [];
@@ -220,8 +249,8 @@
                 </div>
             </div>
             <div class="mp-body">
-                ${renderTeamTable(team2, team2Players, statsMap, 'home')}
-                ${renderTeamTable(team1, team1Players, statsMap, 'away')}
+                ${renderTeamTable(team2, team2Players, statsMap, 'home', ratings)}
+                ${renderTeamTable(team1, team1Players, statsMap, 'away', ratings)}
             </div>
             <div class="mp-footer">
                 📊 個人戰績來自${sheet.label} Google Sheets，即時更新

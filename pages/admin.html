@@ -50,6 +50,7 @@
         <div class="function-nav">
             <button class="fn-btn fn-btn-match active" id="btnMatchSection" onclick="showSection('match')">🎯 比賽登錄</button>
             <button class="fn-btn fn-btn-add" id="btnAddPlayer" onclick="showSection('player')">➕ 新增隊員</button>
+            <button class="fn-btn fn-btn-bind" id="btnBindCard" onclick="showSection('bind')">🎴 綁定卡片<br />(Beta)</button>
         </div>
 
         <div class="admin-content">
@@ -175,6 +176,7 @@
                     </div>
                 </div>
 
+                <!-- 綁定卡片區塊：見 js/admin-bind-card.js -->
                 <!-- 隊伍名單顯示區塊 (動態更新) -->
                 <div class="team-roster-panel" id="teamRosterPanel" style="display: none;">
                     <div class="team-roster-header">
@@ -185,6 +187,36 @@
                         <div class="roster-tags" id="rosterTags">
                             <!-- 隊員標籤將動態渲染 -->
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 綁定卡片區塊 -->
+            <div id="bindSection" style="display: none;">
+                <div class="add-player-panel">
+                    <div class="add-player-header">
+                        <h2>🎴 綁定 PhoenixDarts 卡片</h2>
+                    </div>
+                    <div class="add-player-body">
+                        <div class="form-group">
+                            <label for="bindTeamSelect">選擇隊伍</label>
+                            <select id="bindTeamSelect" class="add-player-select">
+                                <option value="">載入中...</option>
+                            </select>
+                        </div>
+                        <div class="bind-hint" id="bindHint">
+                            點選隊員後搜尋卡片名稱。<b>綁定後不可修改</b>，已綁定的隊員會變成灰色。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-roster-panel" id="bindListPanel" style="display: none;">
+                    <div class="team-roster-header">
+                        <h3>📋 隊員綁定狀態</h3>
+                        <span class="roster-count" id="bindCount">0 / 0</span>
+                    </div>
+                    <div class="team-roster-body">
+                        <div id="bindList"><!-- 隊員列動態渲染 --></div>
                     </div>
                 </div>
             </div>
@@ -219,6 +251,7 @@
     <script src="../js/admin-main.js"></script>
     <script src="../js/scoresheet-camera.js"></script>
     <script src="../js/admin-ocr.js"></script>
+    <script src="../js/admin-bind-card.js"></script>
 
     <!-- 新增隊員功能 -->
     <script>
@@ -305,13 +338,19 @@
 
         document.getElementById('matchSection').style.display = (section === 'match') ? 'block' : 'none';
         document.getElementById('playerSection').style.display = (section === 'player') ? 'block' : 'none';
+        document.getElementById('bindSection').style.display = (section === 'bind') ? 'block' : 'none';
 
         const btnMatch = document.getElementById('btnMatchSection');
         const btnAdd = document.getElementById('btnAddPlayer');
+        const btnBind = document.getElementById('btnBindCard');
         if (btnMatch && btnAdd) {
             btnMatch.classList.toggle('active', section === 'match');
             btnAdd.classList.toggle('active', section === 'player');
         }
+        if (btnBind) btnBind.classList.toggle('active', section === 'bind');
+
+        // 綁定卡片：名單與索引都在 admin-bind-card.js 裡自己載入
+        if (section === 'bind' && typeof initBindCard === 'function') await initBindCard();
 
         if (section === 'player') {
             // 載入當前賽季 (CURRENT_SEASON) 的選手名單 (data/player.json)

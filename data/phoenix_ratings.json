@@ -1,0 +1,273 @@
+{
+  "updatedAt": "2026-08-17T06:58:27.922Z",
+  "teams": {
+    "酒空組": {
+      "Sandy": {
+        "card": "SANDY",
+        "cardAtBind": "SANDY",
+        "cSeq": "2449529",
+        "homeShop": "渴樂鋪Club",
+        "webrate": "5.46",
+        "level": 5,
+        "icon": "images/rating30/5.webp",
+        "ppd": "14.59",
+        "mpr": "1.59"
+      },
+      "傑西": {
+        "card": "逃生入口 Jesse",
+        "cardAtBind": "逃生入口 Jesse",
+        "cSeq": "2397883",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "9.25",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
+        "ppd": "19.54",
+        "mpr": "2.15"
+      },
+      "阿堯": {
+        "card": "神奇貓眼螺",
+        "cardAtBind": "神奇貓眼螺",
+        "cSeq": "2862993",
+        "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+        "webrate": "13.94",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "25.19",
+        "mpr": "2.90"
+      },
+      "阿仁": {
+        "card": "逃生入口 禁區狂仁",
+        "cardAtBind": "逃生入口 禁區狂仁",
+        "cSeq": "2880721",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "11.25",
+        "level": 11,
+        "icon": "images/rating30/11.webp",
+        "ppd": "22.09",
+        "mpr": "2.44"
+      },
+      "慶文": {
+        "card": "神奇斑馬螺",
+        "cardAtBind": "神奇斑馬螺",
+        "cSeq": "2534752",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "8.01",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "18.41",
+        "mpr": "1.83"
+      },
+      "阿輔": {
+        "card": "神奇戰鬥陀螺",
+        "cardAtBind": "神奇戰鬥陀螺",
+        "cSeq": "2400134",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "13.11",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "24.05",
+        "mpr": "2.78"
+      },
+      "喵喵": {
+        "card": "喵咪貓貓叫",
+        "cardAtBind": "喵咪貓貓叫",
+        "cSeq": "2780591",
+        "homeShop": "GG Bar",
+        "webrate": "7.94",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "17.31",
+        "mpr": "2.03"
+      },
+      "羊羊": {
+        "card": "廢物小姐",
+        "cardAtBind": "廢物小姐",
+        "cSeq": "2858329",
+        "homeShop": "藍白拖 Bar",
+        "webrate": "6.77",
+        "level": 6,
+        "icon": "images/rating30/6.webp",
+        "ppd": "16.35",
+        "mpr": "1.81"
+      }
+    },
+    "逃生Zoo口": {
+      "Lucas": {
+        "card": "逃生入口 LUCAS",
+        "cardAtBind": "逃生入口 LUCAS",
+        "cSeq": "2448246",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "9.46",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
+        "ppd": "19.67",
+        "mpr": "2.20"
+      },
+      "小倫": {
+        "card": "您好，敝姓周👍👍",
+        "cardAtBind": "您好，敝姓周👍👍",
+        "cSeq": "2512040",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "16.00",
+        "level": 16,
+        "icon": "images/rating30/16.webp",
+        "ppd": "28.09",
+        "mpr": "3.18"
+      },
+      "隼": {
+        "card": "嘎嗶牠爹 阿隼",
+        "cardAtBind": "嘎嗶牠爹 阿隼",
+        "cSeq": "2616272",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "10.89",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "21.76",
+        "mpr": "2.37"
+      },
+      "Mimo": {
+        "card": "Mimo",
+        "cardAtBind": "Mimo",
+        "cSeq": "2893078",
+        "homeShop": "中原客棧",
+        "webrate": "11.90",
+        "level": 11,
+        "icon": "images/rating30/11.webp",
+        "ppd": "22.41",
+        "mpr": "2.73"
+      },
+      "Linda": {
+        "card": "☜亞利安☞",
+        "cardAtBind": "☜亞利安☞",
+        "cSeq": "2460412",
+        "homeShop": "酌燒 串燒酒食",
+        "webrate": "5.68",
+        "level": 5,
+        "icon": "images/rating30/5.webp",
+        "ppd": "14.95",
+        "mpr": "1.67"
+      },
+      "Molly": {
+        "card": " Molly ",
+        "cardAtBind": "Molly",
+        "cSeq": "2871811",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "7.77",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "17.93",
+        "mpr": "1.86"
+      },
+      "阿樂": {
+        "card": "Keeping wait bicth",
+        "cardAtBind": "Keeping wait bicth",
+        "cSeq": "2397905",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "10.33",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "20.78",
+        "mpr": "2.32"
+      },
+      "小孟": {
+        "card": "孟",
+        "cardAtBind": "孟",
+        "cSeq": "2876571",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "12.19",
+        "level": 12,
+        "icon": "images/rating30/12.webp",
+        "ppd": "22.95",
+        "mpr": "2.63"
+      },
+      "承翰": {
+        "card": "你會仰式嗎？",
+        "cardAtBind": "你會仰式嗎？",
+        "cSeq": "2940156",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "10.70",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "20.62",
+        "mpr": "2.44"
+      },
+      "乳來": {
+        "card": "乳來伸掌",
+        "cardAtBind": "乳來伸掌",
+        "cSeq": "2940159",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "13.51",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "24.73",
+        "mpr": "2.80"
+      },
+      "小東": {
+        "card": "偶素小東",
+        "cardAtBind": "偶素小東",
+        "cSeq": "2851397",
+        "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+        "webrate": "7.38",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "16.17",
+        "mpr": "1.97"
+      },
+      "建龍": {
+        "card": "讓我把吉伊煎成餅",
+        "cardAtBind": "讓我把吉伊煎成餅",
+        "cSeq": "2855332",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "19.11",
+        "level": 19,
+        "icon": "images/rating30/19.webp",
+        "ppd": "30.95",
+        "mpr": "3.74"
+      },
+      "阿誠": {
+        "card": "阿誠",
+        "cardAtBind": "阿誠",
+        "cSeq": "2872166",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "11.90",
+        "level": 11,
+        "icon": "images/rating30/11.webp",
+        "ppd": "22.43",
+        "mpr": "2.59"
+      },
+      "潘潘": {
+        "card": "阿潘o",
+        "cardAtBind": "阿潘o",
+        "cSeq": "1875967",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "15.18",
+        "level": 15,
+        "icon": "images/rating30/15.webp",
+        "ppd": "26.90",
+        "mpr": "3.11"
+      },
+      "阿廷": {
+        "card": "逃生入口-啊！廷欸",
+        "cardAtBind": "逃生入口-啊！廷欸",
+        "cSeq": "2547679",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "23.60",
+        "level": 23,
+        "icon": "images/rating30/23.webp",
+        "ppd": "36.66",
+        "mpr": "4.75"
+      },
+      "小喬": {
+        "card": "小喬",
+        "cardAtBind": "小喬",
+        "cSeq": "2946822",
+        "homeShop": "逃生入口 Bar",
+        "webrate": "12.19",
+        "level": 12,
+        "icon": "images/rating30/12.webp",
+        "ppd": "23.39",
+        "mpr": "2.56"
+      }
+    }
+  }
+}

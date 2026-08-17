@@ -223,6 +223,27 @@
     text-align: left !important;
     font-weight: 700;
     color: #333;
+    white-space: nowrap;
+}
+
+/* PhoenixDarts 等級圖示。
+   圖片已由 scripts/phoenix_icons.js 正規化成同一個畫布（117x44，內容靠左），
+   所以這裡只要指定高度，每個圖的框與字體大小就都一致，姓名也自然對齊。
+   沒有等級的人補一個等寬空位，否則那一欄的姓名會左右參差。
+
+   ⚠️ 不要改成 object-fit:contain 配固定寬度——正規化之前試過，
+   長徽章（GRAND MASTER 30）會被縮到只剩 12px 高，短的（N1）卻有 19px。 */
+.mp-lv,
+.mp-lv-blank {
+    display: inline-block;
+    width: 45px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.mp-lv {
+    height: 17px;
+    vertical-align: -4px;
 }
 
 .mp-tr-inactive td {

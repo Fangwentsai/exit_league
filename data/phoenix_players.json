@@ -1,0 +1,9941 @@
+{
+ "updatedAt": "2026-08-17T02:11:30.700Z",
+ "players": [
+  {
+   "cSeq": "2547679",
+   "card": "逃生入口-啊！廷欸",
+   "webrate": "23.60",
+   "level": 23,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1676083",
+   "card": "高子桓",
+   "webrate": "23.07",
+   "level": 23,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2253328",
+   "card": "AAdarts 9飛5林2機7",
+   "webrate": "22.71",
+   "level": 22,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2855332",
+   "card": "讓我把吉伊煎成餅",
+   "webrate": "19.11",
+   "level": 19,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1989688",
+   "card": "喉嚨Cuesoul阿佑",
+   "webrate": "19.31",
+   "level": 19,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1698141",
+   "card": "卡加布列島",
+   "webrate": "18.34",
+   "level": 18,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2839534",
+   "card": "我是那隻醬板鴨",
+   "webrate": "18.28",
+   "level": 18,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2487601",
+   "card": "LIWEI LIU",
+   "webrate": "18.71",
+   "level": 18,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3072515",
+   "card": "ㄚ ㄧ ㄨㄟ ㄛ",
+   "webrate": "18.47",
+   "level": 18,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2511353",
+   "card": "淳淳",
+   "webrate": "18.80",
+   "level": 18,
+   "shop": "Monster Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2484779",
+   "card": "雷迪森覺得悶我是土豆",
+   "webrate": "18.34",
+   "level": 18,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2969278",
+   "card": "MeiZaiPa",
+   "webrate": "17.54",
+   "level": 17,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2842301",
+   "card": "加成",
+   "webrate": "17.05",
+   "level": 17,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2851663",
+   "card": "Ewen",
+   "webrate": "17.31",
+   "level": 17,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2676274",
+   "card": "Tonight29外場員工",
+   "webrate": "17.99",
+   "level": 17,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3095951",
+   "card": "廷.",
+   "webrate": "17.23",
+   "level": 17,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2449181",
+   "card": "Sonic 飛べ",
+   "webrate": "17.16",
+   "level": 17,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2219532",
+   "card": "我就跟你賭命！",
+   "webrate": "17.04",
+   "level": 17,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2324060",
+   "card": "射太多啾啾痛",
+   "webrate": "16.92",
+   "level": 16,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033087",
+   "card": "OMG是小齊",
+   "webrate": "16.02",
+   "level": 16,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2512040",
+   "card": "您好，敝姓周👍👍",
+   "webrate": "16.00",
+   "level": 16,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3032984",
+   "card": "路人丙",
+   "webrate": "16.21",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1241532",
+   "card": "JerryW",
+   "webrate": "16.46",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033090",
+   "card": "瑞士のRay",
+   "webrate": "16.32",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3036636",
+   "card": "小蘇",
+   "webrate": "16.50",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3121092",
+   "card": "0221_0308",
+   "webrate": "16.85",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2962344",
+   "card": "路人乙",
+   "webrate": "16.19",
+   "level": 16,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2961430",
+   "card": "E竣",
+   "webrate": "15.37",
+   "level": 15,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2813588",
+   "card": "華",
+   "webrate": "15.15",
+   "level": 15,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1925974",
+   "card": "Allen Hung",
+   "webrate": "15.46",
+   "level": 15,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3089755",
+   "card": "+*",
+   "webrate": "15.33",
+   "level": 15,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1808140",
+   "card": "小惡魔-啊豹",
+   "webrate": "15.74",
+   "level": 15,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1875967",
+   "card": "阿潘o",
+   "webrate": "15.18",
+   "level": 15,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2467078",
+   "card": "✿S.C.S✿翔",
+   "webrate": "15.81",
+   "level": 15,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2293486",
+   "card": "Jack瘋狗",
+   "webrate": "15.01",
+   "level": 15,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2940899",
+   "card": "旮",
+   "webrate": "15.48",
+   "level": 15,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3000963",
+   "card": "路人丁",
+   "webrate": "15.94",
+   "level": 15,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2923553",
+   "card": "路人甲",
+   "webrate": "15.50",
+   "level": 15,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2931013",
+   "card": "SORA",
+   "webrate": "15.04",
+   "level": 15,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2973382",
+   "card": "流氓公主就是我",
+   "webrate": "15.24",
+   "level": 15,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2584604",
+   "card": "行動代號：狼及埃",
+   "webrate": "14.31",
+   "level": 14,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033072",
+   "card": "本寶寶叫龍飛昀",
+   "webrate": "14.23",
+   "level": 14,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3119086",
+   "card": "008 8614",
+   "webrate": "14.27",
+   "level": 14,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2866379",
+   "card": "玟",
+   "webrate": "14.09",
+   "level": 14,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2822862",
+   "card": "黎宮裟曉",
+   "webrate": "14.57",
+   "level": 14,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1759268",
+   "card": "豆漿",
+   "webrate": "14.99",
+   "level": 14,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2917462",
+   "card": "藍白拖 盧廣仲",
+   "webrate": "14.21",
+   "level": 14,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2848262",
+   "card": "阿琪",
+   "webrate": "14.33",
+   "level": 14,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3024764",
+   "card": "No.5 小牛",
+   "webrate": "14.58",
+   "level": 14,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2813993",
+   "card": "我是小齊",
+   "webrate": "14.99",
+   "level": 14,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3032900",
+   "card": "喝酒-小宇",
+   "webrate": "14.76",
+   "level": 14,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2767928",
+   "card": "地獄專員-阿瑞",
+   "webrate": "13.94",
+   "level": 13,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2887726",
+   "card": "Tonight29加零",
+   "webrate": "13.33",
+   "level": 13,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2076908",
+   "card": "芬達橘子汽水",
+   "webrate": "13.02",
+   "level": 13,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3079074",
+   "card": "喉嚨不借過",
+   "webrate": "13.34",
+   "level": 13,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2112327",
+   "card": "周東宇",
+   "webrate": "13.05",
+   "level": 13,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2590356",
+   "card": "悠哉_戴",
+   "webrate": "13.82",
+   "level": 13,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2637949",
+   "card": "悶騷艾瑞克or醉後史瑞克",
+   "webrate": "13.30",
+   "level": 13,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2173274",
+   "card": "老白",
+   "webrate": "13.60",
+   "level": 13,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2940159",
+   "card": "乳來伸掌",
+   "webrate": "13.51",
+   "level": 13,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1612071",
+   "card": "樂源_小宇",
+   "webrate": "13.85",
+   "level": 13,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2963195",
+   "card": "卡比超",
+   "webrate": "13.11",
+   "level": 13,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2903567",
+   "card": "小李他媽飛刀團-小清",
+   "webrate": "13.58",
+   "level": 13,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2870182",
+   "card": "君",
+   "webrate": "13.93",
+   "level": 13,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2287370",
+   "card": "大佑池久",
+   "webrate": "13.45",
+   "level": 13,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2944749",
+   "card": "聽君一席話如聽一席話",
+   "webrate": "13.90",
+   "level": 13,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2780732",
+   "card": "熊燒✮阿維",
+   "webrate": "13.10",
+   "level": 13,
+   "shop": "Queen Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2862993",
+   "card": "神奇貓眼螺",
+   "webrate": "13.94",
+   "level": 13,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2400134",
+   "card": "神奇戰鬥陀螺",
+   "webrate": "13.11",
+   "level": 13,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1807876",
+   "card": "LV.1 閒置村民",
+   "webrate": "13.26",
+   "level": 13,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1952756",
+   "card": "祐祐醬",
+   "webrate": "12.37",
+   "level": 12,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2838963",
+   "card": "Open Out",
+   "webrate": "12.53",
+   "level": 12,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2379756",
+   "card": "九紋龍",
+   "webrate": "12.06",
+   "level": 12,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2457924",
+   "card": "Joker瓜",
+   "webrate": "12.81",
+   "level": 12,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2946822",
+   "card": "小喬",
+   "webrate": "12.19",
+   "level": 12,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2890455",
+   "card": "+嘎",
+   "webrate": "12.50",
+   "level": 12,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3058203",
+   "card": "冠軍立",
+   "webrate": "12.54",
+   "level": 12,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2857510",
+   "card": "喵咪貓貓叫.",
+   "webrate": "12.69",
+   "level": 12,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2729115",
+   "card": "JAX",
+   "webrate": "12.05",
+   "level": 12,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3081367",
+   "card": "小宇",
+   "webrate": "12.88",
+   "level": 12,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2895275",
+   "card": "青楓",
+   "webrate": "12.51",
+   "level": 12,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3029227",
+   "card": "波比超人",
+   "webrate": "12.17",
+   "level": 12,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033102",
+   "card": "我是派大星",
+   "webrate": "12.73",
+   "level": 12,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3028081",
+   "card": "小摩托",
+   "webrate": "12.14",
+   "level": 12,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2876571",
+   "card": "孟",
+   "webrate": "12.19",
+   "level": 12,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2584307",
+   "card": "小孟",
+   "webrate": "11.87",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2880721",
+   "card": "逃生入口 禁區狂仁",
+   "webrate": "11.25",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2880662",
+   "card": "乂煞氣o瀚乂",
+   "webrate": "11.49",
+   "level": 11,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2673008",
+   "card": "玉米🌽",
+   "webrate": "11.75",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2865203",
+   "card": "小建",
+   "webrate": "11.10",
+   "level": 11,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3029228",
+   "card": "文山馬邦德",
+   "webrate": "11.64",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1586585",
+   "card": "公鏢打帽子",
+   "webrate": "11.88",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2835876",
+   "card": "E6孤獨傲鷹",
+   "webrate": "11.15",
+   "level": 11,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2789806",
+   "card": "0080_3151",
+   "webrate": "11.24",
+   "level": 11,
+   "shop": "鹿餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2579195",
+   "card": "黑騎士",
+   "webrate": "11.98",
+   "level": 11,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2799451",
+   "card": "阿阿低巴巴",
+   "webrate": "11.30",
+   "level": 11,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2730334",
+   "card": "Honeymoon娛樂傳播",
+   "webrate": "11.80",
+   "level": 11,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2872166",
+   "card": "阿誠",
+   "webrate": "11.90",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2896805",
+   "card": "流川楓",
+   "webrate": "11.01",
+   "level": 11,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2836570",
+   "card": "2317",
+   "webrate": "11.00",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1706853",
+   "card": "老白",
+   "webrate": "11.51",
+   "level": 11,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2809051",
+   "card": "瑋瑋",
+   "webrate": "11.32",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2639652",
+   "card": "逃生入口 Ace",
+   "webrate": "11.13",
+   "level": 11,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2681176",
+   "card": "景平路葉啟田",
+   "webrate": "11.53",
+   "level": 11,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3006234",
+   "card": "Ivan",
+   "webrate": "11.09",
+   "level": 11,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2827879",
+   "card": "宇智波士頓龍蝦",
+   "webrate": "11.59",
+   "level": 11,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033117",
+   "card": "文山黃四郎",
+   "webrate": "11.81",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2981092",
+   "card": "Kai",
+   "webrate": "11.37",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1244092",
+   "card": "漢堡神偷",
+   "webrate": "11.30",
+   "level": 11,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2113200",
+   "card": "santos5678",
+   "webrate": "11.14",
+   "level": 11,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2168890",
+   "card": "花酒臟-小耿",
+   "webrate": "11.77",
+   "level": 11,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2894278",
+   "card": "Hsin",
+   "webrate": "11.22",
+   "level": 11,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2922225",
+   "card": "阿志",
+   "webrate": "11.15",
+   "level": 11,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2940156",
+   "card": "你會仰式嗎？",
+   "webrate": "10.70",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2580662",
+   "card": "逃生zoo口 “猛禽”",
+   "webrate": "10.31",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2805419",
+   "card": "ㄨㄟㄌㄧㄢˊ",
+   "webrate": "10.19",
+   "level": 10,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2828449",
+   "card": "+0",
+   "webrate": "10.19",
+   "level": 10,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2976340",
+   "card": "古蹟抽菸記者會",
+   "webrate": "10.74",
+   "level": 10,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2706251",
+   "card": "雨",
+   "webrate": "10.59",
+   "level": 10,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2983429",
+   "card": "沒喝打不中：）））",
+   "webrate": "10.21",
+   "level": 10,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3029141",
+   "card": "豪",
+   "webrate": "10.00",
+   "level": 10,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2397905",
+   "card": "Keeping wait bicth",
+   "webrate": "10.33",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2362964",
+   "card": "小邱",
+   "webrate": "10.11",
+   "level": 10,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2870184",
+   "card": "豬血糕的爸爸",
+   "webrate": "10.98",
+   "level": 10,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2147286",
+   "card": "HLJG - 豐",
+   "webrate": "10.36",
+   "level": 10,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2564701",
+   "card": "一直沒頭髮",
+   "webrate": "10.17",
+   "level": 10,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2987977",
+   "card": "JIMMY_2",
+   "webrate": "10.87",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2686250",
+   "card": "矮油這麽帥的混血兒",
+   "webrate": "10.94",
+   "level": 10,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2616272",
+   "card": "嘎嗶牠爹 阿隼",
+   "webrate": "10.89",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2710781",
+   "card": "不會打紅星",
+   "webrate": "10.12",
+   "level": 10,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2884222",
+   "card": "忠",
+   "webrate": "10.43",
+   "level": 10,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2584609",
+   "card": "Jack噴氵交火龍上線嘍~*",
+   "webrate": "10.17",
+   "level": 10,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1765036",
+   "card": "鏢不上靶",
+   "webrate": "10.97",
+   "level": 10,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2191560",
+   "card": "TERRY",
+   "webrate": "10.84",
+   "level": 10,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2169267",
+   "card": "HLJG-勝",
+   "webrate": "10.32",
+   "level": 10,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2384537",
+   "card": "來賓請掌聲鼓勵",
+   "webrate": "10.47",
+   "level": 10,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2889575",
+   "card": "9527",
+   "webrate": "10.47",
+   "level": 10,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3041340",
+   "card": "011 1995",
+   "webrate": "10.52",
+   "level": 10,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2664511",
+   "card": "齊 o( 'Θ' )o",
+   "webrate": "10.21",
+   "level": 10,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3022742",
+   "card": "中和阿賢",
+   "webrate": "10.87",
+   "level": 10,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1465729",
+   "card": "DartsShowTW-king",
+   "webrate": "10.63",
+   "level": 10,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2789254",
+   "card": "小周",
+   "webrate": "10.45",
+   "level": 10,
+   "shop": "1992 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2261517",
+   "card": "Tom",
+   "webrate": "9.57",
+   "level": 9,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2581161",
+   "card": "睿仔",
+   "webrate": "9.11",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2507959",
+   "card": "Soul joy-猴子",
+   "webrate": "9.56",
+   "level": 9,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2510045",
+   "card": "Morris",
+   "webrate": "9.06",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2790582",
+   "card": "Jack台柱 皮卡起秋",
+   "webrate": "9.19",
+   "level": 9,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2511486",
+   "card": "Dave Chen",
+   "webrate": "9.52",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2606357",
+   "card": "Yuyu",
+   "webrate": "9.88",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2579378",
+   "card": "鶴^.*餃子",
+   "webrate": "9.20",
+   "level": 9,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3066190",
+   "card": "Wei",
+   "webrate": "9.01",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2397883",
+   "card": "逃生入口 Jesse",
+   "webrate": "9.25",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2470207",
+   "card": "小廢誠",
+   "webrate": "9.53",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2616699",
+   "card": "Andi",
+   "webrate": "9.44",
+   "level": 9,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2639074",
+   "card": "渴樂舖-李昱",
+   "webrate": "9.46",
+   "level": 9,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2639512",
+   "card": "淇淇",
+   "webrate": "9.37",
+   "level": 9,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2851614",
+   "card": "ㄉㄨㄞㄉㄨㄞ",
+   "webrate": "9.40",
+   "level": 9,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2448246",
+   "card": "逃生入口 LUCAS",
+   "webrate": "9.46",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3121792",
+   "card": "003 3036",
+   "webrate": "9.77",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2750519",
+   "card": "Ike",
+   "webrate": "9.74",
+   "level": 9,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2967463",
+   "card": "LupinAry",
+   "webrate": "9.82",
+   "level": 9,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2350683",
+   "card": "Vivi 放水流大師兄",
+   "webrate": "9.16",
+   "level": 9,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2441272",
+   "card": "樂源-藍鳥",
+   "webrate": "9.94",
+   "level": 9,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2532490",
+   "card": "新北市古天樂",
+   "webrate": "9.76",
+   "level": 9,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3074482",
+   "card": "大野狼",
+   "webrate": "9.23",
+   "level": 9,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2655318",
+   "card": "老爺先不要",
+   "webrate": "9.75",
+   "level": 9,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1574297",
+   "card": "Peter_黑",
+   "webrate": "9.69",
+   "level": 9,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3033100",
+   "card": "HLJG-誠",
+   "webrate": "9.57",
+   "level": 9,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2452732",
+   "card": "vincent007",
+   "webrate": "9.07",
+   "level": 9,
+   "shop": "酒精樹 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2838951",
+   "card": "溢洽森の躲",
+   "webrate": "9.35",
+   "level": 9,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1524831",
+   "card": "Leo好強喔»→♥",
+   "webrate": "9.27",
+   "level": 9,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2521939",
+   "card": "小豐",
+   "webrate": "9.29",
+   "level": 9,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3046392",
+   "card": "Lin",
+   "webrate": "9.89",
+   "level": 9,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2448227",
+   "card": "kevin",
+   "webrate": "9.86",
+   "level": 9,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2827774",
+   "card": "老花眼鏡蛇-Kelvin",
+   "webrate": "9.23",
+   "level": 9,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2566787",
+   "card": "蛇",
+   "webrate": "9.14",
+   "level": 9,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2773772",
+   "card": "Yu4n",
+   "webrate": "9.56",
+   "level": 9,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2566170",
+   "card": "Shou",
+   "webrate": "9.59",
+   "level": 9,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2712286",
+   "card": "卡皮巴拉",
+   "webrate": "9.73",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2957368",
+   "card": "今晚不回家",
+   "webrate": "9.38",
+   "level": 9,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2694034",
+   "card": "LPHD",
+   "webrate": "9.81",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2279460",
+   "card": "溢洽森のNick",
+   "webrate": "9.17",
+   "level": 9,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1865285",
+   "card": "BryanLu",
+   "webrate": "9.37",
+   "level": 9,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3060852",
+   "card": "MOREL",
+   "webrate": "9.81",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3045479",
+   "card": "叁石宮芬",
+   "webrate": "9.18",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2838091",
+   "card": "伍陸柒捌",
+   "webrate": "9.90",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2898755",
+   "card": "吭鏘哪～",
+   "webrate": "9.92",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2511857",
+   "card": "eeeee",
+   "webrate": "9.18",
+   "level": 9,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2958086",
+   "card": "荳爸",
+   "webrate": "9.83",
+   "level": 9,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2046144",
+   "card": "高個ㄦ",
+   "webrate": "9.79",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2354103",
+   "card": "Joshua",
+   "webrate": "9.46",
+   "level": 9,
+   "shop": "大樂串燒",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2322809",
+   "card": "29Tonight外場公關",
+   "webrate": "9.20",
+   "level": 9,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2956586",
+   "card": "zjqv3a6b1de416",
+   "webrate": "9.33",
+   "level": 9,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2800834",
+   "card": "喵咪貓貓叫。",
+   "webrate": "9.24",
+   "level": 9,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1808203",
+   "card": "黃小哲",
+   "webrate": "9.83",
+   "level": 9,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3107172",
+   "card": "熊貓",
+   "webrate": "9.05",
+   "level": 9,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2800931",
+   "card": "美美鴨",
+   "webrate": "8.67",
+   "level": 8,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2547901",
+   "card": "岸邊露伴",
+   "webrate": "8.44",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2887184",
+   "card": "阿翰",
+   "webrate": "8.81",
+   "level": 8,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3115681",
+   "card": "奶油益",
+   "webrate": "8.44",
+   "level": 8,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2583395",
+   "card": "Morris",
+   "webrate": "8.34",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2880501",
+   "card": "Tonight 29專業外務員",
+   "webrate": "8.93",
+   "level": 8,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2534752",
+   "card": "神奇斑馬螺",
+   "webrate": "8.01",
+   "level": 8,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3029231",
+   "card": "Jack氵交劉在裡面",
+   "webrate": "8.79",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2644087",
+   "card": "歡歡最可愛",
+   "webrate": "8.22",
+   "level": 8,
+   "shop": "懦夫救星 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2469097",
+   "card": "1992_Shixiang",
+   "webrate": "8.43",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2527835",
+   "card": "藍白拖山豬",
+   "webrate": "8.82",
+   "level": 8,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2938664",
+   "card": "琨琨",
+   "webrate": "8.04",
+   "level": 8,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2754202",
+   "card": "HLJG - 喉嚨借過",
+   "webrate": "8.03",
+   "level": 8,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2880035",
+   "card": "zfcv3a53c093a5",
+   "webrate": "8.54",
+   "level": 8,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2532494",
+   "card": "太子",
+   "webrate": "8.34",
+   "level": 8,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2758294",
+   "card": "Eric",
+   "webrate": "8.42",
+   "level": 8,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2396929",
+   "card": "piggyjeremy",
+   "webrate": "8.65",
+   "level": 8,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3030475",
+   "card": "阿嘎",
+   "webrate": "8.13",
+   "level": 8,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2454310",
+   "card": "偷雞不著蝕把米",
+   "webrate": "8.05",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3020875",
+   "card": "偶坐專機來按讚",
+   "webrate": "8.87",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2836691",
+   "card": "Mina",
+   "webrate": "8.03",
+   "level": 8,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3121256",
+   "card": "可愛寶貝",
+   "webrate": "8.00",
+   "level": 8,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2991005",
+   "card": "吳阿政",
+   "webrate": "8.82",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2900742",
+   "card": "兇兇小腦腐",
+   "webrate": "8.08",
+   "level": 8,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3008034",
+   "card": "今非昔",
+   "webrate": "8.87",
+   "level": 8,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2583736",
+   "card": "楊珈琲",
+   "webrate": "8.10",
+   "level": 8,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2906710",
+   "card": "柔柔",
+   "webrate": "8.13",
+   "level": 8,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2967523",
+   "card": "賤籠",
+   "webrate": "8.66",
+   "level": 8,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3029073",
+   "card": "Keira the darts junkie",
+   "webrate": "8.04",
+   "level": 8,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3019673",
+   "card": "別中！我飽了",
+   "webrate": "8.87",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2918365",
+   "card": "我A妳逼",
+   "webrate": "8.47",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2694325",
+   "card": "燕",
+   "webrate": "8.55",
+   "level": 8,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2534699",
+   "card": "神奇海螺",
+   "webrate": "8.35",
+   "level": 8,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3032991",
+   "card": "Kuki",
+   "webrate": "8.12",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2422070",
+   "card": "chipchip1234",
+   "webrate": "8.74",
+   "level": 8,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2570467",
+   "card": "ㄎㄌㄆㄒㄅ⋯⋯",
+   "webrate": "8.35",
+   "level": 8,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2786441",
+   "card": "Jack嘴炮手",
+   "webrate": "8.22",
+   "level": 8,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2962385",
+   "card": "[PHOENIXDARTS x WOOAH] MINSEO",
+   "webrate": "8.17",
+   "level": 8,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2577622",
+   "card": "老是射歪",
+   "webrate": "8.69",
+   "level": 8,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3021065",
+   "card": "小杰",
+   "webrate": "8.41",
+   "level": 8,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2432429",
+   "card": "HLJG-王凱",
+   "webrate": "8.87",
+   "level": 8,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2442095",
+   "card": "小惡魔萱萱",
+   "webrate": "8.75",
+   "level": 8,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3018785",
+   "card": "台灣代表隊選手 -射Y",
+   "webrate": "7.56",
+   "level": 7,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3074156",
+   "card": "大冰奶",
+   "webrate": "7.78",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3066888",
+   "card": "李艷桃是我🍑",
+   "webrate": "7.98",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3052957",
+   "card": "0249_8044",
+   "webrate": "7.03",
+   "level": 7,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3080950",
+   "card": "諒",
+   "webrate": "7.58",
+   "level": 7,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3024812",
+   "card": "貴圈真亂",
+   "webrate": "7.72",
+   "level": 7,
+   "shop": "鹿餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3040028",
+   "card": "Xiu Xiu",
+   "webrate": "7.89",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2112605",
+   "card": "Devil惡魔",
+   "webrate": "7.93",
+   "level": 7,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3105269",
+   "card": "逃生入口Bullshit Man",
+   "webrate": "7.87",
+   "level": 7,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2708391",
+   "card": "無敵淺水艇",
+   "webrate": "7.54",
+   "level": 7,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3020876",
+   "card": "愛烤愛對漏",
+   "webrate": "7.83",
+   "level": 7,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2740355",
+   "card": "我是糖寶寶🍼",
+   "webrate": "7.39",
+   "level": 7,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2057725",
+   "card": "Jack臭B",
+   "webrate": "7.01",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2951947",
+   "card": "Queen帽子王嘎名",
+   "webrate": "7.58",
+   "level": 7,
+   "shop": "Queen Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2582153",
+   "card": "十一想睡覺Zzz",
+   "webrate": "7.97",
+   "level": 7,
+   "shop": "Monster Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3020436",
+   "card": "打標靠賽",
+   "webrate": "7.50",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2783625",
+   "card": "今晚打老虎",
+   "webrate": "7.23",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3012905",
+   "card": "晚安鹹蛋",
+   "webrate": "7.04",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2835606",
+   "card": "安安",
+   "webrate": "7.84",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2877529",
+   "card": "1992_阿振",
+   "webrate": "7.79",
+   "level": 7,
+   "shop": "1992 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2988522",
+   "card": "送貨的狗",
+   "webrate": "7.79",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2949134",
+   "card": "Sue 蘇",
+   "webrate": "7.45",
+   "level": 7,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2692349",
+   "card": "哥布林要回森林",
+   "webrate": "7.86",
+   "level": 7,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2871811",
+   "card": "Molly",
+   "webrate": "7.77",
+   "level": 7,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3018093",
+   "card": "蓁蓁",
+   "webrate": "7.01",
+   "level": 7,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2113141",
+   "card": "小惡魔文文👿",
+   "webrate": "7.92",
+   "level": 7,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2877525",
+   "card": "阿凱不用喝",
+   "webrate": "7.97",
+   "level": 7,
+   "shop": "1992 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2186942",
+   "card": "Summer",
+   "webrate": "7.69",
+   "level": 7,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2581834",
+   "card": "P.B.H",
+   "webrate": "7.04",
+   "level": 7,
+   "shop": "酒精樹 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2566804",
+   "card": "阿淦",
+   "webrate": "7.80",
+   "level": 7,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2159545",
+   "card": "抒情敗類",
+   "webrate": "7.16",
+   "level": 7,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2883934",
+   "card": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+   "webrate": "7.80",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2558829",
+   "card": "暴龍因為手太短被欺負",
+   "webrate": "7.39",
+   "level": 7,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2868406",
+   "card": "查爾斯",
+   "webrate": "7.34",
+   "level": 7,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2659109",
+   "card": "彩潔",
+   "webrate": "7.40",
+   "level": 7,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3125225",
+   "card": "霸告",
+   "webrate": "7.34",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2009417",
+   "card": "JACK BAR-TZUTE",
+   "webrate": "7.11",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2892093",
+   "card": "飛鏢新手村",
+   "webrate": "7.03",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2996777",
+   "card": "鱷魚",
+   "webrate": "7.76",
+   "level": 7,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2980802",
+   "card": "安妮妮",
+   "webrate": "7.25",
+   "level": 7,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2900768",
+   "card": "無照酒駕",
+   "webrate": "7.07",
+   "level": 7,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2851397",
+   "card": "偶素小東",
+   "webrate": "7.38",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2883935",
+   "card": "就是要電MO",
+   "webrate": "7.53",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2966329",
+   "card": "你成功引起了我的注意",
+   "webrate": "7.90",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2924951",
+   "card": "把你媽賣掉",
+   "webrate": "7.36",
+   "level": 7,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2379165",
+   "card": "HLJG-大冰奶",
+   "webrate": "7.03",
+   "level": 7,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "1854018",
+   "card": "大陰毛癢",
+   "webrate": "7.15",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2810958",
+   "card": "小豪",
+   "webrate": "7.57",
+   "level": 7,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3115937",
+   "card": "$hiningMTFK",
+   "webrate": "6.97",
+   "level": 6,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2693306",
+   "card": "玖玖君",
+   "webrate": "6.12",
+   "level": 6,
+   "shop": "懦夫救星 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3089753",
+   "card": "Tonight29流氓公主",
+   "webrate": "6.20",
+   "level": 6,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2578239",
+   "card": "偉偉道來",
+   "webrate": "6.87",
+   "level": 6,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3117619",
+   "card": "哈哈哈哈利",
+   "webrate": "6.28",
+   "level": 6,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2858329",
+   "card": "廢物小姐",
+   "webrate": "6.77",
+   "level": 6,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2659112",
+   "card": "xiang",
+   "webrate": "6.22",
+   "level": 6,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2957234",
+   "card": "aqian",
+   "webrate": "6.31",
+   "level": 6,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3080960",
+   "card": "015 0762",
+   "webrate": "6.39",
+   "level": 6,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2684280",
+   "card": "小天",
+   "webrate": "6.93",
+   "level": 6,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2996566",
+   "card": "無懼",
+   "webrate": "6.17",
+   "level": 6,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3068056",
+   "card": "老是掉東西",
+   "webrate": "6.83",
+   "level": 6,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2943072",
+   "card": "鬼靈精怪啾比",
+   "webrate": "6.87",
+   "level": 6,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3092575",
+   "card": "Joker",
+   "webrate": "6.07",
+   "level": 6,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2813585",
+   "card": "Cotton",
+   "webrate": "6.85",
+   "level": 6,
+   "shop": "逃生入口 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2308010",
+   "card": "看著我的眼睛 look my  eyes！回答我！！",
+   "webrate": "6.84",
+   "level": 6,
+   "shop": "酒精樹 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3094843",
+   "card": "LoveTia",
+   "webrate": "6.75",
+   "level": 6,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2676409",
+   "card": "一迪厚欄",
+   "webrate": "6.91",
+   "level": 6,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2681252",
+   "card": "AhaoChen",
+   "webrate": "6.50",
+   "level": 6,
+   "shop": "Queen Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2442097",
+   "card": "Devil Kobayashi",
+   "webrate": "6.47",
+   "level": 6,
+   "shop": "小惡魔 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3089739",
+   "card": "收手吧阿祖",
+   "webrate": "6.45",
+   "level": 6,
+   "shop": "1992 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3043460",
+   "card": "1965",
+   "webrate": "6.47",
+   "level": 6,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2836374",
+   "card": "萱萱萱萱",
+   "webrate": "6.66",
+   "level": 6,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2484704",
+   "card": "渴樂舖-愛莉",
+   "webrate": "6.98",
+   "level": 6,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2407408",
+   "card": "神奇鳳螺",
+   "webrate": "6.58",
+   "level": 6,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3079613",
+   "card": "0051_7176",
+   "webrate": "6.85",
+   "level": 6,
+   "shop": "堂口鹽酥雞",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2144257",
+   "card": "HLJG-Nai Nai",
+   "webrate": "6.98",
+   "level": 6,
+   "shop": "喉嚨借過餐酒館",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3030769",
+   "card": "蘋什麼",
+   "webrate": "6.63",
+   "level": 6,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2781120",
+   "card": "雅鈞",
+   "webrate": "5.99",
+   "level": 5,
+   "shop": "懦夫救星 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3040125",
+   "card": "琳姐Linsy ദ്ദി˶ｰ̀֊ｰ́ )✧",
+   "webrate": "5.77",
+   "level": 5,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3011438",
+   "card": "小琪掰",
+   "webrate": "5.62",
+   "level": 5,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3105657",
+   "card": "整天都疲憊",
+   "webrate": "5.26",
+   "level": 5,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3119766",
+   "card": "ya廢廢💗",
+   "webrate": "5.04",
+   "level": 5,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3022786",
+   "card": "不穩定的詠《初心者》",
+   "webrate": "5.78",
+   "level": 5,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3027617",
+   "card": "黃小弟🤪",
+   "webrate": "5.54",
+   "level": 5,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3123333",
+   "card": "永和蜘蛛人",
+   "webrate": "5.42",
+   "level": 5,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2697571",
+   "card": "熊熊不想喝",
+   "webrate": "5.67",
+   "level": 5,
+   "shop": "鈴洛奇冷飲室",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3114674",
+   "card": "David loo",
+   "webrate": "5.21",
+   "level": 5,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2828192",
+   "card": "會飛的肉肉",
+   "webrate": "5.56",
+   "level": 5,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2896302",
+   "card": "Cat",
+   "webrate": "5.80",
+   "level": 5,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2965573",
+   "card": "小甜筒",
+   "webrate": "5.41",
+   "level": 5,
+   "shop": "VIVI 酒吧",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2833286",
+   "card": "Santé",
+   "webrate": "5.99",
+   "level": 5,
+   "shop": "Vogue Lounge",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3039074",
+   "card": "維尼",
+   "webrate": "5.66",
+   "level": 5,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2775592",
+   "card": "CC",
+   "webrate": "5.39",
+   "level": 5,
+   "shop": "Vogue Lounge",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2449529",
+   "card": "SANDY",
+   "webrate": "5.46",
+   "level": 5,
+   "shop": "渴樂鋪Club",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3009367",
+   "card": "歡迎光臨my鳳",
+   "webrate": "5.83",
+   "level": 5,
+   "shop": "藍白拖 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3106391",
+   "card": "笑步初乃",
+   "webrate": "4.90",
+   "level": 4,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3107518",
+   "card": "29搗蛋鬼",
+   "webrate": "4.61",
+   "level": 4,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2945666",
+   "card": "Vera",
+   "webrate": "4.61",
+   "level": 4,
+   "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3080206",
+   "card": "紅心的嵐心",
+   "webrate": "3.66",
+   "level": 3,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2698700",
+   "card": "阿廷",
+   "webrate": "3.84",
+   "level": 3,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3100194",
+   "card": "再+還+就拆你+",
+   "webrate": "22.98",
+   "level": null,
+   "shop": "Tonight29 Pub",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3120765",
+   "card": "美麗的爸爸",
+   "webrate": "18.20",
+   "level": null,
+   "shop": "NO.5 Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2010113",
+   "card": "Yan",
+   "webrate": "24.41",
+   "level": 24,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2762989",
+   "card": "沈秉韜",
+   "webrate": "23.54",
+   "level": 23,
+   "shop": "高斯文教企業",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2413582",
+   "card": "鄭浲恩",
+   "webrate": "20.18",
+   "level": 20,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2220979",
+   "card": "溫仁君",
+   "webrate": "19.22",
+   "level": 19,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2810522",
+   "card": "野原新之助",
+   "webrate": "19.13",
+   "level": 19,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1807862",
+   "card": "暗炎_XIV☆半成品",
+   "webrate": "19.92",
+   "level": 19,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2794676",
+   "card": "zegp3a41eaf3d2",
+   "webrate": "19.93",
+   "level": 19,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1966680",
+   "card": "熊燒^o^韋小樂瘦ㄍㄟˋ欸芒果",
+   "webrate": "19.87",
+   "level": 19,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2673959",
+   "card": "啊啊啊煒",
+   "webrate": "18.17",
+   "level": 18,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2294967",
+   "card": "Blue ln Darts",
+   "webrate": "18.27",
+   "level": 18,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2313690",
+   "card": "阿猛",
+   "webrate": "18.77",
+   "level": 18,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3113375",
+   "card": "喉嚨Cuesoul飛阿佑",
+   "webrate": "18.41",
+   "level": 18,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2113310",
+   "card": "LIQUOR-阿祥",
+   "webrate": "18.17",
+   "level": 18,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2211519",
+   "card": "廖柏懿_羽翼",
+   "webrate": "18.07",
+   "level": 18,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2484592",
+   "card": "呈翰",
+   "webrate": "18.11",
+   "level": 18,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3033164",
+   "card": "Chun",
+   "webrate": "17.93",
+   "level": 17,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2028469",
+   "card": "MOTION",
+   "webrate": "17.24",
+   "level": 17,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1417873",
+   "card": "【T.B.H-Darts 】©STAY©",
+   "webrate": "17.24",
+   "level": 17,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2582824",
+   "card": "0213_3385",
+   "webrate": "17.90",
+   "level": 17,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2517419",
+   "card": "阿文",
+   "webrate": "17.32",
+   "level": 17,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2536750",
+   "card": "圭投抿敢",
+   "webrate": "17.14",
+   "level": 17,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3105703",
+   "card": "小李他媽飛刀團-E竣",
+   "webrate": "17.41",
+   "level": 17,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1556310",
+   "card": "口亮場-吾心見楞",
+   "webrate": "17.60",
+   "level": 17,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2784520",
+   "card": "冰透",
+   "webrate": "17.68",
+   "level": 17,
+   "shop": "高斯文教企業",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032925",
+   "card": "小羊",
+   "webrate": "16.26",
+   "level": 16,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3043073",
+   "card": "shuming",
+   "webrate": "16.47",
+   "level": 16,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2465241",
+   "card": "小連子",
+   "webrate": "16.65",
+   "level": 16,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2004848",
+   "card": "麥哲",
+   "webrate": "16.62",
+   "level": 16,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2929099",
+   "card": "喬喬的采辰老公",
+   "webrate": "16.72",
+   "level": 16,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2199753",
+   "card": "咖飛瘋-卡哥",
+   "webrate": "16.98",
+   "level": 16,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1323818",
+   "card": "★黑衫軍★灰鏢狩魂",
+   "webrate": "16.64",
+   "level": 16,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2824024",
+   "card": "Darkrai",
+   "webrate": "15.45",
+   "level": 15,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2942372",
+   "card": "林佑佑",
+   "webrate": "15.27",
+   "level": 15,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3101583",
+   "card": "Yoyoyo",
+   "webrate": "15.13",
+   "level": 15,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2826279",
+   "card": "Santaz",
+   "webrate": "15.51",
+   "level": 15,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2877918",
+   "card": "林承佑",
+   "webrate": "15.83",
+   "level": 15,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1801215",
+   "card": "Xiao Du",
+   "webrate": "15.34",
+   "level": 15,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2112765",
+   "card": "DM_ shionri",
+   "webrate": "15.65",
+   "level": 15,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1693316",
+   "card": "Stay In Blue",
+   "webrate": "15.67",
+   "level": 15,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2484796",
+   "card": "龍",
+   "webrate": "15.73",
+   "level": 15,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1918750",
+   "card": "★酒空P✩",
+   "webrate": "15.34",
+   "level": 15,
+   "shop": "縱火人 燒食買醉場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2022406",
+   "card": "pumpum",
+   "webrate": "15.05",
+   "level": 15,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2988202",
+   "card": "LUCY",
+   "webrate": "14.80",
+   "level": 14,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2641622",
+   "card": "請叫我新之駿大人",
+   "webrate": "14.17",
+   "level": 14,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1242993",
+   "card": "周陸成",
+   "webrate": "14.26",
+   "level": 14,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1800915",
+   "card": "～♤啵•五花•啵♤～",
+   "webrate": "14.09",
+   "level": 14,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2522391",
+   "card": "毅",
+   "webrate": "14.95",
+   "level": 14,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3096615",
+   "card": "還敢偷學啊",
+   "webrate": "14.24",
+   "level": 14,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2706495",
+   "card": "kui魁",
+   "webrate": "14.71",
+   "level": 14,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1982794",
+   "card": "呵呵",
+   "webrate": "14.29",
+   "level": 14,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3011904",
+   "card": "當家柴魚片",
+   "webrate": "14.45",
+   "level": 14,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1650763",
+   "card": "我是豬隊友",
+   "webrate": "14.56",
+   "level": 14,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2936394",
+   "card": "烏鴉",
+   "webrate": "14.57",
+   "level": 14,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3086533",
+   "card": "史蒂芬崴",
+   "webrate": "14.66",
+   "level": 14,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2990506",
+   "card": "德",
+   "webrate": "14.59",
+   "level": 14,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2857980",
+   "card": "蘆洲-小慶",
+   "webrate": "14.91",
+   "level": 14,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2637465",
+   "card": "⊹⊱⋛⋋毛ㄟ⋌⋚⊰⊹",
+   "webrate": "14.56",
+   "level": 14,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2064952",
+   "card": "翔翔",
+   "webrate": "14.06",
+   "level": 14,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3063697",
+   "card": "winter",
+   "webrate": "14.17",
+   "level": 14,
+   "shop": "強運撞球場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2836873",
+   "card": "諺",
+   "webrate": "13.74",
+   "level": 13,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1587372",
+   "card": "【T.B.H-Darts】Youchia",
+   "webrate": "13.83",
+   "level": 13,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1999111",
+   "card": "就是那個六六",
+   "webrate": "13.66",
+   "level": 13,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2519234",
+   "card": "老P跑店喝酒卡",
+   "webrate": "13.55",
+   "level": 13,
+   "shop": "縱火人 燒食買醉場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3039867",
+   "card": "小傑",
+   "webrate": "13.67",
+   "level": 13,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2899593",
+   "card": "K魁U魁I",
+   "webrate": "13.23",
+   "level": 13,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2861890",
+   "card": "Alice後援會會長 Allen",
+   "webrate": "13.32",
+   "level": 13,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2496279",
+   "card": "宏～",
+   "webrate": "13.91",
+   "level": 13,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3055684",
+   "card": "賀久家參吉",
+   "webrate": "13.32",
+   "level": 13,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2522924",
+   "card": "阿峰仔",
+   "webrate": "13.99",
+   "level": 13,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2695991",
+   "card": "禾亞-高市英娜",
+   "webrate": "13.51",
+   "level": 13,
+   "shop": "禾亞開發有限公司",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2988346",
+   "card": "歪歪阿澤",
+   "webrate": "13.01",
+   "level": 13,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2656866",
+   "card": "W",
+   "webrate": "13.62",
+   "level": 13,
+   "shop": "FUN SONG",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3017952",
+   "card": "ViOR",
+   "webrate": "13.84",
+   "level": 13,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3033048",
+   "card": "rose",
+   "webrate": "13.95",
+   "level": 13,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1807558",
+   "card": "« Ru »",
+   "webrate": "12.90",
+   "level": 12,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1975383",
+   "card": "Meng-Gu",
+   "webrate": "12.14",
+   "level": 12,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2969174",
+   "card": "有求必硬",
+   "webrate": "12.41",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3080714",
+   "card": "Lenny Leeee",
+   "webrate": "12.19",
+   "level": 12,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2895048",
+   "card": "Bacon W",
+   "webrate": "12.07",
+   "level": 12,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3120037",
+   "card": "14",
+   "webrate": "12.27",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2839465",
+   "card": "Weiwei",
+   "webrate": "12.32",
+   "level": 12,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032979",
+   "card": "⛦沾姆濕泡麵⛥",
+   "webrate": "12.04",
+   "level": 12,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1241531",
+   "card": "Ariel❤️",
+   "webrate": "12.09",
+   "level": 12,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2407962",
+   "card": "啾咪",
+   "webrate": "12.06",
+   "level": 12,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3022680",
+   "card": "咖畢瘦",
+   "webrate": "12.82",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2883503",
+   "card": "James.L",
+   "webrate": "12.97",
+   "level": 12,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2875200",
+   "card": "沒有靈魂的Sora",
+   "webrate": "12.69",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3007938",
+   "card": "氵干口未",
+   "webrate": "12.60",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3011156",
+   "card": "VirtualCard",
+   "webrate": "12.26",
+   "level": 12,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2188538",
+   "card": "大佑池久",
+   "webrate": "12.29",
+   "level": 12,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1762491",
+   "card": "梁山伯住陰宅",
+   "webrate": "11.84",
+   "level": 11,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2824391",
+   "card": "Jasper_X",
+   "webrate": "11.24",
+   "level": 11,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2985431",
+   "card": "喝醉的我長啥樣",
+   "webrate": "11.29",
+   "level": 11,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2407959",
+   "card": "Xiang",
+   "webrate": "11.25",
+   "level": 11,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3113512",
+   "card": "小胖胖VirtualCard",
+   "webrate": "11.63",
+   "level": 11,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2629171",
+   "card": "CK",
+   "webrate": "11.49",
+   "level": 11,
+   "shop": "霧都酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2759385",
+   "card": "描邊大師畢卡索",
+   "webrate": "11.59",
+   "level": 11,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2712268",
+   "card": "阿寶",
+   "webrate": "11.23",
+   "level": 11,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2375221",
+   "card": "禾亞 - 三小啦我虞靖暘",
+   "webrate": "11.38",
+   "level": 11,
+   "shop": "禾亞開發有限公司",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1801211",
+   "card": "地表最強のパパ",
+   "webrate": "11.00",
+   "level": 11,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2726867",
+   "card": "蟹蟹老闆",
+   "webrate": "11.78",
+   "level": 11,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3097705",
+   "card": "飛鏢很難",
+   "webrate": "11.40",
+   "level": 11,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3097040",
+   "card": "謙謙謙謙謙",
+   "webrate": "11.08",
+   "level": 11,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2562779",
+   "card": "吹腎鹹",
+   "webrate": "11.16",
+   "level": 11,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2882921",
+   "card": "Mmmm",
+   "webrate": "11.00",
+   "level": 11,
+   "shop": "高斯文教企業",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2870162",
+   "card": "艾碧斯(;｀O´)o",
+   "webrate": "11.52",
+   "level": 11,
+   "shop": "印相餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3012192",
+   "card": "0239_4006",
+   "webrate": "11.83",
+   "level": 11,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2577936",
+   "card": "Amy陀佛",
+   "webrate": "11.80",
+   "level": 11,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3059528",
+   "card": "my sunshine",
+   "webrate": "11.44",
+   "level": 11,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032935",
+   "card": "（●′∀‵）ノ♡",
+   "webrate": "10.54",
+   "level": 10,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3098415",
+   "card": "關Stone",
+   "webrate": "10.44",
+   "level": 10,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2950329",
+   "card": "麻辣教師亮亮",
+   "webrate": "10.07",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1379738",
+   "card": "Jim",
+   "webrate": "10.58",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2484855",
+   "card": "MASA KING",
+   "webrate": "10.74",
+   "level": 10,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2647435",
+   "card": "大恐龍🦕",
+   "webrate": "10.68",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3004880",
+   "card": "wei_",
+   "webrate": "10.45",
+   "level": 10,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3005826",
+   "card": "潘小綸",
+   "webrate": "10.29",
+   "level": 10,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2723068",
+   "card": "菜就多練",
+   "webrate": "10.34",
+   "level": 10,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3093377",
+   "card": "BANANA",
+   "webrate": "10.84",
+   "level": 10,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2909666",
+   "card": "啊就打不到",
+   "webrate": "10.05",
+   "level": 10,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1801214",
+   "card": "BLUEIGHT-小屁",
+   "webrate": "10.08",
+   "level": 10,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1924943",
+   "card": "許小嘟のパパ",
+   "webrate": "10.89",
+   "level": 10,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2673004",
+   "card": "泰山手槍大王",
+   "webrate": "10.52",
+   "level": 10,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2836754",
+   "card": "依託答辯",
+   "webrate": "10.25",
+   "level": 10,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1844390",
+   "card": "OoDM辛蒂貝比oO",
+   "webrate": "10.79",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2681282",
+   "card": "小不點",
+   "webrate": "10.54",
+   "level": 10,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2267359",
+   "card": "帕奇",
+   "webrate": "10.34",
+   "level": 10,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2921836",
+   "card": "有事line清德沒事call文哲",
+   "webrate": "10.21",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2948441",
+   "card": "Drunkenbabe",
+   "webrate": "10.96",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2512163",
+   "card": "禾亞—嘴角的好多滴",
+   "webrate": "10.05",
+   "level": 10,
+   "shop": "禾亞開發有限公司",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2644757",
+   "card": "Waynez",
+   "webrate": "10.99",
+   "level": 10,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2077418",
+   "card": "一條小瘋狗",
+   "webrate": "10.83",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2852152",
+   "card": "TSL",
+   "webrate": "10.02",
+   "level": 10,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2747561",
+   "card": "士奇",
+   "webrate": "10.50",
+   "level": 10,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2468297",
+   "card": "不不理",
+   "webrate": "10.12",
+   "level": 10,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2834017",
+   "card": "心碎小狗",
+   "webrate": "10.96",
+   "level": 10,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3017781",
+   "card": "0114_8522",
+   "webrate": "10.73",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2529561",
+   "card": "大陸雞",
+   "webrate": "10.94",
+   "level": 10,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2494757",
+   "card": "Yang2",
+   "webrate": "10.42",
+   "level": 10,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2388078",
+   "card": "易",
+   "webrate": "10.15",
+   "level": 10,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032999",
+   "card": "一條嘿嘿狗",
+   "webrate": "9.99",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2616700",
+   "card": "Oo煞氣a香腸oO",
+   "webrate": "9.58",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2809723",
+   "card": "二哥",
+   "webrate": "9.60",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2928541",
+   "card": "MASA QUEEN",
+   "webrate": "9.46",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2980789",
+   "card": "道天笑",
+   "webrate": "9.39",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2953213",
+   "card": "蠟筆小乖",
+   "webrate": "9.74",
+   "level": 9,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2970273",
+   "card": "黑心芭樂瓜",
+   "webrate": "9.49",
+   "level": 9,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1474848",
+   "card": "Orlando Pan",
+   "webrate": "9.27",
+   "level": 9,
+   "shop": "裏通路餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2771444",
+   "card": "獨狼LUCAS",
+   "webrate": "9.04",
+   "level": 9,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2751464",
+   "card": "平平賺大錢",
+   "webrate": "9.77",
+   "level": 9,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2303791",
+   "card": "斑ꪔ̤̮",
+   "webrate": "9.44",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2498326",
+   "card": "JAY-PARK",
+   "webrate": "9.77",
+   "level": 9,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2961645",
+   "card": "里宮紗惠",
+   "webrate": "9.55",
+   "level": 9,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3092184",
+   "card": "巧克力奶奶夢工廠",
+   "webrate": "9.74",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3010843",
+   "card": "DEVIL",
+   "webrate": "9.39",
+   "level": 9,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3041158",
+   "card": "Oo煞氣a亮亮oO",
+   "webrate": "9.51",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2484700",
+   "card": "Yuriko",
+   "webrate": "9.00",
+   "level": 9,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2183358",
+   "card": "Derek",
+   "webrate": "9.25",
+   "level": 9,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3102046",
+   "card": "亮亮認真翻車的卡",
+   "webrate": "9.23",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2411911",
+   "card": "飛烽戢煜",
+   "webrate": "9.24",
+   "level": 9,
+   "shop": "縱火人 燒食買醉場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2714234",
+   "card": "木木立青川頁",
+   "webrate": "9.95",
+   "level": 9,
+   "shop": "新北市立中平國中",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3005082",
+   "card": "一條臘腸狗",
+   "webrate": "9.80",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2590071",
+   "card": "鳳凰之眼",
+   "webrate": "9.43",
+   "level": 9,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2846001",
+   "card": "丁·尼格·斐",
+   "webrate": "9.73",
+   "level": 9,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2854875",
+   "card": "昱凱kenny",
+   "webrate": "9.52",
+   "level": 9,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3099631",
+   "card": "0189_0491",
+   "webrate": "9.71",
+   "level": 9,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3104055",
+   "card": "汪汪大神",
+   "webrate": "8.73",
+   "level": 8,
+   "shop": "柒息地串燒居酒屋(三重自強店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2533720",
+   "card": "Super Dad",
+   "webrate": "8.60",
+   "level": 8,
+   "shop": "酒客串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3005742",
+   "card": "酔いダーツるんるん",
+   "webrate": "8.73",
+   "level": 8,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2746169",
+   "card": "Tony要加油",
+   "webrate": "8.36",
+   "level": 8,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3033039",
+   "card": "りよ民しか勝たん",
+   "webrate": "8.21",
+   "level": 8,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3008837",
+   "card": "Kyrie",
+   "webrate": "8.33",
+   "level": 8,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2742604",
+   "card": "酒精燈",
+   "webrate": "8.18",
+   "level": 8,
+   "shop": "酒客串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2516918",
+   "card": "Iron Hsu",
+   "webrate": "8.32",
+   "level": 8,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3116028",
+   "card": "咪醬是隻貓",
+   "webrate": "8.67",
+   "level": 8,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3110792",
+   "card": "33333333",
+   "webrate": "8.04",
+   "level": 8,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3074026",
+   "card": "夜冥寶寶",
+   "webrate": "8.73",
+   "level": 8,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3084057",
+   "card": "Kai-Ting",
+   "webrate": "8.08",
+   "level": 8,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2721240",
+   "card": "沒喝不會射",
+   "webrate": "8.67",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3055674",
+   "card": "BABY JIE",
+   "webrate": "8.33",
+   "level": 8,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2742222",
+   "card": "我知道我很帥",
+   "webrate": "8.92",
+   "level": 8,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2538327",
+   "card": "Drunkenmoon_Ben^^",
+   "webrate": "8.81",
+   "level": 8,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2812944",
+   "card": "VirtualCard",
+   "webrate": "8.10",
+   "level": 8,
+   "shop": "霧都酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2072951",
+   "card": "霧都-白白是也❤️",
+   "webrate": "8.46",
+   "level": 8,
+   "shop": "霧都酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2844355",
+   "card": "T.S Ray",
+   "webrate": "8.91",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2735051",
+   "card": "俊、",
+   "webrate": "8.99",
+   "level": 8,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2791440",
+   "card": "俞秉呈",
+   "webrate": "8.60",
+   "level": 8,
+   "shop": "高斯文教企業",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2349806",
+   "card": "猜猜",
+   "webrate": "8.03",
+   "level": 8,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2281217",
+   "card": "蒙其.D.稻守",
+   "webrate": "8.20",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2820350",
+   "card": "色破蒼穹",
+   "webrate": "8.31",
+   "level": 8,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1634191",
+   "card": "禾亞-兩津不堪一擊",
+   "webrate": "8.22",
+   "level": 8,
+   "shop": "禾亞開發有限公司",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1778420",
+   "card": "流浪鏢手",
+   "webrate": "8.15",
+   "level": 8,
+   "shop": "DC打鏢績地",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2820641",
+   "card": "五斗米",
+   "webrate": "8.09",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3013059",
+   "card": "胃液胃液胃液",
+   "webrate": "8.07",
+   "level": 8,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2463498",
+   "card": "Blue Mini 段中中",
+   "webrate": "8.01",
+   "level": 8,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2976790",
+   "card": "Jimi",
+   "webrate": "8.25",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2563126",
+   "card": "花仔",
+   "webrate": "8.25",
+   "level": 8,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2885850",
+   "card": "鸚鵡先生",
+   "webrate": "8.88",
+   "level": 8,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3113786",
+   "card": "喝酒香腸",
+   "webrate": "8.16",
+   "level": 8,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2532545",
+   "card": "Lin",
+   "webrate": "8.86",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3009769",
+   "card": "Vicky喵",
+   "webrate": "8.04",
+   "level": 8,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3004615",
+   "card": "布拉沃船長",
+   "webrate": "8.18",
+   "level": 8,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3005344",
+   "card": "Feng",
+   "webrate": "8.96",
+   "level": 8,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3021005",
+   "card": "元氣騎士",
+   "webrate": "8.13",
+   "level": 8,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2622890",
+   "card": "阿財他爸",
+   "webrate": "8.76",
+   "level": 8,
+   "shop": "有你 9%",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3058589",
+   "card": "貝瑞",
+   "webrate": "8.10",
+   "level": 8,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2919908",
+   "card": "豪豪豪",
+   "webrate": "8.66",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2035490",
+   "card": "sky.masters",
+   "webrate": "8.05",
+   "level": 8,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2506439",
+   "card": "喝了手會抖",
+   "webrate": "7.73",
+   "level": 7,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2746787",
+   "card": "千玨",
+   "webrate": "7.12",
+   "level": 7,
+   "shop": "裏通路餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2689751",
+   "card": "大屌哥",
+   "webrate": "7.49",
+   "level": 7,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3017778",
+   "card": "我就是我",
+   "webrate": "7.19",
+   "level": 7,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2968832",
+   "card": "小嚕子",
+   "webrate": "7.80",
+   "level": 7,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3112439",
+   "card": "Allison",
+   "webrate": "7.14",
+   "level": 7,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3082714",
+   "card": "2026帥妞",
+   "webrate": "7.12",
+   "level": 7,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2416205",
+   "card": "酒客串燒～小龍",
+   "webrate": "7.48",
+   "level": 7,
+   "shop": "酒客串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2415602",
+   "card": "西門街小霸王",
+   "webrate": "7.15",
+   "level": 7,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3093952",
+   "card": "王海",
+   "webrate": "7.67",
+   "level": 7,
+   "shop": "DT Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2647436",
+   "card": "一隻驕傲狗",
+   "webrate": "7.90",
+   "level": 7,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2511678",
+   "card": "Eddie謝",
+   "webrate": "7.44",
+   "level": 7,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3111364",
+   "card": "POPOTsai",
+   "webrate": "7.71",
+   "level": 7,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2782223",
+   "card": "Allen",
+   "webrate": "7.01",
+   "level": 7,
+   "shop": "印相餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2978737",
+   "card": "阿定",
+   "webrate": "7.77",
+   "level": 7,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2609924",
+   "card": "Vanye",
+   "webrate": "7.06",
+   "level": 7,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032968",
+   "card": "雲林醬板鴨",
+   "webrate": "7.18",
+   "level": 7,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3004667",
+   "card": "Fearnot",
+   "webrate": "7.93",
+   "level": 7,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2443198",
+   "card": "Ziyun",
+   "webrate": "7.94",
+   "level": 7,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2433486",
+   "card": "B52女王",
+   "webrate": "7.18",
+   "level": 7,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1701958",
+   "card": "金色狂風",
+   "webrate": "7.77",
+   "level": 7,
+   "shop": "八鮮烤魚 Beer Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2968269",
+   "card": "～臭屁的小毛～",
+   "webrate": "7.33",
+   "level": 7,
+   "shop": "裏通路餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2112574",
+   "card": "Yang Yang",
+   "webrate": "7.85",
+   "level": 7,
+   "shop": "Liquor Lounge",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2843799",
+   "card": "小祺",
+   "webrate": "7.60",
+   "level": 7,
+   "shop": "FUN SONG",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2713397",
+   "card": "錒白白",
+   "webrate": "7.48",
+   "level": 7,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2100995",
+   "card": "江",
+   "webrate": "7.31",
+   "level": 7,
+   "shop": "縱火人 燒食買醉場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2914550",
+   "card": "毛毛",
+   "webrate": "7.45",
+   "level": 7,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1629512",
+   "card": "蔡",
+   "webrate": "7.67",
+   "level": 7,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2663007",
+   "card": "林口高爾宣",
+   "webrate": "7.01",
+   "level": 7,
+   "shop": "有你 9%",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3022220",
+   "card": "光禿禿的阿伯",
+   "webrate": "7.76",
+   "level": 7,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2192445",
+   "card": "安",
+   "webrate": "7.58",
+   "level": 7,
+   "shop": "老串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2986016",
+   "card": "qunqun",
+   "webrate": "7.32",
+   "level": 7,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2603813",
+   "card": "Qunnie",
+   "webrate": "7.29",
+   "level": 7,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3031233",
+   "card": "遲到鬼",
+   "webrate": "7.27",
+   "level": 7,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2190394",
+   "card": "☆Connie♡",
+   "webrate": "7.61",
+   "level": 7,
+   "shop": "摩迅(新北新莊店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3028249",
+   "card": "MLT2",
+   "webrate": "7.30",
+   "level": 7,
+   "shop": "大魯閣汐止館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2959208",
+   "card": "Oo楠曦oO",
+   "webrate": "6.44",
+   "level": 6,
+   "shop": "酒客串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2913523",
+   "card": "小宇哥不要偷來玩",
+   "webrate": "6.48",
+   "level": 6,
+   "shop": "強運撞球場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3116440",
+   "card": "VirtualCard",
+   "webrate": "6.98",
+   "level": 6,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3098416",
+   "card": "廢物雙魚",
+   "webrate": "6.38",
+   "level": 6,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3120734",
+   "card": "GoldenFire",
+   "webrate": "6.44",
+   "level": 6,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3008829",
+   "card": "神經仔無法控制",
+   "webrate": "6.30",
+   "level": 6,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2073245",
+   "card": "Gary",
+   "webrate": "6.87",
+   "level": 6,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3012939",
+   "card": "洪恩採的狗",
+   "webrate": "6.45",
+   "level": 6,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2729535",
+   "card": "一條封心小狗",
+   "webrate": "6.67",
+   "level": 6,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3082722",
+   "card": "2026 Revolution Finalist",
+   "webrate": "6.41",
+   "level": 6,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2689734",
+   "card": "大  月巴  口苗",
+   "webrate": "6.20",
+   "level": 6,
+   "shop": "印相餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3024695",
+   "card": "白蘭地還有威士忌",
+   "webrate": "6.74",
+   "level": 6,
+   "shop": "窩吧",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3109978",
+   "card": "隆",
+   "webrate": "6.27",
+   "level": 6,
+   "shop": "柒息地串燒居酒屋(三重自強店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2658849",
+   "card": "KuKuBand",
+   "webrate": "6.72",
+   "level": 6,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2760715",
+   "card": "愷愷",
+   "webrate": "6.60",
+   "level": 6,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3112356",
+   "card": "Andy",
+   "webrate": "6.79",
+   "level": 6,
+   "shop": "柒息地串燒居酒屋(三重自強店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2578193",
+   "card": "長島小野貓",
+   "webrate": "6.26",
+   "level": 6,
+   "shop": "印相餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2881130",
+   "card": "Lay",
+   "webrate": "6.87",
+   "level": 6,
+   "shop": "Muse bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3086525",
+   "card": "felix618.",
+   "webrate": "6.95",
+   "level": 6,
+   "shop": "老三酒窖(中央店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2873385",
+   "card": "Sixth_高韶宏",
+   "webrate": "6.37",
+   "level": 6,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1926001",
+   "card": "Yu cheng",
+   "webrate": "6.64",
+   "level": 6,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2663006",
+   "card": "林口大偷比",
+   "webrate": "6.57",
+   "level": 6,
+   "shop": "有你 9%",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1846803",
+   "card": "跪求打死我",
+   "webrate": "6.99",
+   "level": 6,
+   "shop": "Boss Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2484649",
+   "card": "Lego no no",
+   "webrate": "6.74",
+   "level": 6,
+   "shop": "I-La Music Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2691451",
+   "card": "Joyce愛你",
+   "webrate": "6.18",
+   "level": 6,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2842864",
+   "card": "海怪",
+   "webrate": "6.18",
+   "level": 6,
+   "shop": "印相餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2612264",
+   "card": "GD^з^",
+   "webrate": "6.88",
+   "level": 6,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2975819",
+   "card": "黑皮膚",
+   "webrate": "6.87",
+   "level": 6,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3111678",
+   "card": "Demon",
+   "webrate": "5.99",
+   "level": 5,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3087926",
+   "card": "小豬仔",
+   "webrate": "5.00",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2512210",
+   "card": "康莎蜜達❤️",
+   "webrate": "5.09",
+   "level": 5,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3024379",
+   "card": "Blue In LaLa",
+   "webrate": "5.44",
+   "level": 5,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2886443",
+   "card": "思樂冰",
+   "webrate": "5.44",
+   "level": 5,
+   "shop": "Drunken Moon",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3100419",
+   "card": "墊底女孩",
+   "webrate": "5.14",
+   "level": 5,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3027205",
+   "card": "doraemon",
+   "webrate": "5.40",
+   "level": 5,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2512215",
+   "card": "莎朗嘿❤️",
+   "webrate": "5.31",
+   "level": 5,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3014164",
+   "card": "小恩",
+   "webrate": "5.27",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3110760",
+   "card": "ㄚ政政",
+   "webrate": "5.46",
+   "level": 5,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2956110",
+   "card": "飄來飄去",
+   "webrate": "5.46",
+   "level": 5,
+   "shop": "濠野海鮮烤物",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3083865",
+   "card": "GεμIηI✬ιIη",
+   "webrate": "5.27",
+   "level": 5,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3064094",
+   "card": "VirtualCard",
+   "webrate": "5.08",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2995416",
+   "card": "白夜",
+   "webrate": "5.25",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3100936",
+   "card": "森上耀友郎",
+   "webrate": "5.99",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3125066",
+   "card": "Jeff",
+   "webrate": "5.66",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3125065",
+   "card": "Jason Wang",
+   "webrate": "5.96",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2940192",
+   "card": "914愛我別走",
+   "webrate": "5.79",
+   "level": 5,
+   "shop": "藍舍飛鏢運動吧-PD33旗艦新北淡水33店",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2521245",
+   "card": "Mini",
+   "webrate": "5.06",
+   "level": 5,
+   "shop": "碳碳串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2875310",
+   "card": "Alice",
+   "webrate": "5.23",
+   "level": 5,
+   "shop": "FUN SONG",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3120986",
+   "card": "奔雷手文泰VirtualCard",
+   "webrate": "5.49",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3022216",
+   "card": "屌毛",
+   "webrate": "5.03",
+   "level": 5,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3002553",
+   "card": "So So",
+   "webrate": "5.87",
+   "level": 5,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3120985",
+   "card": "連斌",
+   "webrate": "4.02",
+   "level": 4,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3099928",
+   "card": "Whis",
+   "webrate": "4.22",
+   "level": 4,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2908828",
+   "card": "zengyi",
+   "webrate": "4.86",
+   "level": 4,
+   "shop": "強運撞球場",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3092861",
+   "card": "Allison",
+   "webrate": "4.56",
+   "level": 4,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2744749",
+   "card": "嗚嗚拉拉嗚啦",
+   "webrate": "4.14",
+   "level": 4,
+   "shop": "裏通路餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3098464",
+   "card": "克里斯塔",
+   "webrate": "4.09",
+   "level": 4,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3046766",
+   "card": "11烤肉好好吃",
+   "webrate": "4.26",
+   "level": 4,
+   "shop": "碳碳串燒",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3038954",
+   "card": "Serendipity",
+   "webrate": "4.61",
+   "level": 4,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3125497",
+   "card": "MK小老闆",
+   "webrate": "4.15",
+   "level": 4,
+   "shop": "MK 燒烤",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2878225",
+   "card": "柚子",
+   "webrate": "4.94",
+   "level": 4,
+   "shop": "FUN SONG",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2855181",
+   "card": "布拉沃VIVI",
+   "webrate": "4.87",
+   "level": 4,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3099923",
+   "card": "Cynthia",
+   "webrate": "3.75",
+   "level": 3,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3120736",
+   "card": "Eddie",
+   "webrate": "3.75",
+   "level": 3,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3109304",
+   "card": "Henry Chou",
+   "webrate": "3.66",
+   "level": 3,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2764177",
+   "card": "史瑞克",
+   "webrate": "3.72",
+   "level": 3,
+   "shop": "裏通路餐酒館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3128284",
+   "card": "VirtualCard",
+   "webrate": "3.40",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3125056",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3008003",
+   "card": "Yu_",
+   "webrate": "15.83",
+   "level": null,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3113144",
+   "card": "020 3299",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣土城館（保齢球）",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3114963",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣汐止館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3117108",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3068408",
+   "card": "張皮卡",
+   "webrate": "3.44",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3023992",
+   "card": "馬英九的蛋",
+   "webrate": "4.36",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3128942",
+   "card": "TING",
+   "webrate": "5.52",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3020469",
+   "card": "Melody",
+   "webrate": "3.24",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3121210",
+   "card": "LYX.",
+   "webrate": "3.63",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3121219",
+   "card": "Ananananan",
+   "webrate": "3.21",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3020491",
+   "card": "我的比較長",
+   "webrate": "2.44",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3119513",
+   "card": "悠哉 翔翔",
+   "webrate": "8.09",
+   "level": null,
+   "shop": "柒息地串燒居酒屋(三重自強店)",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3015744",
+   "card": "VirtualCard",
+   "webrate": "14.53",
+   "level": null,
+   "shop": "510 Darts Bar",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3100527",
+   "card": "0074_0429",
+   "webrate": "13.32",
+   "level": null,
+   "shop": "Bravo Pub",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "2862744",
+   "card": "vincent",
+   "webrate": "7.81",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3106909",
+   "card": "EKKO",
+   "webrate": "8.52",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3111469",
+   "card": "VirtualCard",
+   "webrate": "7.50",
+   "level": null,
+   "shop": "大魯閣汐止館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3083787",
+   "card": "四川麻辣蚯蚓",
+   "webrate": "12.26",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3123527",
+   "card": "ColdFox",
+   "webrate": "8.45",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3032971",
+   "card": "Han Chou - WOOAH",
+   "webrate": "9.80",
+   "level": null,
+   "shop": "大魯閣新莊館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3124001",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣汐止館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "3124000",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣汐止館",
+   "areaRank": 1
+  },
+  {
+   "cSeq": "1412357",
+   "card": "遨遊孤鷹",
+   "webrate": "27.65",
+   "level": 27,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2865336",
+   "card": "YOU TENG XIANG",
+   "webrate": "24.11",
+   "level": 24,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2086614",
+   "card": "寶咖",
+   "webrate": "22.19",
+   "level": 22,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2281801",
+   "card": "阿偉",
+   "webrate": "22.93",
+   "level": 22,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2409863",
+   "card": "三色豆哥布林_Steve龍貓",
+   "webrate": "20.04",
+   "level": 20,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2993104",
+   "card": "痾KEN",
+   "webrate": "20.71",
+   "level": 20,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2512682",
+   "card": "西油吐馬洛",
+   "webrate": "19.12",
+   "level": 19,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2112617",
+   "card": "朋朋",
+   "webrate": "19.05",
+   "level": 19,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2372462",
+   "card": "呂東霖_不要打東東",
+   "webrate": "19.82",
+   "level": 19,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1239573",
+   "card": "孤寂火星人",
+   "webrate": "19.54",
+   "level": 19,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2976762",
+   "card": "我就爛你更爛🤪",
+   "webrate": "19.28",
+   "level": 19,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2515762",
+   "card": "五更腸旺",
+   "webrate": "19.50",
+   "level": 19,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2661556",
+   "card": "Louis",
+   "webrate": "18.02",
+   "level": 18,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2638133",
+   "card": "蘑菇-蘑菇",
+   "webrate": "18.62",
+   "level": 18,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1958346",
+   "card": "廖柏懿_羽翼",
+   "webrate": "18.92",
+   "level": 18,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2272126",
+   "card": "RD 瞇瞇",
+   "webrate": "18.60",
+   "level": 18,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3117762",
+   "card": "0123_3295",
+   "webrate": "18.43",
+   "level": 18,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2638721",
+   "card": "羽翼寶伲",
+   "webrate": "18.89",
+   "level": 18,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2380290",
+   "card": "蒜泥白肉",
+   "webrate": "18.34",
+   "level": 18,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1678735",
+   "card": "薑絲炒大腸",
+   "webrate": "18.01",
+   "level": 18,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2810075",
+   "card": "Pink Man",
+   "webrate": "17.15",
+   "level": 17,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2688844",
+   "card": "老屁股-凱翔",
+   "webrate": "17.44",
+   "level": 17,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2825782",
+   "card": "黑黑黑黑嚕嚕",
+   "webrate": "17.16",
+   "level": 17,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2717783",
+   "card": "0072_2694",
+   "webrate": "17.34",
+   "level": 17,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2893150",
+   "card": "黑爸爸",
+   "webrate": "16.94",
+   "level": 16,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2747828",
+   "card": "JEFF",
+   "webrate": "16.22",
+   "level": 16,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2174648",
+   "card": "[AI DARTS] 打工仔",
+   "webrate": "16.73",
+   "level": 16,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2750420",
+   "card": "Arrow On Lucy露西",
+   "webrate": "16.48",
+   "level": 16,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1807698",
+   "card": "HBD YTC太師 9527",
+   "webrate": "16.57",
+   "level": 16,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2643983",
+   "card": "David",
+   "webrate": "16.80",
+   "level": 16,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2913771",
+   "card": "熊大",
+   "webrate": "16.02",
+   "level": 16,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2812556",
+   "card": "ikooryi",
+   "webrate": "15.93",
+   "level": 15,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2412294",
+   "card": "小宇",
+   "webrate": "15.41",
+   "level": 15,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1236901",
+   "card": "許春展",
+   "webrate": "15.77",
+   "level": 15,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1244131",
+   "card": "歡迎冠霖",
+   "webrate": "15.93",
+   "level": 15,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2484770",
+   "card": "Daniel☆老丹",
+   "webrate": "15.26",
+   "level": 15,
+   "shop": "ViVi Bar 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2113408",
+   "card": "熊燒酒肉_UUの老公",
+   "webrate": "15.03",
+   "level": 15,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2638841",
+   "card": "LD-Lee",
+   "webrate": "15.95",
+   "level": 15,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3083774",
+   "card": "Blacky",
+   "webrate": "15.18",
+   "level": 15,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1792515",
+   "card": "小欣",
+   "webrate": "15.04",
+   "level": 15,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1946544",
+   "card": "Bin",
+   "webrate": "15.44",
+   "level": 15,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1567065",
+   "card": "LeoDarts",
+   "webrate": "15.82",
+   "level": 15,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2822483",
+   "card": "Chen",
+   "webrate": "15.16",
+   "level": 15,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1947870",
+   "card": "Barista QQ",
+   "webrate": "15.56",
+   "level": 15,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2830254",
+   "card": "Money",
+   "webrate": "14.60",
+   "level": 14,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2732900",
+   "card": "Momoka",
+   "webrate": "14.93",
+   "level": 14,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2969063",
+   "card": "Secret_Joker",
+   "webrate": "14.03",
+   "level": 14,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2993102",
+   "card": "喜守堅友仁",
+   "webrate": "14.97",
+   "level": 14,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2753764",
+   "card": "蘑菇",
+   "webrate": "14.14",
+   "level": 14,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2586078",
+   "card": "彩金衝三",
+   "webrate": "14.69",
+   "level": 14,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2589494",
+   "card": "Arrow Onㄣ台灣阿成",
+   "webrate": "14.26",
+   "level": 14,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2982637",
+   "card": "玖杯-光頭",
+   "webrate": "14.99",
+   "level": 14,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2376529",
+   "card": "Oldbrick_chungyi",
+   "webrate": "14.05",
+   "level": 14,
+   "shop": "Old Brick",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2216182",
+   "card": "酌燒-某米狼",
+   "webrate": "14.18",
+   "level": 14,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1240220",
+   "card": "Y.Bin@D-1",
+   "webrate": "14.55",
+   "level": 14,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1865735",
+   "card": "酌燒-大寶 凱凱",
+   "webrate": "14.81",
+   "level": 14,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2565735",
+   "card": "Neil Lee",
+   "webrate": "14.91",
+   "level": 14,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3079148",
+   "card": "G.T",
+   "webrate": "14.29",
+   "level": 14,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2233134",
+   "card": "韜光養晦的 K",
+   "webrate": "14.85",
+   "level": 14,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2833979",
+   "card": "水蜜頭罐桃",
+   "webrate": "14.67",
+   "level": 14,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2501183",
+   "card": "0181_9938",
+   "webrate": "14.33",
+   "level": 14,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1520286",
+   "card": "右手只是輔助",
+   "webrate": "14.36",
+   "level": 14,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2849795",
+   "card": "張勤",
+   "webrate": "14.26",
+   "level": 14,
+   "shop": "Gravity 磁場",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3003291",
+   "card": "Kirk Chen",
+   "webrate": "14.06",
+   "level": 14,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2451114",
+   "card": "Kuan",
+   "webrate": "14.50",
+   "level": 14,
+   "shop": "攝吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1669874",
+   "card": "🐒🐒🐒",
+   "webrate": "14.52",
+   "level": 14,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1446011",
+   "card": "酌燒_ㄎ+",
+   "webrate": "14.44",
+   "level": 14,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1242503",
+   "card": "逆境無賴",
+   "webrate": "14.39",
+   "level": 14,
+   "shop": "攝吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2122882",
+   "card": "Malu",
+   "webrate": "14.95",
+   "level": 14,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2230588",
+   "card": "8528 MUSIC BAR~~~小柴",
+   "webrate": "14.34",
+   "level": 14,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2850807",
+   "card": "泥好臭",
+   "webrate": "14.10",
+   "level": 14,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1243241",
+   "card": "T C P-VR",
+   "webrate": "14.87",
+   "level": 14,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1621037",
+   "card": "野狼",
+   "webrate": "14.38",
+   "level": 14,
+   "shop": "Phoenix Taiwan 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2761330",
+   "card": "YuWen",
+   "webrate": "14.49",
+   "level": 14,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3068096",
+   "card": "0066_1075",
+   "webrate": "14.34",
+   "level": 14,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2368279",
+   "card": "OB_小傑酒肆菜",
+   "webrate": "14.63",
+   "level": 14,
+   "shop": "Old Brick",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2532766",
+   "card": "Garry Jiang",
+   "webrate": "14.88",
+   "level": 14,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2527677",
+   "card": "口亮土易琵琶手",
+   "webrate": "14.14",
+   "level": 14,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1242373",
+   "card": "Summer",
+   "webrate": "13.44",
+   "level": 13,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2302262",
+   "card": "MTB",
+   "webrate": "13.98",
+   "level": 13,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2831641",
+   "card": "Foxy_Joker",
+   "webrate": "13.98",
+   "level": 13,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988252",
+   "card": "麻生　太郎",
+   "webrate": "13.22",
+   "level": 13,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2831235",
+   "card": "老花眼鏡蛇-吉祥",
+   "webrate": "13.30",
+   "level": 13,
+   "shop": "ViVi Bar 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2804775",
+   "card": "FIDNS✘ Arrow on Heddy",
+   "webrate": "13.51",
+   "level": 13,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2027229",
+   "card": "摧毀部隊☆Chieh",
+   "webrate": "13.57",
+   "level": 13,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2533422",
+   "card": "Arrow Onϟ維尼",
+   "webrate": "13.73",
+   "level": 13,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1751393",
+   "card": "グリズリーズ",
+   "webrate": "13.93",
+   "level": 13,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1240793",
+   "card": "板酒二刀流 大埔躺平",
+   "webrate": "13.78",
+   "level": 13,
+   "shop": "Barcade Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3114632",
+   "card": "玖杯阿一",
+   "webrate": "13.44",
+   "level": 13,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2830250",
+   "card": "宏哲",
+   "webrate": "13.21",
+   "level": 13,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1676076",
+   "card": "Pop",
+   "webrate": "13.05",
+   "level": 13,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2842948",
+   "card": "玖杯-阿宏",
+   "webrate": "13.11",
+   "level": 13,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2410234",
+   "card": "織田信腸",
+   "webrate": "13.97",
+   "level": 13,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2912540",
+   "card": "0229_8167",
+   "webrate": "13.49",
+   "level": 13,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2014248",
+   "card": "ABLE pub",
+   "webrate": "13.20",
+   "level": 13,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1866269",
+   "card": "Dally.泰-Tamama衝擊波",
+   "webrate": "13.54",
+   "level": 13,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1796588",
+   "card": "小柴",
+   "webrate": "13.74",
+   "level": 13,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2906715",
+   "card": "阿俊打壞人",
+   "webrate": "13.34",
+   "level": 13,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2337492",
+   "card": "Anthony",
+   "webrate": "13.23",
+   "level": 13,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2679491",
+   "card": "老花眼鏡蛇-JJ台日",
+   "webrate": "12.48",
+   "level": 12,
+   "shop": "ViVi Bar 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2996761",
+   "card": "dǎixìtuōpéng",
+   "webrate": "12.19",
+   "level": 12,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2751625",
+   "card": "KTR",
+   "webrate": "12.96",
+   "level": 12,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2664325",
+   "card": "阿文喔！",
+   "webrate": "12.80",
+   "level": 12,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2254520",
+   "card": "Jeremy@Darts One",
+   "webrate": "12.66",
+   "level": 12,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2745288",
+   "card": "蘇格蘭Bear.E",
+   "webrate": "12.21",
+   "level": 12,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3079294",
+   "card": "阿翰",
+   "webrate": "12.63",
+   "level": 12,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2453244",
+   "card": "8528-老謙.",
+   "webrate": "12.76",
+   "level": 12,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2605745",
+   "card": "루루입니당",
+   "webrate": "12.58",
+   "level": 12,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2112572",
+   "card": "小剛",
+   "webrate": "12.93",
+   "level": 12,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2624188",
+   "card": "Chris Rock",
+   "webrate": "12.55",
+   "level": 12,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2409847",
+   "card": "雞米花生米",
+   "webrate": "12.83",
+   "level": 12,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3005006",
+   "card": "Amity",
+   "webrate": "12.01",
+   "level": 12,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2617736",
+   "card": "JEDI  KEVIN",
+   "webrate": "12.41",
+   "level": 12,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2908852",
+   "card": "別打我靶",
+   "webrate": "12.10",
+   "level": 12,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2529527",
+   "card": "Arrow On ㄣ Andy",
+   "webrate": "12.44",
+   "level": 12,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1864954",
+   "card": "玖杯_樂樂",
+   "webrate": "12.23",
+   "level": 12,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2920537",
+   "card": "Grey",
+   "webrate": "12.27",
+   "level": 12,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2030606",
+   "card": "［GODs］黑帝斯",
+   "webrate": "12.55",
+   "level": 12,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2952724",
+   "card": "Carter",
+   "webrate": "12.05",
+   "level": 12,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1995453",
+   "card": "= OLD BRICK•VOVO =",
+   "webrate": "12.35",
+   "level": 12,
+   "shop": "Old Brick",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1515844",
+   "card": "hugo",
+   "webrate": "12.72",
+   "level": 12,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2195891",
+   "card": "酌燒-我的扁咚",
+   "webrate": "12.73",
+   "level": 12,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2531283",
+   "card": "阿卡BAN亞",
+   "webrate": "12.87",
+   "level": 12,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2409927",
+   "card": "MT",
+   "webrate": "12.27",
+   "level": 12,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2779121",
+   "card": "小馬",
+   "webrate": "12.34",
+   "level": 12,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2959185",
+   "card": "トーマス",
+   "webrate": "12.06",
+   "level": 12,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1237275",
+   "card": "Jason",
+   "webrate": "12.57",
+   "level": 12,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2617790",
+   "card": "DＡＲＴＳONE Mitsu",
+   "webrate": "12.75",
+   "level": 12,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2752751",
+   "card": "特米能不能當我的廖太太",
+   "webrate": "12.17",
+   "level": 12,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2773989",
+   "card": "Rich",
+   "webrate": "12.61",
+   "level": 12,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2951439",
+   "card": "DIABOL",
+   "webrate": "12.55",
+   "level": 12,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2788149",
+   "card": "鹽蝦爾龍守骸蠶",
+   "webrate": "12.89",
+   "level": 12,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3059588",
+   "card": "小蔡",
+   "webrate": "11.60",
+   "level": 11,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2747440",
+   "card": "阿賢爹地",
+   "webrate": "11.66",
+   "level": 11,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2816614",
+   "card": "Arrow Onㄣ成龍",
+   "webrate": "11.94",
+   "level": 11,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1751740",
+   "card": "口亮場小公主Lydia🖤",
+   "webrate": "11.30",
+   "level": 11,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2779659",
+   "card": "Kai Jack",
+   "webrate": "11.23",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2846886",
+   "card": "RICH-LEON",
+   "webrate": "11.80",
+   "level": 11,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2839809",
+   "card": "Yen Hsu",
+   "webrate": "11.88",
+   "level": 11,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2645393",
+   "card": "Unclechalk承",
+   "webrate": "11.54",
+   "level": 11,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3020998",
+   "card": "傑西不嘻嘻",
+   "webrate": "11.09",
+   "level": 11,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2693747",
+   "card": "廖政穎_JIMMY",
+   "webrate": "11.12",
+   "level": 11,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2919416",
+   "card": "0211_5330",
+   "webrate": "11.56",
+   "level": 11,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1801451",
+   "card": "方周鏢局擎天一柱",
+   "webrate": "11.97",
+   "level": 11,
+   "shop": "方周鏢局",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2810417",
+   "card": "二階巴達獸",
+   "webrate": "11.76",
+   "level": 11,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3093386",
+   "card": "026 4244",
+   "webrate": "11.38",
+   "level": 11,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3018066",
+   "card": "瑋",
+   "webrate": "11.78",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3119383",
+   "card": "老花眼鏡蛇-維尼",
+   "webrate": "11.55",
+   "level": 11,
+   "shop": "ViVi Bar 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3058670",
+   "card": "スジブンリ",
+   "webrate": "11.54",
+   "level": 11,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2835111",
+   "card": "Howard",
+   "webrate": "11.12",
+   "level": 11,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2464104",
+   "card": "R8匪類-Ker",
+   "webrate": "11.43",
+   "level": 11,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2953278",
+   "card": "YuWen",
+   "webrate": "11.10",
+   "level": 11,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3041719",
+   "card": "匪類-屠夫清潔員",
+   "webrate": "11.88",
+   "level": 11,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3049158",
+   "card": "阿德",
+   "webrate": "11.10",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2342310",
+   "card": "神威",
+   "webrate": "11.26",
+   "level": 11,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2290709",
+   "card": "昆霖",
+   "webrate": "11.75",
+   "level": 11,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3088863",
+   "card": "阿憲",
+   "webrate": "11.29",
+   "level": 11,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3030807",
+   "card": "匪類里長-小野爺爺",
+   "webrate": "11.85",
+   "level": 11,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2608061",
+   "card": "糖寶寶的廢物垃圾奴隸🍼",
+   "webrate": "11.46",
+   "level": 11,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1237296",
+   "card": "SARU",
+   "webrate": "11.33",
+   "level": 11,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2773765",
+   "card": "CHIANG",
+   "webrate": "11.73",
+   "level": 11,
+   "shop": "攝吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2893078",
+   "card": "Mimo",
+   "webrate": "11.90",
+   "level": 11,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1865393",
+   "card": "AOxDS Bob",
+   "webrate": "11.82",
+   "level": 11,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3123871",
+   "card": "事前黛莉安",
+   "webrate": "11.08",
+   "level": 11,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1323886",
+   "card": "VICKY FANG",
+   "webrate": "11.73",
+   "level": 11,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2636969",
+   "card": "MGL-今天手感看心情",
+   "webrate": "11.14",
+   "level": 11,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2643942",
+   "card": "小馬里葛逼",
+   "webrate": "11.71",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2646225",
+   "card": "Arrow on Q",
+   "webrate": "11.85",
+   "level": 11,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2881084",
+   "card": "小智同學",
+   "webrate": "11.77",
+   "level": 11,
+   "shop": "Gravity 磁場",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2891820",
+   "card": "Only",
+   "webrate": "11.33",
+   "level": 11,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3117137",
+   "card": "0069_1993",
+   "webrate": "11.27",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1851656",
+   "card": "MONKEY",
+   "webrate": "11.10",
+   "level": 11,
+   "shop": "Circle Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1570281",
+   "card": "Charlie.Yeh",
+   "webrate": "11.10",
+   "level": 11,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3028345",
+   "card": "勃起塔",
+   "webrate": "11.90",
+   "level": 11,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2712178",
+   "card": "天常遞酒",
+   "webrate": "11.27",
+   "level": 11,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2146172",
+   "card": "★ DartsArena 小魚 ★",
+   "webrate": "11.55",
+   "level": 11,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1237090",
+   "card": "AA Darts＊Una Lin",
+   "webrate": "11.97",
+   "level": 11,
+   "shop": "Gravity 磁場",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2875954",
+   "card": "耶穌激凸",
+   "webrate": "11.12",
+   "level": 11,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2522610",
+   "card": "Pin",
+   "webrate": "11.34",
+   "level": 11,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2689736",
+   "card": "嚇乾",
+   "webrate": "11.61",
+   "level": 11,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2672127",
+   "card": "付錢",
+   "webrate": "10.66",
+   "level": 10,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2920643",
+   "card": "HSIEH",
+   "webrate": "10.29",
+   "level": 10,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3039086",
+   "card": "CHUAN",
+   "webrate": "10.69",
+   "level": 10,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3059546",
+   "card": "周",
+   "webrate": "10.51",
+   "level": 10,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1240815",
+   "card": "Dally. Yuting",
+   "webrate": "10.85",
+   "level": 10,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121379",
+   "card": "Wesley",
+   "webrate": "10.46",
+   "level": 10,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1962422",
+   "card": "金色蘑菇-Panda",
+   "webrate": "10.81",
+   "level": 10,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2768677",
+   "card": "志",
+   "webrate": "10.35",
+   "level": 10,
+   "shop": "85基地 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2711800",
+   "card": "RiMaBean",
+   "webrate": "10.44",
+   "level": 10,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2956588",
+   "card": "打三倍，很難嗎？",
+   "webrate": "10.97",
+   "level": 10,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2417258",
+   "card": "Arrow Onㄣ Wei",
+   "webrate": "10.66",
+   "level": 10,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2967099",
+   "card": "Yee",
+   "webrate": "10.13",
+   "level": 10,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2535441",
+   "card": "永嵐佼 宮玖杯",
+   "webrate": "10.67",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2494622",
+   "card": "包包蛋雕",
+   "webrate": "10.68",
+   "level": 10,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2215230",
+   "card": "玖杯-老潘",
+   "webrate": "10.75",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2071677",
+   "card": "民意",
+   "webrate": "10.64",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2889596",
+   "card": "火爆牡羊男",
+   "webrate": "10.41",
+   "level": 10,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2525881",
+   "card": "Arrow Onㄣ Da",
+   "webrate": "10.80",
+   "level": 10,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1323654",
+   "card": "隧道偉爵爺",
+   "webrate": "10.12",
+   "level": 10,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121788",
+   "card": "PUBLIC",
+   "webrate": "10.33",
+   "level": 10,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2884920",
+   "card": "一生只督奶頭珊",
+   "webrate": "10.22",
+   "level": 10,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2706387",
+   "card": "Max",
+   "webrate": "10.52",
+   "level": 10,
+   "shop": "Arno Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3003392",
+   "card": "VirtualCard",
+   "webrate": "10.20",
+   "level": 10,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1823680",
+   "card": "HAHAHAHAHA",
+   "webrate": "10.62",
+   "level": 10,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1740563",
+   "card": "CINDY",
+   "webrate": "10.97",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2852437",
+   "card": "Sam",
+   "webrate": "10.48",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2624858",
+   "card": "Leo",
+   "webrate": "10.88",
+   "level": 10,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2711600",
+   "card": "玖杯-樹樹叫",
+   "webrate": "10.63",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2064667",
+   "card": "我愛一條柴",
+   "webrate": "10.09",
+   "level": 10,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1751135",
+   "card": "人老實話不多",
+   "webrate": "10.41",
+   "level": 10,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2833930",
+   "card": "打鏢靠賽輕鬆自在",
+   "webrate": "10.94",
+   "level": 10,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2505227",
+   "card": "Tung",
+   "webrate": "10.64",
+   "level": 10,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2092957",
+   "card": "JAMIE",
+   "webrate": "10.26",
+   "level": 10,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2914206",
+   "card": "MaticL",
+   "webrate": "10.39",
+   "level": 10,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1872653",
+   "card": "乂台灣阿龍乂",
+   "webrate": "10.06",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3084774",
+   "card": "0000_1222",
+   "webrate": "10.93",
+   "level": 10,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1808563",
+   "card": "名天 載說",
+   "webrate": "10.50",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2408341",
+   "card": "卡文☆Kaman",
+   "webrate": "10.20",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2896990",
+   "card": "Jimmy_1",
+   "webrate": "10.87",
+   "level": 10,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2718034",
+   "card": "丰",
+   "webrate": "10.75",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2523195",
+   "card": "安安你好",
+   "webrate": "10.56",
+   "level": 10,
+   "shop": "Eagle Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3092568",
+   "card": "0070_6909",
+   "webrate": "10.34",
+   "level": 10,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2226175",
+   "card": "Nicole",
+   "webrate": "10.08",
+   "level": 10,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1240910",
+   "card": "老地方♡體育老師♡",
+   "webrate": "10.26",
+   "level": 10,
+   "shop": "老地方Old Place Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2581997",
+   "card": "8528 MUSIC BAR★小魚",
+   "webrate": "10.72",
+   "level": 10,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2757790",
+   "card": "林口金城武",
+   "webrate": "10.82",
+   "level": 10,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2614032",
+   "card": "口亮土易嘟嘟",
+   "webrate": "10.00",
+   "level": 10,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2878622",
+   "card": "Ray",
+   "webrate": "10.50",
+   "level": 10,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2089680",
+   "card": "豆子粗趣玩",
+   "webrate": "10.47",
+   "level": 10,
+   "shop": "Able Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1927658",
+   "card": "查理葉",
+   "webrate": "10.81",
+   "level": 10,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2872025",
+   "card": "程",
+   "webrate": "10.87",
+   "level": 10,
+   "shop": "Phoenix Taiwan",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2711864",
+   "card": "Mr.Rich",
+   "webrate": "9.91",
+   "level": 9,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3122148",
+   "card": "訓導主任",
+   "webrate": "9.61",
+   "level": 9,
+   "shop": "老地方Old Place Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3105257",
+   "card": "PatrickF",
+   "webrate": "9.42",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3128338",
+   "card": "Steave",
+   "webrate": "9.82",
+   "level": 9,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2973329",
+   "card": "Shih Xun",
+   "webrate": "9.70",
+   "level": 9,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2624722",
+   "card": "HAO",
+   "webrate": "9.00",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2617976",
+   "card": "Zaira",
+   "webrate": "9.02",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2986457",
+   "card": "白菜對我笑",
+   "webrate": "9.25",
+   "level": 9,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2623882",
+   "card": "James",
+   "webrate": "9.77",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1707404",
+   "card": "MJWilL➶",
+   "webrate": "9.36",
+   "level": 9,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3027946",
+   "card": "Rayny ；）",
+   "webrate": "9.60",
+   "level": 9,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2756746",
+   "card": "天香易",
+   "webrate": "9.45",
+   "level": 9,
+   "shop": "醉痞 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2890907",
+   "card": "ko no Dio da",
+   "webrate": "9.52",
+   "level": 9,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1621046",
+   "card": "胖子先生",
+   "webrate": "9.25",
+   "level": 9,
+   "shop": "Phoenix Taiwan 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2888719",
+   "card": "凌.0",
+   "webrate": "9.78",
+   "level": 9,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988060",
+   "card": "思漢",
+   "webrate": "9.25",
+   "level": 9,
+   "shop": "Mask 面具音樂餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2525882",
+   "card": "怕今生是朕",
+   "webrate": "9.27",
+   "level": 9,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2849370",
+   "card": "ソウさん",
+   "webrate": "9.94",
+   "level": 9,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1865149",
+   "card": "玖杯_阿哲",
+   "webrate": "9.12",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1956597",
+   "card": "Aaron",
+   "webrate": "9.29",
+   "level": 9,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3106725",
+   "card": "0237_7913",
+   "webrate": "9.93",
+   "level": 9,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2823715",
+   "card": "J",
+   "webrate": "9.42",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2907159",
+   "card": "SHUO",
+   "webrate": "9.02",
+   "level": 9,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2399694",
+   "card": "Candy劉",
+   "webrate": "9.96",
+   "level": 9,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2389343",
+   "card": "MGL-Duncan",
+   "webrate": "9.11",
+   "level": 9,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2589578",
+   "card": "DartsOne_John",
+   "webrate": "9.32",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2155046",
+   "card": "玖杯-打波樂",
+   "webrate": "9.10",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3033141",
+   "card": "TSLA",
+   "webrate": "9.58",
+   "level": 9,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2847505",
+   "card": "品皓",
+   "webrate": "9.85",
+   "level": 9,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1864945",
+   "card": "小胖",
+   "webrate": "9.34",
+   "level": 9,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1465748",
+   "card": "Benny小寶",
+   "webrate": "9.49",
+   "level": 9,
+   "shop": "攝吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3025541",
+   "card": "5858",
+   "webrate": "9.33",
+   "level": 9,
+   "shop": "市民58 小吃店",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2955279",
+   "card": "Kevinjun",
+   "webrate": "9.19",
+   "level": 9,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3107924",
+   "card": "0056_0739",
+   "webrate": "9.76",
+   "level": 9,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2647634",
+   "card": "草莓顆粒",
+   "webrate": "9.47",
+   "level": 9,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2344807",
+   "card": "Wuyenping",
+   "webrate": "9.47",
+   "level": 9,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121196",
+   "card": "胃液認真打鏢的卡",
+   "webrate": "9.58",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2974808",
+   "card": "kirin",
+   "webrate": "9.04",
+   "level": 9,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3022190",
+   "card": "若至兒童",
+   "webrate": "9.48",
+   "level": 9,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2113133",
+   "card": "Chingwen",
+   "webrate": "9.12",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2093001",
+   "card": "八八八",
+   "webrate": "9.48",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2498622",
+   "card": "老花眼鏡蛇-娃娃本蛇",
+   "webrate": "9.70",
+   "level": 9,
+   "shop": "ViVi Bar 2",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2112077",
+   "card": "LAZY_Koga",
+   "webrate": "9.94",
+   "level": 9,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1527161",
+   "card": "abby",
+   "webrate": "9.47",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2676000",
+   "card": "Lin",
+   "webrate": "9.60",
+   "level": 9,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2075698",
+   "card": "阿威威",
+   "webrate": "9.59",
+   "level": 9,
+   "shop": "Escape Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1864917",
+   "card": "玖杯-小樹",
+   "webrate": "9.99",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2436852",
+   "card": "豪",
+   "webrate": "9.30",
+   "level": 9,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2953324",
+   "card": "Tiger",
+   "webrate": "9.41",
+   "level": 9,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2298173",
+   "card": "Nicole",
+   "webrate": "9.91",
+   "level": 9,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2825841",
+   "card": "0054_8715",
+   "webrate": "9.66",
+   "level": 9,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2408757",
+   "card": "小南今天比較早",
+   "webrate": "9.16",
+   "level": 9,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2901980",
+   "card": "我就想在暮打陀螺",
+   "webrate": "9.01",
+   "level": 9,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1920362",
+   "card": "阿民是誰",
+   "webrate": "9.82",
+   "level": 9,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2584865",
+   "card": "說了又不聽",
+   "webrate": "9.61",
+   "level": 9,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3067658",
+   "card": "Jack-水箭龜頭",
+   "webrate": "9.48",
+   "level": 9,
+   "shop": "SPORTS NATION運動餐廳（大巨蛋店）",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2944758",
+   "card": "鞋 ⸝⸝₊˚ෆ",
+   "webrate": "9.78",
+   "level": 9,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2894332",
+   "card": "B05106052",
+   "webrate": "9.31",
+   "level": 9,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121197",
+   "card": "Tony2",
+   "webrate": "9.01",
+   "level": 9,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2112095",
+   "card": "玖杯_丞龍",
+   "webrate": "9.82",
+   "level": 9,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2750379",
+   "card": "雷雷",
+   "webrate": "9.16",
+   "level": 9,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2868936",
+   "card": "Carlo",
+   "webrate": "8.97",
+   "level": 8,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3005518",
+   "card": "小雨",
+   "webrate": "8.99",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2960467",
+   "card": "Mirufi Bar飛飛飛飛減肥",
+   "webrate": "8.84",
+   "level": 8,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2510385",
+   "card": "光頭",
+   "webrate": "8.95",
+   "level": 8,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3094810",
+   "card": "台北第一深情",
+   "webrate": "8.85",
+   "level": 8,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2525884",
+   "card": "Arrow On ㄣ 阿毛",
+   "webrate": "8.33",
+   "level": 8,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2870412",
+   "card": "輸乾爹520塊的小屁孩",
+   "webrate": "8.69",
+   "level": 8,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3096509",
+   "card": "lucki",
+   "webrate": "8.60",
+   "level": 8,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2622479",
+   "card": "玖杯_米粒",
+   "webrate": "8.35",
+   "level": 8,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2819286",
+   "card": "阿倫",
+   "webrate": "8.75",
+   "level": 8,
+   "shop": "七七酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2730861",
+   "card": "Mask羊羊",
+   "webrate": "8.35",
+   "level": 8,
+   "shop": "Mask 面具音樂餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1674731",
+   "card": "吼呦@PHYLLIS",
+   "webrate": "8.50",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2869293",
+   "card": "D.Wolf_祐打不到",
+   "webrate": "8.32",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3085601",
+   "card": "菠蘿啤",
+   "webrate": "8.86",
+   "level": 8,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988173",
+   "card": "匪類-曉爸",
+   "webrate": "8.34",
+   "level": 8,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2705671",
+   "card": "佐吧。阿助",
+   "webrate": "8.68",
+   "level": 8,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2581848",
+   "card": "小齊",
+   "webrate": "8.29",
+   "level": 8,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2687633",
+   "card": "中1",
+   "webrate": "8.20",
+   "level": 8,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988167",
+   "card": "Yi",
+   "webrate": "8.41",
+   "level": 8,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2883166",
+   "card": "小心駛得萬年船",
+   "webrate": "8.79",
+   "level": 8,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2737059",
+   "card": "Mila",
+   "webrate": "8.60",
+   "level": 8,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2852305",
+   "card": "Brian",
+   "webrate": "8.53",
+   "level": 8,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2907801",
+   "card": "VarangIan64",
+   "webrate": "8.46",
+   "level": 8,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2898498",
+   "card": "呆呆笨笨的小二哈",
+   "webrate": "8.97",
+   "level": 8,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2461987",
+   "card": "Ivan🤪",
+   "webrate": "8.75",
+   "level": 8,
+   "shop": "達文西視覺酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2631821",
+   "card": "朱隊長",
+   "webrate": "8.33",
+   "level": 8,
+   "shop": "Join酒隱Lounge Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2501226",
+   "card": "條通百吉",
+   "webrate": "8.94",
+   "level": 8,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2168060",
+   "card": "酌燒-祐高丸藤",
+   "webrate": "8.94",
+   "level": 8,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3081698",
+   "card": "Shark head 777",
+   "webrate": "8.71",
+   "level": 8,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2690795",
+   "card": "你的蛋蛋真香",
+   "webrate": "8.48",
+   "level": 8,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3128374",
+   "card": "yoyo",
+   "webrate": "8.46",
+   "level": 8,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2188553",
+   "card": "小馬",
+   "webrate": "8.06",
+   "level": 8,
+   "shop": "Join酒隱Lounge Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1243524",
+   "card": "Lust4Life",
+   "webrate": "8.57",
+   "level": 8,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2921466",
+   "card": "JL",
+   "webrate": "8.37",
+   "level": 8,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2421403",
+   "card": "沒事 讓小段再飛一會",
+   "webrate": "8.74",
+   "level": 8,
+   "shop": "Joker Bar & Bistro",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3115455",
+   "card": "VirtualCard",
+   "webrate": "8.29",
+   "level": 8,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3009721",
+   "card": "渣☆Ben",
+   "webrate": "8.82",
+   "level": 8,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1745311",
+   "card": "J*Star",
+   "webrate": "8.95",
+   "level": 8,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2113370",
+   "card": "玉樹臨風 人見人愛陳小梨",
+   "webrate": "8.42",
+   "level": 8,
+   "shop": "賞月吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2770040",
+   "card": "酌燒-三寶 一拳超人：）",
+   "webrate": "8.53",
+   "level": 8,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2794323",
+   "card": "JimmyCCC",
+   "webrate": "8.99",
+   "level": 8,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2584712",
+   "card": "ジョイボーイ",
+   "webrate": "8.31",
+   "level": 8,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2640515",
+   "card": "港Boy",
+   "webrate": "8.84",
+   "level": 8,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2983832",
+   "card": "PLOPO",
+   "webrate": "8.12",
+   "level": 8,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2900471",
+   "card": "011 7014",
+   "webrate": "8.05",
+   "level": 8,
+   "shop": "Arno Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3039892",
+   "card": "羅小草",
+   "webrate": "8.60",
+   "level": 8,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3017427",
+   "card": "愛蜜緹",
+   "webrate": "8.20",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2403583",
+   "card": "玖杯_媽咪",
+   "webrate": "8.75",
+   "level": 8,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2959194",
+   "card": "Neil Lee",
+   "webrate": "8.54",
+   "level": 8,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1751050",
+   "card": "sousuke",
+   "webrate": "8.51",
+   "level": 8,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2449955",
+   "card": "齊齊來囉",
+   "webrate": "8.04",
+   "level": 8,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2976440",
+   "card": "Brian.C",
+   "webrate": "8.24",
+   "level": 8,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1788628",
+   "card": "啊ah啊",
+   "webrate": "8.44",
+   "level": 8,
+   "shop": "洋房餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3097375",
+   "card": "0168_0396",
+   "webrate": "8.84",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2635624",
+   "card": "口亮土易-盤子",
+   "webrate": "8.42",
+   "level": 8,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2469454",
+   "card": "Chiu_",
+   "webrate": "8.64",
+   "level": 8,
+   "shop": "Gravity 磁場",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2873448",
+   "card": "Joan",
+   "webrate": "8.08",
+   "level": 8,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2748924",
+   "card": "kuan",
+   "webrate": "8.87",
+   "level": 8,
+   "shop": "醉痞 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2520532",
+   "card": "鴕鳥屁眼",
+   "webrate": "8.68",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3028347",
+   "card": "波齊塔",
+   "webrate": "8.26",
+   "level": 8,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3042517",
+   "card": "DaGui",
+   "webrate": "7.93",
+   "level": 7,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2457631",
+   "card": "『Kani 』k",
+   "webrate": "7.59",
+   "level": 7,
+   "shop": "Kanikani Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988174",
+   "card": "老闆100塊",
+   "webrate": "7.58",
+   "level": 7,
+   "shop": "酒宮閤酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2546539",
+   "card": "Glenden",
+   "webrate": "7.92",
+   "level": 7,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2500715",
+   "card": "JEFF",
+   "webrate": "7.56",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2201530",
+   "card": "e.C",
+   "webrate": "7.58",
+   "level": 7,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2604759",
+   "card": "Kenta",
+   "webrate": "7.40",
+   "level": 7,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2504314",
+   "card": "撿到學生證",
+   "webrate": "7.65",
+   "level": 7,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2286971",
+   "card": "R8匪類-曉爸",
+   "webrate": "7.05",
+   "level": 7,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3021452",
+   "card": "酸菜魚",
+   "webrate": "7.93",
+   "level": 7,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2591040",
+   "card": "Walt",
+   "webrate": "7.25",
+   "level": 7,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3080811",
+   "card": "吉米",
+   "webrate": "7.48",
+   "level": 7,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3041215",
+   "card": "理查",
+   "webrate": "7.15",
+   "level": 7,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3071961",
+   "card": "Robin",
+   "webrate": "7.08",
+   "level": 7,
+   "shop": "轉角 612 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2202368",
+   "card": "温温",
+   "webrate": "7.56",
+   "level": 7,
+   "shop": "85基地 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3076270",
+   "card": "Chen",
+   "webrate": "7.16",
+   "level": 7,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2537024",
+   "card": "內湖小蝦米",
+   "webrate": "7.90",
+   "level": 7,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988170",
+   "card": "菜頭歐巴",
+   "webrate": "7.81",
+   "level": 7,
+   "shop": "Mask 面具音樂餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2974526",
+   "card": "濕蛋粒",
+   "webrate": "7.46",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3122747",
+   "card": "陳入珠",
+   "webrate": "7.17",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2734585",
+   "card": "友友",
+   "webrate": "7.26",
+   "level": 7,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3128368",
+   "card": "我很帥，你要排隊！",
+   "webrate": "7.30",
+   "level": 7,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2909053",
+   "card": "GreyGG",
+   "webrate": "7.84",
+   "level": 7,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2638178",
+   "card": "射會大學教獸",
+   "webrate": "7.89",
+   "level": 7,
+   "shop": "老地方Old Place Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2498569",
+   "card": "☆Peace☆",
+   "webrate": "7.05",
+   "level": 7,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2732765",
+   "card": "酌燒-二寶 啊嘎",
+   "webrate": "7.62",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2201741",
+   "card": "虎虎虎虎",
+   "webrate": "7.50",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1740357",
+   "card": "神毓逍遙（口亮場）",
+   "webrate": "7.80",
+   "level": 7,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2824162",
+   "card": "森尚梅友前",
+   "webrate": "7.64",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2886268",
+   "card": "沉睡中的綿羊",
+   "webrate": "7.55",
+   "level": 7,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2234898",
+   "card": "玖杯 丹尼驊",
+   "webrate": "7.75",
+   "level": 7,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2484936",
+   "card": "蘇蘇susu",
+   "webrate": "7.84",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1237149",
+   "card": "PAXSON",
+   "webrate": "7.66",
+   "level": 7,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1928814",
+   "card": "口亮場哇嗷拎",
+   "webrate": "7.04",
+   "level": 7,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2607755",
+   "card": "34",
+   "webrate": "7.25",
+   "level": 7,
+   "shop": "Join酒隱Lounge Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2555286",
+   "card": "男。人。就。是。犯。賤",
+   "webrate": "7.39",
+   "level": 7,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2677651",
+   "card": "行情",
+   "webrate": "7.64",
+   "level": 7,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3022193",
+   "card": "傑西不嘻嘻",
+   "webrate": "7.06",
+   "level": 7,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2862783",
+   "card": "上山油啞。番號33",
+   "webrate": "7.22",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3043076",
+   "card": "La bar-關關",
+   "webrate": "7.12",
+   "level": 7,
+   "shop": "微醺 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3041792",
+   "card": "江湖笑*",
+   "webrate": "7.97",
+   "level": 7,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2534896",
+   "card": "Arrow Onϟ 小鐘出了沒",
+   "webrate": "7.52",
+   "level": 7,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2061065",
+   "card": "Eagle Pub_楊巨🐑",
+   "webrate": "7.39",
+   "level": 7,
+   "shop": "Eagle Pub",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2530151",
+   "card": "85基地小樂仔",
+   "webrate": "7.72",
+   "level": 7,
+   "shop": "85基地 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2780591",
+   "card": "喵咪貓貓叫",
+   "webrate": "7.94",
+   "level": 7,
+   "shop": "GG Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2162577",
+   "card": "甯",
+   "webrate": "7.57",
+   "level": 7,
+   "shop": "酒宮閤酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3010992",
+   "card": "朝鮮人民第一大將軍",
+   "webrate": "7.02",
+   "level": 7,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2823508",
+   "card": "最美闆娘羊羊",
+   "webrate": "7.52",
+   "level": 7,
+   "shop": "Mask 面具音樂餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3058975",
+   "card": "VirtualCard",
+   "webrate": "7.16",
+   "level": 7,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2000801",
+   "card": "為什麼不走忠孝橋",
+   "webrate": "7.24",
+   "level": 7,
+   "shop": "暮TAIPEI",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2378057",
+   "card": "阿修",
+   "webrate": "7.31",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2171880",
+   "card": "MGL-大腸包小腸",
+   "webrate": "7.19",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2892072",
+   "card": "V~Dream~V",
+   "webrate": "7.87",
+   "level": 7,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1863413",
+   "card": "潮流o舔咪咪",
+   "webrate": "7.67",
+   "level": 7,
+   "shop": "運動家撞球館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2603755",
+   "card": "萬華大腸莖",
+   "webrate": "7.29",
+   "level": 7,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2773254",
+   "card": "j.______.j",
+   "webrate": "7.79",
+   "level": 7,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2413779",
+   "card": "檸檬水滴",
+   "webrate": "7.16",
+   "level": 7,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2269146",
+   "card": "One 9 Bar-西恩",
+   "webrate": "6.83",
+   "level": 6,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2948068",
+   "card": "SiD",
+   "webrate": "6.80",
+   "level": 6,
+   "shop": "Barcade Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2728881",
+   "card": "傳奇本人",
+   "webrate": "6.89",
+   "level": 6,
+   "shop": "BAR ACE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3048349",
+   "card": "Luna0.0",
+   "webrate": "6.81",
+   "level": 6,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2603427",
+   "card": "轉角612高爸爸",
+   "webrate": "6.14",
+   "level": 6,
+   "shop": "轉角 612 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2077118",
+   "card": "しいたけ",
+   "webrate": "6.10",
+   "level": 6,
+   "shop": "Circle Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3099270",
+   "card": "咚咚",
+   "webrate": "6.65",
+   "level": 6,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2930753",
+   "card": "鬱金香沒你浴巾香",
+   "webrate": "6.83",
+   "level": 6,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3058497",
+   "card": "Max0.0",
+   "webrate": "6.86",
+   "level": 6,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988042",
+   "card": "京天打鏢嗎",
+   "webrate": "6.22",
+   "level": 6,
+   "shop": "Mask 面具音樂餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2455323",
+   "card": "Melvin Chan",
+   "webrate": "6.61",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2589500",
+   "card": "like1107",
+   "webrate": "6.29",
+   "level": 6,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1244702",
+   "card": "o0まるこ0o",
+   "webrate": "6.81",
+   "level": 6,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2742322",
+   "card": "碧陽的初生",
+   "webrate": "6.81",
+   "level": 6,
+   "shop": "醉痞 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3109390",
+   "card": "薺元_徐主任",
+   "webrate": "6.34",
+   "level": 6,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3027498",
+   "card": "是湯姆貓啦",
+   "webrate": "6.44",
+   "level": 6,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2755580",
+   "card": "王牌吹瓶員",
+   "webrate": "6.95",
+   "level": 6,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3126055",
+   "card": "Nong",
+   "webrate": "6.16",
+   "level": 6,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2962484",
+   "card": "是傑利鼠呀",
+   "webrate": "6.03",
+   "level": 6,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2998903",
+   "card": "Nana",
+   "webrate": "6.05",
+   "level": 6,
+   "shop": "Arno Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3094856",
+   "card": "Miya",
+   "webrate": "6.37",
+   "level": 6,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3124265",
+   "card": "不喝打不進",
+   "webrate": "6.58",
+   "level": 6,
+   "shop": "隧道音樂主題餐廳",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2437662",
+   "card": "傑利鼠",
+   "webrate": "6.73",
+   "level": 6,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2867484",
+   "card": "炭-小黑",
+   "webrate": "6.52",
+   "level": 6,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2779709",
+   "card": "炭-小光頭",
+   "webrate": "6.63",
+   "level": 6,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3037864",
+   "card": "mimosa",
+   "webrate": "6.76",
+   "level": 6,
+   "shop": "Join酒隱Lounge Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3071356",
+   "card": "King",
+   "webrate": "6.34",
+   "level": 6,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2852905",
+   "card": "Clay",
+   "webrate": "6.39",
+   "level": 6,
+   "shop": "拾貳號Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1705996",
+   "card": "☆Circle Bar☆～¥$Y-Ken$¥~",
+   "webrate": "6.98",
+   "level": 6,
+   "shop": "Circle Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2968793",
+   "card": "Ryan.CCC",
+   "webrate": "6.88",
+   "level": 6,
+   "shop": "ONE 9 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2904016",
+   "card": "三鏢三分贏",
+   "webrate": "6.76",
+   "level": 6,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1491297",
+   "card": "王爺",
+   "webrate": "6.95",
+   "level": 6,
+   "shop": "Gravity 磁場",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3094094",
+   "card": "手感好的時候手感很好",
+   "webrate": "6.97",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988177",
+   "card": "匪類☆村夫☆★明★ ( ´Д`)y一～～",
+   "webrate": "6.92",
+   "level": 6,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2576950",
+   "card": "阿龍",
+   "webrate": "6.97",
+   "level": 6,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3019785",
+   "card": "亂射的阿志",
+   "webrate": "6.92",
+   "level": 6,
+   "shop": "88 Sports Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2913073",
+   "card": "吳林",
+   "webrate": "6.51",
+   "level": 6,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3010028",
+   "card": "一夜七次郎",
+   "webrate": "6.19",
+   "level": 6,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988175",
+   "card": "匪類里民-鄰長來了",
+   "webrate": "6.35",
+   "level": 6,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3062044",
+   "card": "欣蒂貝北",
+   "webrate": "6.34",
+   "level": 6,
+   "shop": "微醺 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2512882",
+   "card": "呻叫組長",
+   "webrate": "6.19",
+   "level": 6,
+   "shop": "老地方Old Place Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2823716",
+   "card": "Rita",
+   "webrate": "6.88",
+   "level": 6,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1897392",
+   "card": "圈圈吧-小小鐘點工",
+   "webrate": "6.62",
+   "level": 6,
+   "shop": "Circle Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2701118",
+   "card": "CC",
+   "webrate": "6.72",
+   "level": 6,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2363461",
+   "card": "林光數學",
+   "webrate": "6.69",
+   "level": 6,
+   "shop": "BAR ACE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3108365",
+   "card": "Tino",
+   "webrate": "6.69",
+   "level": 6,
+   "shop": "微醺 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2005230",
+   "card": "口亮場老馬喝酒卡",
+   "webrate": "6.00",
+   "level": 6,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2072878",
+   "card": "Dally-森上美友前",
+   "webrate": "6.39",
+   "level": 6,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3066197",
+   "card": "通化烤玉米",
+   "webrate": "6.00",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2913142",
+   "card": "Chia",
+   "webrate": "6.45",
+   "level": 6,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2743940",
+   "card": "006 3484",
+   "webrate": "6.69",
+   "level": 6,
+   "shop": "Hawkeye Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2991248",
+   "card": "April",
+   "webrate": "6.62",
+   "level": 6,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3072563",
+   "card": "坐骨海綿體肌",
+   "webrate": "6.28",
+   "level": 6,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2732274",
+   "card": "Trapmandu",
+   "webrate": "6.25",
+   "level": 6,
+   "shop": "Barcade Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3020994",
+   "card": "佐佐木希我老二",
+   "webrate": "6.82",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2958354",
+   "card": "LinLin赫",
+   "webrate": "6.86",
+   "level": 6,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3059123",
+   "card": "魔人普烏",
+   "webrate": "6.14",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988058",
+   "card": "社大重修王小安",
+   "webrate": "6.30",
+   "level": 6,
+   "shop": "老地方Old Place Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2853013",
+   "card": "Lewis",
+   "webrate": "6.91",
+   "level": 6,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2779660",
+   "card": "Poggy",
+   "webrate": "6.22",
+   "level": 6,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2526281",
+   "card": "荒野大鏢客-小蟲",
+   "webrate": "6.46",
+   "level": 6,
+   "shop": "WAY BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3092580",
+   "card": "小太子奶",
+   "webrate": "6.08",
+   "level": 6,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3108380",
+   "card": "VirtualCard",
+   "webrate": "6.06",
+   "level": 6,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2758013",
+   "card": "Mori",
+   "webrate": "6.35",
+   "level": 6,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2770959",
+   "card": "Celia",
+   "webrate": "6.42",
+   "level": 6,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2533491",
+   "card": "谷直書松",
+   "webrate": "6.46",
+   "level": 6,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2979415",
+   "card": "路易斯DOG",
+   "webrate": "6.26",
+   "level": 6,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2763167",
+   "card": "口亮場老馬不會喝",
+   "webrate": "6.43",
+   "level": 6,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3119849",
+   "card": "歐嚕麥抖",
+   "webrate": "5.39",
+   "level": 5,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2722738",
+   "card": "攝吧第一深情 CT",
+   "webrate": "5.91",
+   "level": 5,
+   "shop": "攝吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3101647",
+   "card": "『RU2486』YIAN",
+   "webrate": "5.58",
+   "level": 5,
+   "shop": "Kanikani Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3110181",
+   "card": "[RU2486]WEI",
+   "webrate": "5.19",
+   "level": 5,
+   "shop": "Kanikani Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2879856",
+   "card": "阿美小霸王",
+   "webrate": "5.60",
+   "level": 5,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2644506",
+   "card": "Ye Min",
+   "webrate": "5.46",
+   "level": 5,
+   "shop": "中原客棧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3016165",
+   "card": "Milu",
+   "webrate": "5.71",
+   "level": 5,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3102122",
+   "card": "Peter",
+   "webrate": "5.38",
+   "level": 5,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2516724",
+   "card": "J",
+   "webrate": "5.79",
+   "level": 5,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3089336",
+   "card": "おつきさま໒꒱",
+   "webrate": "5.90",
+   "level": 5,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2904931",
+   "card": "Lucky",
+   "webrate": "5.91",
+   "level": 5,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2096980",
+   "card": "轉角612/seven",
+   "webrate": "5.32",
+   "level": 5,
+   "shop": "轉角 612 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "1237185",
+   "card": "默默 Kevin Hume",
+   "webrate": "5.36",
+   "level": 5,
+   "shop": "方周鏢局",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3085174",
+   "card": "管好你自己",
+   "webrate": "5.95",
+   "level": 5,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3127329",
+   "card": "VirtualCard",
+   "webrate": "5.16",
+   "level": 5,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3057451",
+   "card": "R8匪類-★湯湯跟水水★",
+   "webrate": "5.77",
+   "level": 5,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2948066",
+   "card": "Sagey",
+   "webrate": "5.01",
+   "level": 5,
+   "shop": "Barcade Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2676244",
+   "card": "いっしょ",
+   "webrate": "5.36",
+   "level": 5,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2861513",
+   "card": "jay",
+   "webrate": "5.95",
+   "level": 5,
+   "shop": "Circle Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3054982",
+   "card": "炭-小千",
+   "webrate": "5.64",
+   "level": 5,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3019625",
+   "card": "呂馬克",
+   "webrate": "5.20",
+   "level": 5,
+   "shop": "Patina Lounge",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3090742",
+   "card": "只求30分",
+   "webrate": "5.56",
+   "level": 5,
+   "shop": "酒宮閤酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2327463",
+   "card": "柴",
+   "webrate": "5.90",
+   "level": 5,
+   "shop": "難得糊塗",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2990648",
+   "card": "ゆう",
+   "webrate": "5.54",
+   "level": 5,
+   "shop": "金色蘑菇 餐酒館",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3071265",
+   "card": "Peter",
+   "webrate": "5.91",
+   "level": 5,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2841726",
+   "card": "貝嘎",
+   "webrate": "5.91",
+   "level": 5,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3046992",
+   "card": "TIAN",
+   "webrate": "5.64",
+   "level": 5,
+   "shop": "8528 Music Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2711632",
+   "card": "Egg Lin",
+   "webrate": "5.19",
+   "level": 5,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3086330",
+   "card": "樂邦沾士",
+   "webrate": "5.21",
+   "level": 5,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3066289",
+   "card": "詩肯柚木",
+   "webrate": "5.21",
+   "level": 5,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3114207",
+   "card": "阿郎勒",
+   "webrate": "5.32",
+   "level": 5,
+   "shop": "BAR ACE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2460412",
+   "card": "☜亞利安☞",
+   "webrate": "5.68",
+   "level": 5,
+   "shop": "酌燒 串燒酒食",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3027076",
+   "card": "靖",
+   "webrate": "5.65",
+   "level": 5,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3011640",
+   "card": "熊貓雜耍團",
+   "webrate": "5.60",
+   "level": 5,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2888594",
+   "card": "Kuromi 17",
+   "webrate": "5.34",
+   "level": 5,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3005116",
+   "card": "處處聞啼鳥",
+   "webrate": "5.55",
+   "level": 5,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3091266",
+   "card": "紫是新手",
+   "webrate": "5.14",
+   "level": 5,
+   "shop": "酒宮閤酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3094836",
+   "card": "小柯",
+   "webrate": "5.85",
+   "level": 5,
+   "shop": "米蓮娜茶吧MTB",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3046863",
+   "card": "apple",
+   "webrate": "5.42",
+   "level": 5,
+   "shop": "轉角 612 BAR",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2590419",
+   "card": "山石恭分",
+   "webrate": "5.63",
+   "level": 5,
+   "shop": "角窩T.C.P 美食酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2066487",
+   "card": "陳年酒事๓小夏",
+   "webrate": "4.28",
+   "level": 4,
+   "shop": "85基地 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3119505",
+   "card": "麻辣乾麵",
+   "webrate": "4.38",
+   "level": 4,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3101879",
+   "card": "VirtualCard",
+   "webrate": "4.07",
+   "level": 4,
+   "shop": "SPORTS NATION運動餐廳（大巨蛋店）",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3084692",
+   "card": "小a",
+   "webrate": "4.39",
+   "level": 4,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3125222",
+   "card": "我的肩膀很強大",
+   "webrate": "4.15",
+   "level": 4,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3100198",
+   "card": "AlphaC",
+   "webrate": "4.89",
+   "level": 4,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3030815",
+   "card": "金新雅",
+   "webrate": "4.11",
+   "level": 4,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3033108",
+   "card": "Egg lin",
+   "webrate": "4.77",
+   "level": 4,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2988053",
+   "card": "Jason",
+   "webrate": "4.37",
+   "level": 4,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2740715",
+   "card": "葳葳",
+   "webrate": "4.54",
+   "level": 4,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3086585",
+   "card": "Novia鎂",
+   "webrate": "4.64",
+   "level": 4,
+   "shop": "真性情 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2991417",
+   "card": "Gmi",
+   "webrate": "4.02",
+   "level": 4,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2757564",
+   "card": "木大木大",
+   "webrate": "4.59",
+   "level": 4,
+   "shop": "Mirufi Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3105936",
+   "card": "Buzz_Yang",
+   "webrate": "4.32",
+   "level": 4,
+   "shop": "Dally Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3035318",
+   "card": "R8匪類-泡泡",
+   "webrate": "4.59",
+   "level": 4,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3118324",
+   "card": "ins@princess_macchi_瑪琪M7",
+   "webrate": "3.85",
+   "level": 3,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3119389",
+   "card": "隕石毀滅者",
+   "webrate": "3.57",
+   "level": 3,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3018661",
+   "card": "Dala",
+   "webrate": "3.33",
+   "level": 3,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3018662",
+   "card": "HOHSI",
+   "webrate": "3.92",
+   "level": 3,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3088712",
+   "card": "他是基德",
+   "webrate": "3.69",
+   "level": 3,
+   "shop": "佐吧 Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3122398",
+   "card": "ZuludeChink",
+   "webrate": "3.55",
+   "level": 3,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3082756",
+   "card": "瞇瞇",
+   "webrate": "16.39",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2750828",
+   "card": "0071_0869",
+   "webrate": "11.55",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3125286",
+   "card": "阿拉斯加鮑魚",
+   "webrate": "5.76",
+   "level": null,
+   "shop": "BAR ACE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3128038",
+   "card": "0262_5974",
+   "webrate": "6.14",
+   "level": null,
+   "shop": "Kanikani Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3128944",
+   "card": "綠谷出久",
+   "webrate": "4.91",
+   "level": null,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3031412",
+   "card": "歐REO",
+   "webrate": "4.40",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3122257",
+   "card": "Rookie Kyle",
+   "webrate": "3.68",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3096882",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121612",
+   "card": "PaperCrane",
+   "webrate": "0",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3127653",
+   "card": "VirtualCard",
+   "webrate": "0",
+   "level": null,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3121628",
+   "card": "006 6422",
+   "webrate": "4.97",
+   "level": null,
+   "shop": "Lumina Taipei",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3104042",
+   "card": "PIUY",
+   "webrate": "4.71",
+   "level": null,
+   "shop": "酒宮閤酒吧",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3129847",
+   "card": "Patrick",
+   "webrate": "5.84",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3127572",
+   "card": "FrozenPizza",
+   "webrate": "5.22",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3129846",
+   "card": "VirtualCard",
+   "webrate": "4.25",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3130063",
+   "card": "歐敏",
+   "webrate": "4.32",
+   "level": null,
+   "shop": "玖杯(京華店)",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2778144",
+   "card": "z7af38058b9c37",
+   "webrate": "4.07",
+   "level": null,
+   "shop": "炭炙郎 Tanjirou 串燒 x 啜飲",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3037575",
+   "card": "西屯泣桃囝仔",
+   "webrate": "9.72",
+   "level": null,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3115953",
+   "card": "蜜汁睡豬",
+   "webrate": "7.97",
+   "level": null,
+   "shop": "Sixth Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3109695",
+   "card": "悍馬沒有糖",
+   "webrate": "8.03",
+   "level": null,
+   "shop": "R8 串燒 Metro Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3095870",
+   "card": "AaRon",
+   "webrate": "8.05",
+   "level": null,
+   "shop": "喨場炭燒酒饌",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3119848",
+   "card": "PhysicalCard",
+   "webrate": "5.76",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3126985",
+   "card": "77",
+   "webrate": "4.64",
+   "level": null,
+   "shop": "大魯閣小巨蛋 ( Roller 186 滑輪 )",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "2879142",
+   "card": "0048_5408",
+   "webrate": "11.41",
+   "level": null,
+   "shop": "Arrow On Darts Club",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3107186",
+   "card": "醉小敏",
+   "webrate": "8.46",
+   "level": null,
+   "shop": "B&W Lounge Bar",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3022192",
+   "card": "霹靂米塔",
+   "webrate": "5.50",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3101489",
+   "card": "JunBasso Phoenix Darts",
+   "webrate": "9.77",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3115461",
+   "card": "Pizza",
+   "webrate": "7.28",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3077297",
+   "card": "VirtualCard",
+   "webrate": "7.57",
+   "level": null,
+   "shop": "AI Darts",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3091044",
+   "card": "000 8649",
+   "webrate": "8.69",
+   "level": null,
+   "shop": "DARTS ONE",
+   "areaRank": 2
+  },
+  {
+   "cSeq": "3118874",
+   "card": "R",
+   "webrate": "10.26",
+   "level": null,
+   "shop": "Hawkeye Taipei",
+   "areaRank": 2
+  }
+ ]
+}

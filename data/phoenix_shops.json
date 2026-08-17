@@ -1,0 +1,2200 @@
+{
+  "updatedAt": "2026-08-17T02:11:30.721Z",
+  "shops": {
+    "大魯閣楠梓館（棒壘球）": {
+      "sSeq": "97428",
+      "address": "高雄市楠梓區大學東路169號2樓",
+      "areaRank": 3
+    },
+    "歐印撞球飛鏢館": {
+      "sSeq": "78549",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "神準飛鏢館-Phoenix Dart 37": {
+      "sSeq": "90186",
+      "address": "高雄市三民區九如一路282號",
+      "areaRank": 3
+    },
+    "DC打鏢績地": {
+      "sSeq": "86905",
+      "address": "新北市三重區仁義街167巷6號B1",
+      "areaRank": 1
+    },
+    "So What飛鏢酒吧": {
+      "sSeq": "58491",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "嚐酒 SIP Club": {
+      "sSeq": "46184",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "伍零壹休閒輕食館-PD32 台中西屯32店": {
+      "sSeq": "59072",
+      "address": "台中市青海路一段82之1號2樓",
+      "areaRank": 3
+    },
+    "大魯閣新莊館": {
+      "sSeq": "97420",
+      "address": "新北市新莊區中正路621號",
+      "areaRank": 1
+    },
+    "Perfect Darts-PD8台南旗艦8店": {
+      "sSeq": "41777",
+      "address": "台南市東區富德街49號",
+      "areaRank": 3
+    },
+    "隧道音樂主題餐廳": {
+      "sSeq": "78680",
+      "address": "台北市內湖區金龍路180號",
+      "areaRank": 2
+    },
+    "自遊空間 鹿児島中央店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "藍舍飛鏢運動吧-PD33旗艦新北淡水33店": {
+      "sSeq": "82460",
+      "address": "新北市淡水區學府路198巷5號",
+      "areaRank": 1
+    },
+    "T.B Darts": {
+      "sSeq": "91552",
+      "address": "高雄市苓雅區五福一路187號",
+      "areaRank": 3
+    },
+    "米蓮娜茶吧MTB": {
+      "sSeq": "63928",
+      "address": "台北市和平東路三段66號",
+      "areaRank": 2
+    },
+    "大魯閣新竹巨城複合館": {
+      "sSeq": "97423",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "大魯閣 SKM Park 館 (棒壘球打擊場)": {
+      "sSeq": "97429",
+      "address": "高雄市前鎮區中安路1號1號3樓",
+      "areaRank": 3
+    },
+    "大魯閣嘉義館": {
+      "sSeq": "97426",
+      "address": "嘉義]",
+      "areaRank": 3
+    },
+    "柒息地串燒居酒屋(三重自強店)": {
+      "sSeq": "99601",
+      "address": "新北市三重區自強路一段230號 台北",
+      "areaRank": 1
+    },
+    "逃生入口 Bar": {
+      "sSeq": "86012",
+      "address": "新北市永和區永貞路75號",
+      "areaRank": 0
+    },
+    "渴樂鋪Club": {
+      "sSeq": "79820",
+      "address": "新北市中和區景平路445號",
+      "areaRank": 0
+    },
+    "佐吧 Bar": {
+      "sSeq": "88787",
+      "address": "台北市信義區永吉路120巷81弄4號",
+      "areaRank": 2
+    },
+    "ECT 餐酒館": {
+      "sSeq": "99788",
+      "address": "台中市北屯區敦富五街77號 台中",
+      "areaRank": 3
+    },
+    "BAR 194 癮酒室": {
+      "sSeq": "80431",
+      "address": "高雄市前金區文武三街194號",
+      "areaRank": 3
+    },
+    "Arrow On Darts Club": {
+      "sSeq": "84637",
+      "address": "台北市南港區昆陽街2號2樓",
+      "areaRank": 2
+    },
+    "傾城餐酒館": {
+      "sSeq": "98031",
+      "address": "台中市中區民族路105號 台中",
+      "areaRank": 3
+    },
+    "Alpha Bar": {
+      "sSeq": "49858",
+      "address": "桃園市桃園區大業路一段304號",
+      "areaRank": 3
+    },
+    "Jack Bar": {
+      "sSeq": "62223",
+      "address": "新北市永和區永亨路130號",
+      "areaRank": 0
+    },
+    "大魯閣中正館": {
+      "sSeq": "97438",
+      "address": "桃園市桃園區中正路1650號 桃園",
+      "areaRank": 3
+    },
+    "醉鬼苑": {
+      "sSeq": "98920",
+      "address": "高雄市前金區文武二街226號 高雄",
+      "areaRank": 3
+    },
+    "Mirufi Bar": {
+      "sSeq": "89279",
+      "address": "台北市中山區林森北路133巷37號",
+      "areaRank": 2
+    },
+    "How.Gee.Bar": {
+      "sSeq": "98397",
+      "address": "高雄市新興區新田路195號 高雄",
+      "areaRank": 3
+    },
+    "酒漾BAR": {
+      "sSeq": "58278",
+      "address": "高雄市 三民區 九如二路 21號",
+      "areaRank": 3
+    },
+    "向澤娛樂": {
+      "sSeq": "76586",
+      "address": "南投]",
+      "areaRank": 3
+    },
+    "C.Chill Days飛鏢吧": {
+      "sSeq": "78889",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "Ling's Bar": {
+      "sSeq": "98922",
+      "address": "台南市中西區中正路37號2樓 台南",
+      "areaRank": 3
+    },
+    "85基地 Bar": {
+      "sSeq": "61436",
+      "address": "台北市林森北路85巷19號",
+      "areaRank": 2
+    },
+    "大魯閣仁德館": {
+      "sSeq": "97440",
+      "address": "台南市仁德區中山路701號 台南",
+      "areaRank": 3
+    },
+    "大魯閣棒壘球打擊場（中華館）": {
+      "sSeq": "97427",
+      "address": "台南市中西區中華西路二段855號",
+      "areaRank": 3
+    },
+    "Open 美食飛鏢吧": {
+      "sSeq": "83086",
+      "address": "台中市北區民權路414號",
+      "areaRank": 3
+    },
+    "YX 音樂酒吧": {
+      "sSeq": "99397",
+      "address": "高雄市前金區自強二路54號 高雄",
+      "areaRank": 3
+    },
+    "Able Pub": {
+      "sSeq": "62750",
+      "address": "台北市士林區重慶北路四段262號",
+      "areaRank": 2
+    },
+    "AI Darts": {
+      "sSeq": "79530",
+      "address": "台北市大安區仁愛路四段345巷15弄1號",
+      "areaRank": 2
+    },
+    "Flying Bull Cafe Bar-Phoenix Dart 7新竹旗艦7店": {
+      "sSeq": "55229",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "波本飲料店": {
+      "sSeq": "53365",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "老三酒窖(中央店)": {
+      "sSeq": "72040",
+      "address": "新北市土城區中央路二段34號",
+      "areaRank": 1
+    },
+    "東南撞球館 - PD11苗栗旗艦店": {
+      "sSeq": "91047",
+      "address": "苗栗]",
+      "areaRank": 3
+    },
+    "Super Darts 2-Phoenix Dart 新北永和旗艦48店": {
+      "sSeq": "81629",
+      "address": "新北市永和區秀朗路二段202號",
+      "areaRank": 0
+    },
+    "原宿飛鏢撞球館": {
+      "sSeq": "54239",
+      "address": "台南市北區西門路四段236號2樓",
+      "areaRank": 3
+    },
+    "喉嚨借過餐酒館": {
+      "sSeq": "92486",
+      "address": "新北市中和區安樂路27號 台北",
+      "areaRank": 0
+    },
+    "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店": {
+      "sSeq": "79116",
+      "address": "台中市西屯區福林路45號2樓",
+      "areaRank": 3
+    },
+    "大魯閣土城館（保齢球）": {
+      "sSeq": "97421",
+      "address": "新北市土城區青雲路152號4樓",
+      "areaRank": 1
+    },
+    "ALMA Space": {
+      "sSeq": "72282",
+      "address": "台中市北區中清路一段226號",
+      "areaRank": 3
+    },
+    "VIVI 酒吧": {
+      "sSeq": "92193",
+      "address": "新北市永和區永貞路177號 台北",
+      "areaRank": 0
+    },
+    "無雙鏢局": {
+      "sSeq": "70125",
+      "address": "台中市西屯區福上巷214弄98號之3 台中",
+      "areaRank": 3
+    },
+    "高斯文教企業": {
+      "sSeq": "86077",
+      "address": "新北市新莊區中和街99號",
+      "areaRank": 1
+    },
+    "摩迅(新北新莊店)": {
+      "sSeq": "62571",
+      "address": "新北市新莊區中港路360之3號1樓",
+      "areaRank": 1
+    },
+    "玖杯(京華店)": {
+      "sSeq": "69374",
+      "address": "台北市松山區東寧路11號",
+      "areaRank": 2
+    },
+    "Willy's葳苙二壘": {
+      "sSeq": "55951",
+      "address": "台南市南區健康路二段321號",
+      "areaRank": 3
+    },
+    "C'est La Vie-PD南桃園49店": {
+      "sSeq": "83689",
+      "address": "桃園市中壢區大同路28號2樓",
+      "areaRank": 3
+    },
+    "Moonnight月夜串燒吧": {
+      "sSeq": "91076",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "居酒屋 GARAGE": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "樂源居酒屋": {
+      "sSeq": "93583",
+      "address": "新北市中和區連城路284號 台北",
+      "areaRank": 0
+    },
+    "NO.5 Bar": {
+      "sSeq": "94767",
+      "address": "新北市永和區中正路555號 台北",
+      "areaRank": 0
+    },
+    "大聯盟撞球運動館": {
+      "sSeq": "53532",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "夢想飛行鏢地": {
+      "sSeq": "87941",
+      "address": "高雄市鳳山區建國路2段211號2樓",
+      "areaRank": 3
+    },
+    "真性情 Bar": {
+      "sSeq": "91419",
+      "address": "台北市中山區林森北路119巷88號",
+      "areaRank": 2
+    },
+    "愛玩客": {
+      "sSeq": "58642",
+      "address": "花蓮]",
+      "areaRank": 3
+    },
+    "Sixth Bar": {
+      "sSeq": "91024",
+      "address": "台北市中山區林森北路107巷37號 台北",
+      "areaRank": 2
+    },
+    "Tonight29 Pub": {
+      "sSeq": "16619",
+      "address": "新北市永和區永利路29號",
+      "areaRank": 0
+    },
+    "濠野海鮮烤物": {
+      "sSeq": "83661",
+      "address": "新北市三重區三和路二段154巷3號",
+      "areaRank": 1
+    },
+    "鏢克運動飛鏢BAR": {
+      "sSeq": "85096",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "Drink&Darts Link": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "藍天撞球場": {
+      "sSeq": "65053",
+      "address": "桃園市龜山區明德路258號B1",
+      "areaRank": 3
+    },
+    "ONE 9 BAR": {
+      "sSeq": "62736",
+      "address": "台北市林森北路119巷45號2樓",
+      "areaRank": 2
+    },
+    "喨場炭燒酒饌": {
+      "sSeq": "50806",
+      "address": "台北市民權東路一段70巷12號",
+      "areaRank": 2
+    },
+    "B.O.Bar 波吧": {
+      "sSeq": "70904",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "ViVi Bar 2": {
+      "sSeq": "93998",
+      "address": "台北市中山區復興北路508號 台北",
+      "areaRank": 2
+    },
+    "Chill House": {
+      "sSeq": "80516",
+      "address": "台中市西區臺灣大道二段452號",
+      "areaRank": 3
+    },
+    "新都市育樂廣場": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Kanikani Bar": {
+      "sSeq": "96109",
+      "address": "台北市萬華區漢中街59號2樓 台北",
+      "areaRank": 2
+    },
+    "Happy Time Bar": {
+      "sSeq": "80515",
+      "address": "台中市中區成功路1051號",
+      "areaRank": 3
+    },
+    "鼎山撞球運動休閒館": {
+      "sSeq": "52610",
+      "address": "高雄市三民區鼎山街295號2f",
+      "areaRank": 3
+    },
+    "角窩T.C.P 美食酒吧": {
+      "sSeq": "51773",
+      "address": "台北市基隆路二段10號",
+      "areaRank": 2
+    },
+    "510 Darts Bar": {
+      "sSeq": "58635",
+      "address": "新北市三重區自強路二段88號2樓",
+      "areaRank": 1
+    },
+    "DARTS ONE": {
+      "sSeq": "87542",
+      "address": "台北市大安區大安路一段84巷19號1樓",
+      "areaRank": 2
+    },
+    "M/F": {
+      "sSeq": "44627",
+      "address": "台南市中西區永華路一段36-1號2樓",
+      "areaRank": 3
+    },
+    "King & Queen Bar": {
+      "sSeq": "85101",
+      "address": "台南市中西區和平街32-7號",
+      "areaRank": 3
+    },
+    "SHAMROCK BAR": {
+      "sSeq": "68127",
+      "address": "高雄市前金區成功一路250號",
+      "areaRank": 3
+    },
+    "Tequila Pub": {
+      "sSeq": "55231",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "Taroko Sports (Mesa, AZ)": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "中原客棧": {
+      "sSeq": "88408",
+      "address": "台北市松山區八德路四段182號",
+      "areaRank": 2
+    },
+    "蜂鳥巢": {
+      "sSeq": "83420",
+      "address": "台南市中西區友愛街128號",
+      "areaRank": 3
+    },
+    "E7 ONE 飲音空間": {
+      "sSeq": "94959",
+      "address": "台中市北區原子街127巷21之1號B1 台中",
+      "areaRank": 3
+    },
+    "選手撞球概念館": {
+      "sSeq": "46360",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "昕 PUB": {
+      "sSeq": "71387",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "Free 9 Club": {
+      "sSeq": "90080",
+      "address": "台南市中西區民生路二段179號",
+      "areaRank": 3
+    },
+    "D-BULL鏢局-Phoenix Dart 19 屏東恆春19店": {
+      "sSeq": "42931",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "Drunken Moon": {
+      "sSeq": "83069",
+      "address": "新北市板橋區西門街34號",
+      "areaRank": 1
+    },
+    "酒客串燒": {
+      "sSeq": "78846",
+      "address": "新北市林口區民有街60號",
+      "areaRank": 1
+    },
+    "Baby 36": {
+      "sSeq": "85766",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "Real Soul餐酒館": {
+      "sSeq": "86502",
+      "address": "台中市后里區三豐路四段158號",
+      "areaRank": 3
+    },
+    "Room8音樂坊": {
+      "sSeq": "89029",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "社畜俱樂部": {
+      "sSeq": "94205",
+      "address": "台中市中區民族路98號2樓",
+      "areaRank": 3
+    },
+    "登大郎餐酒館": {
+      "sSeq": "51182",
+      "address": "台中市北區台灣大道二段346號",
+      "areaRank": 3
+    },
+    "大魯閣中壢館": {
+      "sSeq": "97422",
+      "address": "桃園市中壢區環中東路561號",
+      "areaRank": 3
+    },
+    "大魯閣新時代館（棒壘球）": {
+      "sSeq": "97425",
+      "address": "台中市東區復興路四段186號7樓",
+      "areaRank": 3
+    },
+    "老地方Old Place Bar": {
+      "sSeq": "97227",
+      "address": "台北市中山區林森北路119巷79號 台北",
+      "areaRank": 2
+    },
+    "Liquor Lounge": {
+      "sSeq": "72283",
+      "address": "新北市新莊區中港路266號2樓",
+      "areaRank": 1
+    },
+    "裏通路餐酒館": {
+      "sSeq": "91023",
+      "address": "新北市板橋區大觀路二段95號 台北",
+      "areaRank": 1
+    },
+    "ビリヤード BLOW": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "金色蘑菇 餐酒館": {
+      "sSeq": "84635",
+      "address": "台北市中山區林森北路85巷57號",
+      "areaRank": 2
+    },
+    "醉夢 Bar": {
+      "sSeq": "86340",
+      "address": "桃園市中壢區中東路708巷46號",
+      "areaRank": 3
+    },
+    "開侖撞球競技館": {
+      "sSeq": "79816",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "炭炙郎 Tanjirou 串燒 x 啜飲": {
+      "sSeq": "92094",
+      "address": "台北市中山區龍江路350號 台北",
+      "areaRank": 2
+    },
+    "酒宮閤酒吧": {
+      "sSeq": "96558",
+      "address": "台北市中山區林森北路85巷40號 台北",
+      "areaRank": 2
+    },
+    "331 Bar": {
+      "sSeq": "84140",
+      "address": "台中市西區公益路331號",
+      "areaRank": 3
+    },
+    "大魯閣新時代館（保齢球）": {
+      "sSeq": "97424",
+      "address": "台中市東區復興路四段186號10樓",
+      "areaRank": 3
+    },
+    "洛克音樂 Rock Music": {
+      "sSeq": "69934",
+      "address": "高雄市前金區六合二路145號B1",
+      "areaRank": 3
+    },
+    "庫克燒烤": {
+      "sSeq": "56988",
+      "address": "台中市北區漢口路三段46號",
+      "areaRank": 3
+    },
+    "OS 小酒館": {
+      "sSeq": "94206",
+      "address": "高雄市新興區尚義街111號 高雄",
+      "areaRank": 3
+    },
+    "光頭餐酒館": {
+      "sSeq": "81942",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "去哪裡?小酒館 GO WHERE ? D.C.TAIWAN": {
+      "sSeq": "82612",
+      "address": "高雄市左營區富民路352號3樓",
+      "areaRank": 3
+    },
+    "找蓋茶茶飲店": {
+      "sSeq": "55232",
+      "address": "苗栗]",
+      "areaRank": 3
+    },
+    "風味炭燒": {
+      "sSeq": "98964",
+      "address": "台中市西屯區環中路2段1202-2號 台中",
+      "areaRank": 3
+    },
+    "HOUSE II 美式餐館": {
+      "sSeq": "39441",
+      "address": "台中市西區中美街461號2樓",
+      "areaRank": 3
+    },
+    "Neko Amazing Bar": {
+      "sSeq": "91078",
+      "address": "高雄市新興區五福二路129-4號 高雄",
+      "areaRank": 3
+    },
+    "強運撞球場": {
+      "sSeq": "85937",
+      "address": "新北市淡水區北新路182巷5弄22號",
+      "areaRank": 1
+    },
+    "串迷 · 製串所": {
+      "sSeq": "94962",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "ACE BAR": {
+      "sSeq": "90940",
+      "address": "高雄市苓雅區中山二路495號 高雄",
+      "areaRank": 3
+    },
+    "D.R.O.P PUB": {
+      "sSeq": "94201",
+      "address": "桃園市中壢區中央西路一段76巷5號2樓",
+      "areaRank": 3
+    },
+    "酌燒 串燒酒食": {
+      "sSeq": "57159",
+      "address": "台北市中山區中山北路二段65巷38-1號",
+      "areaRank": 2
+    },
+    "八號球": {
+      "sSeq": "72271",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "King Darts Cafe": {
+      "sSeq": "74090",
+      "address": "台中市豐原區新生北路115號2樓",
+      "areaRank": 3
+    },
+    "51 AREA 撞球休閒館": {
+      "sSeq": "57157",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "極度 Talking Bar": {
+      "sSeq": "59821",
+      "address": "高雄市楠梓區楠梓新路97巷8-1號2樓",
+      "areaRank": 3
+    },
+    "黑殿會館": {
+      "sSeq": "88104",
+      "address": "高雄市前金區文武二街88號",
+      "areaRank": 3
+    },
+    "MOOSE 糜鹿餐酒館": {
+      "sSeq": "82605",
+      "address": "桃園市桃園區中正路1373號",
+      "areaRank": 3
+    },
+    "6956半線鏢局": {
+      "sSeq": "84443",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "懦夫救星 Bar": {
+      "sSeq": "90420",
+      "address": "新北市中和區景平路748號 台北",
+      "areaRank": 0
+    },
+    "Bar Pacific 8": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "西門碳烤": {
+      "sSeq": "80698",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "BAR ACE": {
+      "sSeq": "86500",
+      "address": "台北市中山區林森北路107巷25號",
+      "areaRank": 2
+    },
+    "大魯閣花蓮館（複合館）": {
+      "sSeq": "97430",
+      "address": "花蓮]",
+      "areaRank": 3
+    },
+    "Nature Talking Bar": {
+      "sSeq": "90384",
+      "address": "高雄市苓雅區青年一路191號B1 高雄",
+      "areaRank": 3
+    },
+    "Barcade Taipei": {
+      "sSeq": "83279",
+      "address": "台北市大安區和平東路一段177號B1",
+      "areaRank": 2
+    },
+    "Think Of Bar 太空酒吧": {
+      "sSeq": "98769",
+      "address": "桃園市桃園區經國路707號 桃園",
+      "areaRank": 3
+    },
+    "Lumina Taipei": {
+      "sSeq": "99787",
+      "address": "臺北市長安東路一段83號1樓 台北",
+      "areaRank": 2
+    },
+    "200 巷酒館": {
+      "sSeq": "99117",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "大醬無煙燒烤": {
+      "sSeq": "58142",
+      "address": "台中市 西區 忠誠街123號",
+      "areaRank": 3
+    },
+    "酒癮時尚音樂酒館": {
+      "sSeq": "91077",
+      "address": "高雄市苓雅區和平一路292號 高雄",
+      "areaRank": 3
+    },
+    "大魯閣小巨蛋 ( Roller 186 滑輪 )": {
+      "sSeq": "97439",
+      "address": "台北市松山區南京東路四段2號1樓 台北",
+      "areaRank": 2
+    },
+    "鈴洛奇冷飲室": {
+      "sSeq": "89271",
+      "address": "新北市中和區景平路243-3號",
+      "areaRank": 0
+    },
+    "MAX撞球休閒會館": {
+      "sSeq": "63914",
+      "address": "桃園市觀音區大觀路二段153號2樓",
+      "areaRank": 3
+    },
+    "Uncle MC 麥大叔餐酒館": {
+      "sSeq": "81223",
+      "address": "苗栗]",
+      "areaRank": 3
+    },
+    "金色三麥(新竹巨城店)": {
+      "sSeq": "83660",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "SPORTS NATION運動餐廳（大巨蛋店）": {
+      "sSeq": "97518",
+      "address": "台北市信義區忠孝東路四段515號 台北",
+      "areaRank": 2
+    },
+    "攝吧": {
+      "sSeq": "80153",
+      "address": "台北市大同區民族西路249號2樓",
+      "areaRank": 2
+    },
+    "轉角 612 BAR": {
+      "sSeq": "97228",
+      "address": "台北市中山區林森北路612號 台北",
+      "areaRank": 2
+    },
+    "Alone 音樂 Bar": {
+      "sSeq": "99786",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "小惡魔 Bar": {
+      "sSeq": "80046",
+      "address": "新北市永和區中山路一段337號",
+      "areaRank": 0
+    },
+    "Circle Bar": {
+      "sSeq": "57427",
+      "address": "台北市羅斯福路五段31號",
+      "areaRank": 2
+    },
+    "能量美式音樂酒館": {
+      "sSeq": "79725",
+      "address": "高雄市苓雅區正義路90號1樓",
+      "areaRank": 3
+    },
+    "Slamfire 餐酒館": {
+      "sSeq": "99598",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "Dally Bar": {
+      "sSeq": "16602",
+      "address": "台北市民生東路二段8號2樓",
+      "areaRank": 2
+    },
+    "浮生串起小餐館": {
+      "sSeq": "99334",
+      "address": "高雄市左營區立莊路67號 高雄",
+      "areaRank": 3
+    },
+    "TT36": {
+      "sSeq": "96703",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "Bravo Pub": {
+      "sSeq": "16704",
+      "address": "新北市板橋區貴興路114號 (Restaurant Bar)",
+      "areaRank": 1
+    },
+    "VOLTA BISTRO": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Allin@Inbull": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Nika Bar": {
+      "sSeq": "40424",
+      "address": "桃園市龜山區文化二路34巷14弄23號",
+      "areaRank": 3
+    },
+    "Lala Bar": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Over Dose酒吧": {
+      "sSeq": "87541",
+      "address": "高雄市前金區自強二路285巷33號2樓",
+      "areaRank": 3
+    },
+    "MK 燒烤": {
+      "sSeq": "94039",
+      "address": "新北市三重區自強路一段215號 台北",
+      "areaRank": 1
+    },
+    "SAKURAn": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Old Wei's Music Bar": {
+      "sSeq": "55215",
+      "address": "高雄市 新興區 文化路 32號",
+      "areaRank": 3
+    },
+    "縱火人 燒食買醉場": {
+      "sSeq": "77999",
+      "address": "新北市淡水區新生街122之3號",
+      "areaRank": 1
+    },
+    "Freeing Bar": {
+      "sSeq": "96409",
+      "address": "高雄市前金區市中一路7號1樓 高雄",
+      "areaRank": 3
+    },
+    "ONE BAR": {
+      "sSeq": "54890",
+      "address": "桃園市中壢區普仁里三和三街13號",
+      "areaRank": 3
+    },
+    "珍麗廚房": {
+      "sSeq": "56836",
+      "address": "台中市北區忠太西路81號",
+      "areaRank": 3
+    },
+    "J Bar": {
+      "sSeq": "16629",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "Eagle's Dart鄰邊坐坐": {
+      "sSeq": "69947",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "Real Bar": {
+      "sSeq": "86080",
+      "address": "桃園市桃園區民族路147號",
+      "areaRank": 3
+    },
+    "the RED": {
+      "sSeq": "84793",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "GG Bar": {
+      "sSeq": "95868",
+      "address": "台北市大安區瑞安街111號B1 台北",
+      "areaRank": 2
+    },
+    "藍白拖 Bar": {
+      "sSeq": "84639",
+      "address": "新北市永和區永貞路56號",
+      "areaRank": 0
+    },
+    "禾捌串燒": {
+      "sSeq": "90293",
+      "address": "台中市太平區中山路四段115號 台中",
+      "areaRank": 3
+    },
+    "檸檬炭烤": {
+      "sSeq": "70126",
+      "address": "台東]",
+      "areaRank": 3
+    },
+    "MIMI House Pub": {
+      "sSeq": "82602",
+      "address": "桃園市桃園區民有三街616號",
+      "areaRank": 3
+    },
+    "七七酒吧": {
+      "sSeq": "86823",
+      "address": "台北市中山區林森北路107巷77號",
+      "areaRank": 2
+    },
+    "Here Disco Pub": {
+      "sSeq": "16511",
+      "address": "高雄市左營區曾子路145號",
+      "areaRank": 3
+    },
+    "霧都酒館": {
+      "sSeq": "83809",
+      "address": "新北市土城區中央路一段76號",
+      "areaRank": 1
+    },
+    "Only one 英式小館": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "紅番區 Pub": {
+      "sSeq": "65591",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "雲頂 Cloud Night": {
+      "sSeq": "95424",
+      "address": "桃園市桃園區中華路28號2樓 桃園",
+      "areaRank": 3
+    },
+    "方周鏢局": {
+      "sSeq": "79147",
+      "address": "台北市中山區林森北路159巷10號3樓",
+      "areaRank": 2
+    },
+    "歐熊釣蝦場": {
+      "sSeq": "81433",
+      "address": "桃園市中壢區永福路789號",
+      "areaRank": 3
+    },
+    "Mask 面具音樂餐廳": {
+      "sSeq": "89886",
+      "address": "台北市大安區樂利路37-1號",
+      "areaRank": 2
+    },
+    "桃花源": {
+      "sSeq": "90424",
+      "address": "高雄市前金區自強三路258巷21號 高雄",
+      "areaRank": 3
+    },
+    "DT Bar": {
+      "sSeq": "98606",
+      "address": "新北市板橋區四川路一段33號 台北",
+      "areaRank": 1
+    },
+    "God時尚音樂酒館": {
+      "sSeq": "16497",
+      "address": "高雄市新興區林森二路42號",
+      "areaRank": 3
+    },
+    "聚吧": {
+      "sSeq": "74086",
+      "address": "台中市西屯區福上巷271號",
+      "areaRank": 3
+    },
+    "Dreams餐酒館": {
+      "sSeq": "99783",
+      "address": "高雄市新興區六合一路80號B1 高雄",
+      "areaRank": 3
+    },
+    "D.S 魯味 乾鍋": {
+      "sSeq": "70129",
+      "address": "台中市北區民權路470號",
+      "areaRank": 3
+    },
+    "橘子酒吧": {
+      "sSeq": "83891",
+      "address": "基隆市仁愛區仁三路11-2號2樓",
+      "areaRank": 3
+    },
+    "雙囍餐酒館": {
+      "sSeq": "69053",
+      "address": "台中市北區博館路88號",
+      "areaRank": 3
+    },
+    "Queen Pub": {
+      "sSeq": "16515",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "鹿餐酒館": {
+      "sSeq": "90082",
+      "address": "新北市永和區永貞路71號",
+      "areaRank": 0
+    },
+    "Bar Pacific 31": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "夜閣餐酒館": {
+      "sSeq": "97446",
+      "address": "台中市西區向上路一段56號 台中",
+      "areaRank": 3
+    },
+    "自遊空間 宇都宮簗瀬店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "886 柏德虎餐酒館": {
+      "sSeq": "98965",
+      "address": "台中市北屯區崇德十九路886號 台中",
+      "areaRank": 3
+    },
+    "Darts Shop TiTO熊本": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Muse bar": {
+      "sSeq": "80041",
+      "address": "新北市板橋區長江路2段126號",
+      "areaRank": 1
+    },
+    "半葉酒吧": {
+      "sSeq": "97336",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "喝吧鏢Bar": {
+      "sSeq": "85760",
+      "address": "台南市中西區中山路11號",
+      "areaRank": 3
+    },
+    "King‘s Bar": {
+      "sSeq": "94605",
+      "address": "高雄市新興區文化路36號 高雄",
+      "areaRank": 3
+    },
+    "和楓烤肉": {
+      "sSeq": "65773",
+      "address": "台中市北屯區軍和街177號",
+      "areaRank": 3
+    },
+    "BLUES餐酒館": {
+      "sSeq": "84441",
+      "address": "台中市大雅區中清路4段530號",
+      "areaRank": 3
+    },
+    "共酗會": {
+      "sSeq": "98877",
+      "address": "台南市民權路一段279號 台南",
+      "areaRank": 3
+    },
+    "登大郎日間部": {
+      "sSeq": "68854",
+      "address": "台中市西區英才路401號",
+      "areaRank": 3
+    },
+    "醉痞 Bar": {
+      "sSeq": "84638",
+      "address": "台北市士林區基河路126號",
+      "areaRank": 2
+    },
+    "R8 串燒 Metro Bar": {
+      "sSeq": "98033",
+      "address": "台北市中正區金華街12號 台北",
+      "areaRank": 2
+    },
+    "轉角飛鏢吧": {
+      "sSeq": "84444",
+      "address": "台中市太平區旱溪東路一段602號",
+      "areaRank": 3
+    },
+    "17撞球概念館": {
+      "sSeq": "73310",
+      "address": "桃園市中壢區新中北路662之1號",
+      "areaRank": 3
+    },
+    "迷路串燒店": {
+      "sSeq": "89200",
+      "address": "台中市大雅區雅潭路四段545號",
+      "areaRank": 3
+    },
+    "Santa 餐酒館": {
+      "sSeq": "86820",
+      "address": "台中市霧峰區樹仁五街19號",
+      "areaRank": 3
+    },
+    "禾亞開發有限公司": {
+      "sSeq": "82073",
+      "address": "新北市新店區中興路二段218巷2號5樓",
+      "areaRank": 1
+    },
+    "Keep棒壘球打擊場": {
+      "sSeq": "16570",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "印相餐酒館": {
+      "sSeq": "80351",
+      "address": "新北市板橋區板新路127號",
+      "areaRank": 1
+    },
+    "The Spot": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Dope Bar": {
+      "sSeq": "74448",
+      "address": "基隆市中正區義一路20巷1號",
+      "areaRank": 3
+    },
+    "窩吧": {
+      "sSeq": "84438",
+      "address": "新北市鶯歌區中正一路280號",
+      "areaRank": 1
+    },
+    "Delight餐酒館": {
+      "sSeq": "55237",
+      "address": "台南市中西區海安路二段31號",
+      "areaRank": 3
+    },
+    "解憂吧": {
+      "sSeq": "81014",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "隔壁酒館": {
+      "sSeq": "74999",
+      "address": "高雄市前金區七賢二路120號",
+      "areaRank": 3
+    },
+    "Phoenix Taiwan 2": {
+      "sSeq": "46856",
+      "address": "台北市南港區松河街384號5樓",
+      "areaRank": 2
+    },
+    "壹柒酒捌": {
+      "sSeq": "91421",
+      "address": "台中市西區中華路一段3號 台中",
+      "areaRank": 3
+    },
+    "堂口鹽酥雞": {
+      "sSeq": "94953",
+      "address": "新北市中和區莒光路169號1樓 台北",
+      "areaRank": 0
+    },
+    "博愛醫院鄧佩瓊紀念中學": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "ラウンドワン三宮駅前店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "共話餐酒館": {
+      "sSeq": "98034",
+      "address": "台中市西區向上路一段264號 台中",
+      "areaRank": 3
+    },
+    "難得糊塗": {
+      "sSeq": "69854",
+      "address": "台北市大安區仁愛路四段379號",
+      "areaRank": 2
+    },
+    "Mystery": {
+      "sSeq": "88512",
+      "address": "高雄市前金區中山二路537號",
+      "areaRank": 3
+    },
+    "MS. Cafe Bar 米思": {
+      "sSeq": "94960",
+      "address": "台中市西區金山路31-2號 台中",
+      "areaRank": 3
+    },
+    "大魯閣汐止館": {
+      "sSeq": "97437",
+      "address": "新北市汐止區大同路一段154-1號 台北",
+      "areaRank": 1
+    },
+    "ダーツスタジアム 池袋店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "擺渡人 Ferryman Bar": {
+      "sSeq": "86819",
+      "address": "桃園市桃園區大同路70號",
+      "areaRank": 3
+    },
+    "碳碳串燒": {
+      "sSeq": "98393",
+      "address": "新北市蘆洲區中山一路35號 台北",
+      "areaRank": 1
+    },
+    "Hope Lounge Bar": {
+      "sSeq": "58817",
+      "address": "台中市中區中華路一段158之15號",
+      "areaRank": 3
+    },
+    "Pink": {
+      "sSeq": "69369",
+      "address": "高雄市新興區五福一街24號",
+      "areaRank": 3
+    },
+    "8528 Music Bar": {
+      "sSeq": "62047",
+      "address": "台北市林森北路85巷28號",
+      "areaRank": 2
+    },
+    "Old Brick": {
+      "sSeq": "89203",
+      "address": "台北市大安區安和路二段24號",
+      "areaRank": 2
+    },
+    "暮TAIPEI": {
+      "sSeq": "88284",
+      "address": "台北市中山區中山北路一段135巷36號",
+      "areaRank": 2
+    },
+    "Story Bar": {
+      "sSeq": "68563",
+      "address": "台中市沙鹿區北勢東路537巷12號",
+      "areaRank": 3
+    },
+    "Foggy Shisha Bar": {
+      "sSeq": "79450",
+      "address": "高雄市鼓山區文信路229號",
+      "areaRank": 3
+    },
+    "Woosa Music Lounge": {
+      "sSeq": "16516",
+      "address": "台中市中區繼光街40號B1",
+      "areaRank": 3
+    },
+    "老串燒": {
+      "sSeq": "51869",
+      "address": "新北市板橋區板新路200巷6號",
+      "areaRank": 1
+    },
+    "火奴魯魯(新興店)": {
+      "sSeq": "91896",
+      "address": "台中市太平區新興路97號  台中",
+      "areaRank": 3
+    },
+    "鷹熊對決": {
+      "sSeq": "69372",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "揚 居酒屋": {
+      "sSeq": "94210",
+      "address": "台中市北屯區崇德十路二段111號",
+      "areaRank": 3
+    },
+    "Bar Pacific 102": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "9% Nine Percent": {
+      "sSeq": "83653",
+      "address": "台中市中區自由路二段129-11號",
+      "areaRank": 3
+    },
+    "四號碼頭": {
+      "sSeq": "41667",
+      "address": "台南市中西區開山路7號2F",
+      "areaRank": 3
+    },
+    "夜葉食堂(文心店)": {
+      "sSeq": "73320",
+      "address": "台中市西屯區文心路三段62號",
+      "areaRank": 3
+    },
+    "藍色海灣餐酒館": {
+      "sSeq": "98605",
+      "address": "高雄市新興區五福二路45-4號 高雄",
+      "areaRank": 3
+    },
+    "Small.Kitto去哪餐酒館": {
+      "sSeq": "85509",
+      "address": "桃園市中壢區延平路552號B1",
+      "areaRank": 3
+    },
+    "聚 Together Pub": {
+      "sSeq": "80878",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "望高莊園": {
+      "sSeq": "51561",
+      "address": "台中市南屯區中台路398號",
+      "areaRank": 3
+    },
+    "476 BAR": {
+      "sSeq": "79121",
+      "address": "台中市南屯區大進街476號",
+      "areaRank": 3
+    },
+    "Lewis Bar": {
+      "sSeq": "93584",
+      "address": "高雄市新興區中正三路168號 高雄",
+      "areaRank": 3
+    },
+    "薇閣酒館": {
+      "sSeq": "86499",
+      "address": "高雄市新興區七賢一路73-2號",
+      "areaRank": 3
+    },
+    "King Bistro Bar": {
+      "sSeq": "84709",
+      "address": "桃園市桃園區中正路306號2樓",
+      "areaRank": 3
+    },
+    "砵蘭街 Portland Street": {
+      "sSeq": "41985",
+      "address": "高雄市前金區民生二路71號",
+      "areaRank": 3
+    },
+    "C-note": {
+      "sSeq": "96110",
+      "address": "台中市中區民族路100號2樓 台中",
+      "areaRank": 3
+    },
+    "Bar Nine": {
+      "sSeq": "89467",
+      "address": "高雄市新興區青年一路200號",
+      "areaRank": 3
+    },
+    "LEADER遊戲主題餐廳": {
+      "sSeq": "74444",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "Queen Bar": {
+      "sSeq": "95423",
+      "address": "新北市永和區文化路153號 台北",
+      "areaRank": 0
+    },
+    "Monster Bar": {
+      "sSeq": "84156",
+      "address": "新北市中和區成功路44號",
+      "areaRank": 0
+    },
+    "陸樓飲酒店": {
+      "sSeq": "69379",
+      "address": "台中市中區中山路60號6樓",
+      "areaRank": 3
+    },
+    "鬼燒串物專門店": {
+      "sSeq": "74089",
+      "address": "台中市西屯區河南路二段243號",
+      "areaRank": 3
+    },
+    "微醺酒吧": {
+      "sSeq": "99782",
+      "address": "嘉義]",
+      "areaRank": 3
+    },
+    "Crazy Pub": {
+      "sSeq": "92670",
+      "address": "高雄市苓雅區中山二路382號2樓 高雄",
+      "areaRank": 3
+    },
+    "聖地牙哥Pub": {
+      "sSeq": "16448",
+      "address": "苗栗]",
+      "areaRank": 3
+    },
+    "T2 歡唱TALKING BAR": {
+      "sSeq": "55818",
+      "address": "高雄市鼓山區 篤敬路 3號",
+      "areaRank": 3
+    },
+    "Arno Bar": {
+      "sSeq": "84153",
+      "address": "台北市中山區林森北路107巷35號",
+      "areaRank": 2
+    },
+    "MS Lounge Music Bar": {
+      "sSeq": "43094",
+      "address": "台中市中區柳川西路三段16號3樓之一",
+      "areaRank": 3
+    },
+    "Ihca Bistro BAR": {
+      "sSeq": "84440",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "1992 Bar": {
+      "sSeq": "94769",
+      "address": "新北市永和區永貞路66號 台北",
+      "areaRank": 0
+    },
+    "名人撞球館": {
+      "sSeq": "66248",
+      "address": "台中市北區民權路397號",
+      "areaRank": 3
+    },
+    "For Night 49 Live Lounge": {
+      "sSeq": "83816",
+      "address": "台中市中區民族路194-1號",
+      "areaRank": 3
+    },
+    "三年食班": {
+      "sSeq": "98032",
+      "address": "台中市中區興民街8號 台中",
+      "areaRank": 3
+    },
+    "玖貳零 Lounge Bar": {
+      "sSeq": "57669",
+      "address": "桃園市中壢區大同路62號",
+      "areaRank": 3
+    },
+    "Change HomeShop": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "快活CLUB 熊本宇土店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "老司機餐酒館": {
+      "sSeq": "79952",
+      "address": "台中市中區光復路85號2樓",
+      "areaRank": 3
+    },
+    "緹娜複合式酒館": {
+      "sSeq": "54629",
+      "address": "高雄市苓雅區中正二路22號",
+      "areaRank": 3
+    },
+    "不晚 Buwan Bar": {
+      "sSeq": "97553",
+      "address": "台中市西區中華街二段10號2樓 台中",
+      "areaRank": 3
+    },
+    "癮•Shoot飛鏢空間": {
+      "sSeq": "88509",
+      "address": "高雄市小港區樂利路51號2樓",
+      "areaRank": 3
+    },
+    "神串串燒屋": {
+      "sSeq": "68561",
+      "address": "台中市西區精誠路380號",
+      "areaRank": 3
+    },
+    "VIVA AMERICAN": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "191酒吧": {
+      "sSeq": "41284",
+      "address": "台中市大里區德芳南路191號-F",
+      "areaRank": 3
+    },
+    "Monster Music Pub": {
+      "sSeq": "16759",
+      "address": "桃園市桃園區大同路26號B1",
+      "areaRank": 3
+    },
+    "玩吧小鋪 酒吧": {
+      "sSeq": "92969",
+      "address": "桃園市龜山區萬壽路二段1159號, 桃園",
+      "areaRank": 3
+    },
+    "Quality Pub": {
+      "sSeq": "70911",
+      "address": "桃園市中壢區興國路37巷29號",
+      "areaRank": 3
+    },
+    "龍晴釣蝦休閒廣場": {
+      "sSeq": "52300",
+      "address": "桃園市龍潭區中豐路42號",
+      "areaRank": 3
+    },
+    "Gravity 磁場": {
+      "sSeq": "80519",
+      "address": "台北市大安區樂利路39-1號",
+      "areaRank": 2
+    },
+    "動力撞球網路休閒館": {
+      "sSeq": "16772",
+      "address": "台南市永康區大灣路1072號2樓",
+      "areaRank": 3
+    },
+    "酌日會館": {
+      "sSeq": "98921",
+      "address": "高雄市前金區中正四路128號 高雄",
+      "areaRank": 3
+    },
+    "Satan Bar": {
+      "sSeq": "78004",
+      "address": "台中市北區中清路一段26號",
+      "areaRank": 3
+    },
+    "Ohana Vibe Bar": {
+      "sSeq": "97736",
+      "address": "桃園市蘆竹區南崁路一段26號 桃園",
+      "areaRank": 3
+    },
+    "後站咖啡": {
+      "sSeq": "96203",
+      "address": "高雄市三民區博愛一路66號",
+      "areaRank": 3
+    },
+    "C Union": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "DJ/ROCK": {
+      "sSeq": "62350",
+      "address": "台南市中西區民族路二段297號2樓",
+      "areaRank": 3
+    },
+    "CoCoDuck 旺角": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "白馬鏢行": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "FUN SONG": {
+      "sSeq": "81431",
+      "address": "新北市淡水區民權路72-3號",
+      "areaRank": 1
+    },
+    "Ange": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "WETA PARTY CLUB": {
+      "sSeq": "92310",
+      "address": "桃園市桃園區民生路70號   桃園",
+      "areaRank": 3
+    },
+    "Dream Bar": {
+      "sSeq": "86504",
+      "address": "台中市西屯區河南路二段301巷12號",
+      "areaRank": 3
+    },
+    "D+ Music & Darts Pub": {
+      "sSeq": "80141",
+      "address": "台南市中西區民生路二段229號2樓",
+      "areaRank": 3
+    },
+    "旬味酒藏": {
+      "sSeq": "94363",
+      "address": "台中市西區英才路413號",
+      "areaRank": 3
+    },
+    "甘喝壹咻": {
+      "sSeq": "82607",
+      "address": "台南市北區公園南路216號",
+      "areaRank": 3
+    },
+    "鐵道那邊": {
+      "sSeq": "97944",
+      "address": "高雄市三民區鐵道二街508號 高雄",
+      "areaRank": 3
+    },
+    "花雪": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "More飛鏢音樂酒吧": {
+      "sSeq": "83647",
+      "address": "台中市中區公園路32-2號",
+      "areaRank": 3
+    },
+    "對話窗": {
+      "sSeq": "71489",
+      "address": "台中市太平區環中東路三段479號",
+      "areaRank": 3
+    },
+    "花花餐酒館": {
+      "sSeq": "80701",
+      "address": "台中市北屯區松竹路二段431號",
+      "areaRank": 3
+    },
+    "市民58 小吃店": {
+      "sSeq": "95421",
+      "address": "台北市大安區延吉街58之6號 台北",
+      "areaRank": 2
+    },
+    "貓追熊餐廳": {
+      "sSeq": "72144",
+      "address": "台東]",
+      "areaRank": 3
+    },
+    "達文西視覺酒吧": {
+      "sSeq": "86818",
+      "address": "台北市中山區林森北路107巷12號",
+      "areaRank": 2
+    },
+    "悠時候餐酒": {
+      "sSeq": "92099",
+      "address": "台中市西區向上路一段101號 台中",
+      "areaRank": 3
+    },
+    "T.O.P 餐酒館": {
+      "sSeq": "85267",
+      "address": "台中市西區民權路256-1號",
+      "areaRank": 3
+    },
+    "Join酒隱Lounge Bar": {
+      "sSeq": "69595",
+      "address": "台北市中山區林森北路119巷65號",
+      "areaRank": 2
+    },
+    "鐵厝炭火烤魚": {
+      "sSeq": "90292",
+      "address": "台中市西屯區中平路535巷2號 台中",
+      "areaRank": 3
+    },
+    "月光酒吧": {
+      "sSeq": "50804",
+      "address": "台中市中區自由路二段75號",
+      "areaRank": 3
+    },
+    "HC VAPE 新竹店": {
+      "sSeq": "81135",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "La Face Bar": {
+      "sSeq": "64097",
+      "address": "高雄市苓雅區成功一路230號",
+      "areaRank": 3
+    },
+    "酒精樹 Bar": {
+      "sSeq": "60348",
+      "address": "新北市永和區保福路二段3號",
+      "areaRank": 0
+    },
+    "窩窩頭": {
+      "sSeq": "88513",
+      "address": "高雄市三民區九如二路489號",
+      "areaRank": 3
+    },
+    "自遊空間 飯塚店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "洛克飛鏢餐廳": {
+      "sSeq": "74750",
+      "address": "台中市大里區永隆路579號",
+      "areaRank": 3
+    },
+    "Eagle Pub": {
+      "sSeq": "64160",
+      "address": "台北市中山區雙城街32巷18號",
+      "areaRank": 2
+    },
+    "GAGA Bar": {
+      "sSeq": "49727",
+      "address": "高雄市前金區民生二路77號",
+      "areaRank": 3
+    },
+    "拾貳號Bar": {
+      "sSeq": "83811",
+      "address": "台北市中山區林森北路85巷12號",
+      "areaRank": 2
+    },
+    "Joker Bar & Bistro": {
+      "sSeq": "93461",
+      "address": "台北市松山區市民大道四段163號 台北",
+      "areaRank": 2
+    },
+    "藍鯨Bar創意概念餐酒館": {
+      "sSeq": "84145",
+      "address": "台中市西區忠誠街79號",
+      "areaRank": 3
+    },
+    "艾新酒館": {
+      "sSeq": "89274",
+      "address": "台南市中西區永福路一段115-1號",
+      "areaRank": 3
+    },
+    "Question Bar": {
+      "sSeq": "91863",
+      "address": "高雄市新興區七賢一路428號 高雄",
+      "areaRank": 3
+    },
+    "不熟人餐酒館": {
+      "sSeq": "74744",
+      "address": "台中市西區民權路161-1號",
+      "areaRank": 3
+    },
+    "林居美式運動酒吧": {
+      "sSeq": "87381",
+      "address": "高雄市新興區文化路30號",
+      "areaRank": 3
+    },
+    "Escape Bar": {
+      "sSeq": "92091",
+      "address": "台北市信義區文昌街316號 台北",
+      "areaRank": 2
+    },
+    "賞月吧": {
+      "sSeq": "83890",
+      "address": "台北市中山區建國北路二段3巷17號B1",
+      "areaRank": 2
+    },
+    "G Floor": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "醉初餐酒館": {
+      "sSeq": "79136",
+      "address": "苗栗]",
+      "areaRank": 3
+    },
+    "86 串燒餐酒館": {
+      "sSeq": "98030",
+      "address": "台中市西屯區西屯路一段86號 台中",
+      "areaRank": 3
+    },
+    "酒餚.旨味": {
+      "sSeq": "68873",
+      "address": "台中市西屯區西屯路二段282-9號",
+      "areaRank": 3
+    },
+    "八鮮烤魚 Beer Bar": {
+      "sSeq": "68148",
+      "address": "新北市板橋區光華街一巷1號",
+      "areaRank": 1
+    },
+    "向陽山茶鋪": {
+      "sSeq": "16752",
+      "address": "花蓮]",
+      "areaRank": 3
+    },
+    "澳門聖公會北區青年服務隊": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "桌覓桌遊休閒空間": {
+      "sSeq": "78566",
+      "address": "高雄市苓雅區林泉街38巷9弄7號",
+      "areaRank": 3
+    },
+    "微醺 Bar": {
+      "sSeq": "94965",
+      "address": "台北市中山區中山北路一段135巷31號 台北",
+      "areaRank": 2
+    },
+    "Sun City": {
+      "sSeq": "87086",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "老麥音樂酒吧": {
+      "sSeq": "16705",
+      "address": "台中市北區繼光街71號",
+      "areaRank": 3
+    },
+    "DARTS&BAR Quatro": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "M55撞球館": {
+      "sSeq": "97620",
+      "address": "高雄市三民區建工路431號B1 高雄",
+      "areaRank": 3
+    },
+    "酒空招待所": {
+      "sSeq": "87878",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "酒窟Pub": {
+      "sSeq": "43151",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "88 Sports Bar": {
+      "sSeq": "67562",
+      "address": "台北市中山區雙城街32巷4-2號",
+      "areaRank": 2
+    },
+    "露天燒烤飛鏢 Bar": {
+      "sSeq": "94364",
+      "address": "台中市北區崇德路一段99號",
+      "areaRank": 3
+    },
+    "Vogue Lounge": {
+      "sSeq": "66570",
+      "address": "新北市永和區中山路一段104-1號",
+      "areaRank": 0
+    },
+    "Chill": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "アプレシオ 東静岡駅前店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "39碼頭": {
+      "sSeq": "53757",
+      "address": "台中市 南區 永東街 98號 1樓",
+      "areaRank": 3
+    },
+    "DARTS&BAL ARISE Reborn": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "AZ BOX": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "淺嚐串燒": {
+      "sSeq": "90418",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "Boulder 7": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "自遊空間 中津池永店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "老許山莊": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "98.9 Music Darts Bar": {
+      "sSeq": "63135",
+      "address": "台東]",
+      "areaRank": 3
+    },
+    "1881音樂撞球餐廳": {
+      "sSeq": "42186",
+      "address": "高雄市三民區九如一路974號2樓",
+      "areaRank": 3
+    },
+    "阿丹的店": {
+      "sSeq": "85013",
+      "address": "台中市大里區塗城路327之2號",
+      "areaRank": 3
+    },
+    "議場": {
+      "sSeq": "88404",
+      "address": "台中市北屯區興安路一段321巷29號",
+      "areaRank": 3
+    },
+    "開南撞球研習社": {
+      "sSeq": "49050",
+      "address": "桃園市蘆竹區新興街136號B1",
+      "areaRank": 3
+    },
+    "陸小曼Pub": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Change Homeshop": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Sports Expo": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Hea 吧": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "Patina Lounge": {
+      "sSeq": "51800",
+      "address": "台北市雙城街25巷2之1號",
+      "areaRank": 2
+    },
+    "B&W Lounge Bar": {
+      "sSeq": "60103",
+      "address": "台北市中山區新生北路一段88-1號",
+      "areaRank": 2
+    },
+    "調酒系 M.Bar": {
+      "sSeq": "58821",
+      "address": "台南市永康區崑大路155巷6號",
+      "areaRank": 3
+    },
+    "F-22 BAR": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "燃舍串燒店(新竹遠百店)": {
+      "sSeq": "84146",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "後浪餐酒館": {
+      "sSeq": "91582",
+      "address": "高雄市岡山區柳橋西路132-1號  高雄",
+      "areaRank": 3
+    },
+    "Amuse": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "酒匠風": {
+      "sSeq": "90476",
+      "address": "台中市東區建德街282號 台中",
+      "areaRank": 3
+    },
+    "極光酒吧": {
+      "sSeq": "83422",
+      "address": "嘉義]",
+      "areaRank": 3
+    },
+    "大里國民暨兒童運動中心": {
+      "sSeq": "83651",
+      "address": "台中市大里區國光路一段258號",
+      "areaRank": 3
+    },
+    "大樂串燒": {
+      "sSeq": "16719",
+      "address": "新北市中和區信義街92號",
+      "areaRank": 0
+    },
+    "家庭料理 ": {
+      "sSeq": "50218",
+      "address": "台中市西區華美街376號",
+      "areaRank": 3
+    },
+    "佳佳屋": {
+      "sSeq": "71675",
+      "address": "屏東]",
+      "areaRank": 3
+    },
+    "秘境俱樂部": {
+      "sSeq": "60347",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "新北市立中平國中": {
+      "sSeq": "79460",
+      "address": "新北市立中平國中",
+      "areaRank": 1
+    },
+    "大中央花式撞球館": {
+      "sSeq": "78197",
+      "address": "花蓮]",
+      "areaRank": 3
+    },
+    "新買醉": {
+      "sSeq": "96559",
+      "address": "宜蘭]",
+      "areaRank": 3
+    },
+    "卡加利美式餐飲": {
+      "sSeq": "16804",
+      "address": "嘉義]",
+      "areaRank": 3
+    },
+    "Insomnia 餐酒館": {
+      "sSeq": "86338",
+      "address": "高雄市新興區文化路28號",
+      "areaRank": 3
+    },
+    "Lush Bistro": {
+      "sSeq": "73213",
+      "address": "高雄市新興區中山一路12號之1",
+      "areaRank": 3
+    },
+    "Back Door": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "水母餐酒館": {
+      "sSeq": "94963",
+      "address": "桃園市桃園區復興路262號 桃園",
+      "areaRank": 3
+    },
+    "Body芭蒂音樂主題吧": {
+      "sSeq": "87379",
+      "address": "高雄市鳳山區中山西路48號",
+      "areaRank": 3
+    },
+    "洋房餐廳": {
+      "sSeq": "45009",
+      "address": "台北市士東路91巷48號",
+      "areaRank": 2
+    },
+    "巴士底家": {
+      "sSeq": "64511",
+      "address": "台中市西屯區福星路693之1號",
+      "areaRank": 3
+    },
+    "藍貝殼時尚會館": {
+      "sSeq": "85495",
+      "address": "雲林]",
+      "areaRank": 3
+    },
+    "運動家撞球館": {
+      "sSeq": "51497",
+      "address": "台北市北投區尊賢街226號B1",
+      "areaRank": 2
+    },
+    "Snug Harbor": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "自遊空間　熊本十禅寺店": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "真心人餐酒館": {
+      "sSeq": "98754",
+      "address": "高雄市新興區五福一街43號 高雄",
+      "areaRank": 3
+    },
+    "有你 9%": {
+      "sSeq": "87880",
+      "address": "新北市林口區民有街42號",
+      "areaRank": 1
+    },
+    "肆棧酒吧": {
+      "sSeq": "79132",
+      "address": "台中市豐原區中正路129巷7弄7號",
+      "areaRank": 3
+    },
+    "Hawkeye Taipei": {
+      "sSeq": "90081",
+      "address": "台北市大安區仁愛路三段92號",
+      "areaRank": 2
+    },
+    "Boss Bar": {
+      "sSeq": "92663",
+      "address": "新北市水和區林森路109號 台北",
+      "areaRank": 1
+    },
+    "194 Chill Bar": {
+      "sSeq": "88515",
+      "address": "台中市中區民族路194號2樓",
+      "areaRank": 3
+    },
+    "DEEN STYLE TOKYO_Factory Gear": {
+      "sSeq": "85094",
+      "address": "台中市西屯區東興路三段389號A棟",
+      "areaRank": 3
+    },
+    "I-La Music Bar": {
+      "sSeq": "48247",
+      "address": "新北市淡水區中正路12巷1號",
+      "areaRank": 1
+    },
+    "酒霸140": {
+      "sSeq": "92668",
+      "address": "彰化]",
+      "areaRank": 3
+    },
+    "波哥大時尚音樂餐廳": {
+      "sSeq": "49726",
+      "address": "高雄市新興區大同一路181號",
+      "areaRank": 3
+    },
+    "凱恩斯撞球場": {
+      "sSeq": "41778",
+      "address": "新竹]",
+      "areaRank": 3
+    },
+    "SQUIZY": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "玖樓": {
+      "sSeq": "94203",
+      "address": "台中市西區忠明南路229號",
+      "areaRank": 3
+    },
+    "I Group": {
+      "sSeq": "76922",
+      "address": "台中市西屯區市政北二路236號34摟A1",
+      "areaRank": 3
+    },
+    "Phoenix Taiwan": {
+      "sSeq": "16428",
+      "address": "台北市南港區松河街384號5樓",
+      "areaRank": 2
+    },
+    "WAY BAR": {
+      "sSeq": "78200",
+      "address": "台北市中山區林森北路119巷22號B1",
+      "areaRank": 2
+    },
+    "在地餐館": {
+      "sSeq": "92730",
+      "address": "高雄市楠梓區德惠路72號  高雄",
+      "areaRank": 3
+    },
+    "X會館": {
+      "sSeq": "96987",
+      "address": "高雄市三民區中華三路306號 高雄",
+      "areaRank": 3
+    },
+    "Booze 暢欴自助酒吧": {
+      "sSeq": "88788",
+      "address": "高雄市楠梓區右昌街316號",
+      "areaRank": 3
+    },
+    "Grand Pub": {
+      "sSeq": null,
+      "address": null,
+      "areaRank": 9
+    },
+    "紅色穀倉美式餐廳": {
+      "sSeq": "80349",
+      "address": "桃園市蘆竹區坑口里後壁厝1號",
+      "areaRank": 3
+    },
+    "悅酒坊": {
+      "sSeq": "55950",
+      "address": "新竹]",
+      "areaRank": 3
+    }
+  }
+}
