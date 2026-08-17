@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T06:58:27.922Z",
+  "updatedAt": "2026-08-17T09:45:54.066Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -89,6 +89,28 @@
         "icon": "images/rating30/6.webp",
         "ppd": "16.35",
         "mpr": "1.81"
+      },
+      "小宇": {
+        "card": "9527",
+        "cardAtBind": "9527",
+        "cSeq": "2889575",
+        "homeShop": "藍白拖 Bar",
+        "webrate": "10.47",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "21.53",
+        "mpr": "2.26"
+      },
+      "蘋果": {
+        "card": "",
+        "cardAtBind": "蘋什麼",
+        "cSeq": "3030769",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
       }
     },
     "逃生Zoo口": {
@@ -267,6 +289,289 @@
         "icon": "images/rating30/12.webp",
         "ppd": "23.39",
         "mpr": "2.56"
+      }
+    },
+    "有點傻": {
+      "小飛": {
+        "card": "本寶寶叫龍飛昀",
+        "cardAtBind": "本寶寶叫龍飛昀",
+        "cSeq": "3033072",
+        "homeShop": "NO.5 Bar",
+        "webrate": "14.23",
+        "level": 14,
+        "icon": "images/rating30/14.webp",
+        "ppd": "25.86",
+        "mpr": "2.92"
+      }
+    },
+    "哈哈隊": {
+      "范姜": {
+        "card": "神奇鳳螺",
+        "cardAtBind": "神奇鳳螺",
+        "cSeq": "2407408",
+        "homeShop": "VIVI 酒吧",
+        "webrate": "6.58",
+        "level": 6,
+        "icon": "images/rating30/6.webp",
+        "ppd": "15.92",
+        "mpr": "1.79"
+      }
+    },
+    "傑克紅心": {
+      "阿B": {
+        "card": "Jack臭B",
+        "cardAtBind": "Jack臭B",
+        "cSeq": "2057725",
+        "homeShop": "Jack Bar",
+        "webrate": "7.01",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "16.70",
+        "mpr": "1.84"
+      },
+      "小魚": {
+        "card": "Jack噴氵交火龍上線嘍~*",
+        "cardAtBind": "Jack噴氵交火龍上線嘍~*",
+        "cSeq": "2584609",
+        "homeShop": "Jack Bar",
+        "webrate": "10.17",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "20.58",
+        "mpr": "2.32"
+      },
+      "老師": {
+        "card": "Jack嘴炮手",
+        "cardAtBind": "Jack嘴炮手",
+        "cSeq": "2786441",
+        "homeShop": "Jack Bar",
+        "webrate": "8.22",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "18.12",
+        "mpr": "2.01"
+      },
+      "阿發": {
+        "card": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+        "cardAtBind": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+        "cSeq": "2883934",
+        "homeShop": "Jack Bar",
+        "webrate": "7.80",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "17.77",
+        "mpr": "1.95"
+      },
+      "念念": {
+        "card": "",
+        "cardAtBind": "晚安鹹蛋",
+        "cSeq": "3012905",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "大毛": {
+        "card": "大陰毛癢",
+        "cardAtBind": "大陰毛癢",
+        "cSeq": "1854018",
+        "homeShop": "Jack Bar",
+        "webrate": "7.15",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "16.19",
+        "mpr": "1.83"
+      },
+      "小胖": {
+        "card": "Jack台柱 皮卡起秋",
+        "cardAtBind": "Jack台柱 皮卡起秋",
+        "cSeq": "2790582",
+        "homeShop": "Jack Bar",
+        "webrate": "9.19",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
+        "ppd": "19.66",
+        "mpr": "2.10"
+      },
+      "小琪": {
+        "card": "",
+        "cardAtBind": "小琪掰",
+        "cSeq": "3011438",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "宇辰": {
+        "card": "",
+        "cardAtBind": "老是掉東西",
+        "cSeq": "3068056",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "小劉": {
+        "card": "",
+        "cardAtBind": "Jack氵交劉在裡面",
+        "cSeq": "3029231",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "阿俊": {
+        "card": "",
+        "cardAtBind": "Jack-水箭龜頭",
+        "cSeq": "3067658",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "Kevin": {
+        "card": "kevin",
+        "cardAtBind": "kevin",
+        "cSeq": "2448227",
+        "homeShop": "鈴洛奇冷飲室",
+        "webrate": "9.86",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
+        "ppd": "20.20",
+        "mpr": "2.28"
+      }
+    },
+    "傑克黑桃": {
+      "Stan": {
+        "card": "Jack瘋狗",
+        "cardAtBind": "Jack瘋狗",
+        "cSeq": "2293486",
+        "homeShop": "Jack Bar",
+        "webrate": "15.01",
+        "level": 15,
+        "icon": "images/rating30/15.webp",
+        "ppd": "26.13",
+        "mpr": "3.06"
+      },
+      "阿翰": {
+        "card": "阿翰",
+        "cardAtBind": "阿翰",
+        "cSeq": "2887184",
+        "homeShop": "Jack Bar",
+        "webrate": "8.81",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "18.72",
+        "mpr": "2.17"
+      },
+      "霸告": {
+        "card": "",
+        "cardAtBind": "霸告",
+        "cSeq": "3125225",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "小郭": {
+        "card": "E6孤獨傲鷹",
+        "cardAtBind": "E6孤獨傲鷹",
+        "cSeq": "2835876",
+        "homeShop": "Jack Bar",
+        "webrate": "11.15",
+        "level": 11,
+        "icon": "images/rating30/11.webp",
+        "ppd": "22.00",
+        "mpr": "2.45"
+      },
+      "小虎": {
+        "card": "今晚打老虎",
+        "cardAtBind": "今晚打老虎",
+        "cSeq": "2783625",
+        "homeShop": "Jack Bar",
+        "webrate": "7.23",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "17.12",
+        "mpr": "1.82"
+      },
+      "Terry": {
+        "card": "TERRY",
+        "cardAtBind": "TERRY",
+        "cSeq": "2191560",
+        "homeShop": "Jack Bar",
+        "webrate": "10.84",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "21.29",
+        "mpr": "2.48"
+      },
+      "九紋龍": {
+        "card": "",
+        "cardAtBind": "九紋龍",
+        "cSeq": "2379756",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "Ray": {
+        "card": "地獄專員-阿瑞",
+        "cardAtBind": "地獄專員-阿瑞",
+        "cSeq": "2767928",
+        "homeShop": "NO.5 Bar",
+        "webrate": "13.94",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "25.33",
+        "mpr": "2.95"
+      },
+      "肥肥": {
+        "card": "",
+        "cardAtBind": "大冰奶",
+        "cSeq": "3074156",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "青楓": {
+        "card": "青楓",
+        "cardAtBind": "青楓",
+        "cSeq": "2895275",
+        "homeShop": "藍白拖 Bar",
+        "webrate": "12.51",
+        "level": 12,
+        "icon": "images/rating30/12.webp",
+        "ppd": "23.55",
+        "mpr": "2.73"
+      },
+      "Tina": {
+        "card": "",
+        "cardAtBind": "打標靠賽",
+        "cSeq": "3020436",
+        "homeShop": "",
+        "webrate": "0",
+        "level": 1,
+        "icon": "images/rating30/1.webp",
+        "ppd": "0",
+        "mpr": "0"
       }
     }
   }
