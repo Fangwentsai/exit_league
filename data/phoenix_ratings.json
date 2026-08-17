@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T09:49:34.599Z",
+  "updatedAt": "2026-08-17T14:29:38.611Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -152,10 +152,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.90",
+        "webrate": "11.76",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.41",
+        "ppd": "22.15",
         "mpr": "2.73"
       },
       "Linda": {
@@ -163,10 +163,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "5.68",
+        "webrate": "5.50",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "14.95",
+        "ppd": "14.66",
         "mpr": "1.67"
       },
       "Molly": {
@@ -174,10 +174,10 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "7.77",
+        "webrate": "7.82",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "17.93",
+        "ppd": "18.00",
         "mpr": "1.86"
       },
       "阿樂": {
@@ -534,10 +534,10 @@
         "cardAtBind": "TERRY",
         "cSeq": "2191560",
         "homeShop": "Jack Bar",
-        "webrate": "10.84",
+        "webrate": "10.97",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.29",
+        "ppd": "21.53",
         "mpr": "2.48"
       },
       "九紋龍": {
@@ -577,7 +577,7 @@
         "card": "青楓",
         "cardAtBind": "青楓",
         "cSeq": "2895275",
-        "homeShop": "藍白拖 Bar",
+        "homeShop": "Jack Bar",
         "webrate": "12.51",
         "level": 12,
         "icon": "images/rating30/12.webp",
@@ -592,6 +592,17 @@
         "webrate": "7.50",
         "level": 7,
         "icon": "images/rating30/7.webp",
+        "ppd": "0",
+        "mpr": "0"
+      },
+      "霖霖": {
+        "card": "0800",
+        "cardAtBind": "0800",
+        "cSeq": "3043016",
+        "homeShop": "Jack Bar",
+        "webrate": "5.33",
+        "level": 5,
+        "icon": "images/rating30/5.webp",
         "ppd": "0",
         "mpr": "0"
       }
