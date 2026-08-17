@@ -25,7 +25,7 @@ const https = require('https');
 const querystring = require('querystring');
 
 const HOST = 'www.phoenixdarts.com';
-const DELAY_MS = 300;
+const DELAY_MS = 450;
 const PLAYERS_OUT = path.join(__dirname, '../data/phoenix_players.json');
 const SHOPS_OUT = path.join(__dirname, '../data/phoenix_shops.json');
 
@@ -66,12 +66,22 @@ function request(method, pathname, form) {
 }
 
 async function rankPage(rankcode, period, page) {
-    const raw = await request('POST', `/tw/ranking/getAreaRankingList/page/${page}`, {
-        rankcode, period, onlyclass: '', area: '', rstatus: '0',
-        sex: '0', flag: '1', areacode: '', s_seq: '',
-    });
-    try { return JSON.parse(raw).list_data || []; }
-    catch (e) { throw new Error(`排行榜回應不是 JSON：${raw.slice(0, 120)}`); }
+    for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+            const raw = await request('POST', `/tw/ranking/getAreaRankingList/page/${page}`, {
+                rankcode, period, onlyclass: '', area: '', rstatus: '0',
+                sex: '0', flag: '1', areacode: '', s_seq: '',
+            });
+            const parsed = JSON.parse(raw);
+            return parsed.list_data || [];
+        } catch (e) {
+            if (attempt === 3) {
+                throw new Error(`排行榜回應不是 JSON（已重試3次）：${e.message}`);
+            }
+            await sleep(1500 * attempt);
+        }
+    }
+    return [];
 }
 
 /** 從店鋪搜尋頁把地址挖出來。回傳 { 店名: 地址 } */

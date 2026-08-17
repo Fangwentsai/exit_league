@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-08-17T02:11:30.700Z",
+ "updatedAt": "2026-08-17T09:31:39.833Z",
  "players": [
   {
    "cSeq": "2547679",
@@ -1138,6 +1138,22 @@
    "areaRank": 0
   },
   {
+   "cSeq": "2896990",
+   "card": "Jimmy_1",
+   "webrate": "10.87",
+   "level": 10,
+   "shop": "GG Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2773531",
+   "card": "Covid19代言人",
+   "webrate": "10.02",
+   "level": 10,
+   "shop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
+   "areaRank": 0
+  },
+  {
    "cSeq": "2261517",
    "card": "Tom",
    "webrate": "9.57",
@@ -1567,6 +1583,14 @@
    "webrate": "9.05",
    "level": 9,
    "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3067658",
+   "card": "Jack-水箭龜頭",
+   "webrate": "9.48",
+   "level": 9,
+   "shop": "SPORTS NATION運動餐廳（大巨蛋店）",
    "areaRank": 0
   },
   {
@@ -2290,6 +2314,22 @@
    "areaRank": 0
   },
   {
+   "cSeq": "2780591",
+   "card": "喵咪貓貓叫",
+   "webrate": "7.94",
+   "level": 7,
+   "shop": "GG Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3079502",
+   "card": "銀盪寶貝",
+   "webrate": "7.29",
+   "level": 7,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
    "cSeq": "3115937",
    "card": "$hiningMTFK",
    "webrate": "6.97",
@@ -2514,6 +2554,14 @@
    "areaRank": 0
   },
   {
+   "cSeq": "2710719",
+   "card": "溏心蛋",
+   "webrate": "6.72",
+   "level": 6,
+   "shop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
+   "areaRank": 0
+  },
+  {
    "cSeq": "2781120",
    "card": "雅鈞",
    "webrate": "5.99",
@@ -2658,6 +2706,22 @@
    "areaRank": 0
   },
   {
+   "cSeq": "3067661",
+   "card": "女繩",
+   "webrate": "5.18",
+   "level": 5,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "3043016",
+   "card": "0800",
+   "webrate": "5.33",
+   "level": 5,
+   "shop": "Jack Bar",
+   "areaRank": 0
+  },
+  {
    "cSeq": "3106391",
    "card": "笑步初乃",
    "webrate": "4.90",
@@ -2679,6 +2743,14 @@
    "webrate": "4.61",
    "level": 4,
    "shop": "樂源居酒屋",
+   "areaRank": 0
+  },
+  {
+   "cSeq": "2776452",
+   "card": "阿福都贏我",
+   "webrate": "4.76",
+   "level": 4,
+   "shop": "Jack Bar",
    "areaRank": 0
   },
   {
@@ -7130,14 +7202,6 @@
    "areaRank": 2
   },
   {
-   "cSeq": "2896990",
-   "card": "Jimmy_1",
-   "webrate": "10.87",
-   "level": 10,
-   "shop": "GG Bar",
-   "areaRank": 2
-  },
-  {
    "cSeq": "2718034",
    "card": "丰",
    "webrate": "10.75",
@@ -7671,14 +7735,6 @@
    "webrate": "9.61",
    "level": 9,
    "shop": "酌燒 串燒酒食",
-   "areaRank": 2
-  },
-  {
-   "cSeq": "3067658",
-   "card": "Jack-水箭龜頭",
-   "webrate": "9.48",
-   "level": 9,
-   "shop": "SPORTS NATION運動餐廳（大巨蛋店）",
    "areaRank": 2
   },
   {
@@ -8551,14 +8607,6 @@
    "webrate": "7.72",
    "level": 7,
    "shop": "85基地 Bar",
-   "areaRank": 2
-  },
-  {
-   "cSeq": "2780591",
-   "card": "喵咪貓貓叫",
-   "webrate": "7.94",
-   "level": 7,
-   "shop": "GG Bar",
    "areaRank": 2
   },
   {
