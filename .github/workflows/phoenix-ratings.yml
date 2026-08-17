@@ -9,9 +9,10 @@ name: 更新 PhoenixDarts Rating
 
 on:
   schedule:
-    # GitHub 的 cron 一律是 UTC，台北是 UTC+8，所以 00:00 UTC = 早上 08:00。
-    # 注意 Actions 的排程在尖峰時段可能延遲數分鐘到數十分鐘，不保證準點。
-    - cron: '0 0 * * *'
+    # GitHub 的 cron 一律是 UTC，台北是 UTC+8，所以 00:05 UTC = 早上 08:05。
+    # 刻意比 08:00 晚五分鐘：整點是所有人排程的尖峰，Actions 在那時最容易被排隊
+    # 延遲；錯開之後實際開始的時間比較貼近預期。（仍然不保證準點。）
+    - cron: '5 0 * * *'
   workflow_dispatch:          # 也可以在 Actions 頁面手動按一次
 
 # 前一次還沒跑完就不要再開一個，避免兩個 job 同時 commit 打架
