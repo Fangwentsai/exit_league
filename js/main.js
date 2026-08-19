@@ -1206,11 +1206,11 @@ async function loadNewsRankings() {
                     if (res.ok) {
                         const data = await res.json();
                         if (data.values && data.values.length > 0) {
-                            const sections = document.querySelectorAll('.ranking-section');
-                            sections.forEach(sec => {
-                                const title = sec.querySelector('.section-title');
-                                if (title && title.textContent.includes('個人勝場排行')) {
-                                    const table = sec.querySelector('.ranking-table');
+                            document.querySelectorAll('.section-title').forEach(title => {
+                                if (title.textContent.includes('個人勝場排行')) {
+                                    const table = (title.nextElementSibling && title.nextElementSibling.classList.contains('ranking-table'))
+                                        ? title.nextElementSibling
+                                        : title.parentElement.querySelector('.ranking-table');
                                     if (table) {
                                         let html = `<tr><th>組別</th><th>隊名</th><th>姓名</th><th>勝場數</th></tr>`;
                                         data.values.forEach(row => {
@@ -1242,11 +1242,11 @@ async function loadNewsRankings() {
                     if (res.ok) {
                         const data = await res.json();
                         if (data.values && data.values.length > 0) {
-                            const sections = document.querySelectorAll('.ranking-section');
-                            sections.forEach(sec => {
-                                const title = sec.querySelector('.section-title');
-                                if (title && title.textContent.includes('Top Lady')) {
-                                    const table = sec.querySelector('.ranking-table');
+                            document.querySelectorAll('.section-title').forEach(title => {
+                                if (title.textContent.includes('Top Lady')) {
+                                    const table = (title.nextElementSibling && title.nextElementSibling.classList.contains('ranking-table'))
+                                        ? title.nextElementSibling
+                                        : null;
                                     if (table) {
                                         let html = `<tr><th>組別</th><th>隊名</th><th>姓名</th><th>勝場數</th></tr>`;
                                         data.values.forEach(row => {
