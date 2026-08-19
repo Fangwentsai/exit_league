@@ -201,17 +201,20 @@ ${setList}
    ${homeRoster.join('、')}
 2. **客隊選手只能是以下名單中的人**：
    ${awayRoster.join('、')}
-3. 塗黑方框的填法可能是「螺旋塗鴉」而不是整格塗滿，只要框內有明顯筆跡（無論形狀）都算「已勾選」。
-4. 同一列的兩個左側框（緊鄰 SET 標籤左邊）可能同時被塗黑，兩個右側框（緊鄰 SET 標籤右邊）也可能同時被塗黑，這是正常情況（代表同一隊既先攻又獲勝），不是重複勾選的錯誤。
-5. 若某個欄位字跡潦草、模糊到你沒有把握，請誠實給出低信心分數（甚至 0），**不要用猜測填一個看起來合理但沒有根據的答案**。姓名讀不出來就回傳 null，塗黑框讀不出來就回傳 "unclear"。
-6. 場次代號（gamecode）如果照片上有寫，讀出來放進 gameCode 欄位；這場的實際場次是「${gameCode || '未提供'}」，僅供你交叉核對，不代表照片上一定寫得一致。
-7. **出賽限制（同組內同一人不能出賽超過一次）**：以下每組 SET 屬於同一組，同一位選手在同一組內只會出現一次——如果你辨識出同一人在同一組出現兩次以上，代表你至少有一次認錯人，回去重新檢查那幾局的筆跡，不要直接回傳矛盾的結果：
+3. **三人局與四人局多名單讀取**：三人局（SET5、SET10）每側儲存格必須包含 3 位選手；四人局（SET15、SET16）每側儲存格必須包含 4 位選手。手寫姓名通常會在同一格內上下垂直疊寫或左右並列，請仔細讀取該格內的所有文字，將所有選手姓名全部讀出組成陣列，切勿漏讀下方或角落的名字。
+4. **單字與簡稱綽號比對**：選手手寫姓名可能為單字簡稱（例如以「喵」代表名冊中的「喵喵」、以「豬」代表「小朱」、以「衰」代表「瘦子」、以「文」代表「詩惠」或「慶文」），請優先比對並回傳傳入名冊中的完整標準姓名。
+5. **特殊符號與字元（+0 / +o）**：名冊中若有包含符號的選手（例如 "+0" 或 "+o"），手寫常出現 "+o"、"+0" 或 "+O"，請將其認定為該位選手，切勿誤判為數學符號或數字 "+0"。
+6. 塗黑方框的填法可能是「螺旋塗鴉」而不是整格塗滿，只要框內有明顯筆跡（無論形狀）都算「已勾選」。
+7. 同一列的兩個左側框（緊鄰 SET 標籤左邊）可能同時被塗黑，兩個右側框（緊鄰 SET 標籤右邊）也可能同時被塗黑，這是正常情況（代表同一隊既先攻又獲勝），不是重複勾選的錯誤。
+8. 若某個欄位字跡潦草、模糊到你沒有把握，請誠實給出低信心分數（甚至 0），**不要用猜測填一個看起來合理但沒有根據的答案**。姓名讀不出來就回傳 null，塗黑框讀不出來就回傳 "unclear"。
+9. 場次代號（gamecode）如果照片上有寫，讀出來放進 gameCode 欄位；這場的實際場次是「${gameCode || '未提供'}」，僅供你交叉核對，不代表照片上一定寫得一致。
+10. **出賽限制（同組內同一人不能出賽超過一次）**：以下每組 SET 屬於同一組，同一位選手在同一組內只會出現一次——如果你辨識出同一人在同一組出現兩次以上，代表你至少有一次認錯人，回去重新檢查那幾局的筆跡，不要直接回傳矛盾的結果：
    - SET1、SET4 為一組
    - SET6、SET9 為一組
    - SET11、SET12 為一組
    - SET13、SET14 為一組
-8. **firstAttack 與 winner 只回答「塗黑的框在 SET 標籤的左邊還右邊」（left/right），不要自己換算成主隊或客隊**——每一列從左到右固定是「主隊選手、先攻框、勝框、SET 標籤、勝框、先攻框、客隊選手」，哪一側是主隊、哪一側是客隊已經是固定的版面規則，由我們自己的程式判斷，你只需要誠實回答視覺上看到塗黑框在哪一側，不要做語意翻譯。
-9. **塗改（劃掉重寫）的姓名**：記錄員有時會把寫錯的名字劃掉，在旁邊補寫正確的名字。這種格子請照以下方式處理：
+11. **firstAttack 與 winner 只回答「塗黑的框在 SET 標籤的左邊還右邊」（left/right），不要自己換算成主隊或客隊**——每一列從左到右固定是「主隊選手、先攻框、勝框、SET 標籤、勝框、先攻框、客隊選手」，哪一側是主隊、哪一側是客隊已經是固定的版面規則，由我們自己的程式判斷，你只需要誠實回答視覺上看到塗黑框在哪一側，不要做語意翻譯。
+12. **塗改（劃掉重寫）的姓名**：記錄員有時會把寫錯的名字劃掉，在旁邊補寫正確的名字。這種格子請照以下方式處理：
    - **被劃掉的名字一律不是答案**，要讀的是補寫上去的那一個
    - 只要這一格出現任何劃掉的痕跡（刪除線、塗掉、蓋掉），就把該格的 strikethrough 設為 true，不管你對補寫的名字有多確定
    - 如果劃掉之後補寫的字看不清楚、或根本分不出哪個才是最終答案，name 回傳 null
@@ -356,25 +359,35 @@ function matchAgainstRoster(player, roster) {
 }
 
 function matchName(player, roster) {
-    if (roster.includes(player.name)) {
+    if (!player || !player.name) return player;
+    let name = player.name.trim();
+
+    // 1. 特殊符號 +0 / +o 等價對映
+    if (/^[\+＋][0oO]$/i.test(name)) {
+        const symbolMatch = roster.find(r => /^[\+＋][0oO]$/i.test(r));
+        if (symbolMatch) return { ...player, name: symbolMatch };
+    }
+
+    if (roster.includes(name)) {
         return player; // 完全對上，信心分數維持模型給的值
     }
 
-    // 大小寫不同不算讀錯——名單裡存的是「lucy」「Joy」，分紙上寫的是「Lucy」「joy」，
-    // 指的是同一個人。若交給下面的編輯距離處理，會被當成差一個字而白白扣 20 分信心，
-    // 讓沒讀錯的欄位掉到自動填入門檻以下、被標成需人工確認。
-    const caseInsensitive = roster.find(r => r.toLowerCase() === player.name.toLowerCase());
+    // 2. 大小寫相符對比
+    const caseInsensitive = roster.find(r => r.toLowerCase() === name.toLowerCase());
     if (caseInsensitive) {
         return { ...player, name: caseInsensitive };
     }
 
-    // 差一個字時，關鍵不是「差多少」而是「有沒有第二個一樣近的人」。
-    // 實測名單裡 164 人有 55 組彼此只差一個字（中文綽號「小X」「阿X」太常見，
-    // 例如有點傻的小飛／小齊／小安三人互為距離 1）。這種情況硬猜等於擲骰子，
-    // 必須重扣讓它落到人工確認；反之若只有一個人這麼近（例如分紙寫「Andy」、
-    // 名單登記「Andi」，隊上沒有第二個相近的名字），那就是單純的拼寫出入，
-    // 幾乎沒有認錯的空間，不該白白扣到需要人工複查。
-    const ranked = rankByDistance(player.name, roster);
+    // 3. 單字簡稱對照（手寫僅填單字如「喵」對應「喵喵」）
+    if (name.length === 1) {
+        const matches = roster.filter(r => r.includes(name));
+        if (matches.length === 1) {
+            return { ...player, name: matches[0], confidence: Math.max(0, Math.min(player.confidence, 100) - 5) };
+        }
+    }
+
+    // 4. 編輯距離比對
+    const ranked = rankByDistance(name, roster);
     const best = ranked[0], runnerUp = ranked[1];
     if (best && best.distance <= 1) {
         const ambiguous = runnerUp && runnerUp.distance === best.distance;
@@ -382,7 +395,7 @@ function matchName(player, roster) {
         return { ...player, name: best.name, confidence: Math.max(0, Math.min(player.confidence, 100) - penalty) };
     }
     // 名單裡完全找不到接近的人，強制降到需要人工確認
-    return { ...player, name: player.name, confidence: Math.min(player.confidence, 30), notInRoster: true };
+    return { ...player, name: name, confidence: Math.min(player.confidence, 30), notInRoster: true };
 }
 
 // 回傳整份名單依相近程度排序的結果，而不是只有最接近的那一個——
