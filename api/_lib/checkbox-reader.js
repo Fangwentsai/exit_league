@@ -67,15 +67,18 @@ async function readCheckboxes(rectifiedBuffer) {
  * 不要硬猜一個看起來合理的答案。
  */
 function decidePair(covLeft, covRight) {
-    const inkLeft = covLeft > INK_RATIO;
-    const inkRight = covRight > INK_RATIO;
-    if (inkLeft === inkRight) {
+    const diff = covLeft - covRight;
+    const absDiff = Math.abs(diff);
+
+    // 兩格墨水覆蓋率差距不足 0.12，代表兩格無顯著相對差異（真正的同亮或同暗空白）
+    if (absDiff < 0.12) {
         return { value: 'unclear', confidence: 0 };
     }
-    // 兩格差距越大，判讀越明確；差距小代表兩格看起來差不多，可信度該降低
-    const margin = Math.abs(covLeft - covRight);
-    const confidence = Math.round(Math.min(100, margin * 160));
-    return { value: inkLeft ? 'home' : 'away', confidence };
+
+    // 只要存在顯著相對差額（例如 0.85 vs 0.22 差距 0.63），較高者即為填寫方框，
+    // 不會因背景影子或水印使較低那格 > 0.15 而被誤判成 unclear。
+    const confidence = Math.round(Math.min(100, absDiff * 160));
+    return { value: diff > 0 ? 'home' : 'away', confidence };
 }
 
 function coverage(img, box, offset) {
