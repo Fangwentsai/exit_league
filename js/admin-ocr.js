@@ -372,8 +372,8 @@
         modal.style.display = 'flex';
 
         currentPercent = 0;
-        targetPercent = 35;
-        currentStageText = '照片上傳與預處理中...';
+        targetPercent = 10;
+        currentStageText = '照片上傳與透視校正中...';
         currentStageIcon = '📤';
 
         if (ocrProgressTimer) clearInterval(ocrProgressTimer);
@@ -382,19 +382,18 @@
         ocrProgressTimer = setInterval(() => {
             elapsedMs += 70;
 
-            // 根據時間推進目標百分比與提示語（大幅增加 AI 辨識階段的配比）
-            if (elapsedMs < 1200) {
-                targetPercent = 20;
+            // 依指示重配進度條比例：
+            // 1. 照片上傳校正：0% ~ 10% (前 0.8 秒)
+            // 2. AI 辨識分析：10% ~ 70% (耗時主體 0.8~8 秒，佔據 60%~70% 比例)
+            // 3. 準備帶入表單：70% ~ 98% (8 秒後，佔據 30% 比例)
+            if (elapsedMs < 800) {
+                targetPercent = 10;
                 currentStageText = '照片上傳與透視校正中...';
                 currentStageIcon = '📤';
-            } else if (elapsedMs < 7500) {
-                targetPercent = 75;
+            } else if (elapsedMs < 8000) {
+                targetPercent = 70;
                 currentStageText = 'AI 辨識選手姓名與先攻勝負中...';
                 currentStageIcon = '🧠';
-            } else if (elapsedMs < 11000) {
-                targetPercent = 95;
-                currentStageText = '數據交叉核對與 30 分勝負驗算中...';
-                currentStageIcon = '⚡';
             } else {
                 targetPercent = 98;
                 currentStageText = '準備自動帶入表單...';
