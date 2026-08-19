@@ -48,6 +48,16 @@ const SEASONS = {
         apiKey: DEFAULT_API_KEY,
         // 2026/8/18 開打（週二賽制），10/27 結束
         label: '第七屆', startDate: '2026/8/18', endDate: '2026/10/27', rankRange: 'O:V',
+        // 第七屆分組排行在試算表 schedule 分頁的對應參照範圍
+        groupRankRanges: {
+            掉鏢組: 'X2:Z7',
+            靶外組: 'X9:Z14'
+        },
+        // 第七屆個人勝場排行與 Top Lady 在試算表 personal 分頁的參照範圍
+        personalRankRanges: {
+            勝場排行: 'personal!T2:V7',
+            TopLady: 'personal!T9:V13'
+        },
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。
