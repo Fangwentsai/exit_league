@@ -372,23 +372,23 @@
         ocrProgressTimer = setInterval(() => {
             elapsedMs += 70;
 
-            // 根據時間推進目標百分比與提示語
-            if (elapsedMs < 1800) {
-                targetPercent = 35;
-                currentStageText = '照片上傳與預處理中...';
+            // 根據時間推進目標百分比與提示語（大幅增加 AI 辨識階段的配比）
+            if (elapsedMs < 1200) {
+                targetPercent = 20;
+                currentStageText = '照片上傳與透視校正中...';
                 currentStageIcon = '📤';
-            } else if (elapsedMs < 4500) {
-                targetPercent = 65;
-                currentStageText = '照片透視校正與四角定位點檢測中...';
-                currentStageIcon = '🔍';
-            } else if (elapsedMs < 10000) {
-                targetPercent = 90;
+            } else if (elapsedMs < 7500) {
+                targetPercent = 75;
                 currentStageText = 'AI 辨識選手姓名與先攻勝負中...';
                 currentStageIcon = '🧠';
-            } else {
-                targetPercent = 98;
+            } else if (elapsedMs < 11000) {
+                targetPercent = 95;
                 currentStageText = '數據交叉核對與 30 分勝負驗算中...';
                 currentStageIcon = '⚡';
+            } else {
+                targetPercent = 98;
+                currentStageText = '準備自動帶入表單...';
+                currentStageIcon = '⏳';
             }
 
             // 平滑以 1% 為單位累加
