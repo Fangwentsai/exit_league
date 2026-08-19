@@ -368,11 +368,34 @@ function matchName(player, roster) {
         if (symbolMatch) return { ...player, name: symbolMatch };
     }
 
+    // 2. 常用英文縮寫、數字代號與拼音別名對照 (Common Aliases & Phonetic Transliteration)
+    const COMMON_ALIASES = {
+        '91': ['Joy', 'joy'],
+        'lu': ['Louis', 'louis', '小安'],
+        'yu': ['邱昱', 'yu'],
+        'fei': ['小飛'],
+        'chi': ['小齊'],
+        'yiheng': ['羿珩'],
+        'ben': ['Ben', 'ben'],
+        'andy': ['Andi', 'andi', 'Andy'],
+        'kaman': ['Kaman', 'kaman'],
+        'jj': ['JJ', 'jj'],
+    };
+
+    const lowerName = name.toLowerCase();
+    if (COMMON_ALIASES[lowerName]) {
+        const candidates = COMMON_ALIASES[lowerName];
+        const found = roster.find(r => candidates.some(c => c.toLowerCase() === r.toLowerCase()));
+        if (found) {
+            return { ...player, name: found, confidence: Math.max(0, Math.min(player.confidence || 90, 100)) };
+        }
+    }
+
     if (roster.includes(name)) {
         return player; // 完全對上，信心分數維持模型給的值
     }
 
-    // 2. 大小寫相符對比
+    // 3. 大小寫相符對比
     const caseInsensitive = roster.find(r => r.toLowerCase() === name.toLowerCase());
     if (caseInsensitive) {
         return { ...player, name: caseInsensitive };
