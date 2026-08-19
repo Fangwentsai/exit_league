@@ -195,16 +195,26 @@
             if (s.winner && s.winner.value === 'unclear') missDetails.push(`SET${s.set} 勝負方框不清晰`);
         }
 
-        // 收集 AI 分析建議
+        // 收集實際辨識出的名單外手寫暱稱（未對應到名冊者）
+        const unmappedNames = Array.from(new Set(
+            sets.flatMap(s => [...(s.homePlayers || []), ...(s.awayPlayers || [])])
+                .filter(p => p && p.notInRoster && p.name)
+                .map(p => p.name)
+        ));
+
+        // 收集動態 AI 分析建議 (根據本次量測數據產生，不使用死板寫死的範例)
         const recommendations = [];
         if (data.deskew && !data.deskew.applied) {
-            recommendations.push('📸 <b>拍攝建議</b>：四角定位點未完整入鏡，致使透視拉直無法啟用。下次請將照片四角落黑色方塊完整拍入。');
+            recommendations.push('📸 <b>拍攝建議</b>：四角定位點未完整入鏡，致使透視校正未啟用。下次請將照片四角落黑色方塊完整拍入。');
         }
         if (missDetails.some(d => d.includes('方框不清晰'))) {
             recommendations.push('🖋️ <b>填寫建議</b>：部分先攻/勝負方框筆跡偏淡或使用原子筆勾選，建議提醒記錄員使用<b>深色水性筆塗滿</b>。');
         }
-        if (missDetails.some(d => d.includes('無對應名冊'))) {
-            recommendations.push('🔤 <b>名冊建議</b>：若選手常使用手寫英文暱稱/簡寫（如 yu、Lu、91），可於聯賽選手資料庫補齊別名檔。');
+        if (unmappedNames.length > 0) {
+            recommendations.push(`🔤 <b>名冊別名建議</b>：手寫字 <b>${unmappedNames.join('、')}</b> 在名冊中未找到直接對應，若為隊員常用暱稱，可於選手資料庫補齊別名檔。`);
+        }
+        if (data.crossCheck && !data.crossCheck.sumValid) {
+            recommendations.push(`⚠️ <b>總分驗算提醒</b>：逐局推算比賽得分為 ${data.crossCheck.computedHomePoints}:${data.crossCheck.computedAwayPoints}，合計不等於 30 分，請優先確認紅底與黃底欄位。`);
         }
 
         const alertsHtml = alerts.length
