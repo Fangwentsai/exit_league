@@ -1139,12 +1139,139 @@ async function loadMatches() {
     }
 }
 
-// 修改 loadNewsData，載入頁面時自動抓取 Google Sheets
+// 修改 loadNewsData，載入頁面時自動抓取 Google Sheets 賽事與動態排行榜
 async function loadNewsData() {
     try {
         await loadMatches();
+        await loadNewsRankings();
     } catch (error) {
         showNewsError(error.message);
+    }
+}
+
+// 動態從 Google Sheets 載入新聞頁面上的排行榜（使用 config/config.js 設定的範圍）
+async function loadNewsRankings() {
+    try {
+        const seasonNum = (typeof CURRENT_SEASON !== 'undefined') ? CURRENT_SEASON : 7;
+        const seasonMeta = (typeof SEASONS !== 'undefined' && SEASONS[seasonNum]) || {};
+        const config = (typeof CONFIG !== 'undefined') ? CONFIG[`SEASON${seasonNum}`] : null;
+        if (!config || !config.SHEET_ID || !config.API_KEY) return;
+
+        const BADGE = { 掉鏢組: '掉鏢', 靶外組: '靶外' };
+        const groupOf = (team) => {
+            const g = seasonMeta.groups || {};
+            for (const k in g) {
+                if (g[k] && g[k].indexOf(team) >= 0) return k;
+            }
+            return '';
+        };
+
+        // 1. 動態抓取團隊總分分組排行（groupRankRanges）
+        if (seasonMeta.groupRankRanges) {
+            for (const [groupName, range] of Object.entries(seasonMeta.groupRankRanges)) {
+                try {
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/schedule!${range}?key=${config.API_KEY}`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.values && data.values.length > 0) {
+                            const table = document.querySelector(`.ranking-table[data-league="${groupName}"]`);
+                            if (table) {
+                                let rowsHtml = `<tr><th>排名</th><th>隊名</th><th>總分</th></tr>`;
+                                data.values.forEach((row, idx) => {
+                                    const rank = row[0] || (idx + 1);
+                                    const team = row[1] || '';
+                                    const score = row[2] || '0';
+                                    if (team) {
+                                        rowsHtml += `<tr><td>${rank}</td><td>${team}</td><td>${score}</td></tr>`;
+                                    }
+                                });
+                                table.innerHTML = rowsHtml;
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error(`動態載入團隊排行 ${groupName} 失敗:`, err);
+                }
+            }
+        }
+
+        // 2. 動態抓取個人勝場排行與 Top Lady（personalRankRanges）4 欄式: 組別 | 隊名 | 姓名 | 勝場數
+        if (seasonMeta.personalRankRanges) {
+            // 個人勝場排行
+            if (seasonMeta.personalRankRanges.勝場排行) {
+                try {
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${seasonMeta.personalRankRanges.勝場排行}?key=${config.API_KEY}`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.values && data.values.length > 0) {
+                            const sections = document.querySelectorAll('.ranking-section');
+                            sections.forEach(sec => {
+                                const title = sec.querySelector('.section-title');
+                                if (title && title.textContent.includes('個人勝場排行')) {
+                                    const table = sec.querySelector('.ranking-table');
+                                    if (table) {
+                                        let html = `<tr><th>組別</th><th>隊名</th><th>姓名</th><th>勝場數</th></tr>`;
+                                        data.values.forEach(row => {
+                                            const team = row[0] || '';
+                                            const name = row[1] || '';
+                                            const wins = row[2] || '0';
+                                            if (team && name) {
+                                                const g = groupOf(team);
+                                                const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
+                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${name}</td><td>${wins}</td></tr>`;
+                                            }
+                                        });
+                                        table.innerHTML = html;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error('動態載入個人勝場排行失敗:', err);
+                }
+            }
+
+            // Top Lady
+            if (seasonMeta.personalRankRanges.TopLady) {
+                try {
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${seasonMeta.personalRankRanges.TopLady}?key=${config.API_KEY}`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.values && data.values.length > 0) {
+                            const sections = document.querySelectorAll('.ranking-section');
+                            sections.forEach(sec => {
+                                const title = sec.querySelector('.section-title');
+                                if (title && title.textContent.includes('Top Lady')) {
+                                    const table = sec.querySelector('.ranking-table');
+                                    if (table) {
+                                        let html = `<tr><th>組別</th><th>隊名</th><th>姓名</th><th>勝場數</th></tr>`;
+                                        data.values.forEach(row => {
+                                            const team = row[0] || '';
+                                            const name = row[1] || '';
+                                            const wins = row[2] || '0';
+                                            if (team && name) {
+                                                const g = groupOf(team);
+                                                const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
+                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${name}</td><td>${wins}</td></tr>`;
+                                            }
+                                        });
+                                        table.innerHTML = html;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error('動態載入 Top Lady 失敗:', err);
+                }
+            }
+        }
+    } catch (e) {
+        console.error('載入新聞排行榜時發生錯誤:', e);
     }
 }
 
