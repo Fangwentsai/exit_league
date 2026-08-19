@@ -514,7 +514,7 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
     // 四欄：組別／隊名／姓名／勝場數。欄數必須跟 news.html 的表頭一致，
     // 少一格整列會往左偏，最後一欄變空白。
     const playerRows = playerRankings.map(p =>
-      `                    <tr><td>${grp(p.team)}</td><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
+      `                    <tr><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
     ).join('\n');
 
     html = html.replace(
@@ -527,14 +527,12 @@ function updateNewsHtml(teamRankings, playerRankings, topLadies, unluckyPlayers)
   // === 更新 Top Lady ===
   if (topLadies.length > 0) {
     const ladyRows = topLadies.map(p =>
-      `                    <tr><td>${grp(p.team)}</td><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
+      `                    <tr><td>${p.team}</td><td>${p.name}</td><td>${p.totalWins}</td></tr>`
     ).join('\n');
 
-    // 這一段連表頭一起換掉，所以表頭也要是四欄——原本寫的是三欄，
-    // 換完之後 Top Lady 會少一個「組別」欄，跟上下兩張表對不齊。
     html = html.replace(
       /<h3 class="section-title">Top Lady 🌹<\/h3>\s*<table class="ranking-table">[\s\S]*?<\/table>/,
-      `<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>組別</th>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n${ladyRows}\n                </table>`
+      `<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n${ladyRows}\n                </table>`
     );
     console.log(`  ✅ Top Lady：更新 Top ${topLadies.length}`);
   }

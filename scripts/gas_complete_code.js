@@ -696,17 +696,16 @@ function updateAndPushNewsHtml(rankings) {
   // 表頭一致；少一格整列會往左偏，最後一欄變空白。
   if (rankings.players.length > 0) {
     var playerRows = rankings.players.map(function(p) {
-      return '                    <tr><td>' + groupLabelOf(p.team) + '</td><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
+      return '                    <tr><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
     }).join('\n');
     html = html.replace(/<th>勝場數<\/th>\s*<\/tr>\s*<tr>\s*<td>[\s\S]*?<\/table>/, '<th>勝場數</th>\n                    </tr>\n' + playerRows + '\n                </table>');
   }
   
   if (rankings.ladies.length > 0) {
     var ladyRows = rankings.ladies.map(function(p) {
-      return '                    <tr><td>' + groupLabelOf(p.team) + '</td><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
+      return '                    <tr><td>' + p.team + '</td><td>' + p.name + '</td><td>' + p.wins + '</td></tr>';
     }).join('\n');
-    // 這段連表頭一起換掉，表頭也必須是四欄，否則 Top Lady 會少一個組別欄
-    html = html.replace(/<h3 class="section-title">Top Lady 🌹<\/h3>\s*<table class="ranking-table">[\s\S]*?<\/table>/, '<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>組別</th>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n' + ladyRows + '\n                </table>');
+    html = html.replace(/<h3 class="section-title">Top Lady 🌹<\/h3>\s*<table class="ranking-table">[\s\S]*?<\/table>/, '<h3 class="section-title">Top Lady 🌹</h3>\n                <table class="ranking-table">\n                    <tr>\n                        <th>隊名</th>\n                        <th>姓名</th>\n                        <th>勝場數</th>\n                    </tr>\n' + ladyRows + '\n                </table>');
   }
   
   if (rankings.unlucky.length > 0) {

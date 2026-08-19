@@ -79,24 +79,7 @@
         if (!Object.keys(groups()).length) return;
         document.querySelectorAll('.ranking-table:not([data-league])').forEach(table => {
             table.querySelectorAll('tr').forEach(tr => {
-                const cells = tr.querySelectorAll('td');
-                if (!cells.length) return;
-
-                // 如果這張表有 4 欄 (組別/隊名/姓名/數值)
-                if (cells.length >= 4) {
-                    const groupCell = cells[0];
-                    const teamCell = cells[1];
-                    const g = groupOf(teamCell.textContent.trim());
-                    if (g) {
-                        if (!groupCell.textContent.trim() || groupCell.textContent.trim() === '-') {
-                            groupCell.textContent = BADGE[g] || g;
-                        }
-                    }
-                    return;
-                }
-
-                // 舊版 3 欄 (隊名/姓名/數值)，將組別標籤附在隊名格子內
-                const cell = cells[0];
+                const cell = tr.querySelector('td');
                 if (!cell || cell.querySelector('.league-badge')) return;
                 const g = groupOf(cell.textContent.trim());
                 if (!g) return;
