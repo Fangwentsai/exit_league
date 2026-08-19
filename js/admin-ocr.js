@@ -164,6 +164,119 @@
             summary + (alerts.length ? '<div class="ocr-notes">' + alerts.map(a => `<div>⚠️ ${a}</div>`).join('') + '</div>' : ''),
             miss || alerts.length ? 'bad' : 'ok'
         );
+
+        // 彈出 AI 辨識分析結果視窗（提醒使用者請勿重複上傳）
+        showOcrResultModal(summary, alerts, warn, miss);
+    }
+
+    // 彈出視窗（Modal）：顯示分析結果並強烈提醒勿重複上傳
+    function showOcrResultModal(summary, alerts, warn, miss) {
+        let modal = el('ocrResultModalOverlay');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'ocrResultModalOverlay';
+            modal.style.cssText = 'position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:999999; padding:20px;';
+            document.body.appendChild(modal);
+        }
+
+        const alertsHtml = alerts.length
+            ? `<div style="background:#fff3cd; border:1px solid #ffeba2; color:#856404; padding:10px 14px; border-radius:6px; margin-top:12px; font-size:13px; text-align:left;">` +
+              alerts.map(a => `<div style="margin-bottom:4px;">⚠️ ${a}</div>`).join('') +
+              `</div>`
+            : '';
+
+        modal.innerHTML = `
+            <div style="background:#fff; width:100%; max-width:480px; border-radius:12px; padding:24px; box-shadow:0 12px 30px rgba(0,0,0,0.4); text-align:center; font-family:sans-serif; line-height:1.5;">
+                <div style="font-size:40px; margin-bottom:8px;">🤖</div>
+                <h3 style="margin:0 0 12px; color:#222; font-size:20px; font-weight:700;">AI 分紙辨識分析完成</h3>
+                
+                <!-- 醒目提醒框：強烈提醒勿重複上傳 -->
+                <div style="background:#f8d7da; border:2px solid #f5c6cb; color:#721c24; padding:14px; border-radius:8px; font-weight:bold; font-size:15px; margin-bottom:16px; text-align:left;">
+                    <div style="font-size:16px; color:#721c24; margin-bottom:4px; font-weight:bold;">⚠️ 重要提醒：資料已自動填入表單</div>
+                    <div style="font-size:14px; color:#495057; font-weight:normal; line-height:1.4;">
+                        辨識數據已自動寫入下方比賽表單，<b>請勿重複上傳照片或重新拍攝</b>！請直接在下方表單進行確認或微調。
+                    </div>
+                </div>
+
+                <div style="background:#f8f9fa; border:1px solid #e9ecef; padding:12px 14px; border-radius:8px; font-size:14px; color:#333; text-align:left; margin-bottom:20px;">
+                    <div>📊 <b>辨識統計</b>：${summary}</div>
+                    ${alertsHtml}
+                </div>
+
+                <div>
+                    <button onclick="document.getElementById('ocrResultModalOverlay').style.display='none'" style="background:#007bff; color:#fff; border:none; padding:11px 24px; font-size:15px; border-radius:6px; font-weight:bold; cursor:pointer; width:100%;">
+                        瞭解，前往確認下方欄位
+                    </button>
+                </div>
+            </div>
+        `;
+
+        modal.style.display = 'flex';
+    }
+
+    // 相片檔案上傳處理功能
+    function startUpload() {
+        if (!window.currentGame && typeof currentGame === 'undefined') {
+            alert('請先選擇比賽場次');
+            return;
+        }
+        const game = window.currentGame || currentGame;
+        if (!game) {
+            alert('請先選擇比賽場次');
+            return;
+        }
+
+        const fileInput = el('scoresheetFileInput');
+        if (fileInput) fileInput.click();
+    }
+
+    async function handleFileSelect(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        const game = window.currentGame || currentGame;
+        if (!game) {
+            alert('請先選擇比賽場次');
+            return;
+        }
+
+        const players = window.playersData || (typeof playersData !== 'undefined' ? playersData : {});
+        const homeRoster = players[normalizeTeam(game.home)];
+        const awayRoster = players[normalizeTeam(game.away)];
+        if (!homeRoster || !awayRoster) {
+            alert(`找不到隊伍名單\n主隊：${game.home}\n客隊：${game.away}`);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (evt) => {
+            const dataUrl = evt.target.result;
+            setStatus('上傳相片分析中…（約需 5~15 秒）', 'busy');
+            try {
+                const resp = await fetch('/api/analyze-scoresheet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: dataUrl,
+                        gameCode: game.id,
+                        homeTeam: game.home,
+                        awayTeam: game.away,
+                        homeRoster,
+                        awayRoster,
+                    }),
+                });
+                const data = await resp.json();
+                if (!resp.ok) {
+                    setStatus('辨識失敗：' + (data.error || resp.status), 'bad');
+                    return;
+                }
+                applyResult(data);
+            } catch (err) {
+                setStatus('連線失敗：' + err.message, 'bad');
+            }
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
     }
 
     // 點過就當作已確認，把標色拿掉
@@ -173,4 +286,6 @@
     }, true);
 
     window.startScoresheetCapture = startCapture;
+    window.startScoresheetUpload = startUpload;
+    window.handleScoresheetFileSelect = handleFileSelect;
 })();

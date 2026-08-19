@@ -83,10 +83,15 @@
             <!-- 比賽詳情區域 -->
             <div class="game-details" id="gameDetails">
                 <!-- 拍照辨識分紙：選好場次後才有意義，所以放在 gameDetails 內 -->
+                <!-- 拍照與上傳辨識分紙 -->
                 <div class="ocr-panel">
-                    <button class="ocr-shoot" onclick="startScoresheetCapture()">📷 拍照辨識分紙</button>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+                        <button class="ocr-shoot" onclick="startScoresheetCapture()">📷 拍照辨識分紙</button>
+                        <button class="ocr-shoot" style="background: #28a745;" onclick="startScoresheetUpload()">📁 上傳照片辨識</button>
+                        <input type="file" id="scoresheetFileInput" accept="image/*" style="display:none" onchange="handleScoresheetFileSelect(event)">
+                    </div>
                     <div class="ocr-status" id="ocrStatus">
-                        對齊四角後拍照辨識。帶入結果：<b>黃底</b>需確認、<b>紅底</b>需手動選擇。
+                        拍照或上傳照片對齊四角後辨識。帶入結果：<b>黃底</b>需確認、<b>紅底</b>需手動選擇。
                     </div>
                 </div>
 
