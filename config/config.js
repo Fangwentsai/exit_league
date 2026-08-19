@@ -55,7 +55,7 @@ const SEASONS = {
         },
         // 第七屆個人勝場排行與 Top Lady 在試算表 personal 分頁的參照範圍
         personalRankRanges: {
-            勝場排行: 'personal!T2:V7',
+            勝場排行: 'personal!T2:V6',
             TopLady: 'personal!T9:V13'
         },
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
