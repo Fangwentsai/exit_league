@@ -222,11 +222,33 @@ document.addEventListener('DOMContentLoaded', function () {
     startTagRemovalMonitor(); // 啟動標籤移除監控
 });
 
-// 當內容動態載入時也要重新初始化
-window.initializeNewsToggle = initializeNewsToggle;
-
 // 確保函數可以全域訪問
 window.toggleNews = toggleNews;
+
+// 動態載入舊賽季歷史戰報彙整（收合點擊後才拉取 data/news_sN.html）
+window.loadSeasonArchive = async function(seasonNum, headerEl) {
+    console.log(`開始非同步載入第 ${seasonNum} 屆歷史戰報...`);
+    const contentEl = document.getElementById(`season${seasonNum}ArchiveContent`);
+    if (!contentEl) return;
+
+    if (!contentEl.getAttribute('data-loaded')) {
+        try {
+            const res = await fetch(`../data/news_s${seasonNum}.html`);
+            if (res.ok) {
+                const html = await res.text();
+                contentEl.innerHTML = html;
+                contentEl.setAttribute('data-loaded', 'true');
+                // 替剛剛動態嵌入的歷史文章重新綁定點擊事件
+                initializeNewsToggle();
+            } else {
+                contentEl.innerHTML = '<div style="padding:15px; text-align:center; color:#c00;">⚠️ 歷史戰報檔載入失敗，請重新點擊。</div>';
+            }
+        } catch (e) {
+            console.error(`載入第 ${seasonNum} 屆歷史戰報失敗:`, e);
+            contentEl.innerHTML = '<div style="padding:15px; text-align:center; color:#c00;">⚠️ 網路異常，請稍後再試。</div>';
+        }
+    }
+};
 
 async function loadMatches() {
     try {
