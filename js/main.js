@@ -129,9 +129,7 @@ function toggleNews(headerElement) {
     const newsItem = headerElement.parentElement;
     const newsText = newsItem.querySelector('.news-text');
 
-    console.log('newsItem:', newsItem);
-    console.log('newsText:', newsText);
-    console.log('newsText classes before:', newsText.className);
+    if (!newsText) return;
 
     if (newsText.classList.contains('collapsed')) {
         // 展開
@@ -139,6 +137,12 @@ function toggleNews(headerElement) {
         newsText.classList.remove('collapsed');
         newsText.classList.add('expanded');
         headerElement.classList.add('expanded');
+
+        // 檢查是否為歷史賽季歸檔卡片
+        const seasonArchiveNum = headerElement.getAttribute('data-season-archive');
+        if (seasonArchiveNum && window.loadSeasonArchive) {
+            window.loadSeasonArchive(seasonArchiveNum, headerElement);
+        }
     } else {
         // 折疊
         console.log('折疊新聞');
@@ -146,10 +150,41 @@ function toggleNews(headerElement) {
         newsText.classList.add('collapsed');
         headerElement.classList.remove('expanded');
     }
-
-    console.log('newsText classes after:', newsText.className);
-    console.log('headerElement classes after:', headerElement.className);
 }
+
+// 動態載入舊賽季歷史戰報彙整（收合點擊後才拉取 data/news_sN.html）
+window.loadSeasonArchive = async function(seasonNum, headerEl) {
+    console.log(`開始非同步載入第 ${seasonNum} 屆歷史戰報...`);
+    const contentEl = document.getElementById(`season${seasonNum}ArchiveContent`);
+    if (!contentEl) return;
+
+    if (!contentEl.getAttribute('data-loaded')) {
+        const isPagesDir = window.location.pathname.includes('/pages/');
+        const primaryPath = isPagesDir ? `../data/news_s${seasonNum}.html` : `data/news_s${seasonNum}.html`;
+        const fallbackPath = isPagesDir ? `data/news_s${seasonNum}.html` : `../data/news_s${seasonNum}.html`;
+
+        try {
+            let res = await fetch(primaryPath);
+            if (!res.ok) {
+                res = await fetch(fallbackPath);
+            }
+
+            if (res.ok) {
+                const html = await res.text();
+                contentEl.innerHTML = html;
+                contentEl.setAttribute('data-loaded', 'true');
+                if (typeof initializeNewsToggle === 'function') {
+                    initializeNewsToggle();
+                }
+            } else {
+                contentEl.innerHTML = '<div style="padding:15px; text-align:center; color:#c00;">⚠️ 歷史戰報檔載入失敗，請重新點擊。</div>';
+            }
+        } catch (e) {
+            console.error(`載入第 ${seasonNum} 屆歷史戰報失敗:`, e);
+            contentEl.innerHTML = '<div style="padding:15px; text-align:center; color:#c00;">⚠️ 網路異常，請稍後再試。</div>';
+        }
+    }
+};
 
 // 初始化新聞折疊功能
 function initializeNewsToggle() {

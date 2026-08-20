@@ -126,9 +126,7 @@ function toggleNews(headerElement) {
     const newsItem = headerElement.parentElement;
     const newsText = newsItem.querySelector('.news-text');
 
-    console.log('newsItem:', newsItem);
-    console.log('newsText:', newsText);
-    console.log('newsText classes before:', newsText.className);
+    if (!newsText) return;
 
     if (newsText.classList.contains('collapsed')) {
         // 展開
@@ -136,6 +134,12 @@ function toggleNews(headerElement) {
         newsText.classList.remove('collapsed');
         newsText.classList.add('expanded');
         headerElement.classList.add('expanded');
+
+        // 檢查是否為歷史賽季歸檔卡片
+        const seasonArchiveNum = headerElement.getAttribute('data-season-archive');
+        if (seasonArchiveNum && window.loadSeasonArchive) {
+            window.loadSeasonArchive(seasonArchiveNum, headerElement);
+        }
     } else {
         // 折疊
         console.log('折疊新聞');
@@ -143,9 +147,6 @@ function toggleNews(headerElement) {
         newsText.classList.add('collapsed');
         headerElement.classList.remove('expanded');
     }
-
-    console.log('newsText classes after:', newsText.className);
-    console.log('headerElement classes after:', headerElement.className);
 }
 
 // 初始化新聞折疊功能
@@ -232,14 +233,23 @@ window.loadSeasonArchive = async function(seasonNum, headerEl) {
     if (!contentEl) return;
 
     if (!contentEl.getAttribute('data-loaded')) {
+        const isPagesDir = window.location.pathname.includes('/pages/');
+        const primaryPath = isPagesDir ? `../data/news_s${seasonNum}.html` : `data/news_s${seasonNum}.html`;
+        const fallbackPath = isPagesDir ? `data/news_s${seasonNum}.html` : `../data/news_s${seasonNum}.html`;
+
         try {
-            const res = await fetch(`../data/news_s${seasonNum}.html`);
+            let res = await fetch(primaryPath);
+            if (!res.ok) {
+                res = await fetch(fallbackPath);
+            }
+
             if (res.ok) {
                 const html = await res.text();
                 contentEl.innerHTML = html;
                 contentEl.setAttribute('data-loaded', 'true');
-                // 替剛剛動態嵌入的歷史文章重新綁定點擊事件
-                initializeNewsToggle();
+                if (typeof initializeNewsToggle === 'function') {
+                    initializeNewsToggle();
+                }
             } else {
                 contentEl.innerHTML = '<div style="padding:15px; text-align:center; color:#c00;">⚠️ 歷史戰報檔載入失敗，請重新點擊。</div>';
             }
