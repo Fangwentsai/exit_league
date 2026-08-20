@@ -217,6 +217,9 @@ function initializeNewsToggle() {
             }
             // 使用從 contentArea 找到的標題
             contentNewsHeaders.forEach((header, index) => {
+                if (header.hasAttribute('data-toggle-bound')) return;
+                header.setAttribute('data-toggle-bound', 'true');
+
                 console.log(`🖱️ 為第${index + 1}個新聞標題添加點擊事件`);
                 header.addEventListener('click', function (event) {
                     console.log(`🖱️ 點擊了第${index + 1}個新聞標題`, event);
@@ -234,6 +237,9 @@ function initializeNewsToggle() {
         }
 
         newsHeaders.forEach((header, index) => {
+            if (header.hasAttribute('data-toggle-bound')) return;
+            header.setAttribute('data-toggle-bound', 'true');
+
             console.log(`🖱️ 為第${index + 1}個新聞標題添加點擊事件`);
             header.addEventListener('click', function (event) {
                 console.log(`🖱️ 點擊了第${index + 1}個新聞標題`, event);

@@ -184,6 +184,9 @@ function initializeNewsToggle() {
         }
 
         newsHeaders.forEach((header, index) => {
+            if (header.hasAttribute('data-toggle-bound')) return;
+            header.setAttribute('data-toggle-bound', 'true');
+
             console.log(`🖱️ 為第${index + 1}個新聞標題添加點擊事件`);
             header.addEventListener('click', function (event) {
                 console.log(`🖱️ 點擊了第${index + 1}個新聞標題`, event);
