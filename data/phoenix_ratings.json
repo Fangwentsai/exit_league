@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T03:12:55.144Z",
+  "updatedAt": "2026-08-21T07:04:21.272Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -638,11 +638,11 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.44",
+        "webrate": "14.48",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.00",
-        "mpr": "3.02",
+        "ppd": "26.12",
+        "mpr": "3.01",
         "source": "myinfo"
       },
       "肥肥": {
