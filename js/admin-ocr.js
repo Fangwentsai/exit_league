@@ -33,6 +33,50 @@
         box.innerHTML = html;
     }
 
+    // 用 Canvas 壓縮圖片，避免手機高畫質相片 (6MB~15MB+) 突破 Vercel 4.5MB Payload 限制
+    function compressImage(dataUrl, maxDim = 2048, quality = 0.85) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                let w = img.width;
+                let h = img.height;
+                if (w > maxDim || h > maxDim) {
+                    if (w > h) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL('image/jpeg', quality));
+            };
+            img.onerror = () => resolve(dataUrl);
+            img.src = dataUrl;
+        });
+    }
+
+    // 解析 API 回應，若非 JSON (例如 413 / 504 HTML Error 頁面) 則捕捉中文提示
+    async function parseApiResponse(resp) {
+        const contentType = resp.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            return await resp.json();
+        }
+        const text = await resp.text();
+        if (resp.status === 413 || text.includes('Request Entity Too Large')) {
+            throw new Error('相片檔案過大 (HTTP 413)，請重新拍攝或選擇較小檔案');
+        }
+        if (resp.status === 504 || resp.status === 502) {
+            throw new Error('伺服器處理超時 (HTTP ' + resp.status + ')，請重新嘗試');
+        }
+        throw new Error(`伺服器回應異常 (HTTP ${resp.status})`);
+    }
+
     async function startCapture() {
         if (!window.currentGame && typeof currentGame === 'undefined') {
             alert('請先選擇比賽場次');
@@ -55,15 +99,16 @@
         const shot = await ScoresheetCamera.open();
         if (!shot) return;
 
-        setStatus('辨識中…（約需 5~15 秒）', 'busy');
+        setStatus('圖檔處理與辨識中…（約需 5~15 秒）', 'busy');
         showOcrProgressModal();
 
         try {
+            const compressedImage = await compressImage(shot.dataUrl);
             const resp = await fetch('/api/analyze-scoresheet', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    image: shot.dataUrl,
+                    image: compressedImage,
                     gameCode: game.id,
                     homeTeam: game.home,
                     awayTeam: game.away,
@@ -71,7 +116,7 @@
                     awayRoster,
                 }),
             });
-            const data = await resp.json();
+            const data = await parseApiResponse(resp);
             setOcrProgressComplete(() => {
                 if (!resp.ok) {
                     setStatus('辨識失敗：' + (data.error || resp.status), 'bad');
@@ -304,16 +349,17 @@
 
         const reader = new FileReader();
         reader.onload = async (evt) => {
-            const dataUrl = evt.target.result;
-            setStatus('上傳相片分析中…（約需 5~15 秒）', 'busy');
+            const rawDataUrl = evt.target.result;
+            setStatus('相片壓縮與分析中…（約需 5~15 秒）', 'busy');
             showOcrProgressModal();
 
             try {
+                const compressedImage = await compressImage(rawDataUrl);
                 const resp = await fetch('/api/analyze-scoresheet', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        image: dataUrl,
+                        image: compressedImage,
                         gameCode: game.id,
                         homeTeam: game.home,
                         awayTeam: game.away,
@@ -321,7 +367,7 @@
                         awayRoster,
                     }),
                 });
-                const data = await resp.json();
+                const data = await parseApiResponse(resp);
                 setOcrProgressComplete(() => {
                     if (!resp.ok) {
                         setStatus('辨識失敗：' + (data.error || resp.status), 'bad');
