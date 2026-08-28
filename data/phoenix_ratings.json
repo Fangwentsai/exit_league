@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-28T14:17:37.867Z",
+  "updatedAt": "2026-08-28T18:36:42.267Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -19,10 +19,10 @@
         "cardAtBind": "逃生入口 Jesse",
         "cSeq": "2397883",
         "homeShop": "逃生入口 Bar",
-        "webrate": "8.93",
+        "webrate": "8.95",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "19.05",
+        "ppd": "19.09",
         "mpr": "2.12",
         "source": "myinfo"
       },
@@ -79,11 +79,11 @@
         "cardAtBind": "喵咪貓貓叫",
         "cSeq": "2780591",
         "homeShop": "GG Bar",
-        "webrate": "7.45",
+        "webrate": "7.37",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "16.68",
-        "mpr": "1.96",
+        "ppd": "16.63",
+        "mpr": "1.94",
         "source": "myinfo"
       },
       "羊羊": {
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.31",
+        "webrate": "9.32",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.68",
-        "mpr": "2.14",
+        "ppd": "19.55",
+        "mpr": "2.17",
         "source": "myinfo"
       },
       "小倫": {
@@ -190,11 +190,11 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "7.54",
+        "webrate": "7.35",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "17.42",
-        "mpr": "1.89",
+        "ppd": "17.01",
+        "mpr": "1.91",
         "source": "myinfo"
       },
       "阿樂": {
@@ -226,11 +226,11 @@
         "cardAtBind": "你會仰式嗎？",
         "cSeq": "2940156",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.57",
+        "webrate": "9.71",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.75",
-        "mpr": "2.20",
+        "ppd": "19.86",
+        "mpr": "2.23",
         "source": "myinfo"
       },
       "乳來": {
@@ -262,11 +262,11 @@
         "cardAtBind": "讓我把吉伊煎成餅",
         "cSeq": "2855332",
         "homeShop": "逃生入口 Bar",
-        "webrate": "18.61",
+        "webrate": "18.22",
         "level": 18,
         "icon": "images/rating30/18.webp",
-        "ppd": "31.05",
-        "mpr": "3.60",
+        "ppd": "30.19",
+        "mpr": "3.57",
         "source": "myinfo"
       },
       "阿誠": {
@@ -336,11 +336,11 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "15.68",
+        "webrate": "15.64",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.40",
-        "mpr": "3.20",
+        "ppd": "27.19",
+        "mpr": "3.22",
         "source": "myinfo"
       },
       "宏哥": {
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.80",
+        "webrate": "11.68",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "23.17",
+        "ppd": "23.01",
         "mpr": "2.36",
         "source": "myinfo"
       }
@@ -362,11 +362,11 @@
         "cardAtBind": "神奇鳳螺",
         "cSeq": "2407408",
         "homeShop": "VIVI 酒吧",
-        "webrate": "6.44",
+        "webrate": "6.46",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.66",
-        "mpr": "1.79",
+        "ppd": "15.73",
+        "mpr": "1.78",
         "source": "myinfo"
       }
     },
@@ -449,10 +449,10 @@
         "cardAtBind": "Jack台柱 皮卡起秋",
         "cSeq": "2790582",
         "homeShop": "Jack Bar",
-        "webrate": "9.17",
+        "webrate": "9.15",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.62",
+        "ppd": "19.59",
         "mpr": "2.10",
         "source": "myinfo"
       },
@@ -474,7 +474,7 @@
         "cardAtBind": "老是掉東西",
         "cSeq": "3068056",
         "homeShop": "Jack Bar",
-        "webrate": "7.38",
+        "webrate": "7.20",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "鈴洛奇冷飲室",
-        "webrate": "10.26",
+        "webrate": "10.21",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.59",
+        "ppd": "20.49",
         "mpr": "2.37",
         "source": "myinfo"
       },
@@ -564,11 +564,11 @@
         "cardAtBind": "阿翰",
         "cSeq": "2887184",
         "homeShop": "Jack Bar",
-        "webrate": "9.45",
+        "webrate": "9.35",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.88",
-        "mpr": "2.17",
+        "ppd": "19.66",
+        "mpr": "2.18",
         "source": "myinfo"
       },
       "霸告": {
@@ -613,11 +613,11 @@
         "cardAtBind": "TERRY",
         "cSeq": "2191560",
         "homeShop": "Jack Bar",
-        "webrate": "10.50",
+        "webrate": "10.41",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.38",
-        "mpr": "2.29",
+        "ppd": "21.15",
+        "mpr": "2.31",
         "source": "myinfo"
       },
       "九紋龍": {
@@ -638,10 +638,10 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.23",
+        "webrate": "14.12",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "25.83",
+        "ppd": "25.62",
         "mpr": "2.96",
         "source": "myinfo"
       },
@@ -650,7 +650,7 @@
         "cardAtBind": "大冰奶",
         "cSeq": "3074156",
         "homeShop": "Jack Bar",
-        "webrate": "7.46",
+        "webrate": "7.59",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -675,7 +675,7 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "8.36",
+        "webrate": "8.03",
         "level": 8,
         "icon": "images/rating30/8.webp",
         "ppd": null,
@@ -727,10 +727,10 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "11.88",
+        "webrate": "11.83",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.40",
+        "ppd": "21.30",
         "mpr": "2.76",
         "source": "myinfo"
       }
