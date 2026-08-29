@@ -9,7 +9,7 @@ const SHEETS_CONFIG = {
     // 讀取比賽場次：跟著 config.js 的當季走，不要寫死屆數
     get API_KEY() {
         try { return SEASONS[CURRENT_SEASON].apiKey; }
-        catch (e) { return 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4'; }
+        catch (e) { return (typeof DEFAULT_API_KEY !== 'undefined') ? DEFAULT_API_KEY : undefined; }
     },
     get SCHEDULE_SHEET_ID() {
         try { return SEASONS[CURRENT_SEASON].sheetId; }
