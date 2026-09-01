@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T07:44:30.744Z",
+  "updatedAt": "2026-09-01T11:34:38.873Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -589,10 +589,10 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.35",
+        "webrate": "11.36",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.91",
+        "ppd": "21.92",
         "mpr": "2.58",
         "source": "myinfo"
       },
