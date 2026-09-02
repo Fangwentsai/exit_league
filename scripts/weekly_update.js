@@ -377,13 +377,21 @@ async function fetchRankingsAndUpdateNews() {
     console.log(`  ✅ Top Lady：Top ${topLadies.length}（personal N=女 + G欄排序）`);
 
 
-    // ── 地獄倒霉鬼：personal!W2:Y6（W=隊名, X=姓名, Y=先攻機率）
-    const unluckyUrl = `${sheetsApiBase}/personal!W2:Y6?key=${apiKey}`;
-    const unluckyData = await httpsGet(unluckyUrl);
-    unluckyPlayers = (unluckyData.values || [])
-      .filter(r => r[1] && r[2])
-      .map(r => ({ team: r[0], name: r[1], faRate: r[2] }));
-    console.log(`  ✅ 地獄倒霉鬼：Top ${unluckyPlayers.length}（personal W:Y）`);
+    // ── 地獄倒霉鬼：改成直接從 personal!A2:N200 現算，不要依賴 W2:Y6
+    //    （那個範圍在試算表裡的公式已經壞掉，整格回傳 #N/A，導致這區塊
+    //    每週都被下面的 length===0 判斷跳過，永遠不會更新）。
+    //    I欄(index 8)=先攻率, M欄(index 12)=總場數，跟 gas_auto_rankings.js
+    //    用的是同一套邏輯：先攻率越低代表越常被搶先攻、越倒霉。
+    unluckyPlayers = allPlayers
+      .filter(r => {
+        const totalGames = parseInt(r[12]) || 0;
+        const faRate = String(r[8] || '').trim();
+        return totalGames > 0 && faRate && faRate !== 'DNP' && faRate !== '0%';
+      })
+      .map(r => ({ team: r[0], name: r[1], faRate: r[8], faRateNum: parseFloat(String(r[8]).replace('%', '')) || 100 }))
+      .sort((a, b) => a.faRateNum - b.faRateNum)
+      .slice(0, 5);
+    console.log(`  ✅ 地獄倒霉鬼：Top ${unluckyPlayers.length}（personal A:N 現算，I=先攻率, M=總場數）`);
 
   } catch (err) {
     console.error(`  ❌ 讀取排行榜失敗: ${err.message}`);
