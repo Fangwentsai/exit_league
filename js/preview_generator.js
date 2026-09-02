@@ -406,6 +406,21 @@ initializeStats(awayPlayers, homePlayers);
         if (!homeTeam) return '比賽場地';
 
         const venues = {
+            // 第七屆隊伍與主場對照（完全對齊 Google Sheet 登記名稱）
+            '匪類里民一直喝': 'R8串燒 Metro Bar',
+            '有點傻': 'No.5 飛鏢Bar',
+            '酒空組': '逃生入口Bar',
+            '軟飯揪團中': '樂源 a.k.a 兩杯',
+            '逃生Zoo口': '逃生入口Bar',
+            '傑克黑桃': 'JACK BAR',
+            '傑克紅心': 'JACK BAR',
+            'Tonight29發財隊': 'Tonight29',
+            'Tonight29恭喜隊': 'Tonight29',
+            '嘻嘻隊': 'Vivi Bar',
+            '哈哈隊': 'Vivi Bar',
+            '人生揪難亮': 'No.5 飛鏢Bar',
+
+            // 舊屆別相容
             '人生揪難': 'No.5 飛鏢Bar',
             '人生揪亮': 'No.5 飛鏢Bar',
             'Vivi嘻嘻隊': 'Vivi Bar',
@@ -413,10 +428,7 @@ initializeStats(awayPlayers, homePlayers);
             'Tonight29大四喜': 'Tonight29',
             'Tonight29大三元': 'Tonight29',
             'Tonight29十三么': 'Tonight29',
-            '傑克黑桃': 'Jack',
-            '傑克紅心': 'Jack',
             '逃生入口': '逃生入口 Bar',
-            '酒空組': '藍白拖',
             '軟飯硬吃': '樂源A.K.A兩杯'
         };
 
