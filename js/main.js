@@ -1434,7 +1434,9 @@ async function loadRankData(page) {
             rateCR: parseFloat(row[5]) || 0,
             totalWins: parseFloat(row[6]) || 0,
             totalRate: parseFloat(row[7]) || 0,
-            firstRate: parseFloat(row[8]) || 0
+            firstRate: parseFloat(row[8]) || 0,
+            // I欄場次不足時試算表填 "DNP"，parseFloat 會變 0，畫面上要顯示「-」而不是 0%
+            firstRateDNP: !row[8] || String(row[8]).trim() === 'DNP'
         }));
 
         // 初始化個人排名相關功能
@@ -1476,7 +1478,7 @@ function initializePersonalRankings(rankings) {
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
                 <td>${row.totalRate}%</td>
-                <td>${row.firstRate}%</td>
+                <td>${row.firstRateDNP ? '-' : row.firstRate + '%'}</td>
             </tr>
         `).join('');
 
@@ -1642,8 +1644,10 @@ function updateTeamRankings(data, isS5OrS6 = false) {
             total: parseFloat(row[6] || 0)
         };
     })
-        // 過濾空行
-        .filter(item => item.team && !isNaN(item.total))
+        // 過濾空行，並濾掉 O:V 範圍裡混在掉鏢組/靶外組資料中間的表頭列
+        // （那個表頭列 team="隊伍名稱"、total 因 parseFloat 失敗被當成 0，
+        // 會通過 !isNaN(total) 檢查混進榜單——用「勝場欄位必須是數字」濾掉它）
+        .filter(item => item.team && !isNaN(item.total) && /^\d+$/.test(String(item.wins).trim()))
         // 排序
         .sort((a, b) => b.total - a.total);
 
