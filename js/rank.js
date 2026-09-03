@@ -211,7 +211,9 @@ if (!CONFIG[currentSeason]) {
                 rateCR: parseFloat(row[5]) || 0,
                 totalWins: parseFloat(row[6]) || 0,
                 totalRate: parseFloat(row[7]) || 0,
-                firstRate: parseFloat(row[8]) || 0
+                firstRate: parseFloat(row[8]) || 0,
+                // I欄場次不足時試算表填 "DNP"，parseFloat 會變 0，畫面上要顯示「-」而不是 0%
+                firstRateDNP: !row[8] || String(row[8]).trim() === 'DNP'
             }));
 
             // 設置初始數據
@@ -314,7 +316,7 @@ if (!CONFIG[currentSeason]) {
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
                 <td>${row.totalRate}%</td>
-                <td>${row.firstRate}%</td>
+                <td>${row.firstRateDNP ? '-' : row.firstRate + '%'}</td>
             `;
             tableBody.appendChild(tr);
         });
@@ -448,7 +450,7 @@ if (!CONFIG[currentSeason]) {
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
                 <td>${row.totalRate}%</td>
-                <td>${row.firstRate}%</td>
+                <td>${row.firstRateDNP ? '-' : row.firstRate + '%'}</td>
             `;
             tableBody.appendChild(tr);
         });
