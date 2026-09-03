@@ -1414,6 +1414,11 @@ async function loadRankData(page) {
 
         // 【修改這裡】把 isS5OrS6 傳遞下去，讓 updateTeamRankings 知道如何解析
         updateTeamRankings(rankData.values.slice(1), isNewRankLayout);
+        // 有分組的賽季（目前只有第七屆）要把 12 隊拆成掉鏢組/靶外組分頁顯示，
+        // 這段邏輯原本只寫在 pages/rankS7.html 自己的內嵌 <script> 裡，
+        // 但那段 script 是透過 innerHTML 注入到 SPA 的，瀏覽器不會執行，
+        // 所以首頁 #rankS7 這個多數人在用的入口一直是看到 12 隊平舖一列、沒有分頁籤。
+        applyTeamGroupTabs(season);
 
         // 載入個人排名
         const personalResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A:I?key=${config.API_KEY}`);
@@ -1666,6 +1671,49 @@ function updateTeamRankings(data, isS5OrS6 = false) {
         </tr>
     `).join('');
     // =================================
+}
+
+// 隊伍排名分組頁籤（適用於 S7 及未來分組賽季）
+// 移植自 pages/rankS7.html 自己的內嵌 <script>：把 updateTeamRankings 畫出來的
+// 12 隊平舖列表，依 season.groups 拆成掉鏢組/靶外組分頁顯示、組內重新編號。
+// 沒有分組設定的舊賽季呼叫這個函式會直接跳過，維持原本的平舖排名。
+function applyTeamGroupTabs(season) {
+    const groups = (season && season.groups) || {};
+    const order = Object.keys(groups);
+    if (!order.length) return;
+
+    const body = document.getElementById('rankTableBody');
+    const host = document.getElementById('rankLeagueTabs');
+    if (!body) return;
+
+    let current = order[0];
+
+    function render() {
+        const teams = groups[current] || [];
+        let seq = 0;
+        body.querySelectorAll('tr').forEach(tr => {
+            const cells = tr.querySelectorAll('td');
+            if (cells.length < 2) return;
+            const name = cells[1].textContent.trim();
+            const show = teams.includes(name);
+            tr.hidden = !show;
+            if (show) cells[0].textContent = ++seq; // 組內重新編號
+        });
+    }
+
+    if (host) {
+        host.innerHTML = order.map(k =>
+            `<button class="league-tab${k === current ? ' active' : ''}" data-league="${k}">${k}</button>`).join('');
+        host.onclick = function (e) {
+            const tab = e.target.closest('.league-tab');
+            if (!tab) return;
+            current = tab.dataset.league;
+            host.querySelectorAll('.league-tab').forEach(t => t.classList.toggle('active', t === tab));
+            render();
+        };
+    }
+
+    render();
 }
 
 // 分組賽程自動分配與頁籤建置 (適用於 S7 及未來分組賽季)
