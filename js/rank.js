@@ -127,11 +127,18 @@ if (!CONFIG[currentSeason]) {
                     
                     // 排除賽程相關的行（包含日期、比賽場次等關鍵字）
                     const teamLower = item.team.trim().toLowerCase();
-                    const excludeKeywords = ['日期', '遊戲編號', '客場', '主場', '比賽地點', 'g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9'];
+                    const excludeKeywords = ['日期', '遊戲編號', '客場', '主場', '比賽地點', '隊伍名稱', '排名', 'g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9'];
                     if (excludeKeywords.some(keyword => teamLower.includes(keyword))) {
                         return false;
                     }
-                    
+
+                    // O:V 範圍中間夾了掉鏢組/靶外組各自的表頭列（同一份試算表兩組疊在一起），
+                    // slice(1) 只能砍掉最前面那一個。真正的隊伍列勝場一定是數字，表頭列的
+                    // 「勝」欄位是文字，用這個特徵把混進來的表頭列也濾掉。
+                    if (!/^\d+$/.test(String(item.wins).trim())) {
+                        return false;
+                    }
+
                     // 必須有有效的總分
                     if (isS5OrS6) {
                         return !isNaN(item.total) && item.total >= 0;
