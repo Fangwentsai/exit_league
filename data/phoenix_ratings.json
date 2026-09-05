@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T06:54:22.163Z",
+  "updatedAt": "2026-09-05T10:29:57.146Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -376,10 +376,10 @@
         "cardAtBind": "Jack臭B",
         "cSeq": "2057725",
         "homeShop": "Jack Bar",
-        "webrate": "6.98",
+        "webrate": "6.83",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.64",
+        "ppd": "16.39",
         "mpr": "1.84",
         "source": "myinfo"
       },
@@ -537,9 +537,9 @@
         "cardAtBind": "女繩",
         "cSeq": "3067661",
         "homeShop": "Jack Bar",
-        "webrate": "5.06",
-        "level": 5,
-        "icon": "images/rating30/5.webp",
+        "webrate": "4.96",
+        "level": 4,
+        "icon": "images/rating30/4.webp",
         "ppd": null,
         "mpr": null,
         "profileHidden": true,
