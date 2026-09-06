@@ -84,6 +84,7 @@ async function searchProducts(keyword, limit = 6) {
                         imageUrl
                         priceMin
                         priceMax
+                        priceDiscountRate
                         sales
                         commissionRate
                         ratingStar
@@ -120,6 +121,7 @@ async function getShopProducts(shopName, limit = 6) {
                         imageUrl
                         priceMin
                         priceMax
+                        priceDiscountRate
                         sales
                         commissionRate
                         ratingStar
@@ -235,30 +237,33 @@ module.exports = async function handler(req, res) {
 
         // ===== 原有模式：回傳完整商品列表 =====
         const limitNum = parseInt(limit, 10);
-        
+        // 多抓一些候選（上限 50），這樣篩出「特價中」的商品後還有得排，
+        // 不會因為篩選折扣就讓最後回傳的商品數比 limitNum 少
+        const fetchLimit = Math.min(limitNum * 3, 50);
+
         console.log(`\n🛒 === Shopee API 請求 ===`);
-        console.log(`📍 shop: ${shop}, keyword: ${keyword}, limit: ${limitNum}`);
-        
+        console.log(`📍 shop: ${shop}, keyword: ${keyword}, limit: ${limitNum}（實際抓取 ${fetchLimit}）`);
+
         let data;
         let nodes = [];
-        
+
         // 優先使用賣場搜尋
         if (shop) {
             console.log(`🏪 搜尋賣場: ${shop}`);
-            data = await getShopProducts(shop, limitNum);
+            data = await getShopProducts(shop, fetchLimit);
             console.log(`🏪 shopOfferV2 回傳:`, JSON.stringify(data, null, 2).substring(0, 1000));
             nodes = data?.data?.shopOfferV2?.nodes || [];
-            
+
             if (nodes.length > 0) {
                 const shopNames = [...new Set(nodes.map(n => n.shopName))];
                 console.log(`🏪 實際賣場: ${shopNames.join(', ')}`);
             }
         }
-        
+
         // 如果賣場沒有結果，使用關鍵字搜尋
         if (nodes.length === 0) {
             console.log(`🔍 搜尋關鍵字: ${keyword}`);
-            data = await searchProducts(keyword, limitNum);
+            data = await searchProducts(keyword, fetchLimit);
             nodes = data?.data?.productOfferV2?.nodes || [];
         }
         
@@ -273,29 +278,45 @@ module.exports = async function handler(req, res) {
         }
         
         // 組裝商品資料
-        let products = nodes.map(node => ({
-            id: node.itemId,
-            name: node.productName,
-            price: Math.floor(node.priceMin || 0),
-            originalPrice: node.priceMax && node.priceMax > node.priceMin ? Math.floor(node.priceMax) : null,
-            discount: null,
-            image: node.imageUrl,
-            sold: node.sales || 0,
-            rating: node.ratingStar || 0,
-            shopName: node.shopName || '',
-            url: node.offerLink || node.productLink,
-            commissionRate: node.commissionRate
-        }));
-        
+        let products = nodes.map(node => {
+            const price = Math.floor(node.priceMin || 0);
+            const discount = parseInt(node.priceDiscountRate, 10) || 0;
+            // priceDiscountRate 是 Shopee 真正的特價折扣（例如 20 代表打 8 折），
+            // 用它反推原價，而不是拿 priceMax（同商品不同款式的價格區間）冒充原價
+            const originalPrice = discount > 0 ? Math.round(price / (1 - discount / 100)) : null;
+            return {
+                id: node.itemId,
+                name: node.productName,
+                price,
+                originalPrice,
+                discount: discount > 0 ? discount : null,
+                image: node.imageUrl,
+                sold: node.sales || 0,
+                rating: node.ratingStar || 0,
+                shopName: node.shopName || '',
+                url: node.offerLink || node.productLink,
+                commissionRate: node.commissionRate
+            };
+        });
+
         // 過濾掉不想要的商品
         const excludeKeywords = ['原廠公鏢', '公鏢組'];
-        products = products.filter(p => 
+        products = products.filter(p =>
             !excludeKeywords.some(kw => p.name.includes(kw))
         );
-        
-        // 按銷量從高到低排序
-        products = products.sort((a, b) => b.sold - a.sold);
-        
+
+        // 特價中的商品優先（同樣有折扣的話銷量高排前面，其餘商品接在後面補滿，
+        // 不會因為篩選特價而讓版位開天窗）
+        products = products.sort((a, b) => {
+            const aOnSale = a.discount ? 1 : 0;
+            const bOnSale = b.discount ? 1 : 0;
+            if (aOnSale !== bOnSale) return bOnSale - aOnSale;
+            return b.sold - a.sold;
+        });
+
+        // 篩選/多抓的候選只是排序用，最後還是照原本請求的數量回傳
+        products = products.slice(0, limitNum);
+
         // 取得實際賣場名稱
         const actualShops = [...new Set(products.map(p => p.shopName).filter(Boolean))];
         
