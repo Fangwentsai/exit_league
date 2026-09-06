@@ -155,6 +155,7 @@
         track.innerHTML = products.map(product => createProductCard(product)).join('');
 
         const itemsPerView = getItemsPerView();
+        applyCardWidth(track, itemsPerView);
         const totalPages = Math.ceil(products.length / itemsPerView);
         
         if (dotsContainer) {
@@ -164,6 +165,23 @@
         }
 
         updateCarouselPosition();
+    }
+
+    // ========== 精算卡片實際寬度 ==========
+    // 這是一個「30 張卡片攤平成一整排、用 overflow:hidden 裁切、靠 translateX
+    // 滑動」的輪播，track 本身允許內容溢位（卡片 flex-shrink:0 不會被壓縮）。
+    // 在這種會溢位的 flex 容器裡，CSS 百分比 flex-basis（calc(50% - 5px)）
+    // 算出來的寬度基準跟容器實際可視寬度會對不上（親測溢位達 20px），
+    // 導致每排第二張卡片的右側被容器邊界裁掉一截、文字被切字。
+    // 直接用 JS 量出容器真正的可視寬度，扣掉 gap 再精算，透過 CSS 變數
+    // 指定成明確的 px 值，繞開這個 flex 百分比在溢位情境下不可靠的問題。
+    function applyCardWidth(track, itemsPerView) {
+        const container = track.parentElement;
+        if (!container) return;
+        const containerWidth = container.clientWidth;
+        const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
+        const cardWidth = (containerWidth - gap * (itemsPerView - 1)) / itemsPerView;
+        track.style.setProperty('--shopee-card-width', `${cardWidth}px`);
     }
 
     // ========== 創建商品卡片 HTML ==========

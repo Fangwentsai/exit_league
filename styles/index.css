@@ -530,9 +530,13 @@ body {
 }
 
 .shopee-product-card {
-    /* 一排 2 張、中間 1 條 10px 的 gap，這條 gap 由兩張卡平分，
-       所以每張卡片實際寬度要扣掉 gap 的一半（5px），不是隨便估的數字 */
-    flex: 0 0 calc(50% - 5px);
+    /* 這個 track 允許內容溢位（30 張卡片攤平、用 overflow:hidden 裁切、
+       靠 translateX 滑動），CSS 百分比 flex-basis 在這種情境下算出來的
+       寬度基準會跟容器實際可視寬度對不上，導致每排右邊卡片被裁掉一截。
+       改由 js/shopee-carousel.js 的 applyCardWidth() 量出容器真實寬度後
+       寫入 --shopee-card-width 這個 CSS 變數，calc(50% - 5px) 只當作 JS
+       還沒跑之前的備援值。 */
+    flex: 0 0 var(--shopee-card-width, calc(50% - 5px));
     display: flex;
     flex-direction: row;
     background: #EE4D2D;
