@@ -533,21 +533,21 @@ body {
     flex: 0 0 calc(50% - 6px);
     display: flex;
     flex-direction: row;
-    background: #fff;
+    background: #EE4D2D;
     border-radius: 6px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
-    border: 1px solid #eee;
+    border: 1px solid #EE4D2D;
     padding: 4px 5px;
     gap: 8px;
     align-items: center;
 }
 
 .shopee-product-card:hover {
-    box-shadow: 0 4px 12px rgba(238, 77, 45, 0.2);
-    border-color: #EE4D2D;
+    box-shadow: 0 4px 12px rgba(238, 77, 45, 0.35);
+    border-color: #D94429;
 }
 
 .product-image-container {
@@ -555,6 +555,8 @@ body {
     flex-shrink: 0;
     width: 55px;
     height: 55px;
+    background: #fff;
+    border-radius: 4px;
 }
 
 .product-image {
@@ -562,14 +564,15 @@ body {
     height: 55px;
     object-fit: cover;
     border-radius: 4px;
+    background: #fff;
 }
 
 .product-discount-badge {
     position: absolute;
     top: 0;
     left: 0;
-    background: #EE4D2D;
-    color: white;
+    background: #fff;
+    color: #EE4D2D;
     padding: 2px 4px;
     font-size: 10px;
     font-weight: bold;
@@ -587,8 +590,8 @@ body {
 
 .product-name {
     font-size: 12px;
-    font-weight: 500;
-    color: #333;
+    font-weight: bold;
+    color: #fff;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -606,18 +609,20 @@ body {
 .product-price {
     font-size: 14px;
     font-weight: bold;
-    color: #EE4D2D;
+    color: #fff;
 }
 
 .product-original-price {
     font-size: 11px;
-    color: #999;
+    font-weight: bold;
+    color: #fff;
+    opacity: 0.75;
     text-decoration: line-through;
 }
 
 .product-sold {
     font-size: 10px;
-    color: #888;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .shopee-carousel-dots {
