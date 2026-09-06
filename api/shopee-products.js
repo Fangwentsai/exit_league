@@ -305,14 +305,21 @@ module.exports = async function handler(req, res) {
             !excludeKeywords.some(kw => p.name.includes(kw))
         );
 
-        // 特價中的商品優先（同樣有折扣的話銷量高排前面，其餘商品接在後面補滿，
-        // 不會因為篩選特價而讓版位開天窗）
-        products = products.sort((a, b) => {
-            const aOnSale = a.discount ? 1 : 0;
-            const bOnSale = b.discount ? 1 : 0;
-            if (aOnSale !== bOnSale) return bOnSale - aOnSale;
-            return b.sold - a.sold;
-        });
+        // 特價中的商品優先於沒打折的（不打折的商品接在後面補滿，不會因為
+        // 篩選特價而讓版位開天窗），但同樣都是熱賣特價品，銷量高低不再決定
+        // 順序——洗牌讓每個商品都有機會出現在前幾頁，訪客每次來看到的組合
+        // 也會不一樣，不會每次都只有同一批人氣最高的商品露出。
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        const onSale = shuffle(products.filter(p => p.discount));
+        const rest = shuffle(products.filter(p => !p.discount));
+        products = [...onSale, ...rest];
 
         // 篩選/多抓的候選只是排序用，最後還是照原本請求的數量回傳
         products = products.slice(0, limitNum);
