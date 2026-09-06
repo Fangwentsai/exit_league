@@ -600,6 +600,9 @@ body {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     line-height: 1.3;
+    /* line-clamp 只限制「最多」2 行，標題不夠長時不會補滿，
+       同一排兩張卡就會因為標題長短不同而高度不一致——固定保留 2 行的空間 */
+    min-height: calc(1.3em * 2);
 }
 
 .product-price-row {
