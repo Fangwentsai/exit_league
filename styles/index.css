@@ -530,7 +530,9 @@ body {
 }
 
 .shopee-product-card {
-    flex: 0 0 calc(50% - 6px);
+    /* 一排 2 張、中間 1 條 10px 的 gap，這條 gap 由兩張卡平分，
+       所以每張卡片實際寬度要扣掉 gap 的一半（5px），不是隨便估的數字 */
+    flex: 0 0 calc(50% - 5px);
     display: flex;
     flex-direction: row;
     background: #EE4D2D;
@@ -571,8 +573,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background: #fff;
-    color: #EE4D2D;
+    background: #dc3545;
+    color: #fff;
     padding: 2px 4px;
     font-size: 10px;
     font-weight: bold;

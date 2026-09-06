@@ -274,7 +274,9 @@
 
         const itemsPerView = getItemsPerView();
         const cardWidth = track.querySelector('.shopee-product-card')?.offsetWidth || 150;
-        const gap = 15;
+        // 直接讀 CSS 實際的 gap，不要寫死數字——之前寫死 15 但 CSS 其實是 10，
+        // 兩邊對不上，每翻一頁多位移一點，滑久了就會偷看到下一張卡片的開頭
+        const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
         const offset = currentIndex * itemsPerView * (cardWidth + gap);
         
         track.style.transform = `translateX(-${offset}px)`;
