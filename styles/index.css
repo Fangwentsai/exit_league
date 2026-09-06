@@ -537,6 +537,9 @@ body {
        寫入 --shopee-card-width 這個 CSS 變數，calc(50% - 5px) 只當作 JS
        還沒跑之前的備援值。 */
     flex: 0 0 var(--shopee-card-width, calc(50% - 5px));
+    /* 預設 content-box 會讓 padding 疊加在算好的寬度之外（多了左右各 5px），
+       改 border-box 讓 JS 算出來的寬度直接等於卡片實際佔用的視覺寬度 */
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     background: #EE4D2D;
