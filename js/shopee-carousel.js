@@ -121,7 +121,7 @@
             // 數字ID、賣場短連結、網路上找到的 vanity slug 都一樣落空，可能官方直營
             // 賣場沒開放這個查詢），改用賣場名稱本身當關鍵字查，反而能精準命中同一個
             // 賣場、且都是銷量 8~28 萬筆的爆款。
-            const response = await fetch('/api/shopee-products?keyword=%E8%9D%A6%E7%9A%AE%E7%9B%B4%E7%87%9F&limit=15');
+            const response = await fetch('/api/shopee-products?keyword=%E8%9D%A6%E7%9A%AE%E7%9B%B4%E7%87%9F&limit=30');
             
             if (!response.ok) {
                 throw new Error(`API 請求失敗: ${response.status}`);
