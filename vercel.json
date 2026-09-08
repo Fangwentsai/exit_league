@@ -1,7 +1,14 @@
 {
-  "version": 2
+  "version": 2,
+  "headers": [
+    {
+      "source": "/api/shopee-products",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=0, s-maxage=3600, stale-while-revalidate=1800"
+        }
+      ]
+    }
+  ]
 }
-
-
-
-
