@@ -306,19 +306,12 @@ module.exports = async function handler(req, res) {
         );
 
         // 特價中的商品優先於沒打折的（不打折的商品接在後面補滿，不會因為
-        // 篩選特價而讓版位開天窗），但同樣都是熱賣特價品，銷量高低不再決定
-        // 順序——洗牌讓每個商品都有機會出現在前幾頁，訪客每次來看到的組合
-        // 也會不一樣，不會每次都只有同一批人氣最高的商品露出。
-        function shuffle(arr) {
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
-
-        const onSale = shuffle(products.filter(p => p.discount));
-        const rest = shuffle(products.filter(p => !p.discount));
+        // 篩選特價而讓版位開天窗）。這支 API 的回應會被快取 1 小時（見下方
+        // Cache-Control），洗牌若放在這裡，同一小時內所有訪客會看到同一組
+        // 被快取住的順序——真正的「每個訪客看到不同順序」交給前端
+        // js/shopee-carousel.js 拿到這批候選名單後自己洗牌決定顯示順序。
+        const onSale = products.filter(p => p.discount).sort((a, b) => b.sold - a.sold);
+        const rest = products.filter(p => !p.discount).sort((a, b) => b.sold - a.sold);
         products = [...onSale, ...rest];
 
         // 篩選/多抓的候選只是排序用，最後還是照原本請求的數量回傳
@@ -328,7 +321,11 @@ module.exports = async function handler(req, res) {
         const actualShops = [...new Set(products.map(p => p.shopName).filter(Boolean))];
         
         console.log(`✅ 成功處理 ${products.length} 個商品`);
-        
+
+        // 流量不大，不需要頻繁重打蝦皮 API，但特價有時效性，不能快取太久。
+        // 1 小時：夠擋掉短時間內的重複請求，過期優惠最多掛著 1 小時就會被換掉。
+        res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=1800');
+
         return res.status(200).json({
             products,
             count: products.length,

@@ -112,6 +112,16 @@
             });
     }
 
+    // ========== 洗牌（Fisher-Yates）==========
+    function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
     // ========== 從 API 獲取商品 ==========
     async function fetchProducts() {
         try {
@@ -132,7 +142,10 @@
             if (data.products && data.products.length > 0) {
                 console.log('✅ 成功從 Shopee API 獲取商品:', data.products.length, '件');
                 console.log('📊 來源:', data.source);
-                return data.products;
+                // API 回應在後端會被快取 1 小時（省重複打蝦皮 API，同時避免特價
+                // 過期還掛著太久），代表同一小時內拿到的候選名單是固定的——
+                // 洗牌交給這裡做，讓每個訪客自己看到不同的顯示順序。
+                return shuffleArray(data.products);
             }
             
             throw new Error('沒有獲取到商品');
