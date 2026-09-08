@@ -159,13 +159,10 @@ async function generateShortLink(originUrl, subIds) {
         variables: { originUrl, subIds }
     });
     if (data?.errors) {
-        const err = new Error('GraphQL errors: ' + JSON.stringify(data.errors));
-        err.graphqlErrors = data.errors;
-        throw err;
+        throw new Error('GraphQL errors: ' + JSON.stringify(data.errors));
     }
     if (!data?.data?.generateShortLink?.shortLink) {
-        const err = new Error('No shortLink in response: ' + JSON.stringify(data));
-        throw err;
+        throw new Error('No shortLink in response: ' + JSON.stringify(data));
     }
     return data.data.generateShortLink.shortLink;
 }
@@ -353,14 +350,11 @@ module.exports = async function handler(req, res) {
         // 說明，URL 後面手動加參數蝦皮不認）。這支 API 回應會快取 1 小時，
         // 所以這批額外的 mutation 呼叫平均下來一小時只會真的發生一次，
         // 不會造成太大負擔。單一商品失敗就照舊用原本的 offerLink，不整批擋住。
-        const shortLinkDebug = [];
         products = await Promise.all(products.map(async (p) => {
             try {
                 const tracked = await generateShortLink(p.url, ['index']);
-                shortLinkDebug.push({ id: p.id, originalUrl: p.url, trackedUrl: tracked, changed: tracked !== p.url });
                 return tracked ? { ...p, url: tracked } : p;
             } catch (e) {
-                shortLinkDebug.push({ id: p.id, originalUrl: p.url, error: e.message });
                 console.warn(`⚠️ generateShortLink 失敗（${p.id}）:`, e.message);
                 return p;
             }
@@ -383,10 +377,7 @@ module.exports = async function handler(req, res) {
             // 這支函式真正被執行、重新去抓蝦皮資料的時間點。如果 Vercel 邊緣
             // 快取有生效，同一小時內連續打這支 API 應該會看到一模一樣的
             // fetchedAt；如果每次都不一樣，代表其實還是每次都真的重新抓。
-            fetchedAt: new Date().toISOString(),
-            // 暫時除錯用：確認 generateShortLink 是不是真的有換到新連結，
-            // 還是失敗後默默退回原本的 offerLink。查完就拿掉。
-            shortLinkDebug: req.query.debugShortLink ? shortLinkDebug : undefined
+            fetchedAt: new Date().toISOString()
         });
         
     } catch (error) {
