@@ -142,6 +142,9 @@
             if (data.products && data.products.length > 0) {
                 console.log('✅ 成功從 Shopee API 獲取商品:', data.products.length, '件');
                 console.log('📊 來源:', data.source);
+                // fetchedAt 沒變代表吃到快取（同一小時內大家看到同一批候選商品資料，
+                // 只是顯示順序在瀏覽器端各自洗牌）；每次都不一樣代表其實還是即時抓。
+                console.log('🕒 資料抓取時間:', data.fetchedAt);
                 // API 回應在後端會被快取 1 小時（省重複打蝦皮 API，同時避免特價
                 // 過期還掛著太久），代表同一小時內拿到的候選名單是固定的——
                 // 洗牌交給這裡做，讓每個訪客自己看到不同的顯示順序。

@@ -330,7 +330,11 @@ module.exports = async function handler(req, res) {
             products,
             count: products.length,
             source: shop ? `shop:${shop}` : `keyword:${keyword}`,
-            actualShops: actualShops
+            actualShops: actualShops,
+            // 這支函式真正被執行、重新去抓蝦皮資料的時間點。如果 Vercel 邊緣
+            // 快取有生效，同一小時內連續打這支 API 應該會看到一模一樣的
+            // fetchedAt；如果每次都不一樣，代表其實還是每次都真的重新抓。
+            fetchedAt: new Date().toISOString()
         });
         
     } catch (error) {
