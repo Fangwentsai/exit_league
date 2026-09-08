@@ -158,6 +158,11 @@ async function generateShortLink(originUrl, subIds) {
         `,
         variables: { originUrl, subIds }
     });
+    if (data?.errors) {
+        const err = new Error('GraphQL errors: ' + JSON.stringify(data.errors));
+        err.graphqlErrors = data.errors;
+        throw err;
+    }
     return data?.data?.generateShortLink?.shortLink || null;
 }
 
