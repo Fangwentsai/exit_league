@@ -150,7 +150,7 @@ async function getShopProducts(shopName, limit = 6) {
 async function generateShortLink(originUrl, subIds) {
     const data = await callShopeeAPI('/graphql', {
         query: `
-            mutation ($originUrl: String!, $subIds: [String]) {
+            mutation ($originUrl: String!, $subIds: [String!]) {
                 generateShortLink(input: { originUrl: $originUrl, subIds: $subIds }) {
                     shortLink
                 }
