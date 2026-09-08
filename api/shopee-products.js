@@ -139,6 +139,29 @@ async function getShopProducts(shopName, limit = 6) {
 }
 
 /**
+ * 用 subIds 產生真正會被蝦皮分潤後台記錄的追蹤短連結
+ *
+ * 之前直接在 offerLink 後面手動接 ?sub_id1=index 完全沒用——蝦皮後台的
+ * 點擊報告 Sub_id 欄位全部是空的（"----"）。查了官方 API 文件才發現 sub_id
+ * 不是 URL 參數，是 GraphQL 的獨立 mutation：generateShortLink，要在產生
+ * 連結的當下就把 subIds 一起帶進去，事後在網址後面加參數蝦皮不會認。
+ * 文件: sub_id 會被寫入分潤報表的 utm_content 欄位，最多 5 組。
+ */
+async function generateShortLink(originUrl, subIds) {
+    const data = await callShopeeAPI('/graphql', {
+        query: `
+            mutation ($originUrl: String!, $subIds: [String]) {
+                generateShortLink(input: { originUrl: $originUrl, subIds: $subIds }) {
+                    shortLink
+                }
+            }
+        `,
+        variables: { originUrl, subIds }
+    });
+    return data?.data?.generateShortLink?.shortLink || null;
+}
+
+/**
  * 主要 API Handler
  */
 module.exports = async function handler(req, res) {
@@ -316,6 +339,20 @@ module.exports = async function handler(req, res) {
 
         // 篩選/多抓的候選只是排序用，最後還是照原本請求的數量回傳
         products = products.slice(0, limitNum);
+
+        // 幫每個商品換成帶 sub_id 的追蹤短連結（見上面 generateShortLink 的
+        // 說明，URL 後面手動加參數蝦皮不認）。這支 API 回應會快取 1 小時，
+        // 所以這批額外的 mutation 呼叫平均下來一小時只會真的發生一次，
+        // 不會造成太大負擔。單一商品失敗就照舊用原本的 offerLink，不整批擋住。
+        products = await Promise.all(products.map(async (p) => {
+            try {
+                const tracked = await generateShortLink(p.url, ['index']);
+                return tracked ? { ...p, url: tracked } : p;
+            } catch (e) {
+                console.warn(`⚠️ generateShortLink 失敗（${p.id}）:`, e.message);
+                return p;
+            }
+        }));
 
         // 取得實際賣場名稱
         const actualShops = [...new Set(products.map(p => p.shopName).filter(Boolean))];

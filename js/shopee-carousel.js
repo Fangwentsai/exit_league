@@ -214,8 +214,10 @@
             ? `${(product.sold / 1000).toFixed(1)}k 已售` 
             : `${product.sold} 已售`;
 
-        // 首頁輪播固定用 sub_id1=index
-        const urlWithSubId = product.url + (product.url.includes('?') ? '&' : '?') + 'sub_id1=index';
+        // sub_id 追蹤已經在後端用 generateShortLink mutation 產生時就帶進去了
+        // （直接在網址後面手動接 ?sub_id1=index 蝦皮後台不會認，點擊報告的
+        // Sub_id 欄位會整欄是空的，實測驗證過），這裡直接用就好
+        const urlWithSubId = product.url;
 
         return `
             <a href="${urlWithSubId}" target="_blank" rel="noopener noreferrer" class="shopee-product-card" onclick="if(window.gtag) gtag('event', 'click_shopee_product', { 'event_category': 'Shopee', 'event_label': '${product.name.replace(/'/g, "\\'")}', 'shopee_url': '${urlWithSubId}', 'page_source': window.location.pathname });">
