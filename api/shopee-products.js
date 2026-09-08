@@ -163,7 +163,11 @@ async function generateShortLink(originUrl, subIds) {
         err.graphqlErrors = data.errors;
         throw err;
     }
-    return data?.data?.generateShortLink?.shortLink || null;
+    if (!data?.data?.generateShortLink?.shortLink) {
+        const err = new Error('No shortLink in response: ' + JSON.stringify(data));
+        throw err;
+    }
+    return data.data.generateShortLink.shortLink;
 }
 
 /**
