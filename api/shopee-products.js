@@ -324,7 +324,7 @@ module.exports = async function handler(req, res) {
 
         // 流量不大，不需要頻繁重打蝦皮 API，但特價有時效性，不能快取太久。
         // 1 小時：夠擋掉短時間內的重複請求，過期優惠最多掛著 1 小時就會被換掉。
-        res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=1800');
+        res.setHeader('Cache-Control', 'max-age=0, s-maxage=3600, stale-while-revalidate=1800');
 
         return res.status(200).json({
             products,
