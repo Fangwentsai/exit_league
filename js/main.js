@@ -1311,14 +1311,34 @@ async function loadNewsRankings() {
                 }
             }
 
-            // 地獄倒霉鬼
-            if (seasonMeta.personalRankRanges.地獄倒霉鬼) {
-                try {
-                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${seasonMeta.personalRankRanges.地獄倒霉鬼}?key=${config.API_KEY}`;
-                    const res = await fetch(url);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.values && data.values.length > 0) {
+            // 地獄倒霉鬼——改成直接從 personal!A2:N200 現算，不要依賴 W2:Y6
+            // （那個範圍在試算表裡的公式已經壞掉，整格回傳 #N/A，導致這裡
+            // validCount 永遠是 0、table.innerHTML 永遠不會被換掉，畫面停留
+            // 在新聞頁面寫死的舊資料，也沒有 league-badge 樣式，跟其他表格
+            // 看起來不一致。做法跟 scripts/weekly_update.js 現在的算法一致：
+            // I欄(index 8)=先攻率，M欄(index 12)=總場數。）
+            try {
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A2:N200?key=${config.API_KEY}`;
+                const res = await fetch(url);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.values && data.values.length > 0) {
+                        const unlucky = data.values
+                            .filter(row => {
+                                const totalGames = parseInt(row[12]) || 0;
+                                const faRate = String(row[8] || '').trim();
+                                return row[0] && row[1] && totalGames > 0 && faRate && faRate !== 'DNP' && faRate !== '0%';
+                            })
+                            .map(row => ({
+                                team: row[0],
+                                name: row[1],
+                                faRate: row[8],
+                                faRateNum: parseFloat(String(row[8]).replace('%', '')) || 100
+                            }))
+                            .sort((a, b) => a.faRateNum - b.faRateNum)
+                            .slice(0, 5);
+
+                        if (unlucky.length > 0) {
                             document.querySelectorAll('.section-title').forEach(title => {
                                 if (title.textContent.includes('地獄倒霉鬼')) {
                                     const table = (title.nextElementSibling && title.nextElementSibling.classList.contains('ranking-table'))
@@ -1326,29 +1346,20 @@ async function loadNewsRankings() {
                                         : null;
                                     if (table) {
                                         let html = `<tr><th>組別</th><th>隊名</th><th>姓名</th><th>先攻機率</th></tr>`;
-                                        let validCount = 0;
-                                        data.values.forEach(row => {
-                                            const team = row[0] || '';
-                                            const name = row[1] || '';
-                                            const faRate = row[2] || '-';
-                                            if (team && name && team !== '#N/A' && name !== '#N/A') {
-                                                validCount++;
-                                                const g = groupOf(team);
-                                                const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
-                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${name}</td><td>${faRate}</td></tr>`;
-                                            }
+                                        unlucky.forEach(p => {
+                                            const g = groupOf(p.team);
+                                            const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
+                                            html += `<tr><td>${badgeHtml}</td><td>${p.team}</td><td>${p.name}</td><td>${p.faRate}</td></tr>`;
                                         });
-                                        if (validCount > 0) {
-                                            table.innerHTML = html;
-                                        }
+                                        table.innerHTML = html;
                                     }
                                 }
                             });
                         }
                     }
-                } catch (err) {
-                    console.error('動態載入地獄倒霉鬼失敗:', err);
                 }
+            } catch (err) {
+                console.error('動態載入地獄倒霉鬼失敗:', err);
             }
         }
     } catch (e) {
