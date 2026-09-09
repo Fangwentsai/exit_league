@@ -174,8 +174,35 @@
         return document.querySelector(`.team-button[data-set="${setNum}"][data-team="${team}"]`);
     }
 
+    // 把 OCR 修正前的原始判讀記錄下來（場次、隊名、每局姓名/信心分數/
+    // 先攻/勝負、cross-check 結果），之後比賽結果確認完成、game_result
+    // 產生後，可以拿這份記錄跟最終正確答案比對，找出模型真正常錯在哪裡。
+    // 記錄失敗不能擋住辨識流程，所以刻意不 await、錯誤只印在 console。
+    function logOcrResult(data) {
+        try {
+            const game = window.currentGame || (typeof currentGame !== 'undefined' ? currentGame : null);
+            if (!game || typeof SCRIPT_URL === 'undefined') return;
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({
+                    action: 'logOcrResult',
+                    gameCode: game.id,
+                    homeTeam: game.home,
+                    awayTeam: game.away,
+                    timestamp: new Date().toISOString(),
+                    result: data,
+                }),
+            }).catch(err => console.warn('⚠️ OCR 記錄寫入失敗（不影響辨識結果使用）:', err.message));
+        } catch (err) {
+            console.warn('⚠️ OCR 記錄組裝失敗（不影響辨識結果使用）:', err.message);
+        }
+    }
+
     function applyResult(data) {
         lastResult = data;
+        logOcrResult(data);
         const sets = data.sets || [];
         let warn = 0, miss = 0;
 
