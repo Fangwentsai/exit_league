@@ -122,6 +122,36 @@ function parseImage(image, fallbackMimeType) {
     return { mimeType: fallbackMimeType || 'image/jpeg', data: image };
 }
 
+// 免費額度的 RPM（每分鐘請求數）上限很低，六場比賽的分紙照片如果集中在
+// 賽後同一段時間上傳，很容易同時撞上這個上限、回傳 429。這裡遇到 429 就
+// 短暫等待後自動重試，不要第一次撞到限流就直接失敗給使用者看——多數情況
+// 只要錯開個幾秒，額度視窗就過了。重試次數與延遲刻意保守，避免在 Vercel
+// 的執行時間上限（Hobby 方案預設 10 秒）內超時。
+const GEMINI_MAX_RETRIES = 2;
+const GEMINI_RETRY_DELAYS_MS = [1200, 2500];
+
+async function fetchGeminiWithRetry(url, body) {
+    let lastResponse, lastJson;
+    for (let attempt = 0; attempt <= GEMINI_MAX_RETRIES; attempt++) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        });
+        const json = await response.json();
+
+        if (response.status !== 429 || attempt === GEMINI_MAX_RETRIES) {
+            return { response, json };
+        }
+
+        lastResponse = response;
+        lastJson = json;
+        console.warn(`⚠️ Gemini 429（第 ${attempt + 1} 次），${GEMINI_RETRY_DELAYS_MS[attempt]}ms 後重試`);
+        await new Promise(resolve => setTimeout(resolve, GEMINI_RETRY_DELAYS_MS[attempt]));
+    }
+    return { response: lastResponse, json: lastJson };
+}
+
 async function callGemini({ apiKey, imageData, mimeType, gameCode, homeTeam, awayTeam, homeRoster, awayRoster }) {
     const prompt = buildPrompt({ gameCode, homeTeam, awayTeam, homeRoster, awayRoster });
     const schema = buildResponseSchema();
@@ -142,13 +172,7 @@ async function callGemini({ apiKey, imageData, mimeType, gameCode, homeTeam, awa
         },
     };
 
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-    });
-
-    const json = await response.json();
+    const { response, json } = await fetchGeminiWithRetry(url, body);
 
     if (!response.ok) {
         const err = new Error(json?.error?.message || `Gemini API 錯誤 (HTTP ${response.status})`);
