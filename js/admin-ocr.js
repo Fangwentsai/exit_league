@@ -61,6 +61,40 @@
         });
     }
 
+    // 伺服器端（api/analyze-scoresheet.js）遇到 429 已經會在 10 秒的執行時間
+    // 伺服器端（api/analyze-scoresheet.js）只在 Google 建議的等待秒數
+    // 夠短（≤3 秒）時才會自己重試；等待秒數較長的話，會把那個秒數
+    // （retryDelayMs）原樣附在錯誤回應裡回來，這裡就照那個精確秒數等，
+    // 而不是自己猜一個固定值——猜的話很可能等得不夠久，新的一分鐘額度
+    // 視窗根本還沒開始，重試了也是白搭。真的沒拿到這個欄位才退回 30 秒
+    // 當備援。瀏覽器沒有 Vercel 那種執行時間限制，撐得住這種等待。
+    const CLIENT_RETRY_FALLBACK_MS = 30000;
+    const CLIENT_MAX_RETRIES = 2;
+
+    async function fetchAnalyzeScoresheet(payload) {
+        for (let attempt = 0; ; attempt++) {
+            const resp = await fetch('/api/analyze-scoresheet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (resp.status !== 429 || attempt >= CLIENT_MAX_RETRIES) {
+                return resp;
+            }
+
+            let waitMs = CLIENT_RETRY_FALLBACK_MS;
+            try {
+                const errBody = await resp.clone().json();
+                if (errBody && errBody.retryDelayMs) waitMs = errBody.retryDelayMs;
+            } catch (e) { /* 解析失敗就用備援值 */ }
+
+            const waitSec = Math.ceil(waitMs / 1000);
+            setStatus(`Gemini 額度限制，${waitSec} 秒後自動重試中…（第 ${attempt + 1} 次）`, 'busy');
+            await new Promise(resolve => setTimeout(resolve, waitMs));
+            setStatus('圖檔處理與辨識中…（約需 5~15 秒）', 'busy');
+        }
+    }
+
     // 解析 API 回應，若非 JSON (例如 413 / 504 HTML Error 頁面) 則捕捉中文提示
     async function parseApiResponse(resp) {
         const contentType = resp.headers.get('content-type') || '';
@@ -104,17 +138,13 @@
 
         try {
             const compressedImage = await compressImage(shot.dataUrl);
-            const resp = await fetch('/api/analyze-scoresheet', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    image: compressedImage,
-                    gameCode: game.id,
-                    homeTeam: game.home,
-                    awayTeam: game.away,
-                    homeRoster,
-                    awayRoster,
-                }),
+            const resp = await fetchAnalyzeScoresheet({
+                image: compressedImage,
+                gameCode: game.id,
+                homeTeam: game.home,
+                awayTeam: game.away,
+                homeRoster,
+                awayRoster,
             });
             const data = await parseApiResponse(resp);
             setOcrProgressComplete(() => {
@@ -355,17 +385,13 @@
 
             try {
                 const compressedImage = await compressImage(rawDataUrl);
-                const resp = await fetch('/api/analyze-scoresheet', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        image: compressedImage,
-                        gameCode: game.id,
-                        homeTeam: game.home,
-                        awayTeam: game.away,
-                        homeRoster,
-                        awayRoster,
-                    }),
+                const resp = await fetchAnalyzeScoresheet({
+                    image: compressedImage,
+                    gameCode: game.id,
+                    homeTeam: game.home,
+                    awayTeam: game.away,
+                    homeRoster,
+                    awayRoster,
                 });
                 const data = await parseApiResponse(resp);
                 setOcrProgressComplete(() => {

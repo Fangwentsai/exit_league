@@ -107,7 +107,10 @@ module.exports = async (req, res) => {
         console.error('❌ analyze-scoresheet 失敗:', err);
         // 不要把內部錯誤細節（可能含請求內容）原樣丟給前端
         const message = err.userMessage || 'Gemini 辨識失敗，請稍後再試或直接手動填寫';
-        return res.status(err.statusCode || 500).json({ error: message });
+        // Google 建議的重試等待秒數（沒有就不附這個欄位，前端自己套固定備援值）
+        const body = { error: message };
+        if (err.retryDelayMs) body.retryDelayMs = err.retryDelayMs;
+        return res.status(err.statusCode || 500).json(body);
     }
 };
 
@@ -123,33 +126,60 @@ function parseImage(image, fallbackMimeType) {
 }
 
 // 免費額度的 RPM（每分鐘請求數）上限很低，六場比賽的分紙照片如果集中在
-// 賽後同一段時間上傳，很容易同時撞上這個上限、回傳 429。這裡遇到 429 就
-// 短暫等待後自動重試，不要第一次撞到限流就直接失敗給使用者看——多數情況
-// 只要錯開個幾秒，額度視窗就過了。重試次數與延遲刻意保守，避免在 Vercel
-// 的執行時間上限（Hobby 方案預設 10 秒）內超時。
-const GEMINI_MAX_RETRIES = 2;
-const GEMINI_RETRY_DELAYS_MS = [1200, 2500];
+// 賽後同一段時間上傳，很容易同時撞上這個上限、回傳 429。
+//
+// 一開始這裡寫的是「429 就等 1.2s / 2.5s 後重試」，但這個間隔幾乎沒用：
+// RPM 是以「分鐘」為單位的視窗，幾秒鐘的重試大機率還在同一個已經打滿的
+// 視窗裡，等於是在同一分鐘內又追加了好幾次注定失敗的請求，反而讓額度
+// 更快見底。改成讀 Google 錯誤回應裡附的 google.rpc.RetryInfo.retryDelay
+// （明確告訴你要等多久，通常是幾十秒），只有這個值短到還塞得進 Vercel
+// 的執行時間上限（Hobby 方案 10 秒）才在伺服器端等一次；如果建議的等待
+// 時間比較長，就不在這裡硬等，直接把 retryDelay 一併回給前端，讓前端
+// （沒有執行時間限制）自己去等精確的秒數再重試，而不是用猜的固定值。
+const GEMINI_SERVER_RETRY_BUDGET_MS = 3000; // 伺服器端最多願意多等這麼久
+
+function parseRetryDelayMs(json) {
+    const detail = json?.error?.details?.find(d => d['@type'] === 'type.googleapis.com/google.rpc.RetryInfo');
+    const raw = detail?.retryDelay; // 例如 "30s" 或 "12.500s"
+    if (!raw) return null;
+    const match = /^([\d.]+)s$/.exec(raw);
+    return match ? Math.round(parseFloat(match[1]) * 1000) : null;
+}
 
 async function fetchGeminiWithRetry(url, body) {
-    let lastResponse, lastJson;
-    for (let attempt = 0; attempt <= GEMINI_MAX_RETRIES; attempt++) {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-        });
-        const json = await response.json();
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const json = await response.json();
 
-        if (response.status !== 429 || attempt === GEMINI_MAX_RETRIES) {
-            return { response, json };
-        }
-
-        lastResponse = response;
-        lastJson = json;
-        console.warn(`⚠️ Gemini 429（第 ${attempt + 1} 次），${GEMINI_RETRY_DELAYS_MS[attempt]}ms 後重試`);
-        await new Promise(resolve => setTimeout(resolve, GEMINI_RETRY_DELAYS_MS[attempt]));
+    if (response.status !== 429) {
+        return { response, json };
     }
-    return { response: lastResponse, json: lastJson };
+
+    const retryDelayMs = parseRetryDelayMs(json);
+
+    // Google 沒給建議等待時間，或建議的時間太長塞不進執行時間上限，
+    // 就不在這裡硬等——直接把 retryDelayMs 帶回去給前端自己決定怎麼等。
+    if (retryDelayMs === null || retryDelayMs > GEMINI_SERVER_RETRY_BUDGET_MS) {
+        return { response, json, retryDelayMs };
+    }
+
+    console.warn(`⚠️ Gemini 429，依 retryDelay 等待 ${retryDelayMs}ms 後重試一次`);
+    await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+
+    const retryResponse = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const retryJson = await retryResponse.json();
+    return {
+        response: retryResponse,
+        json: retryJson,
+        retryDelayMs: retryResponse.status === 429 ? parseRetryDelayMs(retryJson) : null,
+    };
 }
 
 async function callGemini({ apiKey, imageData, mimeType, gameCode, homeTeam, awayTeam, homeRoster, awayRoster }) {
@@ -172,7 +202,7 @@ async function callGemini({ apiKey, imageData, mimeType, gameCode, homeTeam, awa
         },
     };
 
-    const { response, json } = await fetchGeminiWithRetry(url, body);
+    const { response, json, retryDelayMs } = await fetchGeminiWithRetry(url, body);
 
     if (!response.ok) {
         const err = new Error(json?.error?.message || `Gemini API 錯誤 (HTTP ${response.status})`);
@@ -180,6 +210,10 @@ async function callGemini({ apiKey, imageData, mimeType, gameCode, homeTeam, awa
         err.userMessage = response.status === 429
             ? 'Gemini API 額度已用完，請稍後再試'
             : 'Gemini 辨識服務暫時無法使用';
+        // 附上 Google 建議的等待秒數，前端沒有拿到就用固定值當備援
+        if (response.status === 429 && retryDelayMs) {
+            err.retryDelayMs = retryDelayMs;
+        }
         throw err;
     }
 
