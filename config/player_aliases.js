@@ -136,4 +136,15 @@ const PLAYER_ALIASES = [
       { name: '猴猴', team: 'Tonight29發財隊' },     // 第7屆
     ],
   },
+  {
+    // 注意：一鏢開天門也有一個「丹」（第4、5屆），跟這位是完全不同人，
+    // 不要合併——這裡只收錄 Vivi 系列隊伍「老丹」這條線。
+    id: 'laodan_vivi',
+    canonicalName: '老丹',
+    identities: [
+      { name: '老丹', team: 'Vivi朝酒晚舞' }, // 第4屆
+      { name: '老丹', team: 'VIVI嘻嘻隊' },   // 第5、6屆
+      { name: '丹', team: '嘻嘻隊' },         // 第7屆，去掉「老」（隊名也簡化了）
+    ],
+  },
 ];
