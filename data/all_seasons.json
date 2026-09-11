@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:47:56.439Z",
+  "generatedAt": "2026-09-11T15:53:00.748Z",
   "bakedSeasons": [
     4,
     5,
@@ -2938,8 +2938,8 @@
         ]
       }
     },
-    "小歪": {
-      "name": "小歪",
+    "__alias__xiaohuangya_taoshengrukouc": {
+      "name": "小黃鴨",
       "seasons": {
         "4": [
           {
@@ -6573,8 +6573,8 @@
         ]
       }
     },
-    "Jason": {
-      "name": "Jason",
+    "__alias__jiesen_vivi": {
+      "name": "傑森",
       "seasons": {
         "5": [
           {
@@ -6978,8 +6978,8 @@
         ]
       }
     },
-    "卡門": {
-      "name": "卡門",
+    "__alias__kamen_vivi": {
+      "name": "Kaman",
       "seasons": {
         "5": [
           {

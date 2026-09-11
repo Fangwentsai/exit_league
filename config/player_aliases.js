@@ -165,4 +165,29 @@ const PLAYER_ALIASES = [
       // 自動接回這裡，不需要另外列一筆。
     ],
   },
+  {
+    id: 'kamen_vivi',
+    canonicalName: 'Kaman',
+    identities: [
+      { name: '卡門', team: 'VIVI哈哈隊' }, // 第5屆
+      { name: 'Kaman', team: '嘻嘻隊' },    // 第7屆，改用英文拼法、換到嘻嘻隊
+    ],
+  },
+  {
+    id: 'xiaohuangya_taoshengrukouc',
+    canonicalName: '小黃鴨',
+    identities: [
+      { name: '小歪', team: '逃生入口C' },          // 第4、5屆
+      { name: '小黃鴨', team: 'Tonight29發財隊' },  // 第7屆，第6屆沒打，換隊改名
+    ],
+  },
+  {
+    id: 'jiesen_vivi',
+    canonicalName: '傑森',
+    identities: [
+      { name: 'Jason', team: 'VIVI嘻嘻隊' }, // 第5屆
+      { name: 'Jason', team: 'VIVI哈哈隊' }, // 第6屆，換隊
+      { name: '傑森', team: '哈哈隊' },       // 第7屆，改用中文名（隊名也簡化了）
+    ],
+  },
 ];
