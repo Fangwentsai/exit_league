@@ -126,4 +126,14 @@ const PLAYER_ALIASES = [
       { name: '淦', team: '嘻嘻隊' },         // 第7屆，去掉「阿」（隊名也簡化了）
     ],
   },
+  {
+    id: 'houhou_vivi',
+    canonicalName: '猴猴',
+    identities: [
+      { name: '猴子', team: 'Vivi朝酒晚舞' },        // 第4屆
+      { name: '猴子', team: 'VIVI嘻嘻隊' },          // 第5屆
+      { name: '猴猴', team: 'Tonight29十三么' },     // 第6屆，換隊改名
+      { name: '猴猴', team: 'Tonight29發財隊' },     // 第7屆
+    ],
+  },
 ];

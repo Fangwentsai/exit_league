@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:43:47.964Z",
+  "generatedAt": "2026-09-11T15:44:26.288Z",
   "bakedSeasons": [
     4,
     5,
@@ -4682,8 +4682,8 @@
         ]
       }
     },
-    "猴子": {
-      "name": "猴子",
+    "__alias__houhou_vivi": {
+      "name": "猴猴",
       "seasons": {
         "4": [
           {
@@ -4717,6 +4717,23 @@
             "firstCount": 74,
             "totalGames": 131,
             "gender": null
+          }
+        ],
+        "6": [
+          {
+            "team": "Tonight29十三么",
+            "wins01": 58,
+            "rate01": 66.67,
+            "winsCR": 54,
+            "rateCR": 69.23,
+            "totalWins": 112,
+            "totalRate": 67.88,
+            "firstRate": 53.94,
+            "games01": 87,
+            "gamesCR": 78,
+            "firstCount": 89,
+            "totalGames": 165,
+            "gender": "男"
           }
         ]
       }
@@ -7612,28 +7629,6 @@
             "firstCount": 0,
             "totalGames": 0,
             "gender": null
-          }
-        ]
-      }
-    },
-    "猴猴": {
-      "name": "猴猴",
-      "seasons": {
-        "6": [
-          {
-            "team": "Tonight29十三么",
-            "wins01": 58,
-            "rate01": 66.67,
-            "winsCR": 54,
-            "rateCR": 69.23,
-            "totalWins": 112,
-            "totalRate": 67.88,
-            "firstRate": 53.94,
-            "games01": 87,
-            "gamesCR": 78,
-            "firstCount": 89,
-            "totalGames": 165,
-            "gender": "男"
           }
         ]
       }
