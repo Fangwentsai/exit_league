@@ -57,4 +57,45 @@ const PLAYER_ALIASES = [
       { name: '隼', team: '逃生Zoo口' },   // 第7屆
     ],
   },
+  {
+    id: 'mark_vivi',
+    canonicalName: 'Mark',
+    identities: [
+      { name: '馬克', team: 'VIVI哈哈隊' }, // 第5、6屆
+      { name: 'Mark', team: '哈哈隊' },     // 第7屆，改用英文拼法（隊名也簡化了）
+    ],
+  },
+  {
+    id: 'david_vivi',
+    canonicalName: 'David',
+    identities: [
+      { name: 'david', team: 'VIVI哈哈隊' }, // 第6屆（小寫）
+      { name: 'David', team: '哈哈隊' },     // 第7屆（改成大寫開頭）
+    ],
+  },
+  {
+    id: 'xiaofei_yibiaokaitianmen',
+    canonicalName: '小飛',
+    identities: [
+      { name: '飛', team: '一鏢開天門' },        // 第4、5屆
+      { name: '小飛', team: 'Tonight29十三么' },  // 第6屆，換隊
+      { name: '小飛', team: '有點傻' },           // 第7屆，再換隊
+    ],
+  },
+  {
+    id: 'hong_yibiaokaitianmen',
+    canonicalName: '宏',
+    identities: [
+      { name: '宏哥', team: '一鏢開天門' }, // 第4屆
+      { name: '宏', team: '一鏢開天門' },   // 第5屆
+    ],
+  },
+  {
+    id: 'xiaodong_taoshengrukouc',
+    canonicalName: '小東',
+    identities: [
+      { name: '偶素小東', team: '逃生入口C' }, // 第4屆
+      { name: '小東', team: '逃生入口C' },     // 第5屆
+    ],
+  },
 ];
