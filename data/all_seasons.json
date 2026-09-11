@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:45:25.873Z",
+  "generatedAt": "2026-09-11T15:46:44.690Z",
   "bakedSeasons": [
     4,
     5,
@@ -3642,8 +3642,8 @@
         ]
       }
     },
-    "宓哥": {
-      "name": "宓哥",
+    "__alias__mige_jiukong": {
+      "name": "小宓",
       "seasons": {
         "4": [
           {
@@ -3677,6 +3677,23 @@
             "firstCount": 14,
             "totalGames": 31,
             "gender": null
+          }
+        ],
+        "6": [
+          {
+            "team": "酒空組",
+            "wins01": 9,
+            "rate01": 40.91,
+            "winsCR": 0,
+            "rateCR": 0,
+            "totalWins": 9,
+            "totalRate": 39.13,
+            "firstRate": 47.83,
+            "games01": 22,
+            "gamesCR": 1,
+            "firstCount": 11,
+            "totalGames": 23,
+            "gender": "男"
           }
         ]
       }
@@ -8530,28 +8547,6 @@
             "gamesCR": 9,
             "firstCount": 14,
             "totalGames": 25,
-            "gender": "男"
-          }
-        ]
-      }
-    },
-    "小宓": {
-      "name": "小宓",
-      "seasons": {
-        "6": [
-          {
-            "team": "酒空組",
-            "wins01": 9,
-            "rate01": 40.91,
-            "winsCR": 0,
-            "rateCR": 0,
-            "totalWins": 9,
-            "totalRate": 39.13,
-            "firstRate": 47.83,
-            "games01": 22,
-            "gamesCR": 1,
-            "firstCount": 11,
-            "totalGames": 23,
             "gender": "男"
           }
         ]

@@ -147,4 +147,12 @@ const PLAYER_ALIASES = [
       { name: '丹', team: '嘻嘻隊' },         // 第7屆，去掉「老」（隊名也簡化了）
     ],
   },
+  {
+    id: 'mige_jiukong',
+    canonicalName: '小宓',
+    identities: [
+      { name: '宓哥', team: '酒空組' }, // 第4、5屆
+      { name: '小宓', team: '酒空組' }, // 第6、7屆，「宓」很罕見的姓，同隊直接視為同一人
+    ],
+  },
 ];
