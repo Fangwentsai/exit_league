@@ -30,6 +30,16 @@ body {
     border: 1px solid #dee2e6;
 }
 
+/* 排行榜姓名點擊連結：點下去開啟 player.html 顯示跨屆生涯成績 */
+.player-link {
+    color: inherit;
+    cursor: pointer;
+}
+
+.player-link:active {
+    opacity: 0.7;
+}
+
 /* 表頭樣式 */
 .header-row th {
     background-color: #dc3545 !important;

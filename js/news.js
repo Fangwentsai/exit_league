@@ -766,3 +766,30 @@ function _closeDetailOverlay(overlay) {
     document.body.style.overflow = '';
     setTimeout(function () { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 300);
 }
+// ========== 排行榜姓名點擊連結（news.html 專用）==========
+// news.html 的排行榜表格是每週手動寫死的靜態 HTML，沒有像首頁 SPA 那樣的
+// 動態重繪流程可以掛進去，所以在這裡對已經渲染好的 DOM 做後處理：找出表頭裡
+// 有「姓名」欄的 .ranking-table（隊伍排名表只有隊名/總分，沒有姓名欄，會被
+// 跳過），把姓名欄包成跟 player.html 連動的可點擊連結，用同一列的「隊名」
+// 欄位當作選手當週所屬隊伍。
+function linkifyRankingTables() {
+    if (typeof playerLinkHtml !== 'function') return;
+    document.querySelectorAll('table.ranking-table').forEach(function (table) {
+        var rows = table.rows;
+        if (!rows.length) return;
+        var headerCells = Array.prototype.map.call(rows[0].cells, function (c) { return c.textContent.trim(); });
+        var nameIdx = headerCells.indexOf('姓名');
+        if (nameIdx === -1) return;
+        var teamIdx = headerCells.indexOf('隊名');
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].cells;
+            if (cells.length <= nameIdx) continue;
+            var nameCell = cells[nameIdx];
+            var name = nameCell.textContent.trim();
+            if (!name) continue;
+            var team = (teamIdx !== -1 && cells.length > teamIdx) ? cells[teamIdx].textContent.trim() : '';
+            nameCell.innerHTML = playerLinkHtml(name, team);
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', linkifyRankingTables);

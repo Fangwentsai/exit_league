@@ -441,6 +441,16 @@ body {
     font-weight: bold;
 }
 
+/* 排行榜姓名點擊連結：點下去開啟 player.html 顯示跨屆生涯成績 */
+.player-link {
+    color: inherit;
+    cursor: pointer;
+}
+
+.player-link:active {
+    opacity: 0.7;
+}
+
 /* ===== 排行榜表格的欄寬 =====
  *
  * 欄寬不能讓瀏覽器均分。四欄裡只有隊名是長的：

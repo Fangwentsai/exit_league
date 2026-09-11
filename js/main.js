@@ -1261,7 +1261,7 @@ async function loadNewsRankings() {
                                             if (team && name) {
                                                 const g = groupOf(team);
                                                 const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
-                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${name}</td><td>${wins}</td></tr>`;
+                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${playerLinkHtml(name, team)}</td><td>${wins}</td></tr>`;
                                             }
                                         });
                                         table.innerHTML = html;
@@ -1297,7 +1297,7 @@ async function loadNewsRankings() {
                                             if (team && name) {
                                                 const g = groupOf(team);
                                                 const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
-                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${name}</td><td>${wins}</td></tr>`;
+                                                html += `<tr><td>${badgeHtml}</td><td>${team}</td><td>${playerLinkHtml(name, team)}</td><td>${wins}</td></tr>`;
                                             }
                                         });
                                         table.innerHTML = html;
@@ -1349,7 +1349,7 @@ async function loadNewsRankings() {
                                         unlucky.forEach(p => {
                                             const g = groupOf(p.team);
                                             const badgeHtml = g ? `<span class="league-badge">${BADGE[g] || g}</span>` : '';
-                                            html += `<tr><td>${badgeHtml}</td><td>${p.team}</td><td>${p.name}</td><td>${p.faRate}</td></tr>`;
+                                            html += `<tr><td>${badgeHtml}</td><td>${p.team}</td><td>${playerLinkHtml(p.name, p.team)}</td><td>${p.faRate}</td></tr>`;
                                         });
                                         table.innerHTML = html;
                                     }
@@ -1489,7 +1489,7 @@ function initializePersonalRankings(rankings) {
             <tr>
                 <td>${start + index + 1}</td>
                 <td>${row.team}</td>
-                <td>${row.name}</td>
+                <td>${playerLinkHtml(row.name, row.team)}</td>
                 <td>${row.rate01}%</td>
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
@@ -2065,6 +2065,14 @@ async function loadScheduleData(page) {
 }
 
 // 顯示比賽詳情 — 使用 fetch + inject（不使用 iframe，解決手機滾動與關閉問題）
+// 排行榜表格裡的姓名做成可點擊連結，點下去用跟比賽詳情一樣的 iframe
+// 彈窗（showMatchDetails）開啟 player.html，顯示該選手的跨屆生涯成績。
+function playerLinkHtml(name, team) {
+    if (!name) return '';
+    const url = `pages/player.html?name=${encodeURIComponent(name)}&team=${encodeURIComponent(team || '')}`;
+    return `<span class="player-link" onclick="showMatchDetails('${url}')">${name}</span>`;
+}
+
 function showMatchDetails(gameUrl) {
     console.log('✅ showMatchDetails (fetch 版本):', gameUrl);
 

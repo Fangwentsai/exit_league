@@ -67,10 +67,10 @@
     </script>
 
     <!-- 預載入關鍵 CSS 以改善 LCP -->
-    <link rel="preload" href="styles/news.css?v=20260319_2" as="style"
+    <link rel="preload" href="styles/news.css?v=20260911_1" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="styles/news.css?v=20260319_2">
+        <link rel="stylesheet" href="styles/news.css?v=20260911_1">
     </noscript>
 
     <!-- CSS 載入 polyfill -->
@@ -81,8 +81,9 @@
     <!-- 延遲載入 JavaScript（添加時間戳防止快取）-->
     <!-- 賽季設定必須先於 news.js 載入（defer 會依序執行）-->
     <script src="../config/config.js?v=20260729" defer></script>
-    <script src="../js/news.js?v=20260729" defer></script>
-    <script src="../js/match-preview.js?v=20260325" defer></script>
+    <script src="../js/player-link.js?v=20260911_1" defer></script>
+    <script src="../js/news.js?v=20260911_1" defer></script>
+    <script src="../js/match-preview.js?v=20260911_1" defer></script>
 
     <style>
         /* ========== 字體顯示優化 ========== */

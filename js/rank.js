@@ -318,7 +318,7 @@ if (!CONFIG[currentSeason]) {
             tr.innerHTML = `
                 <td>${start + index + 1}</td>
                 <td>${row.team}</td>
-                <td>${row.name}</td>
+                <td>${typeof playerLinkHtml === 'function' ? playerLinkHtml(row.name, row.team) : row.name}</td>
                 <td>${row.rate01}%</td>
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>
@@ -452,7 +452,7 @@ if (!CONFIG[currentSeason]) {
             tr.innerHTML = `
                 <td>${start + index + 1}</td>
                 <td>${row.team}</td>
-                <td>${row.name}</td>
+                <td>${typeof playerLinkHtml === 'function' ? playerLinkHtml(row.name, row.team) : row.name}</td>
                 <td>${row.rate01}%</td>
                 <td>${row.rateCR}%</td>
                 <td>${row.totalWins}</td>

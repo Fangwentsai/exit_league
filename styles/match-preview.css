@@ -226,6 +226,16 @@
     white-space: nowrap;
 }
 
+/* 選手姓名點擊連結：點下去開啟 player.html 顯示跨屆生涯成績 */
+.mp-td-name .player-link {
+    color: inherit;
+    cursor: pointer;
+}
+
+.mp-td-name .player-link:active {
+    opacity: 0.7;
+}
+
 /* PhoenixDarts 等級圖示。
    圖片已由 scripts/phoenix_icons.js 正規化成同一個畫布（117x44，內容靠左），
    所以這裡只要指定高度，每個圖的框與字體大小就都一致，姓名也自然對齊。
