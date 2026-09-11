@@ -190,4 +190,29 @@ const PLAYER_ALIASES = [
       { name: '傑森', team: '哈哈隊' },       // 第7屆，改用中文名（隊名也簡化了）
     ],
   },
+  {
+    id: 'aga_laidoulaile',
+    canonicalName: '阿嘎',
+    identities: [
+      { name: '阿嘎', team: '來都來了' },   // 第5屆
+      { name: '阿嘎', team: '軟飯硬吃' },   // 第6屆，換隊名
+      { name: '阿旮', team: '軟飯揪團中' }, // 第7屆，同音異字
+    ],
+  },
+  {
+    id: 'joy_rensheng',
+    canonicalName: 'Joy',
+    identities: [
+      { name: 'joy', team: '人生揪難' }, // 第6屆（小寫）
+      { name: 'Joy', team: '有點傻' },   // 第7屆（改成大寫開頭）
+    ],
+  },
+  {
+    id: 'ben_rensheng',
+    canonicalName: 'Ben',
+    identities: [
+      { name: 'ben', team: '人生揪難' }, // 第6屆（小寫）
+      { name: 'Ben', team: '有點傻' },   // 第7屆（改成大寫開頭）
+    ],
+  },
 ];

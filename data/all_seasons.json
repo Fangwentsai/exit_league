@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:53:00.748Z",
+  "generatedAt": "2026-09-11T15:55:48.346Z",
   "bakedSeasons": [
     4,
     5,
@@ -5939,7 +5939,7 @@
         ]
       }
     },
-    "阿嘎": {
+    "__alias__aga_laidoulaile": {
       "name": "阿嘎",
       "seasons": {
         "5": [
@@ -7799,8 +7799,8 @@
         ]
       }
     },
-    "joy": {
-      "name": "joy",
+    "__alias__joy_rensheng": {
+      "name": "Joy",
       "seasons": {
         "6": [
           {
@@ -7843,8 +7843,8 @@
         ]
       }
     },
-    "ben": {
-      "name": "ben",
+    "__alias__ben_rensheng": {
+      "name": "Ben",
       "seasons": {
         "6": [
           {
