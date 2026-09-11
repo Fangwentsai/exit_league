@@ -304,10 +304,80 @@ function generateMatchTable(matches) {
 document.addEventListener('DOMContentLoaded', function() {
     // 處理勝利圖標的位置
     setupWinnerIcons();
-    
+
     // 其他頁面初始化代碼...
     setupStatsButtons();
+
+    // 把選手姓名做成可點擊連結，連到 player.html 顯示跨屆生涯成績。
+    // 放在這裡（DOMContentLoaded 最後）是因為每場比賽的 SET 戰況表是各
+    // 頁面自己寫死的靜態 HTML，統計表則是本檔案上面的 initializeStats()
+    // 同步填好的，兩者到這個時間點都已經在 DOM 裡了。
+    linkifyGameResultPlayerNames();
 });
+
+// 這個頁面永遠是被 showMatchDetails() 用 iframe 開出來的比賽詳情頁，
+// 所以點姓名不用再彈一層 iframe，直接在 iframe 裡原地跳轉到 player.html，
+// 讓使用者可以用瀏覽器上一頁／手勢滑動回到比賽詳情。
+function openPlayerPage(name, team) {
+    if (!name) return;
+    const url = `../../pages/player.html?name=${encodeURIComponent(name)}&team=${encodeURIComponent(team || '')}`;
+    window.location.href = url;
+}
+
+// 把一個儲存格裡的選手姓名文字節點包成可點擊的 <span class="player-link">。
+// 多人賽（例如三人賽）的姓名是用「, 」隔開存在同一個文字節點裡，所以要先
+// 切開，其餘像 winner-icon 這種子元素維持原樣，只處理純文字部分。
+function linkifyPlayerCell(cell, team) {
+    if (!cell) return;
+    const textNodes = Array.prototype.filter.call(cell.childNodes, function (n) {
+        return n.nodeType === Node.TEXT_NODE && n.textContent.trim();
+    });
+    textNodes.forEach(function (node) {
+        const names = node.textContent.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        if (!names.length) return;
+        const frag = document.createDocumentFragment();
+        names.forEach(function (n, i) {
+            if (i > 0) frag.appendChild(document.createTextNode(', '));
+            const span = document.createElement('span');
+            span.className = 'player-link';
+            span.textContent = n;
+            span.addEventListener('click', function (e) {
+                e.stopPropagation();
+                openPlayerPage(n, team);
+            });
+            frag.appendChild(span);
+        });
+        node.parentNode.replaceChild(frag, node);
+    });
+}
+
+function linkifyGameResultPlayerNames() {
+    const awayTeamEl = document.querySelector('.team.away .team-name');
+    const homeTeamEl = document.querySelector('.team.home .team-name');
+    const awayTeam = awayTeamEl ? awayTeamEl.textContent.trim() : '';
+    const homeTeam = homeTeamEl ? homeTeamEl.textContent.trim() : '';
+
+    // SET 戰況表：每個 .game-table（統計表除外）扣掉表頭列，第2欄是客場
+    // 選手、第3欄是主場選手。
+    document.querySelectorAll('.game-table:not(.stats-table)').forEach(function (table) {
+        Array.prototype.forEach.call(table.rows, function (row, idx) {
+            if (idx === 0) return; // 表頭列
+            if (row.cells.length < 3) return;
+            linkifyPlayerCell(row.cells[1], awayTeam);
+            linkifyPlayerCell(row.cells[2], homeTeam);
+        });
+    });
+
+    // 個人數據統計表：.player-name 那欄
+    [['awayStats', awayTeam], ['homeStats', homeTeam]].forEach(function (pair) {
+        const table = document.getElementById(pair[0]);
+        if (!table) return;
+        Array.prototype.forEach.call(table.rows, function (row, idx) {
+            if (idx === 0) return;
+            linkifyPlayerCell(row.querySelector('.player-name'), pair[1]);
+        });
+    });
+}
 
 // 設置勝利圖標的位置
 function setupWinnerIcons() {

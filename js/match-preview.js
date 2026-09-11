@@ -177,7 +177,7 @@
                 const rate = parseFloat((s.totalWinRate || '0').replace('%', ''));
                 const rateColor = rate >= 60 ? '#28a745' : rate >= 40 ? '#333' : '#999';
                 rows += `<tr>
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${s.name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${typeof playerLinkHtml === 'function' ? playerLinkHtml(s.name, teamName) : s.name}</td>
                     <td>${s.totalWins}/${s.totalGames}</td>
                     <td style="color:${rateColor};font-weight:600">${s.totalWinRate}</td>
                     <td>${s.winRate01}</td>
@@ -185,7 +185,7 @@
                 </tr>`;
             } else {
                 rows += `<tr class="mp-tr-inactive">
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${typeof playerLinkHtml === 'function' ? playerLinkHtml(name, teamName) : name}</td>
                     <td>-</td><td>-</td><td>-</td><td>-</td>
                 </tr>`;
             }

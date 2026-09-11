@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>選手成績表 | 難找的聯賽</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <script src="../config/config.js"></script>
+    <script src="../config/player_aliases.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .player-header {
+            background: linear-gradient(135deg, #3a3a3a, #1f1f1f);
+            color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .player-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .player-header .subtitle {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 2px;
+        }
+        .section {
+            padding: 16px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        .scroll-hint {
+            display: none;
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        @media (max-width: 640px) {
+            .scroll-hint { display: block; }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+        }
+        table.stat-table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 640px;
+            font-size: 14px;
+        }
+        table.stat-table th, table.stat-table td {
+            padding: 10px 12px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        table.stat-table thead th {
+            background: #2b2b2b;
+            color: #fff;
+            font-weight: 600;
+            border-right: 1px solid #444;
+        }
+        table.stat-table thead th:first-child {
+            text-align: left;
+        }
+        table.stat-table tbody td:first-child {
+            text-align: left;
+            border-right: 1px solid #eee;
+        }
+        table.stat-table tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        table.stat-table tbody tr.career-row {
+            background: #fff4e6;
+            font-weight: 700;
+        }
+        table.stat-table tbody tr.career-row td {
+            border-top: 2px solid #dc3545;
+        }
+        .season-cell .year {
+            font-weight: 700;
+            display: block;
+        }
+        .season-cell .team {
+            font-size: 12px;
+            color: #666;
+            display: block;
+        }
+        .live-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: #dc3545;
+            color: #fff;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        .empty-state, .loading-state {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-header">
+        <div>
+            <h1 id="playerName">選手成績表</h1>
+            <div class="subtitle">難找的聯賽・個人生涯成績</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">生涯成績</div>
+        <div id="loadingState" class="loading-state">載入中…</div>
+        <div id="tableWrap" class="table-wrap" style="display:none;">
+            <div class="scroll-hint">行動裝置請用手指觸控滑動表格 ← →</div>
+            <table class="stat-table">
+                <thead>
+                    <tr>
+                        <th>賽季／球隊</th>
+                        <th>出賽數</th>
+                        <th>01勝場</th>
+                        <th>01勝率</th>
+                        <th>CR勝場</th>
+                        <th>CR勝率</th>
+                        <th>總勝場</th>
+                        <th>總勝率</th>
+                        <th>先攻率</th>
+                    </tr>
+                </thead>
+                <tbody id="statBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 這個頁面被 showMatchDetails() 用 <iframe src="player.html?name=華華">
+        // 的方式嵌入彈窗開啟，跟 game_result 那些比賽詳情頁是同一套機制。
+        //
+        // 資料來源分兩塊：
+        //   1. 已結束賽季（第 4~6 屆）：讀靜態的 data/all_seasons.json，
+        //      這份檔案是用 scripts/build_all_seasons.js 一次性整理出來的。
+        //   2. 進行中賽季（第 7 屆）：即時打 Google Sheets API 抓最新資料，
+        //      跟網站其他排行榜頁面的做法一致，永遠是當下最新數字。
+        //   等第七屆打完，把它也烘進 all_seasons.json，第八屆變成新的
+        //   「進行中賽季」，重複同樣的模式（見 build_all_seasons.js 檔頭說明）。
+
+        const params = new URLSearchParams(window.location.search);
+        const clickedName = params.get('name') || '';
+        const clickedTeam = params.get('team') || '';
+
+        const SEASON_LABELS = { 4: '第四屆', 5: '第五屆', 6: '第六屆', 7: '第七屆' };
+        const LIVE_SEASON_NUM = 7;
+
+        // 有些選手跨屆改過暱稱／換過隊伍（例如孟瑄→小孟、Jesse→傑西），
+        // 見 config/player_aliases.js。用點擊當下的「姓名＋隊伍」去查，
+        // 查得到就用該生涯身分的 id 當資料庫 key、canonicalName 當顯示名字；
+        // 查不到就照舊直接用姓名（沒有列在對照表裡的同名一律視為不同人）。
+        function resolveIdentity(name, team) {
+            if (typeof PLAYER_ALIASES !== 'undefined') {
+                for (const group of PLAYER_ALIASES) {
+                    const hit = group.identities.some(id => id.name === name && id.team === team);
+                    if (hit) return { playerKey: `__alias__${group.id}`, displayName: group.canonicalName };
+                }
+            }
+            return { playerKey: name, displayName: name };
+        }
+
+        const { playerKey, displayName } = resolveIdentity(clickedName, clickedTeam);
+        const playerName = displayName || clickedName;
+
+        function fmtPct(v) {
+            return (v === null || v === undefined) ? '—' : v.toFixed(2) + '%';
+        }
+        function fmtNum(v) {
+            return (v === null || v === undefined) ? '—' : v;
+        }
+
+        async function fetchLiveSeasonRows(targetPlayerKey) {
+            try {
+                const season = (typeof SEASONS !== 'undefined') ? SEASONS[LIVE_SEASON_NUM] : null;
+                if (!season) return [];
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${season.sheetId}/values/personal!A1:N300?key=${season.apiKey}`;
+                const res = await fetch(url);
+                if (!res.ok) return [];
+                const data = await res.json();
+                const rows = (data.values || []).slice(1);
+                const numOrNull = (v) => (v === undefined || v === null || v === '') ? null : (isNaN(parseInt(v, 10)) ? null : parseInt(v, 10));
+                const pctOrNull = (v) => {
+                    if (v === undefined || v === null || v === '' || String(v).trim() === 'DNP') return null;
+                    const n = parseFloat(String(v).replace('%', ''));
+                    return isNaN(n) ? null : n;
+                };
+                // 每一列都用自己的「姓名＋隊伍」重新判斷生涯身分，只留下跟我們
+                // 要找的這個人同一個身分的列——不能只比對姓名字串，不然像
+                // 「小孟」這種同名不同人的即時資料會被誤抓進另一個人的頁面。
+                return rows
+                    .filter(r => {
+                        const rowName = (r[1] || '').trim();
+                        const rowTeam = (r[0] || '').trim();
+                        if (!rowName) return false;
+                        return resolveIdentity(rowName, rowTeam).playerKey === targetPlayerKey;
+                    })
+                    .map(r => ({
+                        team: (r[0] || '').trim(),
+                        wins01: numOrNull(r[2]), rate01: pctOrNull(r[3]),
+                        winsCR: numOrNull(r[4]), rateCR: pctOrNull(r[5]),
+                        totalWins: numOrNull(r[6]), totalRate: pctOrNull(r[7]),
+                        firstRate: pctOrNull(r[8]),
+                        games01: numOrNull(r[9]), gamesCR: numOrNull(r[10]),
+                        firstCount: numOrNull(r[11]), totalGames: numOrNull(r[12]),
+                    }));
+            } catch (e) {
+                console.error('讀取第七屆即時資料失敗:', e);
+                return [];
+            }
+        }
+
+        function renderRow(seasonNum, entry, isLive) {
+            const tr = document.createElement('tr');
+            const label = SEASON_LABELS[seasonNum] || `第${seasonNum}屆`;
+            tr.innerHTML = `
+                <td class="season-cell">
+                    <span class="year">${label}${isLive ? '<span class="live-badge">進行中</span>' : ''}</span>
+                    <span class="team">${entry.team || ''}</span>
+                </td>
+                <td>${fmtNum(entry.totalGames)}</td>
+                <td>${fmtNum(entry.wins01)}</td>
+                <td>${fmtPct(entry.rate01)}</td>
+                <td>${fmtNum(entry.winsCR)}</td>
+                <td>${fmtPct(entry.rateCR)}</td>
+                <td>${fmtNum(entry.totalWins)}</td>
+                <td>${fmtPct(entry.totalRate)}</td>
+                <td>${fmtPct(entry.firstRate)}</td>
+            `;
+            return tr;
+        }
+
+        function renderCareerRow(allEntries) {
+            const sum = (key) => allEntries.reduce((s, e) => s + (e[key] || 0), 0);
+            const totalGames = sum('totalGames');
+            const totalWins = sum('totalWins');
+            const games01 = sum('games01');
+            const wins01 = sum('wins01');
+            const gamesCR = sum('gamesCR');
+            const winsCR = sum('winsCR');
+            const firstCount = sum('firstCount');
+
+            const tr = document.createElement('tr');
+            tr.className = 'career-row';
+            tr.innerHTML = `
+                <td>生涯合計</td>
+                <td>${totalGames}</td>
+                <td>${wins01}</td>
+                <td>${games01 ? fmtPct(wins01 / games01 * 100) : '—'}</td>
+                <td>${winsCR}</td>
+                <td>${gamesCR ? fmtPct(winsCR / gamesCR * 100) : '—'}</td>
+                <td>${totalWins}</td>
+                <td>${totalGames ? fmtPct(totalWins / totalGames * 100) : '—'}</td>
+                <td>${totalGames ? fmtPct(firstCount / totalGames * 100) : '—'}</td>
+            `;
+            return tr;
+        }
+
+        async function init() {
+            document.getElementById('playerName').textContent = playerName || '（未指定選手）';
+            const loadingEl = document.getElementById('loadingState');
+            const wrapEl = document.getElementById('tableWrap');
+            const bodyEl = document.getElementById('statBody');
+
+            if (!clickedName) {
+                loadingEl.textContent = '沒有指定選手名字';
+                return;
+            }
+
+            let baked = { seasons: {} };
+            try {
+                const res = await fetch('../data/all_seasons.json');
+                if (res.ok) baked = await res.json();
+            } catch (e) {
+                console.error('讀取歷屆資料失敗:', e);
+            }
+
+            const bakedEntry = baked.players && baked.players[playerKey];
+            const liveRows = await fetchLiveSeasonRows(playerKey);
+
+            const allEntries = [];
+            // 同一屆出現在超過一支隊伍，極可能是「同名不同人」（見
+            // scripts/build_all_seasons.js 檔頭說明的小孟/小宇/阿軒案例），
+            // 不是同一人换過隊——這種情況下把所有列加總成「生涯合計」會把
+            // 兩個不同人的成績混在一起，比不顯示更誤導人，所以偵測到就跳過
+            // 生涯合計，改顯示警語。
+            let ambiguousIdentity = false;
+            const seasonNumbers = (bakedEntry ? Object.keys(bakedEntry.seasons).map(Number) : []);
+            seasonNumbers.sort((a, b) => a - b);
+
+            for (const num of seasonNumbers) {
+                const entries = bakedEntry.seasons[num];
+                if (entries.length > 1) ambiguousIdentity = true;
+                for (const entry of entries) {
+                    bodyEl.appendChild(renderRow(num, entry, false));
+                    allEntries.push(entry);
+                }
+            }
+            if (liveRows.length > 1) ambiguousIdentity = true;
+            for (const entry of liveRows) {
+                bodyEl.appendChild(renderRow(LIVE_SEASON_NUM, entry, true));
+                allEntries.push(entry);
+            }
+
+            loadingEl.style.display = 'none';
+
+            if (allEntries.length === 0) {
+                loadingEl.style.display = 'block';
+                loadingEl.textContent = `找不到「${playerName}」的歷屆成績資料`;
+                return;
+            }
+
+            if (ambiguousIdentity) {
+                const note = document.createElement('div');
+                note.style.cssText = 'padding:10px 12px;background:#fff4e6;color:#8a5a00;font-size:13px;border-top:1px solid #e5e5e5;';
+                note.textContent = `「${playerName}」在某一屆同時出現在多支隊伍，可能是不同人剛好同名/同暱稱，無法可靠合併計算生涯總和，故不顯示生涯合計。`;
+                wrapEl.after(note);
+            } else {
+                bodyEl.appendChild(renderCareerRow(allEntries));
+            }
+            wrapEl.style.display = 'block';
+        }
+
+        init();
+    </script>
+</body>
+</html>
