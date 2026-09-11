@@ -27,11 +27,23 @@
         .player-header h1 {
             font-size: 20px;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .player-header .subtitle {
             font-size: 12px;
             color: #ccc;
             margin-top: 2px;
+        }
+        .phoenix-level-icon {
+            width: 22px;
+            height: 22px;
+        }
+        .phoenix-stats {
+            font-size: 12px;
+            color: #ddd;
+            margin-top: 4px;
         }
         .section {
             padding: 16px;
@@ -122,8 +134,9 @@
 <body>
     <div class="player-header">
         <div>
-            <h1 id="playerName">選手成績表</h1>
+            <h1><img id="phoenixLevelIcon" class="phoenix-level-icon" hidden alt=""><span id="playerName">選手成績表</span></h1>
             <div class="subtitle">難找的聯賽・個人生涯成績</div>
+            <div id="phoenixStats" class="phoenix-stats" hidden></div>
         </div>
     </div>
 
@@ -280,6 +293,41 @@
             return tr;
         }
 
+        // 在 data/phoenix_ratings.json（scripts/phoenix_fetch.js 定期更新）裡
+        // 找這個人的鳳凰數據。這份資料是用「目前隊伍＋暱稱」綁定 cSeq 查出來
+        // 的現成表，前端不用處理 cSeq，只要拿這個生涯身分「打過的隊伍」＋
+        // 目前顯示名字去對就好；同名不同人的風險比對戰績合併小很多（畢竟只是
+        // 多顯示一個等級圖示，不是合併數據），對不到隊伍才退而求其次整站找
+        // 同名。
+        function findPhoenixRating(ratings, name, teamsUsed) {
+            if (!ratings || !ratings.teams || !name) return null;
+            for (const team of teamsUsed) {
+                const rec = ratings.teams[team] && ratings.teams[team][name];
+                if (rec) return rec;
+            }
+            for (const team of Object.keys(ratings.teams)) {
+                const rec = ratings.teams[team][name];
+                if (rec) return rec;
+            }
+            return null;
+        }
+
+        function renderPhoenixStats(rec) {
+            if (!rec) return;
+            const iconEl = document.getElementById('phoenixLevelIcon');
+            if (rec.level) {
+                iconEl.src = `../images/rating30/${rec.level}.webp`;
+                iconEl.alt = `Lv${rec.level}`;
+                iconEl.title = `${rec.card}　rating ${rec.webrate}`;
+                iconEl.hidden = false;
+            }
+            const statsEl = document.getElementById('phoenixStats');
+            const parts = [`Rating ${rec.webrate}`];
+            if (rec.ppd && rec.mpr) parts.push(`PPD ${rec.ppd}`, `MPR ${rec.mpr}`);
+            statsEl.textContent = parts.join('　');
+            statsEl.hidden = false;
+        }
+
         async function init() {
             document.getElementById('playerName').textContent = playerName || '（未指定選手）';
             const loadingEl = document.getElementById('loadingState');
@@ -301,6 +349,21 @@
 
             const bakedEntry = baked.players && baked.players[playerKey];
             const liveRows = await fetchLiveSeasonRows(playerKey);
+
+            fetch('../data/phoenix_ratings.json')
+                .then(res => res.ok ? res.json() : null)
+                .then(ratings => {
+                    if (!ratings) return;
+                    const teamsUsed = [];
+                    if (liveRows.length) teamsUsed.push(...liveRows.map(e => e.team));
+                    if (bakedEntry) {
+                        const nums = Object.keys(bakedEntry.seasons).map(Number).sort((a, b) => b - a);
+                        for (const num of nums) teamsUsed.push(...bakedEntry.seasons[num].map(e => e.team));
+                    }
+                    const rec = findPhoenixRating(ratings, playerName, teamsUsed);
+                    renderPhoenixStats(rec);
+                })
+                .catch(e => console.error('讀取鳳凰數據失敗:', e));
 
             const allEntries = [];
             // 同一屆出現在超過一支隊伍，極可能是「同名不同人」（見
