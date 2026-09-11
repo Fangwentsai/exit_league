@@ -98,4 +98,14 @@ const PLAYER_ALIASES = [
       { name: '小東', team: '逃生入口C' },     // 第5屆
     ],
   },
+  {
+    id: 'xiaoqi_yibiaokaitianmen',
+    canonicalName: '小齊',
+    identities: [
+      { name: 'chi', team: '一鏢開天門' },       // 第4屆
+      { name: 'Chi', team: '一鏢開天門' },       // 第5屆
+      { name: '小齊', team: 'Tonight29十三么' }, // 第6屆，換隊改用中文名
+      { name: '小齊', team: '有點傻' },          // 第7屆
+    ],
+  },
 ];

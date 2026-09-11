@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:35:10.203Z",
+  "generatedAt": "2026-09-11T15:37:33.806Z",
   "bakedSeasons": [
     4,
     5,
@@ -98,8 +98,8 @@
         ]
       }
     },
-    "chi": {
-      "name": "chi",
+    "__alias__xiaoqi_yibiaokaitianmen": {
+      "name": "小齊",
       "seasons": {
         "4": [
           {
@@ -116,6 +116,40 @@
             "firstCount": 42,
             "totalGames": 87,
             "gender": null
+          }
+        ],
+        "5": [
+          {
+            "team": "一鏢開天門",
+            "wins01": 38,
+            "rate01": 64.41,
+            "winsCR": 30,
+            "rateCR": 50,
+            "totalWins": 68,
+            "totalRate": 57.14,
+            "firstRate": 46.22,
+            "games01": 59,
+            "gamesCR": 60,
+            "firstCount": 55,
+            "totalGames": 119,
+            "gender": null
+          }
+        ],
+        "6": [
+          {
+            "team": "Tonight29十三么",
+            "wins01": 60,
+            "rate01": 67.42,
+            "winsCR": 49,
+            "rateCR": 66.22,
+            "totalWins": 109,
+            "totalRate": 66.87,
+            "firstRate": 57.06,
+            "games01": 89,
+            "gamesCR": 74,
+            "firstCount": 93,
+            "totalGames": 163,
+            "gender": "男"
           }
         ]
       }
@@ -1361,23 +1395,6 @@
             "firstCount": 0,
             "totalGames": 0,
             "gender": null
-          }
-        ],
-        "6": [
-          {
-            "team": "Tonight29十三么",
-            "wins01": 60,
-            "rate01": 67.42,
-            "winsCR": 49,
-            "rateCR": 66.22,
-            "totalWins": 109,
-            "totalRate": 66.87,
-            "firstRate": 57.06,
-            "games01": 89,
-            "gamesCR": 74,
-            "firstCount": 93,
-            "totalGames": 163,
-            "gender": "男"
           }
         ]
       }
@@ -5688,28 +5705,6 @@
             "gamesCR": 0,
             "firstCount": 1,
             "totalGames": 1,
-            "gender": null
-          }
-        ]
-      }
-    },
-    "Chi": {
-      "name": "Chi",
-      "seasons": {
-        "5": [
-          {
-            "team": "一鏢開天門",
-            "wins01": 38,
-            "rate01": 64.41,
-            "winsCR": 30,
-            "rateCR": 50,
-            "totalWins": 68,
-            "totalRate": 57.14,
-            "firstRate": 46.22,
-            "games01": 59,
-            "gamesCR": 60,
-            "firstCount": 55,
-            "totalGames": 119,
             "gender": null
           }
         ]
