@@ -109,4 +109,21 @@ const PLAYER_ALIASES = [
       { name: '小齊', team: '有點傻' },          // 第7屆
     ],
   },
+  {
+    id: 'labaruo_huangbo',
+    canonicalName: '黃渤',
+    identities: [
+      { name: '喇叭', team: '逃生入口A' }, // 第4、5屆
+      { name: '黃渤', team: '哈哈隊' },    // 第7屆，第6屆沒打、換隊改名
+    ],
+  },
+  {
+    id: 'gan_vivi',
+    canonicalName: '淦',
+    identities: [
+      { name: '阿淦', team: 'Vivi朝酒晚舞' }, // 第4屆
+      { name: '阿淦', team: 'VIVI嘻嘻隊' },   // 第5、6屆
+      { name: '淦', team: '嘻嘻隊' },         // 第7屆，去掉「阿」（隊名也簡化了）
+    ],
+  },
 ];
