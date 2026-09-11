@@ -88,6 +88,7 @@ const PLAYER_ALIASES = [
     identities: [
       { name: '宏哥', team: '一鏢開天門' }, // 第4屆
       { name: '宏', team: '一鏢開天門' },   // 第5屆
+      { name: '宏哥', team: '有點傻' },     // 第7屆，第6屆沒打，換隊又改回宏哥
     ],
   },
   {
