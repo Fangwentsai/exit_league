@@ -155,4 +155,14 @@ const PLAYER_ALIASES = [
       { name: '小宓', team: '酒空組' }, // 第6、7屆，「宓」很罕見的姓，同隊直接視為同一人
     ],
   },
+  {
+    id: 'ahong_jiukong',
+    canonicalName: '阿鴻',
+    identities: [
+      { name: '阿鴻', team: '酒空組' }, // 第4、5屆
+      { name: '小鴻', team: '酒空組' }, // 第6屆，改叫小鴻
+      // 第7屆的「阿鴻」是同隊同名，靠 findPhoenixRating/build 時的姓名比對
+      // 自動接回這裡，不需要另外列一筆。
+    ],
+  },
 ];
