@@ -36,9 +36,13 @@
             color: #ccc;
             margin-top: 2px;
         }
+        /* 跟 styles/match-preview.css 的 .mp-lv 用同一組尺寸——鳳凰等級圖示原始
+           比例不是正方形，之前試過 object-fit:contain 配固定寬度，長徽章
+           （GRAND MASTER 30）會被縮到只剩很扁，短的又太高，所以維持固定
+           寬高（45x17，跟預覽卡片一致），不要再改回正方形。 */
         .phoenix-level-icon {
-            width: 22px;
-            height: 22px;
+            width: 45px;
+            height: 17px;
         }
         .phoenix-stats {
             font-size: 12px;
