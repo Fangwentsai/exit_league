@@ -18,12 +18,10 @@
                 ? resolveSeasonNumber({})
                 : (typeof CURRENT_SEASON !== 'undefined' ? CURRENT_SEASON : 7);
             const s = (typeof SEASONS !== 'undefined' && SEASONS[seasonNum]) ? SEASONS[seasonNum] : null;
-            const fallbackKey = (typeof DEFAULT_API_KEY !== 'undefined') ? DEFAULT_API_KEY : undefined;
-            if (s && s.sheetId) return { id: s.sheetId, key: s.apiKey || fallbackKey, label: s.label || '第七屆' };
+            if (s && s.sheetId) return { id: s.sheetId, label: s.label || '第七屆' };
         } catch (e) { /* fallback */ }
         return {
             id: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
-            key: (typeof DEFAULT_API_KEY !== 'undefined') ? DEFAULT_API_KEY : undefined,
             label: '第七屆'
         };
     }
@@ -112,7 +110,7 @@
         _fetchingStats = true;
         try {
             const sheet = seasonSheet();
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheet.id}/values/${PERSONAL_RANGE}?key=${sheet.key}`;
+            const url = sheetsUrl(sheet.id, PERSONAL_RANGE);
             console.log('📊 正在撈取 personal 工作表...');
             const resp = await fetch(url);
             if (!resp.ok) throw new Error(`API 錯誤: ${resp.status}`);

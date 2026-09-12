@@ -282,8 +282,7 @@ async function loadMatches() {
         try {
             // 使用第六屆的 Google Sheet API取得數據
             const sheetId = CONFIG[`SEASON${CURRENT_SEASON}`].SHEET_ID; // 當季的 Sheet ID
-            const apiKey = CONFIG[`SEASON${CURRENT_SEASON}`].API_KEY;
-            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!O:V?key=${apiKey}`;
+            const gsheetUrl = sheetsUrl(sheetId, 'schedule!O:V');
 
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
             response = await fetch(gsheetUrl);

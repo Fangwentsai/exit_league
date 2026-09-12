@@ -7,10 +7,7 @@
 const SHEETS_CONFIG = {
     CLIENT_ID: '945502427007-dq3ldlv77r1u0h6me3s6jj948dajk6gm.apps.googleusercontent.com',
     // 讀取比賽場次：跟著 config.js 的當季走，不要寫死屆數
-    get API_KEY() {
-        try { return SEASONS[CURRENT_SEASON].apiKey; }
-        catch (e) { return (typeof DEFAULT_API_KEY !== 'undefined') ? DEFAULT_API_KEY : undefined; }
-    },
+    // （API key 已移到伺服器端，讀取一律走 sheetsUrl() -> /api/sheets）
     get SCHEDULE_SHEET_ID() {
         try { return SEASONS[CURRENT_SEASON].sheetId; }
         catch (e) { return null; }
@@ -52,7 +49,6 @@ async function loadGames() {
         
         debugLog('🗓️ 搜尋日期範圍:', targetDates);
         debugLog('🔧 使用的API配置:', {
-            API_KEY: SHEETS_CONFIG.API_KEY,
             SHEET_ID: SHEETS_CONFIG.SCHEDULE_SHEET_ID
         });
         
@@ -155,7 +151,7 @@ async function loadGamesFromSheet(targetDates) {
                 debugLog(`🔄 嘗試工作表: ${sheetName}`);
                 
                 const range = `${sheetName}!A:H`;
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_CONFIG.SCHEDULE_SHEET_ID}/values/${range}?key=${SHEETS_CONFIG.API_KEY}`;
+                const url = sheetsUrl(SHEETS_CONFIG.SCHEDULE_SHEET_ID, range, { fresh: true });
                 
                 const response = await fetch(url);
                 
@@ -429,7 +425,7 @@ async function testSheetsConnection() {
         console.log('🔍 測試 Google Sheets API 連線...');
         
         // 測試讀取比賽資料
-        const testUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_CONFIG.SCHEDULE_SHEET_ID}/values/A1:A1?key=${SHEETS_CONFIG.API_KEY}`;
+        const testUrl = sheetsUrl(SHEETS_CONFIG.SCHEDULE_SHEET_ID, 'A1:A1', { fresh: true });
         
         const response = await fetch(testUrl);
         
@@ -455,7 +451,7 @@ async function testSheetsConnection() {
  */
 async function getSheetsList() {
     try {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_CONFIG.SCHEDULE_SHEET_ID}?key=${SHEETS_CONFIG.API_KEY}`;
+        const url = sheetsUrl(SHEETS_CONFIG.SCHEDULE_SHEET_ID, null, { meta: true });
         
         const response = await fetch(url);
         

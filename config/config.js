@@ -14,38 +14,30 @@
 //               舊制 K:Q（K 隊名、L 勝、M 敗、N 和、O 積分、P 飲酒加成、Q 總分）
 //               新制 O:V（O 排名、P 隊名、Q 勝、R 敗、S 和、T 積分、U 飲酒加成、V 總分）
 
-const DEFAULT_API_KEY = 'AIzaSyC-FZGPTfchBh2FQGGc8KyLEX1ZDxmadX4';
-
 const SEASONS = {
     3: {
         sheetId: '1Rjxr6rT_NfonXtYYsxpo3caYJbvI-fxc2WQh3tKBSC8',
-        apiKey: DEFAULT_API_KEY,
         // 2024/11 開打、2025/2 結束，跨年；試算表已填完整日期，不需補年份
         label: '第三屆', startDate: null, rankRange: 'K:Q',
         schedulePage: 'schedule', rankPage: 'rank', resultDir: 'season3'
     },
     4: {
         sheetId: '1UV-uMGibCmqPqhlMCqmNH2Z_fBQQTJQcqTGjkBQNiOE',
-        apiKey: DEFAULT_API_KEY,
         label: '第四屆', startDate: '2025/4/8', rankRange: 'K:Q',
         schedulePage: 'scheduleS4', rankPage: 'rankS4', resultDir: 'season4'
     },
     5: {
-        // 這把 key 設有 referer 限制，只能從 yhdarts.com 網域呼叫
         sheetId: '1xb6UmcQ4ueQcCn_dHW8JJ9H2Ya2Mp94HdJqz90BlEEY',
-        apiKey: 'AIzaSyDtba1arudetdcnc3yd3ri7Q35HlAndjr0',
         label: '第五屆', startDate: '2025/8/20', rankRange: 'O:V',
         schedulePage: 'scheduleS5', rankPage: 'rankS5', resultDir: 'season5'
     },
     6: {
         sheetId: '1qc08K2zPsHm9g5Deku-yshYfggosTZdWIyFg7nqEEOM',
-        apiKey: DEFAULT_API_KEY,
         label: '第六屆', startDate: '2026/1/27', endDate: '2026/6/2', rankRange: 'O:V',
         schedulePage: 'scheduleS6', rankPage: 'rankS6', resultDir: 'season6'
     },
     7: {
         sheetId: '1APUuzy6Dcbi1sWGUVvrbrluEvKsktRvPYygASofekKQ',
-        apiKey: DEFAULT_API_KEY,
         // 2026/8/18 開打（週二賽制），10/27 結束
         label: '第七屆', startDate: '2026/8/18', endDate: '2026/10/27', rankRange: 'O:V',
         // 第七屆分組排行在試算表 schedule 分頁的對應參照範圍
@@ -90,11 +82,27 @@ const CONFIG = {};
 Object.keys(SEASONS).forEach(num => {
     CONFIG[`SEASON${num}`] = {
         SHEET_ID: SEASONS[num].sheetId,
-        API_KEY: SEASONS[num].apiKey,
         SEASON_FILTER: String(num),
         season: Number(num)
     };
 });
+
+// ==================== Sheets 讀取 ====================
+// 前端一律不直接打 sheets.googleapis.com。API key 留在伺服器端（Vercel 環境變數
+// GOOGLE_SHEETS_API_KEY），所有讀取走 /api/sheets 代理，詳見 api/sheets.js。
+// 這麼做是因為 key 若寫在這個公開 repo 裡，只能靠 HTTP referrer 限制擋盜用，
+// 而那個限制又會把 vercel.app 的 preview 部署擋成 403。
+//
+//   sheetsUrl(id, 'schedule!A:H')             讀範圍
+//   sheetsUrl(id, null, { meta: true })       讀試算表基本資料
+//   sheetsUrl(id, range, { fresh: true })     略過 CDN 快取
+function sheetsUrl(spreadsheetId, range, options) {
+    const params = new URLSearchParams({ id: spreadsheetId });
+    if (range) params.set('range', range);
+    if (options && options.meta) params.set('meta', '1');
+    if (options && options.fresh) params.set('fresh', '1');
+    return `/api/sheets?${params.toString()}`;
+}
 
 // 從 seasonOverride、頁面名稱或網址解析出屆數，找不到時回傳 null
 // 優先順序：override → 頁面名稱 → 網址路徑

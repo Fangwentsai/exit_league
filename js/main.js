@@ -1146,10 +1146,8 @@ async function loadMatches() {
     try {
         debugLog('開始從 Google Sheets 載入比賽數據...');
         const sheetId = CONFIG[`SEASON${CURRENT_SEASON}`].SHEET_ID;
-        const apiKey = CONFIG[`SEASON${CURRENT_SEASON}`].API_KEY;
         debugLog('使用的 Google Sheets ID:', sheetId);
-        // debugLog('使用的 API Key:', apiKey); // 已註釋：隱藏敏感資訊
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A:H?key=${apiKey}`;
+        const url = sheetsUrl(sheetId, 'schedule!A:H');
         // debugLog('請求的 URL:', url); // 已註釋：隱藏敏感資訊
         const response = await fetch(url);
         debugLog('fetch 響應狀態:', response.status);
@@ -1196,7 +1194,7 @@ async function loadNewsRankings() {
         const seasonNum = (typeof CURRENT_SEASON !== 'undefined') ? CURRENT_SEASON : 7;
         const seasonMeta = (typeof SEASONS !== 'undefined' && SEASONS[seasonNum]) || {};
         const config = (typeof CONFIG !== 'undefined') ? CONFIG[`SEASON${seasonNum}`] : null;
-        if (!config || !config.SHEET_ID || !config.API_KEY) return;
+        if (!config || !config.SHEET_ID) return;
 
         const BADGE = { 掉鏢組: '掉鏢', 靶外組: '靶外' };
         const groupOf = (team) => {
@@ -1211,7 +1209,7 @@ async function loadNewsRankings() {
         if (seasonMeta.groupRankRanges) {
             for (const [groupName, range] of Object.entries(seasonMeta.groupRankRanges)) {
                 try {
-                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/schedule!${range}?key=${config.API_KEY}`;
+                    const url = sheetsUrl(config.SHEET_ID, `schedule!${range}`);
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
@@ -1242,7 +1240,7 @@ async function loadNewsRankings() {
             // 個人勝場排行
             if (seasonMeta.personalRankRanges.勝場排行) {
                 try {
-                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${seasonMeta.personalRankRanges.勝場排行}?key=${config.API_KEY}`;
+                    const url = sheetsUrl(config.SHEET_ID, seasonMeta.personalRankRanges.勝場排行);
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
@@ -1278,7 +1276,7 @@ async function loadNewsRankings() {
             // Top Lady
             if (seasonMeta.personalRankRanges.TopLady) {
                 try {
-                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${seasonMeta.personalRankRanges.TopLady}?key=${config.API_KEY}`;
+                    const url = sheetsUrl(config.SHEET_ID, seasonMeta.personalRankRanges.TopLady);
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
@@ -1318,7 +1316,7 @@ async function loadNewsRankings() {
             // 看起來不一致。做法跟 scripts/weekly_update.js 現在的算法一致：
             // I欄(index 8)=先攻率，M欄(index 12)=總場數。）
             try {
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A2:N200?key=${config.API_KEY}`;
+                const url = sheetsUrl(config.SHEET_ID, 'personal!A2:N200');
                 const res = await fetch(url);
                 if (res.ok) {
                     const data = await res.json();
@@ -1408,7 +1406,7 @@ async function loadRankData(page) {
         // 排行榜欄位範圍依賽季而定（新制 O:V、舊制 K:Q）
         const isNewRankLayout = season.rankRange === 'O:V';
         const rankRange = `schedule!${season.rankRange}`;
-        const rankUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${rankRange}?key=${config.API_KEY}`;
+        const rankUrl = sheetsUrl(config.SHEET_ID, rankRange);
 
         console.log('當前賽季:', season.label, '排名欄位:', season.rankRange);
         // console.log('正在請求團隊排名 URL:', rankUrl); // 已註釋：隱藏敏感資訊
@@ -1432,7 +1430,7 @@ async function loadRankData(page) {
         applyTeamGroupTabs(season);
 
         // 載入個人排名
-        const personalResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/personal!A:I?key=${config.API_KEY}`);
+        const personalResponse = await fetch(sheetsUrl(config.SHEET_ID, 'personal!A:I'));
         if (!personalResponse.ok) throw new Error(`HTTP 錯誤! 狀態: ${personalResponse.status}`);
 
         const personalData = await personalResponse.json();
@@ -1863,7 +1861,7 @@ async function loadScheduleData(page) {
     debugLog('判斷賽季為:', getSeason(seasonNum).label);
 
     // 構建 Google Sheets API URL - 讀取 schedule 工作表的 A:H 欄
-    const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/schedule!A:H?key=${config.API_KEY}`;
+    const sheetUrl = sheetsUrl(config.SHEET_ID, 'schedule!A:H');
     debugLog('嘗試載入 Google Sheets 數據:', sheetUrl);
 
     try {

@@ -215,7 +215,7 @@
             try {
                 const season = (typeof SEASONS !== 'undefined') ? SEASONS[LIVE_SEASON_NUM] : null;
                 if (!season) return [];
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${season.sheetId}/values/personal!A1:N300?key=${season.apiKey}`;
+                const url = sheetsUrl(season.sheetId, 'personal!A1:N300');
                 const res = await fetch(url);
                 if (!res.ok) return [];
                 const data = await res.json();

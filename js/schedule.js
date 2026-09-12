@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 構建 API URL
     const RANGE= 'schedule!A1:F1000';
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.SHEET_ID}/values/${RANGE}?key=${config.API_KEY}`;
+    const url = sheetsUrl(config.SHEET_ID, RANGE);
     console.log('API URL:', url);
     
     // 獲取數據

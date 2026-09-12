@@ -52,11 +52,10 @@ console.log('檢測到賽季:', seasonMeta.label);
 if (!CONFIG[currentSeason]) {
     console.error('找不到配置:', currentSeason);
 } else {
-    // 從賽季配置中獲取 SHEET_ID 和 API_KEY
+    // 從賽季配置中獲取 SHEET_ID（API key 已移到伺服器端，見 api/sheets.js）
     const SHEET_ID = CONFIG[currentSeason].SHEET_ID;
-    const API_KEY = CONFIG[currentSeason].API_KEY;
-    
-    console.log('使用配置 - SHEET_ID:', SHEET_ID, 'API_KEY:', API_KEY);
+
+    console.log('使用配置 - SHEET_ID:', SHEET_ID);
     
     // 其他變量初始化
     let allRankings = [];
@@ -71,7 +70,7 @@ if (!CONFIG[currentSeason]) {
             const isS5OrS6 = seasonMeta.rankRange === 'O:V';
             const sheetName = 'schedule';
             const range = `${sheetName}!${seasonMeta.rankRange}`;
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+            const url = sheetsUrl(SHEET_ID, range);
 
             console.log("當前賽季:", currentSeason);
             console.log("是否為 S5/S6:", isS5OrS6);
@@ -190,7 +189,7 @@ if (!CONFIG[currentSeason]) {
         try {
             console.log('開始載入個人排名...');
             const range = 'personal!A:I';
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+            const url = sheetsUrl(SHEET_ID, range);
             
             console.log("正在請求個人排名 URL:", url);
             
