@@ -1193,11 +1193,13 @@ body.news-page {
     border-color: #dc3545;
 }
 
+/* 日期就在這裡，11px 小到會被當成沒有。放大到 13px 並拉開距離就夠，
+   不需要另外做一排日期切換控制項——分頁本身就是時間軸上的兩個位置。 */
 .match-nav-tab .matches-date {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: normal;
-    margin-left: 4px;
-    opacity: 0.9;
+    margin-left: 6px;
+    opacity: 0.92;
 }
 
 .match-pane {
