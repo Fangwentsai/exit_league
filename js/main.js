@@ -733,10 +733,7 @@ function generateMatchesHTML(matches) {
 
     let html = `<div id="${uniqueId}">`;
     for (const date in matchesByDate) {
-        const dayObj = parseDate(date);
-        const weekday = dayObj ? '日一二三四五六'[dayObj.getDay()] : '';
         html += `
-            <div class="matches-day">${date}${weekday ? `（${weekday}）` : ''}</div>
             <div class="matches-container">
         `;
         for (const match of matchesByDate[date]) {
@@ -804,19 +801,56 @@ function generateMatchesHTML(matches) {
         style.textContent = `
             /* 賽事列是表格型資料，不是卡片：平列 + 細分隔線，整組包在一張卡裡。
                兩隊各佔一行，右側窄欄放 Preview 或比分。 */
-            /* 比賽日期獨立一行：分頁標籤上那個 11px 的日期太小，容易被當成沒有 */
+            /* 比賽日期切換列：兩側直接把前後一個比賽日的日期寫出來，
+               不用點下去才知道會跳到哪。賽制是每週二，所以前後就是前後一週。 */
             .matches-day {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                padding: 8px 12px;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 6px 8px;
                 margin-bottom: 8px;
                 background: #f8f9fa;
                 border: 1px solid #e0e0e0;
                 border-radius: 6px;
+            }
+
+            .matches-day-current {
                 font-size: 15px;
                 font-weight: bold;
                 color: #333;
+                white-space: nowrap;
+            }
+
+            .matches-day-nav {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                min-width: 78px;
+                min-height: 34px;
+                padding: 4px 8px;
+                border: none;
+                border-radius: 4px;
+                background: transparent;
+                color: #6c757d;
+                font-size: 12px;
+                font-family: inherit;
+                cursor: pointer;
+            }
+
+            .matches-day-nav:last-child {
+                justify-content: flex-end;
+            }
+
+            .matches-day-nav:hover:not(.is-disabled) {
+                background: #ececec;
+                color: #b02a37;
+            }
+
+            /* 頭尾沒有下一個比賽日時留著位置，日期才不會左右跳動 */
+            .matches-day-nav.is-disabled {
+                visibility: hidden;
+                cursor: default;
             }
 
             .matches-container {
@@ -1101,6 +1135,68 @@ function parseScheduleData(values, season = 'SEASON4') {
     return result;
 }
 
+// ===== 賽事日期切換 =====
+// 設計稿裡日期是一個可以前後翻週次的控制項，不是只顯示當天。
+// 把所有有比賽的日子排成一個清單，前後鍵就在這個清單上移動；
+// 兩個分頁各自記住自己停在哪一天。
+const MATCH_DAYS = { dates: [], byDate: {} };
+
+function weekdayOf(dateStr) {
+    const d = parseDate(dateStr);
+    return d ? '日一二三四五六'[d.getDay()] : '';
+}
+
+// 只留月/日，兩側的預覽用，免得「2026/9/15」把那一行塞爆
+function shortDate(dateStr) {
+    const parts = String(dateStr).split(/[\/\-.]/);
+    return parts.length >= 3 ? `${parts[1]}/${parts[2]}` : dateStr;
+}
+
+function matchDayStepperHTML(paneId, index) {
+    const dates = MATCH_DAYS.dates;
+    const prev = index > 0 ? dates[index - 1] : null;
+    const next = index < dates.length - 1 ? dates[index + 1] : null;
+    const arrow = (dir) => dir === 'prev'
+        ? '<polyline points="15 5 8 12 15 19"></polyline>'
+        : '<polyline points="9 5 16 12 9 19"></polyline>';
+    const side = (dir, d) => `
+        <button class="matches-day-nav${d ? '' : ' is-disabled'}"
+                ${d ? `onclick="stepMatchDay('${paneId}', ${dir === 'prev' ? -1 : 1})"` : 'disabled'}
+                aria-label="${dir === 'prev' ? '上一個比賽日' : '下一個比賽日'}">
+            ${dir === 'prev' ? `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${arrow('prev')}</svg>` : ''}
+            <span>${d ? shortDate(d) : ''}</span>
+            ${dir === 'next' ? `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${arrow('next')}</svg>` : ''}
+        </button>`;
+    const cur = dates[index];
+    const wd = weekdayOf(cur);
+    return `
+        <div class="matches-day">
+            ${side('prev', prev)}
+            <span class="matches-day-current">${cur}${wd ? `（${wd}）` : ''}</span>
+            ${side('next', next)}
+        </div>`;
+}
+
+function renderMatchDay(paneId, index) {
+    const pane = document.getElementById(paneId);
+    if (!pane || !MATCH_DAYS.dates.length) return;
+    const i = Math.max(0, Math.min(index, MATCH_DAYS.dates.length - 1));
+    pane.dataset.dayIndex = String(i);
+    const date = MATCH_DAYS.dates[i];
+    pane.innerHTML = matchDayStepperHTML(paneId, i) + generateMatchesHTML(MATCH_DAYS.byDate[date] || []);
+
+    // 分頁標籤上的日期跟著走
+    const labelId = paneId === 'upcomingMatchesContent' ? 'upcomingDate' : 'lastWeekDate';
+    const label = document.getElementById(labelId);
+    if (label) label.textContent = date;
+}
+
+window.stepMatchDay = function (paneId, delta) {
+    const pane = document.getElementById(paneId);
+    if (!pane) return;
+    renderMatchDay(paneId, Number(pane.dataset.dayIndex || 0) + delta);
+};
+
 function displayMatches(matches) {
     debugLog('開始處理並顯示比賽數據，總數據條數:', matches.length);
     const today = new Date();
@@ -1170,43 +1266,37 @@ function displayMatches(matches) {
 
     debugLog('上週比賽總數:', lastWeekMatches.length);
     debugLog('近期比賽總數:', upcomingMatches.length);
+
+    // 建立日期清單給切換列用：所有有比賽的日子，由舊到新
+    MATCH_DAYS.dates = [];
+    MATCH_DAYS.byDate = {};
+    for (const m of matches) {
+        if (!m.date || !parseDate(m.date)) continue;
+        (MATCH_DAYS.byDate[m.date] = MATCH_DAYS.byDate[m.date] || []).push(m);
+    }
+    MATCH_DAYS.dates = Object.keys(MATCH_DAYS.byDate).sort((a, b) => parseDate(a) - parseDate(b));
+
+    const idxOf = (dateStr) => MATCH_DAYS.dates.indexOf(dateStr);
+
     const lastWeekContent = document.getElementById('lastWeekMatchesContent');
     if (lastWeekContent) {
         if (lastWeekMatches.length > 0) {
-            lastWeekContent.innerHTML = generateMatchesHTML(lastWeekMatches);
+            renderMatchDay('lastWeekMatchesContent', idxOf(lastWeekMatches[0].date));
             debugLog('上週戰況已更新');
-
-            // 更新上週戰況的日期顯示
-            const lastWeekDate = lastWeekMatches.length > 0 ? lastWeekMatches[0].date : '上週';
-            const lastWeekDateElement = document.getElementById('lastWeekDate');
-            if (lastWeekDateElement) {
-                lastWeekDateElement.textContent = lastWeekDate || '上週';
-            }
         } else {
             lastWeekContent.innerHTML = '<p>無上週比賽數據</p>';
-            debugLog('無上週比賽數據');
         }
     } else {
         console.error('找不到上週戰況容器元素');
     }
+
     const upcomingContent = document.getElementById('upcomingMatchesContent');
     if (upcomingContent) {
         if (upcomingMatches.length > 0) {
-            // 只顯示最近一個比賽日的所有比賽（第六屆每週有6場比賽）
-            const firstMatchDate = upcomingMatches[0].date;
-            const sameDateMatches = upcomingMatches.filter(match => match.date === firstMatchDate);
-            upcomingContent.innerHTML = generateMatchesHTML(sameDateMatches);
-            debugLog('近期比賽已更新，顯示', sameDateMatches.length, '場比賽（日期:', firstMatchDate, '）');
-
-            // 更新近期比賽的日期顯示
-            const upcomingDate = firstMatchDate || '本週';
-            const upcomingDateElement = document.getElementById('upcomingDate');
-            if (upcomingDateElement) {
-                upcomingDateElement.textContent = upcomingDate || '本週';
-            }
+            renderMatchDay('upcomingMatchesContent', idxOf(upcomingMatches[0].date));
+            debugLog('近期比賽已更新，日期:', upcomingMatches[0].date);
         } else {
             upcomingContent.innerHTML = '<p>無近期比賽數據</p>';
-            debugLog('無近期比賽數據');
         }
     } else {
         console.error('找不到近期比賽容器元素');
