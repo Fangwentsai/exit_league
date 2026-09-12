@@ -701,6 +701,20 @@ function parseDate(dateStr) {
     return new Date(year, month, day);
 }
 
+// 第七屆起隊伍分成掉鏢組/靶外組，賽事列上用一個小標籤標出來。
+// 名單來自 config/config.js 的 SEASONS[n].groups，沒有分組的賽季回傳空字串。
+const GROUP_BADGE = { 掉鏢組: '掉鏢', 靶外組: '靶外' };
+function groupOfTeam(team) {
+    try {
+        const groups = (typeof SEASONS !== 'undefined' && SEASONS[CURRENT_SEASON] && SEASONS[CURRENT_SEASON].groups) || null;
+        if (!groups || !team) return '';
+        for (const name in groups) {
+            if (groups[name] && groups[name].indexOf(team) >= 0) return name;
+        }
+    } catch (e) { /* 分組是加分資訊，抓不到就不顯示 */ }
+    return '';
+}
+
 function generateMatchesHTML(matches) {
     if (matches.length === 0) {
         return '<p>沒有比賽數據</p>';
@@ -749,22 +763,29 @@ function generateMatchesHTML(matches) {
                 ? 'clickable-match'
                 : showPreview ? 'clickable-match preview-match' : '';
 
+            // 兩隊各佔一行（客隊在上、主隊在下），長隊名才不會被截。
+            // team2 是主隊：venue 就是它的主場（見 news.js 的 team2 = homeTeam + (venue)）。
+            const group = groupOfTeam(match.team2) || groupOfTeam(match.team1);
+            const groupTag = group
+                ? `<span class="group-tag ${group === '掉鏢組' ? 'group-d' : 'group-b'}">${GROUP_BADGE[group] || ''}</span>`
+                : '';
+            const rightCol = hasScores
+                ? `<div class="score">${match.score1 || ''}</div><div class="score">${match.score2 || ''}</div>`
+                : (showPreview ? '<span class="mp-tag">Preview</span>' : '');
+
             html += `
                 <div class="match ${clickableClass}" ${dataAttr}>
                     <div class="match-header">
                         <span class="match-code">${match.gameCode}</span>
+                        ${groupTag}
                         <span class="match-venue">${match.venue ? `@${match.venue}` : ''}</span>
                     </div>
                     <div class="match-teams">
-                        <div class="team team1">
+                        <div class="match-names">
                             <div class="team-name">${match.team1}</div>
-                            <div class="score">${match.score1 || ''}</div>
+                            <div class="team-name">${match.team2}<span class="home-tag">主</span></div>
                         </div>
-                        <div class="vs">${showPreview ? '<span class="mp-tag">Preview</span>' : ''}<span class="vs-label">vs</span></div>
-                        <div class="team team2">
-                            <div class="team-name">${match.team2}</div>
-                            <div class="score">${match.score2 || ''}</div>
-                        </div>
+                        <div class="match-right${hasScores ? ' has-score' : ''}">${rightCol}</div>
                     </div>
                 </div>
             `;
@@ -778,158 +799,189 @@ function generateMatchesHTML(matches) {
         const style = document.createElement('style');
         style.id = 'match-style';
         style.textContent = `
-            .match {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                margin-bottom: 10px;
-                padding: 10px 14px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-                border: 1px solid #eaeaea;
+            /* 賽事列是表格型資料，不是卡片：平列 + 細分隔線，整組包在一張卡裡。
+               兩隊各佔一行，右側窄欄放 Preview 或比分。 */
+            .matches-container {
+                background: #ffffff;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                overflow: hidden;
             }
-            
+
+            .match {
+                background-color: #ffffff;
+                padding: 9px 12px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .match:nth-child(even) {
+                background-color: #fcfcfc;
+            }
+
+            .match:last-child {
+                border-bottom: none;
+            }
+
             .clickable-match {
                 cursor: pointer;
-                transition: all 0.15s ease;
+                transition: background-color 0.15s ease;
             }
-            
+
+            /* 平列不做位移，只換底色——位移會讓整排跟著抖 */
             .clickable-match:hover {
-                background-color: #f1f3f5;
-                transform: translateY(-1px);
-                box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+                background-color: #f5f6f8;
             }
-            
+
             .match-header {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-                margin-bottom: 4px;
-                font-size: 13px;
-                color: #666;
+                gap: 7px;
+                margin-bottom: 3px;
                 line-height: 1.2;
             }
-            
+
             .match-code {
                 font-weight: bold;
-                color: #333;
-                font-size: 13px;
-            }
-            
-            .match-venue {
-                font-style: italic;
-                color: #777;
+                color: #495057;
                 font-size: 12px;
+                flex-shrink: 0;
             }
-            
+
+            .group-tag {
+                font-size: 10px;
+                font-weight: bold;
+                padding: 1px 6px;
+                border-radius: 3px;
+                flex-shrink: 0;
+                letter-spacing: 0.02em;
+            }
+
+            .group-d {
+                background: #fdeaec;
+                color: #b02a37;
+                border: 1px solid #f3c3c8;
+            }
+
+            .group-b {
+                background: #eef2f7;
+                color: #41566b;
+                border: 1px solid #d7e0ea;
+            }
+
+            /* 主場推到最右，字級小但寫全名，不縮寫 */
+            .match-venue {
+                margin-left: auto;
+                font-style: normal;
+                color: #6c757d;
+                font-size: 11.5px;
+                min-width: 0;
+                text-align: right;
+            }
+
             .match-teams {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                gap: 10px;
                 padding: 0;
             }
-            
-            .team {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                width: 42%;
-            }
-            
-            .team1 {
-                justify-content: flex-start;
-                text-align: left;
-            }
-            
-            .team2 {
-                justify-content: flex-end;
-                text-align: right;
-            }
-            
-            .team-name {
-                font-weight: bold;
-                font-size: 15px;
-                margin-bottom: 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 100%;
-                letter-spacing: -0.2px;
-                color: #212529;
-            }
-            
-            .score {
-                font-size: 18px;
-                font-weight: bold;
-                color: #dc3545;
-                line-height: 1;
-            }
-            
-            .vs {
+
+            .match-names {
+                flex-grow: 1;
                 display: flex;
                 flex-direction: column;
+                gap: 2px;
+                min-width: 0;
+            }
+
+            /* 往內收一段，免得隊名和右欄中間空一大塊 */
+            .match-right {
+                width: 62px;
+                flex-shrink: 0;
+                margin-right: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
                 align-items: center;
                 justify-content: center;
+            }
+
+            .match-right.has-score {
+                align-items: flex-end;
+            }
+
+            .team-name {
+                font-weight: normal;
+                font-size: 15px;
+                line-height: 1.42;
+                letter-spacing: -0.2px;
+                color: #212529;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .home-tag {
+                font-size: 10px;
+                font-weight: bold;
+                color: #b02a37;
+                background: #fdeaec;
+                border: 1px solid #f3c3c8;
+                border-radius: 3px;
                 padding: 0 4px;
-                flex-shrink: 0;
-                line-height: 1;
-                margin-top: -3px;
+                margin-left: 6px;
+            }
+
+            /* 兩隊比分上下對齊各自的隊名，不用左右來回看 */
+            .score {
+                font-size: 16px;
+                font-weight: bold;
+                color: #dc3545;
+                line-height: 1.42;
+                width: 100%;
+                text-align: right;
             }
 
             .mp-tag {
-                font-size: 15px;
+                font-size: 13.5px;
                 color: #dc3545;
                 font-weight: 700;
                 letter-spacing: 0.5px;
-                margin-bottom: 1px;
-                line-height: 1.1;
-            }
-
-            .vs-label {
-                font-size: 12.5px;
-                font-weight: 700;
-                color: #888;
-                line-height: 1;
+                line-height: 1.15;
             }
 
             /* 手機版 (600px 以下) 配置：六場賽程剛好填滿第一頁面 */
             @media screen and (max-width: 600px) {
                 .match {
-                    margin-bottom: 6px;
-                    padding: 7px 10px;
-                    border-radius: 7px;
+                    padding: 8px 12px;
                 }
 
                 .match-header {
                     margin-bottom: 3px;
-                    font-size: 12px;
+                    gap: 6px;
                 }
 
                 .match-code {
-                    font-size: 12.5px;
+                    font-size: 12px;
                 }
 
                 .match-venue {
-                    font-size: 11.5px;
+                    font-size: 11px;
                 }
 
                 .team-name {
-                    font-size: 13.5px;
+                    font-size: 14.5px;
                 }
 
                 .score {
-                    font-size: 16.5px;
+                    font-size: 16px;
                 }
 
-                .vs {
-                    margin-top: -5px;
+                /* 螢幕窄，右欄少收一點，隊名才留得住 */
+                .match-right {
+                    margin-right: 16px;
                 }
 
                 .mp-tag {
-                    font-size: 13.5px;
-                    margin-bottom: 0;
-                }
-
-                .vs-label {
-                    font-size: 11px;
+                    font-size: 13px;
                 }
             }
             
