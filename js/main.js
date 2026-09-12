@@ -393,6 +393,70 @@ function setupHamburgerMenu() {
     }
 }
 
+// 標題列右上角的屆別切換
+// 歷屆的賽程與排名原本只在漢堡選單的兩層子選單裡，要點三下才到得了。
+// 清單直接從 SEASONS 產生，加一屆只要改 config.js。
+function setupSeasonSwitch() {
+    const root = document.getElementById('seasonSwitch');
+    if (!root || typeof SEASONS === 'undefined') return;
+
+    const btn = root.querySelector('.season-switch-btn');
+    const menu = root.querySelector('.season-switch-menu');
+    const label = document.getElementById('seasonSwitchLabel');
+    if (!btn || !menu || !label) return;
+
+    const current = (typeof CURRENT_SEASON !== 'undefined') ? Number(CURRENT_SEASON) : null;
+    if (current && SEASONS[current]) label.textContent = SEASONS[current].label;
+
+    // 新的在上面
+    const nums = Object.keys(SEASONS).map(Number).sort((a, b) => b - a);
+    menu.innerHTML = nums.map(n => {
+        const season = SEASONS[n];
+        if (!season) return '';
+        const links = [
+            season.schedulePage ? `<button type="button" class="season-link" data-page="${season.schedulePage}">賽程</button>` : '',
+            season.rankPage ? `<button type="button" class="season-link" data-page="${season.rankPage}">排名</button>` : ''
+        ].join('');
+        return `
+            <div class="season-row${n === current ? ' is-current' : ''}">
+                <span class="season-row-label">${season.label || n + '屆'}</span>
+                <span class="season-row-links">${links}</span>
+            </div>`;
+    }).join('');
+
+    const close = () => {
+        menu.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+    };
+
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const opening = menu.hidden;
+        menu.hidden = !opening;
+        btn.setAttribute('aria-expanded', String(opening));
+    });
+
+    menu.addEventListener('click', e => {
+        const link = e.target.closest('.season-link');
+        if (!link || !link.dataset.page) return;
+        close();
+        // 標籤跟著選到的那一屆走
+        const row = link.closest('.season-row');
+        const rowLabel = row && row.querySelector('.season-row-label');
+        if (rowLabel) label.textContent = rowLabel.textContent;
+        menu.querySelectorAll('.season-row').forEach(r => r.classList.toggle('is-current', r === row));
+        loadContent(link.dataset.page);
+    });
+
+    // 點別的地方或按 Esc 就收起來
+    document.addEventListener('click', e => {
+        if (!menu.hidden && !root.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+    });
+}
+
 // 設置導航
 function setupNavigation() {
     document.querySelectorAll('.sidebar-btn').forEach(button => {
@@ -2660,6 +2724,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 設置導航
     setupNavigation();
+
+    // 標題列右上角的屆別切換
+    setupSeasonSwitch();
 
     // 處理URL中的錨點
     const hash = window.location.hash.substring(1);

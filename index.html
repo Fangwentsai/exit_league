@@ -291,6 +291,18 @@
                 </div>
             </h1>
         </div>
+        <!-- 屆別切換。清單由 SEASONS 動態產生（見 main.js 的 setupSeasonSwitch），
+             之後加一屆只要改 config.js，這裡不用動。 -->
+        <div class="season-switch" id="seasonSwitch">
+            <button class="season-switch-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                <span id="seasonSwitchLabel">屆別</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="season-switch-menu" hidden></div>
+        </div>
     </div>
 
     <!-- 內容區域 -->
