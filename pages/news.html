@@ -934,13 +934,16 @@
         <!-- 排行榜區塊 -->
         <div class="rankings">
             <div class="ranking-section">
-                <h2 class="section-title">團隊總分排行👑</h2>
                 <!-- 第七屆分兩組進行，各自排名。按鈕切換要看哪一組。
-                     隊名與分數等第七屆開打後由賽果更新。 -->
-                <div class="league-tabs">
-                    <button class="league-tab active" data-league="掉鏢組">掉鏢組</button>
-                    <button class="league-tab" data-league="靶外組">靶外組</button>
-                </div>
+                     分組膠囊放在標題列裡，四張榜的表頭才會齊頭——原本它夾在
+                     標題與表格之間，只有這一張有，表格就被推低了一截。 -->
+                <h2 class="section-title">
+                    <span>團隊總分排行👑</span>
+                    <span class="league-tabs">
+                        <button class="league-tab active" data-league="掉鏢組">掉鏢組</button>
+                        <button class="league-tab" data-league="靶外組">靶外組</button>
+                    </span>
+                </h2>
                 <table class="ranking-table" data-league="掉鏢組">
                     <tr><th>排名</th><th>隊名</th><th>總分</th>
                     </tr>
@@ -968,7 +971,7 @@
             </div>
 
             <div class="ranking-section">
-                <h2 class="section-title">個人勝場排行👑</h2>
+                <h2 class="section-title"><span>個人勝場排行👑</span></h2>
                 <table class="ranking-table">
                     <tr>
                         <th>組別</th>
@@ -983,7 +986,10 @@
                     <tr><td>靶外</td><td>嘻嘻隊</td><td>阿倫</td><td>14</td></tr>
                 </table>
 
-                <h3 class="section-title">Top Lady 🌹</h3>
+            </div>
+
+            <div class="ranking-section">
+                <h3 class="section-title"><span>Top Lady 🌹</span></h3>
                 <table class="ranking-table">
                     <tr>
                         <th>隊名</th>
@@ -999,7 +1005,7 @@
             </div>
 
             <div class="ranking-section">
-                <h2 class="section-title">地獄倒霉鬼💀</h2>
+                <h2 class="section-title"><span>地獄倒霉鬼💀</span></h2>
                 <table class="ranking-table">
                     <tr>
                         <th>組別</th>

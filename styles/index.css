@@ -251,6 +251,13 @@ body::-webkit-scrollbar {
     padding-top: 0;
 }
 
+/* 外層若還鎖在 1000px，news.css 的 1280px 會被夾死 */
+@media screen and (min-width: 1200px) {
+    .content-container {
+        max-width: 1320px;
+    }
+}
+
 /* 內容區域 */
 #contentArea {
     background: white;

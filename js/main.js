@@ -733,7 +733,10 @@ function generateMatchesHTML(matches) {
 
     let html = `<div id="${uniqueId}">`;
     for (const date in matchesByDate) {
+        const dayObj = parseDate(date);
+        const weekday = dayObj ? '日一二三四五六'[dayObj.getDay()] : '';
         html += `
+            <div class="matches-day">${date}${weekday ? `（${weekday}）` : ''}</div>
             <div class="matches-container">
         `;
         for (const match of matchesByDate[date]) {
@@ -801,6 +804,21 @@ function generateMatchesHTML(matches) {
         style.textContent = `
             /* 賽事列是表格型資料，不是卡片：平列 + 細分隔線，整組包在一張卡裡。
                兩隊各佔一行，右側窄欄放 Preview 或比分。 */
+            /* 比賽日期獨立一行：分頁標籤上那個 11px 的日期太小，容易被當成沒有 */
+            .matches-day {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 12px;
+                margin-bottom: 8px;
+                background: #f8f9fa;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                font-size: 15px;
+                font-weight: bold;
+                color: #333;
+            }
+
             .matches-container {
                 background: #ffffff;
                 border: 1px solid #e0e0e0;
@@ -909,12 +927,13 @@ function generateMatchesHTML(matches) {
                 align-items: flex-end;
             }
 
+            /* 跟排行榜的隊名同一套：15px 粗體（見 news.css 的
+               .ranking-table td:nth-child(2)）。全頁只有這裡有過負字距，拿掉。 */
             .team-name {
-                font-weight: normal;
+                font-weight: bold;
                 font-size: 15px;
                 line-height: 1.42;
-                letter-spacing: -0.2px;
-                color: #212529;
+                color: #333;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }

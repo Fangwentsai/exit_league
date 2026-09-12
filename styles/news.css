@@ -39,6 +39,39 @@ body {
     box-sizing: border-box;
 }
 
+/* 標題列要放得下分組膠囊，四張榜又要同高，所以固定 min-height */
+.ranking-section .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 40px;
+}
+
+.ranking-section .section-title .league-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.ranking-section .section-title .league-tab {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .22);
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.ranking-section .section-title .league-tab.active {
+    background: #ffffff;
+    color: #b02a37;
+}
+
 /* Top Lady 專用的粉紅色背景標題 */
 .ranking-section h3.section-title {
     font-size: 22px;
@@ -417,8 +450,10 @@ body {
     font-size: 14px;
 }
 
+/* 沒指定 color 會吃到純黑，全頁其他文字都是 #333，只有表格是黑的 */
 .ranking-table th,
 .ranking-table td {
+    color: #333;
     padding: 6px 4px;
     text-align: center;
     border-bottom: 1px solid #eee;
@@ -533,29 +568,49 @@ body {
  * 「掉鏢」兩個字都放不下，實測整排格子都溢出。900px 以下維持單欄、
  * 用整個內容寬度放表格，讀起來也比擠成三欄清楚。
  */
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1000px) {
+    /* 四張榜一列並排。內容寬放到 1280px 之後每欄約 305px，
+       不必再像以前擠在 800px 裡那樣把字級壓到 13px／表頭 11px。 */
     .rankings {
-        display: flex;
-        justify-content: space-between;
-        gap: 3px;
+        display: grid;
+        /* 團隊總分只有三欄，個人榜有四欄又要放得下「Tonight29發財隊」，
+           所以不等寬：中間兩張給多一點。 */
+        grid-template-columns: 0.9fr 1.05fr 1.05fr 1fr;
+        gap: 20px;
+        align-items: start;
     }
 
     .ranking-section {
-        flex: 1;
         margin-bottom: 0;
     }
 
-    /* 並排後每欄約 265px，和 320px 手機上的可用寬度差不多，
-       所以字級跟著縮到與窄螢幕相同，最長的隊名才留得住單行 */
+    /* 22px 的標題加上分組膠囊在 305px 裡會換行，換行就不齊頭了 */
+    .ranking-section .section-title {
+        font-size: 18px;
+        min-height: 42px;
+    }
+
+    .ranking-section .section-title > span:first-child {
+        white-space: nowrap;
+    }
+
+    /* Top Lady 以前疊在個人勝場底下才需要這個上邊距，現在自成一欄，
+       留著會讓它比另外三張低 20px */
+    .ranking-section h3.section-title {
+        margin-top: 0;
+    }
+
     .ranking-table th,
     .ranking-table td {
-        font-size: 13px;
-        padding: 6px 2px;
+        font-size: 15px;
+        padding: 8px 4px;
     }
+
     .ranking-table th {
-        font-size: 11px;
+        font-size: 13px;
     }
 }
+
 
 /* 通知相關樣式 */
 .toast {
@@ -1151,4 +1206,14 @@ body.news-page {
 
 .match-pane[hidden] {
     display: none;
+}
+
+
+/* ===== 桌機內容寬 =====
+   原本整頁鎖在 800px，1440px 視窗下兩側各空 320px（約 44% 的畫面沒有內容）。
+   放寬到 1280px，排行榜四欄才排得開、輪播照片也看得清楚。 */
+@media screen and (min-width: 1200px) {
+    .news-container {
+        max-width: 1280px;
+    }
 }

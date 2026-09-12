@@ -46,10 +46,11 @@ const SEASONS = {
             靶外組: 'X9:Z14'
         },
         // 第七屆個人勝場排行與 Top Lady 在試算表 personal 分頁的參照範圍
+        // 一組六隊，四張榜都抓 1~6 名（原本只抓 5 列）
         personalRankRanges: {
-            勝場排行: 'personal!T2:V6',
-            TopLady: 'personal!T9:V13',
-            地獄倒霉鬼: 'personal!W2:Y6'
+            勝場排行: 'personal!T2:V7',
+            TopLady: 'personal!T9:V14',
+            地獄倒霉鬼: 'personal!W2:Y7'
         },
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
