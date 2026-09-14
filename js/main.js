@@ -1820,6 +1820,11 @@ function distributeScheduleGroups(seasonNum) {
         }
 
         // 分配 60 場比賽至各自組別表格
+        // 先清空各組表格的現有內容再重新分配，讓這個函式不管被呼叫幾次都
+        // 是同一個結果——不清空的話，第二次呼叫會把新的一批列再 append
+        // 一次到舊的列後面，畫面上同一場比賽就會看到兩遍。
+        host.querySelectorAll('.group-block tbody').forEach(tb => { tb.innerHTML = ''; });
+
         const rows = Array.from(sourceTbody.querySelectorAll('tr'));
         console.log(`📡 [distributeScheduleGroups] 來源共 ${rows.length} 列，開始分配至 ${ORDER.join(', ')}`);
 
