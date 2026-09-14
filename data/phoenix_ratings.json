@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T07:51:17.865Z",
+  "updatedAt": "2026-09-14T12:37:35.762Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -166,10 +166,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.91",
+        "webrate": "11.90",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.80",
+        "ppd": "22.77",
         "mpr": "2.62",
         "source": "myinfo"
       },
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.23",
+        "webrate": "12.12",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "22.80",
-        "mpr": "2.67",
+        "ppd": "22.74",
+        "mpr": "2.64",
         "source": "myinfo"
       }
     }
