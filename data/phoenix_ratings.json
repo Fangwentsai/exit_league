@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13T11:43:47.009Z",
+  "updatedAt": "2026-09-14T07:51:17.865Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "8.44",
+        "webrate": "8.61",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.22",
-        "mpr": "2.07",
+        "ppd": "18.64",
+        "mpr": "2.06",
         "source": "myinfo"
       },
       "小倫": {
@@ -190,11 +190,11 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "7.41",
+        "webrate": "7.47",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "17.11",
-        "mpr": "1.91",
+        "ppd": "17.14",
+        "mpr": "1.93",
         "source": "myinfo"
       },
       "阿樂": {
@@ -226,11 +226,11 @@
         "cardAtBind": "你會仰式嗎？",
         "cSeq": "2940156",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.81",
+        "webrate": "9.72",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.77",
-        "mpr": "2.27",
+        "ppd": "20.04",
+        "mpr": "2.21",
         "source": "myinfo"
       },
       "乳來": {
@@ -286,11 +286,11 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "15.62",
+        "webrate": "15.48",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "28.00",
-        "mpr": "3.08",
+        "ppd": "28.08",
+        "mpr": "3.01",
         "source": "myinfo"
       },
       "阿廷": {
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.90",
+        "webrate": "14.80",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.75",
+        "ppd": "26.54",
         "mpr": "3.02",
         "source": "myinfo"
       },
@@ -336,11 +336,11 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "15.47",
+        "webrate": "15.24",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.08",
-        "mpr": "3.17",
+        "ppd": "26.98",
+        "mpr": "3.10",
         "source": "myinfo"
       },
       "宏哥": {
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.85",
-        "level": 11,
-        "icon": "images/rating30/11.webp",
-        "ppd": "23.21",
+        "webrate": "12.22",
+        "level": 12,
+        "icon": "images/rating30/12.webp",
+        "ppd": "23.73",
         "mpr": "2.40",
         "source": "myinfo"
       }
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "鈴洛奇冷飲室",
-        "webrate": "10.53",
+        "webrate": "10.46",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.89",
+        "ppd": "20.76",
         "mpr": "2.42",
         "source": "myinfo"
       },
@@ -525,10 +525,10 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.96",
+        "webrate": "9.74",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "20.24",
+        "ppd": "19.80",
         "mpr": "2.30",
         "source": "myinfo"
       },
@@ -625,7 +625,7 @@
         "cardAtBind": "九紋龍",
         "cSeq": "2379756",
         "homeShop": "Jack Bar",
-        "webrate": "12.41",
+        "webrate": "12.72",
         "level": 12,
         "icon": "images/rating30/12.webp",
         "ppd": null,
@@ -663,10 +663,10 @@
         "cardAtBind": "青楓",
         "cSeq": "2895275",
         "homeShop": "Jack Bar",
-        "webrate": "11.91",
+        "webrate": "11.86",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.17",
+        "ppd": "22.10",
         "mpr": "2.82",
         "source": "myinfo"
       },
@@ -713,11 +713,11 @@
         "cardAtBind": "公鏢打帽子",
         "cSeq": "1586585",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.47",
+        "webrate": "11.44",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.97",
-        "mpr": "2.58",
+        "ppd": "22.01",
+        "mpr": "2.56",
         "source": "myinfo"
       }
     },
