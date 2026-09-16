@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T07:38:03.933Z",
+  "updatedAt": "2026-09-16T11:25:45.539Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -181,7 +181,7 @@
         "webrate": "6.12",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.60",
+        "ppd": "15.61",
         "mpr": "1.70",
         "source": "myinfo"
       },
@@ -487,9 +487,9 @@
         "cardAtBind": "Jack氵交劉在裡面",
         "cSeq": "3029231",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "8.96",
-        "level": 8,
-        "icon": "images/rating30/8.webp",
+        "webrate": "9.29",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
         "ppd": null,
         "mpr": null,
         "profileHidden": true,
@@ -638,11 +638,11 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "15.09",
+        "webrate": "15.26",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.17",
-        "mpr": "3.04",
+        "ppd": "27.46",
+        "mpr": "3.05",
         "source": "myinfo"
       },
       "肥肥": {
