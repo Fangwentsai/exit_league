@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T07:21:38.037Z",
+  "updatedAt": "2026-09-18T11:07:39.209Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -166,11 +166,11 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.59",
+        "webrate": "11.52",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.48",
-        "mpr": "2.54",
+        "ppd": "22.44",
+        "mpr": "2.52",
         "source": "myinfo"
       },
       "Linda": {
