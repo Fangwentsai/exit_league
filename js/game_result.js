@@ -157,7 +157,7 @@ if (!window.location.href.includes('preview') && !document.querySelector('.previ
             // 新版賽果版型（頁面有 #paneStats）自己渲染統計表，舊的會找不到
             // #awayStats/#homeStats 而報錯，所以跳過。
             if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined'
-                && !document.getElementById('paneStats')) {
+                && !document.getElementById('matchResult')) {
                 initializeStats(awayPlayers, homePlayers);
             }
         });
@@ -165,10 +165,20 @@ if (!window.location.href.includes('preview') && !document.querySelector('.previ
         console.log('DOM 已載入，直接執行初始化');
         // 同上：新版型自己渲染統計表
         if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined'
-            && !document.getElementById('paneStats')) {
+            && !document.getElementById('matchResult')) {
             initializeStats(awayPlayers, homePlayers);
         }
     }
+}
+
+// 每個 SET 的分值。全站唯一一份權重——賽果頁的逐 SET 走勢條、選手得分欄
+// 與總分計算都要用同一個，分成兩份遲早會分岔。
+// 五屆都是 16 場同一套格式（2026/09 全站盤點確認）。
+function pointsForSet(set) {
+    if ([5, 10].includes(set)) return 3;
+    if ([15, 16].includes(set)) return 4;
+    if ([11, 12, 13, 14].includes(set)) return 2;
+    return 1;
 }
 
 // 計算比賽分數
@@ -177,17 +187,7 @@ function calculateMatchScore(matches) {
     let homeScore = 0;
 
     matches.forEach(match => {
-        let points;
-        // 依據場次決定分數
-        if ([1,2,3,4,6,7,8,9].includes(match.set)) {
-            points = 1;
-        } else if ([11,12,13,14].includes(match.set)) {
-            points = 2;
-        } else if ([5,10].includes(match.set)) {
-            points = 3;
-        } else if ([15,16].includes(match.set)) {
-            points = 4;
-        }
+        const points = pointsForSet(match.set);
 
         // 計算得分
         if (match.winner === 'away') {
@@ -426,3 +426,156 @@ function setupStatsButtons() {
         });
     });
 } 
+// ============================================================
+// 賽果頁版型（2026/09 改版，參考 Apple Sports 的賽果頁）
+//
+// 整頁由這支渲染，頁面只需要 <div class="container" id="matchResult"></div>
+// 與一段資料。舊版頁面沒有 #matchResult，行為完全不受影響。
+//
+// meta 需要：{ date, venue, away, home, types }
+//   types 是 SET 編號 → 賽制名稱（'501 (OI/MO)' 之類）。這份資料原本只寫在
+//   每頁的靜態 HTML 裡，改版時抽出來放進頁面的資料區。
+// ============================================================
+
+function mrEsc(t) {
+    return String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+}
+
+function mrList(v) {
+    return Array.isArray(v) ? v : [v];
+}
+
+// 三人賽強制單行（字級縮一級才塞得下），四人賽強制兩行、每行兩人
+function mrNames(v) {
+    const a = mrList(v);
+    if (a.length >= 4) {
+        return '<div class="nm n4">' + mrEsc(a.slice(0, 2).join(', ')) + '<br>' + mrEsc(a.slice(2).join(', ')) + '</div>';
+    }
+    if (a.length === 3) return '<div class="nm n3">' + mrEsc(a.join(', ')) + '</div>';
+    return '<div class="nm">' + mrEsc(a.join(', ')) + '</div>';
+}
+
+// 每列領先方紅、落後方灰，持平兩邊同色。勝場與比賽成績兩列相鄰時，
+// 紅色區塊左右跳動就是加權計分造成的落差，不必另外用文字說明。
+function mrCmpRow(label, a, h) {
+    const tot = (a + h) || 1;
+    const aLead = a > h, hLead = h > a;
+    const col = (lead, trail) => lead ? '#dc3545' : (trail ? '#adb5bd' : '#c8ced4');
+    return '<div class="cmp"><div class="cmp-top">'
+        + '<span class="cmp-v ' + (aLead ? 'lead' : hLead ? 'trail' : '') + '">' + a + '</span>'
+        + '<span class="cmp-l">' + mrEsc(label) + '</span>'
+        + '<span class="cmp-v ' + (hLead ? 'lead' : aLead ? 'trail' : '') + '">' + h + '</span></div>'
+        + '<div class="cmp-bar"><i style="width:' + (a / tot * 100).toFixed(1) + '%;background:' + col(aLead, hLead) + '"></i>'
+        + '<i style="width:' + (h / tot * 100).toFixed(1) + '%;background:' + col(hLead, aLead) + '"></i></div></div>';
+}
+
+function mrStatRows(matches, side, roster) {
+    const acc = {};
+    (roster || []).forEach(n => acc[n] = { p: 0, w: 0, f: 0, pts: 0 });
+    matches.forEach(m => {
+        mrList(m[side]).forEach(n => {
+            if (!acc[n]) acc[n] = { p: 0, w: 0, f: 0, pts: 0 };
+            acc[n].p++;
+            if (m.winner === side) { acc[n].w++; acc[n].pts += pointsForSet(m.set); }
+            if (m.firstAttack === side) acc[n].f++;
+        });
+    });
+    return Object.entries(acc).filter(([, d]) => d.p > 0)
+        .sort((x, y) => y[1].w - x[1].w || y[1].p - x[1].p || x[0].localeCompare(y[0]))
+        .map(([n, d]) => '<tr><td class="pn">' + mrEsc(n) + '</td><td>' + d.p + '</td>'
+            + '<td class="wv">' + d.w + '</td><td>' + d.f + '</td><td>' + d.pts + '</td></tr>').join('');
+}
+
+function renderMatchResult(matches, meta, drinkingBonus, awayPlayers, homePlayers) {
+    const root = document.getElementById('matchResult');
+    if (!root) return;
+
+    const scores = calculateFinalScore(matches, drinkingBonus || { away: 0, home: 0 });
+    const won = side => matches.filter(m => m.winner === side).length;
+    const got = side => matches.filter(m => m.winner === side).reduce((s, m) => s + pointsForSet(m.set), 0);
+    const first = side => matches.filter(m => m.firstAttack === side).length;
+    const awayWon = scores.away > scores.home;
+    const SW = c => '<i class="sw" style="background:' + c + '"></i>';
+
+    const cols = [['比賽成績', scores.details.baseScores.awayScore, scores.details.baseScores.homeScore],
+                  ['勝場加成', scores.details.winnerBonus.away, scores.details.winnerBonus.home],
+                  ['飲酒加成', scores.details.drinkingBonus.away, scores.details.drinkingBonus.home],
+                  ['最終得分', scores.away, scores.home]];
+    const detRow = (name, sw, i, lose) => '<tr><td>' + SW(sw) + mrEsc(name) + '</td>'
+        + cols.map(c => '<td class="' + (c[0] === '最終得分' ? 'fin' + (lose ? ' lose' : '') : '') + '">' + c[i] + '</td>').join('')
+        + '</tr>';
+
+    // 段寬＝該 SET 分值，所以顏色佔比＝比分佔比，4 分場自然比 1 分場寬四倍
+    const strip = side => matches.map(m => {
+        const mine = m.winner === side, p = pointsForSet(m.set);
+        return '<i class="sg ' + (mine ? (side === 'away' ? 'on-a' : 'on-h') : 'off') + '" style="flex:' + p + '">'
+            + (mine ? p : '') + '</i>';
+    }).join('');
+
+    const cell = (m, side) => '<td class="pl' + (m.winner === side ? ' win' : '') + '">' + mrNames(m[side])
+        + '<div class="fa-row">' + (m.firstAttack === side ? '<span class="fa">先攻</span>' : '') + '</div></td>';
+
+    const statHead = '<tr><th>選手</th><th>出賽</th><th>勝場</th><th>先攻</th><th>得分</th></tr>';
+
+    root.innerHTML =
+        '<div class="head">'
+        + '<div class="meta"><b>' + mrEsc(meta.date) + '</b> ・ ' + mrEsc(meta.venue) + '</div>'
+        + '<div class="scoreline">'
+        + '<div class="side"><span class="tag">客場</span><span class="tname">' + mrEsc(meta.away) + '</span>'
+        + '<span class="tscore ' + (awayWon ? 'win' : 'lose') + '">' + scores.away + '</span></div>'
+        + '<div class="state">終場</div>'
+        + '<div class="side"><span class="tag">主場</span><span class="tname">' + mrEsc(meta.home) + '</span>'
+        + '<span class="tscore ' + (awayWon ? 'lose' : 'win') + '">' + scores.home + '</span></div>'
+        + '</div>'
+        + '<table class="det"><tr><th></th>' + cols.map(c => '<th>' + c[0] + '</th>').join('') + '</tr>'
+        + detRow(meta.away, 'var(--slate)', 1, !awayWon) + detRow(meta.home, 'var(--red)', 2, awayWon) + '</table>'
+        + '</div>'
+        + '<div class="sec">' + mrCmpRow('勝場', won('away'), won('home'))
+        + mrCmpRow('比賽成績', got('away'), got('home'))
+        + mrCmpRow('先攻場次', first('away'), first('home')) + '</div>'
+        + '<div class="sec">'
+        + '<div class="legend"><span>' + SW('var(--slate)') + mrEsc(meta.away) + '</span><span>' + got('away') + ' 分</span></div>'
+        + '<div class="strip">' + strip('away') + '</div>'
+        + '<div class="legend" style="margin-top:6px"><span>' + SW('var(--red)') + mrEsc(meta.home) + '</span><span>' + got('home') + ' 分</span></div>'
+        + '<div class="strip">' + strip('home') + '</div></div>'
+        + '<div class="tabs"><button class="tab on" data-p="paneGames">賽況</button>'
+        + '<button class="tab" data-p="paneStats">統計</button></div>'
+        + '<div class="pane" id="paneGames"><table class="g">'
+        + '<tr><th>賽局</th><th>' + mrEsc(meta.away) + '</th><th>' + mrEsc(meta.home) + '</th></tr>'
+        + matches.map(m => {
+            const p = pointsForSet(m.set);
+            return '<tr><td class="st"><div class="l1"><b>SET' + m.set + '</b>'
+                + '<span class="pt p' + p + '">' + p + '分</span></div>'
+                + '<div class="ty">' + mrEsc((meta.types || {})[m.set] || '') + '</div></td>'
+                + cell(m, 'away') + cell(m, 'home') + '</tr>';
+        }).join('') + '</table></div>'
+        + '<div class="pane" id="paneStats" hidden>'
+        + '<div class="ptitle">' + SW('var(--red)') + '主場 ' + mrEsc(meta.home) + '</div>'
+        + '<table class="g">' + statHead + mrStatRows(matches, 'home', homePlayers) + '</table>'
+        + '<div class="ptitle mt">' + SW('var(--slate)') + '客場 ' + mrEsc(meta.away) + '</div>'
+        + '<table class="g">' + statHead + mrStatRows(matches, 'away', awayPlayers) + '</table></div>';
+
+    root.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+        root.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+        ['paneGames', 'paneStats'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.hidden = id !== b.dataset.p;
+        });
+    });
+
+    // 選手名字連到 player.html。linkifyPlayerCell 只掃儲存格的直接子文字節點，
+    // 新版型名字包在 .nm 裡，所以對 .nm 呼叫。
+    if (typeof linkifyPlayerCell === 'function') {
+        document.querySelectorAll('#paneGames tr').forEach((row, idx) => {
+            if (!idx || row.cells.length < 3) return;
+            row.cells[1].querySelectorAll('.nm').forEach(d => linkifyPlayerCell(d, meta.away));
+            row.cells[2].querySelectorAll('.nm').forEach(d => linkifyPlayerCell(d, meta.home));
+        });
+        document.querySelectorAll('#paneStats table').forEach((t, i) => {
+            const team = i === 0 ? meta.home : meta.away;
+            Array.prototype.forEach.call(t.rows, (row, idx) => {
+                if (idx > 0) linkifyPlayerCell(row.cells[0], team);
+            });
+        });
+    }
+}
