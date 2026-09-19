@@ -8,7 +8,8 @@
 
 :root { --red:#dc3545; --grey:#adb5bd; --slate:#41566b; --ink:#333; --line:#e0e0e0; }
 body { margin:0; background:#f0f0f0; font-family:Arial,"PingFang TC","Microsoft JhengHei",sans-serif; color:var(--ink); }
-.container { max-width:760px; margin:0 auto; background:#fff; min-height:100vh; padding:0; }
+/* 不要 min-height:100vh：會把後面的 Shopee 區塊推到一整螢幕之下，看起來像消失了 */
+.container { max-width:760px; margin:0 auto; background:#fff; padding:0; }
 .head { padding:16px 16px 14px; border-bottom:1px solid var(--line); }
 .meta { text-align:center; font-size:12px; color:#6c757d; margin-bottom:12px; }
 .meta b { color:var(--ink); font-size:13px; }
@@ -43,10 +44,10 @@ table.det td.fin.lose { color:var(--grey); }
 .sg.on-a { background:var(--slate); } .sg.on-h { background:var(--red); } .sg.off { background:#f1f3f5; }
 /* 分頁用 Apple Sports 的拆法：純文字平均分佈、不做色塊，只用一小段底線標示 */
 .tabs { display:flex; border-bottom:1px solid var(--line); }
-.tab { flex:1; text-align:center; font-size:15px; padding:13px 0 11px; color:#868e96; cursor:pointer; border:none; background:none; font-family:inherit; position:relative; }
+.tab { flex:1; text-align:center; font-size:15px; padding:9px 0 8px; color:#868e96; cursor:pointer; border:none; background:none; font-family:inherit; position:relative; }
 .tab.on { color:var(--red); font-weight:bold; }
 .tab.on::after { content:''; position:absolute; left:50%; transform:translateX(-50%); bottom:-1px; width:46px; height:3px; border-radius:2px; background:var(--red); }
-.pane { padding:12px 16px 24px; }
+.pane { padding:10px 16px 24px; }
 .ptitle { font-size:14px; font-weight:bold; margin-bottom:8px; }
 .ptitle.mt { margin-top:22px; }
 table.g { width:100%; border-collapse:collapse; }
