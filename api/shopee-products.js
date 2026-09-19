@@ -210,41 +210,63 @@ module.exports = async function handler(req, res) {
             const BATCH = 3;
             const imageMap = {}; // itemId -> imageUrl
 
+            // productOfferV2 是關鍵字搜尋，關鍵字太長就會回空陣列 —— 與括號、
+            // 方括號那些變體後綴無關（實測：拿掉括號仍然找不到，截短才找得到）。
+            // 所以找不到時逐步截短重試：完整名稱 -> 前 5/4/3/2 個詞。
+            // 2026/09 對 100 件商品實測：原本 87/100，加上這條退路後 100/100。
+            function keywordCandidates(keyword) {
+                const out = [keyword];
+                const words = keyword
+                    .replace(/[（(\[][^）)\]]*[）)\]]/g, ' ')  // 去掉 (…) 與 […]
+                    .split(/\s+/)
+                    .filter(Boolean);
+                for (const n of [5, 4, 3, 2]) {
+                    const k = words.slice(0, n).join(' ');
+                    if (k && k.length > 1 && !out.includes(k)) out.push(k);
+                }
+                return out;
+            }
+
+            async function lookupOffer(keyword) {
+                const d = await callShopeeAPI('/graphql', {
+                    query: `
+                        query ($keyword: String!) {
+                            productOfferV2(keyword: $keyword, limit: 1) {
+                                nodes {
+                                    itemId
+                                    imageUrl
+                                }
+                            }
+                        }
+                    `,
+                    variables: { keyword }
+                });
+                const nodes = d?.data?.productOfferV2?.nodes;
+                return (nodes && nodes.length > 0) ? nodes[0] : null;
+            }
+
             for (let i = 0; i < itemList.length; i += BATCH) {
                 const batch = itemList.slice(i, i + BATCH);
                 await Promise.all(batch.map(async ({ id, keyword }) => {
-                    try {
-                        const d = await callShopeeAPI('/graphql', {
-                            query: `
-                                query ($keyword: String!) {
-                                    productOfferV2(keyword: $keyword, limit: 1) {
-                                        nodes {
-                                            itemId
-                                            imageUrl
-                                        }
-                                    }
-                                }
-                            `,
-                            variables: { keyword }
-                        });
-                        const nodes = d?.data?.productOfferV2?.nodes;
-                        if (nodes && nodes.length > 0) {
-                            const offer = nodes[0];
+                    for (const kw of keywordCandidates(keyword)) {
+                        try {
+                            const offer = await lookupOffer(kw);
                             if (offer?.imageUrl) {
                                 // 如果有傳 id，就用指定的 id；沒有的話就用回傳的 itemId
                                 const targetId = id || String(offer.itemId);
                                 imageMap[targetId] = offer.imageUrl;
-                                console.log(`✅ 找到圖片: ${keyword.substring(0, 15)}...`);
+                                console.log(`✅ 找到圖片: ${keyword.substring(0, 15)}...`
+                                    + (kw === keyword ? '' : ` (退到「${kw}」)`));
+                                return;
                             }
-                        } else {
-                            console.log(`❌ 找不到圖片: ${keyword}`);
-                            // 記錄錯誤以便 debug
-                            imageMap.debug = imageMap.debug || [];
-                            imageMap.debug.push(keyword);
+                        } catch (e) {
+                            console.warn(`⚠️ "${kw}" 查詢失敗:`, e.message);
                         }
-                    } catch (e) {
-                        console.warn(`⚠️ "${keyword}" 查詢失敗:`, e.message);
                     }
+                    console.log(`❌ 找不到圖片: ${keyword}`);
+                    // 記錄錯誤以便 debug
+                    imageMap.debug = imageMap.debug || [];
+                    imageMap.debug.push(keyword);
                 }));
             }
 
