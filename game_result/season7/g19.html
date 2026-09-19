@@ -10,271 +10,92 @@
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
   
     <link rel="stylesheet" href="../../styles/common/game_result.css">
+
+    <!-- 新版賽果版型（先只套在這一頁試）。styles/common/game_result.css 有 364 頁在用，
+         所以不動它，樣式寫在頁內；確定後再搬進共用檔並套到其他頁。 -->
+    <style>
+    :root { --red:#dc3545; --grey:#adb5bd; --slate:#41566b; --ink:#333; --line:#e0e0e0; }
+    body { margin:0; background:#f0f0f0; font-family:Arial,"PingFang TC","Microsoft JhengHei",sans-serif; color:var(--ink); }
+    .container { max-width:760px; margin:0 auto; background:#fff; min-height:100vh; padding:0; }
+    .head { padding:16px 16px 14px; border-bottom:1px solid var(--line); }
+    .meta { text-align:center; font-size:12px; color:#6c757d; margin-bottom:12px; }
+    .meta b { color:var(--ink); font-size:13px; }
+    /* 不能叫 .score：共用的 game_result.css 已經有 .score { color:#fa363a } */
+    .scoreline { display:flex; align-items:center; gap:10px; }
+    .side { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; min-width:0; }
+    .tag { font-size:11px; color:#868e96; letter-spacing:.08em; }
+    .tname { font-size:15px; font-weight:bold; text-align:center; }
+    .tscore { font-size:58px; font-weight:bold; line-height:1; }
+    .tscore.win { color:var(--red); } .tscore.lose { color:var(--grey); }
+    .state { font-size:12px; color:#868e96; padding-bottom:22px; white-space:nowrap; }
+    table.det { width:100%; border-collapse:collapse; margin-top:14px; }
+    table.det th { font-size:11px; font-weight:normal; color:#6c757d; padding:6px 4px; border-bottom:1px solid var(--line); text-align:center; }
+    table.det th:first-child { text-align:left; }
+    table.det td { font-size:14px; padding:8px 4px; text-align:center; border-bottom:1px solid #f2f2f2; }
+    table.det td:first-child { text-align:left; font-weight:bold; font-size:13px; }
+    table.det td.fin { font-weight:bold; font-size:16px; color:var(--red); }
+    table.det td.fin.lose { color:var(--grey); }
+    .sec { padding:16px; border-bottom:1px solid var(--line); }
+    .cmp { margin-bottom:12px; }
+    .cmp-top { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px; }
+    .cmp-v { font-size:17px; font-weight:bold; width:46px; }
+    .cmp-v:last-child { text-align:right; }
+    .cmp-v.lead { color:var(--red); } .cmp-v.trail { color:var(--grey); }
+    .cmp-l { font-size:13px; color:#6c757d; }
+    .cmp-bar { display:flex; height:6px; border-radius:3px; overflow:hidden; background:#eee; }
+    .cmp-bar i { display:block; }
+    .sw { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align:baseline; }
+    .legend { display:flex; justify-content:space-between; font-size:12px; color:#6c757d; margin-bottom:6px; }
+    .strip { display:flex; height:22px; border-radius:4px; overflow:hidden; gap:1px; }
+    .strip i { display:flex; align-items:center; justify-content:center; font-size:10px; font-style:normal; color:#fff; }
+    .sg.on-a { background:var(--slate); } .sg.on-h { background:var(--red); } .sg.off { background:#f1f3f5; }
+    /* 分頁用 Apple Sports 的拆法：純文字平均分佈、不做色塊，只用一小段底線標示 */
+    .tabs { display:flex; border-bottom:1px solid var(--line); }
+    .tab { flex:1; text-align:center; font-size:15px; padding:13px 0 11px; color:#868e96; cursor:pointer; border:none; background:none; font-family:inherit; position:relative; }
+    .tab.on { color:var(--red); font-weight:bold; }
+    .tab.on::after { content:''; position:absolute; left:50%; transform:translateX(-50%); bottom:-1px; width:46px; height:3px; border-radius:2px; background:var(--red); }
+    .pane { padding:12px 16px 24px; }
+    .ptitle { font-size:14px; font-weight:bold; margin-bottom:8px; }
+    .ptitle.mt { margin-top:22px; }
+    table.g { width:100%; border-collapse:collapse; }
+    table.g th { font-size:11px; font-weight:normal; color:#fff; background:#4a4a4a; padding:7px 4px; }
+    table.g td { font-size:14px; padding:5px 6px; border-bottom:1px solid #f0f0f0; text-align:center; }
+    td.st { width:132px; line-height:1.3; }
+    td.st .l1 { display:flex; align-items:center; justify-content:center; gap:5px; }
+    td.st b { font-size:12px; }
+    .ty { font-size:10px; color:#adb5bd; }
+    .pt { font-size:10px; padding:1px 5px; border-radius:3px; background:#f1f3f5; color:#6c757d; }
+    .pt.p3 { background:#fff4e0; color:#8a6d00; } .pt.p4 { background:#fdeaec; color:#b02a37; }
+    td.pl { vertical-align:top; }
+    td.pl.win .nm { font-weight:bold; color:var(--red); }
+    .nm { line-height:1.3; } .nm.n3 { font-size:12.5px; white-space:nowrap; } .nm.n4 { white-space:nowrap; }
+    .fa-row { min-height:15px; margin-top:1px; line-height:1; }
+    .fa { font-size:9px; color:#8a6d00; background:#fff4e0; padding:1px 4px; border-radius:2px; }
+    td.pn { text-align:left; font-weight:bold; } td.wv { font-weight:bold; color:var(--red); }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="match-info">
-            <h2 class="match-date">09/08</h2>
-            <div class="venue-info">Tonight29</div>
-            <div class="match-result">
-                <div class="team away">
-                    <div class="team-name">酒空組</div>
-                    <div class="team-score">23</div>
-                </div>
-                <div class="score-divider">:</div>
-                <div class="team home">
-                    <div class="team-score">13</div>
-                    <div class="team-name">Tonight29發財隊</div>
-                </div>
+        <div class="head">
+            <div class="meta"><b>09/08</b> ・ Tonight29</div>
+            <div class="scoreline">
+                <div class="side"><span class="tag">客場</span><span class="tname" id="awayName"></span><span class="tscore" id="awayScore"></span></div>
+                <div class="state">終場</div>
+                <div class="side"><span class="tag">主場</span><span class="tname" id="homeName"></span><span class="tscore" id="homeScore"></span></div>
             </div>
+            <table class="det" id="detTable"></table>
         </div>
-
-        <div class="score-details"><table class="score-table"></table></div>
-
-        <div class="games-container">
-            
-            <div class="game-section">
-                <h3>個人賽 01</h3>
-                <h4>(黃底為先攻場次)</h4>
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET1<br><span class="game-detail">501 (OI/MO)</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                蘋果
-            </td>
-            <td class=" ">
-                
-                貓咪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET2<br><span class="game-detail">501 (DI/DO)</span></td>
-            <td class="first-attack ">
-                
-                傑西
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                阿哲
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET3<br><span class="game-detail">701 (OI/MO)</span></td>
-            <td class=" ">
-                
-                小宓
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                猴猴
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET4<br><span class="game-detail">701 (OI/MO, 25/50)</span></td>
-            <td class="first-attack ">
-                
-                瘦子
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                學長
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET5<br><span class="game-detail">三人賽 701<br>每人一鏢骰子賽</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                瘦子, 小宇, 慶文
-            </td>
-            <td class=" ">
-                
-                猴猴, 學長, Keira
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>Cricket Games</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET6<br><span class="game-detail">Cricket</span></td>
-            <td class=" ">
-                
-                羊羊
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                Keira
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET7<br><span class="game-detail">Cricket</span></td>
-            <td class=" ">
-                
-                小宇
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                +0
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET8<br><span class="game-detail">HALF-IT</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                虎哥
-            </td>
-            <td class="first-attack ">
-                
-                凱哥
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET9<br><span class="game-detail">HALF-IT</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                阿堯
-            </td>
-            <td class="first-attack ">
-                
-                猴猴
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET10<br><span class="game-detail">三人賽 Cricket<br>每人一鏢骰子賽</span></td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                虎哥, 阿仁, 阿堯
-            </td>
-            <td class=" ">
-                
-                猴猴, 阿哲, 凱哥
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>雙人賽</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET11<br><span class="game-detail">701 雙人賽</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                瘦子, 蘋果
-            </td>
-            <td class="first-attack ">
-                
-                Keira, 貓咪
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET12<br><span class="game-detail">701 雙人賽 FREEZE</span></td>
-            <td class="first-attack ">
-                
-                小宓, 阿堯
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                猴猴, 凱哥
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET13<br><span class="game-detail">Cricket 雙人賽</span></td>
-            <td class=" ">
-                
-                傑西, 羊羊
-            </td>
-            <td class="first-attack winner">
-                <div class="winner-icon"></div>
-                阿哲, 學長
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET14<br><span class="game-detail">Team Cricket</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                虎哥, 阿仁
-            </td>
-            <td class="first-attack ">
-                
-                猴猴, +0
-            </td>
-        </tr>
-                </table>
-            </div>
-            <div class="game-section">
-                <h3>四人賽</h3>
-                
-                <table class="game-table">
-                    <tr>
-                        <th>賽局</th>
-                        <th>客隊</th>
-                        <th>主隊</th>
-                    </tr>
-                    
-        <tr>
-            <td class="game-type">SET15<br><span class="game-detail">四人賽 1101</span></td>
-            <td class="first-attack ">
-                
-                瘦子, 慶文, Sandy, 阿堯
-            </td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                Keira, 學長, 猴猴, 凱哥
-            </td>
-        </tr>
-        <tr>
-            <td class="game-type">SET16<br><span class="game-detail">四人賽 Cricket</span></td>
-            <td class=" winner">
-                <div class="winner-icon"></div>
-                虎哥, 小宇, 傑西, 阿仁
-            </td>
-            <td class="first-attack ">
-                
-                白哥, 猴猴, 阿哲, +0
-            </td>
-        </tr>
-                </table>
-            </div>
-          
-            <div class="game-section">
-                <h3>選手統計</h3>
-                <div class="stats-buttons">
-                    <button class="stats-btn active" data-team="away">客場選手</button>
-                    <button class="stats-btn" data-team="home">主場選手</button>
-                </div>
-                <table class="game-table stats-table" id="awayStats">
-                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
-                </table>
-                <table class="game-table stats-table hidden" id="homeStats">
-                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
-                </table>
-            </div>
+        <div class="sec" id="cmpBox"></div>
+        <div class="sec" id="stripBox"></div>
+        <div class="tabs">
+            <button class="tab on" data-p="paneGames">賽況</button>
+            <button class="tab" data-p="paneStats">統計</button>
         </div>
+        <div class="pane" id="paneGames"></div>
+        <div class="pane" id="paneStats" hidden></div>
     </div>
 
-<script src="../../js/game_result.js"></script>
+<script src="../../js/game_result.js?v=20260919_1"></script>
 <script>
 // G19 比賽數據
 const g19Matches = [
@@ -303,11 +124,144 @@ const drinkingBonus = { away: 5, home: 0 };
 const awayPlayers = ['蘋果', '傑西', '小宓', '瘦子', '小宇', '慶文', '羊羊', '虎哥', '阿堯', '阿仁', 'Sandy'];
 const homePlayers = ['貓咪', '阿哲', '猴猴', '學長', 'Keira', '+0', '凱哥', '白哥'];
 
+
+// ===== 新版賽果渲染（先只在這一頁試）=====
+// 之後要套到其他頁時，整段搬進 js/game_result.js 即可；
+// 唯一需要每頁提供的新資料是 GAME_TYPES（賽制名稱），原本只寫在靜態 HTML 裡。
+const GAME_TYPES = {"1": "501 (OI/MO)", "2": "501 (DI/DO)", "3": "701 (OI/MO)", "4": "701 (OI/MO, 25/50)", "5": "三人賽 701 每人一鏢", "6": "Cricket", "7": "Cricket", "8": "HALF-IT", "9": "HALF-IT", "10": "三人賽 Cricket 每人一鏢", "11": "701 雙人賽", "12": "701 雙人賽 FREEZE", "13": "Cricket 雙人賽", "14": "Team Cricket", "15": "四人賽 1101", "16": "四人賽 Cricket"};
+const AWAY_TEAM = '酒空組', HOME_TEAM = 'Tonight29發財隊';
+
+function ptsOf(n) {
+    if ([1,2,3,4,6,7,8,9].includes(n)) return 1;
+    if ([5,10].includes(n)) return 3;
+    if ([11,12,13,14].includes(n)) return 2;
+    return 4;
+}
+const asList = v => Array.isArray(v) ? v : [v];
+const esc = t => String(t).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function namesHtml(v) {
+    const a = asList(v);
+    if (a.length >= 4) return '<div class="nm n4">' + esc(a.slice(0,2).join(', ')) + '<br>' + esc(a.slice(2).join(', ')) + '</div>';
+    if (a.length === 3) return '<div class="nm n3">' + esc(a.join(', ')) + '</div>';
+    return '<div class="nm">' + esc(a.join(', ')) + '</div>';
+}
+
+function cmpRow(label, a, h) {
+    const tot = (a + h) || 1;
+    const aLead = a > h, hLead = h > a;
+    const c = (lead, trail) => lead ? '#dc3545' : (trail ? '#adb5bd' : '#c8ced4');
+    return '<div class="cmp"><div class="cmp-top">'
+        + '<span class="cmp-v ' + (aLead ? 'lead' : hLead ? 'trail' : '') + '">' + a + '</span>'
+        + '<span class="cmp-l">' + label + '</span>'
+        + '<span class="cmp-v ' + (hLead ? 'lead' : aLead ? 'trail' : '') + '">' + h + '</span></div>'
+        + '<div class="cmp-bar"><i style="width:' + (a/tot*100).toFixed(1) + '%;background:' + c(aLead,hLead) + '"></i>'
+        + '<i style="width:' + (h/tot*100).toFixed(1) + '%;background:' + c(hLead,aLead) + '"></i></div></div>';
+}
+
+function statRows(side, roster) {
+    const acc = {};
+    roster.forEach(n => acc[n] = { p:0, w:0, f:0, pts:0 });
+    g19Matches.forEach(m => {
+        asList(m[side]).forEach(n => {
+            if (!acc[n]) acc[n] = { p:0, w:0, f:0, pts:0 };
+            acc[n].p++;
+            if (m.winner === side) { acc[n].w++; acc[n].pts += ptsOf(m.set); }
+            if (m.firstAttack === side) acc[n].f++;
+        });
+    });
+    return Object.entries(acc).filter(([, d]) => d.p > 0)
+        .sort((x, y) => y[1].w - x[1].w || y[1].p - x[1].p || x[0].localeCompare(y[0]))
+        .map(([n, d]) => '<tr><td class="pn">' + esc(n) + '</td><td>' + d.p + '</td><td class="wv">' + d.w + '</td><td>' + d.f + '</td><td>' + d.pts + '</td></tr>')
+        .join('');
+}
+
+function renderResult(scores) {
+    const aw = g19Matches.filter(m => m.winner === 'away').length;
+    const hw = g19Matches.length - aw;
+    const apt = g19Matches.filter(m => m.winner === 'away').reduce((s, m) => s + ptsOf(m.set), 0);
+    const hpt = g19Matches.filter(m => m.winner === 'home').reduce((s, m) => s + ptsOf(m.set), 0);
+    const af = g19Matches.filter(m => m.firstAttack === 'away').length;
+    const hf = g19Matches.length - af;
+    const awayWon = scores.away > scores.home;
+
+    document.getElementById('awayName').textContent = AWAY_TEAM;
+    document.getElementById('homeName').textContent = HOME_TEAM;
+    const as = document.getElementById('awayScore'), hs = document.getElementById('homeScore');
+    as.textContent = scores.away; hs.textContent = scores.home;
+    as.className = 'tscore ' + (awayWon ? 'win' : 'lose');
+    hs.className = 'tscore ' + (awayWon ? 'lose' : 'win');
+
+    const d = scores.details;
+    const cols = [['比賽成績', d.baseScores.awayScore, d.baseScores.homeScore],
+                  ['勝場加成', d.winnerBonus.away, d.winnerBonus.home],
+                  ['飲酒加成', d.drinkingBonus.away, d.drinkingBonus.home],
+                  ['最終得分', scores.away, scores.home]];
+    const row = (name, sw, i, lose) => '<tr><td><i class="sw" style="background:' + sw + '"></i>' + esc(name) + '</td>'
+        + cols.map(c => '<td class="' + (c[0] === '最終得分' ? 'fin' + (lose ? ' lose' : '') : '') + '">' + c[i] + '</td>').join('') + '</tr>';
+    document.getElementById('detTable').innerHTML =
+        '<tr><th></th>' + cols.map(c => '<th>' + c[0] + '</th>').join('') + '</tr>'
+        + row(AWAY_TEAM, 'var(--slate)', 1, !awayWon) + row(HOME_TEAM, 'var(--red)', 2, awayWon);
+
+    document.getElementById('cmpBox').innerHTML =
+        cmpRow('勝場', aw, hw) + cmpRow('比賽成績', apt, hpt) + cmpRow('先攻場次', af, hf);
+
+    const seg = side => g19Matches.map(m => {
+        const mine = m.winner === side;
+        return '<i class="sg ' + (mine ? (side === 'away' ? 'on-a' : 'on-h') : 'off') + '" style="flex:' + ptsOf(m.set) + '">'
+            + (mine ? ptsOf(m.set) : '') + '</i>';
+    }).join('');
+    document.getElementById('stripBox').innerHTML =
+        '<div class="legend"><span><i class="sw" style="background:var(--slate)"></i>' + esc(AWAY_TEAM) + '</span><span>' + apt + ' 分</span></div>'
+        + '<div class="strip">' + seg('away') + '</div>'
+        + '<div class="legend" style="margin-top:6px"><span><i class="sw" style="background:var(--red)"></i>' + esc(HOME_TEAM) + '</span><span>' + hpt + ' 分</span></div>'
+        + '<div class="strip">' + seg('home') + '</div>';
+
+    const cell = (m, side) => '<td class="pl' + (m.winner === side ? ' win' : '') + '">' + namesHtml(m[side])
+        + '<div class="fa-row">' + (m.firstAttack === side ? '<span class="fa">先攻</span>' : '') + '</div></td>';
+    document.getElementById('paneGames').innerHTML =
+        '<table class="g"><tr><th>賽局</th><th>' + esc(AWAY_TEAM) + '</th><th>' + esc(HOME_TEAM) + '</th></tr>'
+        + g19Matches.map(m => {
+            const pts = ptsOf(m.set);
+            return '<tr><td class="st"><div class="l1"><b>SET' + m.set + '</b><span class="pt p' + pts + '">' + pts + '分</span></div>'
+                + '<div class="ty">' + esc(GAME_TYPES[m.set] || '') + '</div></td>' + cell(m, 'away') + cell(m, 'home') + '</tr>';
+        }).join('') + '</table>';
+
+    const head = '<tr><th>選手</th><th>出賽</th><th>勝場</th><th>先攻</th><th>得分</th></tr>';
+    document.getElementById('paneStats').innerHTML =
+        '<div class="ptitle"><i class="sw" style="background:var(--red)"></i>主場 ' + esc(HOME_TEAM) + '</div>'
+        + '<table class="g">' + head + statRows('home', homePlayers) + '</table>'
+        + '<div class="ptitle mt"><i class="sw" style="background:var(--slate)"></i>客場 ' + esc(AWAY_TEAM) + '</div>'
+        + '<table class="g">' + head + statRows('away', awayPlayers) + '</table>';
+}
+
+// 選手名字連到 player.html。共用檔的 linkifyPlayerCell 只掃儲存格的直接子
+// 文字節點，新版型的名字包在 .nm 裡，所以對 .nm 呼叫。
+function linkifyNew() {
+    if (typeof linkifyPlayerCell !== 'function') return;
+    document.querySelectorAll('#paneGames tr').forEach((row, idx) => {
+        if (!idx || row.cells.length < 3) return;
+        row.cells[1].querySelectorAll('.nm').forEach(d => linkifyPlayerCell(d, AWAY_TEAM));
+        row.cells[2].querySelectorAll('.nm').forEach(d => linkifyPlayerCell(d, HOME_TEAM));
+    });
+    document.querySelectorAll('#paneStats table').forEach((t, i) => {
+        const team = i === 0 ? HOME_TEAM : AWAY_TEAM;
+        Array.prototype.forEach.call(t.rows, (row, idx) => {
+            if (idx === 0) return;
+            linkifyPlayerCell(row.cells[0], team);
+        });
+    });
+}
+
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+    ['paneGames', 'paneStats'].forEach(id => document.getElementById(id).hidden = id !== b.dataset.p);
+});
+
 // 初始化
 addMatchData(g19Matches);
-const scores = calculateFinalScore(g19Matches, drinkingBonus);
-updateScoreDisplay(scores);
-initializeStats(awayPlayers, homePlayers);
+renderResult(calculateFinalScore(g19Matches, drinkingBonus));
+linkifyNew();
 </script>
 
 <!-- Shopee 商品推廣 -->

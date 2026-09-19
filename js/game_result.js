@@ -153,15 +153,19 @@ if (!window.location.href.includes('preview') && !document.querySelector('.previ
     if (document.readyState === 'loading') {
         console.log('DOM 尚未載入，等待中...');
         document.addEventListener('DOMContentLoaded', function() {
-            // 只有在一般比賽結果頁面才自動執行（有預設選手數據）
-            if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined') {
+            // 只有在一般比賽結果頁面才自動執行（有預設選手數據）。
+            // 新版賽果版型（頁面有 #paneStats）自己渲染統計表，舊的會找不到
+            // #awayStats/#homeStats 而報錯，所以跳過。
+            if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined'
+                && !document.getElementById('paneStats')) {
                 initializeStats(awayPlayers, homePlayers);
             }
         });
     } else {
         console.log('DOM 已載入，直接執行初始化');
-        // 只有在一般比賽結果頁面才自動執行（有預設選手數據）
-        if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined') {
+        // 同上：新版型自己渲染統計表
+        if (typeof awayPlayers !== 'undefined' && typeof homePlayers !== 'undefined'
+            && !document.getElementById('paneStats')) {
             initializeStats(awayPlayers, homePlayers);
         }
     }
