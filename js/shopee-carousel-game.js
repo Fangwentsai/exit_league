@@ -198,20 +198,22 @@
             }
         }, 150);
 
-        // 真隨機載入法 (放棄快取，追求第一頁滿圖且全亂數)
-        // 1. 先將 58 個商品全局洗牌
+        // 洗牌只決定「顯示順序」，不影響送去 API 的清單。
+        //
+        // 以前是先洗牌再照洗牌結果分兩批去要圖，等於每次開頁的網址都不一樣，
+        // /api/shopee-products 那層 s-maxage=86400 的邊緣快取永遠打不中
+        // （原本的註解也寫了「因為網址每次隨機，快取將失效」）。
+        // 實測：同一個網址第一次 7.2 秒、第二次 0.1 秒；而照舊邏輯開頁，
+        // 第二批要 29 秒才回來，那段期間 100 格裡有 88 格是佔位圖。
+        //
+        // 改成一次要齊全部商品、而且依 id 排序後才組網址，網址就固定了。
+        // 當天第一個訪客之外都會命中快取，29 秒變 0.1 秒。
         shuffled = shuffle([...csvProducts]);
-        
-        // 2. 擷取洗牌後的前 12 個與後 46 個
-        const batch1 = shuffled.slice(0, 12);
-        const batch2 = shuffled.slice(12);
 
-        // 同時發出請求（因為網址每次隨機，快取將失效，約等 1~1.5 秒）
-        const p1 = fetchImagesForBatch(batch1);
-        const p2 = fetchImagesForBatch(batch2);
+        const canonical = [...csvProducts].sort((a, b) => a.id - b.id);
+        const imagesReady = fetchImagesForBatch(canonical);
 
-        // 只等待第一批 (也就是畫面上最前面的 12 個) 處理完，即刻渲染畫面
-        await p1;
+        await imagesReady;
         
         // 載入完成，直接推滿進度條
         clearInterval(progressTimer);
@@ -223,21 +225,9 @@
         // 稍微延遲讓用戶看到 100% 滿了，避免瞬間切換太突兀
         await new Promise(r => setTimeout(r, 250));
         
-        // 渲染 (前 12 個保證有圖，後 46 個暫時為 SVG)
+        // 圖片已經全部就緒才渲染，不需要再做背景替換
         render(track);
         startAuto();
-
-        // 在背景等待剩餘的 46 個商品圖片載入
-        p2.then(() => {
-            // 載入完成後，將背景圖偷偷替換掉畫面上還是 SVG 佔位圖的元素
-            batch2.forEach(p => {
-                if (p.image) {
-                    const imgEl = track.querySelector(`.shopee-game-img[data-id="${p.id}"]`);
-                    if (imgEl) imgEl.src = p.image;
-                }
-            });
-            console.log('✅ Shopee 背景剩餘圖片載入完畢與替換完成');
-        });
 
         // 左右按鈕
         const prev = document.getElementById('shopee-game-prev');
