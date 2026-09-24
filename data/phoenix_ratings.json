@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T07:33:08.304Z",
+  "updatedAt": "2026-09-24T11:38:39.172Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -487,9 +487,9 @@
         "cardAtBind": "Jack氵交劉在裡面",
         "cSeq": "3029231",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "8.89",
-        "level": 8,
-        "icon": "images/rating30/8.webp",
+        "webrate": "9.45",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
         "ppd": null,
         "mpr": null,
         "profileHidden": true,
