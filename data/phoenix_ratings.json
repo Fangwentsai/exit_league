@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T11:44:45.005Z",
+  "updatedAt": "2026-09-26T07:35:12.970Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -7,10 +7,10 @@
         "cardAtBind": "SANDY",
         "cSeq": "2449529",
         "homeShop": "渴樂鋪Club",
-        "webrate": "5.63",
+        "webrate": "5.59",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "15.60",
+        "ppd": "15.50",
         "mpr": "1.49",
         "source": "myinfo"
       },
@@ -19,11 +19,11 @@
         "cardAtBind": "逃生入口 Jesse",
         "cSeq": "2397883",
         "homeShop": "逃生入口 Bar",
-        "webrate": "10.23",
+        "webrate": "10.01",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.48",
-        "mpr": "2.37",
+        "ppd": "20.13",
+        "mpr": "2.35",
         "source": "myinfo"
       },
       "阿堯": {
@@ -79,11 +79,11 @@
         "cardAtBind": "喵咪貓貓叫",
         "cSeq": "2780591",
         "homeShop": "GG Bar",
-        "webrate": "8.34",
+        "webrate": "8.37",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.24",
-        "mpr": "2.02",
+        "ppd": "18.41",
+        "mpr": "2.00",
         "source": "myinfo"
       },
       "羊羊": {
@@ -91,10 +91,10 @@
         "cardAtBind": "廢物小姐",
         "cSeq": "2858329",
         "homeShop": "藍白拖 Bar",
-        "webrate": "6.35",
+        "webrate": "6.46",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.97",
+        "ppd": "16.15",
         "mpr": "1.70",
         "source": "myinfo"
       },
@@ -115,7 +115,7 @@
         "cardAtBind": "蘋什麼",
         "cSeq": "3030769",
         "homeShop": "鈴洛奇冷飲室",
-        "webrate": "6.73",
+        "webrate": "6.55",
         "level": 6,
         "icon": "images/rating30/6.webp",
         "ppd": null,
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "8.91",
+        "webrate": "8.78",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "19.26",
-        "mpr": "2.06",
+        "ppd": "19.28",
+        "mpr": "2.01",
         "source": "myinfo"
       },
       "小倫": {
@@ -145,8 +145,8 @@
         "webrate": "16.04",
         "level": 16,
         "icon": "images/rating30/16.webp",
-        "ppd": "27.44",
-        "mpr": "3.27",
+        "ppd": "27.77",
+        "mpr": "3.23",
         "source": "myinfo"
       },
       "隼": {
@@ -166,11 +166,11 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.66",
+        "webrate": "11.59",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.62",
-        "mpr": "2.54",
+        "ppd": "22.54",
+        "mpr": "2.53",
         "source": "myinfo"
       },
       "Linda": {
@@ -226,11 +226,11 @@
         "cardAtBind": "你會仰式嗎？",
         "cSeq": "2940156",
         "homeShop": "逃生入口 Bar",
-        "webrate": "10.59",
+        "webrate": "10.46",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.92",
-        "mpr": "2.25",
+        "ppd": "21.67",
+        "mpr": "2.24",
         "source": "myinfo"
       },
       "乳來": {
@@ -238,11 +238,11 @@
         "cardAtBind": "乳來伸掌",
         "cSeq": "2940159",
         "homeShop": "逃生入口 Bar",
-        "webrate": "14.68",
+        "webrate": "14.80",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.20",
-        "mpr": "2.98",
+        "ppd": "26.64",
+        "mpr": "2.97",
         "source": "myinfo"
       },
       "小東": {
@@ -250,10 +250,10 @@
         "cardAtBind": "偶素小東",
         "cSeq": "2851397",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "7.38",
+        "webrate": "7.39",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "16.17",
+        "ppd": "16.20",
         "mpr": "1.97",
         "source": "myinfo"
       },
@@ -301,8 +301,8 @@
         "webrate": "21.94",
         "level": 21,
         "icon": "images/rating30/21.webp",
-        "ppd": "34.98",
-        "mpr": "4.31",
+        "ppd": "35.31",
+        "mpr": "4.26",
         "source": "myinfo"
       },
       "小喬": {
@@ -310,11 +310,11 @@
         "cardAtBind": "小喬",
         "cSeq": "2946822",
         "homeShop": "逃生入口 Bar",
-        "webrate": "13.02",
+        "webrate": "13.06",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "24.27",
-        "mpr": "2.71",
+        "ppd": "24.19",
+        "mpr": "2.73",
         "source": "myinfo"
       }
     },
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.68",
+        "webrate": "11.69",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.95",
+        "ppd": "22.97",
         "mpr": "2.45",
         "source": "myinfo"
       }
@@ -376,10 +376,10 @@
         "cardAtBind": "Jack臭B",
         "cSeq": "2057725",
         "homeShop": "Jack Bar",
-        "webrate": "6.97",
+        "webrate": "6.82",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.78",
+        "ppd": "16.53",
         "mpr": "1.79",
         "source": "myinfo"
       },
@@ -388,11 +388,11 @@
         "cardAtBind": "Jack噴氵交火龍上線嘍~*",
         "cSeq": "2584609",
         "homeShop": "Jack Bar",
-        "webrate": "10.68",
+        "webrate": "10.77",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.37",
-        "mpr": "2.37",
+        "ppd": "21.45",
+        "mpr": "2.39",
         "source": "myinfo"
       },
       "老師": {
@@ -400,11 +400,11 @@
         "cardAtBind": "Jack嘴炮手",
         "cSeq": "2786441",
         "homeShop": "Jack Bar",
-        "webrate": "8.18",
+        "webrate": "8.21",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.34",
-        "mpr": "1.95",
+        "ppd": "18.44",
+        "mpr": "1.94",
         "source": "myinfo"
       },
       "阿發": {
@@ -474,7 +474,7 @@
         "cardAtBind": "老是掉東西",
         "cSeq": "3068056",
         "homeShop": "Jack Bar",
-        "webrate": "7.45",
+        "webrate": "7.40",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -487,7 +487,7 @@
         "cardAtBind": "Jack氵交劉在裡面",
         "cSeq": "3029231",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "9.45",
+        "webrate": "9.34",
         "level": 9,
         "icon": "images/rating30/9.webp",
         "ppd": null,
@@ -525,11 +525,11 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.65",
+        "webrate": "9.61",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.82",
-        "mpr": "2.26",
+        "ppd": "19.69",
+        "mpr": "2.27",
         "source": "myinfo"
       },
       "文姊": {
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.19",
+        "webrate": "11.17",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.89",
-        "mpr": "2.50",
+        "ppd": "21.66",
+        "mpr": "2.55",
         "source": "myinfo"
       },
       "小虎": {
@@ -701,11 +701,11 @@
         "cardAtBind": "小建",
         "cSeq": "2865203",
         "homeShop": "Tonight29 Pub",
-        "webrate": "12.33",
+        "webrate": "12.43",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.23",
-        "mpr": "2.64",
+        "ppd": "23.17",
+        "mpr": "2.68",
         "source": "myinfo"
       },
       "公鏢傑": {
@@ -713,10 +713,10 @@
         "cardAtBind": "公鏢打帽子",
         "cSeq": "1586585",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.92",
+        "webrate": "11.73",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.73",
+        "ppd": "22.34",
         "mpr": "2.61",
         "source": "myinfo"
       }
