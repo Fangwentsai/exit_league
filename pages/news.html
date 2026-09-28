@@ -487,8 +487,11 @@
 
         /* 響應式設計 */
         @media (max-width: 768px) {
+            /* 高度跟寬度走 2:1（最少 200px）：固定 200px 高時，平板寬度會變成約 4:1，
+               照片和季後賽賽制圖上下都被裁掉一大塊 */
             .carousel-container {
-                height: 200px;
+                height: auto;
+                aspect-ratio: 2 / 1;
                 min-height: 200px;
             }
 
@@ -882,7 +885,7 @@
                 <img id="carousel-image-next" src="" alt="賽事照片輪播" class="carousel-image" width="800" height="400"
                     loading="lazy">
                 <div class="carousel-overlay">
-                    <div class="carousel-title" style="display: none;">難找的聯賽第六屆頒獎典禮</div>
+                    <div class="carousel-title">第七屆團隊季後賽賽制公開</div>
                     <div class="carousel-dots" id="carousel-dots"></div>
                 </div>
             </div>

@@ -104,7 +104,7 @@
   /* ---------- 後段班：小型四強單淘汰 ---------- */
   .mini { width: 180px; height: 34px; border-radius: 6px; font-size: 20px; letter-spacing: 1px; }
   .mini i { width: 34px; font-size: 22px; }
-  .lower { position: absolute; left: 660px; width: 280px; top: 625px; height: 40px;
+  .lower { position: absolute; left: 1030px; width: 280px; top: 625px; height: 40px;
     display: flex; align-items: center; justify-content: center; gap: 10px; }
   .lower .lbl { font-size: 20px; font-weight: 700; letter-spacing: 4px; }
   .lower .amt { font-size: 32px; font-weight: 900; font-style: italic; line-height: 1; color: var(--gold);
@@ -131,8 +131,8 @@
     <path d="M1270 456 H1240 V520 H1270 M1240 488 H1220" />
     <path d="M1020 344 H990 V488 H1020 M990 416 H970" />
     <!-- 後段班：格中心 y 627/663 → 645（再往下會壓到輪播圓點：桌機中央 y≥687） -->
-    <path d="M620 627 H640 V663 H620 M640 645 H660" />
-    <path d="M980 627 H960 V663 H980 M960 645 H940" />
+    <path d="M990 627 H1010 V663 H990 M1010 645 H1030" />
+    <path d="M1350 627 H1330 V663 H1350 M1330 645 H1310" />
   </g>
 </svg>
 
@@ -173,11 +173,11 @@
   <div><small>季軍</small><b>$3,000</b></div>
 </div>
 
-<!-- 後段班：兩組後段 5、6 名交叉，四強單淘汰 -->
-<div class="slot mini a" style="left:440px; top:610px"><i>5</i><span>掉鏢組</span></div>
-<div class="slot mini b" style="left:440px; top:646px"><i>6</i><span>靶外組</span></div>
-<div class="slot mini r b" style="left:980px; top:610px"><i>5</i><span>靶外組</span></div>
-<div class="slot mini r a" style="left:980px; top:646px"><i>6</i><span>掉鏢組</span></div>
+<!-- 後段班：兩組後段 5、6 名交叉，四強單淘汰。放右下，左下角留給輪播標題 -->
+<div class="slot mini a" style="left:810px; top:610px"><i>5</i><span>掉鏢組</span></div>
+<div class="slot mini b" style="left:810px; top:646px"><i>6</i><span>靶外組</span></div>
+<div class="slot mini r b" style="left:1350px; top:610px"><i>5</i><span>靶外組</span></div>
+<div class="slot mini r a" style="left:1350px; top:646px"><i>6</i><span>掉鏢組</span></div>
 <div class="lower">
   <div class="lbl">冠軍</div>
   <div class="amt">$2,000</div>

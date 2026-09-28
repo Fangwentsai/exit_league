@@ -3044,9 +3044,9 @@ let carouselImages = [];
 let currentCarouselIndex = 0;
 let carouselInterval = null;
 let carouselImagePositions = {};
-// 每張圖的輪播標題；沒列的沿用 HTML 裡的預設標題，空字串代表圖本身已有標題、不再疊字
+// 每張圖的輪播標題；沒列的用預設標題（頒獎照）
 let carouselImageTitles = {};
-let carouselDefaultTitle = '';
+const carouselDefaultTitle = '難找的聯賽第六屆頒獎典禮';
 
 // 取得照片的 object-position（預設 center 30%）
 function getCarouselObjectPosition(src) {
@@ -3109,14 +3109,11 @@ function initializePhotoCarousel() {
     };
 
     carouselImageTitles = {
-        's7_playoffs.webp': ''
+        's7_playoffs.webp': '第七屆團隊季後賽賽制公開'
     };
 
     // 季後賽賽制圖固定第一張，不參與隨機排序
     carouselImages = ['/images/s7_playoffs.webp', ...season6Images];
-
-    const titleEl = document.querySelector('.carousel-title');
-    if (titleEl && !carouselDefaultTitle) carouselDefaultTitle = titleEl.textContent;
 
     // 檢查DOM元素是否存在
     const carouselImage = document.getElementById('carousel-image');
@@ -3130,9 +3127,17 @@ function initializePhotoCarousel() {
     // 初始化圓點指示器
     createCarouselDots();
 
-    // 載入第一張圖片
+    // 載入第一張圖片；HTML 已經直接顯示第一張（LCP 優化）時就不要再淡出淡入一次，
+    // 否則第一張看起來會播兩次
     if (carouselImages.length > 0) {
-        loadCarouselImage(0);
+        if (carouselImage.getAttribute('src').endsWith(carouselImages[0].split('/').pop())) {
+            currentCarouselIndex = 0;
+            carouselImage.style.objectPosition = getCarouselObjectPosition(carouselImages[0]);
+            updateCarouselTitle(carouselImages[0]);
+            updateCarouselDots(0);
+        } else {
+            loadCarouselImage(0);
+        }
         startCarouselAutoPlay();
         console.log(`✅ 照片輪播初始化完成，共 ${carouselImages.length} 張照片`);
     }
@@ -3211,7 +3216,7 @@ function setupImageClickEvent(imageElement) {
     imageElement.style.cursor = 'pointer';
 }
 
-// 更新輪播標題（空字串就隱藏，避免壓在自帶標題的圖上）
+// 更新輪播標題（空字串就隱藏）
 function updateCarouselTitle(src) {
     const titleEl = document.querySelector('.carousel-title');
     if (!titleEl) return;
@@ -3256,6 +3261,7 @@ function nextCarouselImage() {
 // 開始自動播放
 function startCarouselAutoPlay() {
     if (carouselImages.length <= 1) return;
+    stopCarouselAutoPlay(); // 重複初始化時避免同時跑兩個計時器
 
     carouselInterval = setInterval(() => {
         nextCarouselImage();
