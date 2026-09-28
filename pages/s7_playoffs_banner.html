@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>第七屆團隊季後賽 輪播圖</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  首頁輪播用的第七屆團隊季後賽賽制圖（跟個人季後賽區分）（輸出 1600x800 → images/s7_playoffs.webp）。
+
+  輪播框是 object-fit: cover、object-position 置中：桌機約 2.4:1 會裁掉上下各約 67px，
+  手機約 1.9:1 會裁掉左右各約 3%，底部還有圓點指示器，
+  實測桌機圓點落在原圖中央 y 687–700、手機圓點落在 x 286–1314、y 708–740，
+  所以內容擺在 x 70–1530、y 80–680 的安全區內。
+
+  重新輸出：
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \
+      --window-size=1600,800 --virtual-time-budget=5000 --screenshot=s7_playoffs.png pages/s7_playoffs_banner.html
+    cwebp -q 90 s7_playoffs.png -o images/s7_playoffs.webp
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap');
+
+  :root {
+    --red: #D1383F;
+    --red-deep: #8f1d24;
+    --gold: #F7D774;
+    --ink: #a8262d;
+  }
+
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1600px; height: 800px; overflow: hidden; position: relative;
+    font-family: 'Noto Sans TC', sans-serif; color: #fff;
+    background:
+      radial-gradient(ellipse 620px 460px at 50% 420px, rgba(255, 170, 110, 0.16), transparent 70%),
+      linear-gradient(135deg, #a82830 0%, #8c1c24 55%, #5e0f15 100%);
+  }
+  /* 跟站上其他 banner 一樣的斜切亮面 */
+  body::after {
+    content: ''; position: absolute; top: 0; bottom: 0; right: -120px; width: 420px;
+    background: rgba(255, 255, 255, 0.045); transform: skewX(-18deg);
+  }
+
+  svg { position: absolute; inset: 0; }
+
+  /* ---------- 標題 ---------- */
+  .eyebrow {
+    position: absolute; top: 78px; width: 100%; text-align: center;
+    font-size: 28px; font-weight: 700; letter-spacing: 14px; opacity: 0.9;
+  }
+  .title {
+    position: absolute; top: 110px; width: 100%; text-align: center;
+    font-size: 86px; font-weight: 900; line-height: 1; letter-spacing: 10px;
+    transform: skewX(-9deg);
+    text-shadow: 0 6px 0 rgba(90, 10, 16, 0.35), 0 16px 40px rgba(60, 0, 6, 0.35);
+  }
+
+
+  /* ---------- 樹狀圖：仿 NBA / MLB 種子未定時的空格＋種子號 ---------- */
+  .round {
+    position: absolute; top: 212px; width: 260px; line-height: 1.15; text-indent: 8px; text-align: center;
+    font-size: 24px; font-weight: 900; letter-spacing: 8px; color: #fff;
+  }
+  .round span { display: block; text-indent: 0; margin-top: 2px; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--gold); }
+  .round.c { left: 600px; width: 400px; }
+  .slot {
+    position: absolute; height: 56px; box-sizing: border-box; border-radius: 8px;
+    display: flex; align-items: center; overflow: hidden;
+    background: rgba(70, 0, 8, 0.32); border: 2px solid rgba(255, 255, 255, 0.28);
+    font-size: 26px; font-weight: 700; letter-spacing: 2px;
+  }
+  .qf { width: 260px; }
+  .slot i {
+    width: 52px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+    font-style: italic; font-weight: 900; font-size: 32px;
+  }
+  .slot span { flex: 1; text-align: center; padding-right: 8px; }
+  .slot.r i { flex-direction: row; order: 2; }
+  .slot.r span { padding: 0 0 0 8px; }
+  /* 掉鏢組：白色種子號；靶外組：金色種子號 */
+  .a i { background: #fff; color: var(--ink); }
+  .b i { background: var(--gold); color: #6b4a00; }
+  /* 還沒產生的晉級格 */
+  .tbd { width: 200px; border-style: dashed; border-color: rgba(255, 255, 255, 0.35); background: rgba(70, 0, 8, 0.18); }
+  .fin { width: 150px; border: 2px solid var(--gold); background: rgba(70, 0, 8, 0.3); }
+
+  /* ---------- 中央獎金 ---------- */
+  .champ {
+    position: absolute; left: 630px; width: 340px; top: 274px; height: 102px; box-sizing: border-box;
+    border: 3px solid var(--gold); border-radius: 10px; background: rgba(70, 0, 8, 0.45);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    box-shadow: 0 0 36px rgba(247, 215, 116, 0.3);
+  }
+  .champ small { font-size: 22px; line-height: 1; font-weight: 900; letter-spacing: 10px; color: var(--gold); }
+  .champ b {
+    font-size: 64px; line-height: 1; font-weight: 900; font-style: italic; color: var(--gold);
+    text-shadow: 0 4px 0 rgba(90, 10, 16, 0.35);
+  }
+  .podium { position: absolute; left: 560px; width: 480px; top: 458px; display: flex; justify-content: center; gap: 56px; }
+  .podium div { text-align: center; }
+  .podium small { display: block; font-size: 22px; font-weight: 700; letter-spacing: 6px; }
+  .podium b { font-size: 40px; font-weight: 900; font-style: italic; line-height: 1.15; }
+
+  /* ---------- 後段班：小型四強單淘汰 ---------- */
+  .mini { width: 180px; height: 34px; border-radius: 6px; font-size: 20px; letter-spacing: 1px; }
+  .mini i { width: 34px; font-size: 22px; }
+  .lower { position: absolute; left: 660px; width: 280px; top: 625px; height: 40px;
+    display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .lower .lbl { font-size: 20px; font-weight: 700; letter-spacing: 4px; }
+  .lower .amt { font-size: 32px; font-weight: 900; font-style: italic; line-height: 1; color: var(--gold);
+    text-shadow: 0 3px 0 rgba(90, 10, 16, 0.35); }
+
+</style>
+</head>
+<body>
+
+<svg width="1600" height="800" fill="none">
+  <!-- 背景鏢靶環 -->
+  <g stroke="#fff" stroke-opacity="0.07" stroke-width="2">
+    <circle cx="800" cy="416" r="150" />
+    <circle cx="800" cy="416" r="250" />
+    <circle cx="800" cy="416" r="360" />
+    <circle cx="800" cy="416" r="480" />
+  </g>
+  <!-- 八強格中心 y 312/376 → 四強格 344；456/520 → 四強格 488；四強 344/488 → 冠軍戰 416 -->
+  <g stroke="#fff" stroke-opacity="0.6" stroke-width="3" stroke-linejoin="round">
+    <path d="M330 312 H360 V376 H330 M360 344 H380" />
+    <path d="M330 456 H360 V520 H330 M360 488 H380" />
+    <path d="M580 344 H610 V488 H580 M610 416 H630" />
+    <path d="M1270 312 H1240 V376 H1270 M1240 344 H1220" />
+    <path d="M1270 456 H1240 V520 H1270 M1240 488 H1220" />
+    <path d="M1020 344 H990 V488 H1020 M990 416 H970" />
+    <!-- 後段班：格中心 y 627/663 → 645（再往下會壓到輪播圓點：桌機中央 y≥687） -->
+    <path d="M620 627 H640 V663 H620 M640 645 H660" />
+    <path d="M980 627 H960 V663 H980 M960 645 H940" />
+  </g>
+</svg>
+
+<div class="eyebrow">難找的聯賽 ‧ 第七屆</div>
+<div class="title">團隊季後賽</div>
+
+<div class="round" style="left:70px">八強<span>11/3</span></div>
+<div class="round" style="left:350px">四強<span>11/10</span></div>
+<div class="round" style="left:990px">四強<span>11/10</span></div>
+<div class="round" style="left:1270px">八強<span>11/3</span></div>
+
+<!-- 左半區：掉鏢1 vs 靶外4、靶外2 vs 掉鏢3 -->
+<div class="slot qf a" style="left:70px; top:284px"><i>1</i><span>掉鏢組</span></div>
+<div class="slot qf b" style="left:70px; top:348px"><i>4</i><span>靶外組</span></div>
+<div class="slot qf b" style="left:70px; top:428px"><i>2</i><span>靶外組</span></div>
+<div class="slot qf a" style="left:70px; top:492px"><i>3</i><span>掉鏢組</span></div>
+
+<!-- 右半區：靶外1 vs 掉鏢4、掉鏢2 vs 靶外3 -->
+<div class="slot qf r b" style="left:1270px; top:284px"><i>1</i><span>靶外組</span></div>
+<div class="slot qf r a" style="left:1270px; top:348px"><i>4</i><span>掉鏢組</span></div>
+<div class="slot qf r a" style="left:1270px; top:428px"><i>2</i><span>掉鏢組</span></div>
+<div class="slot qf r b" style="left:1270px; top:492px"><i>3</i><span>靶外組</span></div>
+
+<!-- 四強：還沒產生的晉級格 -->
+<div class="slot tbd" style="left:380px;  top:316px"></div>
+<div class="slot tbd" style="left:380px;  top:460px"></div>
+<div class="slot tbd" style="left:1020px; top:316px"></div>
+<div class="slot tbd" style="left:1020px; top:460px"></div>
+
+<!-- 冠軍戰 -->
+<div class="round c">冠軍戰<span>11/17</span></div>
+<div class="champ"><small>冠軍</small><b>$8,000</b></div>
+<div class="slot fin" style="left:630px; top:388px"></div>
+<div class="slot fin" style="left:820px; top:388px"></div>
+
+<div class="podium">
+  <div><small>亞軍</small><b>$5,000</b></div>
+  <div><small>季軍</small><b>$3,000</b></div>
+</div>
+
+<!-- 後段班：兩組後段 5、6 名交叉，四強單淘汰 -->
+<div class="slot mini a" style="left:440px; top:610px"><i>5</i><span>掉鏢組</span></div>
+<div class="slot mini b" style="left:440px; top:646px"><i>6</i><span>靶外組</span></div>
+<div class="slot mini r b" style="left:980px; top:610px"><i>5</i><span>靶外組</span></div>
+<div class="slot mini r a" style="left:980px; top:646px"><i>6</i><span>掉鏢組</span></div>
+<div class="lower">
+  <div class="lbl">冠軍</div>
+  <div class="amt">$2,000</div>
+</div>
+
+</body>
+</html>

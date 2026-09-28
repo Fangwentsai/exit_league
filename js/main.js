@@ -3044,6 +3044,9 @@ let carouselImages = [];
 let currentCarouselIndex = 0;
 let carouselInterval = null;
 let carouselImagePositions = {};
+// 每張圖的輪播標題；沒列的沿用 HTML 裡的預設標題，空字串代表圖本身已有標題、不再疊字
+let carouselImageTitles = {};
+let carouselDefaultTitle = '';
 
 // 取得照片的 object-position（預設 center 30%）
 function getCarouselObjectPosition(src) {
@@ -3100,10 +3103,20 @@ function initializePhotoCarousel() {
         'season6_13.webp': '10%',
         'season6_14.webp': '10%',
         'season6_15.webp': '30%',
-        'season6_16.webp': '30%'
+        'season6_16.webp': '30%',
+        // 賽制圖內容上下置中，桌機裁掉上下各一點剛好落在留白
+        's7_playoffs.webp': '50%'
     };
 
-    carouselImages = season6Images;
+    carouselImageTitles = {
+        's7_playoffs.webp': ''
+    };
+
+    // 季後賽賽制圖固定第一張，不參與隨機排序
+    carouselImages = ['/images/s7_playoffs.webp', ...season6Images];
+
+    const titleEl = document.querySelector('.carousel-title');
+    if (titleEl && !carouselDefaultTitle) carouselDefaultTitle = titleEl.textContent;
 
     // 檢查DOM元素是否存在
     const carouselImage = document.getElementById('carousel-image');
@@ -3173,6 +3186,7 @@ function loadCarouselImage(index) {
     setTimeout(() => {
         carouselImage.src = carouselImages[index];
         carouselImage.style.objectPosition = getCarouselObjectPosition(carouselImages[index]);
+        updateCarouselTitle(carouselImages[index]);
         // 淡入新圖片
         carouselImage.style.opacity = '1';
 
@@ -3195,6 +3209,16 @@ function setupImageClickEvent(imageElement) {
         }
     };
     imageElement.style.cursor = 'pointer';
+}
+
+// 更新輪播標題（空字串就隱藏，避免壓在自帶標題的圖上）
+function updateCarouselTitle(src) {
+    const titleEl = document.querySelector('.carousel-title');
+    if (!titleEl) return;
+    const fileName = (src || '').split('/').pop();
+    const title = fileName in carouselImageTitles ? carouselImageTitles[fileName] : carouselDefaultTitle;
+    titleEl.textContent = title;
+    titleEl.style.display = title ? '' : 'none';
 }
 
 // 更新圓點指示器
