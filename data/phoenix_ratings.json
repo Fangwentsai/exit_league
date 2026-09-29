@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29T08:22:42.515Z",
+  "updatedAt": "2026-09-29T12:44:47.675Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -388,10 +388,10 @@
         "cardAtBind": "Jack噴氵交火龍上線嘍~*",
         "cSeq": "2584609",
         "homeShop": "Jack Bar",
-        "webrate": "11.00",
-        "level": 11,
-        "icon": "images/rating30/11.webp",
-        "ppd": "21.86",
+        "webrate": "10.98",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "21.84",
         "mpr": "2.40",
         "source": "myinfo"
       },
@@ -449,10 +449,10 @@
         "cardAtBind": "Jack台柱 皮卡起秋",
         "cSeq": "2790582",
         "homeShop": "Jack Bar",
-        "webrate": "9.27",
+        "webrate": "9.24",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.67",
+        "ppd": "19.62",
         "mpr": "2.14",
         "source": "myinfo"
       },
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "10.81",
+        "webrate": "10.72",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.35",
+        "ppd": "21.19",
         "mpr": "2.44",
         "source": "myinfo"
       },
@@ -525,10 +525,10 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.52",
+        "webrate": "9.50",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.69",
+        "ppd": "19.67",
         "mpr": "2.23",
         "source": "myinfo"
       },
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.38",
+        "webrate": "11.50",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.13",
-        "mpr": "2.53",
+        "ppd": "22.32",
+        "mpr": "2.54",
         "source": "myinfo"
       },
       "小虎": {
