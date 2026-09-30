@@ -51,6 +51,7 @@ class GameResultPreviewGenerator {
         const matchesJS = this.generateMatchesJS(matchData, gameCodeLower);
         const drinkingBonusJS = this.generateDrinkingBonusJS(adminData.drinkingBonus || {});
         const playersJS = this.generatePlayersJS(awayPlayers, homePlayers);
+        const matchMetaJS = this.generateMatchMetaJS(gameInfo);
 
         const html = `<!DOCTYPE html>
 <html>
@@ -64,47 +65,12 @@ class GameResultPreviewGenerator {
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
   
     <link rel="stylesheet" href="../../styles/common/game_result.css">
+    <link rel="stylesheet" href="../../styles/common/match-result.css?v=20260919_1">
 </head>
 <body>
-    <div class="container">
-        <div class="match-info">
-            <h2 class="match-date">${gameInfo.date}</h2>
-            <div class="venue-info">${gameInfo.venue}</div>
-            <div class="match-result">
-                <div class="team away">
-                    <div class="team-name">${gameInfo.awayTeam}</div>
-                    <div class="team-score">${finalScores.away}</div>
-                </div>
-                <div class="score-divider">:</div>
-                <div class="team home">
-                    <div class="team-score">${finalScores.home}</div>
-                    <div class="team-name">${gameInfo.homeTeam}</div>
-                </div>
-            </div>
-        </div>
+    <div class="container" id="matchResult"></div>
 
-        <div class="score-details"><table class="score-table"></table></div>
-
-        <div class="games-container">
-            ${this.generateGameSections(matchData)}
-          
-            <div class="game-section">
-                <h3>選手統計</h3>
-                <div class="stats-buttons">
-                    <button class="stats-btn active" data-team="away">客場選手</button>
-                    <button class="stats-btn" data-team="home">主場選手</button>
-                </div>
-                <table class="game-table stats-table" id="awayStats">
-                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
-                </table>
-                <table class="game-table stats-table hidden" id="homeStats">
-                    <tr><th class="player-name">選手</th><th class="stat-cell">01出賽</th><th class="stat-cell">01勝場</th><th class="stat-cell">CR出賽</th><th class="stat-cell">CR勝場</th><th class="stat-cell">合計出賽</th><th class="stat-cell">合計勝場</th><th class="stat-cell">先攻數</th></tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-<script src="../../js/game_result.js"></script>
+<script src="../../js/game_result.js?v=20260919_1"></script>
 <script>
 // ${gameCode} 比賽數據
 ${matchesJS}
@@ -115,11 +81,10 @@ ${drinkingBonusJS}
 // 選手名單
 ${playersJS}
 
-// 初始化
+${matchMetaJS}
+
 addMatchData(${gameCodeLower}Matches);
-const scores = calculateFinalScore(${gameCodeLower}Matches, drinkingBonus);
-updateScoreDisplay(scores);
-initializeStats(awayPlayers, homePlayers);
+renderMatchResult(${gameCodeLower}Matches, matchMeta, drinkingBonus, awayPlayers, homePlayers);
 </script>
 
 <!-- Shopee 商品推廣 -->
@@ -143,6 +108,30 @@ initializeStats(awayPlayers, homePlayers);
     }
 
     // 📝 生成比賽數據的 JavaScript 對象
+    // 新版賽果版型需要的頁面資料。date/venue/隊名/賽制名稱原本只寫在靜態
+    // HTML 裡，改版後改由 game_result.js 的 renderMatchResult() 讀這份資料渲染。
+    // gameTypes 裡 SET5/SET10 帶著 "<br>每人一鏢骰子賽"，新版是純文字且不
+    // 顯示骰子賽字樣，這裡一併正規化。
+    generateMatchMetaJS(gameInfo) {
+        const types = {};
+        Object.keys(this.gameTypes).forEach(k => {
+            types[k] = String(this.gameTypes[k])
+                .replace(/<br\s*\/?>/g, ' ')
+                .replace(/每人一鏢骰子賽/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        });
+        const q = v => JSON.stringify(String(v));
+        const typesJs = '{ ' + Object.keys(types).map(k => k + ': ' + q(types[k])).join(', ') + ' }';
+        return `const matchMeta = {
+    date: ${q(gameInfo.date)},
+    venue: ${q(gameInfo.venue)},
+    away: ${q(gameInfo.awayTeam)},
+    home: ${q(gameInfo.homeTeam)},
+    types: ${typesJs}
+};`;
+    }
+
     generateMatchesJS(matchData, gameCode = null) {
         if (!matchData || matchData.length === 0) {
             const code = gameCode || 'g00';
@@ -189,45 +178,55 @@ initializeStats(awayPlayers, homePlayers);
         return `const awayPlayers = [${awayPlayersStr}];\nconst homePlayers = [${homePlayersStr}];`;
     }
 
-    // 📅 從比賽日期獲取賽季
-    getSeasonFromDate(dateStr) {
-        // 將日期字串轉換為 Date 物件
-        // 支援格式：2026/1/27 或 2026-1-27
-        const parts = dateStr.replace(/-/g, '/').split('/');
-        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
-        const season6Start = new Date(2026, 0, 27); // 2026/1/27
+    // 📅 賽季判斷（getSeasonFromDate / getSeasonNumber / getSeasonFolder 共用）
+    //
+    // admin 從 Sheets 讀到的日期是 B 欄的「8/19」這種 M/D，沒有年份。
+    // 舊版只拿 season6Start 比大小、又沒處理缺年份的情況，任何 M/D 都會算出
+    // Invalid Date，比較結果永遠 false，於是整個第七屆的頁面標題都被寫成
+    //「第五季」。改成讀 config.js 的 SEASONS 註冊表：
+    //   有完整年份 → 用 startDate 找最後一個「已經開打」的賽季
+    //   只有 M/D  → 用 CURRENT_SEASON，因為 admin 寫的一定是當季比賽
+    getSeasonNumberFromDate(dateStr) {
+        const hasTable = typeof SEASONS !== 'undefined' && typeof CURRENT_SEASON !== 'undefined';
+        // 沒載到 config.js（例如單獨跑測試）時至少不要再退回第五季
+        if (!hasTable) return 7;
 
-        if (gameDate >= season6Start) {
-            return '第六季';
-        } else {
-            return '第五季';
+        const parts = String(dateStr || '').replace(/-/g, '/').split('/').map(s => parseInt(s, 10));
+        if (parts.length === 3 && parts.every(n => !isNaN(n))) {
+            const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
+            let best = null;
+            Object.keys(SEASONS).forEach(key => {
+                const season = SEASONS[key];
+                if (!season.startDate) return;
+                const sp = season.startDate.split('/').map(Number);
+                const start = new Date(sp[0], sp[1] - 1, sp[2]);
+                if (gameDate >= start && (!best || start > best.start)) {
+                    best = { start: start, num: parseInt(key, 10) };
+                }
+            });
+            if (best) return best.num;
         }
+
+        return CURRENT_SEASON;
+    }
+
+    // 📅 從比賽日期獲取賽季（頁面標題用，沿用既有頁面的「第N季」寫法）
+    getSeasonFromDate(dateStr) {
+        const num = this.getSeasonNumberFromDate(dateStr);
+        const cn = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+        return '第' + (cn[num] || num) + '季';
     }
 
     // 📅 獲取賽季數字（用於 SEO 描述）
     getSeasonNumber(dateStr) {
-        const parts = dateStr.replace(/-/g, '/').split('/');
-        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
-        const season6Start = new Date(2026, 0, 27); // 2026/1/27
-
-        if (gameDate >= season6Start) {
-            return '06';
-        } else {
-            return '05';
-        }
+        return String(this.getSeasonNumberFromDate(dateStr)).padStart(2, '0');
     }
 
     // 📅 獲取 GitHub 資料夾用的賽季名稱
     getSeasonFolder(dateStr) {
-        const parts = dateStr.replace(/-/g, '/').split('/');
-        const gameDate = new Date(parts[0], parts[1] - 1, parts[2]);
-        const season6Start = new Date(2026, 0, 27); // 2026/1/27
-
-        if (gameDate >= season6Start) {
-            return 'season6';
-        } else {
-            return 'season5';
-        }
+        const num = this.getSeasonNumberFromDate(dateStr);
+        const season = (typeof SEASONS !== 'undefined' && SEASONS[num]) ? SEASONS[num] : null;
+        return (season && season.resultDir) || ('season' + num);
     }
 
     // 🎯 主要功能：生成完整的預覽HTML
