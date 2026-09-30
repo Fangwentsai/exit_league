@@ -69,8 +69,3 @@ td.pl.win .nm { font-weight:bold; color:var(--red); }
 .fa { font-size:9px; color:#8a6d00; background:#fff4e0; padding:1px 4px; border-radius:2px; }
 td.pn { text-align:left; font-weight:bold; } td.wv { font-weight:bold; color:var(--red); }
 
-/* 極窄螢幕：三人／四人賽的隊名放行換行，讓隊伍欄也一起分擔壓縮，
-   否則三欄全部剛性會撐出橫向捲軸 */
-@media screen and (max-width: 359px) {
-    .nm.n3, .nm.n4 { white-space: normal; }
-}
