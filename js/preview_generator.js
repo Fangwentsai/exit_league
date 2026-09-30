@@ -229,163 +229,18 @@ renderMatchResult(${gameCodeLower}Matches, matchMeta, drinkingBonus, awayPlayers
         return (season && season.resultDir) || ('season' + num);
     }
 
-    // 🎯 主要功能：生成完整的預覽HTML
+    // 🎯 admin「預覽」按鈕用的 HTML
+    //
+    // 以前這裡自己維護一套模板，結果 generateFullHTML 換成新版型之後這邊沒跟上，
+    // 變成預覽看到舊版、存檔寫出新版。現在直接輸出跟存檔一模一樣的東西，
+    // 只拿掉預覽時用不到的 Shopee 推廣區，不可能再各走各的。
+    //
+    // 模板裡的 ../../ 是以 game_result/seasonN/ 為基準寫的，而預覽是在
+    // /pages/admin.html 用 srcdoc iframe 開，相對路徑會被 clamp 到網站根目錄，
+    // 算出來同樣是 /js/ 與 /styles/，所以不需要改寫路徑。
     generatePreviewHTML(adminData) {
-        const gameInfo = this.extractGameInfo(adminData);
-        const matchData = this.convertToMatchData(adminData);
-        const finalScores = this.calculateFinalScores(matchData, adminData.drinkingBonus || {});
-        const awayPlayers = this.extractPlayers(adminData, 'away');
-        const homePlayers = this.extractPlayers(adminData, 'home');
-
-        const html = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../styles/common/game_result.css">
-    <style>
-        /* 預覽模式樣式增強 - 使用 #dc3545 主色調 */
-        .preview-header {
-            background: linear-gradient(135deg, #dc3545 0%, #b02a3a 100%);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
-        }
-        .preview-header h1 {
-            font-size: 20px;
-            margin: 0 0 8px 0;
-        }
-        .preview-header p {
-            font-size: 14px;
-            margin: 0;
-        }
-        .preview-notice {
-            background: #fdf2f2;
-            border: 2px dashed #dc3545;
-            padding: 10px;
-            margin: 10px 0;
-            text-align: center;
-            border-radius: 5px;
-            color: #dc3545;
-            font-weight: bold;
-        }
-        /* 移除預覽按鈕區域 */
-        .preview-actions {
-            display: none;
-        }
-        /* 確保iframe內容不會覆蓋關閉按鈕 */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: auto;
-        }
-        .container {
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* 預覽模式專用的勝利圖標樣式 */
-        .winner-icon {
-            position: absolute;
-            top: 50%;
-            left: 4px;
-            width: 30px;
-            height: 30px;
-            transform: translateY(-50%);
-            background-image: url('../../images/winner.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 5;
-        }
-        
-        /* 確保勝方標示有足夠的左側空間 */
-        .winner {
-            position: relative;
-            text-align: center;
-            vertical-align: middle;
-            padding: 8px 6px 8px 38px !important;
-        }
-    </style>
-</head>
-<body>
-    <div class="preview-header">
-        <h1>比賽預覽</h1>
-        <p>請確認以下資料正確</p>
-    </div>
-    
-    <div class="preview-notice">
-        這是預覽模式 - 資料尚未正式保存
-    </div>
-
-    <div class="container">
-        <!-- 比賽資訊區 -->
-        <div class="match-info">
-            <h2 class="match-date">${gameInfo.date}</h2>
-            <div class="venue-info">${gameInfo.venue}</div>
-            <div class="match-result">
-                <div class="team away">
-                    <div class="team-name">${gameInfo.awayTeam}</div>
-                    <div class="team-score">${finalScores.away}</div>
-                </div>
-                <div class="score-divider">:</div>
-                <div class="team home">
-                    <div class="team-score">${finalScores.home}</div>
-                    <div class="team-name">${gameInfo.homeTeam}</div>
-                </div>
-            </div>
-        </div>
-
-        ${this.generateScoreDetailsTable(finalScores, gameInfo)}
-
-        <div class="games-container">
-            ${this.generateGameSections(matchData)}
-            ${this.generateStatsSection(matchData, gameInfo, awayPlayers, homePlayers)}
-        </div>
-    </div>
-
-    <script>
-        // 預覽專用的簡化統計切換
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('預覽頁面載入完成');
-            
-            // 設置統計按鈕切換
-            const statsBtns = document.querySelectorAll('.stats-btn');
-            const awayStats = document.getElementById('awayStats');
-            const homeStats = document.getElementById('homeStats');
-            
-            if (statsBtns.length && awayStats && homeStats) {
-                statsBtns.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // 移除所有按鈕的活動狀態
-                        statsBtns.forEach(b => b.classList.remove('active'));
-                        // 添加當前按鈕的活動狀態
-                        this.classList.add('active');
-                        
-                        // 顯示對應的統計表格
-                        const team = this.getAttribute('data-team');
-                        if (team === 'away') {
-                            awayStats.classList.remove('hidden');
-                            homeStats.classList.add('hidden');
-                        } else {
-                            homeStats.classList.remove('hidden');
-                            awayStats.classList.add('hidden');
-                        }
-                    });
-                });
-                console.log('統計按鈕切換功能已設置');
-            } else {
-                console.warn('統計按鈕或表格未找到');
-            }
-        });
-    </script>
-</body>
-</html>`;
-
-        return html;
+        return this.generateFullHTML(adminData)
+            .replace(/\n*<!-- Shopee 商品推廣 -->[\s\S]*?<script src="\.\.\/\.\.\/js\/shopee-carousel-game\.js"><\/script>/, '');
     }
 
     // 📊 提取比賽基本資訊
