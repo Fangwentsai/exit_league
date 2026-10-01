@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-01T08:48:21.309Z",
+  "updatedAt": "2026-10-01T13:04:43.539Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -166,11 +166,11 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.30",
+        "webrate": "11.60",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.07",
-        "mpr": "2.51",
+        "ppd": "22.55",
+        "mpr": "2.53",
         "source": "myinfo"
       },
       "Linda": {
@@ -589,10 +589,10 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.56",
+        "webrate": "11.74",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.32",
+        "ppd": "22.64",
         "mpr": "2.57",
         "source": "myinfo"
       },
