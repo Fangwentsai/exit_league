@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T08:54:25.061Z",
+  "updatedAt": "2026-10-05T14:28:29.613Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -178,10 +178,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "5.89",
+        "webrate": "5.97",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "15.26",
+        "ppd": "15.39",
         "mpr": "1.69",
         "source": "myinfo"
       },
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.49",
+        "webrate": "13.55",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "25.00",
+        "ppd": "25.12",
         "mpr": "2.79",
         "source": "myinfo"
       },
@@ -336,11 +336,11 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.89",
-        "level": 14,
-        "icon": "images/rating30/14.webp",
-        "ppd": "26.77",
-        "mpr": "3.01",
+        "webrate": "15.11",
+        "level": 15,
+        "icon": "images/rating30/15.webp",
+        "ppd": "26.70",
+        "mpr": "3.10",
         "source": "myinfo"
       },
       "宏哥": {
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.22",
+        "webrate": "12.29",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "22.96",
-        "mpr": "2.64",
+        "ppd": "23.19",
+        "mpr": "2.63",
         "source": "myinfo"
       }
     }
