@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>難找的聯賽 第七季 G41 賽果：Tonight29恭喜隊 vs. 嘻嘻隊｜飛鏢聯賽戰報</title>
+    <meta name="description" content="查看 難找的聯賽 飛鏢07季 G41 的詳細賽果。本場比賽由Tonight29恭喜隊對決嘻嘻隊，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。">
+    <meta name="keywords" content="飛鏢聯賽, YHDARTS, 賽果, Tonight29恭喜隊, 嘻嘻隊, 飛鏢比賽, dart league, match result, phoenix darts, dartslive">
+  
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+  
+    <link rel="stylesheet" href="../../styles/common/game_result.css">
+    <link rel="stylesheet" href="../../styles/common/match-result.css?v=20260930_1">
+</head>
+<body>
+    <div class="container" id="matchResult"></div>
+
+<script src="../../js/game_result.js?v=20260919_1"></script>
+<script>
+// G41 比賽數據
+const g41Matches = [
+    {set: 1, type: '01', away: '薇薇', home: '小芬', firstAttack: 'away', winner: 'away'},
+    {set: 2, type: '01', away: '嘉宸', home: '小佑', firstAttack: 'away', winner: 'away'},
+    {set: 3, type: '01', away: '29小安', home: 'JJ', firstAttack: 'away', winner: 'home'},
+    {set: 4, type: '01', away: '嘉宸', home: '淦', firstAttack: 'away', winner: 'away'},
+    {set: 5, type: '01', away: ['嘉宸', '29小安', '小豪'], home: ['淦', '小芬', '光頭'], firstAttack: 'away', winner: 'home'},
+    {set: 6, type: 'CR', away: '薇薇', home: '光頭', firstAttack: 'away', winner: 'away'},
+    {set: 7, type: 'CR', away: '29小安', home: 'JJ', firstAttack: 'away', winner: 'home'},
+    {set: 8, type: 'CR', away: '嘉宸', home: '淦', firstAttack: 'home', winner: 'away'},
+    {set: 9, type: 'CR', away: '小豪', home: '小佑', firstAttack: 'home', winner: 'home'},
+    {set: 10, type: 'CR', away: ['嘉宸', '薇薇', '小豪'], home: ['淦', 'JJ', '小佑'], firstAttack: 'home', winner: 'away'},
+    {set: 11, type: '01', away: ['強哥', '柏暐'], home: ['小佑', '小芬'], firstAttack: 'away', winner: 'away'},
+    {set: 12, type: '01', away: ['嘉宸', '小豪'], home: ['JJ', '光頭'], firstAttack: 'away', winner: 'away'},
+    {set: 13, type: 'CR', away: ['強哥', '小豪'], home: ['光頭', '石頭'], firstAttack: 'away', winner: 'away'},
+    {set: 14, type: 'CR', away: ['薇薇', '嘉宸'], home: ['淦', '小佑'], firstAttack: 'home', winner: 'away'},
+    {set: 15, type: '01', away: ['嘉宸', '柏暐', '29小安', '強哥'], home: ['淦', '光頭', '石頭', '小佑'], firstAttack: 'away', winner: 'home'},
+    {set: 16, type: 'CR', away: ['嘉宸', '小豪', '薇薇', '強哥'], home: ['淦', 'JJ', '小佑', '小芬'], firstAttack: 'away', winner: 'away'}
+];
+
+// 飲酒加成
+const drinkingBonus = { away: 0, home: 5 };
+
+// 選手名單
+const awayPlayers = ['薇薇', '嘉宸', '29小安', '小豪', '強哥', '柏暐'];
+const homePlayers = ['小芬', '小佑', 'JJ', '淦', '光頭', '石頭'];
+
+const matchMeta = {
+    date: "10/06",
+    venue: "Vivi Bar",
+    away: "Tonight29恭喜隊",
+    home: "嘻嘻隊",
+    types: { 1: "501 (OI/MO)", 2: "501 (DI/DO)", 3: "701 (OI/MO)", 4: "701 (OI/MO, 25/50)", 5: "三人賽 701", 6: "Cricket", 7: "Cricket", 8: "HALF-IT", 9: "HALF-IT", 10: "三人賽 Cricket", 11: "701 雙人賽", 12: "701 雙人賽 FREEZE", 13: "Cricket 雙人賽", 14: "Team Cricket", 15: "四人賽 1101", 16: "四人賽 Cricket" }
+};
+
+addMatchData(g41Matches);
+renderMatchResult(g41Matches, matchMeta, drinkingBonus, awayPlayers, homePlayers);
+</script>
+
+<!-- Shopee 商品推廣 -->
+<section class="shopee-game-carousel">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="shopee-game-header" style="display:flex; align-items:center; gap: 4px;">
+            <img src="../../images/aadarts.webp" alt="AA Darts">
+            <div>【AA飛鏢專賣店】難找的補貨專區<br>官方蝦皮滿199店到店免運，聯賽感恩您</div>
+        </div>
+    </div>
+    <div class="shopee-game-track-wrapper">
+        <div class="shopee-game-track" id="shopee-game-track"></div>
+    </div>
+    <div class="shopee-game-dots" id="shopee-game-dots"></div>
+</section>
+<script src="../../js/shopee-carousel-game.js"></script>
+</body>
+</html>
