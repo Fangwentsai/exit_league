@@ -166,8 +166,8 @@
                 return [];
             }
         })();
-        // 標在 <tr> 上，CSS 用一條絕對定位的線橫跨整列（單純對每個 td 下
-        // line-through 會被儲存格間距切成一段一段）。
+        // 標在 <tr> 上，CSS 只把姓名欄轉灰（標在姓名外層的話 index.html 沒載
+        // player-link.js、姓名是純文字，不好一致處理）。
         const frozenCls = n => (frozen.indexOf(n) !== -1 ? ' mp-frozen' : '');
         const nameHtml = (display) =>
             (typeof playerLinkHtml === 'function' ? playerLinkHtml(display, teamName) : display);
