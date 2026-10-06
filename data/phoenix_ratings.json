@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T08:53:58.720Z",
+  "updatedAt": "2026-10-06T13:14:05.911Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -19,11 +19,11 @@
         "cardAtBind": "逃生入口 Jesse",
         "cSeq": "2397883",
         "homeShop": "逃生入口 Bar",
-        "webrate": "10.52",
+        "webrate": "10.49",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.80",
-        "mpr": "2.43",
+        "ppd": "20.77",
+        "mpr": "2.42",
         "source": "myinfo"
       },
       "阿堯": {
@@ -43,11 +43,11 @@
         "cardAtBind": "逃生入口 禁區狂仁",
         "cSeq": "2880721",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.27",
+        "webrate": "11.17",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.13",
-        "mpr": "2.44",
+        "ppd": "22.12",
+        "mpr": "2.41",
         "source": "myinfo"
       },
       "慶文": {
@@ -130,10 +130,10 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "8.89",
+        "webrate": "8.84",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "19.10",
+        "ppd": "19.00",
         "mpr": "2.08",
         "source": "myinfo"
       },
@@ -202,10 +202,10 @@
         "cardAtBind": "Keeping wait bicth",
         "cSeq": "2397905",
         "homeShop": "逃生入口 Bar",
-        "webrate": "10.72",
+        "webrate": "10.70",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.94",
+        "ppd": "21.90",
         "mpr": "2.28",
         "source": "myinfo"
       },
@@ -400,10 +400,10 @@
         "cardAtBind": "Jack嘴炮手",
         "cSeq": "2786441",
         "homeShop": "Jack Bar",
-        "webrate": "8.30",
+        "webrate": "8.31",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.62",
+        "ppd": "18.64",
         "mpr": "1.94",
         "source": "myinfo"
       },
@@ -424,9 +424,9 @@
         "cardAtBind": "晚安鹹蛋",
         "cSeq": "3012905",
         "homeShop": "Jack Bar",
-        "webrate": "7.01",
-        "level": 7,
-        "icon": "images/rating30/7.webp",
+        "webrate": "6.98",
+        "level": 6,
+        "icon": "images/rating30/6.webp",
         "ppd": null,
         "mpr": null,
         "profileHidden": true,
@@ -589,10 +589,10 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.77",
+        "webrate": "11.53",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.74",
+        "ppd": "22.29",
         "mpr": "2.56",
         "source": "myinfo"
       },
