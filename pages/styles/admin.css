@@ -921,6 +921,15 @@ body {
     transform: translateY(-2px);
 }
 
+.player-option.frozen {
+    text-decoration: line-through;
+    text-decoration-color: #fa363a;
+    text-decoration-thickness: 2px;
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .player-option.selected {
     background: #dc3545;
     color: white;

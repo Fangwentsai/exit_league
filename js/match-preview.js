@@ -157,6 +157,22 @@
 
     // ========== 生成隊伍表格 ==========
     function renderTeamTable(teamName, playerList, statsMap, cssClass, ratings) {
+        // 本屆被凍結、不得再上場的選手（config.js 的 SEASONS[N].frozenPlayers）。
+        // 名字照常列出、既有戰績照常顯示，只是姓名畫刪除線。
+        const frozen = (function () {
+            try {
+                return (SEASONS[CURRENT_SEASON].frozenPlayers || {})[teamName] || [];
+            } catch (e) {
+                return [];
+            }
+        })();
+        // 只包姓名、不包等級徽章，刪除線才不會畫到徽章上。
+        // index.html 沒載 player-link.js，姓名會是純文字，所以包在外層而不是靠 .player-link。
+        const nameCell = (display, raw) => {
+            const html = typeof playerLinkHtml === 'function' ? playerLinkHtml(display, teamName) : display;
+            return frozen.indexOf(raw) !== -1 ? '<span class="mp-frozen">' + html + '</span>' : html;
+        };
+
         // 按總勝場數降序排列
         const sorted = [...playerList].sort((a, b) => {
             const sa = statsMap[`${teamName}_${a}`.toLowerCase()];
@@ -177,7 +193,7 @@
                 const rate = parseFloat((s.totalWinRate || '0').replace('%', ''));
                 const rateColor = rate >= 60 ? '#28a745' : rate >= 40 ? '#333' : '#999';
                 rows += `<tr>
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${typeof playerLinkHtml === 'function' ? playerLinkHtml(s.name, teamName) : s.name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameCell(s.name, name)}</td>
                     <td>${s.totalWins}/${s.totalGames}</td>
                     <td style="color:${rateColor};font-weight:600">${s.totalWinRate}</td>
                     <td>${s.winRate01}</td>
@@ -185,7 +201,7 @@
                 </tr>`;
             } else {
                 rows += `<tr class="mp-tr-inactive">
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${typeof playerLinkHtml === 'function' ? playerLinkHtml(name, teamName) : name}</td>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameCell(name, name)}</td>
                     <td>-</td><td>-</td><td>-</td><td>-</td>
                 </tr>`;
             }

@@ -562,11 +562,29 @@ function openPlayerModal(setNumber, team) {
     const playerList = document.getElementById('playerList');
     playerList.innerHTML = '';
     
+    // 本屆被凍結、不得再上場的選手（config.js 的 SEASONS[N].frozenPlayers）。
+    // 照常列出來但不掛點擊事件，讓操作的人看得到「這個人被凍結了」，
+    // 而不是名單裡莫名少一個人。既有成績完全不受影響。
+    const frozenPlayers = (function () {
+        try {
+            return (SEASONS[CURRENT_SEASON].frozenPlayers || {})[teamName] || [];
+        } catch (e) {
+            return [];
+        }
+    })();
+
     players.forEach(player => {
         const playerDiv = document.createElement('div');
         playerDiv.className = 'player-option';
         playerDiv.textContent = player;
-        
+
+        if (frozenPlayers.indexOf(player) !== -1) {
+            playerDiv.classList.add('frozen');
+            playerDiv.title = '此選手已凍結，不得上場';
+            playerList.appendChild(playerDiv);
+            return;
+        }
+
         // 檢查是否已選中
         if (selectedPlayers[key].includes(player)) {
             playerDiv.classList.add('selected');

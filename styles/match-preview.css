@@ -260,6 +260,16 @@
     color: #ccc !important;
 }
 
+/* 被凍結、不得再上場的選手：姓名畫刪除線。
+   只包姓名不包等級徽章（見 match-preview.js 的 nameCell），
+   既有戰績數字照常顯示，不影響任何成績。 */
+.mp-frozen {
+    text-decoration: line-through;
+    text-decoration-color: #fa363a;
+    text-decoration-thickness: 2px;
+    opacity: 0.55;
+}
+
 /* Loading spinner */
 .mp-body-loading {
     display: flex;
