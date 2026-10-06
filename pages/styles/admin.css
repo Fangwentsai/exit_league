@@ -922,7 +922,9 @@ body {
 }
 
 .player-option.frozen {
-    color: #bbb;
+    text-decoration: line-through;
+    text-decoration-color: rgba(250, 54, 58, 0.65);
+    text-decoration-thickness: 1.5px;
     cursor: not-allowed;
     pointer-events: none;
 }

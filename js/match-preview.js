@@ -166,11 +166,12 @@
                 return [];
             }
         })();
-        // 標在 <tr> 上，CSS 只把姓名欄轉灰（標在姓名外層的話 index.html 沒載
-        // player-link.js、姓名是純文字，不好一致處理）。
-        const frozenCls = n => (frozen.indexOf(n) !== -1 ? ' mp-frozen' : '');
-        const nameHtml = (display) =>
-            (typeof playerLinkHtml === 'function' ? playerLinkHtml(display, teamName) : display);
+        // 只包姓名、不包等級徽章，線才不會橫過徽章。
+        // index.html 沒載 player-link.js、姓名會是純文字，所以包在外層而不是靠 .player-link。
+        const nameHtml = (display, raw) => {
+            const html = (typeof playerLinkHtml === 'function') ? playerLinkHtml(display, teamName) : display;
+            return frozen.indexOf(raw) !== -1 ? '<span class="mp-frozen">' + html + '</span>' : html;
+        };
 
         // 按總勝場數降序排列
         const sorted = [...playerList].sort((a, b) => {
@@ -191,16 +192,16 @@
             if (s && parseInt(s.totalGames) > 0) {
                 const rate = parseFloat((s.totalWinRate || '0').replace('%', ''));
                 const rateColor = rate >= 60 ? '#28a745' : rate >= 40 ? '#333' : '#999';
-                rows += `<tr class="${frozenCls(name).trim()}">
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameHtml(s.name)}</td>
+                rows += `<tr>
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameHtml(s.name, name)}</td>
                     <td>${s.totalWins}/${s.totalGames}</td>
                     <td style="color:${rateColor};font-weight:600">${s.totalWinRate}</td>
                     <td>${s.winRate01}</td>
                     <td>${s.winRateCR}</td>
                 </tr>`;
             } else {
-                rows += `<tr class="mp-tr-inactive${frozenCls(name)}">
-                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameHtml(name)}</td>
+                rows += `<tr class="mp-tr-inactive">
+                    <td class="mp-td-name">${levelIcon(ratings, teamName, name)}${nameHtml(name, name)}</td>
                     <td>-</td><td>-</td><td>-</td><td>-</td>
                 </tr>`;
             }

@@ -260,13 +260,14 @@
     color: #ccc !important;
 }
 
-/* 被凍結、不得再上場的選手：姓名轉灰。
-   戰績數字維持原本顏色，不影響任何成績。
-   加 !important 是因為 .mp-tr-inactive td 也用了 !important，
-   凍結的人如果剛好沒出賽紀錄，不加會被蓋掉。 */
-tr.mp-frozen .mp-td-name,
-tr.mp-frozen .mp-td-name .player-link {
-    color: #aaa !important;
+/* 被凍結、不得再上場的選手。
+   姓名「不」轉灰 —— 沒出賽的人已經是灰字（.mp-tr-inactive），
+   再用灰色會讓有成績卻被禁賽的人看起來像沒上場過。
+   改成維持原本字色，加一條淺紅刪除線，和兩群人都區隔得開。 */
+.mp-frozen {
+    text-decoration: line-through;
+    text-decoration-color: rgba(250, 54, 58, 0.65);
+    text-decoration-thickness: 1.5px;
 }
 
 /* Loading spinner */
