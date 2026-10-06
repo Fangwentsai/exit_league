@@ -260,14 +260,28 @@
     color: #ccc !important;
 }
 
-/* 被凍結、不得再上場的選手：姓名畫刪除線。
-   只包姓名不包等級徽章（見 match-preview.js 的 nameCell），
-   既有戰績數字照常顯示，不影響任何成績。 */
-.mp-frozen {
-    text-decoration: line-through;
-    text-decoration-color: #fa363a;
-    text-decoration-thickness: 2px;
-    opacity: 0.55;
+/* 被凍結、不得再上場的選手：整列從頭到尾畫一條線。
+   用絕對定位的 ::after 而不是對每個 td 下 line-through，
+   後者會被儲存格間距切成一段一段，連不成一條。
+   戰績數字照常顯示，不影響任何成績。 */
+tr.mp-frozen {
+    position: relative;
+}
+
+tr.mp-frozen::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: #333;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+tr.mp-frozen td {
+    opacity: 0.5;
 }
 
 /* Loading spinner */
