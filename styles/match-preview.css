@@ -260,14 +260,25 @@
     color: #ccc !important;
 }
 
-/* 被凍結、不得再上場的選手。
-   姓名「不」轉灰 —— 沒出賽的人已經是灰字（.mp-tr-inactive），
-   再用灰色會讓有成績卻被禁賽的人看起來像沒上場過。
-   改成維持原本字色，加一條淺紅刪除線，和兩群人都區隔得開。 */
-.mp-frozen {
-    text-decoration: line-through;
-    text-decoration-color: rgba(250, 54, 58, 0.65);
-    text-decoration-thickness: 1.5px;
+/* 被凍結、不得再上場的選手：整列從頭到尾劃一條淺紅線。
+   用絕對定位的 ::after，不是對每個 td 下 line-through ——
+   後者會被儲存格間距切成一段一段，連不成一條。
+   字色一律不動：沒出賽的人已經是灰字（.mp-tr-inactive），
+   凍結的人再轉灰或降透明度，會看起來像從沒上場過。 */
+tr.mp-frozen {
+    position: relative;
+}
+
+tr.mp-frozen::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1.5px;
+    background: rgba(250, 54, 58, 0.65);
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 /* Loading spinner */
