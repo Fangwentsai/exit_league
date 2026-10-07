@@ -283,7 +283,7 @@ async function loadMatches() {
             // 使用第六屆的 Google Sheet API取得數據
             const sheetId = CONFIG[`SEASON${CURRENT_SEASON}`].SHEET_ID; // 當季的 Sheet ID
             const apiKey = CONFIG[`SEASON${CURRENT_SEASON}`].API_KEY;
-            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!O:V?key=${apiKey}`;
+            const gsheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/schedule!A:H?key=${apiKey}`;
 
             console.log('嘗試從Google Sheets API獲取數據:', gsheetUrl);
             response = await fetch(gsheetUrl);
@@ -303,22 +303,32 @@ async function loadMatches() {
                 let currentDate = '';
                 let currentGames = [];
 
-                // O:V 欄位格式: O=日期, P=比賽號碼, Q=客隊, R=客隊分數, S=主隊分數, T=主隊, U=場地, V=其他資訊
-                rawData.values.forEach(row => {
-                    // 檢查至少要有日期和隊伍資訊（至少6欄，但可以容忍空分數）
-                    if (row.length >= 5 && row[0] && row[2] && row[5]) {
-                        const date = row[0] ? row[0].trim() : '';        // O欄 - 日期
-                        const gameNumber = row[1] ? row[1].trim() : '';  // P欄 - 比賽號碼
-                        const awayTeam = row[2] ? row[2].trim().replace(/\r?\n|\r/g, "") : '';    // Q欄 - 客隊
-                        const awayScore = row[3] ? row[3].trim() : '';   // R欄 - 客隊分數
-                        const homeScore = row[4] ? row[4].trim() : '';   // S欄 - 主隊分數
-                        const homeTeam = row[5] ? row[5].trim().replace(/\r?\n|\r/g, "") : '';    // T欄 - 主隊
-                        const venue = row[6] ? row[6].trim() : '';       // U欄 - 場地
+                // A:H 欄位格式（跟 schedule 頁籤表頭一致）：
+                // A=遊戲編號, B=日期, C=客場, D=客場分數, E=vs(略過), F=主場分數, G=主場, H=比賽地點
+                // 這份資料以前誤用 O:V（第七屆這個範圍其實是團隊排名表，不是賽程），
+                // 導致「近期比賽／上週戰況」永遠抓到排名列、日期全部解析失敗。
+                const seasonMeta = (typeof getSeason === 'function' && typeof CURRENT_SEASON !== 'undefined')
+                    ? getSeason(CURRENT_SEASON) : null;
+                rawData.values.slice(1).forEach(row => {
+                    // 檢查至少要有日期和隊伍資訊（至少7欄，但可以容忍空分數）
+                    if (row.length >= 5 && row[1] && row[2] && row[6]) {
+                        let date = row[1] ? row[1].trim() : '';          // B欄 - 日期
+                        const gameNumber = row[0] ? row[0].trim() : '';  // A欄 - 遊戲編號
+                        const awayTeam = row[2] ? row[2].trim().replace(/\r?\n|\r/g, "") : '';    // C欄 - 客隊
+                        const awayScore = row[3] ? row[3].trim() : '';   // D欄 - 客隊分數
+                        const homeScore = row[5] ? row[5].trim() : '';   // F欄 - 主隊分數
+                        const homeTeam = row[6] ? row[6].trim().replace(/\r?\n|\r/g, "") : '';    // G欄 - 主隊
+                        const venue = row[7] ? row[7].trim() : '';       // H欄 - 場地
 
                         // 必須有日期、客隊和主隊才算有效的比賽
                         if (!date || !awayTeam || !homeTeam) {
                             console.log('跳過無效行（缺少必要資訊）:', row);
                             return;
+                        }
+
+                        // 補上年份（表格裡的日期只有「M/D」），後面比對今天日期才不會變成 Invalid Date
+                        if (seasonMeta && typeof withSeasonYear === 'function') {
+                            date = withSeasonYear(seasonMeta, date);
                         }
 
                         // 組合隊伍名稱和分數
