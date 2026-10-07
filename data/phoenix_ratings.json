@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T08:34:27.950Z",
+  "updatedAt": "2026-10-07T13:14:01.783Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -178,10 +178,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "5.91",
+        "webrate": "5.89",
         "level": 5,
         "icon": "images/rating30/5.webp",
-        "ppd": "15.37",
+        "ppd": "15.33",
         "mpr": "1.66",
         "source": "myinfo"
       },
