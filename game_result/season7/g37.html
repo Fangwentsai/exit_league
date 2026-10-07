@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>難找的聯賽 第七季 G37 賽果：人生揪難亮 vs. 酒空組｜飛鏢聯賽戰報</title>
+    <meta name="description" content="查看 難找的聯賽 飛鏢07季 G37 的詳細賽果。本場比賽由人生揪難亮對決酒空組，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。">
+    <meta name="keywords" content="飛鏢聯賽, YHDARTS, 賽果, 人生揪難亮, 酒空組, 飛鏢比賽, dart league, match result, phoenix darts, dartslive">
+  
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+  
+    <link rel="stylesheet" href="../../styles/common/game_result.css">
+    <link rel="stylesheet" href="../../styles/common/match-result.css?v=20260930_1">
+</head>
+<body>
+    <div class="container" id="matchResult"></div>
+
+<script src="../../js/game_result.js?v=20260919_1"></script>
+<script>
+// G37 比賽數據
+const g37Matches = [
+    {set: 1, type: '01', away: '婠婠', home: '羊羊', firstAttack: 'away', winner: 'home'},
+    {set: 2, type: '01', away: '宗燁', home: '虎哥', firstAttack: 'away', winner: 'home'},
+    {set: 3, type: '01', away: '紅閎', home: '小宓', firstAttack: 'away', winner: 'away'},
+    {set: 4, type: '01', away: '小蘇', home: '瘦子', firstAttack: 'away', winner: 'away'},
+    {set: 5, type: '01', away: ['小蘇', '宗燁', 'lucy'], home: ['小宇', '阿堯', '阿仁'], firstAttack: 'away', winner: 'home'},
+    {set: 6, type: 'CR', away: '宜竫', home: 'Sandy', firstAttack: 'away', winner: 'away'},
+    {set: 7, type: 'CR', away: '克林', home: '傑西', firstAttack: 'away', winner: 'home'},
+    {set: 8, type: 'CR', away: '蘇ㄟ', home: '虎哥', firstAttack: 'away', winner: 'away'},
+    {set: 9, type: 'CR', away: '小蘇', home: '阿堯', firstAttack: 'home', winner: 'away'},
+    {set: 10, type: 'CR', away: ['小蘇', '克林', '婠婠'], home: ['瘦子', '虎哥', '傑西'], firstAttack: 'home', winner: 'home'},
+    {set: 11, type: '01', away: ['宜竫', 'lucy'], home: ['小宓', '瘦子'], firstAttack: 'away', winner: 'home'},
+    {set: 12, type: '01', away: ['宗燁', '克林'], home: ['虎哥', '羊羊'], firstAttack: 'away', winner: 'home'},
+    {set: 13, type: 'CR', away: ['亮亮', '小姜'], home: ['阿仁', '小宇'], firstAttack: 'away', winner: 'home'},
+    {set: 14, type: 'CR', away: ['蘇ㄟ', '小蘇'], home: ['傑西', '阿堯'], firstAttack: 'away', winner: 'home'},
+    {set: 15, type: '01', away: ['小蘇', '蘇ㄟ', '克林', '紅閎'], home: ['虎哥', '瘦子', '小宓', '阿仁'], firstAttack: 'home', winner: 'away'},
+    {set: 16, type: 'CR', away: ['蘇ㄟ', '小蘇', '婠婠', '宜竫'], home: ['虎哥', '小宇', 'Sandy', '阿仁'], firstAttack: 'home', winner: 'home'}
+];
+
+// 飲酒加成
+const drinkingBonus = { away: 0, home: 5 };
+
+// 選手名單
+const awayPlayers = ['婠婠', '宗燁', '紅閎', '小蘇', 'lucy', '宜竫', '克林', '蘇ㄟ', '亮亮', '小姜'];
+const homePlayers = ['羊羊', '虎哥', '小宓', '瘦子', '小宇', '阿堯', '阿仁', 'Sandy', '傑西'];
+
+const matchMeta = {
+    date: "10/06",
+    venue: "逃生入口Bar",
+    away: "人生揪難亮",
+    home: "酒空組",
+    types: { 1: "501 (OI/MO)", 2: "501 (DI/DO)", 3: "701 (OI/MO)", 4: "701 (OI/MO, 25/50)", 5: "三人賽 701", 6: "Cricket", 7: "Cricket", 8: "HALF-IT", 9: "HALF-IT", 10: "三人賽 Cricket", 11: "701 雙人賽", 12: "701 雙人賽 FREEZE", 13: "Cricket 雙人賽", 14: "Team Cricket", 15: "四人賽 1101", 16: "四人賽 Cricket" }
+};
+
+addMatchData(g37Matches);
+renderMatchResult(g37Matches, matchMeta, drinkingBonus, awayPlayers, homePlayers);
+</script>
+
+<!-- Shopee 商品推廣 -->
+<section class="shopee-game-carousel">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="shopee-game-header" style="display:flex; align-items:center; gap: 4px;">
+            <img src="../../images/aadarts.webp" alt="AA Darts">
+            <div>【AA飛鏢專賣店】難找的補貨專區<br>官方蝦皮滿199店到店免運，聯賽感恩您</div>
+        </div>
+    </div>
+    <div class="shopee-game-track-wrapper">
+        <div class="shopee-game-track" id="shopee-game-track"></div>
+    </div>
+    <div class="shopee-game-dots" id="shopee-game-dots"></div>
+</section>
+<script src="../../js/shopee-carousel-game.js"></script>
+</body>
+</html>
