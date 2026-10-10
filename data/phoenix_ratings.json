@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T08:25:12.646Z",
+  "updatedAt": "2026-10-10T12:24:19.966Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -449,10 +449,10 @@
         "cardAtBind": "Jack台柱 皮卡起秋",
         "cSeq": "2790582",
         "homeShop": "Jack Bar",
-        "webrate": "9.41",
+        "webrate": "9.30",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.82",
+        "ppd": "19.63",
         "mpr": "2.17",
         "source": "myinfo"
       },
@@ -638,10 +638,10 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.45",
+        "webrate": "14.47",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "25.92",
+        "ppd": "25.95",
         "mpr": "3.04",
         "source": "myinfo"
       },
