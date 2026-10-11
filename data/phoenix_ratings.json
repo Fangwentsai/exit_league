@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11T08:42:56.187Z",
+  "updatedAt": "2026-10-11T12:41:51.233Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -638,11 +638,11 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.77",
+        "webrate": "14.85",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.46",
-        "mpr": "3.06",
+        "ppd": "26.54",
+        "mpr": "3.08",
         "source": "myinfo"
       },
       "肥肥": {
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.14",
+        "webrate": "12.50",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.20",
-        "mpr": "2.58",
+        "ppd": "23.54",
+        "mpr": "2.65",
         "source": "myinfo"
       }
     }
