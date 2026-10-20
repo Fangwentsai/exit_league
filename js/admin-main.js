@@ -1346,8 +1346,17 @@ function computePlayerStats(gameData) {
             const players = gameData.selectedPlayers[key] || [];
             if (!players.length) continue;
             
-            // 判斷比賽類型：SET 6~10 是 CR，其餘是 01
-            const isCR = (i >= 6 && i <= 10);
+            // 判斷比賽類型。
+            //
+            // ⚠️ 這裡原本寫死 (i >= 6 && i <= 10)，漏掉 SET13（Cricket 雙人賽）、
+            //    SET14（Team Cricket）、SET16（四人賽 Cricket），三者全被算成 01。
+            //    這份統計會直接 POST 給 GAS 寫進試算表 data 分頁，所以錯的是
+            //    試算表而不是頁面——頁面的 type 是 preview_generator 的
+            //    getSetType() 產的，那支一直是對的。兩條路徑各算各的才會對不起來。
+            //    結果：第七屆 116 位出賽 10 局以上的選手有 107 位拆分錯誤。
+            //
+            //    現在直接共用 getSetType()，不要再維護第二份規則。
+            const isCR = previewGenerator.getSetType(i) !== '01';
             const isWin = gameData.winLoseData[i] === team;
             const isFirstAttack = gameData.firstAttackData[i] === team;
             
