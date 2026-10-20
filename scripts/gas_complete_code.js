@@ -439,24 +439,26 @@ function parsePlayerStatsFromHtml(htmlContent) {
     
     var matchStr = matchBlock[1];
     // 逐筆解析 {set:1, type:'01', away:'安安', home:'Mo', firstAttack:'home', winner:'home'}
-    var matchRegex = /\{[^}]*type:\s*'(\w+)'[^}]*away:\s*(\[[^\]]*\]|'[^']*')[^}]*home:\s*(\[[^\]]*\]|'[^']*')[^}]*firstAttack:\s*'(\w+)'[^}]*winner:\s*'(\w+)'/g;
+    // 一併抓 set 編號：萬一哪天資料沒帶 type，isCricket() 還能用編號回推
+    var matchRegex = /\{[^}]*set:\s*(\d+)[^}]*type:\s*'(\w+)'[^}]*away:\s*(\[[^\]]*\]|'[^']*')[^}]*home:\s*(\[[^\]]*\]|'[^']*')[^}]*firstAttack:\s*'(\w+)'[^}]*winner:\s*'(\w+)'/g;
     var m;
     var stats = {};
     
     while ((m = matchRegex.exec(matchStr)) !== null) {
-      var type = m[1]; // '01' or 'CR'
-      var awayRaw = m[2];
-      var homeRaw = m[3];
-      var firstAttack = m[4];
-      var winner = m[5];
+      var setNum = parseInt(m[1], 10);
+      var type = m[2]; // '01' or 'CR'
+      var awayRaw = m[3];
+      var homeRaw = m[4];
+      var firstAttack = m[5];
+      var winner = m[6];
       
       // 解析選手名（可能是 '名字' 或 ['名1','名2','名3']）
       var awayPlayers = parsePlayerNames(awayRaw);
       var homePlayers = parsePlayerNames(homeRaw);
       
       // 統計
-      processPlayers(stats, awayPlayers, 'away', type, firstAttack, winner);
-      processPlayers(stats, homePlayers, 'home', type, firstAttack, winner);
+      processPlayers(stats, awayPlayers, 'away', type, firstAttack, winner, setNum);
+      processPlayers(stats, homePlayers, 'home', type, firstAttack, winner, setNum);
     }
     
     // 分成 away/home 陣列
@@ -493,7 +495,24 @@ function parsePlayerNames(raw) {
   }
 }
 
-function processPlayers(stats, players, side, type, firstAttack, winner) {
+// ⚠️ 01 / Cricket 的唯一判斷依據。
+//
+// 曾經出事：某一版的 Apps Script 沒讀資料裡的 type，改用 SET 編號硬判，
+// 條件只寫了 6~10，於是 SET13（Cricket 雙人賽）、SET14（Team Cricket）、
+// SET16（四人賽 Cricket）全被算成 01。第七屆 116 位出賽 10 局以上的選手
+// 有 107 位拆分錯誤，CR 出賽人次少算 53%。合計場次／勝場／先攻數不受影響。
+//
+// 第六、七屆共 180 場驗證過，每個 SET 的 type 都唯一且一致：
+var CR_SETS = [6, 7, 8, 9, 10, 13, 14, 16];
+
+function isCricket(type, setNum) {
+  // 優先相信資料裡的 type；沒有才用 SET 編號回推
+  if (type) { return String(type).toUpperCase() !== '01'; }
+  return CR_SETS.indexOf(Number(setNum)) !== -1;
+}
+
+function processPlayers(stats, players, side, type, firstAttack, winner, setNum) {
+  var cr = isCricket(type, setNum);
   for (var i = 0; i < players.length; i++) {
     var name = players[i];
     var key = side + ':' + name;
@@ -501,10 +520,10 @@ function processPlayers(stats, players, side, type, firstAttack, winner) {
       stats[key] = { name: name, side: side, p01: 0, w01: 0, pCR: 0, wCR: 0, total: 0, wins: 0, fa: 0 };
     }
     var s = stats[key];
-    if (type === '01') { s.p01++; } else { s.pCR++; }
+    if (cr) { s.pCR++; } else { s.p01++; }
     s.total++;
     if (winner === side) {
-      if (type === '01') { s.w01++; } else { s.wCR++; }
+      if (cr) { s.wCR++; } else { s.w01++; }
       s.wins++;
     }
     if (firstAttack === side) { s.fa++; }
