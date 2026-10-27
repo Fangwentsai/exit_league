@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T12:51:08.135Z",
+  "updatedAt": "2026-10-27T07:43:26.599Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.02",
+        "webrate": "9.13",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.39",
-        "mpr": "2.08",
+        "ppd": "19.40",
+        "mpr": "2.12",
         "source": "myinfo"
       },
       "小倫": {
@@ -142,11 +142,11 @@
         "cardAtBind": "您好，敝姓周👍👍",
         "cSeq": "2512040",
         "homeShop": "逃生入口 Bar",
-        "webrate": "16.64",
+        "webrate": "16.69",
         "level": 16,
         "icon": "images/rating30/16.webp",
-        "ppd": "28.65",
-        "mpr": "3.31",
+        "ppd": "28.97",
+        "mpr": "3.29",
         "source": "myinfo"
       },
       "隼": {
@@ -166,11 +166,11 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.64",
+        "webrate": "11.82",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.53",
-        "mpr": "2.56",
+        "ppd": "22.68",
+        "mpr": "2.61",
         "source": "myinfo"
       },
       "Linda": {
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.79",
+        "webrate": "13.75",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "25.22",
+        "ppd": "25.13",
         "mpr": "2.87",
         "source": "myinfo"
       },
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.83",
+        "webrate": "11.94",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "23.09",
+        "ppd": "23.25",
         "mpr": "2.55",
         "source": "myinfo"
       }
@@ -388,11 +388,11 @@
         "cardAtBind": "Jack噴氵交火龍上線嘍~*",
         "cSeq": "2584609",
         "homeShop": "Jack Bar",
-        "webrate": "10.28",
+        "webrate": "10.24",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.46",
-        "mpr": "2.18",
+        "ppd": "21.59",
+        "mpr": "2.14",
         "source": "myinfo"
       },
       "老師": {
@@ -412,10 +412,10 @@
         "cardAtBind": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
         "cSeq": "2883934",
         "homeShop": "Jack Bar",
-        "webrate": "8.01",
-        "level": 8,
-        "icon": "images/rating30/8.webp",
-        "ppd": "18.13",
+        "webrate": "7.97",
+        "level": 7,
+        "icon": "images/rating30/7.webp",
+        "ppd": "18.07",
         "mpr": "1.93",
         "source": "myinfo"
       },
@@ -513,11 +513,11 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "10.26",
+        "webrate": "10.44",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.88",
-        "mpr": "2.30",
+        "ppd": "21.05",
+        "mpr": "2.34",
         "source": "myinfo"
       },
       "Mo": {
@@ -552,11 +552,11 @@
         "cardAtBind": "Jack瘋狗",
         "cSeq": "2293486",
         "homeShop": "Jack Bar",
-        "webrate": "14.97",
-        "level": 14,
-        "icon": "images/rating30/14.webp",
-        "ppd": "25.71",
-        "mpr": "3.09",
+        "webrate": "15.15",
+        "level": 15,
+        "icon": "images/rating30/15.webp",
+        "ppd": "25.79",
+        "mpr": "3.13",
         "source": "myinfo"
       },
       "阿翰": {
@@ -564,11 +564,11 @@
         "cardAtBind": "阿翰",
         "cSeq": "2887184",
         "homeShop": "Jack Bar",
-        "webrate": "9.39",
+        "webrate": "9.48",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.57",
-        "mpr": "2.23",
+        "ppd": "19.80",
+        "mpr": "2.21",
         "source": "myinfo"
       },
       "霸告": {
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "10.85",
-        "level": 10,
-        "icon": "images/rating30/10.webp",
-        "ppd": "21.20",
-        "mpr": "2.51",
+        "webrate": "11.33",
+        "level": 11,
+        "icon": "images/rating30/11.webp",
+        "ppd": "21.96",
+        "mpr": "2.55",
         "source": "myinfo"
       },
       "小虎": {
@@ -613,10 +613,10 @@
         "cardAtBind": "TERRY",
         "cSeq": "2191560",
         "homeShop": "Jack Bar",
-        "webrate": "9.18",
+        "webrate": "9.10",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.60",
+        "ppd": "19.45",
         "mpr": "2.11",
         "source": "myinfo"
       },
@@ -625,7 +625,7 @@
         "cardAtBind": "九紋龍",
         "cSeq": "2379756",
         "homeShop": "Jack Bar",
-        "webrate": "12.06",
+        "webrate": "12.08",
         "level": 12,
         "icon": "images/rating30/12.webp",
         "ppd": null,
@@ -675,9 +675,9 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "7.33",
-        "level": 7,
-        "icon": "images/rating30/7.webp",
+        "webrate": "8.02",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
         "ppd": null,
         "mpr": null,
         "profileHidden": true,
@@ -701,11 +701,11 @@
         "cardAtBind": "小建",
         "cSeq": "2865203",
         "homeShop": "Tonight29 Pub",
-        "webrate": "12.74",
+        "webrate": "12.57",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.34",
-        "mpr": "2.76",
+        "ppd": "23.28",
+        "mpr": "2.71",
         "source": "myinfo"
       },
       "公鏢傑": {
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.43",
+        "webrate": "12.49",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.45",
-        "mpr": "2.64",
+        "ppd": "23.52",
+        "mpr": "2.65",
         "source": "myinfo"
       }
     }
