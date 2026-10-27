@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T07:43:26.599Z",
+  "updatedAt": "2026-10-27T12:02:21.805Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -589,10 +589,10 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.33",
+        "webrate": "11.16",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.96",
+        "ppd": "21.64",
         "mpr": "2.55",
         "source": "myinfo"
       },
@@ -727,10 +727,10 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.49",
+        "webrate": "12.42",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.52",
+        "ppd": "23.36",
         "mpr": "2.65",
         "source": "myinfo"
       }
