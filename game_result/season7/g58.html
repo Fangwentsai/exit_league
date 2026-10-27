@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>難找的聯賽 第七季 G58 賽果：逃生Zoo口 vs. 傑克黑桃｜飛鏢聯賽戰報</title>
+    <meta name="description" content="查看 難找的聯賽 飛鏢07季 G58 的詳細賽果。本場比賽由逃生Zoo口對決傑克黑桃，包含 701 、 Cricket 與多人賽的完整數據分析與戰報。">
+    <meta name="keywords" content="飛鏢聯賽, YHDARTS, 賽果, 逃生Zoo口, 傑克黑桃, 飛鏢比賽, dart league, match result, phoenix darts, dartslive">
+  
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+  
+    <link rel="stylesheet" href="../../styles/common/game_result.css">
+    <link rel="stylesheet" href="../../styles/common/match-result.css?v=20260930_1">
+</head>
+<body>
+    <div class="container" id="matchResult"></div>
+
+<script src="../../js/game_result.js?v=20260919_1"></script>
+<script>
+// G58 比賽數據
+const g58Matches = [
+    {set: 1, type: '01', away: '小喬', home: 'Tina', firstAttack: 'home', winner: 'away'},
+    {set: 2, type: '01', away: '小倫', home: '青楓', firstAttack: 'away', winner: 'away'},
+    {set: 3, type: '01', away: 'Lucas', home: '九紋龍', firstAttack: 'away', winner: 'away'},
+    {set: 4, type: '01', away: 'Linda', home: '小郭', firstAttack: 'home', winner: 'away'},
+    {set: 5, type: '01', away: ['小倫', '小孟', '阿樂'], home: ['Terry', '九紋龍', '青楓'], firstAttack: 'home', winner: 'away'},
+    {set: 6, type: 'CR', away: '小喬', home: '肥肥', firstAttack: 'home', winner: 'away'},
+    {set: 7, type: 'CR', away: '阿誠', home: '小建', firstAttack: 'home', winner: 'home'},
+    {set: 8, type: 'CR', away: '小孟', home: 'Stan', firstAttack: 'home', winner: 'away'},
+    {set: 9, type: 'CR', away: '小倫', home: '阿翰', firstAttack: 'home', winner: 'away'},
+    {set: 10, type: 'CR', away: ['小倫', '小孟', '阿誠'], home: ['小建', 'Stan', '小郭'], firstAttack: 'away', winner: 'home'},
+    {set: 11, type: '01', away: ['小倫', '小喬'], home: ['Tina', '九紋龍'], firstAttack: 'away', winner: 'away'},
+    {set: 12, type: '01', away: ['阿廷', 'Lucas'], home: ['Terry', 'Stan'], firstAttack: 'away', winner: 'away'},
+    {set: 13, type: 'CR', away: ['小倫', '小喬'], home: ['小建', '小郭'], firstAttack: 'away', winner: 'away'},
+    {set: 14, type: 'CR', away: ['阿誠', '晨晨'], home: ['Terry', '小虎'], firstAttack: 'home', winner: 'home'},
+    {set: 15, type: '01', away: ['阿廷', '小倫', '小喬', '小孟'], home: ['Stan', 'Terry', '青楓', 'Tina'], firstAttack: 'away', winner: 'away'},
+    {set: 16, type: 'CR', away: ['阿廷', '小倫', '小喬', '阿樂'], home: ['Stan', '九紋龍', '小建', '小郭'], firstAttack: 'home', winner: 'away'}
+];
+
+// 飲酒加成
+const drinkingBonus = { away: 0, home: 5 };
+
+// 選手名單
+const awayPlayers = ['小喬', '小倫', 'Lucas', 'Linda', '小孟', '阿樂', '阿誠', '阿廷', '晨晨'];
+const homePlayers = ['Tina', '青楓', '九紋龍', '小郭', 'Terry', '肥肥', '小建', 'Stan', '阿翰', '小虎'];
+
+const matchMeta = {
+    date: "10/27",
+    venue: "JACK BAR",
+    away: "逃生Zoo口",
+    home: "傑克黑桃",
+    types: { 1: "501 (OI/MO)", 2: "501 (DI/DO)", 3: "701 (OI/MO)", 4: "701 (OI/MO, 25/50)", 5: "三人賽 701", 6: "Cricket", 7: "Cricket", 8: "HALF-IT", 9: "HALF-IT", 10: "三人賽 Cricket", 11: "701 雙人賽", 12: "701 雙人賽 FREEZE", 13: "Cricket 雙人賽", 14: "Team Cricket", 15: "四人賽 1101", 16: "四人賽 Cricket" }
+};
+
+addMatchData(g58Matches);
+renderMatchResult(g58Matches, matchMeta, drinkingBonus, awayPlayers, homePlayers);
+</script>
+
+<!-- Shopee 商品推廣 -->
+<section class="shopee-game-carousel">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="shopee-game-header" style="display:flex; align-items:center; gap: 4px;">
+            <img src="../../images/aadarts.webp" alt="AA Darts">
+            <div>【AA飛鏢專賣店】難找的補貨專區<br>官方蝦皮滿199店到店免運，聯賽感恩您</div>
+        </div>
+    </div>
+    <div class="shopee-game-track-wrapper">
+        <div class="shopee-game-track" id="shopee-game-track"></div>
+    </div>
+    <div class="shopee-game-dots" id="shopee-game-dots"></div>
+</section>
+<script src="../../js/shopee-carousel-game.js"></script>
+</body>
+</html>
