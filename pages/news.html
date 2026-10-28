@@ -904,13 +904,17 @@
             <div class="icon-trophy">🏆</div>
         </button>
 
-        <!-- 季後賽 Banner：第六屆已結束，第七屆季後賽開始前先隱藏。
-             要重新開啟時把註解拿掉，並換成當屆的圖片。 -->
-        <!--
-        <div onclick="window.openPlayoffsModal()" style="cursor:pointer; margin-bottom: 15px;">
-            <img src="images/playoffs_s6.png" alt="第六屆季後賽預測" style="width:100%; border-radius:4px; display:block;">
-        </div>
-        -->
+        <!-- 季後賽 Banner：季後賽期間常駐，點了開季後賽頁。
+             用 CSS 版而不是圖片，縮放不會失真、改屆數只要改這裡的文字。
+             季後賽結束後整段註解掉即可。 -->
+        <button class="playoffs-banner" onclick="window.openPlayoffsModal()" aria-label="查看第七屆季後賽">
+            <div class="deco-line"></div>
+            <div class="text-group">
+                <div class="sub-title">難找的聯賽</div>
+                <div class="main-title">第七屆季後賽</div>
+            </div>
+            <div class="icon-crown">👑</div>
+        </button>
 
         <!-- 賽事動態區塊 (頁籤整合：近期比賽 / 上週戰況) -->
         <div class="matches-section match-tab-container">

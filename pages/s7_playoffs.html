@@ -112,6 +112,16 @@
   .loader { border:3px solid #333; border-top:3px solid var(--gold); border-radius:50%; width:28px; height:28px; animation:spin 1s linear infinite; }
   @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
 
+  /* ===== 頁籤：團隊 / 個人 ===== */
+  .pane-tabs { display:flex; gap:8px; padding:16px 15px 0; position:sticky; top:0; z-index:5;
+               background:var(--bg-color); }
+  .pane-tab { flex:1; font:inherit; font-size:13px; font-weight:700; letter-spacing:1px;
+              padding:11px 6px; border:1px solid #333; border-radius:8px; background:#161616;
+              color:#999; cursor:pointer; transition:all .18s; }
+  .pane-tab:hover { color:#ddd; border-color:#444; }
+  .pane-tab.on { background:var(--gold-gradient); border-color:var(--gold); color:#2b1d00; }
+  .pane[hidden] { display:none; }
+
   /* ===== 第七屆新增：團隊季後賽 ===== */
   .bracket-wrap { padding:0 15px; }
   .bracket-wrap img { width:100%; height:auto; display:block; border-radius:6px; border:1px solid #2a2a2a; cursor:zoom-in; }
@@ -127,6 +137,9 @@
   .tie-team { font-size:14px; font-weight:bold; color:#fff; flex:1; }
   .tie-pts { font-size:11px; color:#888; font-family:'Impact',sans-serif; }
   .tie-vs { font-size:9px; color:#555; text-align:center; letter-spacing:3px; padding:1px 0; }
+  .tie-venue { display:flex; align-items:center; gap:5px; margin-top:8px; padding-top:8px;
+               border-top:1px dashed #2a2a2a; font-size:11px; color:#999; }
+  .tie-venue b { color:var(--gold); font-weight:600; }
   .grp-key { display:flex; justify-content:center; gap:16px; font-size:10px; color:#888; margin:10px 0 0; }
   .grp-key span { display:flex; align-items:center; gap:5px; }
   .grp-key i { width:11px; height:11px; border-radius:3px; display:inline-block; }
@@ -155,6 +168,12 @@
     <p style="font-size:12px; color:#bbb; margin-top:5px;">例行賽 60 場全部結束，名次確定</p>
   </div>
 
+  <div class="pane-tabs">
+    <button class="pane-tab on" data-pane="pane-team">🏆 團隊季後賽</button>
+    <button class="pane-tab" data-pane="pane-solo">👑 個人季後賽</button>
+  </div>
+
+  <div class="pane" id="pane-team">
   <!-- ===================== 團隊季後賽 ===================== -->
   <div class="section-title">🏆 Team Playoffs (團隊季後賽)</div>
 
@@ -198,6 +217,9 @@
     </div>
   </div>
 
+  </div><!-- /pane-team -->
+
+  <div class="pane" id="pane-solo" hidden>
   <!-- ===================== 個人季後賽 ===================== -->
   <div class="section-title">👑 Individual Playoffs (個人季後賽)</div>
   <div class="note-box" style="margin-bottom:4px;">
@@ -245,6 +267,8 @@
     </div>
   </div>
 
+  </div><!-- /pane-solo -->
+
   <div class="footer">© 2026 難找的聯賽. All rights reserved.</div>
 </div>
 
@@ -285,13 +309,37 @@ const FINAL = {
     d: [['軟飯揪團中',257],['匪類里民一直喝',205],['酒空組',174],['Tonight29發財隊',157],['人生揪難亮',147],['傑克紅心',137]],
     b: [['逃生Zoo口',258],['哈哈隊',189],['有點傻',172],['傑克黑桃',170],['嘻嘻隊',161],['Tonight29恭喜隊',129]]
 };
+// 隊伍主場。與 preview_generator.getVenueFromTeam 一致，並用實際 60 場賽果驗證過。
+const VENUE = {
+    '軟飯揪團中': '樂源 a.k.a 兩杯', '匪類里民一直喝': 'R8串燒 Metro Bar', '酒空組': '逃生入口Bar',
+    'Tonight29發財隊': 'Tonight29', '人生揪難亮': 'No.5 飛鏢Bar', '傑克紅心': 'JACK BAR',
+    '逃生Zoo口': '逃生入口Bar', '哈哈隊': 'Vivi Bar', '有點傻': 'No.5 飛鏢Bar',
+    '傑克黑桃': 'JACK BAR', '嘻嘻隊': 'Vivi Bar', 'Tonight29恭喜隊': 'Tonight29'
+};
+
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const side = (grp, seed) => {
     const [name, pts] = FINAL[grp][seed - 1];
     return `<div class="tie-side"><div class="tie-seed ${grp}">${seed}</div>`
          + `<div class="tie-team">${esc(name)}</div><div class="tie-pts">${pts}</div></div>`;
 };
-const tie = (a, b) => `<div class="tie">${side(a[0], a[1])}<div class="tie-vs">VS</div>${side(b[0], b[1])}</div>`;
+// 種子較高（數字小）的一方為主場，比賽辦在該隊的主場酒吧
+const tie = (a, b) => {
+    const host = a[1] <= b[1] ? a : b;
+    const team = FINAL[host[0]][host[1] - 1][0];
+    const venue = VENUE[team] || '待定';
+    return `<div class="tie">${side(a[0], a[1])}<div class="tie-vs">VS</div>${side(b[0], b[1])}`
+         + `<div class="tie-venue">📍 <b>${esc(venue)}</b><span style="color:#666">（${esc(team)} 主場）</span></div></div>`;
+};
+
+// 頁籤切換：切完捲回頂端，不然從長頁面切過去會停在半空中
+document.querySelectorAll('.pane-tab').forEach(btn => {
+    btn.onclick = () => {
+        document.querySelectorAll('.pane-tab').forEach(b => b.classList.toggle('on', b === btn));
+        document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== btn.dataset.pane; });
+        window.scrollTo({ top: 0 });
+    };
+});
 
 document.getElementById('tie-list').innerHTML =
       tie(['d',1], ['b',4]) + tie(['b',2], ['d',3]) + tie(['b',1], ['d',4]) + tie(['d',2], ['b',3]);
