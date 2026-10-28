@@ -351,6 +351,15 @@ const tie = (label, a, b) => {
     </div>`;
 };
 
+// 頁籤切換：切完捲回頂端，不然從長頁面切過去會停在半空中
+document.querySelectorAll('.pane-tab').forEach(btn => {
+    btn.onclick = () => {
+        document.querySelectorAll('.pane-tab').forEach(b => b.classList.toggle('on', b === btn));
+        document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== btn.dataset.pane; });
+        window.scrollTo({ top: 0 });
+    };
+});
+
 document.getElementById('tie-list').innerHTML =
       tie('QF1', ['d',1], ['b',4]) + tie('QF2', ['b',2], ['d',3])
     + tie('QF3', ['b',1], ['d',4]) + tie('QF4', ['d',2], ['b',3]);
