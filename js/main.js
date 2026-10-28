@@ -3224,6 +3224,23 @@ function updateCarouselTitle(src) {
     const title = fileName in carouselImageTitles ? carouselImageTitles[fileName] : carouselDefaultTitle;
     titleEl.textContent = title;
     titleEl.style.display = title ? '' : 'none';
+    updateCarouselLink(fileName);
+}
+
+// 輪播第一張是季後賽賽制圖，點下去開季後賽頁；其餘是活動照片，不給點。
+// 掛在 updateCarouselTitle 裡，因為每次換圖都會經過它。
+const CAROUSEL_LINKS = { 's7_playoffs.webp': 'openPlayoffsModal' };
+
+function updateCarouselLink(fileName) {
+    const box = document.querySelector('.carousel-container');
+    if (!box) return;
+    const fn = CAROUSEL_LINKS[fileName];
+    box.style.cursor = fn ? 'pointer' : '';
+    box.onclick = fn ? function (e) {
+        // 圓點是用來切圖的，點圓點不要同時開視窗
+        if (e.target.closest('.carousel-dot')) return;
+        if (typeof window[fn] === 'function') window[fn]();
+    } : null;
 }
 
 // 更新圓點指示器

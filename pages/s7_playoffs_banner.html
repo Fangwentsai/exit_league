@@ -82,6 +82,9 @@
   .b i { background: var(--gold); color: #6b4a00; }
   /* 名次已確定、填上隊名的格子：隊名用金色和未定的組別區隔 */
   .named span { color: var(--gold); }
+  /* 隊名太長的格子：縮字級並收緊字距，才塞得進固定寬度的格子 */
+  .qf.long span { font-size: 21px; letter-spacing: 0; }
+  .mini.long span { font-size: 16px; letter-spacing: 0; }
 
   /* 還沒產生的晉級格 */
   .tbd { width: 200px; border-style: dashed; border-color: rgba(255, 255, 255, 0.35); background: rgba(70, 0, 8, 0.18); }
@@ -149,15 +152,15 @@
 
 <!-- 左半區：掉鏢1 vs 靶外4、靶外2 vs 掉鏢3 -->
 <div class="slot qf a named" style="left:70px; top:284px"><i>1</i><span>軟飯揪團中</span></div>
-<div class="slot qf b" style="left:70px; top:348px"><i>4</i><span>靶外組</span></div>
-<div class="slot qf b" style="left:70px; top:428px"><i>2</i><span>靶外組</span></div>
-<div class="slot qf a" style="left:70px; top:492px"><i>3</i><span>掉鏢組</span></div>
+<div class="slot qf b named" style="left:70px; top:348px"><i>4</i><span>傑克黑桃</span></div>
+<div class="slot qf b named" style="left:70px; top:428px"><i>2</i><span>哈哈隊</span></div>
+<div class="slot qf a named" style="left:70px; top:492px"><i>3</i><span>酒空組</span></div>
 
 <!-- 右半區：靶外1 vs 掉鏢4、掉鏢2 vs 靶外3 -->
 <div class="slot qf r b named" style="left:1270px; top:284px"><i>1</i><span>逃生Zoo口</span></div>
-<div class="slot qf r a" style="left:1270px; top:348px"><i>4</i><span>掉鏢組</span></div>
-<div class="slot qf r a" style="left:1270px; top:428px"><i>2</i><span>掉鏢組</span></div>
-<div class="slot qf r b" style="left:1270px; top:492px"><i>3</i><span>靶外組</span></div>
+<div class="slot qf r a named long" style="left:1270px; top:348px"><i>4</i><span>Tonight29發財隊</span></div>
+<div class="slot qf r a named long" style="left:1270px; top:428px"><i>2</i><span>匪類里民一直喝</span></div>
+<div class="slot qf r b named" style="left:1270px; top:492px"><i>3</i><span>有點傻</span></div>
 
 <!-- 四強：還沒產生的晉級格 -->
 <div class="slot tbd" style="left:380px;  top:316px"></div>
@@ -177,10 +180,10 @@
 </div>
 
 <!-- 後段班：兩組後段 5、6 名交叉，四強單淘汰。放右下，左下角留給輪播標題 -->
-<div class="slot mini a" style="left:810px; top:610px"><i>5</i><span>掉鏢組</span></div>
-<div class="slot mini b" style="left:810px; top:646px"><i>6</i><span>靶外組</span></div>
-<div class="slot mini r b" style="left:1350px; top:610px"><i>5</i><span>靶外組</span></div>
-<div class="slot mini r a" style="left:1350px; top:646px"><i>6</i><span>掉鏢組</span></div>
+<div class="slot mini a named" style="left:810px; top:610px"><i>5</i><span>人生揪難亮</span></div>
+<div class="slot mini b named long" style="left:810px; top:646px"><i>6</i><span>Tonight29恭喜隊</span></div>
+<div class="slot mini r b named" style="left:1350px; top:610px"><i>5</i><span>嘻嘻隊</span></div>
+<div class="slot mini r a named" style="left:1350px; top:646px"><i>6</i><span>傑克紅心</span></div>
 <div class="lower">
   <div class="lbl">冠軍</div>
   <div class="amt">$2,000</div>
