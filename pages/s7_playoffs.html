@@ -293,11 +293,6 @@
     <div class="loader-container"><div class="loader"></div></div>
   </div>
 
-  <div class="section-title" style="font-size:12px;color:#666;">⚔️ On the radar (後補觀察)</div>
-  <div id="waitlist-container" class="waitlist-grid">
-    <div class="loader-container"><div class="loader"></div></div>
-  </div>
-
   <div class="section-title">📜 Tournament Info (賽事資訊)</div>
   <div class="info-section">
     <div class="info-box">
@@ -419,7 +414,7 @@ for (const grp of ['d', 'b']) {
 
 // ===== 個人季後賽：讀試算表 personal 分頁 =====
 function fail(msg) {
-    ['leaders-container', 'elites-container', 'waitlist-container'].forEach(id => {
+    ['leaders-container', 'elites-container'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = `<div style="grid-column:1/-1;color:#888;font-size:12px;padding:10px 5px">${esc(msg)}</div>`;
     });
@@ -464,7 +459,6 @@ async function loadPlayers() {
     const ladyInLeaders = leaders.some(isLady);
     const pool = rest.filter(p => !isLady(p));
     const elites = pool.slice(0, 3);
-    const waitlist = pool.slice(3, 9);
 
     document.getElementById('leaders-container').innerHTML = leaders.map(p => {
         const [, s2, s3] = top3[p.team] || [];
@@ -497,13 +491,6 @@ async function loadPlayers() {
           <div class="stats"><div class="win-count">${p.wins}</div><div class="win-label">WINS</div></div>
         </div>`).join('');
 
-    document.getElementById('waitlist-container').innerHTML = waitlist.length
-        ? waitlist.map((p, i) => `
-            <div class="waitlist-card"><div class="wait-info">
-              <span class="wait-name">${i + 4}. ${esc(p.name)}</span>
-              <span class="wait-team">${esc(p.team)}</span></div>
-              <span class="wait-wins">${p.wins}</span></div>`).join('')
-        : '<div style="grid-column:1/-1;color:#666;font-size:12px">—</div>';
 }
 loadPlayers();
 </script>
