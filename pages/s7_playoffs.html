@@ -127,19 +127,26 @@
   .bracket-wrap img { width:100%; height:auto; display:block; border-radius:6px; border:1px solid #2a2a2a; cursor:zoom-in; }
   .bracket-hint { text-align:center; font-size:10px; color:#666; margin-top:6px; letter-spacing:1px; }
 
-  .tie-list { padding:0 15px; display:grid; gap:8px; }
-  .tie { background:var(--card-bg); border:1px solid #2a2a2a; border-radius:6px; padding:10px 12px; }
-  .tie-side { display:flex; align-items:center; gap:8px; padding:3px 0; }
-  .tie-seed { width:22px; height:22px; flex-shrink:0; border-radius:4px; display:flex; align-items:center;
-              justify-content:center; font-size:11px; font-weight:900; font-style:italic; }
-  .tie-seed.d { background:#fff; color:#111; }            /* 掉鏢組 */
-  .tie-seed.b { background:var(--gold); color:#4a3200; }  /* 靶外組 */
-  .tie-team { font-size:14px; font-weight:bold; color:#fff; flex:1; }
-  .tie-pts { font-size:11px; color:#888; font-family:'Impact',sans-serif; }
-  .tie-vs { font-size:9px; color:#555; text-align:center; letter-spacing:3px; padding:1px 0; }
-  .tie-venue { display:flex; align-items:center; gap:5px; margin-top:8px; padding-top:8px;
-               border-top:1px dashed #2a2a2a; font-size:11px; color:#999; }
-  .tie-venue b { color:var(--gold); font-weight:600; }
+  /* 對戰卡：沿用首頁「上週戰況」的排版 —— 編號在左、@場地在右上，隊伍一列三欄 */
+  .tie-list { padding:0 15px; display:grid; gap:10px; }
+  .po-match { background:var(--card-bg); border:1px solid #2a2a2a; border-radius:8px; padding:10px 14px; }
+  .po-head { display:flex; justify-content:space-between; align-items:center;
+             margin-bottom:6px; font-size:13px; line-height:1.2; }
+  .po-code { font-weight:bold; color:#ddd; font-size:13px; }
+  .po-venue { font-style:italic; color:#8a8a8a; font-size:12px; text-align:right; }
+  .po-teams { display:flex; align-items:center; justify-content:space-between; }
+  .po-team { display:flex; flex-direction:row; align-items:center; gap:7px; flex:1; min-width:0; }
+  .po-team.l { justify-content:flex-start; }
+  .po-team.r { justify-content:flex-end; }
+  /* min-width:0 讓名字能在 flex 裡正常收縮，否則長隊名會把格子撐爆 */
+  .po-name { font-weight:bold; font-size:15px; white-space:nowrap; overflow:hidden;
+             text-overflow:ellipsis; letter-spacing:-0.3px; color:#fff; min-width:0; }
+  .po-seed { width:20px; height:20px; flex-shrink:0; border-radius:4px; display:flex;
+             align-items:center; justify-content:center; font-size:11px; font-weight:900; font-style:italic; }
+  .po-seed.d { background:#fff; color:#111; }
+  .po-seed.b { background:var(--gold); color:#4a3200; }
+  .po-vs { font-size:12px; color:#666; font-weight:600; flex-shrink:0; padding:0 10px; }
+
   .grp-key { display:flex; justify-content:center; gap:16px; font-size:10px; color:#888; margin:10px 0 0; }
   .grp-key span { display:flex; align-items:center; gap:5px; }
   .grp-key i { width:11px; height:11px; border-radius:3px; display:inline-block; }
@@ -318,33 +325,31 @@ const VENUE = {
 };
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const side = (grp, seed) => {
-    const [name, pts] = FINAL[grp][seed - 1];
-    return `<div class="tie-side"><div class="tie-seed ${grp}">${seed}</div>`
-         + `<div class="tie-team">${esc(name)}</div><div class="tie-pts">${pts}</div></div>`;
-};
-// 種子較高（數字小）的一方為主場，比賽辦在該隊的主場酒吧
-const tie = (a, b) => {
-    const host = a[1] <= b[1] ? a : b;
-    const team = FINAL[host[0]][host[1] - 1][0];
-    const venue = VENUE[team] || '待定';
-    return `<div class="tie">${side(a[0], a[1])}<div class="tie-vs">VS</div>${side(b[0], b[1])}`
-         + `<div class="tie-venue">📍 <b>${esc(venue)}</b><span style="color:#666">（${esc(team)} 主場）</span></div></div>`;
+const teamCell = (grp, seed, pos) => {
+    const [name] = FINAL[grp][seed - 1];
+    const badge = `<div class="po-seed ${grp}">${seed}</div>`;
+    const nm = `<div class="po-name">${esc(name)}</div>`;
+    // 種子號靠格子外側，和賽制圖的擺法一致
+    return `<div class="po-team ${pos}">${pos === 'l' ? badge + nm : nm + badge}</div>`;
 };
 
-// 頁籤切換：切完捲回頂端，不然從長頁面切過去會停在半空中
-document.querySelectorAll('.pane-tab').forEach(btn => {
-    btn.onclick = () => {
-        document.querySelectorAll('.pane-tab').forEach(b => b.classList.toggle('on', b === btn));
-        document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== btn.dataset.pane; });
-        window.scrollTo({ top: 0 });
-    };
-});
+// 種子較高（數字小）的一方為主場，比賽辦在該隊的主場酒吧
+const tie = (label, a, b) => {
+    const host = a[1] <= b[1] ? a : b;
+    const venue = VENUE[FINAL[host[0]][host[1] - 1][0]] || '待定';
+    return `<div class="po-match">
+      <div class="po-head"><span class="po-code">${esc(label)}</span>
+        <span class="po-venue">@${esc(venue)}</span></div>
+      <div class="po-teams">${teamCell(a[0], a[1], 'l')}
+        <div class="po-vs">vs</div>${teamCell(b[0], b[1], 'r')}</div>
+    </div>`;
+};
 
 document.getElementById('tie-list').innerHTML =
-      tie(['d',1], ['b',4]) + tie(['b',2], ['d',3]) + tie(['b',1], ['d',4]) + tie(['d',2], ['b',3]);
+      tie('QF1', ['d',1], ['b',4]) + tie('QF2', ['b',2], ['d',3])
+    + tie('QF3', ['b',1], ['d',4]) + tie('QF4', ['d',2], ['b',3]);
 document.getElementById('lower-list').innerHTML =
-      tie(['d',5], ['b',6]) + tie(['b',5], ['d',6]);
+      tie('L1', ['d',5], ['b',6]) + tie('L2', ['b',5], ['d',6]);
 
 for (const grp of ['d', 'b']) {
     document.getElementById('tbl-' + grp).innerHTML =
