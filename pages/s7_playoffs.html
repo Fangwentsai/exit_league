@@ -206,7 +206,8 @@
   <div class="tie-list" id="tie-list"></div>
   <div class="note-box" style="margin-top:10px;font-size:11px;">
     八強主場為例行賽<strong>勝分較高</strong>的一方。<br>
-    <strong>四強起改看上一輪的季後賽勝分</strong>——在八強拿到較高分數的隊伍為主場，待 11/3 打完確定。
+    <strong>四強起改看上一輪的季後賽勝分</strong>——在八強拿到較高分數的隊伍為主場，待 11/3 打完確定。<br>
+    若晉級的兩隊<strong>勝分相同</strong>，則由上一場<strong>飲酒點數較多</strong>的隊伍為主場。
   </div>
   <div class="grp-key">
     <span><i style="background:#fff"></i>掉鏢組</span>
@@ -303,7 +304,7 @@
       <div class="info-header">🏆 個人季後賽規則</div>
       <div class="info-content">
         <div class="rule-row"><span class="rule-label">日期</span><span class="rule-val">11/24</span></div>
-        <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">冠軍店家</span></div>
+        <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">逃生入口Bar</span></div>
         <div class="rule-row"><span class="rule-label">資格</span><span class="rule-val">各隊勝場最高 ＋ Top Lady ＋ 勝場前三</span></div>
         <hr style="border:0;border-top:1px solid #333;margin:10px 0;">
         <div class="rule-row"><span class="rule-label">初賽</span><span class="rule-val">501 單淘汰 (讓級讓分/OI/MO)</span></div>
@@ -381,7 +382,7 @@ const teamCell = (grp, seed, pos) => {
 
 // 八強主場＝例行賽勝分較高的一方（這六組和「種子較高」剛好都指向同一隊）。
 // 四強起改看上一輪的季後賽勝分，誰在八強拿的分數高誰就是主場，
-// 所以要等 11/3 打完才算得出來。
+// 勝分相同時由上一場飲酒點數較多的隊伍主場。要等 11/3 打完才算得出來。
 const tie = (label, a, b) => {
     const A = FINAL[a[0]][a[1] - 1], B = FINAL[b[0]][b[1] - 1];
     const venue = VENUE[(A[1] >= B[1] ? A : B)[0]] || '待定';
