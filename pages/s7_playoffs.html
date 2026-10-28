@@ -192,6 +192,10 @@
 
   <div class="section-title" style="font-size:12px;">⚔️ 八強對戰 (11/3)</div>
   <div class="tie-list" id="tie-list"></div>
+  <div class="note-box" style="margin-top:10px;font-size:11px;">
+    八強主場為例行賽<strong>勝分較高</strong>的一方。<br>
+    <strong>四強起改看上一輪的季後賽勝分</strong>——在八強拿到較高分數的隊伍為主場，待 11/3 打完確定。
+  </div>
   <div class="grp-key">
     <span><i style="background:#fff"></i>掉鏢組</span>
     <span><i style="background:#C9A063"></i>靶外組</span>
@@ -333,10 +337,12 @@ const teamCell = (grp, seed, pos) => {
     return `<div class="po-team ${pos}">${pos === 'l' ? badge + nm : nm + badge}</div>`;
 };
 
-// 種子較高（數字小）的一方為主場，比賽辦在該隊的主場酒吧
+// 八強主場＝例行賽勝分較高的一方（這六組和「種子較高」剛好都指向同一隊）。
+// 四強起改看上一輪的季後賽勝分，誰在八強拿的分數高誰就是主場，
+// 所以要等 11/3 打完才算得出來。
 const tie = (label, a, b) => {
-    const host = a[1] <= b[1] ? a : b;
-    const venue = VENUE[FINAL[host[0]][host[1] - 1][0]] || '待定';
+    const A = FINAL[a[0]][a[1] - 1], B = FINAL[b[0]][b[1] - 1];
+    const venue = VENUE[(A[1] >= B[1] ? A : B)[0]] || '待定';
     return `<div class="po-match">
       <div class="po-head"><span class="po-code">${esc(label)}</span>
         <span class="po-venue">@${esc(venue)}</span></div>
