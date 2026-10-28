@@ -160,6 +160,18 @@
   .final-tbl .q td { color:#fff; }
   .final-tbl .q .pos { color:var(--gold); }
 
+  .award { display:flex; justify-content:space-between; align-items:center;
+            padding:11px 0; border-bottom:1px dashed #2a2a2a; }
+  .award:last-child { border-bottom:none; }
+  .award-l { display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .award-t { font-size:11px; color:#888; letter-spacing:1px; }
+  .award-w { font-size:15px; font-weight:bold; color:#fff; }
+  .award-w small { font-size:11px; color:#999; font-weight:normal; margin-left:5px; }
+  .award-r { text-align:right; flex-shrink:0; margin-left:10px; }
+  .award-v { font-size:15px; font-weight:bold; color:var(--gold); font-family:'Impact',sans-serif; }
+  .award-v.txt { font-family:inherit; font-size:12px; color:#ddd; font-weight:600; }
+  .pending { color:#777 !important; font-style:italic; }
+
   .lady-card { margin:0 15px; background:linear-gradient(90deg,#1A1A1A 0%,#2a1020 100%);
                border-left:3px solid #e35d9a; border-radius:4px; padding:12px 14px;
                display:flex; justify-content:space-between; align-items:center; }
@@ -221,9 +233,12 @@
         <li class="reward-item"><span class="place">亞軍</span><span class="prize">NT$ 5,000</span></li>
         <li class="reward-item"><span class="place">季軍</span><span class="prize">NT$ 3,000</span></li>
         <li class="reward-item"><span class="place">後段班冠軍</span><span class="prize">NT$ 2,000</span></li>
+        <li class="reward-item"><span class="place">飲酒店家冠軍</span><span class="prize">NT$ 5,000</span></li>
+        <li class="reward-item"><span class="place">飲酒店家亞軍</span><span class="prize">NT$ 3,000</span></li>
       </ul>
       <div class="info-content" style="margin-top:10px;color:#888;font-size:11px;">
-        八強 11/3 ‧ 四強 11/10 ‧ 冠軍戰 11/17
+        八強 11/3 ‧ 四強 11/10 ‧ 冠軍戰 11/17<br>
+        飲酒店家依賽季累積飲酒點數計算，結果另行公布。
       </div>
     </div>
   </div>
@@ -236,6 +251,37 @@
   <div class="note-box" style="margin-bottom:4px;">
     正取 <strong>16 人</strong>：各隊勝場最高 <strong>12 人</strong> ＋ <strong>Top Lady</strong> ＋ 其餘選手勝場前三。<br>
     <span style="color:#777;">點任一張卡片可展開該隊第 2、3 名的勝場。</span>
+  </div>
+
+  <div class="section-title">🏅 Season Awards (例行賽獎項．已確定)</div>
+  <div class="info-section">
+    <div class="info-box">
+      <div class="award">
+        <div class="award-l"><span class="award-t">🎯 聯賽勝場王</span>
+          <span class="award-w">小倫<small>逃生Zoo口 ‧ 48 勝</small></span></div>
+        <div class="award-r"><div class="award-v">NT$ 1,000</div></div>
+      </div>
+      <div class="award">
+        <div class="award-l"><span class="award-t">🌹 Top Lady</span>
+          <span class="award-w">小喬<small>逃生Zoo口 ‧ 31 勝</small></span></div>
+        <div class="award-r"><div class="award-v">NT$ 1,000</div></div>
+      </div>
+      <div class="award">
+        <div class="award-l"><span class="award-t">💀 地獄倒霉鬼</span>
+          <span class="award-w">小象<small>軟飯揪團中 ‧ 先攻率 20.00%</small></span></div>
+        <div class="award-r"><div class="award-v txt">專屬卡套<br>客店首次 shot 招待</div></div>
+      </div>
+      <div class="award">
+        <div class="award-l"><span class="award-t">🍺 飲酒店家冠軍／亞軍</span>
+          <span class="award-w pending">依累積飲酒點數結算</span></div>
+        <div class="award-r"><div class="award-v">5,000 / 3,000</div></div>
+      </div>
+      <div class="award">
+        <div class="award-l"><span class="award-t">🏆 大力神盃</span>
+          <span class="award-w pending">老丹處理</span></div>
+        <div class="award-r"><div class="award-v">NT$ 2,000</div></div>
+      </div>
+    </div>
   </div>
 
   <div class="section-title" style="font-size:12px;">👑 Team Leader (各隊第一)</div>
@@ -261,6 +307,7 @@
     <div class="info-box">
       <div class="info-header">🏆 個人季後賽規則</div>
       <div class="info-content">
+        <div class="rule-row"><span class="rule-label">日期</span><span class="rule-val">11/24</span></div>
         <div class="rule-row"><span class="rule-label">地點</span><span class="rule-val">冠軍店家</span></div>
         <div class="rule-row"><span class="rule-label">資格</span><span class="rule-val">各隊勝場最高 ＋ Top Lady ＋ 勝場前三</span></div>
         <hr style="border:0;border-top:1px solid #333;margin:10px 0;">
