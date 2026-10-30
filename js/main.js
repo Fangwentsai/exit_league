@@ -749,8 +749,7 @@ function generateMatchesHTML(matches) {
                 ? 'clickable-match'
                 : showPreview ? 'clickable-match preview-match' : '';
 
-            // 季後賽場次（config 的 playoffFrom 起）給不同底色與 PLAYOFFS 浮水印，
-            // 和例行賽一眼分得開
+            // 季後賽場次（config 的 playoffFrom 起）給不同底色，和例行賽一眼分得開
             const pf = SEASONS[CURRENT_SEASON].playoffFrom;
             const isPlayoff = pf && parseInt(gameNumber, 10) >= pf;
 
@@ -792,47 +791,14 @@ function generateMatchesHTML(matches) {
                 border: 1px solid #eaeaea;
             }
             
-            /* 季後賽場次：淡紅底 + 斜體 PLAYOFFS 浮水印 */
+            /* 季後賽場次：淡紅底，和例行賽一眼分得開 */
             .match.playoff-match {
-                position: relative;
                 background-color: #fdf3f4;
                 border-color: #f3d6d9;
-                overflow: hidden;
-            }
-
-            .match.playoff-match::after {
-                content: 'PLAYOFFS';
-                position: absolute;
-                /* 從右側定位，不管列多寬都不會被 overflow:hidden 裁掉 */
-                right: 10%;
-                top: 50%;
-                transform: translateY(-50%);
-                /* 約吃掉列高的 75%（桌機列高 69px） */
-                font-size: 50px;
-                line-height: 1;
-                font-weight: 900;
-                font-style: italic;
-                letter-spacing: -1px;
-                color: #dc3545;
-                opacity: 0.4;
-                pointer-events: none;
-                white-space: nowrap;
-                z-index: 0;
-            }
-
-            /* 浮水印要沉在文字底下，字放大後才不會蓋住隊名 */
-            .match.playoff-match .match-header,
-            .match.playoff-match .match-teams {
-                position: relative;
-                z-index: 1;
             }
 
             .clickable-match.playoff-match:hover {
                 background-color: #fbe9eb;
-            }
-
-            @media (max-width: 480px) {
-                .match.playoff-match::after { font-size: 30px; right: 6%; }
             }
 
             .clickable-match {
