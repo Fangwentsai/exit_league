@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T08:31:46.988Z",
+  "updatedAt": "2026-10-30T12:45:29.632Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -166,10 +166,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.66",
+        "webrate": "11.54",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.52",
+        "ppd": "22.30",
         "mpr": "2.57",
         "source": "myinfo"
       },
@@ -178,10 +178,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "6.68",
+        "webrate": "6.56",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.57",
+        "ppd": "16.37",
         "mpr": "1.69",
         "source": "myinfo"
       },
@@ -638,11 +638,11 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.83",
+        "webrate": "14.91",
         "level": 14,
         "icon": "images/rating30/14.webp",
         "ppd": "26.38",
-        "mpr": "3.11",
+        "mpr": "3.15",
         "source": "myinfo"
       },
       "肥肥": {
