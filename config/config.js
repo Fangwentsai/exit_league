@@ -60,6 +60,8 @@ const SEASONS = {
             地獄倒霉鬼: 'personal!W2:Y6'
         },
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
+        // 例行賽 G01~G60，G61 起是季後賽（近期比賽會標上 PLAYOFFS 底色）
+        playoffFrom: 61,
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。
         groups: {

@@ -749,8 +749,13 @@ function generateMatchesHTML(matches) {
                 ? 'clickable-match'
                 : showPreview ? 'clickable-match preview-match' : '';
 
+            // 季後賽場次（config 的 playoffFrom 起）給不同底色與 PLAYOFFS 浮水印，
+            // 和例行賽一眼分得開
+            const pf = SEASONS[CURRENT_SEASON].playoffFrom;
+            const isPlayoff = pf && parseInt(gameNumber, 10) >= pf;
+
             html += `
-                <div class="match ${clickableClass}" ${dataAttr}>
+                <div class="match ${clickableClass}${isPlayoff ? ' playoff-match' : ''}" ${dataAttr}>
                     <div class="match-header">
                         <span class="match-code">${match.gameCode}</span>
                         <span class="match-venue">${match.venue ? `@${match.venue}` : ''}</span>
@@ -787,6 +792,38 @@ function generateMatchesHTML(matches) {
                 border: 1px solid #eaeaea;
             }
             
+            /* 季後賽場次：淡紅底 + 斜體 PLAYOFFS 浮水印 */
+            .match.playoff-match {
+                position: relative;
+                background-color: #fdf3f4;
+                border-color: #f3d6d9;
+                overflow: hidden;
+            }
+
+            .match.playoff-match::after {
+                content: 'PLAYOFFS';
+                position: absolute;
+                left: 56%;
+                top: 50%;
+                transform: translateY(-20%);
+                font-size: 17px;
+                font-weight: 900;
+                font-style: italic;
+                letter-spacing: 1px;
+                color: #dc3545;
+                opacity: 0.4;
+                pointer-events: none;
+                white-space: nowrap;
+            }
+
+            .clickable-match.playoff-match:hover {
+                background-color: #fbe9eb;
+            }
+
+            @media (max-width: 480px) {
+                .match.playoff-match::after { font-size: 13px; left: 52%; }
+            }
+
             .clickable-match {
                 cursor: pointer;
                 transition: all 0.15s ease;
