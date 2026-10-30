@@ -132,6 +132,8 @@
              align-items:center; justify-content:center; font-size:11px; font-weight:900; font-style:italic; }
   .po-seed.d { background:#fff; color:#111; }
   .po-seed.b { background:var(--gold); color:#4a3200; }
+  .po-host { font-size:9px; font-weight:900; color:#4a3200; background:var(--gold);
+             border-radius:3px; padding:1px 4px; flex-shrink:0; letter-spacing:0; }
   .po-vs { font-size:12px; color:#666; font-weight:600; flex-shrink:0; padding:0 10px; }
 
   .grp-key { display:flex; justify-content:center; gap:16px; font-size:10px; color:#888; margin:10px 0 0; }
@@ -354,28 +356,31 @@ const VENUE = {
 };
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const teamCell = (grp, seed, pos) => {
+const teamCell = (grp, seed, pos, isHost) => {
     const [name] = FINAL[grp][seed - 1];
     const badge = `<div class="po-seed ${grp}">${seed}</div>`;
+    const host = isHost ? '<span class="po-host">主</span>' : '';
     const nm = `<div class="po-name">${esc(name)}</div>`;
-    // 種子號靠格子外側，和賽制圖的擺法一致
-    return `<div class="po-team ${pos}">${pos === 'l' ? badge + nm : nm + badge}</div>`;
+    // 種子號靠格子外側，和賽制圖的擺法一致；主場標記貼在名字旁
+    return `<div class="po-team ${pos}">${pos === 'l' ? badge + nm + host : host + nm + badge}</div>`;
 };
 
 // 八強主場＝例行賽勝分較高的一方（這六組和「種子較高」剛好都指向同一隊）。
 // 四強起改看上一輪的季後賽勝分，誰在八強拿的分數高誰就是主場，
 // 勝分相同時由上一場飲酒點數較多的隊伍主場。要等 11/3 打完才算得出來。
-// 第四個參數可以指定場地，用在規則算出來的主場要另外喬的時候。
-// L2 嘻嘻隊 vs 傑克紅心：照規則是嘻嘻隊主場 Vivi Bar，但同一天 QF2
-// 已經排在 Vivi Bar，兩場撞場，所以改到 JACK BAR。
-const tie = (label, a, b, venueOverride) => {
+// 第四個參數可指定主場隊伍，用在規則算出來的主場要另外喬的時候。
+// 場地一律由主場隊伍推導，不會出現「主場是甲隊、場地卻在乙隊店裡」。
+// L2 嘻嘻隊 vs 傑克紅心：照勝分規則是嘻嘻隊主場（161 ＞ 137）、場地 Vivi Bar，
+// 但同一天 QF2 已排在 Vivi Bar 撞場，所以主場改由傑克紅心擔任，移到 JACK BAR。
+const tie = (label, a, b, hostOverride) => {
     const A = FINAL[a[0]][a[1] - 1], B = FINAL[b[0]][b[1] - 1];
-    const venue = venueOverride || VENUE[(A[1] >= B[1] ? A : B)[0]] || '待定';
+    const host = hostOverride || (A[1] >= B[1] ? A : B)[0];
+    const venue = VENUE[host] || '待定';
     return `<div class="po-match">
       <div class="po-head"><span class="po-code">${esc(label)}</span>
         <span class="po-venue">@${esc(venue)}</span></div>
-      <div class="po-teams">${teamCell(a[0], a[1], 'l')}
-        <div class="po-vs">vs</div>${teamCell(b[0], b[1], 'r')}</div>
+      <div class="po-teams">${teamCell(a[0], a[1], 'l', A[0] === host)}
+        <div class="po-vs">vs</div>${teamCell(b[0], b[1], 'r', B[0] === host)}</div>
     </div>`;
 };
 
@@ -392,7 +397,7 @@ document.getElementById('tie-list').innerHTML =
       tie('QF1', ['d',1], ['b',4]) + tie('QF2', ['b',2], ['d',3])
     + tie('QF3', ['b',1], ['d',4]) + tie('QF4', ['d',2], ['b',3]);
 document.getElementById('lower-list').innerHTML =
-      tie('L1', ['d',5], ['b',6]) + tie('L2', ['b',5], ['d',6], 'JACK BAR');
+      tie('L1', ['d',5], ['b',6]) + tie('L2', ['b',5], ['d',6], '傑克紅心');
 
 for (const grp of ['d', 'b']) {
     document.getElementById('tbl-' + grp).innerHTML =
