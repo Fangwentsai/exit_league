@@ -803,17 +803,27 @@ function generateMatchesHTML(matches) {
             .match.playoff-match::after {
                 content: 'PLAYOFFS';
                 position: absolute;
-                left: 56%;
+                left: 60%;
                 top: 50%;
-                transform: translateY(-20%);
-                font-size: 17px;
+                transform: translateY(-50%);
+                /* 約吃掉列高的 75%（桌機列高 69px） */
+                font-size: 50px;
+                line-height: 1;
                 font-weight: 900;
                 font-style: italic;
-                letter-spacing: 1px;
+                letter-spacing: -1px;
                 color: #dc3545;
                 opacity: 0.4;
                 pointer-events: none;
                 white-space: nowrap;
+                z-index: 0;
+            }
+
+            /* 浮水印要沉在文字底下，字放大後才不會蓋住隊名 */
+            .match.playoff-match .match-header,
+            .match.playoff-match .match-teams {
+                position: relative;
+                z-index: 1;
             }
 
             .clickable-match.playoff-match:hover {
@@ -821,7 +831,7 @@ function generateMatchesHTML(matches) {
             }
 
             @media (max-width: 480px) {
-                .match.playoff-match::after { font-size: 13px; left: 52%; }
+                .match.playoff-match::after { font-size: 34px; left: 54%; }
             }
 
             .clickable-match {
