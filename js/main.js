@@ -803,7 +803,8 @@ function generateMatchesHTML(matches) {
             .match.playoff-match::after {
                 content: 'PLAYOFFS';
                 position: absolute;
-                left: 60%;
+                /* 從右側定位，不管列多寬都不會被 overflow:hidden 裁掉 */
+                right: 10%;
                 top: 50%;
                 transform: translateY(-50%);
                 /* 約吃掉列高的 75%（桌機列高 69px） */
@@ -831,7 +832,7 @@ function generateMatchesHTML(matches) {
             }
 
             @media (max-width: 480px) {
-                .match.playoff-match::after { font-size: 34px; left: 54%; }
+                .match.playoff-match::after { font-size: 30px; right: 6%; }
             }
 
             .clickable-match {
