@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T13:13:29.942Z",
+  "updatedAt": "2026-11-02T09:21:59.555Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -43,10 +43,10 @@
         "cardAtBind": "逃生入口 禁區狂仁",
         "cSeq": "2880721",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.16",
+        "webrate": "11.05",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.09",
+        "ppd": "21.83",
         "mpr": "2.41",
         "source": "myinfo"
       },
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.23",
+        "webrate": "9.10",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.62",
-        "mpr": "2.12",
+        "ppd": "19.39",
+        "mpr": "2.11",
         "source": "myinfo"
       },
       "小倫": {
@@ -202,11 +202,11 @@
         "cardAtBind": "Keeping wait bicth",
         "cSeq": "2397905",
         "homeShop": "逃生入口 Bar",
-        "webrate": "10.63",
+        "webrate": "10.44",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.99",
-        "mpr": "2.24",
+        "ppd": "21.64",
+        "mpr": "2.23",
         "source": "myinfo"
       },
       "小孟": {
@@ -286,11 +286,11 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "15.81",
+        "webrate": "15.94",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "28.20",
-        "mpr": "3.12",
+        "ppd": "28.31",
+        "mpr": "3.15",
         "source": "myinfo"
       },
       "阿廷": {
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "15.20",
+        "webrate": "15.16",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "26.72",
+        "ppd": "26.66",
         "mpr": "3.15",
         "source": "myinfo"
       },
@@ -336,11 +336,11 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.14",
+        "webrate": "14.09",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "25.29",
-        "mpr": "2.98",
+        "ppd": "25.30",
+        "mpr": "2.96",
         "source": "myinfo"
       },
       "宏哥": {
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "10.30",
+        "webrate": "10.51",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.95",
+        "ppd": "21.37",
         "mpr": "2.30",
         "source": "myinfo"
       },
@@ -525,11 +525,11 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.21",
+        "webrate": "9.32",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.22",
-        "mpr": "2.20",
+        "ppd": "19.10",
+        "mpr": "2.27",
         "source": "myinfo"
       },
       "文姊": {
@@ -564,10 +564,10 @@
         "cardAtBind": "阿翰",
         "cSeq": "2887184",
         "homeShop": "Jack Bar",
-        "webrate": "8.84",
+        "webrate": "8.89",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.49",
+        "ppd": "18.57",
         "mpr": "2.25",
         "source": "myinfo"
       },
@@ -650,7 +650,7 @@
         "cardAtBind": "大冰奶",
         "cSeq": "3074156",
         "homeShop": "Jack Bar",
-        "webrate": "7.23",
+        "webrate": "7.24",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "13.02",
+        "webrate": "13.04",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "24.26",
-        "mpr": "2.72",
+        "ppd": "24.18",
+        "mpr": "2.74",
         "source": "myinfo"
       }
     }
