@@ -25,3 +25,6 @@ service-account*.json
 *-credentials.json
 *.pem
 .claude/
+
+# Google OAuth token（本機授權用，絕對不要進版控）
+.google_token.json

@@ -23,10 +23,13 @@
 
 之後每週季後賽的新區塊都會接在 1274 以後，所以下面兩組公式都不必再動。
 
+> **2026/11/4 已套用完成**，下面保留做為紀錄。
+> 實際執行的是 [scripts/split_playoff_stats.py](scripts/split_playoff_stats.py)，
+> 透過 OAuth 直接寫進試算表（186 位選手、C2:M187，兩個分頁各 2046 格）。
+
 ## 步驟 1：把 personal 凍結在例行賽
 
-在 `personal` 分頁選 **C2**，貼上這一列（會自動拆進 C~M 共 11 欄），再往下拉到最後一位選手。
-N 欄（Gender）是手key的，不要覆蓋。
+公式範圍改成有界（`personal!C2:M187`），N 欄（Gender）沒有動。
 
 ```
 =sumif(data!$A$1:$A$1273,$B2,data!$C$1:$C$1273)	=iferror(C2/J2,0)	=sumif(data!$A$1:$A$1273,$B2,data!$E$1:$E$1273)	=iferror(E2/K2,0)	=C2+E2	=iferror(G2/M2,0)	=iferror(if(M2<10,"DNP",sum(L2/M2)),0)	=sumif(data!$A$1:$A$1273,$B2,data!$B$1:$B$1273)	=sumif(data!$A$1:$A$1273,$B2,data!$D$1:$D$1273)	=sumif(data!$A$1:$A$1273,$B2,data!$H$1:$H$1273)	=sum(J2:K2)
@@ -37,9 +40,8 @@ N 欄（Gender）是手key的，不要覆蓋。
 
 ## 步驟 2：建季後賽分頁
 
-1. 在 `personal` 分頁標籤按右鍵 → **複製**，把新分頁改名 `personal_playoff`
-   （這樣隊伍、姓名、Gender 三欄直接沿用，不用重打）。
-2. 選 **C2**，貼上這一列，往下拉到底。
+用 API 的 `duplicateSheet` 複製 `personal` 成 `personal_playoff`
+（隊伍、姓名、Gender 三欄直接沿用），再寫入下面的公式。
 
 ```
 =sumif(data!$A$1274:$A,$B2,data!$C$1274:$C)	=iferror(C2/J2,0)	=sumif(data!$A$1274:$A,$B2,data!$E$1274:$E)	=iferror(E2/K2,0)	=C2+E2	=iferror(G2/M2,0)	=iferror(L2/M2,0)	=sumif(data!$A$1274:$A,$B2,data!$B$1274:$B)	=sumif(data!$A$1274:$A,$B2,data!$D$1274:$D)	=sumif(data!$A$1274:$A,$B2,data!$H$1274:$H)	=sum(J2:K2)
@@ -58,3 +60,20 @@ N 欄（Gender）是手key的，不要覆蓋。
 - **網站不用動。** `pages/player.html`、季後賽頁的 16 人名單都是讀 `personal`，
   凍結之後讀到的就是例行賽成績，正是要的結果。
   之後若要在網站上呈現季後賽個人數據，再接 `personal_playoff` 即可。
+
+## 套用後的驗證（2026/11/4）
+
+| 選手 | 例行賽 | 季後賽 |
+|---|---|---|
+| 小倫 | 48 勝 / 66 場 | 3 勝 / 7 場 |
+| 猴猴 | 42 / 77 | 5 / 8 |
+| 小蘇 | 33 / 57 | 5 / 7 |
+| 淦 | 32 / 63 | 4 / 5 |
+| 華華 | 32 / 61 | 3 / 6 |
+| 小喬 | 31 / 38 | 3 / 5 |
+
+總量檢查也對得上：`personal` 總出賽人次 3600、總勝場 1800（60 場 × 60 人次）；
+`personal_playoff` 360 / 180（6 場 × 60 人次）。
+
+順帶修掉的舊問題：`蘇ㄟ`（第 17 列）和 `小姜`（第 141 列）的 01勝率、CR勝率
+原本是手填的 `0` 而不是公式，整列重寫時一併補回來了。
