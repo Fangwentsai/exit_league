@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T09:01:45.329Z",
+  "updatedAt": "2026-11-04T14:23:36.470Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -190,11 +190,11 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.08",
-        "level": 9,
-        "icon": "images/rating30/9.webp",
-        "ppd": "19.08",
-        "mpr": "2.20",
+        "webrate": "8.96",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "18.96",
+        "mpr": "2.17",
         "source": "myinfo"
       },
       "阿樂": {
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.32",
+        "webrate": "12.41",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.19",
-        "mpr": "2.64",
+        "ppd": "23.27",
+        "mpr": "2.66",
         "source": "myinfo"
       }
     }
