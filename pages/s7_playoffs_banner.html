@@ -86,8 +86,9 @@
   .qf.long span { font-size: 21px; letter-spacing: 0; }
   .mini.long span { font-size: 16px; letter-spacing: 0; }
 
-  /* 還沒產生的晉級格 */
-  .tbd { width: 200px; border-style: dashed; border-color: rgba(255, 255, 255, 0.35); background: rgba(70, 0, 8, 0.18); }
+  /* 四強格：比八強格窄，所以隊名字級再收一號才塞得下 */
+  .sf { width: 200px; }
+  .sf span { font-size: 21px; letter-spacing: 0; }
   .fin { width: 150px; border: 2px solid var(--gold); background: rgba(70, 0, 8, 0.3); }
 
   /* ---------- 中央獎金 ---------- */
@@ -110,8 +111,11 @@
   /* ---------- 第二段：小型四強單淘汰 ---------- */
   .mini { width: 180px; height: 34px; border-radius: 6px; font-size: 20px; letter-spacing: 1px; }
   .mini i { width: 34px; font-size: 22px; }
-  .lower { position: absolute; left: 1030px; width: 280px; top: 625px; height: 40px;
-    display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .lower { position: absolute; left: 1010px; width: 320px; top: 606px; height: 78px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .lower .lrow { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .lower .lmatch { font-size: 19px; font-weight: 700; letter-spacing: 1px; color: var(--gold); }
+  .lower .lmatch em { font-style: italic; font-weight: 900; color: #fff; opacity: 0.75; padding: 0 2px; }
   .lower .lbl { font-size: 20px; font-weight: 700; letter-spacing: 4px; }
   .lower .amt { font-size: 32px; font-weight: 900; font-style: italic; line-height: 1; color: var(--gold);
     text-shadow: 0 3px 0 rgba(90, 10, 16, 0.35); }
@@ -162,11 +166,11 @@
 <div class="slot qf r a named long" style="left:1270px; top:428px"><i>2</i><span>匪類里民一直喝</span></div>
 <div class="slot qf r b named" style="left:1270px; top:492px"><i>3</i><span>有點傻</span></div>
 
-<!-- 四強：還沒產生的晉級格 -->
-<div class="slot tbd" style="left:380px;  top:316px"></div>
-<div class="slot tbd" style="left:380px;  top:460px"></div>
-<div class="slot tbd" style="left:1020px; top:316px"></div>
-<div class="slot tbd" style="left:1020px; top:460px"></div>
+<!-- 四強：11/3 八強的勝隊。種子號沿用例行賽名次，底色沿用所屬分組 -->
+<div class="slot sf a named" style="left:380px;  top:316px"><i>1</i><span>軟飯揪團中</span></div>
+<div class="slot sf b named" style="left:380px;  top:460px"><i>2</i><span>哈哈隊</span></div>
+<div class="slot sf r b named" style="left:1020px; top:316px"><i>1</i><span>逃生Zoo口</span></div>
+<div class="slot sf r b named" style="left:1020px; top:460px"><i>3</i><span>有點傻</span></div>
 
 <!-- 冠軍戰 -->
 <div class="round c">冠軍戰<span>11/17</span></div>
@@ -185,8 +189,8 @@
 <div class="slot mini r b named" style="left:1350px; top:610px"><i>5</i><span>嘻嘻隊</span></div>
 <div class="slot mini r a named" style="left:1350px; top:646px"><i>6</i><span>傑克紅心</span></div>
 <div class="lower">
-  <div class="lbl">冠軍</div>
-  <div class="amt">$2,000</div>
+  <div class="lrow"><div class="lbl">冠軍</div><div class="amt">$2,000</div></div>
+  <div class="lmatch">人生揪難亮 <em>vs</em> 嘻嘻隊</div>
 </div>
 
 </body>

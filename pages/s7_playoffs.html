@@ -146,6 +146,11 @@
   .po-host { font-size:9px; font-weight:900; color:#4a3200; background:var(--gold);
              border-radius:3px; padding:1px 4px; flex-shrink:0; letter-spacing:0; }
   .po-vs { font-size:12px; color:#666; font-weight:600; flex-shrink:0; padding:0 10px; }
+  /* 打完的對戰：中間放比分，敗隊整格淡掉 */
+  .po-score { font-size:14px; font-weight:900; color:var(--gold); flex-shrink:0; padding:0 10px;
+              white-space:nowrap; letter-spacing:1px; }
+  .po-team.lose { opacity:0.45; }
+  .po-team.win .po-name { color:var(--gold); }
 
   .grp-key { display:flex; justify-content:center; gap:16px; font-size:10px; color:#888; margin:10px 0 0; }
   .grp-key span { display:flex; align-items:center; gap:5px; }
@@ -202,11 +207,14 @@
     <div class="bracket-hint">點圖可放大</div>
   </div>
 
-  <div class="section-title" style="font-size:12px;">⚔️ 八強對戰 (11/3)</div>
+  <div class="section-title" style="font-size:12px;">🔥 四強對戰 (11/10)</div>
+  <div class="tie-list" id="sf-list"></div>
+
+  <div class="section-title" style="font-size:12px;">⚔️ 八強結果 (11/3)</div>
   <div class="tie-list" id="tie-list"></div>
   <div class="note-box" style="margin-top:10px;font-size:11px;">
     八強主場為例行賽<strong>勝分較高</strong>的一方。<br>
-    <strong>四強起改看上一輪的季後賽勝分</strong>——在八強拿到較高分數的隊伍為主場，待 11/3 打完確定。<br>
+    <strong>四強起改看上一輪的季後賽勝分</strong>——在八強拿到較高分數的隊伍為主場。<br>
     若晉級的兩隊<strong>勝分相同</strong>，則由上一場<strong>飲酒點數較多</strong>的隊伍為主場。
   </div>
   <div class="grp-key">
@@ -214,7 +222,10 @@
     <span><i style="background:#C9A063"></i>靶外組</span>
   </div>
 
-  <div class="section-title" style="font-size:12px;color:#888;">🍺 第二段單淘汰 (11/3)</div>
+  <div class="section-title" style="font-size:12px;color:#888;">🍺 第二段決賽 (11/10)</div>
+  <div class="tie-list" id="lf-list"></div>
+
+  <div class="section-title" style="font-size:12px;color:#888;">🍺 第二段首輪結果 (11/3)</div>
   <div class="tie-list" id="lower-list"></div>
 
   <div class="section-title" style="font-size:12px;">📊 例行賽最終名次</div>
@@ -417,24 +428,9 @@ const teamCell = (grp, seed, pos, isHost) => {
     return `<div class="po-team ${pos}">${pos === 'l' ? badge + nm + host : host + nm + badge}</div>`;
 };
 
-// 八強主場＝例行賽勝分較高的一方（這六組和「種子較高」剛好都指向同一隊）。
-// 四強起改看上一輪的季後賽勝分，誰在八強拿的分數高誰就是主場，
-// 勝分相同時由上一場飲酒點數較多的隊伍主場。要等 11/3 打完才算得出來。
-// 第四個參數可指定主場隊伍，用在規則算出來的主場要另外喬的時候。
 // 場地一律由主場隊伍推導，不會出現「主場是甲隊、場地卻在乙隊店裡」。
 // L2 嘻嘻隊 vs 傑克紅心：照勝分規則是嘻嘻隊主場（161 ＞ 137）、場地 Vivi Bar，
 // 但同一天 QF2 已排在 Vivi Bar 撞場，所以主場改由傑克紅心擔任，移到 JACK BAR。
-const tie = (label, a, b, hostOverride) => {
-    const A = FINAL[a[0]][a[1] - 1], B = FINAL[b[0]][b[1] - 1];
-    const host = hostOverride || (A[1] >= B[1] ? A : B)[0];
-    const venue = VENUE[host] || '待定';
-    return `<div class="po-match">
-      <div class="po-head"><span class="po-code">${esc(label)}</span>
-        <span class="po-venue">@${esc(venue)}</span></div>
-      <div class="po-teams">${teamCell(a[0], a[1], 'l', A[0] === host)}
-        <div class="po-vs">vs</div>${teamCell(b[0], b[1], 'r', B[0] === host)}</div>
-    </div>`;
-};
 
 // 頁籤切換：切完捲回頂端，不然從長頁面切過去會停在半空中
 // 圖片燈箱。這一頁是在首頁的 modal 裡用 iframe 載入，
@@ -466,11 +462,59 @@ document.querySelectorAll('.pane-tab').forEach(btn => {
     };
 });
 
+// ===== 11/3 第一輪賽果。分數是含勝場與飲酒加成的總分，和例行賽同一套算法 =====
+const R1 = {
+    QF1: { a: ['d',1], b: ['b',4], sa: 31, sb:  5 },   // G61 軟飯揪團中 vs 傑克黑桃
+    QF2: { a: ['b',2], b: ['d',3], sa: 25, sb: 11 },   // G62 哈哈隊 vs 酒空組
+    QF3: { a: ['b',1], b: ['d',4], sa: 22, sb: 14 },   // G63 逃生Zoo口 vs Tonight29發財隊
+    QF4: { a: ['d',2], b: ['b',3], sa: 16, sb: 20 },   // G64 匪類里民一直喝 vs 有點傻
+    L1:  { a: ['d',5], b: ['b',6], sa: 24, sb: 12 },   // G65 人生揪難亮 vs Tonight29恭喜隊
+    L2:  { a: ['b',5], b: ['d',6], sa: 27, sb:  9, host: '傑克紅心' } // G66 嘻嘻隊 vs 傑克紅心
+};
+
+// 已打完的對戰：中間改放比分，勝隊金字、敗隊淡化
+const played = (label, key) => {
+    const r = R1[key];
+    const A = FINAL[r.a[0]][r.a[1] - 1], B = FINAL[r.b[0]][r.b[1] - 1];
+    const host = r.host || (A[1] >= B[1] ? A : B)[0];
+    const cls = w => w ? 'win' : 'lose';
+    const cell = (side, seed, pos, name, win) =>
+        teamCell(side, seed, pos, name === host).replace('po-team ' + pos, 'po-team ' + pos + ' ' + cls(win));
+    return `<div class="po-match">
+      <div class="po-head"><span class="po-code">${esc(label)}</span>
+        <span class="po-venue">@${esc(VENUE[host] || '待定')}</span></div>
+      <div class="po-teams">${cell(r.a[0], r.a[1], 'l', A[0], r.sa > r.sb)}
+        <div class="po-score">${r.sa} : ${r.sb}</div>${cell(r.b[0], r.b[1], 'r', B[0], r.sb > r.sa)}</div>
+    </div>`;
+};
+
+// 晉級者：回傳 [組別, 種子, 這一輪拿到的分數]
+const winnerOf = key => {
+    const r = R1[key];
+    return r.sa >= r.sb ? [r.a[0], r.a[1], r.sa] : [r.b[0], r.b[1], r.sb];
+};
+
+// 四強起的主場＝上一輪季後賽勝分較高者；同分時看上一場飲酒點數（目前沒出現同分）
+const nextTie = (label, k1, k2) => {
+    const [g1, s1, p1] = winnerOf(k1), [g2, s2, p2] = winnerOf(k2);
+    const A = FINAL[g1][s1 - 1], B = FINAL[g2][s2 - 1];
+    const host = (p1 >= p2 ? A : B)[0];
+    return `<div class="po-match">
+      <div class="po-head"><span class="po-code">${esc(label)}</span>
+        <span class="po-venue">@${esc(VENUE[host] || '待定')}</span></div>
+      <div class="po-teams">${teamCell(g1, s1, 'l', A[0] === host)}
+        <div class="po-vs">vs</div>${teamCell(g2, s2, 'r', B[0] === host)}</div>
+    </div>`;
+};
+
 document.getElementById('tie-list').innerHTML =
-      tie('QF1', ['d',1], ['b',4]) + tie('QF2', ['b',2], ['d',3])
-    + tie('QF3', ['b',1], ['d',4]) + tie('QF4', ['d',2], ['b',3]);
+      played('QF1', 'QF1') + played('QF2', 'QF2')
+    + played('QF3', 'QF3') + played('QF4', 'QF4');
 document.getElementById('lower-list').innerHTML =
-      tie('L1', ['d',5], ['b',6]) + tie('L2', ['b',5], ['d',6], '傑克紅心');
+      played('L1', 'L1') + played('L2', 'L2');
+document.getElementById('sf-list').innerHTML =
+      nextTie('SF1', 'QF1', 'QF2') + nextTie('SF2', 'QF3', 'QF4');
+document.getElementById('lf-list').innerHTML = nextTie('LF', 'L1', 'L2');
 
 for (const grp of ['d', 'b']) {
     document.getElementById('tbl-' + grp).innerHTML =
