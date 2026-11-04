@@ -101,6 +101,13 @@
         table.stat-table tbody tr:nth-child(even) {
             background: #f9f9f9;
         }
+        table.stat-table tbody tr.playoff-row {
+            background: #fff8f8;
+        }
+        .playoff-badge {
+            display: inline-block; margin-left: 6px; padding: 1px 5px; border-radius: 3px;
+            background: #fa363a; color: #fff; font-size: 10px; font-weight: bold; vertical-align: middle;
+        }
         table.stat-table tbody tr.career-row {
             background: #fff4e6;
             font-weight: 700;
@@ -211,11 +218,13 @@
             return (v === null || v === undefined) ? '—' : v;
         }
 
-        async function fetchLiveSeasonRows(targetPlayerKey) {
+        // tab 預設讀例行賽的 personal；季後賽那一列改讀 personal_playoff，
+        // 兩個分頁的 A~N 欄結構完全一樣，所以共用同一套解析。
+        async function fetchLiveSeasonRows(targetPlayerKey, tab) {
             try {
                 const season = (typeof SEASONS !== 'undefined') ? SEASONS[LIVE_SEASON_NUM] : null;
                 if (!season) return [];
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${season.sheetId}/values/personal!A1:N300?key=${season.apiKey}`;
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${season.sheetId}/values/${tab || 'personal'}!A1:N300?key=${season.apiKey}`;
                 const res = await fetch(url);
                 if (!res.ok) return [];
                 const data = await res.json();
@@ -251,12 +260,16 @@
             }
         }
 
-        function renderRow(seasonNum, entry, isLive) {
+        function renderRow(seasonNum, entry, isLive, kind) {
             const tr = document.createElement('tr');
             const label = SEASON_LABELS[seasonNum] || `第${seasonNum}屆`;
+            if (kind === 'playoff') tr.className = 'playoff-row';
+            const badge = kind === 'playoff'
+                ? '<span class="playoff-badge">季後賽</span>'
+                : (isLive ? '<span class="live-badge">進行中</span>' : '');
             tr.innerHTML = `
                 <td class="season-cell">
-                    <span class="year">${label}${isLive ? '<span class="live-badge">進行中</span>' : ''}</span>
+                    <span class="year">${label}${badge}</span>
                     <span class="team">${entry.team || ''}</span>
                 </td>
                 <td>${fmtNum(entry.totalGames)}</td>
@@ -352,7 +365,14 @@
             }
 
             const bakedEntry = baked.players && baked.players[playerKey];
-            const liveRows = await fetchLiveSeasonRows(playerKey);
+            const liveSeason = (typeof SEASONS !== 'undefined') ? SEASONS[LIVE_SEASON_NUM] : null;
+            const playoffTab = liveSeason && liveSeason.playoffPersonalTab;
+            const [liveRows, playoffRows] = await Promise.all([
+                fetchLiveSeasonRows(playerKey),
+                playoffTab ? fetchLiveSeasonRows(playerKey, playoffTab) : Promise.resolve([])
+            ]);
+            // 季後賽那一列只有真的出賽過才顯示，不然每個人都會多一列全 0
+            const playedPlayoff = playoffRows.filter(e => (e.totalGames || 0) > 0);
 
             fetch('../data/phoenix_ratings.json')
                 .then(res => res.ok ? res.json() : null)
@@ -390,6 +410,12 @@
             if (liveRows.length > 1) ambiguousIdentity = true;
             for (const entry of liveRows) {
                 bodyEl.appendChild(renderRow(LIVE_SEASON_NUM, entry, true));
+                allEntries.push(entry);
+            }
+            // 季後賽接在例行賽那一列下面。第 4~6 屆烘進 all_seasons.json 的
+            // 數字本來就含季後賽，所以這一列也要算進生涯合計，口徑才一致。
+            for (const entry of playedPlayoff) {
+                bodyEl.appendChild(renderRow(LIVE_SEASON_NUM, entry, true, 'playoff'));
                 allEntries.push(entry);
             }
 

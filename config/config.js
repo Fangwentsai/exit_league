@@ -62,6 +62,10 @@ const SEASONS = {
         schedulePage: 'scheduleS7', rankPage: 'rankS7', resultDir: 'season7',
         // 例行賽 G01~G60，G61 起是季後賽（近期比賽會用不同底色標示）
         playoffFrom: 61,
+        // 季後賽個人數據獨立統計在 personal_playoff 分頁（例行賽的 personal
+        // 已凍結在 G60，見 PLAYOFF_STATS_SPLIT.md）。沒有這個欄位的賽季，
+        // 生涯頁就不會去抓季後賽那一列。
+        playoffPersonalTab: 'personal_playoff',
         // 第七屆 12 隊拆兩組，2026/8/6 用 LINE 爬梯子公開抽出。
         // 隊名必須與 data/player.json 的 key 完全一致，名單比對才對得上。
         groups: {
