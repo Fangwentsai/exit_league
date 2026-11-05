@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T09:22:50.612Z",
+  "updatedAt": "2026-11-05T14:32:10.272Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.02",
-        "level": 9,
-        "icon": "images/rating30/9.webp",
+        "webrate": "8.99",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
         "ppd": "19.22",
-        "mpr": "2.11",
+        "mpr": "2.10",
         "source": "myinfo"
       },
       "小倫": {
@@ -166,11 +166,11 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.50",
+        "webrate": "11.60",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.30",
-        "mpr": "2.55",
+        "ppd": "22.44",
+        "mpr": "2.56",
         "source": "myinfo"
       },
       "Linda": {
@@ -178,11 +178,11 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "6.19",
+        "webrate": "6.40",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.72",
-        "mpr": "1.70",
+        "ppd": "15.94",
+        "mpr": "1.75",
         "source": "myinfo"
       },
       "Molly": {
@@ -613,19 +613,19 @@
         "cardAtBind": "TERRY",
         "cSeq": "2191560",
         "homeShop": "Jack Bar",
-        "webrate": "9.01",
-        "level": 9,
-        "icon": "images/rating30/9.webp",
-        "ppd": "19.44",
-        "mpr": "2.07",
+        "webrate": "8.91",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "19.29",
+        "mpr": "2.06",
         "source": "myinfo"
       },
       "九紋龍": {
-        "card": "九紋龍",
+        "card": "九紋龍(九爺)",
         "cardAtBind": "九紋龍",
         "cSeq": "2379756",
         "homeShop": "Jack Bar",
-        "webrate": "12.49",
+        "webrate": "12.43",
         "level": 12,
         "icon": "images/rating30/12.webp",
         "ppd": null,
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.41",
+        "webrate": "12.07",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.27",
-        "mpr": "2.66",
+        "ppd": "22.95",
+        "mpr": "2.59",
         "source": "myinfo"
       }
     }
