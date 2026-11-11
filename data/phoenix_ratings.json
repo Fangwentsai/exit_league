@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T09:15:49.889Z",
+  "updatedAt": "2026-11-11T14:09:27.224Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -324,11 +324,11 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.79",
+        "webrate": "14.76",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.49",
-        "mpr": "3.03",
+        "ppd": "26.54",
+        "mpr": "3.01",
         "source": "myinfo"
       },
       "小齊": {
@@ -336,11 +336,11 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.31",
+        "webrate": "13.58",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "23.96",
-        "mpr": "2.90",
+        "ppd": "24.42",
+        "mpr": "2.92",
         "source": "myinfo"
       },
       "宏哥": {
@@ -424,7 +424,7 @@
         "cardAtBind": "晚安鹹蛋",
         "cSeq": "3012905",
         "homeShop": "Jack Bar",
-        "webrate": "7.22",
+        "webrate": "7.16",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -487,7 +487,7 @@
         "cardAtBind": "Jack氵交劉在裡面",
         "cSeq": "3029231",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "9.59",
+        "webrate": "9.64",
         "level": 9,
         "icon": "images/rating30/9.webp",
         "ppd": null,
