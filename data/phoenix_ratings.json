@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T09:43:26.201Z",
+  "updatedAt": "2026-11-12T15:03:40.529Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.22",
+        "webrate": "9.12",
         "level": 9,
         "icon": "images/rating30/9.webp",
         "ppd": "19.33",
-        "mpr": "2.17",
+        "mpr": "2.13",
         "source": "myinfo"
       },
       "小倫": {
@@ -166,10 +166,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "11.30",
-        "level": 11,
-        "icon": "images/rating30/11.webp",
-        "ppd": "22.00",
+        "webrate": "10.90",
+        "level": 10,
+        "icon": "images/rating30/10.webp",
+        "ppd": "21.27",
         "mpr": "2.53",
         "source": "myinfo"
       },
@@ -190,11 +190,11 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "8.87",
-        "level": 8,
-        "icon": "images/rating30/8.webp",
-        "ppd": "19.01",
-        "mpr": "2.11",
+        "webrate": "9.07",
+        "level": 9,
+        "icon": "images/rating30/9.webp",
+        "ppd": "19.35",
+        "mpr": "2.12",
         "source": "myinfo"
       },
       "阿樂": {
@@ -336,10 +336,10 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.38",
+        "webrate": "13.24",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "24.34",
+        "ppd": "24.04",
         "mpr": "2.86",
         "source": "myinfo"
       },
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "13.29",
+        "webrate": "13.00",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "24.92",
-        "mpr": "2.72",
+        "ppd": "24.72",
+        "mpr": "2.65",
         "source": "myinfo"
       }
     }
