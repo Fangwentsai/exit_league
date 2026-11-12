@@ -90,6 +90,7 @@
   .sf { width: 200px; }
   .sf span { font-size: 21px; letter-spacing: 0; }
   .fin { width: 150px; border: 2px solid var(--gold); background: rgba(70, 0, 8, 0.3); }
+  .fin span { font-size: 19px; letter-spacing: 0; padding: 0; }
 
   /* ---------- 中央獎金 ---------- */
   .champ {
@@ -115,7 +116,7 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
   .lower .lrow { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .lower .lmatch { font-size: 19px; font-weight: 700; letter-spacing: 1px; color: var(--gold); }
-  .lower .lmatch em { font-style: italic; font-weight: 900; color: #fff; opacity: 0.75; padding: 0 2px; }
+  .lower .lmatch.lwin { font-size: 22px; font-weight: 900; }
   .lower .lbl { font-size: 20px; font-weight: 700; letter-spacing: 4px; }
   .lower .amt { font-size: 32px; font-weight: 900; font-style: italic; line-height: 1; color: var(--gold);
     text-shadow: 0 3px 0 rgba(90, 10, 16, 0.35); }
@@ -175,8 +176,8 @@
 <!-- 冠軍戰 -->
 <div class="round c">冠軍戰<span>11/17</span></div>
 <div class="champ"><small>冠軍</small><b>$8,000</b></div>
-<div class="slot fin" style="left:630px; top:388px"></div>
-<div class="slot fin" style="left:820px; top:388px"></div>
+<div class="slot fin named" style="left:630px; top:388px"><span>軟飯揪團中</span></div>
+<div class="slot fin named" style="left:820px; top:388px"><span>逃生Zoo口</span></div>
 
 <div class="podium">
   <div><small>亞軍</small><b>$5,000</b></div>
@@ -190,7 +191,7 @@
 <div class="slot mini r a named" style="left:1350px; top:646px"><i>6</i><span>傑克紅心</span></div>
 <div class="lower">
   <div class="lrow"><div class="lbl">冠軍</div><div class="amt">$2,000</div></div>
-  <div class="lmatch">人生揪難亮 <em>vs</em> 嘻嘻隊</div>
+  <div class="lmatch lwin">人生揪難亮</div>
 </div>
 
 </body>

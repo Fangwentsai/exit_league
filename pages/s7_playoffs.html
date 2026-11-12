@@ -207,7 +207,10 @@
     <div class="bracket-hint">點圖可放大</div>
   </div>
 
-  <div class="section-title" style="font-size:12px;">🔥 四強對戰 (11/10)</div>
+  <div class="section-title" style="font-size:12px;">🏆 冠軍戰 ‧ 季軍戰 (11/17)</div>
+  <div class="tie-list" id="final-list"></div>
+
+  <div class="section-title" style="font-size:12px;">🔥 四強結果 (11/10)</div>
   <div class="tie-list" id="sf-list"></div>
 
   <div class="section-title" style="font-size:12px;">⚔️ 八強結果 (11/3)</div>
@@ -224,6 +227,9 @@
 
   <div class="section-title" style="font-size:12px;color:#888;">🍺 第二段決賽 (11/10)</div>
   <div class="tie-list" id="lf-list"></div>
+  <div class="note-box" style="margin-top:10px;font-size:11px;">
+    第二段冠軍：<strong>人生揪難亮</strong>　NT$ 2,000
+  </div>
 
   <div class="section-title" style="font-size:12px;color:#888;">🍺 第二段首輪結果 (11/3)</div>
   <div class="tie-list" id="lower-list"></div>
@@ -469,7 +475,11 @@ const R1 = {
     QF3: { a: ['b',1], b: ['d',4], sa: 22, sb: 14 },   // G63 逃生Zoo口 vs Tonight29發財隊
     QF4: { a: ['d',2], b: ['b',3], sa: 16, sb: 20 },   // G64 匪類里民一直喝 vs 有點傻
     L1:  { a: ['d',5], b: ['b',6], sa: 24, sb: 12 },   // G65 人生揪難亮 vs Tonight29恭喜隊
-    L2:  { a: ['b',5], b: ['d',6], sa: 27, sb:  9, host: '傑克紅心' } // G66 嘻嘻隊 vs 傑克紅心
+    L2:  { a: ['b',5], b: ['d',6], sa: 27, sb:  9, host: '傑克紅心' }, // G66 嘻嘻隊 vs 傑克紅心
+    // 四強起的主場是上一輪勝分推出來的，不能再用例行賽總分判斷，所以直接寫明
+    SF1: { a: ['d',1], b: ['b',2], sa: 22, sb: 14, host: '軟飯揪團中' }, // G67 軟飯揪團中 vs 哈哈隊
+    SF2: { a: ['b',1], b: ['b',3], sa: 26, sb: 10, host: '逃生Zoo口' },  // G68 逃生Zoo口 vs 有點傻
+    LF:  { a: ['d',5], b: ['b',5], sa: 19, sb: 17, host: '嘻嘻隊' }      // G69 人生揪難亮 vs 嘻嘻隊
 };
 
 // 已打完的對戰：中間改放比分，勝隊金字、敗隊淡化
@@ -488,15 +498,19 @@ const played = (label, key) => {
     </div>`;
 };
 
-// 晉級者：回傳 [組別, 種子, 這一輪拿到的分數]
+// 晉級者／被淘汰者：回傳 [組別, 種子, 這一輪拿到的分數]
 const winnerOf = key => {
     const r = R1[key];
     return r.sa >= r.sb ? [r.a[0], r.a[1], r.sa] : [r.b[0], r.b[1], r.sb];
 };
+const loserOf = key => {
+    const r = R1[key];
+    return r.sa >= r.sb ? [r.b[0], r.b[1], r.sb] : [r.a[0], r.a[1], r.sa];
+};
 
 // 四強起的主場＝上一輪季後賽勝分較高者；同分時看上一場飲酒點數（目前沒出現同分）
-const nextTie = (label, k1, k2) => {
-    const [g1, s1, p1] = winnerOf(k1), [g2, s2, p2] = winnerOf(k2);
+const pairTie = (label, X, Y) => {
+    const [g1, s1, p1] = X, [g2, s2, p2] = Y;
     const A = FINAL[g1][s1 - 1], B = FINAL[g2][s2 - 1];
     const host = (p1 >= p2 ? A : B)[0];
     return `<div class="po-match">
@@ -506,6 +520,7 @@ const nextTie = (label, k1, k2) => {
         <div class="po-vs">vs</div>${teamCell(g2, s2, 'r', B[0] === host)}</div>
     </div>`;
 };
+const nextTie = (label, k1, k2) => pairTie(label, winnerOf(k1), winnerOf(k2));
 
 document.getElementById('tie-list').innerHTML =
       played('QF1', 'QF1') + played('QF2', 'QF2')
@@ -513,8 +528,11 @@ document.getElementById('tie-list').innerHTML =
 document.getElementById('lower-list').innerHTML =
       played('L1', 'L1') + played('L2', 'L2');
 document.getElementById('sf-list').innerHTML =
-      nextTie('SF1', 'QF1', 'QF2') + nextTie('SF2', 'QF3', 'QF4');
-document.getElementById('lf-list').innerHTML = nextTie('LF', 'L1', 'L2');
+      played('SF1', 'SF1') + played('SF2', 'SF2');
+document.getElementById('lf-list').innerHTML = played('LF', 'LF');
+document.getElementById('final-list').innerHTML =
+      nextTie('冠軍戰', 'SF1', 'SF2')
+    + pairTie('季軍戰', loserOf('SF1'), loserOf('SF2'));
 
 for (const grp of ['d', 'b']) {
     document.getElementById('tbl-' + grp).innerHTML =
