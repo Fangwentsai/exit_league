@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T09:26:15.029Z",
+  "updatedAt": "2026-11-13T14:28:46.766Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -166,10 +166,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "10.90",
+        "webrate": "10.85",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.27",
+        "ppd": "21.19",
         "mpr": "2.53",
         "source": "myinfo"
       },
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "11.11",
+        "webrate": "11.03",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.45",
+        "ppd": "22.29",
         "mpr": "2.32",
         "source": "myinfo"
       },
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.14",
+        "webrate": "11.47",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.59",
-        "mpr": "2.55",
+        "ppd": "22.01",
+        "mpr": "2.60",
         "source": "myinfo"
       },
       "小虎": {
@@ -675,7 +675,7 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "7.31",
+        "webrate": "7.30",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
