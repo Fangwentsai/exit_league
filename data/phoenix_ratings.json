@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T08:54:25.547Z",
+  "updatedAt": "2026-11-14T13:25:13.751Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.95",
+        "webrate": "12.91",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "24.62",
-        "mpr": "2.65",
+        "ppd": "24.61",
+        "mpr": "2.64",
         "source": "myinfo"
       }
     }
