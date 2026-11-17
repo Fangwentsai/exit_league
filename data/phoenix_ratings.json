@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T15:35:05.770Z",
+  "updatedAt": "2026-11-17T10:36:38.953Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -43,11 +43,11 @@
         "cardAtBind": "逃生入口 禁區狂仁",
         "cSeq": "2880721",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.68",
+        "webrate": "11.69",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.05",
-        "mpr": "2.59",
+        "ppd": "22.21",
+        "mpr": "2.57",
         "source": "myinfo"
       },
       "慶文": {
@@ -166,10 +166,10 @@
         "cardAtBind": "Mimo",
         "cSeq": "2893078",
         "homeShop": "中原客棧",
-        "webrate": "10.74",
+        "webrate": "10.70",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "20.78",
+        "ppd": "20.70",
         "mpr": "2.59",
         "source": "myinfo"
       },
@@ -238,11 +238,11 @@
         "cardAtBind": "乳來伸掌",
         "cSeq": "2940159",
         "homeShop": "逃生入口 Bar",
-        "webrate": "14.02",
-        "level": 14,
-        "icon": "images/rating30/14.webp",
-        "ppd": "25.06",
-        "mpr": "2.91",
+        "webrate": "13.80",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "24.37",
+        "mpr": "2.92",
         "source": "myinfo"
       },
       "小東": {
@@ -250,10 +250,10 @@
         "cardAtBind": "偶素小東",
         "cSeq": "2851397",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "7.48",
+        "webrate": "7.43",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "16.43",
+        "ppd": "16.29",
         "mpr": "1.97",
         "source": "myinfo"
       },
@@ -274,11 +274,11 @@
         "cardAtBind": "阿誠",
         "cSeq": "2872166",
         "homeShop": "逃生入口 Bar",
-        "webrate": "12.13",
+        "webrate": "12.27",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "22.94",
-        "mpr": "2.60",
+        "ppd": "23.24",
+        "mpr": "2.61",
         "source": "myinfo"
       },
       "潘潘": {
@@ -286,11 +286,11 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "15.51",
+        "webrate": "15.42",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.48",
-        "mpr": "3.13",
+        "ppd": "27.35",
+        "mpr": "3.12",
         "source": "myinfo"
       },
       "阿廷": {
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.19",
+        "webrate": "14.08",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "25.73",
+        "ppd": "25.52",
         "mpr": "2.93",
         "source": "myinfo"
       },
@@ -336,10 +336,10 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.50",
+        "webrate": "13.89",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "24.38",
+        "ppd": "25.21",
         "mpr": "2.90",
         "source": "myinfo"
       },
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.39",
+        "webrate": "11.57",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.49",
+        "ppd": "22.73",
         "mpr": "2.55",
         "source": "myinfo"
       }
@@ -376,11 +376,11 @@
         "cardAtBind": "Jack臭B",
         "cSeq": "2057725",
         "homeShop": "Jack Bar",
-        "webrate": "6.57",
+        "webrate": "6.59",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.17",
-        "mpr": "1.77",
+        "ppd": "16.26",
+        "mpr": "1.75",
         "source": "myinfo"
       },
       "小魚": {
@@ -388,11 +388,11 @@
         "cardAtBind": "Jack噴氵交火龍上線嘍~*",
         "cSeq": "2584609",
         "homeShop": "Jack Bar",
-        "webrate": "10.52",
+        "webrate": "10.51",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.91",
-        "mpr": "2.19",
+        "ppd": "21.93",
+        "mpr": "2.18",
         "source": "myinfo"
       },
       "老師": {
@@ -412,10 +412,10 @@
         "cardAtBind": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
         "cSeq": "2883934",
         "homeShop": "Jack Bar",
-        "webrate": "7.98",
-        "level": 7,
-        "icon": "images/rating30/7.webp",
-        "ppd": "18.09",
+        "webrate": "8.03",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "18.17",
         "mpr": "1.93",
         "source": "myinfo"
       },
@@ -437,11 +437,11 @@
         "cardAtBind": "大陰毛癢",
         "cSeq": "1854018",
         "homeShop": "Jack Bar",
-        "webrate": "7.26",
+        "webrate": "7.18",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "16.30",
-        "mpr": "1.85",
+        "ppd": "16.17",
+        "mpr": "1.84",
         "source": "myinfo"
       },
       "小胖": {
@@ -513,11 +513,11 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "11.42",
+        "webrate": "11.38",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "23.00",
-        "mpr": "2.33",
+        "ppd": "23.05",
+        "mpr": "2.30",
         "source": "myinfo"
       },
       "Mo": {
@@ -675,7 +675,7 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "7.21",
+        "webrate": "7.20",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.74",
+        "webrate": "12.69",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.70",
-        "mpr": "2.71",
+        "ppd": "23.66",
+        "mpr": "2.70",
         "source": "myinfo"
       }
     }
