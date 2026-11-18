@@ -91,23 +91,28 @@
   .sf span { font-size: 21px; letter-spacing: 0; }
   .fin { width: 150px; border: 2px solid var(--gold); background: rgba(70, 0, 8, 0.3); }
   .fin span { font-size: 19px; letter-spacing: 0; padding: 0; }
+  /* 冠軍那一格加厚金框，和亞軍區隔 */
+  .fin.win { border-width: 3px; background: rgba(247, 215, 116, 0.18); }
 
   /* ---------- 中央獎金 ---------- */
   .champ {
-    position: absolute; left: 630px; width: 340px; top: 274px; height: 102px; box-sizing: border-box;
+    position: absolute; left: 630px; width: 340px; top: 268px; height: 114px; box-sizing: border-box;
     border: 3px solid var(--gold); border-radius: 10px; background: rgba(70, 0, 8, 0.45);
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
     box-shadow: 0 0 36px rgba(247, 215, 116, 0.3);
   }
   .champ small { font-size: 22px; line-height: 1; font-weight: 900; letter-spacing: 10px; color: var(--gold); }
+  .champ u { text-decoration: none; font-size: 24px; font-weight: 900; letter-spacing: 2px; color: #fff; }
   .champ b {
-    font-size: 64px; line-height: 1; font-weight: 900; font-style: italic; color: var(--gold);
+    font-size: 48px; line-height: 1; font-weight: 900; font-style: italic; color: var(--gold);
     text-shadow: 0 4px 0 rgba(90, 10, 16, 0.35);
   }
   .podium { position: absolute; left: 560px; width: 480px; top: 458px; display: flex; justify-content: center; gap: 56px; }
   .podium div { text-align: center; }
   .podium small { display: block; font-size: 22px; font-weight: 700; letter-spacing: 6px; }
   .podium b { font-size: 40px; font-weight: 900; font-style: italic; line-height: 1.15; }
+  .podium u { display: block; text-decoration: none; margin-top: 2px;
+              font-size: 20px; font-weight: 700; letter-spacing: 1px; color: var(--gold); }
 
   /* ---------- 第二段：小型四強單淘汰 ---------- */
   .mini { width: 180px; height: 34px; border-radius: 6px; font-size: 20px; letter-spacing: 1px; }
@@ -175,13 +180,13 @@
 
 <!-- 冠軍戰 -->
 <div class="round c">冠軍戰<span>11/17</span></div>
-<div class="champ"><small>冠軍</small><b>$8,000</b></div>
-<div class="slot fin named" style="left:630px; top:388px"><span>軟飯揪團中</span></div>
+<div class="champ"><small>冠軍</small><b>$8,000</b><u>軟飯揪團中</u></div>
+<div class="slot fin named win" style="left:630px; top:388px"><span>軟飯揪團中</span></div>
 <div class="slot fin named" style="left:820px; top:388px"><span>逃生Zoo口</span></div>
 
 <div class="podium">
-  <div><small>亞軍</small><b>$5,000</b></div>
-  <div><small>季軍</small><b>$3,000</b></div>
+  <div><small>亞軍</small><b>$5,000</b><u>逃生Zoo口</u></div>
+  <div><small>季軍</small><b>$3,000</b><u>有點傻</u></div>
 </div>
 
 <!-- 第二段：兩組後段 5、6 名交叉，四強單淘汰。放右下，左下角留給輪播標題 -->
