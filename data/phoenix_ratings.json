@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T10:02:48.528Z",
+  "updatedAt": "2026-11-18T15:32:08.875Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -19,11 +19,11 @@
         "cardAtBind": "逃生入口 Jesse",
         "cSeq": "2397883",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.12",
+        "webrate": "11.31",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.46",
-        "mpr": "2.54",
+        "ppd": "21.66",
+        "mpr": "2.58",
         "source": "myinfo"
       },
       "阿堯": {
@@ -91,10 +91,10 @@
         "cardAtBind": "廢物小姐",
         "cSeq": "2858329",
         "homeShop": "藍白拖 Bar",
-        "webrate": "6.53",
+        "webrate": "6.40",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.22",
+        "ppd": "15.99",
         "mpr": "1.72",
         "source": "myinfo"
       },
@@ -727,11 +727,11 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "12.69",
+        "webrate": "12.88",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.66",
-        "mpr": "2.70",
+        "ppd": "23.67",
+        "mpr": "2.76",
         "source": "myinfo"
       }
     }
