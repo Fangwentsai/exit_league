@@ -175,6 +175,9 @@
   .award-r { text-align:right; flex-shrink:0; margin-left:10px; }
   .award-v { font-size:15px; font-weight:bold; color:var(--gold); font-family:'Impact',sans-serif; }
   .award-v.txt { font-family:inherit; font-size:12px; color:#ddd; font-weight:600; }
+  /* 劃掉的獎項：整列加刪除線並淡化 */
+  .award.struck { opacity:0.5; }
+  .award.struck .award-w, .award.struck .award-t, .award.struck .award-v { text-decoration:line-through; }
   .pending { color:#777 !important; font-style:italic; }
 
   .lady-card { margin:0 15px; background:linear-gradient(90deg,#1A1A1A 0%,#2a1020 100%);
@@ -345,7 +348,7 @@
           <span class="award-w">小喬<small>逃生Zoo口 ‧ 31 勝</small></span></div>
         <div class="award-r"><div class="award-v">NT$ 1,000</div></div>
       </div>
-      <div class="award">
+      <div class="award struck">
         <div class="award-l"><span class="award-t">💀 地獄倒霉鬼</span>
           <span class="award-w">小象<small>軟飯揪團中 ‧ 先攻率 20.00%</small></span></div>
         <div class="award-r"><div class="award-v txt">專屬卡套<br>客店首次 shot 招待</div></div>
