@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T15:39:18.106Z",
+  "updatedAt": "2026-11-20T09:56:42.888Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -43,11 +43,11 @@
         "cardAtBind": "逃生入口 禁區狂仁",
         "cSeq": "2880721",
         "homeShop": "逃生入口 Bar",
-        "webrate": "12.19",
+        "webrate": "12.14",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.54",
-        "mpr": "2.55",
+        "ppd": "23.26",
+        "mpr": "2.57",
         "source": "myinfo"
       },
       "慶文": {
@@ -55,10 +55,10 @@
         "cardAtBind": "神奇斑馬螺",
         "cSeq": "2534752",
         "homeShop": "逃生入口 Bar",
-        "webrate": "7.84",
+        "webrate": "7.79",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "17.86",
+        "ppd": "17.78",
         "mpr": "1.92",
         "source": "myinfo"
       },
@@ -79,10 +79,10 @@
         "cardAtBind": "喵咪貓貓叫",
         "cSeq": "2780591",
         "homeShop": "GG Bar",
-        "webrate": "9.79",
+        "webrate": "9.80",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "20.66",
+        "ppd": "20.69",
         "mpr": "2.15",
         "source": "myinfo"
       },
@@ -115,7 +115,7 @@
         "cardAtBind": "蘋什麼",
         "cSeq": "3030769",
         "homeShop": "鈴洛奇冷飲室",
-        "webrate": "6.74",
+        "webrate": "6.51",
         "level": 6,
         "icon": "images/rating30/6.webp",
         "ppd": null,
@@ -130,11 +130,11 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.25",
+        "webrate": "9.20",
         "level": 9,
         "icon": "images/rating30/9.webp",
         "ppd": "19.27",
-        "mpr": "2.19",
+        "mpr": "2.17",
         "source": "myinfo"
       },
       "小倫": {
@@ -286,11 +286,11 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "15.51",
+        "webrate": "15.70",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.60",
-        "mpr": "3.11",
+        "ppd": "28.13",
+        "mpr": "3.09",
         "source": "myinfo"
       },
       "阿廷": {
@@ -391,8 +391,8 @@
         "webrate": "10.39",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.65",
-        "mpr": "2.19",
+        "ppd": "21.69",
+        "mpr": "2.18",
         "source": "myinfo"
       },
       "老師": {
@@ -525,11 +525,11 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.40",
+        "webrate": "9.36",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.58",
-        "mpr": "2.20",
+        "ppd": "19.45",
+        "mpr": "2.21",
         "source": "myinfo"
       },
       "文姊": {
@@ -727,10 +727,10 @@
         "cardAtBind": "匪類里長-小野爺爺",
         "cSeq": "3030807",
         "homeShop": "R8 串燒 Metro Bar",
-        "webrate": "13.24",
+        "webrate": "13.38",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "23.81",
+        "ppd": "24.13",
         "mpr": "2.86",
         "source": "myinfo"
       }
