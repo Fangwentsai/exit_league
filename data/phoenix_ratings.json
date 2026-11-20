@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T09:56:42.888Z",
+  "updatedAt": "2026-11-20T15:20:39.483Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -142,11 +142,11 @@
         "cardAtBind": "您好，敝姓周👍👍",
         "cSeq": "2512040",
         "homeShop": "逃生入口 Bar",
-        "webrate": "17.13",
-        "level": 17,
-        "icon": "images/rating30/17.webp",
-        "ppd": "28.03",
-        "mpr": "3.54",
+        "webrate": "16.99",
+        "level": 16,
+        "icon": "images/rating30/16.webp",
+        "ppd": "27.84",
+        "mpr": "3.52",
         "source": "myinfo"
       },
       "隼": {
@@ -178,10 +178,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "6.22",
+        "webrate": "6.37",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.55",
+        "ppd": "15.81",
         "mpr": "1.78",
         "source": "myinfo"
       },
@@ -190,11 +190,11 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.11",
+        "webrate": "9.07",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.55",
-        "mpr": "2.09",
+        "ppd": "19.39",
+        "mpr": "2.11",
         "source": "myinfo"
       },
       "阿樂": {
@@ -336,10 +336,10 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.84",
+        "webrate": "13.85",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "25.21",
+        "ppd": "25.24",
         "mpr": "2.88",
         "source": "myinfo"
       },
