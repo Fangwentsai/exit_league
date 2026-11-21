@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T09:39:58.006Z",
+  "updatedAt": "2026-11-21T14:33:24.859Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -130,10 +130,10 @@
         "cardAtBind": "逃生入口 LUCAS",
         "cSeq": "2448246",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.20",
+        "webrate": "9.18",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.27",
+        "ppd": "19.23",
         "mpr": "2.17",
         "source": "myinfo"
       },
@@ -336,10 +336,10 @@
         "cardAtBind": "OMG是小齊",
         "cSeq": "3033087",
         "homeShop": "NO.5 Bar",
-        "webrate": "13.86",
+        "webrate": "13.96",
         "level": 13,
         "icon": "images/rating30/13.webp",
-        "ppd": "25.37",
+        "ppd": "25.59",
         "mpr": "2.86",
         "source": "myinfo"
       },
@@ -601,10 +601,10 @@
         "cardAtBind": "今晚打老虎",
         "cSeq": "2783625",
         "homeShop": "Jack Bar",
-        "webrate": "7.79",
+        "webrate": "7.64",
         "level": 7,
         "icon": "images/rating30/7.webp",
-        "ppd": "17.81",
+        "ppd": "17.55",
         "mpr": "1.91",
         "source": "myinfo"
       },
@@ -613,11 +613,11 @@
         "cardAtBind": "TERRY",
         "cSeq": "2191560",
         "homeShop": "Jack Bar",
-        "webrate": "9.16",
+        "webrate": "9.14",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "18.95",
-        "mpr": "2.27",
+        "ppd": "18.99",
+        "mpr": "2.25",
         "source": "myinfo"
       },
       "九紋龍": {
@@ -650,7 +650,7 @@
         "cardAtBind": "大冰奶",
         "cSeq": "3074156",
         "homeShop": "Jack Bar",
-        "webrate": "7.36",
+        "webrate": "7.37",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -675,7 +675,7 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "7.15",
+        "webrate": "7.06",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
