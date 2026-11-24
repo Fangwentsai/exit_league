@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T17:57:11.261Z",
+  "updatedAt": "2026-11-24T12:22:43.740Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -43,11 +43,11 @@
         "cardAtBind": "逃生入口 禁區狂仁",
         "cSeq": "2880721",
         "homeShop": "逃生入口 Bar",
-        "webrate": "11.51",
+        "webrate": "11.42",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.63",
-        "mpr": "2.45",
+        "ppd": "22.48",
+        "mpr": "2.44",
         "source": "myinfo"
       },
       "慶文": {
@@ -286,10 +286,10 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "15.50",
+        "webrate": "15.34",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "27.86",
+        "ppd": "27.49",
         "mpr": "3.06",
         "source": "myinfo"
       },
@@ -324,10 +324,10 @@
         "cardAtBind": "本寶寶叫龍飛昀",
         "cSeq": "3033072",
         "homeShop": "NO.5 Bar",
-        "webrate": "14.31",
+        "webrate": "14.16",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.45",
+        "ppd": "26.13",
         "mpr": "2.84",
         "source": "myinfo"
       },
@@ -348,10 +348,10 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.45",
+        "webrate": "11.51",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.58",
+        "ppd": "22.66",
         "mpr": "2.53",
         "source": "myinfo"
       }
@@ -376,10 +376,10 @@
         "cardAtBind": "Jack臭B",
         "cSeq": "2057725",
         "homeShop": "Jack Bar",
-        "webrate": "6.73",
+        "webrate": "6.70",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.47",
+        "ppd": "16.40",
         "mpr": "1.76",
         "source": "myinfo"
       },
@@ -525,11 +525,11 @@
         "cardAtBind": "Covid19代言人",
         "cSeq": "2773531",
         "homeShop": "漫調斯理飛鏢餐廳-PD 45 旗艦台中45店",
-        "webrate": "9.07",
+        "webrate": "9.08",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.02",
-        "mpr": "2.18",
+        "ppd": "19.00",
+        "mpr": "2.19",
         "source": "myinfo"
       },
       "文姊": {
@@ -701,11 +701,11 @@
         "cardAtBind": "小建",
         "cSeq": "2865203",
         "homeShop": "Tonight29 Pub",
-        "webrate": "12.58",
+        "webrate": "12.73",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "23.59",
-        "mpr": "2.67",
+        "ppd": "23.79",
+        "mpr": "2.69",
         "source": "myinfo"
       },
       "公鏢傑": {
