@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T17:33:44.116Z",
+  "updatedAt": "2026-11-25T11:10:35.951Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -46,7 +46,7 @@
         "webrate": "11.07",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.89",
+        "ppd": "21.87",
         "mpr": "2.41",
         "source": "myinfo"
       },
@@ -190,10 +190,10 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.18",
-        "level": 9,
-        "icon": "images/rating30/9.webp",
-        "ppd": "19.71",
+        "webrate": "8.97",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "19.32",
         "mpr": "2.08",
         "source": "myinfo"
       },
@@ -388,10 +388,10 @@
         "cardAtBind": "Jack噴氵交火龍上線嘍~*",
         "cSeq": "2584609",
         "homeShop": "Jack Bar",
-        "webrate": "10.21",
+        "webrate": "10.19",
         "level": 10,
         "icon": "images/rating30/10.webp",
-        "ppd": "21.31",
+        "ppd": "21.29",
         "mpr": "2.18",
         "source": "myinfo"
       },
@@ -487,7 +487,7 @@
         "cardAtBind": "Jack氵交劉在裡面",
         "cSeq": "3029231",
         "homeShop": "Super Darts 2-Phoenix Dart 新北永和旗艦48店",
-        "webrate": "11.91",
+        "webrate": "11.06",
         "level": 11,
         "icon": "images/rating30/11.webp",
         "ppd": null,
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.38",
+        "webrate": "11.32",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "21.68",
-        "mpr": "2.64",
+        "ppd": "21.64",
+        "mpr": "2.62",
         "source": "myinfo"
       },
       "小虎": {
@@ -650,7 +650,7 @@
         "cardAtBind": "大冰奶",
         "cSeq": "3074156",
         "homeShop": "Jack Bar",
-        "webrate": "7.54",
+        "webrate": "7.42",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
@@ -713,10 +713,10 @@
         "cardAtBind": "公鏢打帽子",
         "cSeq": "1586585",
         "homeShop": "逃生入口 Bar",
-        "webrate": "12.01",
+        "webrate": "12.03",
         "level": 12,
         "icon": "images/rating30/12.webp",
-        "ppd": "22.57",
+        "ppd": "22.62",
         "mpr": "2.68",
         "source": "myinfo"
       }
