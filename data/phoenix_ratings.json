@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T16:47:01.501Z",
+  "updatedAt": "2026-11-27T10:46:07.856Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -79,11 +79,11 @@
         "cardAtBind": "喵咪貓貓叫",
         "cSeq": "2780591",
         "homeShop": "GG Bar",
-        "webrate": "9.63",
+        "webrate": "9.66",
         "level": 9,
         "icon": "images/rating30/9.webp",
-        "ppd": "19.81",
-        "mpr": "2.23",
+        "ppd": "19.76",
+        "mpr": "2.25",
         "source": "myinfo"
       },
       "羊羊": {
@@ -286,11 +286,11 @@
         "cardAtBind": "阿潘o",
         "cSeq": "1875967",
         "homeShop": "逃生入口 Bar",
-        "webrate": "14.56",
+        "webrate": "14.48",
         "level": 14,
         "icon": "images/rating30/14.webp",
-        "ppd": "26.26",
-        "mpr": "2.98",
+        "ppd": "26.34",
+        "mpr": "2.93",
         "source": "myinfo"
       },
       "阿廷": {
@@ -348,11 +348,11 @@
         "cardAtBind": "矮油這麽帥的混血兒",
         "cSeq": "2686250",
         "homeShop": "NO.5 Bar",
-        "webrate": "11.05",
+        "webrate": "11.10",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.02",
-        "mpr": "2.53",
+        "ppd": "22.09",
+        "mpr": "2.51",
         "source": "myinfo"
       }
     },
@@ -376,10 +376,10 @@
         "cardAtBind": "Jack臭B",
         "cSeq": "2057725",
         "homeShop": "Jack Bar",
-        "webrate": "6.70",
+        "webrate": "6.69",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "16.40",
+        "ppd": "16.39",
         "mpr": "1.76",
         "source": "myinfo"
       },
@@ -564,11 +564,11 @@
         "cardAtBind": "阿翰",
         "cSeq": "2887184",
         "homeShop": "Jack Bar",
-        "webrate": "8.90",
+        "webrate": "8.94",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "19.09",
-        "mpr": "2.11",
+        "ppd": "19.05",
+        "mpr": "2.14",
         "source": "myinfo"
       },
       "霸告": {
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.59",
+        "webrate": "11.76",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.11",
-        "mpr": "2.63",
+        "ppd": "22.27",
+        "mpr": "2.67",
         "source": "myinfo"
       },
       "小虎": {
@@ -638,11 +638,11 @@
         "cardAtBind": "地獄專員-阿瑞",
         "cSeq": "2767928",
         "homeShop": "NO.5 Bar",
-        "webrate": "15.27",
-        "level": 15,
-        "icon": "images/rating30/15.webp",
-        "ppd": "26.86",
-        "mpr": "3.20",
+        "webrate": "14.41",
+        "level": 14,
+        "icon": "images/rating30/14.webp",
+        "ppd": "26.00",
+        "mpr": "3.00",
         "source": "myinfo"
       },
       "肥肥": {
@@ -701,11 +701,11 @@
         "cardAtBind": "小建",
         "cSeq": "2865203",
         "homeShop": "Tonight29 Pub",
-        "webrate": "12.73",
-        "level": 12,
-        "icon": "images/rating30/12.webp",
-        "ppd": "23.79",
-        "mpr": "2.69",
+        "webrate": "13.29",
+        "level": 13,
+        "icon": "images/rating30/13.webp",
+        "ppd": "24.91",
+        "mpr": "2.72",
         "source": "myinfo"
       },
       "公鏢傑": {
