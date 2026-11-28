@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-28T10:15:47.527Z",
+  "updatedAt": "2026-11-28T15:25:21.980Z",
   "teams": {
     "酒空組": {
       "Sandy": {
@@ -178,10 +178,10 @@
         "cardAtBind": "☜亞利安☞",
         "cSeq": "2460412",
         "homeShop": "酌燒 串燒酒食",
-        "webrate": "6.29",
+        "webrate": "6.17",
         "level": 6,
         "icon": "images/rating30/6.webp",
-        "ppd": "15.78",
+        "ppd": "15.59",
         "mpr": "1.74",
         "source": "myinfo"
       },
@@ -190,10 +190,10 @@
         "cardAtBind": "Molly",
         "cSeq": "2871811",
         "homeShop": "逃生入口 Bar",
-        "webrate": "9.09",
-        "level": 9,
-        "icon": "images/rating30/9.webp",
-        "ppd": "19.60",
+        "webrate": "8.94",
+        "level": 8,
+        "icon": "images/rating30/8.webp",
+        "ppd": "19.31",
         "mpr": "2.07",
         "source": "myinfo"
       },
@@ -449,10 +449,10 @@
         "cardAtBind": "Jack台柱 皮卡起秋",
         "cSeq": "2790582",
         "homeShop": "Jack Bar",
-        "webrate": "8.15",
+        "webrate": "8.20",
         "level": 8,
         "icon": "images/rating30/8.webp",
-        "ppd": "18.07",
+        "ppd": "18.14",
         "mpr": "2.02",
         "source": "myinfo"
       },
@@ -513,10 +513,10 @@
         "cardAtBind": "kevin",
         "cSeq": "2448227",
         "homeShop": "Jack Bar",
-        "webrate": "11.24",
+        "webrate": "11.14",
         "level": 11,
         "icon": "images/rating30/11.webp",
-        "ppd": "22.90",
+        "ppd": "22.70",
         "mpr": "2.27",
         "source": "myinfo"
       },
@@ -552,11 +552,11 @@
         "cardAtBind": "Jack瘋狗",
         "cSeq": "2293486",
         "homeShop": "Jack Bar",
-        "webrate": "15.03",
+        "webrate": "15.07",
         "level": 15,
         "icon": "images/rating30/15.webp",
-        "ppd": "26.26",
-        "mpr": "3.06",
+        "ppd": "26.45",
+        "mpr": "3.05",
         "source": "myinfo"
       },
       "阿翰": {
@@ -589,11 +589,11 @@
         "cardAtBind": "E6孤獨傲鷹",
         "cSeq": "2835876",
         "homeShop": "Jack Bar",
-        "webrate": "11.76",
-        "level": 11,
-        "icon": "images/rating30/11.webp",
-        "ppd": "22.27",
-        "mpr": "2.67",
+        "webrate": "12.02",
+        "level": 12,
+        "icon": "images/rating30/12.webp",
+        "ppd": "22.80",
+        "mpr": "2.66",
         "source": "myinfo"
       },
       "小虎": {
@@ -675,7 +675,7 @@
         "cardAtBind": "打標靠賽",
         "cSeq": "3020436",
         "homeShop": "Jack Bar",
-        "webrate": "7.15",
+        "webrate": "7.31",
         "level": 7,
         "icon": "images/rating30/7.webp",
         "ppd": null,
